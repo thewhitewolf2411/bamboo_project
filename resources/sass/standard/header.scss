@@ -1,0 +1,158 @@
+header{
+    background-color: #fff;
+}
+
+.header-container:not(.navigation-header-container){
+    display: flex;
+    flex-direction: column;
+
+    background: url('/customer_page_images/header/header_background.jpg') no-repeat top center;
+}
+
+.top-header-container{
+    width: 980px;
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.right-header-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.login-links-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+}
+.login-links-container label{
+    font-weight: 600;
+    color: #49a300;
+    margin: 0;
+}
+
+.social-media-links{
+    margin-left: 5px;
+}
+
+.cart-header-container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+.basket-container{
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
+}
+
+.basket-container img{
+    margin-right: 5px;
+}
+
+.basket-container label{
+    font-weight: 600;
+    font-size: 12pt;
+    color: #49a300;
+}
+
+.basket-content-container{
+    margin-right: 40px;
+}
+
+
+//menu elements
+.navigation-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    height: 50px;
+
+    background-image: linear-gradient(#8fd15a, #629F2E);
+    border-top: 1px solid #629F2E;
+    border-bottom: 1px solid #629F2E;
+}
+
+.navigation-element-container{
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+}
+
+.navigation-element-container:hover{
+    background-color: #49a300;
+}
+
+
+.navigation-element{
+    font-size: 12pt;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    text-align: center;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navigation-element:hover{
+    text-decoration: none;
+    color: yellow;
+}
+
+.navigation-element-selected{
+    font-size: 12pt;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    text-align: center;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: yellow;
+}
+
+.navigation-element-selected:hover{
+    text-decoration: none;
+    color: yellow;
+}
+
+
+#home{
+    width: 115px;
+}
+
+#about{
+    width: 139px;
+}
+
+#how{
+    width: 163px;
+}
+
+#sell{
+    width: 166px;
+}
+
+#faqs{
+    width: 101px;
+}
+
+#support{
+    width: 128px;
+}
+
+#contact{
+    width: 148px;
+}
