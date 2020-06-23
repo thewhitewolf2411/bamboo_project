@@ -27,14 +27,12 @@ class CreateProductsTable extends Migration
             $table->string('product_code_isbn')->nullable();
             $table->string('product_code_extension_1')->nullable();
             $table->string('product_code_extension_2')->nullable();
-            $table->string('network')->nullable();
             $table->integer('price_new');
             $table->integer('price_working_a');
             $table->integer('price_working_b');
             $table->integer('price_working_c');
             $table->integer('price_faulty');
             $table->integer('price_damaged');
-            $table->integer('quantity');
             $table->timestamps();
         });
     }

@@ -1,0 +1,36 @@
+.portal-dashboard{
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+.portal-dashboard-elements{
+    width: 30%;
+    padding: 10px;
+    border: 1px solid #c5c5c5;
+    border-radius: 5px;
+
+    margin: 15px;
+}
+
+.portal-elements-links-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.portal-elements-links-container a{
+    width: 100px;
+    height: 100px;
+
+    background-color: #52A10E;
+    border-radius: 8px;
+    color: #fff;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    margin: 5px;
+}

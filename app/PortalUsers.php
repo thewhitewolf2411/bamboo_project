@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model
+class PortalUsers extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'orders';
+    protected $table = 'portal_users';
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +19,7 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'order_placed', 'product_id', 'user_id','user_email', 'product_total', 
-        'order_total','order_status','payment_status','shipping_status','quantity','status',
+        'warehouse_receipt_and_dispatch_portal', 'warehouse_stock_management_portal', 'phone_testing_portal',
+        'customer_care_portal', 'administration_portal', 'warehouse_administration_console',
     ];
 }

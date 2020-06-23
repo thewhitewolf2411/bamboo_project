@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use App\PortalUsers;
+use App\Order;
 
 class PagesController extends Controller
 {
@@ -19,7 +21,10 @@ class PagesController extends Controller
 
     public function admin(){
         if(Auth::User()->type_of_user == 2 || Auth::User()->type_of_user == 3){
-            return view('admin');
+
+            $orders = Order::orderBy('id','desc')->take(10)->get();
+
+            return view('admin')->with('last_orders', $orders);
         }
         else{
             return redirect('/');
@@ -29,7 +34,10 @@ class PagesController extends Controller
 
     public function portal(){
         if(Auth::User()->type_of_user == 1 || Auth::User()->type_of_user == 3){
-            return view('portal');
+
+            $portal_user = PortalUsers::where('user_id', Auth::User()->id)->first();
+
+            return view('portal')->with('user_data', $portal_user);
         }
         else{
             return redirect('/');

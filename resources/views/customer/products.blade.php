@@ -11,7 +11,7 @@
         <h3>Avalible products from {{$category}} category</h3>
         @foreach($products as $product)
 
-        <a href="">{{$product->product_name}}</a>
+        <a href="/product/{{$product->id}}">{{$product->product_name}}</a>
 
         @endforeach
 

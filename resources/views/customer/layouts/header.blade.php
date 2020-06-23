@@ -39,7 +39,11 @@
                     <label>My Basket:</label>
                 </div>
                 <div class="basket-content-container">
+                    @if(!Session::has('cart'))
                     <p>Your basket is empty.</p>
+                    @else
+                    <p><a href="{{url('/cart')}}">You have {{count(Session::get('cart')->items)}} items in cart</a></p>
+                    @endif
                 </div>
             </div>
         </div>
