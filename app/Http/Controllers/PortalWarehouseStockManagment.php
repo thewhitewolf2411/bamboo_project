@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class PortalWarehouseStockManagment extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
     public function StockPortalDeviceTestStockManagment(){
         return view('portal.warehousestockmanagmentportal.devicetesterstockmanagment');
     }

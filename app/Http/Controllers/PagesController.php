@@ -20,7 +20,7 @@ class PagesController extends Controller
     }
 
     public function admin(){
-        if(Auth::User()->type_of_user == 2 || Auth::User()->type_of_user == 3){
+        if(Auth::User() || Auth::User()->type_of_user == 2 || Auth::User()->type_of_user == 3){
 
             $orders = Order::orderBy('id','desc')->take(10)->get();
 

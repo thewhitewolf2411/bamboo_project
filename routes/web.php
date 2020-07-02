@@ -33,31 +33,34 @@ Route::post('/removefromcart', 'CustomerController@removeFromCart')->name('remov
 Route::post('/checkoutcart', 'CustomerController@sheckoutcart')->name('sheckoutcart');
 
 //Admin get Route
-Route::get('/admin', 'PagesController@admin')->name('admin');
-Route::get('/admin/sales', 'AdminController@sales')->name('adminsales');
-Route::get('/admin/customers', 'AdminController@customers')->name('admincustomers');
+Route::get('/admin', 'PagesController@admin')->name('admin')->middleware('auth');
+Route::get('/admin/sales', 'AdminController@sales')->name('adminsales')->middleware('auth');
+Route::get('/admin/customers', 'AdminController@customers')->name('admincustomers')->middleware('auth');
 Route::get('/admin/products', 'AdminController@products')->name('adminsproducts');
-Route::get('/admin/category/{category}', 'AdminController@showCategory');
-Route::get('/admin/search', 'AdminController@search')->name('adminsearch');
-Route::get('/admin/reports', 'AdminController@reports')->name('adminreports');
+Route::get('/admin/category/{category}', 'AdminController@showCategory')->middleware('auth');
+Route::get('/admin/search', 'AdminController@search')->name('adminsearch')->middleware('auth');
+Route::get('/admin/reports', 'AdminController@reports')->name('adminreports')->middleware('auth');
 Route::get('/admin/options', 'AdminController@options')->name('adminsoptions');
-Route::get('/admin/addcategory', 'AdminController@addCategoryPage')->name('addCategoryPage');
-Route::get('/admin/products/addproduct/{id}', 'AdminController@addProductPage')->name('addProductPage');
+Route::get('/admin/addcategory', 'AdminController@addCategoryPage')->name('addCategoryPage')->middleware('auth');
+Route::get('/admin/products/addproduct/{id}', 'AdminController@addProductPage')->name('addProductPage')->middleware('auth');
 
 //Admin post route
-Route::post('/addCategory', 'AdminController@addCategory');
-Route::post('/addProduct', 'AdminController@addProduct');
+Route::post('/addCategory', 'AdminController@addCategory')->middleware('auth');
+Route::post('/addProduct', 'AdminController@addProduct')->middleware('auth');
 
 //Portal get Route
-Route::get('/portal', 'PagesController@portal')->name('portal');
+Route::get('/portal', 'PagesController@portal')->name('portal')->middleware('auth');
 
 //Warehouse Administration Console
-Route::get('/portal/adminconsole/adduser', 'PortalAdminConsoleController@showAdminConsoleAddUser');
+Route::get('/portal/adminconsole/adduser', 'PortalAdminConsoleController@showAdminConsoleAddUser')->middleware('auth');
 Route::get('/portal/adminconsole/usermanagment', 'PortalAdminConsoleController@showAdminConsoleUserManagment');
+Route::get('/portal/adminconsole/usermanagment/view/{id}', 'PortalAdminConsoleController@showAdminConsoleUserManagmentView');
 Route::get('/portal/adminconsole/reports', 'PortalAdminConsoleController@showAdminConsoleReportsAndStatistics');
 Route::get('/portal/adminconsole/reports/stuckdevicereport', 'PortalAdminConsoleController@showAdminConsoleStuckDevices');
 Route::get('/portal/adminconsole/reports/onlineuserreport', 'PortalAdminConsoleController@showAdminConsoleOnlineUser');
 
+Route::post('/portal/adminconsole/adduser/add', 'PortalAdminConsoleController@showAdminConsoleAdd');
+Route::post('/portal/adminconsole/adduser/change', 'PortalAdminConsoleController@showAdminConsoleChange');
 
 //Administration Portal
 Route::get('/portal/adminportal/sales', 'PortalAdministrationPortal@showAdminPortalSales');

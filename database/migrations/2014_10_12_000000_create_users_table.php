@@ -17,11 +17,13 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('surename');
+            $table->string('username')->nullable()->unique();
             $table->string('company_name')->nullable();
             $table->string('address');
             $table->string('city');
-            $table->integer('phone_number')->unique();
-            $table->string('email',100)->unique();
+            $table->string('phone_number')->default("8455820511");
+            $table->string('email',100)->unique()->nullable();
+            $table->string('worker_email', 100)->default('customersupport@bamboorecycle.com');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->smallInteger('type_of_user')->default(0);

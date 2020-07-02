@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
 
             'first_name'=>'admin',
             'surename'=>'admin',
+            'username'=>'bambooadmin',
             'address'=>'none',
             'city'=>'none',
             'phone_number'=>mt_rand(10000, 99999),

@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class PortalAdministrationPortal extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
+
     public function showAdminPortalSales(){
         return view('portal.administrationportal.sales');
     }

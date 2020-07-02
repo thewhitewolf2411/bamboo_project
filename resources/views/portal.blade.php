@@ -6,7 +6,6 @@
     <body>
         <header>@include('customer.layouts.header')</header>
 
-        Portal
         <div class="portal-dashboard">
 
             <div class="portal-dashboard-elements">

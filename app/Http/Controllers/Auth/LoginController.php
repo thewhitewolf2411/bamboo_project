@@ -29,27 +29,35 @@ class LoginController extends Controller
      */
     //protected $redirectTo = "/";
     public function redirectTo(){
-            // User role
-    $role = Auth::user()->type_of_user; 
-    // Check user role
-    switch ($role) {
-        case 0:
-            return '/';
-            break;
-        case 1:
-            return '/portal';
-            break; 
-        case 2:
-            return '/admin';
-            break; 
-        case 3:
-            return '/admin';
-            break; 
-        default:
-            return '/login'; 
-            break;
-        }
+        // User role
+        $role = Auth::user()->type_of_user; 
+        // Check user role
+        switch ($role) {
+            case 0:
+                return '/';
+                break;
+            case 1:
+                return '/portal';
+                break; 
+            case 2:
+                return '/admin';
+                break; 
+            case 3:
+                return '/admin';
+                break; 
+            default:
+                return '/login'; 
+                break;
+            }
     }
+
+    /**
+     * Login username to be used by the controller.
+     *
+     * @var string
+     */
+    protected $username;
+
     /**
      * Create a new controller instance.
      *
@@ -58,5 +66,34 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+
+        $this->username = $this->findUsername();
+    }
+
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function findUsername()
+    {
+        $login = request()->input('login');
+ 
+        $fieldType = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+ 
+        request()->merge([$fieldType => $login]);
+ 
+        return $fieldType;
+    }
+
+    /**
+     * Get username property.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return $this->username;
     }
 }
