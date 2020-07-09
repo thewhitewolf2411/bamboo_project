@@ -73,6 +73,8 @@ main p, a, span{
     padding-bottom: 4px;
     font-size: 32px;
     font-weight: 600;
+
+    cursor: pointer;
 }
 
 .how-button-container{
@@ -81,6 +83,9 @@ main p, a, span{
 
 .active{
     opacity: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    transition: 0.2s linear;
 }
 
 #shopping-btn p{
@@ -95,6 +100,9 @@ main p, a, span{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
 .how-first-text-container{
@@ -139,4 +147,455 @@ main p, a, span{
     border: 1px solid;
     height: 400px;
     z-index: -50;
+}
+
+.selling-content-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.grading-container{
+    background: #A375BC;
+    padding-bottom: 0;
+}
+
+.center-grading-elements{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    padding-bottom: 0;
+}
+
+.grading-text-container p{
+    font-size: 16px;
+    text-align: center;
+}
+
+.grading-video-container{
+    width: 815px;
+    height: 473px;
+    background: #fff;
+    border-radius: 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.grading-video-container a{
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.play-container{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #FCC44C;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.play-container .fa{
+    font-size: 70px !important;
+    color: #fff;
+    opacity: 1;
+    width: 70%;
+    height: 70%;
+    border-radius: 15px;
+}
+
+.grading-show-more-container{
+    padding: 20px;
+}
+
+.grading-show-more-btn{
+    width: 160px;
+    height: 50px;
+    background: #fff;
+    color: #000;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grading-show-more-btn p{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.trustpilot-container{
+    background: #FCC44C;
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    justify-content: space-evenly;
+    height: 70px;
+}
+
+.trustpilot-element{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.trustpilot-element p{
+    font-size: 18px;
+}
+
+.green-box{
+    background: #00B67A;
+    width: 34px;
+    height: 34px;
+    margin-left: 3px;
+    margin-right: 3px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.green-box .fa{
+    color: #fff;
+    opacity: 1;
+    font-size: 18px !important;
+}
+
+.assurance-container{
+    background: #EFEFEF;
+    display: flex;
+    justify-content: space-evenly;
+    width: 100vw;
+    padding: 50px 80px 50px 80px;
+
+}
+
+.assurance-element{
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
+.assurance-element img{
+    width: 150px;
+    height: 150px;
+}
+
+.assurance-element p{
+    text-align: center;
+    font-size: 18px;
+    padding: 10px;
+    width: 80%;
+}
+
+.devices-container{
+    display: flex;
+    justify-content: center;
+}
+
+.device-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.category-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.device-container .category-title{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.device-container .model-title{
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.about-container{
+    background: linear-gradient(#A3D147, #59DDC1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.about-top-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.about-element-container{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 150px;
+}
+
+.about-bamboo-text{
+    font-size: 18px;
+}
+
+.about-element-container .grading-show-more-container{
+    padding: 0 !important;
+    padding-top: 50px !important;
+}
+
+.about-image{
+    width: 450px;
+    height: 450px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+}
+
+.about-bottom-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 150px;
+    margin-top: 50px;
+}
+
+.sustainability-element-container{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-right: 150px;
+}
+
+.about-images{
+    width: 280px;
+    height: 280px;
+    background: #fff;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+}
+
+.about-images-container{
+    position: relative;
+    top: 100px;
+}
+
+#top-image {
+    position: relative;
+}
+
+#bottom-image {
+    position: absolute;
+    bottom: 150px;
+    left: 150px;
+}
+
+.home-links-container{
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.home-links-element{
+    width: 30%;
+    height: 200px;
+}
+
+.home-link-container{
+    height: 100%;
+    border-radius: 20px;
+    border: 2px solid #fff;
+    transition: 0.2s linear;
+
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.home-link-container p{
+    margin: 0 !important;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.home-link-container img{
+    width: 150px;
+    height: 150px;
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.home-link-container:hover{
+    border: 2px solid #000;
+    transition: 0.2s linear;
+}
+
+.home-links-element #news{
+    background: #59DDC1;
+}
+
+.home-links-element #service{
+    background: #A375BC;
+}
+
+.home-links-element #contact{
+    background: #A3D147;
+}
+
+.sign-up{
+    width: 100vw;
+    background: #FCC44C;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text-center-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-center-container p{
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.sign-up form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+
+    width: 80%;
+}
+
+.email-input{
+    border: 1px solid #000;
+    padding: 15px;
+    width: 80%;
+    border-radius: 5px;
+    
+}
+
+.email-input::placeholder{
+    color: #000;
+    opacity: 0.3;
+}
+
+.email-submit{
+    width: 180px;
+    height: 56px;
+    background: #A375BC;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+}
+
+.contact-title-container{
+    background: url('/customer_page_images/body/Green-mustard.png');
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-title-container .center-title-container p{
+    color: #fff !important;
+}
+
+.contact-ways-container{
+    padding: 50px;
+}
+
+.ways-element{
+    width: 20%;
+    height: 300px;
+}
+
+.ways-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.ways-element a{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.contact-div{
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    padding: 30px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+}
+
+.contact-div img{
+    width: 100px;
+    height: 100px;
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.contact-div .center-title-container p{
+    font-size: 24px;
+}
+
+#contact-message{
+    background: #59DDC1;
+}
+
+#contact-live{
+    background: #A375BC;
+}
+
+#contact-telephone{
+    background: #A3D147;
+}
+
+#contact-whatsapp{
+    background: #FCC44C;
 }

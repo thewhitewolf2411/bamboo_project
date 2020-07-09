@@ -40,6 +40,22 @@ class CustomerController extends Controller
             case "contact":
                 $page="contact";
             break;
+            case "account":
+                if(Auth::user()){
+
+                }
+                else{
+                    return redirect('/login');
+                }
+            break;
+            case "wishlist":
+                if(Auth::user()){
+
+                }
+                else{
+                    return redirect('/login');
+                }
+            break;
             default:
                 $page="home";
             break;

@@ -15,13 +15,13 @@
         
         <div class="hovers-header">
             <div class="hover-link" id="user-hover-link">
-                <a href="#"><i class="fa fa-user-o" aria-hidden="true"></i><p class="showhover">Account</p></a>
+                <a href="/setpage/account"><i class="fa fa-user-o" aria-hidden="true"></i><p class="showhover">Account</p></a>
             </div>
             <div class="hover-link" id="wishlist-hover-link">
-                <a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i><p class="showhover">Wishlist</p></a>
+                <a href="/setpage/wishlist"><i class="fa fa-heart-o" aria-hidden="true"></i><p class="showhover">Wishlist</p></a>
             </div>
             <div class="hover-link" id="card-hover-link">
-                <a href="#"><i class="fa fa-keyboard-o" aria-hidden="true"></i><p class="showhover">Basket</p></a>
+                <a href="/cart"><i class="fa fa-keyboard-o" aria-hidden="true"></i><p class="showhover">Basket</p></a>
             </div>
         </div>
         <div class="urls-header">
@@ -33,19 +33,19 @@
                 <a href="#">Start Selling</a>
             </div>
             <div class="url-header-container">
-                <a href="#">How it works</a>
+                <a href="/setpage/how">How it works</a>
             </div>
             <div class="url-header-container">
-                <a href="#">About</a>
+                <a href="/setpage/about">About</a>
             </div>
             <div class="url-header-container">
-                <a href="#">News & Blog</a>
+                <a href="/setpage/news">News & Blog</a>
             </div>
             <div class="url-header-container">
-                <a href="#">Support & Service</a>
+                <a href="/setpage/faqs">Support & Service</a>
             </div>
             <div class="url-header-container">
-                <a href="#">Contact</a>
+                <a href="/setpage/contact">Contact</a>
             </div>
 
         </div>
