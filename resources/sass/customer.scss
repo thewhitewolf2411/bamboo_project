@@ -291,7 +291,7 @@ main p, a, span{
     width: 20%;
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -571,6 +571,14 @@ main p, a, span{
     flex-direction: column;
     justify-content: space-between;
 
+    cursor: pointer;
+    border: 1px solid #fff;
+    transition: 0.2s linear;
+}
+
+.contact-div:hover{
+    border: 1px solid #000;
+    transition: 0.2s linear;
 }
 
 .contact-div img{
@@ -598,4 +606,59 @@ main p, a, span{
 
 #contact-whatsapp{
     background: #FCC44C;
+}
+
+.contact-forms-container{
+    background: #F4F4F4;
+}
+
+.contact-form-container span{
+    color: #000 !important;
+    font-weight: 600;
+}
+
+.contact-form-container{
+    padding: 100px;
+}
+
+.form-group{
+    width: 45%;
+}
+
+#message-form{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#yourmessage{
+    height: 90%;
+}
+
+#telephone-form-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.telephone-contact-container span{
+    color: #A3D147 !important;
+    font-size: 32px;
+}
+
+.worktime-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px;
+}
+
+.workdays-container {
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+}
+
+.hours-time{
+    color: #A3D147 !important;
 }
