@@ -1,102 +1,245 @@
-<div class="how-container">
-
-    <div class="title-container">
-        <h3>Selling Your Mobile Phone</h3>
-        <img src="{{asset('/customer_page_images/body/title_bg_how.png')}}" />
+<div class="app">
+    <div class="how-page how-title-container">
+        <div class="center-title-container">
+            <p>How it works</p>
+        </div>
     </div>
 
-    <div class="how-elements-container">
-        <div class="how-element element-one">
-            <h3>1. Search for your Mobile Phone </h3>
-            <p>We will provide you with an instant quote offering you great value for your handset or redundant electronic equipment. </p>
-            <ul>
-                <li>Simply enter your mobile phone make and model into the relevant search box. We will show you the price we are prepared to offer. </li>
-                <li>Choose one of our payment methods and enter your details </li>
-            </ul>
+    <div class="how-first-element">
+        <div class="d-flex flex-row justify-content-between">
+
+            <div class="p-5 d-flex flex-column justify-content-between">
+                <div class="center-title-container">
+                    <p>Buy and sell easily <br> with just a few clicks</p>
+                </div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus.</p>
+            </div>
+            <div class="p-5 d-flex flex-column justify-content-between">
+                <div class="grading-video-container">
+                    <a onclick="showgradingvideo()">
+                        <div class="video-image-container">
+                            <div class="play-container">
+                                <i class="fa fa-play" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <p>Watch our quick video explaining just how thorough our grading system is. Trust us, you will be shocked.</p>
+            </div>
         </div>
-        <div class="how-element element-two">
-            <h3>2. Post your Mobile Phone </h3>
-            <p>Once you have completed a sales order with us and printed the relevant paperwork  </p>
-            <ul>
-                <li>Use the freepost address </li>
-                <li>Send via your chosen delivery method </li>
-            </ul>
+    </div>
+
+    <div class="toggle-elements">
+        <div class="toggle-elements-btn">
+            <div class="toggle-element-btn shopping-toggle active">
+                <a onclick="changeToggleElement('shopping')">
+                    <p style="color: #23AAF7;" class="active" id="toggle-element-btn-shopping">Shopping with us</p>
+                    <img src="">
+                </a>
+            </div>
+            <div class="toggle-element-btn selling-toggle">
+                <a onclick="changeToggleElement('selling')">
+                    <p style="color: #FCC44C;" id="toggle-element-btn-selling">Selling with us</p>
+                    <img src="">
+                </a>
+            </div>
         </div>
-        <div class="how-element element-three">
-            <h3>3. When we receive your Mobile Phone </h3>
-            <p>The goods will remain your property until you have accepted our offer. If you are not satisfied we will return your goods. </p>
-            <p>When your mobile phone has been checked we will make sure your order is complete and the mobile phone matches the information you have provided on our system. </p>
+        <div class="toggle-element shopping-toggle active">
+
+            <div class="shopping-element">
+                <div class="shopping-element-image">
+                    <img src="{{ asset('/customer_page_images/body/How-Icon-1.svg') }}">
+                </div>
+                <div class="shopping-element-text">
+                    <p class="left-title-text">1. Search for a new device</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper,</p>
+                </div>
+            </div>
+            <div class="shopping-element">
+                <div class="shopping-element-image">
+                    <img src="{{ asset('/customer_page_images/body/How-Icon-2.svg') }}">
+                </div>
+                <div class="shopping-element-text">
+                    <p class="left-title-text">2. Free Next Day Delivery</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper,</p>
+                </div>
+            </div>
+            <div class="shopping-element">
+                <div class="shopping-element-image">
+                    <img src="{{ asset('/customer_page_images/body/How-Icon-3.svg') }}">
+                </div>
+                <div class="shopping-element-text">
+                    <p class="left-title-text">3. You have a shiny new phone to play with</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper,</p>
+                </div>
+            </div>
+
+            <div class="url-footer-container" id="start-shopping">
+                <a href="#">Start Shopping</a>
+            </div>
+
         </div>
-        <div class="how-element element-four">
-            <h3>4. Receive Your Payment </h3>
-            <p>If everything is complete and we are happy you have provided the correct information, we will release payment on the same day as per your chosen payment method. </p>
-            <p>For more information please see our Terms & Conditions</p>
+        <div class="toggle-element selling-toggle">
+
+            <div class="shopping-element">
+                <div class="shopping-element-text">
+                    <p class="left-title-text">1. Search for a new device</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper,</p>
+                </div>
+                <div class="shopping-element-image">
+                    <img src="{{ asset('/customer_page_images/body/How-Icon-4.svg') }}">
+                </div>
+            </div>
+
+            <div class="shopping-element">
+                <div class="shopping-element-text">
+                    <p class="left-title-text">2. Free Next Day Delivery</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper,</p>
+                </div>
+                <div class="shopping-element-image">
+                    <img src="{{ asset('/customer_page_images/body/How-Icon-5.svg') }}">
+                </div>
+            </div>
+
+            <div class="shopping-element">
+                <div class="shopping-element-text">
+                    <p class="left-title-text">3. You have a shiny new phone to play with</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper,</p>
+                </div>
+                <div class="shopping-element-image">
+                    <img src="{{ asset('/customer_page_images/body/How-Icon-6.svg') }}">
+                </div>
+            </div>
+
+            <div class="url-footer-container" id="start-selling">
+                <a href="#">Start Selling</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="how-sustainability">
+        <div class="about-bottom-container">
+            <div class="about-images-container">
+                <div class="about-images" id="top-image">
+                    <p>Space for image</p>
+                </div>
+                <div class="about-images" id="bottom-image">
+                    <p>Space for image</p>
+                </div>
+            </div>
+
+            <div class="sustainability-element-container">
+                <div class="center-title-container">
+                    <p>Sustainability</p>
+                </div>
+                <p class="about-bamboo-text">Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent non est id leo viverra porttitor. Vivamus iaculis nisl non hend.</p>
+                <div class="grading-show-more-container">
+                    <a href="#"><div class="grading-show-more-btn">
+                        <p>Read More</p>
+                    </div></a>
+                </div>   
+            </div>
+        </div>
+    </div>
+
+    <div class="home-element home-links-container">
+        
+        <div class="home-links-element">
+            <a href="#">
+                <div class="home-link-container" id="news">
+                    <p>News & Blog</p>
+                    <img src="{{asset('/customer_page_images/body/home-link-images/home-links-1.svg')}}">
+                </div>
+            </a>
+        </div>
+
+        <div class="home-links-element">
+            <a href="#">
+                <div class="home-link-container" id="service">
+                    <p>Service & Support</p>
+                    <img src="{{asset('/customer_page_images/body/home-link-images/home-links-2.svg')}}">
+                </div>
+            </a>
+        </div>
+
+        <div class="home-links-element">
+            <a href="#">
+                <div class="home-link-container" id="contact">
+                    <p>Contact us</p>
+                    <img src="{{asset('/customer_page_images/body/home-link-images/home-links-3.svg')}}">
+                </div>
+            </a>
         </div>
 
     </div>
 
-    <div class="why-content-container">
-        <div class="title-container">
-            <h3>Why Recycling Mobile Phones Is Important </h3>
+    <div class="home-element sign-up">
+        
+        <div class="center-title-container">
+            <p>Sign up to our newsletter!</p>
         </div>
-        <div class="why-content-text">
-            <p>
-            The Social and Environmental Benefits of Mobile Phone Reuse and Recycling
-            </p>
-            <p>
-            Every year, millions of mobile phones are needlessly thrown away.
-            </p>
-            <p>
-            Many of these are in perfectly good working order; many more could be fixed, refurbished and resold, whilst the rest can be reprocessed, the valuable components removed and the
-            rest disposed of in a way which has minimal environmental impact.
-            </p>
-            <p>
-            But why should it matter to you what happens to an old mobile phone? Well, here are a few things to think about:
-            </p>
-            <ul>
-            <li>The cadmium in just three mobile phone batteries is enough to pollute an Olympic sized swimming pool.
-            </li>
-            <li>The plastic in a typical mobile phone can take up to 1000 years to biodegrade.
-            </li>
-            <li>Some mobile phones and their accessories contain substances that are amongst the 10 most dangerous known to man including Cadmium, Rhodium, Palladium, Beryllium and Lead
-            Solder. Simply throwing out unwanted or old mobile phones is harmful for the environment as there is the potential for considerable toxic contamination caused by these substances
-            leaking into the surrounding soil
-            </li>
-            <li>One thing that most people don't realize is that the toxins that end up in the landfills from these types of electronics are dangerous to everyone. They can end up getting
-            into the water; they can harm the wildlife, and more. This only goes to show how important mobile phone recycling really is.
-            </li>
-            <li>Developing countries that do not have easy access to the technology we have can use those old mobile phones, giving them access to telecommunications as a lower price.
-            </li>
-            <li>It is estimated that over 5 billion mobile phones have been produced.
-            </li>
-            <li>Research suggests that there are over 20 million potentially toxic redundant mobile phones in the UK, making up one to two percent of electronic waste.
-            </li>
-            <li>People in the UK change their phone on average every 12 months. As more and more new phones come on the market this number is set to grow.
-            </li>
-            <li>Old mobile phones don't need to end up in a landfill site. There are many ways in which you can recycle your old mobile phone and be environmentally friendly at the same time.
-            </li>
-            </ul>
+
+        <div class="text-center-container">
+            <p>amazing offers, hints and tips and just awesome-ness</p>
         </div>
+
+        <form action="/" method="POST">
+            @csrf
+
+            <input class="email-input" type="email" placeholder="Enter email address here">
+            <input class="email-submit" type="submit" value="Sign me up!">
+
+        </form>
 
     </div>
 
-    <div class="reasons-container">
-        <div class="title-container">
-            <h3>Reasons Why You Should Sell Your Old Phone </h3>
-        </div>
+    <script>
 
-        <div class="reasons-list-container">
+    function showgradingvideo(){
+        console.log('Play video');
+    }
 
-            <ol class="reasons_why">
-                <li class="one"><span class="number">1.</span><p>It's an incredibly intensive process to make a mobile phone. Each phone utilizes important resources and immense energy in its manufacture. The parts of even the most undesirable phone are still valuable. By recycling phones we could lessen the impact of the mobile phone manufacturing process on the environment.</p></li>
-                <li class="two"><span class="number">2.</span><p>Many second hand phones are used in the developing world where many people would be unable to afford full price handsets. By selling your phone you could be helping people get access to vital technology. Reusing phones also means fewer need have to be manufactured, again reducing damage to the environment.</p></li>
-                <li class="three"><span class="number">3.</span><p>Financially, selling your mobile makes sense. A handset in reasonably good condition could make more than you think. It's a complete waste of money if you just leave it in a drawer. In these times of economic uncertainty any extra cash is a real help. Considering how easy it is, there's no excuse not to do it. </p></li>
-            </ol>
+    function changeToggleElement(elementclicked){
+        console.log(elementclicked);
 
-        </div>
+        if(elementclicked == 'shopping'){
+            var shoppingelements = document.getElementsByClassName('shopping-toggle');
+            var sellingelements = document.getElementsByClassName('selling-toggle');
 
+            for(var i=0; i<shoppingelements.length; i++){
+                if(shoppingelements[i].classList.contains('active')){
+                    //do nothing
+                }
+                else{
+                    sellingelements[i].classList.remove('active');
+                    shoppingelements[i].classList.add('active');
+                    document.getElementById('toggle-element-btn-selling').classList.remove('active');
+                    document.getElementById('toggle-element-btn-shopping').classList.add('active');
+                }
 
-    </div>
+            }
+        }
 
+        if(elementclicked == 'selling'){
+            var shoppingelements = document.getElementsByClassName('shopping-toggle');
+            var sellingelements = document.getElementsByClassName('selling-toggle');
+
+            for(var i=0; i<shoppingelements.length; i++){
+                if(sellingelements[i].classList.contains('active')){
+                    //do nothing
+                }
+                else{
+                    sellingelements[i].classList.add('active');
+                    shoppingelements[i].classList.remove('active');
+                    document.getElementById('toggle-element-btn-selling').classList.add('active');
+                    document.getElementById('toggle-element-btn-shopping').classList.remove('active');
+                }
+
+            }
+        }
+    }
+
+    </script>
 
 </div>

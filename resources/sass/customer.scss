@@ -524,6 +524,8 @@ main p, a, span{
     border-radius: 5px;
 }
 
+//Contact page
+
 .contact-title-container{
     background: url('/customer_page_images/body/Green-mustard.png');
     height: 250px;
@@ -661,4 +663,155 @@ main p, a, span{
 
 .hours-time{
     color: #A3D147 !important;
+}
+
+//How it works
+.how-title-container{
+    background: url('/customer_page_images/body/Green-Purple.png');
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.how-title-container .center-title-container p{
+    color: #fff !important;
+}
+
+.how-first-element{
+    padding: 50px;
+}
+
+.how-first-element .grading-video-container{
+    margin-top: 0;
+    background-color: #A375BC;
+    width: 600px;
+    height: 300px;
+}
+
+.toggle-elements-btn{
+    display: flex;
+    flex-direction: row;
+}
+
+.toggle-element{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 150px;
+}
+
+.shopping-element{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 50px 100px;
+    justify-content: space-between;
+}
+
+.shopping-element-text{
+    width: 70%;
+}
+
+.shopping-element-text p{
+    font-size: 12pt;
+}
+
+.left-title-text{
+    font-size: 14pt;
+    font-weight: 600;
+    margin: 0;
+}
+
+.toggle-element {
+    opacity: 0;
+    height: 0;
+}
+
+.shopping-toggle {
+    background: rgba(35,170,247,0.05);
+}
+
+.selling-toggle{
+    background: rgba(252, 196, 76, 0.05);
+}
+
+.toggle-element-btn{
+    width: 50% !important;
+    height: 100px !important;
+    display: flex;
+    align-items: center;
+}
+
+.toggle-element-btn a{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.toggle-element-btn p{
+    font-size: 14pt;
+    font-weight: 600;
+    opacity: 0.5;
+}
+
+.how-sustainability{
+    background: #59DDC1;
+    height: 650px;
+    padding: 150px;
+}
+
+//about
+.about-title-container{
+    background: url('/customer_page_images/body/Jade-Salmon.png');
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.about-title-container .center-title-container p{
+    color: #fff !important;
+}
+
+.about-first-element{
+    padding: 150px;
+    text-align: center;
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 1.0);
+    width: 70%;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+
+.about-first-element p{
+    padding: 50px;
+}
+
+.about-elements{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 150px;
+}
+
+.about-element{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.about-element-text{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.about-image-container{
+    width: 400px;
+    height: 300px;
 }

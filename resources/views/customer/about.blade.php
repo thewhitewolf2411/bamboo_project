@@ -1,16 +1,30 @@
-<div class="about-container">
+<div class="app">
 
-    <div class="title-container">
-        <h3>About us</h3>
-        <img src="{{asset('/customer_page_images/body/title_bg_about_us.png')}}" />
+    <div class="about-page about-title-container">
+        <div class="center-title-container">
+            <p>About</p>
+        </div>
     </div>
-    
-    <div class="about-text-container">
-        <p>
-        Bamboo Distribution is an international leader in the recovery, refurbishment and recycling of consumer electronic devices. With global operations offering recovery, processing, sales and distribution we provide our customers the very best value and quality of service end to end, always delivered with care and integrity.
 
-        We supply and support a whole range of electrical products for customers across the world. We provide a fully comprehensive service. We will collect the product. We will refurbish the product. We will sell the product into a new market and if a product cannot be refurbished, we will recycle it safely and responsibly, making sure it does not go to landfill. So whether you are buying from us or selling to us, we are here to make it easy for you.
-        </p>
+    <div class="about-first-element">
+        <div class="center-title-container">
+            <p>About sub-heading</p>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus.</p>
+    </div>
+
+    <div class="about-elements">
+        <div class="about-element">
+            <div class="about-element-text">
+                <p class="left-title-text">1. Search for a new device</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper,</p>
+                <div class="url-footer-container" id="how-it-works">
+                    <a href="#">How it works</a>
+                </div>
+            </div>
+            <div class="about-image-container" id="first-about-image">
+            </div>
+        </div>
     </div>
 
 </div>
