@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\PortalUsers;
 use App\Order;
+use App\Product;
 
 class PagesController extends Controller
 {
@@ -16,7 +17,12 @@ class PagesController extends Controller
      */
     public function index()
     {
-        return view('welcome');
+        $products = Product::all();
+        return view('welcome')->with('products', $products);
+    }
+
+    public function showProfile(){
+        
     }
 
     public function admin(){

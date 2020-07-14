@@ -6,10 +6,17 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+//customer pages
 @import './customer.scss';
 
 // standard css (header, footer, body)
 @import './standard/header.scss';
 @import './standard/footer.scss';
 @import './standard/body.scss';
-@import './portal/portal.scss'
+@import './portal/portal.scss';
+
+
+//auth css
+@import './auth/login.scss';
+@import './auth/register.scss';

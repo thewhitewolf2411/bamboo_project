@@ -23,6 +23,9 @@ Route::get('/setpage/{parameter}', [
     'as'=>'setpage',
     'uses'=>'CustomerController@setPage'
 ]);
+
+Route::get('/userprofile', 'CustomerController@showProfile');
+
 Route::get('/products/{category}', 'CustomerController@customerCategoryView')->name('customerproducts');
 Route::get('/product/{product}', 'CustomerController@showProduct')->name('showproduct');
 Route::get('/cart', 'CustomerController@showCart')->name('showcart');

@@ -1,0 +1,19 @@
+.register-elements-container {
+    width: 50%;
+}
+
+.login-form-container {
+    width: 50%;
+}
+
+.login-form-container > form:nth-child(2) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.btn-primary{
+    background: #F28E33;
+    border-color: #F28E33;
+}

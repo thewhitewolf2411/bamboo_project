@@ -1,0 +1,179 @@
+.modal {
+    padding-right: 0px !important;
+    padding: 150px !important;
+}
+
+.modal-body {
+
+    padding: 0;
+
+}
+
+.modal-dialog{
+    max-width: 800px;
+}
+
+.modal-first-element{
+    display: flex;
+    padding: 50px;
+}
+
+.register-elements-container {
+    padding-left: 50px;
+    border-right: 1px solid rgba(0,0,0,0.6);
+}
+
+.login-form-container {
+    padding-left: 50px;
+}
+
+.modal-second-element{
+    height: 0;
+    opacity: 0;
+    transition: 0.15s linear;
+
+    background: #F7F7F7;
+}
+
+.modal-second-element-active{
+    height: auto !important;
+    opacity: 1 !important;
+    transition: 0.15s linear;
+    padding: 50px;
+}
+
+
+.dropdown-item span{
+    color: #000 !important;
+}
+
+.dropdown-toggle {
+    background: #fff;
+    border: 1px solid #ced4da;
+}
+
+.form-control::placeholder{
+    background: #fff !important;
+}
+
+.btn-light:not(:disabled):not(.disabled):active, .btn-light:not(:disabled):not(.disabled).active, .show > .btn-light.dropdown-toggle{
+    background: #fff;
+}
+
+.btn-light:focus, .btn-light.focus{
+    background: #fff;
+}
+
+//radio buttons for newsletter
+.news-label > input{
+    visibility: hidden;
+    position: absolute;
+}
+
+.news-label > input + .news-label-content{
+    cursor: pointer;
+}
+
+.newsletter-subscription{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.newsletter-subscription label{
+    margin: 0;
+}
+
+.news-label{
+    width: 45%;
+}
+
+.news-label-content{
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background:#fff;
+    border-radius: 15px;
+    border: 2px solid #A375BC;
+}
+
+.news-label-content img{
+    background-image: url('/customer_page_images/body/Icon-Tick-Selected-clear.svg');
+    background-repeat: no-repeat;
+}
+
+.news-label-selected-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    width: 70%;
+}
+
+.terms-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 50%;
+}
+
+.terms-container input{
+    width: auto;
+    margin: 0em;
+}
+
+//password
+/* Style all input fields */
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+  }
+  
+  /* Style the submit button */
+  input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  /* Style the container for inputs */
+  .container {
+    background-color: #f1f1f1;
+    padding: 20px;
+  }
+  
+  /* The message box is shown when the user clicks on the password field */
+  #message {
+    display:none;
+    color: #000;
+    position: relative;
+    padding: 20px;
+    margin-top: 10px;
+  }
+  
+  /* Add a green text color and a checkmark when the requirements are right */
+  .valid {
+    color: green;
+  }
+  
+  .valid:before {
+    position: relative;
+    left: -35px;
+  }
+  
+  /* Add a red text color and an "x" icon when the requirements are wrong */
+  .invalid {
+    color: red;
+  }
+  
+  .invalid:before {
+    position: relative;
+    left: -35px;
+  }

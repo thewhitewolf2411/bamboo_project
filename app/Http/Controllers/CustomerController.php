@@ -42,7 +42,7 @@ class CustomerController extends Controller
             break;
             case "account":
                 if(Auth::user()){
-
+                    return redirect('/userprofile');
                 }
                 else{
                     return redirect('/login');
@@ -61,13 +61,16 @@ class CustomerController extends Controller
             break;
         }
 
+        $products = Product::all();
+
         if($categories == null){
-            return redirect('/')->with('page', $page);
+            return redirect('/')->with('page', $page)->with('products', $products);
         }
         else{
             return redirect('/')
                     ->with('page', $page)
-                    ->with('categories', $categories);
+                    ->with('categories', $categories)
+                    ->with('products', $products);
         }
         
     }
@@ -210,5 +213,10 @@ class CustomerController extends Controller
 
         return redirect('/');
 
+    }
+
+    public function showProfile(){
+        //get current user data
+        return view('customer.profile');
     }
 }
