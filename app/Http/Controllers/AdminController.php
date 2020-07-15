@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Storage;
-use App\Product;
-use App\Category;
-use App\User;
+use App\Eloquent\Product;
+use App\Eloquent\Category;
+use App\Eloquent\User;
 
 class AdminController extends Controller
 {

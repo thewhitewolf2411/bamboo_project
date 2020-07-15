@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-use App\PortalUsers;
-use App\Order;
-use App\Product;
+use App\Eloquent\PortalUsers;
+use App\Eloquent\Order;
+use App\Eloquent\Product;
 
 class PagesController extends Controller
 {

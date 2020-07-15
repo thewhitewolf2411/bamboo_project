@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Order;
+use App\Eloquent\Order;
 
 class PortalWarehouseReceiptDispatch extends Controller
 {

@@ -23,6 +23,10 @@ class CreateUsersTable extends Migration
             $table->string('current_phone');
             $table->string('preffered_os');
             $table->boolean('sub');
+            $table->string('delivery_address')->nullable();
+            $table->string('billing_address')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->integer('bamboo_credit')->default(0);
             $table->string('username')->nullable()->unique();
             $table->string('worker_email', 100)->default('customersupport@bamboorecycle.com');
             $table->timestamp('email_verified_at')->nullable();

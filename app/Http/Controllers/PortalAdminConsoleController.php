@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Hash;
 use DB;
-use App\User;
-use App\PortalUsers;
+use App\Eloquent\User;
+use App\Eloquent\PortalUsers;
 
 class PortalAdminConsoleController extends Controller
 {

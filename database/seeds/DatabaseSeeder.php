@@ -26,6 +26,9 @@ class DatabaseSeeder extends Seeder
             'preffered_os'=>'Android',
             'sub'=>false,
             'username'=>'bambooadmin',
+            'delivery_address'=>'Sarajevo',
+            'billing_address'=>'Sarajevo',
+            'contact_number'=>'061172442',
             'type_of_user'=>3,
             'account_disabled'=>false,
         ]);
@@ -326,6 +329,49 @@ class DatabaseSeeder extends Seeder
             'price_working_c'=>mt_rand(0, 99),
             'price_faulty'=>mt_rand(0, 99),
             'price_damaged'=>mt_rand(0, 99),
+        ]);
+
+
+        DB::table('orders')->insert([
+            'order_placed'=>'15.07.2020',
+            'product_id'=>1,
+            'user_id'=>1,
+            'user_email'=>'bamboo',
+            'product_total'=>46,
+            'order_total'=>58,
+            'order_status'=>0,
+            'payment_status'=>0,
+            'shipping_status'=>0,
+            'quantity'=>2,
+            'status'=>'good'
+        ]);
+
+        DB::table('orders')->insert([
+            'order_placed'=>'11.07.2020',
+            'product_id'=>1,
+            'user_id'=>1,
+            'user_email'=>'bamboo',
+            'product_total'=>26,
+            'order_total'=>28,
+            'order_status'=>0,
+            'payment_status'=>0,
+            'shipping_status'=>0,
+            'quantity'=>2,
+            'status'=>'good'
+        ]);
+
+        DB::table('orders')->insert([
+            'order_placed'=>'13.07.2020',
+            'product_id'=>1,
+            'user_id'=>1,
+            'user_email'=>'bamboo',
+            'product_total'=>146,
+            'order_total'=>158,
+            'order_status'=>0,
+            'payment_status'=>0,
+            'shipping_status'=>0,
+            'quantity'=>2,
+            'status'=>'good'
         ]);
 
     }

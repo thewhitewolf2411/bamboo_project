@@ -815,3 +815,113 @@ main p, a, span{
     width: 400px;
     height: 300px;
 }
+
+//profile
+
+.profile-container{
+    padding: 50px;
+}
+
+.profile-element{
+    padding-top: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #000;
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-element-one{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.profile-element-one span{
+    color: #000;
+    display: flex;
+    width: 240px;
+    justify-content: space-between;
+}
+
+.profile-element-one i{
+    color: #000;
+    opacity: 1;
+    font-size: 60px !important;
+}
+
+.profile-element-two-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    align-items: end;
+    width: 40%;
+}
+
+.profile-element-two-btns {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.profile-element-two-content {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profile-element-two-left {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-element-two-right-balance p{
+    font-size: 48px;
+}
+
+.profile-element-three-left {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 20px;
+}
+
+.profile-element-three-right{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 50%;
+    padding: 20px;
+}
+
+.element-three-top-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.element-three-top{
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+}
+
+.profile-element-container{
+    width: 50%;
+}
+
+.profile-small{
+    font-size: 12pt;
+    opacity: 0.5;
+}
+
+.profile-large{
+    font-size: 14pt;
+}
+
+.element-three-bottom{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 30px;
+}

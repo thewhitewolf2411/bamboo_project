@@ -1,17 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Order extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'product_category';
+    protected $table = 'orders';
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +19,7 @@ class Category extends Model
      * @var array
      */
     protected $fillable = [
-        'category_name', 'category_description', 'category_image',
+        'order_placed', 'product_id', 'user_id','user_email', 'product_total', 
+        'order_total','order_status','payment_status','shipping_status','quantity','status',
     ];
-
 }

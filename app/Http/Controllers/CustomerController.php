@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
-use App\Category;
-use App\Product;
-use App\User;
-use App\Cart;
-use App\Order;
+use App\Eloquent\Category;
+use App\Eloquent\Product;
+use App\Eloquent\User;
+use App\Eloquent\Cart;
+use App\Eloquent\Order;
 use Auth;
 
 class CustomerController extends Controller
@@ -216,7 +216,19 @@ class CustomerController extends Controller
     }
 
     public function showProfile(){
-        //get current user data
-        return view('customer.profile');
+
+        if(Auth::user()){
+            //get current user data
+            $userdata = Auth::user();
+            $userorders = Order::where('user_id', $userdata->id)->get();
+
+            return view('customer.profile')
+                ->with('userdata', $userdata)
+                ->with('userorders', $userorders);
+        }
+        else{
+            return redirect('/');
+        }
+
     }
 }
