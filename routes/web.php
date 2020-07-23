@@ -30,6 +30,11 @@ Route::get('/products/{category}', 'CustomerController@customerCategoryView')->n
 Route::get('/product/{product}', 'CustomerController@showProduct')->name('showproduct');
 Route::get('/cart', 'CustomerController@showCart')->name('showcart');
 
+//shopping
+Route::get('/shop', 'ShopController@showShopView');
+
+//selling
+
 //User post Route
 Route::post('/addtocart/{id}', 'CustomerController@addProductToCart')->name('addproducttocart');
 Route::post('/removefromcart', 'CustomerController@removeFromCart')->name('removefromcart');

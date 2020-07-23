@@ -10163,7 +10163,8 @@ main p, a, span {
 
 .home-title-container {
   background: url(/images/Bamboo_header2.png?35400f645bc747034c96ac9db32c60a5);
-  background-size: 100% 100%;
+  background-size: cover;
+  background-position: center;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -11491,6 +11492,178 @@ h3, h4, h5 {
   text-align: center;
   align-items: center;
   margin: 5px;
+}
+
+.shop-top-header {
+  margin-bottom: 50px;
+}
+
+.shop-search-container {
+  padding: 50px;
+  background: #23AAF7;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shop-search-form {
+  width: 70%;
+  display: flex;
+  align-items: center;
+}
+
+.shop-search-form input {
+  height: 72px;
+  margin: 0;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  font-size: 20pt;
+}
+
+.shop-search-form button {
+  height: 72px;
+  margin: 0;
+  margin-left: -10px;
+  background: #0B7DF0;
+  color: #fff;
+  border: none;
+  outline: none;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.shop-menu-container {
+  background: #0B7DF0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 50px 0 50px;
+  min-height: 82px;
+}
+
+.shop-menu-element {
+  min-width: 160px;
+}
+
+.shop-link {
+  padding: 15px;
+  min-height: 82px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  transition: 0.2s linear;
+  justify-content: center;
+}
+
+.shop-link:hover {
+  background: #fff;
+  color: #0B7DF0;
+  transition: 0.2s linear;
+}
+
+.shop-header-background {
+  height: 520px;
+}
+
+.shop-categories-container {
+  display: flex;
+}
+
+.category-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
+  align-items: center;
+}
+
+.rounded-background-image {
+  margin-top: 50px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#rounded-mobile {
+  background: transparent linear-gradient(151deg, #FD7F8E 0%, #569CCE 100%) 0% 0% no-repeat padding-box;
+}
+
+#rounded-tablets {
+  background: transparent linear-gradient(151deg, #57D591 0%, #A3D047 100%) 0% 0% no-repeat padding-box;
+}
+
+#rounded-watches {
+  background: transparent linear-gradient(151deg, #57D591 0%, #A670AF 100%) 0% 0% no-repeat padding-box;
+}
+
+#rounded-accesories {
+  background: transparent linear-gradient(151deg, #569CCE 0%, #FBC24F 100%) 0% 0% no-repeat padding-box;
+}
+
+.shop-spilt {
+  background: #59DDC1;
+  display: flex;
+}
+
+.shop-split-image {
+  width: 500px;
+}
+
+.shop-split-image img {
+  width: 500px;
+}
+
+.shop-split-text {
+  display: flex;
+  align-items: center;
+}
+
+.shop-title {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.category-title {
+  font-size: 26px;
+}
+
+.shop-popular-brands {
+  margin-top: 50px;
+}
+
+.brands-container {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0 100px 0 100px;
+}
+
+.brand-container {
+  flex: 1 0 21%;
+  margin: 20px;
+  height: 125px;
+  width: 250px;
+  border: 1px solid #707070;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.brand-container img {
+  height: 80px;
+}
+
+#img-smaller {
+  height: 30px;
 }
 
 .register-elements-container {

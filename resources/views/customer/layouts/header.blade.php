@@ -31,10 +31,10 @@
         <div class="urls-header">
 
             <div class="url-header-container" id="start-shopping">
-                <a href="#">Start Shopping</a>
+                <a href="/shop">Start Shopping</a>
             </div>
             <div class="url-header-container" id="start-selling">
-                <a href="#">Start Selling</a>
+                <a href="/sell">Start Selling</a>
             </div>
             <div class="url-header-container">
                 <a href="/setpage/how">How it works</a>

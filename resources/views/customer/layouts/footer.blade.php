@@ -6,10 +6,10 @@
             <span>Get Started</span>
             <div class="footer-button-container">
                 <div class="url-footer-container" id="start-shopping">
-                    <a href="#">Start Shopping</a>
+                    <a href="/shop">Start Shopping</a>
                 </div>
                 <div class="url-footer-container" id="start-selling">
-                    <a href="#">Start Selling</a>
+                    <a href="/sell">Start Selling</a>
                 </div>
             </div>
         </div>
