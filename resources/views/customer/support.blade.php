@@ -1,31 +1,189 @@
-<div class="support-container">
-
-    <div class="title-container">
-        <h3>Support</h3>
-        <img src="{{asset('/customer_page_images/body/title_bg_support.png')}}" />
+<div class="app">
+    <div class="how-page support-title-container">
+        <div class="center-title-container">
+            <p>Support & Service</p>
+        </div>
     </div>
 
-    <div class="support-content-container support-top-content">
+    <div class="support-search-element">
+        <div class="center-title-container">
+            <p>How can we help?</p>
+        </div>
 
-        <div class="bubble-text">
-            <h2>Quality Support</h2>
-            <p>If you have any questions, queries regarding your handset, your order, your freepost or even about your payment then please get in touch.</p>
-            <p>We’re happy to help!</p>
+        <div class="support-search-help">
+            <p>USE THE SEARCH BAR BELOW OR SELECT FROM ONE OF THE OPTIONS BELOW</p>
+        </div>
+
+        <div class="search-bar">
+            <form class="support-search-form" action="/searchsupport" method="POST">
+                @csrf
+                <input type="text" placeholder="Search...">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
         </div>
 
     </div>
 
-    <div class="support-content-container support-bottom-content">
-        <div class="support-bottom-element">
-            <h3>Tel: 0845 582 0511</h3>
-            <p>Our opening times are: <br>Monday to Friday, 9am to 5pm</p><br>
-            <p>Calls are charged at 5p per minute from standard UK landlines, calls from mobile phones may vary (please check with your provider). Standard network charges may also apply. If you are under the age of 18 you must have the bill payers permission. </p>
+    <div class="supprt-titles-container">
+        <div class="row-height-140 support-top-row pc-15-50">
+            <a href="">
+                <div class="btn btn-primary btn-blue btn-font-white">
+                    <p>Buying a device</p>
+                </div>
+            </a>
+            <a href="">
+                <div class="btn btn-primary btn-orange btn-font-white">
+                    <p>Selling a device</p>
+                </div>
+            </a>
         </div>
-        <div class="support-bottom-element">
-            <h3>Email: <a href="mailto: customersupport@bamboorecycle.com">customersupport@bamboorecycle.com</a></h3>
-            <p>(We aim to respond to your claim the next working day, but please allow up to 3 working days during busy times) </p>
+
+        <div class="row-height-140 support-middle-row pc-15-50">
+            <a href="">
+                <div class="btn btn-primary btn-purple btn-font-white">
+                    <p>Tech</p>
+                </div>
+            </a>
         </div>
-        
+
+        <div class="row-height-140 support-bottom-row pc-15-50">
+            <a href="">
+                <div class="btn btn-primary btn-green btn-font-white">
+                    <p>Delivery</p>
+                </div>
+            </a>
+            <a href="">
+                <div class="btn btn-primary btn-green btn-font-white">
+                    <p>Your Order</p>
+                </div>
+            </a>
+            <a href="">
+                <div class="btn btn-primary btn-green btn-font-white">
+                    <p>Your Account</p>
+                </div>
+            </a>
+            <a href="">
+                <div class="btn btn-primary btn-green btn-font-white">
+                    <p>General Questions</p>
+                </div>
+            </a>
+        </div>
+
     </div>
+
+    <div class="support-faq">
+        <div class="faq-left">
+            <div class="faq-title">
+                <p>MOST FREQUENTLY ASKED QUESTIONS</p>
+            </div>
+
+            <div class="faq-question">
+                <a href="">
+                    <div class="faq-question-text">
+                        <p>When will I receive my item?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Purple.svg')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a href="">
+                    <div class="faq-question-text">
+                        <p>Are all of your devices covered by a warranty?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Purple.svg')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a href="">
+                    <div class="faq-question-text">
+                        <p>How should I return a device?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Purple.svg')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a href="">
+                    <div class="faq-question-text">
+                        <p>What does "Grade A" mean?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Purple.svg')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a href="">
+                    <div class="faq-question-text">
+                        <p>What do you do with my phone?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Purple.svg')}}">
+                    </div>
+                </a>
+            </div> 
+        </div>
+        <div class="faq-right">
+            <div class="faq-title">
+                <p>POPULAR HOW TO...ARTICLES</p>
+            </div>
+            <div class="faq-question">
+                <a href="">
+                    <div class="faq-question-text">
+                        <p>How do I find the model of my phone?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Green.svg')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a href="">
+                    <div class="faq-question-text">
+                        <p>How do I find the make of my phone?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Green.svg')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a href="">
+                    <div class="faq-question-text">
+                        <p>How should I return a device?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Green.svg')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a href="">
+                    <div class="faq-question-text">
+                        <p>What does "Grade A" mean?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Green.svg')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a href="">
+                    <div class="faq-question-text">
+                        <p>What do you do with my phone?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Green.svg')}}">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
 
 </div>

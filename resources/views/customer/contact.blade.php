@@ -152,6 +152,34 @@
                 </div>
             </div>
         </div>
+
+        <div class="contact-form-container" id="whatsapp-form-container">
+            <span>WHATSAPP</span>
+            <p>To contact a member of the bamboo team directly via WhatsApp, click the button below</p>
+            <a href="">
+                <div class="ways-element">
+                    <div class="contact-div contact-flex-row" id="contact-whatsapp">
+                        <div class="center-title-container">
+                            <p>Launch WhatsApp</p>
+                        </div>
+                        <img src="{{asset('/customer_page_images/body/contact-images/image-4.svg')}}">
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="contact-footer">
+        <div class="contact-footer-image">
+            <img src="{{asset('/customer_page_images/body/Icon-Trust.svg')}}">
+        </div>
+        <div class="contact-footer-text">
+            <p class="service-header-1" >Service & Support</p>
+            <p class="service-header-2">A lot of our queries can be found within our Service & Support section</p>
+        </div>
+        <div class="contact-footer-arrow">
+            <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+        </div>
     </div>
 
 </div>
@@ -159,7 +187,85 @@
 <script>
 
     function showContactForm(contact){
-        console.log(contact);
+
+        var hideElem = document.getElementsByClassName('contact-div');
+
+        if(contact=="message"){
+            if(!document.getElementById('message-form-container').classList.contains('contact-form-container-active')){
+                for(var i = 0; i<hideElem.length; i++){
+                    if(i!=0){
+                        hideElem[i].classList.add('contact-div-hidden');
+                    }
+                }
+                document.getElementById('message-form-container').classList.add('contact-form-container-active');
+            }
+            else{
+                for(var i = 0; i<hideElem.length; i++){
+                    if(i!=0){
+                        hideElem[i].classList.remove('contact-div-hidden');
+                    }
+                }
+                document.getElementById('message-form-container').classList.remove('contact-form-container-active');
+            }
+        }
+
+        if(contact=="live"){
+            if(!document.getElementById('live-form-container').classList.contains('contact-form-container-active')){
+                for(var i = 0; i<hideElem.length; i++){
+                    if(i!=1){
+                        hideElem[i].classList.add('contact-div-hidden');
+                    }
+                }
+                document.getElementById('live-form-container').classList.add('contact-form-container-active');
+            }
+            else{
+                for(var i = 0; i<hideElem.length; i++){
+                    if(i!=1){
+                        hideElem[i].classList.remove('contact-div-hidden');
+                    }
+                }
+                document.getElementById('live-form-container').classList.remove('contact-form-container-active');
+            }
+        }
+
+        if(contact=="telephone"){
+            if(!document.getElementById('telephone-form-container').classList.contains('contact-form-container-active')){
+                for(var i = 0; i<hideElem.length; i++){
+                    if(i!=2){
+                        hideElem[i].classList.add('contact-div-hidden');
+                    }
+                }
+                document.getElementById('telephone-form-container').classList.add('contact-form-container-active');
+            }
+            else{
+                for(var i = 0; i<hideElem.length; i++){
+                    if(i!=2){
+                        hideElem[i].classList.remove('contact-div-hidden');
+                    }
+                }
+                document.getElementById('telephone-form-container').classList.remove('contact-form-container-active');
+            }
+        }
+
+        if(contact=="whatsapp"){
+            if(!document.getElementById('whatsapp-form-container').classList.contains('contact-form-container-active')){
+                for(var i = 0; i<hideElem.length; i++){
+                    if(i!=3){
+                        hideElem[i].classList.add('contact-div-hidden');
+                    }
+                }
+                document.getElementById('whatsapp-form-container').classList.add('contact-form-container-active');
+            }
+            else{
+                for(var i = 0; i<hideElem.length; i++){
+                    if(i!=3){
+                        hideElem[i].classList.remove('contact-div-hidden');
+                    }
+                }
+                document.getElementById('whatsapp-form-container').classList.remove('contact-form-container-active');
+            }
+        }
+
     }
 
 </script>

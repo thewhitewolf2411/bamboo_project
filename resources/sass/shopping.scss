@@ -74,7 +74,7 @@
 
 .shop-categories-container{
     display: flex;
-
+    padding: 50px;
 }
 
 .category-container{
@@ -86,13 +86,22 @@
 }
 
 .rounded-background-image{
-    margin-top: 50px;
+    margin-top: 100px;
     width: 200px;
     height: 200px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.category-container:hover .rounded-background-image{
+    width: 150px;
+    height: 150px;
+}
+
+.category-container:hover .rounded-background-image>img{
+    transform: scale(2);
 }
 
 #rounded-mobile{

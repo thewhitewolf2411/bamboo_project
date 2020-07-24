@@ -46,7 +46,7 @@
                 <a href="/setpage/news">News & Blog</a>
             </div>
             <div class="url-header-container">
-                <a href="/setpage/faqs">Support & Service</a>
+                <a href="/setpage/support">Support & Service</a>
             </div>
             <div class="url-header-container">
                 <a href="/setpage/contact">Contact</a>
