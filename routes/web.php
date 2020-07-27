@@ -34,6 +34,8 @@ Route::get('/cart', 'CustomerController@showCart')->name('showcart');
 Route::get('/shop', 'ShopController@showShopView');
 
 //selling
+Route::get('/sell', 'SellController@showSellView');
+
 
 //User post Route
 Route::post('/addtocart/{id}', 'CustomerController@addProductToCart')->name('addproducttocart');
