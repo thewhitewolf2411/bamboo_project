@@ -52,11 +52,11 @@
                             <a href="#"><div class="shop-link">Why Shop With Us</div></a>
                         </div>
                         <div class="shop-menu-element">
-                            <a href="#"><div class="shop-link">Let boo do it, for you</div></a>
+                            <a href="/shop/let"><div class="shop-link">Let boo do it, for you</div></a>
                         </div>
                     </div>
                     <div class="shop-header-background">
-
+                        
                     </div>
                     <div class="trustpilot-container">
                         <div class="trustpilot-element">
@@ -419,6 +419,15 @@
         </main>
 
         <footer>@include('customer.layouts.footer')</footer>
+        <script>
+
+            function showRegistrationForm(){
+                if(!document.getElementsByClassName('modal-second-element')[0].classList.contains('modal-second-element-active')){
+                    document.getElementsByClassName('modal-second-element')[0].classList.add('modal-second-element-active');
+                }
+            }
+
+        </script>
     </body>
 
 </html>

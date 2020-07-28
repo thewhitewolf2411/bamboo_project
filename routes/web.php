@@ -32,9 +32,13 @@ Route::get('/cart', 'CustomerController@showCart')->name('showcart');
 
 //shopping
 Route::get('/shop', 'ShopController@showShopView');
+Route::get('/shop/let','ShopController@showLetView');
+
+Route::post('/shop/choosephone', 'ShopController@choosePhone');
 
 //selling
 Route::get('/sell', 'SellController@showSellView');
+Route::get('/sell/why','SellController@showSellWhy');
 
 
 //User post Route

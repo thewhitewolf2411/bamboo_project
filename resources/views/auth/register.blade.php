@@ -61,7 +61,7 @@
                 </div>
             </div>
 
-          </label>
+        </label>
 
           <label class="news-label">
             <input id="radio-checked-no" type="radio" name="sub" value="false">

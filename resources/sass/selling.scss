@@ -1,0 +1,252 @@
+.sell-top-container{
+    background: #F28E33;
+    
+}
+
+.top-upper-elements-container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 80px;
+    min-height: 80px;
+    padding: 0 150px;
+}
+
+.top-upper-elements-container a{
+    margin: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 240px;
+}
+
+.top-element-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s linear;
+}
+
+.top-element-container:hover{
+    background: #fff;
+    transition: 0.2s linear;
+}
+
+.top-element-container:hover p{
+    color: #F28E33;
+    transition: 0.2s linear;
+}
+
+.top-element-container p{
+    font-size: 14pt;
+    color: #fff;
+    transition: 0.2s linear;
+}
+
+.sell-title-container{
+    padding: 50px;
+}
+
+.sell-title-container div{
+    margin-bottom: 2.5rem;
+}
+
+.sell-search-form{
+    width: 70%;
+    display: flex;
+    align-items: center;
+}
+
+.sell-search-form input{
+    height: 72px;
+    margin: 0;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    font-size: 20pt;
+
+    background: #F2F2F2 0% 0% no-repeat padding-box;
+}
+
+.sell-search-form button{
+    height: 72px;
+    margin: 0;
+    margin-left: -10px;
+    background: #F28E33;
+    color: #fff;
+    border: none;
+    outline: none;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.smaller-title p{
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.mt-50{
+    margin-top: 50px;
+    align-items: center;
+}
+
+.mt-50 p{
+    font-size: 18px;
+}
+
+.mt-50 img{
+    height: 32px;
+    margin-left: 25px;
+}
+
+.smaller-a{
+    width: 350px;
+    max-width: 350px;
+}
+
+.w-1000{
+    max-width: 1100px;
+    width: 1100px;
+    margin: auto;
+}
+
+.selling-info-container{
+    height: 500px;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 50px 150px;
+    background: #EFEFEF 0% 0% no-repeat padding-box;
+}
+
+.selling-info-element{
+    width: 25%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.selling-info-element img{
+    margin-bottom: 40px;
+}
+
+.selling-info-element p{
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.selling-service-container-image{
+    width: 150px;
+    height: 150px;
+    min-width: 150px;
+}
+
+.selling-service-container img{
+    width: 100%;
+    height: 100%;
+}
+
+.selling-service-container-text {
+    width: 70%;
+}
+
+.selling-service-container{
+    background: #23AAF7;
+    display: flex;
+    padding: 25px 250px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.why-title-container{
+    background: url("/customer_page_images/body/Green-mustard.png");
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.why-title-container p{
+    color: #fff;
+}
+
+.selling-video-container{
+    margin-top: 0;
+    background-color: #F28E33;
+    width: 600px;
+    height: 300px;
+
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.selling-video-container p{
+    font-size: 32px;
+    color: #fff;
+}
+
+.border-down{
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.5);
+}
+
+.selling-with-container{
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.selling-with-container .center-title-container>p{
+    color: #F28E33;
+}
+
+.selling-with-elements{
+    padding: 100px;
+}
+
+.selling-with-element{
+    display: flex;
+    justify-content: space-between;
+    padding: 25px;
+}
+
+.selling-img-container{
+    width: 45%;
+}
+
+.selling-text-container{
+    width: 45%;
+}
+
+.selling-img-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selling-img-container img{
+    max-width: 250px;
+    max-height: 250px;
+    width: 250px;
+    height: 250px;
+}
+
+.selling-text-container p{
+    font-size: 16px;
+}
+
+.title-orange{
+    font-size: 32px !important;
+    font-family: Bebas Neue, Helvetica, sans-serif;
+    color: #F28E33;
+    margin-bottom: 40px;
+}

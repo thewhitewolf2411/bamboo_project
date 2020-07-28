@@ -12,6 +12,17 @@ class ShopController extends Controller
 {
     public function showShopView(){
         $products = Product::all();
-        return view ('shop.welcome')->with('products', $products);;
+        return view ('shop.welcome')->with('products', $products);
+    }
+
+    public function showLetView(){
+        $products = Product::all();
+        return view ('shop.let')->with('products', $products);
+    }
+
+
+    //Post metode za shop
+    public function choosePhone(Request $request){
+
     }
 }

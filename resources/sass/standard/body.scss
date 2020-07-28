@@ -1,8 +1,18 @@
 a, p, label{
     margin: 0 auto;
-    font-family: "Bebas Neue", Helvetica, sans-serif;
     font-size: 9pt;
+    font-family: "Sharp Sans No1 Book", Helvetica, sans-serif;
 }
+
+@font-face{
+    font-family: Bebas Neue, Helvetica, sans-serif;
+    src: url('/fonts/BebasNeue-Regular.ttf');
+}
+
+.medium-text{
+    font-size: 18px;
+}
+
 a:hover{
     text-decoration: none;
 }
@@ -12,7 +22,6 @@ body{
 }
 
 h3, h4, h5{
-    font-family: "Sharp Sans No1 Book", Helvetica, sans-serif;
     font-weight: 600;
 }
 
@@ -52,4 +61,19 @@ h3, h4, h5{
 
 .pc-15-50{
     padding: 15px 50px 15px 50px !important;
+}
+
+.w70{
+    width: 70%;
+    margin-top: 50px;
+}
+
+.w50{
+    width: 50%;
+}
+
+.center-title-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
