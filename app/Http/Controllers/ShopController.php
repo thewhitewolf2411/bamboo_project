@@ -23,6 +23,6 @@ class ShopController extends Controller
 
     //Post metode za shop
     public function choosePhone(Request $request){
-
+        dd($request);
     }
 }

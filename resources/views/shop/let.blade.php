@@ -84,31 +84,49 @@
                 <p class="medium-text w70">With so many smartphones to choose from, it can be a challenge to decide which one to get. So let us help with a few simple questions to get the right phone for you.</p>
             
                 <form action="/shop/choosephone" method="POST">
-
+                    @csrf
                     <div class="form-question-container">
                         <div class="progress-bar">
                             <div class="progress-percentege"></div>
                         </div>
 
                         <div class="form-icon-container image-round" id="sound-image">
-                            <img src="">
+                            <img src="{{asset('/shop_images/letboo/011.svg')}}">
                         </div>
 
                         <div class="question-container">
-                            <p>1 - Do you listen to music on your phone?</p>
+                            <p class="question-bold">1 - Do you listen to music on your phone?</p>
                         </div>
 
                         <div class="answers-container">
-                            <label class="news-label">
-                                <input type="radio" name="music-1">
-                                <div class="news-label-content">
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="0">
+                                <div class="answer-content">
                                     <p>All The time</p>
-                                    <div class="news-label-selected-container">
-                                        <img id="select-image-yes" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" width="48px" height="48px">
-                                    </div>
-                                </div>                    
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
                             </label>
-                            
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="1">
+                                <div class="answer-content">
+                                    <p>I only use Spotify or similar</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="2">
+                                <div class="answer-content">
+                                    <p>Not at all</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="3">
+                                <div class="answer-content">
+                                    <p>Sometimes</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
                         </div>
 
                         <p class="medium-text w70">
@@ -116,8 +134,485 @@
                         </p>
                     </div>
                     
+                    <div class="form-question-container">
+                        <div class="progress-bar">
+                            <div class="progress-percentege"></div>
+                        </div>
+
+                        <div class="form-icon-container image-round" id="sound-image">
+                            <img src="{{asset('/shop_images/letboo/011.svg')}}">
+                        </div>
+
+                        <div class="question-container">
+                            <p class="question-bold">1 - Do you listen to music on your phone?</p>
+                        </div>
+
+                        <div class="answers-container">
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="0">
+                                <div class="answer-content">
+                                    <p>All The time</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="1">
+                                <div class="answer-content">
+                                    <p>I only use Spotify or similar</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="2">
+                                <div class="answer-content">
+                                    <p>Not at all</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="3">
+                                <div class="answer-content">
+                                    <p>Sometimes</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                        </div>
+
+                        <p class="medium-text w70">
+                            Audio is an important quality in any smartphone. While not all of them include decent speakers in the device itself, the compatibility with headphones lengthens the potential for great sound. Unfortunately, many phones are ditching the headphone jack these days.
+                        </p>
+                    </div>
+
+                    <div class="form-question-container">
+                        <div class="progress-bar">
+                            <div class="progress-percentege"></div>
+                        </div>
+
+                        <div class="form-icon-container image-round" id="sound-image">
+                            <img src="{{asset('/shop_images/letboo/011.svg')}}">
+                        </div>
+
+                        <div class="question-container">
+                            <p class="question-bold">1 - Do you listen to music on your phone?</p>
+                        </div>
+
+                        <div class="answers-container">
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="0">
+                                <div class="answer-content">
+                                    <p>All The time</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="1">
+                                <div class="answer-content">
+                                    <p>I only use Spotify or similar</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="2">
+                                <div class="answer-content">
+                                    <p>Not at all</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="3">
+                                <div class="answer-content">
+                                    <p>Sometimes</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                        </div>
+
+                        <p class="medium-text w70">
+                            Audio is an important quality in any smartphone. While not all of them include decent speakers in the device itself, the compatibility with headphones lengthens the potential for great sound. Unfortunately, many phones are ditching the headphone jack these days.
+                        </p>
+                    </div>
+
+                    <div class="form-question-container">
+                        <div class="progress-bar">
+                            <div class="progress-percentege"></div>
+                        </div>
+
+                        <div class="form-icon-container image-round" id="sound-image">
+                            <img src="{{asset('/shop_images/letboo/011.svg')}}">
+                        </div>
+
+                        <div class="question-container">
+                            <p class="question-bold">1 - Do you listen to music on your phone?</p>
+                        </div>
+
+                        <div class="answers-container">
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="0">
+                                <div class="answer-content">
+                                    <p>All The time</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="1">
+                                <div class="answer-content">
+                                    <p>I only use Spotify or similar</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="2">
+                                <div class="answer-content">
+                                    <p>Not at all</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="3">
+                                <div class="answer-content">
+                                    <p>Sometimes</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                        </div>
+
+                        <p class="medium-text w70">
+                            Audio is an important quality in any smartphone. While not all of them include decent speakers in the device itself, the compatibility with headphones lengthens the potential for great sound. Unfortunately, many phones are ditching the headphone jack these days.
+                        </p>
+                    </div>
+
+                    <div class="form-question-container">
+                        <div class="progress-bar">
+                            <div class="progress-percentege"></div>
+                        </div>
+
+                        <div class="form-icon-container image-round" id="sound-image">
+                            <img src="{{asset('/shop_images/letboo/011.svg')}}">
+                        </div>
+
+                        <div class="question-container">
+                            <p class="question-bold">1 - Do you listen to music on your phone?</p>
+                        </div>
+
+                        <div class="answers-container">
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="0">
+                                <div class="answer-content">
+                                    <p>All The time</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="1">
+                                <div class="answer-content">
+                                    <p>I only use Spotify or similar</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="2">
+                                <div class="answer-content">
+                                    <p>Not at all</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="3">
+                                <div class="answer-content">
+                                    <p>Sometimes</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                        </div>
+
+                        <p class="medium-text w70">
+                            Audio is an important quality in any smartphone. While not all of them include decent speakers in the device itself, the compatibility with headphones lengthens the potential for great sound. Unfortunately, many phones are ditching the headphone jack these days.
+                        </p>
+                    </div>
+
+                    <div class="form-question-container">
+                        <div class="progress-bar">
+                            <div class="progress-percentege"></div>
+                        </div>
+
+                        <div class="form-icon-container image-round" id="sound-image">
+                            <img src="{{asset('/shop_images/letboo/011.svg')}}">
+                        </div>
+
+                        <div class="question-container">
+                            <p class="question-bold">1 - Do you listen to music on your phone?</p>
+                        </div>
+
+                        <div class="answers-container">
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="0">
+                                <div class="answer-content">
+                                    <p>All The time</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="1">
+                                <div class="answer-content">
+                                    <p>I only use Spotify or similar</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="2">
+                                <div class="answer-content">
+                                    <p>Not at all</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="3">
+                                <div class="answer-content">
+                                    <p>Sometimes</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                        </div>
+
+                        <p class="medium-text w70">
+                            Audio is an important quality in any smartphone. While not all of them include decent speakers in the device itself, the compatibility with headphones lengthens the potential for great sound. Unfortunately, many phones are ditching the headphone jack these days.
+                        </p>
+                    </div>
+
+                    <div class="form-question-container">
+                        <div class="progress-bar">
+                            <div class="progress-percentege"></div>
+                        </div>
+
+                        <div class="form-icon-container image-round" id="sound-image">
+                            <img src="{{asset('/shop_images/letboo/011.svg')}}">
+                        </div>
+
+                        <div class="question-container">
+                            <p class="question-bold">1 - Do you listen to music on your phone?</p>
+                        </div>
+
+                        <div class="answers-container">
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="0">
+                                <div class="answer-content">
+                                    <p>All The time</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="1">
+                                <div class="answer-content">
+                                    <p>I only use Spotify or similar</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="2">
+                                <div class="answer-content">
+                                    <p>Not at all</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="3">
+                                <div class="answer-content">
+                                    <p>Sometimes</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                        </div>
+
+                        <p class="medium-text w70">
+                            Audio is an important quality in any smartphone. While not all of them include decent speakers in the device itself, the compatibility with headphones lengthens the potential for great sound. Unfortunately, many phones are ditching the headphone jack these days.
+                        </p>
+                    </div>
+
+                    <div class="form-question-container">
+                        <div class="progress-bar">
+                            <div class="progress-percentege"></div>
+                        </div>
+
+                        <div class="form-icon-container image-round" id="sound-image">
+                            <img src="{{asset('/shop_images/letboo/011.svg')}}">
+                        </div>
+
+                        <div class="question-container">
+                            <p class="question-bold">1 - Do you listen to music on your phone?</p>
+                        </div>
+
+                        <div class="answers-container">
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="0">
+                                <div class="answer-content">
+                                    <p>All The time</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="1">
+                                <div class="answer-content">
+                                    <p>I only use Spotify or similar</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="2">
+                                <div class="answer-content">
+                                    <p>Not at all</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="3">
+                                <div class="answer-content">
+                                    <p>Sometimes</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                        </div>
+
+                        <p class="medium-text w70">
+                            Audio is an important quality in any smartphone. While not all of them include decent speakers in the device itself, the compatibility with headphones lengthens the potential for great sound. Unfortunately, many phones are ditching the headphone jack these days.
+                        </p>
+                    </div>
+
+                    <div class="form-question-container">
+                        <div class="progress-bar">
+                            <div class="progress-percentege"></div>
+                        </div>
+
+                        <div class="form-icon-container image-round" id="sound-image">
+                            <img src="{{asset('/shop_images/letboo/011.svg')}}">
+                        </div>
+
+                        <div class="question-container">
+                            <p class="question-bold">1 - Do you listen to music on your phone?</p>
+                        </div>
+
+                        <div class="answers-container">
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="0">
+                                <div class="answer-content">
+                                    <p>All The time</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="1">
+                                <div class="answer-content">
+                                    <p>I only use Spotify or similar</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="2">
+                                <div class="answer-content">
+                                    <p>Not at all</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="3">
+                                <div class="answer-content">
+                                    <p>Sometimes</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                        </div>
+
+                        <p class="medium-text w70">
+                            Audio is an important quality in any smartphone. While not all of them include decent speakers in the device itself, the compatibility with headphones lengthens the potential for great sound. Unfortunately, many phones are ditching the headphone jack these days.
+                        </p>
+                    </div>
+
+                    <div class="form-question-container">
+                        <div class="progress-bar">
+                            <div class="progress-percentege"></div>
+                        </div>
+
+                        <div class="form-icon-container image-round" id="sound-image">
+                            <img src="{{asset('/shop_images/letboo/011.svg')}}">
+                        </div>
+
+                        <div class="question-container">
+                            <p class="question-bold">1 - Do you listen to music on your phone?</p>
+                        </div>
+
+                        <div class="answers-container">
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="0">
+                                <div class="answer-content">
+                                    <p>All The time</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="1">
+                                <div class="answer-content">
+                                    <p>I only use Spotify or similar</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="2">
+                                <div class="answer-content">
+                                    <p>Not at all</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                            <label class="answer-label">
+                                <input type="radio" name="q-1" value="3">
+                                <div class="answer-content">
+                                    <p>Sometimes</p>
+                                </div>
+                                <img src="{{asset('/shop_images/letboo/033.svg')}}">
+                            </label>
+                        </div>
+
+                        <p class="medium-text w70">
+                            Audio is an important quality in any smartphone. While not all of them include decent speakers in the device itself, the compatibility with headphones lengthens the potential for great sound. Unfortunately, many phones are ditching the headphone jack these days.
+                        </p>
+                    </div>
+
+                    <div class="form-submit-container">
+                        <button type="submit" class="btn btn-primary btn-blue">Find me my new phone</button>
+                    </div>
 
                 </form>
+            </div>
+
+            <div class="let-footer">
+                <div class="contact-footer-image">
+                    <img src="{{asset('po/shop_images/letboo/035.svg')}}">
+                </div>
+                <div class="contact-footer-text">
+                    <p class="service-header-1" >Save up to £300</p>
+                    <p class="service-header-2">By trading in your old device when you make a purchase.</p>
+                </div>
+                <div class="contact-footer-arrow">
+                    <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                </div>
+            </div>
+
+            <div class="home-element sign-up">
+        
+                <div class="center-title-container">
+                    <p>Sign up to our newsletter!</p>
+                </div>
+        
+                <div class="text-center-container">
+                    <p>amazing offers, hints and tips and just awesome-ness</p>
+                </div>
+        
+                <form action="/" method="POST">
+                    @csrf
+        
+                    <input class="email-input" type="email" placeholder="Enter email address here">
+                    <input class="email-submit" type="submit" value="Sign me up!">
+        
+                </form>
+        
             </div>
 
             <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
