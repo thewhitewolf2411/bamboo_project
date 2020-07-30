@@ -7,9 +7,20 @@ use Auth;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Order;
 use App\Eloquent\Product;
+use App\Eloquent\Brand;
 
 class ShopController extends Controller
 {
+
+    /* Note on products
+    
+    Mobile devices are product_category id = 1
+    Tablets are product_category id = 2
+    Accessories are product_category id = 3
+    Watches are product_categry id = 4
+    
+    */
+
     public function showShopView(){
         $products = Product::all();
         return view ('shop.welcome')->with('products', $products);
@@ -20,6 +31,50 @@ class ShopController extends Controller
         return view ('shop.let')->with('products', $products);
     }
 
+    public function showWhyView(){
+        $products = Product::all();
+        return view ('shop.why')->with('products', $products);
+    }
+
+    public function showShop($category){
+        $title="";
+        $data = "";
+        $appleData = null;
+        $samsungData = null;
+        $brands = null;
+
+        switch($category){
+            case "latest":
+                $title = "Shop Latest Offers";
+            break;
+            case "mobile":
+                $data = Product::where('category_id', 1)->get();
+                $appleData = Product::where('category_id', 1)->where('brand_id', 1)->get();
+                $samsungData = Product::where('category_id', 1)->where('brand_id', 2)->get();
+                $brands = Brand::get();
+                $title = "Shop Mobile Phones";
+            break;
+            case "tablets":
+                $title = "Shop Tablets";
+            break;
+            case "accesories":
+                $title = "Shop Accessories";
+            break;
+            case "watches":
+                $title = "Shop Watches";
+            break;
+            case "compare":
+                $title = "Compare Models";
+            break;
+        }
+
+        $products = Product::all();
+        return view('shop.products')->with('products', $products)->with('title', $title)->with('data', $data)->with('appleData', $appleData)->with('samsungData', $samsungData)->with('brands', $brands);
+    }
+
+    public function showItem($id){
+        dd($id);
+    }
 
     //Post metode za shop
     public function choosePhone(Request $request){

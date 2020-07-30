@@ -33,6 +33,10 @@ Route::get('/cart', 'CustomerController@showCart')->name('showcart');
 //shopping
 Route::get('/shop', 'ShopController@showShopView');
 Route::get('/shop/let','ShopController@showLetView');
+Route::get('/shop/why', 'ShopController@showWhyView');
+
+Route::get('/shop/category/{category}', 'ShopController@showShop');
+Route::get('/shop/item/{id}', 'ShopController@showItem');
 
 Route::post('/shop/choosephone', 'ShopController@choosePhone');
 

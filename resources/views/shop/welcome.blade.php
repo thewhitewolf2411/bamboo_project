@@ -31,25 +31,25 @@
                     <div class="shop-menu-container">
 
                         <div class="shop-menu-element">
-                            <a href="#"><div class="shop-link">Latest Offers</div></a>
+                            <a href="/shop/category/latest"><div class="shop-link">Latest Offers</div></a>
                         </div>
                         <div class="shop-menu-element shop-dropdown">
-                            <a href="#"><div class="shop-link">Shop Mobile Phones</div></a>
+                            <a href="/shop/category/mobile"><div class="shop-link">Shop Mobile Phones</div></a>
                         </div>
                         <div class="shop-menu-element">
-                            <a href="#"><div class="shop-link">Shop Tablets</div></a>
+                            <a href="/shop/category/tablets"><div class="shop-link">Shop Tablets</div></a>
                         </div>
                         <div class="shop-menu-element">
-                            <a href="#"><div class="shop-link">Shop Accessories</div></a>
+                            <a href="/shop/category/accesories"><div class="shop-link">Shop Accessories</div></a>
                         </div>
                         <div class="shop-menu-element">
-                            <a href="#"><div class="shop-link">Shop Watches</div></a>
+                            <a href="/shop/category/watches"><div class="shop-link">Shop Watches</div></a>
                         </div>
                         <div class="shop-menu-element">
-                            <a href="#"><div class="shop-link">Compare Models</div></a>
+                            <a href="/shop/category/compare"><div class="shop-link">Compare Models</div></a>
                         </div>
                         <div class="shop-menu-element">
-                            <a href="#"><div class="shop-link">Why Shop With Us</div></a>
+                            <a href="/shop/why"><div class="shop-link">Why Shop With Us</div></a>
                         </div>
                         <div class="shop-menu-element">
                             <a href="/shop/let"><div class="shop-link">Let boo do it, for you</div></a>
@@ -102,7 +102,7 @@
                         <a href="#">
                             <div class="category-container">
                                 <p class="shop-title">Shop</p>
-                                <p class="category-title">Mobile Phones</p>
+                                <p class="category-title">Tablets</p>
                                 <div class="rounded-background-image" id="rounded-tablets">
                                     <img src="{{asset('/shop_images/category-image-2.png')}}">
                                 </div>
@@ -111,7 +111,7 @@
                         <a href="#">
                             <div class="category-container">
                                 <p class="shop-title">Shop</p>
-                                <p class="category-title">Mobile Phones</p>
+                                <p class="category-title">Watches</p>
                                 <div class="rounded-background-image" id="rounded-watches">
                                     <img src="{{asset('/shop_images/category-image-3.png')}}">
                                 </div>
@@ -120,7 +120,7 @@
                         <a href="#">
                             <div class="category-container">
                                 <p class="shop-title">Shop</p>
-                                <p class="category-title">Mobile Phones</p>
+                                <p class="category-title">Accesories</p>
                                 <div class="rounded-background-image" id="rounded-accesories">
                                     <img src="{{asset('/shop_images/category-image-4.png')}}">
                                 </div>

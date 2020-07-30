@@ -110,6 +110,16 @@
     height: 180px;
 }
 
+.category-container:hover .shop-title{
+    font-size: 26px;
+    font-weight: 400;
+}
+
+.category-container:hover .category-title{
+    font-size: 32px;
+    font-weight: 600;
+}
+
 .category-container:hover .rounded-background-image>img{
     transform: scale(1.5);
 }
@@ -230,7 +240,6 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: transparent linear-gradient(180deg, #57D591 0%, #A3D047 100%) 0% 0% no-repeat padding-box;
     margin-bottom: 30px;
 
     display: flex;
@@ -317,4 +326,128 @@
     padding: 25px 250px;
     align-items: center;
     justify-content: space-between;
+}
+
+#q-1{
+    background: transparent linear-gradient(180deg, #57D591 0%, #A3D047 100%) 0% 0% no-repeat padding-box;
+}
+#q-1 img{
+    margin-left: -5px;
+}
+#q-2{
+    background: transparent linear-gradient(180deg, #57D591 0%, #A670AF 100%) 0% 0% no-repeat padding-box;
+}
+#q-3{
+    background: transparent linear-gradient(180deg, #569CCE 0%, #A771AE 100%) 0% 0% no-repeat padding-box;
+}
+#q-4{
+    background: transparent linear-gradient(180deg, #F28F33 0%, #F9C150 100%) 0% 0% no-repeat padding-box;
+}
+#q-5{
+    background: transparent linear-gradient(180deg, #57D591 0%, #A3D047 100%) 0% 0% no-repeat padding-box;
+}
+#q-6{
+    background: transparent linear-gradient(180deg, #FD7F8E 0%, #29C0B4 100%) 0% 0% no-repeat padding-box;
+}
+#q-7{
+    background: transparent linear-gradient(180deg, #57D591 0%, #A670AF 100%) 0% 0% no-repeat padding-box;
+}
+#q-8{
+    background: transparent linear-gradient(180deg, #569CCE 0%, #A771AE 100%) 0% 0% no-repeat padding-box;
+}
+#q-9{
+    background: transparent linear-gradient(180deg, #FD7F8E 0%, #70C482 100%) 0% 0% no-repeat padding-box;
+}
+#q-10{
+    background: transparent linear-gradient(180deg, #FD7F8E 0%, #569CCE 100%) 0% 0% no-repeat padding-box;
+}
+
+.shopping-video-container{
+    margin-top: 0;
+    background-color: #23AAF7;
+    width: 600px;
+    height: 300px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.shopping-video-container p {
+    margin-top: 0;
+    color: #fff;
+    font-size: 32px;
+    width: 600px;
+    height: 300px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.title-blue {
+    font-size: 32px !important;
+    font-family: Bebas Neue, Helvetica, sans-serif;
+    color: #23AAF7 !important;
+    margin-bottom: 40px;
+}
+
+.shop-devices-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 50px 150px;
+}
+
+.shop-devices-container>.center-title-container{
+    margin-bottom: 50px;
+}
+
+.devices{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.shop-device{
+    flex: 1 0 21%;
+    margin: 5px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.shop-device p{
+    font-size: 20px;
+    font-weight: 600;
+    padding: 15px;
+}
+
+.shop-device img{
+    width: 250px;
+    height: 400px;
+}
+
+.apple-devices-container{
+    margin-top: 50px;
+    background: rgba($color: #59DDC1, $alpha: 0.15) 0% 0% no-repeat padding-box;
+}
+
+.shop-brands-container{
+    display: flex;
+    flex-wrap: wrap;
+
+    padding: 50px 150px;
+}
+
+.shop-brands-container>.brand-container{
+    flex: 1 0 21%;
+    margin: 5px;
+    max-width: 21%;
 }

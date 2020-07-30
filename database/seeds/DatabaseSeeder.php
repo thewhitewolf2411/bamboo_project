@@ -32,346 +32,181 @@ class DatabaseSeeder extends Seeder
             'type_of_user'=>3,
             'account_disabled'=>false,
         ]);
-        DB::table('portal_users')->insert([
 
-            'user_id'=>1,
-            'superuser'=>true,
-            'trade_pack_dispach_system' => true,
-            'dispach_portal_delivery_receiving_system' => true,
-            'device_tester_stock_managment' => true,
-            'stock_managment' => true,
-            'stock_managment_delivery_receiving_system' => true,
-            'quarantine_managamnet_and_customer_returns' => true,
-            'tray_managment_system' => true,
-            'sales_and_dispach' => true,
-            'stock_transfer' => true,
-            'device_managment' => true,
-            'box_managment_system' => true,
-            'device_testing' => true,
-            'user_managment' => true,
-            'reports_and_statistics' => true,
-        ]);
-        DB::table('users')->insert([
-            'first_name' => "Eren",
-            'last_name' => "Yeager",
-            'email' => "eren@yeager.com",
-            'birthdate' => "March 30th, 835",
-            'password' => Hash::make(Str::random(10)),
-            'current_phone' => rand(0, 5),
-            'preffered_os' => 'Android',
-            'sub' => false,
-        ]);
-        DB::table('users')->insert([
-            'first_name' => "Mikasa",
-            'last_name' => "Ackerman",
-            'email' => "mikasa@ackerman.com",
-            'birthdate' => "March 30th, 835",
-            'password' => Hash::make(Str::random(10)),
-            'current_phone' => rand(0, 5),
-            'preffered_os' => 'iPhone X',
-            'sub' => false,
-        ]);
-        DB::table('users')->insert([
-            'first_name' => "Ymir",
-            'last_name' => "Fritz",
-            'email' => "ymir@fritz.com",
-            'birthdate' => "March 30th, 835",
-            'password' => Hash::make(Str::random(10)),
-            'current_phone' => rand(0, 5),
-            'preffered_os' => 'Android',
-            'sub' => false,
-        ]);
-        DB::table('users')->insert([
-            'first_name' => "Annie",
-            'last_name' => "Leonheart",
-            'email' => "annie@leonheart.com",
-            'birthdate' => "March 30th, 835",
-            'password' => Hash::make(Str::random(10)),
-            'current_phone' => rand(0, 5),
-            'preffered_os' => 'Android',
-            'sub' => false,
-        ]);
-        DB::table('users')->insert([
-            'first_name' => "Jean",
-            'last_name' => "Kirstien",
-            'email' => "jean@kirstien.com",
-            'birthdate' => "March 30th, 835",
-            'password' => Hash::make(Str::random(10)),
-            'current_phone' => rand(0, 5),
-            'preffered_os' => 'Android',
-            'sub' => false,
-        ]);
-        DB::table('users')->insert([
-            'first_name' => "Armin",
-            'last_name' => "Arlert",
-            'email' => "armin@Arlert.com",
-            'birthdate' => "March 30th, 835",
-            'password' => Hash::make(Str::random(10)),
-            'current_phone' => rand(0, 5),
-            'preffered_os' => 'Android',
-            'sub' => false,
-        ]);
-        DB::table('users')->insert([
-            'first_name' => "Lee",
-            'last_name' => "Sin",
-            'email' => "Lee@sin.com",
-            'birthdate' => "March 30th, 835",
-            'password' => Hash::make(Str::random(10)),
-            'current_phone' => rand(0, 5),
-            'preffered_os' => 'Android',
-            'sub' => false,
-        ]);
-
-        //Categories
         DB::table('product_category')->insert([
-            'category_name'=>'Apple',
-            'category_description'=>'Apple',
-            'category_image'=>'default_category_image.jpg',
-        ]);
+
+            'category_name'=>'mobile_devices',
+            'category_description'=>'A mobile device is a general term for any type of handheld computer. These devices are designed to be extremely portable, and they can often fit in your hand.',
+            'category_image'=>'mobile_image.jpeg'
+            ]);
         DB::table('product_category')->insert([
-            'category_name'=>'BlackBerry',
-            'category_description'=>'BlackBerry',
-            'category_image'=>'default_category_image.jpg',
-        ]);
+
+            'category_name'=>'tablets',
+            'category_description'=>'A tablet, or tablet PC, is a portable computer that uses a touchscreen as its primary input device.',
+            'category_image'=>'tablet_image.jpeg'
+            ]);
         DB::table('product_category')->insert([
-            'category_name'=>'HTC',
-            'category_description'=>'HTC',
-            'category_image'=>'default_category_image.jpg',
-        ]);
+
+            'category_name'=>'accesories',
+            'category_description'=>'All kinds of accesories for smart devices.',
+            'category_image'=>'accesories_image.jpeg'
+            ]);
         DB::table('product_category')->insert([
-            'category_name'=>'Huawei',
-            'category_description'=>'Huawei',
-            'category_image'=>'default_category_image.jpg',
-        ]);
-        DB::table('product_category')->insert([
-            'category_name'=>'LG',
-            'category_description'=>'LG',
-            'category_image'=>'default_category_image.jpg',
-        ]);
 
-        //products
-        DB::table('products')->insert([
-            'category_id'=>1,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
-        DB::table('products')->insert([
-            'category_id'=>1,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
-        DB::table('products')->insert([
-            'category_id'=>1,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
-        DB::table('products')->insert([
-            'category_id'=>2,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
-        DB::table('products')->insert([
-            'category_id'=>2,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
-        DB::table('products')->insert([
-            'category_id'=>2,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
-        DB::table('products')->insert([
-            'category_id'=>3,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
-        DB::table('products')->insert([
-            'category_id'=>3,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
-        DB::table('products')->insert([
-            'category_id'=>3,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
-        DB::table('products')->insert([
-            'category_id'=>4,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
-        DB::table('products')->insert([
-            'category_id'=>4,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
-        DB::table('products')->insert([
-            'category_id'=>4,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
-        DB::table('products')->insert([
-            'category_id'=>5,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
-        DB::table('products')->insert([
-            'category_id'=>5,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
-        DB::table('products')->insert([
-            'category_id'=>5,
-            'product_name'=>Str::random(10),
-            'product_description'=>Str::random(10),
-            'product_image'=>'default_product_image.jpg',
-            'price_new'=>mt_rand(0, 99),
-            'price_working_a'=>mt_rand(0, 99),
-            'price_working_b'=>mt_rand(0, 99),
-            'price_working_c'=>mt_rand(0, 99),
-            'price_faulty'=>mt_rand(0, 99),
-            'price_damaged'=>mt_rand(0, 99),
-        ]);
+            'category_name'=>'watches',
+            'category_description'=>'A smartwatch is a digital watch that provides many other features besides timekeeping.',
+            'category_image'=>'watches_image.jpeg'
+            ]);
 
 
-        DB::table('orders')->insert([
-            'order_placed'=>'15.07.2020',
-            'product_id'=>1,
-            'user_id'=>1,
-            'user_email'=>'bamboo',
-            'product_total'=>46,
-            'order_total'=>58,
-            'order_status'=>0,
-            'payment_status'=>0,
-            'shipping_status'=>0,
-            'quantity'=>2,
-            'status'=>'good'
+        DB::table('brand')->insert([
+            'brand_name'=>'Apple',
+            'brand_image'=>'apple_image.jpeg',
         ]);
 
-        DB::table('orders')->insert([
-            'order_placed'=>'11.07.2020',
-            'product_id'=>1,
-            'user_id'=>1,
-            'user_email'=>'bamboo',
-            'product_total'=>26,
-            'order_total'=>28,
-            'order_status'=>0,
-            'payment_status'=>0,
-            'shipping_status'=>0,
-            'quantity'=>2,
-            'status'=>'good'
+        DB::table('brand')->insert([
+            'brand_name'=>'Samsung',
+            'brand_image'=>'samsung_image.jpeg',
         ]);
 
-        DB::table('orders')->insert([
-            'order_placed'=>'13.07.2020',
-            'product_id'=>1,
-            'user_id'=>1,
-            'user_email'=>'bamboo',
-            'product_total'=>146,
-            'order_total'=>158,
-            'order_status'=>0,
-            'payment_status'=>0,
-            'shipping_status'=>0,
-            'quantity'=>2,
-            'status'=>'good'
+        DB::table('brand')->insert([
+            'brand_name'=>'HTC',
+            'brand_image'=>'htc_image.jpeg',
+        ]);
+
+        DB::table('brand')->insert([
+            'brand_name'=>'Huaweii',
+            'brand_image'=>'huaweii_image.jpeg',
+        ]);
+
+        DB::table('brand')->insert([
+            'brand_name'=>'Nokia',
+            'brand_image'=>'nokia_image.jpeg',
+        ]);
+
+        DB::table('products')->insert([
+
+            'category_id' => 1,
+            'brand_id' => 1,
+            'product_name' => "iPhone 11",
+            'product_image' => 'iphone_11_image.jpg',
+            'product_network' => 'EE',
+            'product_memory' => '64GB',
+            'product_colour' => '#ba0c2f',
+            'product_grade' => 'A+',
+            'product_dimensions' => "150.9x75.7x8.3",
+            'product_processor' => 'Apple A13 Bionic',
+            'product_weight' => '188g',
+            'product_screen' => '6.1',
+            'product_system' => 'iOS',
+            'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
+            'product_battery' => '3110 mAh',
+            'product_signal' => 'g3, g4',
+            'product_camera' => '12 MP',
+            'product_sim' => 'Single SIM',
+            'product_memory_slots' => 'No',
+            'price' => '629'
+
+        ]);
+
+        DB::table('products')->insert([
+
+            'category_id' => 1,
+            'brand_id' => 1,
+            'product_name' => "iPhone 11 Pro",
+            'product_image' => 'iphone_11_pro_image.jpg',
+            'product_network' => 'AT&T',
+            'product_memory' => '256GB',
+            'product_colour' => '#ba0c2f',
+            'product_grade' => 'B',
+            'product_dimensions' => "144 x 71.4 x 8.1 ",
+            'product_processor' => 'Apple A13 Bionic',
+            'product_weight' => '188g',
+            'product_screen' => '5.8',
+            'product_system' => 'iOS',
+            'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
+            'product_battery' => '3046 mAh',
+            'product_signal' => 'g3, g4',
+            'product_camera' => '12 MP',
+            'product_sim' => 'Single SIM',
+            'product_memory_slots' => 'No',
+            'price' => '889.99'
+
+        ]);
+
+        DB::table('products')->insert([
+
+            'category_id' => 1,
+            'brand_id' => 1,
+            'product_name' => "iPhone 12",
+            'product_image' => 'iphone_12_image.jpg',
+            'product_network' => 'EE',
+            'product_memory' => '128GB',
+            'product_colour' => '#ba0c2f',
+            'product_grade' => 'A',
+            'product_dimensions' => "7.4",
+            'product_processor' => 'Apple A13 Bionic',
+            'product_weight' => '188g',
+            'product_screen' => '6.7',
+            'product_system' => 'iOS',
+            'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
+            'product_battery' => '3110 mAh',
+            'product_signal' => 'g3, g4',
+            'product_camera' => '12 MP',
+            'product_sim' => 'Single SIM',
+            'product_memory_slots' => 'No',
+            'price' => '629'
+
+        ]);
+
+        DB::table('products')->insert([
+
+            'category_id' => 1,
+            'brand_id' => 2,
+            'product_name' => "Galaxy S20",
+            'product_image' => 'galaxy_s20_image.jpg',
+            'product_network' => 'GSM',
+            'product_memory' => '128GB',
+            'product_colour' => '#ba0c2f',
+            'product_grade' => 'A+',
+            'product_dimensions' => "151.7 x 69.1 x 7.9",
+            'product_processor' => '2x2.73 GHz Mongoose',
+            'product_weight' => '163g',
+            'product_screen' => '6.2',
+            'product_system' => 'Android 10',
+            'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
+            'product_battery' => '4000 mAh',
+            'product_signal' => 'g3, g4',
+            'product_camera' => '12 MP',
+            'product_sim' => 'Single SIM',
+            'product_memory_slots' => 'microSDXC',
+            'price' => '649'
+
+        ]);
+
+        DB::table('products')->insert([
+
+            'category_id' => 1,
+            'brand_id' => 2,
+            'product_name' => "Galaxy S10",
+            'product_image' => 'galaxy_s20_image.jpg',
+            'product_network' => 'GSM',
+            'product_memory' => '128GB',
+            'product_colour' => '#ba0c2f',
+            'product_grade' => 'B',
+            'product_dimensions' => "151.7 x 69.1 x 7.9",
+            'product_processor' => '2x2.73 GHz Mongoose',
+            'product_weight' => '157g',
+            'product_screen' => '6.2',
+            'product_system' => 'Android 9',
+            'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
+            'product_battery' => '4000 mAh',
+            'product_signal' => 'g3, g4',
+            'product_camera' => '12 MP',
+            'product_sim' => 'Single SIM',
+            'product_memory_slots' => 'microSDXC',
+            'price' => '519'
+
         ]);
 
     }

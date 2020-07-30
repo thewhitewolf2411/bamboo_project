@@ -19,9 +19,8 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'category_id', 'product_name', 'product_description','product_image', 'product_code_sku', 
-        'product_code_mpn','product_code_gtin', 'product_code_upc', 'product_code_ean','product_code_isbn', 
-        'product_code_extension_1', 'product_code_extension_2','network','price_new','price_working_a',
-        'price_working_b','price_working_c','price_faulty','price_damaged','quantity',
+        'category_id', 'brand_id','product_name','product_image','product_network','product_memory','product_colour','product_grade','product_dimensions',
+        'product_processor','product_weight','product_screen','product_system','product_connectivity','product_battery','product_signal','product_camera',
+        'product_sim','product_memory_slots', 'price'
     ];
 }
