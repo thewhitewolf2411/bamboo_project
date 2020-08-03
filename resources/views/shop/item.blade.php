@@ -18,7 +18,7 @@
 
         <main>
             <div class="app">
-                <div class="shop-top-header" style="margin: 0;">
+                <div class="shop-top-header">
                     <div class="shop-search-container">
                         <div class="search-bar">
                             <form class="shop-search-form" action="/searchproducts" method="POST">
@@ -80,109 +80,31 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="let-top-container">
-                    <div class="center-title-container">
-                        <p> {{$title}} </p>
-                    </div>
+
+
                 </div>
 
-                @if($appleData !== null && count($appleData)>0)
-                    <div class="shop-devices-container apple-devices-container">
-                        <div class="center-title-container">
-                            <p>Shop <strong>Apple</strong></p>
-                        </div>
-                        <div class="devices">
-                            @foreach($appleData as $appleDevice)
-                            <a href="/shop/item/{{$appleDevice->id}}"><div class="shop-device">
-                                <img src="{{$appleDevice->product_image}}">
-                                <p>{{$appleDevice->product_name}}</p>
-                            </div></a>
-                        @endforeach
-                        </div>
+                <div class="single-product-container">
 
-                        <div class="shop-form-container">
-                            <form action="/shop/allitems" method="GET">
-                                
-                                <input type="hidden" name="sort" value="apple">
-                                <button type="submit" class="btn btn-primary btn-blue">Shop all Apple Mobile Phones</button>
-                            </form>
-                        </div>
+                    <div class="product-image-container">
+                        <img src="{{$itemData->product_image}}">
                     </div>
-                @endif
-
-                @if($samsungData !== null && count($samsungData)>0)
-                    <div class="shop-devices-container samsung-devices-container">
-                        <div class="center-title-container">
-                            <p>Shop <strong>Samsung</strong></p>
+                    <div class="product-data-container">
+                        <div class="product-name-container">
+                            <p>{{$itemData->product_name}}</p>
                         </div>
-                        <div class="devices">
-                            @foreach($samsungData as $samsungDevice)
-                            <a href="/shop/item/{{$samsungDevice->id}}"><div class="shop-device">
-                                <img src="{{$samsungDevice->product_image}}">
-                                <p>{{$samsungDevice->product_name}}</p>
-                            </div></a>
-                        @endforeach
+                        <div class="product-selected product-network-container">
+                            <p>Product Network:</p>
                         </div>
-                        <div class="shop-form-container">
-                            <form action="/shop/allitems" method="GET">
-                                
-                                <input type="hidden" name="sort" value="samsung">
-                                <button type="submit" class="btn btn-primary btn-blue">Shop all Samsung Mobile Phones</button>
-                            </form>
+                        <div class="product-selected product-memory-container">
+                            <p>Product Memory:</p>
                         </div>
-                    </div>
-                @endif
-
-                @if($brands !== null)
-
-                    <div class="shop-brands-container">
-                        <div class="center-title-container">
-                            <p>Shop <strong>Brand</strong></p>
+                        <div class="product-selected product-color-container">
+                            <p>Product Colour:</p>
                         </div>
-                        <div class="brands-container">
-                            @foreach($brands as $brand)
-                            <div class="brand-container">
-                                
-                                
-                            </div>
-                            @endforeach
+                        <div class="product-selected product-grade-container">
+                            <p>Product Grade:</p>
                         </div>
-                        <div class="shop-form-container">
-                            <form action="/shop/allitems" method="GET">
-                               
-                                <input type="hidden" name="sort" value="brands">
-                                <button type="submit" class="btn btn-primary btn-blue">Shop all Brands</button>
-                            </form>
-                        </div>
-
-                    </div>
-
-                @endif
-
-                <div class="shop-grade-container">
-                    <div class="center-title-container">
-                        <p>Shop by<strong>Grade</strong></p>
-                    </div>
-                    <div class="grades-container">
-                        <div class="grade-container">
-                            <p><strong>A+</strong></p>
-                        </div>
-                        <div class="grade-container">
-                            <p><strong>A</strong></p>
-                        </div>
-                        <div class="grade-container">
-                            <p><strong>B</strong></p>
-                        </div>
-                        <div class="grade-container">
-                            <p><strong>C</strong></p>
-                        </div>
-                    </div>
-                    <div class="shop-form-container">
-                        <form action="/shop/allitems" method="GET">
-                            <input type="hidden" name="sort" value="grades">
-                            <button type="submit" class="btn btn-primary btn-blue">Shop all Grades</button>
-                        </form>
                     </div>
                 </div>
 
@@ -204,57 +126,114 @@
                         <p>12 MONTH GUARANTEE</p>
                     </div>
                 </div>
-
-                <div class="let-footer">
-                    <div class="contact-footer-image">
-                        <img src="{{asset('/shop_images/letboo/035.svg')}}">
+                <div class="shop-spilt">
+                    <div class="shop-split-image">
+                        <img src="{{asset('/shop_images/shop_split_image.png')}}">
                     </div>
-                    <div class="contact-footer-text">
-                        <p class="service-header-1" >Save up to £300</p>
-                        <p class="service-header-2">By trading in your old device when you make a purchase.</p>
-                    </div>
-                    <div class="contact-footer-arrow">
-                        <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    <div class="shop-split-text">
+                        <div class="shop-split-text-container">
+                            <p class="shop-title">Spoilt for choice?</p>
+                            <p class="category-title">Use our handy comparison tool <br> to find the best option for you.</p>
+                        </div>
+                        <div class="shop-split-arrow">
+                            <img src="">
+                        </div>
                     </div>
                 </div>
 
-                <div class="shop-categories-container">
-                    <a href="#">
-                        <div class="category-container">
-                            <p class="shop-title">Shop</p>
-                            <p class="category-title">Mobile Phones</p>
-                            <div class="rounded-background-image" id="rounded-mobile">
-                                <img src="{{asset('/shop_images/category-image-1.png')}}">
+                <div class="product-description-container">
+                    <div class="product-description-left">
+                        <p class="left-title-text">DESCRIPTION</p>
+                        <div class="product-description-text">
+                            <p><strong>And then there was Pro</strong></p>
+                            <p class="description-text">{{$itemData->product_description}}</p>
+                        </div>
+                    </div>
+
+                    <div class="product-description-right">
+                        <p class="left-title-text">SPECIFICATIONS</p>
+                        <div class="product-description-data">
+                            <div class="product-description-data-text">
+                                <p class="product-description-title">Dimensions</p>
+                                <p>{{$itemData->product_dimensions}} mm</p>
+                            </div>
+                            <div class="product-description-data-text">
+                                <p class="product-description-title">Processor</p>
+                                <p>{{$itemData->product_processor}}</p>
+                            </div>
+                            <div class="product-description-data-text">
+                                <p class="product-description-title">Weight</p>
+                                <p>{{$itemData->product_weight}}</p>
+                            </div>
+                            <div class="product-description-data-text">
+                                <p class="product-description-title">Screen size</p>
+                                <p>{{$itemData->product_screen}}</p>
+                            </div>
+                            <div class="product-description-data-text">
+                                <p class="product-description-title">Operating System</p>
+                                <p>{{$itemData->product_system}}</p>
+                            </div>
+                            <div class="product-description-data-text">
+                                <p class="product-description-title">Connectivity</p>
+                                <p>{{$itemData->product_connectivity}}</p>
+                            </div>
+                            <div class="product-description-data-text">
+                                <p class="product-description-title">Battery</p>
+                                <p>{{$itemData->product_battery}}</p>
+                            </div>
+                            <div class="product-description-data-text">
+                                <p class="product-description-title"> Signal</p>
+                                <p>{{$itemData->product_signal}}</p>
+                            </div>
+                            <div class="product-description-data-text">
+                                <p class="product-description-title">Camera</p>
+                                <p>{{$itemData->product_camera}}</p>
+                                @if($itemData->product_camera_2 !== null)
+                                <p>{{$itemData->product_camera_2}}</p>
+                                @endif
+                            </div>
+                            <div class="product-description-data-text">
+                                <p class="product-description-title">Sim Size</p>
+                                <p>{{$itemData->product_sim}}</p>
+                            </div>
+                            <div class="product-description-data-text">
+                                <p class="product-description-title">Memory Card Slots</p>
+                                <p>{{$itemData->product_memory_slots}}</p>
                             </div>
                         </div>
-                    </a>
-                    <a href="#">
-                        <div class="category-container">
-                            <p class="shop-title">Shop</p>
-                            <p class="category-title">Tablets</p>
-                            <div class="rounded-background-image" id="rounded-tablets">
-                                <img src="{{asset('/shop_images/category-image-2.png')}}">
-                            </div>
+                    </div>
+                </div>
+
+                <div class="bl-100"></div>
+
+                <div class="warranty-container">
+
+                    <div class="product-description-left">
+                        <p class="left-title-text">WARRANTY</p>
+                        <div class="product-description-text">
+                            <p class="description-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus. Mauris blandit dolor sit amet posuere hendrerit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aenean at erat tempor, aliquam orci vitae, rutrum lorem. Etiam nec semper lorem.</p>
                         </div>
-                    </a>
-                    <a href="#">
-                        <div class="category-container">
-                            <p class="shop-title">Shop</p>
-                            <p class="category-title">Watches</p>
-                            <div class="rounded-background-image" id="rounded-watches">
-                                <img src="{{asset('/shop_images/category-image-3.png')}}">
-                            </div>
+                    </div>
+
+                    <div class="product-description-right">
+                        <div class="assurance-element">
+                            <img src="{{asset('/customer_page_images/body/Assuranc')}}">
+                            <p>NO QUIBBLE MONEY BACK</p>
                         </div>
-                    </a>
-                    <a href="#">
-                        <div class="category-container">
-                            <p class="shop-title">Shop</p>
-                            <p class="category-title">Accesories</p>
-                            <div class="rounded-background-image" id="rounded-accesories">
-                                <img src="{{asset('/shop_images/category-image-4.png')}}">
-                            </div>
+                        <div class="assurance-element">
+                            <img src="">
+                            <p>12 MONTH GUARANTEE</p>
                         </div>
-                    </a>
+                    </div>
+
+                </div>
+
+                <div class="bl-100"></div>
+
+                <div class="similar-devices">
+                    <div class="center-title-container">
+                        <p>Similar devices</p>
+                    </div>
                 </div>
 
                 <div class="home-element sign-up">
@@ -262,19 +241,19 @@
                     <div class="center-title-container">
                         <p>Sign up to our newsletter!</p>
                     </div>
-
+            
                     <div class="text-center-container">
                         <p>amazing offers, hints and tips and just awesome-ness</p>
                     </div>
-
+            
                     <form action="/" method="POST">
                         @csrf
-
+            
                         <input class="email-input" type="email" placeholder="Enter email address here">
                         <input class="email-submit" type="submit" value="Sign me up!">
-
+            
                     </form>
-
+            
                 </div>
 
             </div>
@@ -340,13 +319,19 @@
                 </div>
             </div>
         </main>
+
         <footer>@include('customer.layouts.footer')</footer>
+
         <script>
 
             function showRegistrationForm(){
                 if(!document.getElementsByClassName('modal-second-element')[0].classList.contains('modal-second-element-active')){
                     document.getElementsByClassName('modal-second-element')[0].classList.add('modal-second-element-active');
                 }
+            }
+
+            function addToWishList(){
+                console.log("hepek");
             }
 
         </script>

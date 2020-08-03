@@ -7,6 +7,7 @@ use Auth;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Order;
 use App\Eloquent\Product;
+use App\Eloquent\ProductData;
 use App\Eloquent\Brand;
 
 class ShopController extends Controller
@@ -48,7 +49,7 @@ class ShopController extends Controller
                 $title = "Shop Latest Offers";
             break;
             case "mobile":
-                $data = Product::where('category_id', 1)->get();
+                $data = Product::get();
                 $appleData = Product::where('category_id', 1)->where('brand_id', 1)->get();
                 $samsungData = Product::where('category_id', 1)->where('brand_id', 2)->get();
                 $brands = Brand::get();
@@ -73,7 +74,18 @@ class ShopController extends Controller
     }
 
     public function showItem($id){
-        dd($id);
+        $itemData = Product::where('id', $id)->first();
+        $products = Product::all();
+        return view('shop.item')->with('products', $products)->with('itemData', $itemData);
+    }
+
+    public function showAllItems(Request $request){
+
+        $sortData = "";
+
+        $products = Product::all();
+
+        return view('shop.shop')->with("sortData", $sortData)->with('products', $products);
     }
 
     //Post metode za shop

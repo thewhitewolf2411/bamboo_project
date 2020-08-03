@@ -15,10 +15,11 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->smallInteger('category_id');
-            $table->smallInteger('brand_id');
             $table->string('product_name');
             $table->string('product_image');
+            $table->string('product_description',1000);
+            $table->smallInteger('category_id');
+            $table->smallInteger('brand_id');
             $table->string('product_network');
             $table->string('product_memory');
             $table->string('product_colour');
@@ -35,7 +36,8 @@ class CreateProductsTable extends Migration
             $table->string('product_camera_2')->nullable();
             $table->string('product_sim');
             $table->string('product_memory_slots');
-            $table->integer('price');
+            $table->smallInteger('product_quantity');
+            $table->integer('base_price');
             $table->timestamps();
         });
     }

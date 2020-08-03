@@ -37,6 +37,7 @@ Route::get('/shop/why', 'ShopController@showWhyView');
 
 Route::get('/shop/category/{category}', 'ShopController@showShop');
 Route::get('/shop/item/{id}', 'ShopController@showItem');
+Route::get('/shop/allitems', 'ShopController@showAllItems');
 
 Route::post('/shop/choosephone', 'ShopController@choosePhone');
 

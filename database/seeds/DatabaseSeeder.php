@@ -86,10 +86,11 @@ class DatabaseSeeder extends Seeder
 
         DB::table('products')->insert([
 
-            'category_id' => 1,
-            'brand_id' => 1,
             'product_name' => "iPhone 11",
             'product_image' => 'iphone_11_image.jpg',
+            'product_description' => Str::random(350),
+            'category_id' => 1,
+            'brand_id' => 1,
             'product_network' => 'EE',
             'product_memory' => '64GB',
             'product_colour' => '#ba0c2f',
@@ -105,49 +106,26 @@ class DatabaseSeeder extends Seeder
             'product_camera' => '12 MP',
             'product_sim' => 'Single SIM',
             'product_memory_slots' => 'No',
-            'price' => '629'
+            'product_quantity'=>3,
+            'base_price' => '629'
 
         ]);
 
         DB::table('products')->insert([
 
+            'product_name' => "iPhone 11",
+            'product_image' => 'iphone_11_image.jpg',
+            'product_description' => Str::random(350),
             'category_id' => 1,
             'brand_id' => 1,
-            'product_name' => "iPhone 11 Pro",
-            'product_image' => 'iphone_11_pro_image.jpg',
-            'product_network' => 'AT&T',
-            'product_memory' => '256GB',
-            'product_colour' => '#ba0c2f',
-            'product_grade' => 'B',
-            'product_dimensions' => "144 x 71.4 x 8.1 ",
-            'product_processor' => 'Apple A13 Bionic',
-            'product_weight' => '188g',
-            'product_screen' => '5.8',
-            'product_system' => 'iOS',
-            'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
-            'product_battery' => '3046 mAh',
-            'product_signal' => 'g3, g4',
-            'product_camera' => '12 MP',
-            'product_sim' => 'Single SIM',
-            'product_memory_slots' => 'No',
-            'price' => '889.99'
-
-        ]);
-
-        DB::table('products')->insert([
-
-            'category_id' => 1,
-            'brand_id' => 1,
-            'product_name' => "iPhone 12",
-            'product_image' => 'iphone_12_image.jpg',
             'product_network' => 'EE',
-            'product_memory' => '128GB',
+            'product_memory' => '64GB',
             'product_colour' => '#ba0c2f',
-            'product_grade' => 'A',
-            'product_dimensions' => "7.4",
+            'product_grade' => 'A+',
+            'product_dimensions' => "150.9x75.7x8.3",
             'product_processor' => 'Apple A13 Bionic',
             'product_weight' => '188g',
-            'product_screen' => '6.7',
+            'product_screen' => '6.1',
             'product_system' => 'iOS',
             'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
             'product_battery' => '3110 mAh',
@@ -155,59 +133,227 @@ class DatabaseSeeder extends Seeder
             'product_camera' => '12 MP',
             'product_sim' => 'Single SIM',
             'product_memory_slots' => 'No',
-            'price' => '629'
+            'product_quantity'=>3,
+            'base_price' => '629'
 
         ]);
 
         DB::table('products')->insert([
 
+            'product_name' => "iPhone 11",
+            'product_image' => 'iphone_11_image.jpg',
+            'product_description' => Str::random(350),
             'category_id' => 1,
-            'brand_id' => 2,
-            'product_name' => "Galaxy S20",
-            'product_image' => 'galaxy_s20_image.jpg',
-            'product_network' => 'GSM',
-            'product_memory' => '128GB',
+            'brand_id' => 1,
+            'product_network' => 'EE',
+            'product_memory' => '64GB',
             'product_colour' => '#ba0c2f',
             'product_grade' => 'A+',
-            'product_dimensions' => "151.7 x 69.1 x 7.9",
-            'product_processor' => '2x2.73 GHz Mongoose',
-            'product_weight' => '163g',
-            'product_screen' => '6.2',
-            'product_system' => 'Android 10',
+            'product_dimensions' => "150.9x75.7x8.3",
+            'product_processor' => 'Apple A13 Bionic',
+            'product_weight' => '188g',
+            'product_screen' => '6.1',
+            'product_system' => 'iOS',
             'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
-            'product_battery' => '4000 mAh',
+            'product_battery' => '3110 mAh',
             'product_signal' => 'g3, g4',
             'product_camera' => '12 MP',
             'product_sim' => 'Single SIM',
-            'product_memory_slots' => 'microSDXC',
-            'price' => '649'
+            'product_memory_slots' => 'No',
+            'product_quantity'=>3,
+            'base_price' => '629'
 
         ]);
 
         DB::table('products')->insert([
 
+            'product_name' => "iPhone 11",
+            'product_image' => 'iphone_11_image.jpg',
+            'product_description' => Str::random(350),
             'category_id' => 1,
-            'brand_id' => 2,
-            'product_name' => "Galaxy S10",
-            'product_image' => 'galaxy_s20_image.jpg',
-            'product_network' => 'GSM',
-            'product_memory' => '128GB',
+            'brand_id' => 1,
+            'product_network' => 'EE',
+            'product_memory' => '64GB',
             'product_colour' => '#ba0c2f',
-            'product_grade' => 'B',
-            'product_dimensions' => "151.7 x 69.1 x 7.9",
-            'product_processor' => '2x2.73 GHz Mongoose',
-            'product_weight' => '157g',
-            'product_screen' => '6.2',
-            'product_system' => 'Android 9',
+            'product_grade' => 'A+',
+            'product_dimensions' => "150.9x75.7x8.3",
+            'product_processor' => 'Apple A13 Bionic',
+            'product_weight' => '188g',
+            'product_screen' => '6.1',
+            'product_system' => 'iOS',
             'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
-            'product_battery' => '4000 mAh',
+            'product_battery' => '3110 mAh',
             'product_signal' => 'g3, g4',
             'product_camera' => '12 MP',
             'product_sim' => 'Single SIM',
-            'product_memory_slots' => 'microSDXC',
-            'price' => '519'
+            'product_memory_slots' => 'No',
+            'product_quantity'=>3,
+            'base_price' => '629'
 
         ]);
+
+        DB::table('products')->insert([
+
+            'product_name' => "iPhone 11",
+            'product_image' => 'iphone_11_image.jpg',
+            'product_description' => Str::random(350),
+            'category_id' => 1,
+            'brand_id' => 1,
+            'product_network' => 'EE',
+            'product_memory' => '64GB',
+            'product_colour' => '#ba0c2f',
+            'product_grade' => 'A+',
+            'product_dimensions' => "150.9x75.7x8.3",
+            'product_processor' => 'Apple A13 Bionic',
+            'product_weight' => '188g',
+            'product_screen' => '6.1',
+            'product_system' => 'iOS',
+            'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
+            'product_battery' => '3110 mAh',
+            'product_signal' => 'g3, g4',
+            'product_camera' => '12 MP',
+            'product_sim' => 'Single SIM',
+            'product_memory_slots' => 'No',
+            'product_quantity'=>3,
+            'base_price' => '629'
+
+        ]);
+
+        DB::table('products')->insert([
+
+            'product_name' => "iPhone 11",
+            'product_image' => 'iphone_11_image.jpg',
+            'product_description' => Str::random(350),
+            'category_id' => 1,
+            'brand_id' => 1,
+            'product_network' => 'EE',
+            'product_memory' => '64GB',
+            'product_colour' => '#ba0c2f',
+            'product_grade' => 'A+',
+            'product_dimensions' => "150.9x75.7x8.3",
+            'product_processor' => 'Apple A13 Bionic',
+            'product_weight' => '188g',
+            'product_screen' => '6.1',
+            'product_system' => 'iOS',
+            'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
+            'product_battery' => '3110 mAh',
+            'product_signal' => 'g3, g4',
+            'product_camera' => '12 MP',
+            'product_sim' => 'Single SIM',
+            'product_memory_slots' => 'No',
+            'product_quantity'=>3,
+            'base_price' => '629'
+
+        ]);
+
+        DB::table('products')->insert([
+
+            'product_name' => "iPhone 11",
+            'product_image' => 'iphone_11_image.jpg',
+            'product_description' => Str::random(350),
+            'category_id' => 1,
+            'brand_id' => 1,
+            'product_network' => 'EE',
+            'product_memory' => '64GB',
+            'product_colour' => '#ba0c2f',
+            'product_grade' => 'A+',
+            'product_dimensions' => "150.9x75.7x8.3",
+            'product_processor' => 'Apple A13 Bionic',
+            'product_weight' => '188g',
+            'product_screen' => '6.1',
+            'product_system' => 'iOS',
+            'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
+            'product_battery' => '3110 mAh',
+            'product_signal' => 'g3, g4',
+            'product_camera' => '12 MP',
+            'product_sim' => 'Single SIM',
+            'product_memory_slots' => 'No',
+            'product_quantity'=>3,
+            'base_price' => '629'
+
+        ]);
+
+        DB::table('products')->insert([
+
+            'product_name' => "iPhone 11",
+            'product_image' => 'iphone_11_image.jpg',
+            'product_description' => Str::random(350),
+            'category_id' => 1,
+            'brand_id' => 1,
+            'product_network' => 'EE',
+            'product_memory' => '64GB',
+            'product_colour' => '#ba0c2f',
+            'product_grade' => 'A+',
+            'product_dimensions' => "150.9x75.7x8.3",
+            'product_processor' => 'Apple A13 Bionic',
+            'product_weight' => '188g',
+            'product_screen' => '6.1',
+            'product_system' => 'iOS',
+            'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
+            'product_battery' => '3110 mAh',
+            'product_signal' => 'g3, g4',
+            'product_camera' => '12 MP',
+            'product_sim' => 'Single SIM',
+            'product_memory_slots' => 'No',
+            'product_quantity'=>3,
+            'base_price' => '629'
+
+        ]);
+
+        DB::table('products')->insert([
+
+            'product_name' => "iPhone 11",
+            'product_image' => 'iphone_11_image.jpg',
+            'product_description' => Str::random(350),
+            'category_id' => 1,
+            'brand_id' => 1,
+            'product_network' => 'EE',
+            'product_memory' => '64GB',
+            'product_colour' => '#ba0c2f',
+            'product_grade' => 'A+',
+            'product_dimensions' => "150.9x75.7x8.3",
+            'product_processor' => 'Apple A13 Bionic',
+            'product_weight' => '188g',
+            'product_screen' => '6.1',
+            'product_system' => 'iOS',
+            'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
+            'product_battery' => '3110 mAh',
+            'product_signal' => 'g3, g4',
+            'product_camera' => '12 MP',
+            'product_sim' => 'Single SIM',
+            'product_memory_slots' => 'No',
+            'product_quantity'=>3,
+            'base_price' => '629'
+
+        ]);
+
+        DB::table('products')->insert([
+
+            'product_name' => "iPhone 11",
+            'product_image' => 'iphone_11_image.jpg',
+            'product_description' => Str::random(350),
+            'category_id' => 1,
+            'brand_id' => 1,
+            'product_network' => 'EE',
+            'product_memory' => '64GB',
+            'product_colour' => '#ba0c2f',
+            'product_grade' => 'A+',
+            'product_dimensions' => "150.9x75.7x8.3",
+            'product_processor' => 'Apple A13 Bionic',
+            'product_weight' => '188g',
+            'product_screen' => '6.1',
+            'product_system' => 'iOS',
+            'product_connectivity' => 'wlan, bluetooth, gps, radio, usb',
+            'product_battery' => '3110 mAh',
+            'product_signal' => 'g3, g4',
+            'product_camera' => '12 MP',
+            'product_sim' => 'Single SIM',
+            'product_memory_slots' => 'No',
+            'product_quantity'=>3,
+            'base_price' => '629'
+
+        ]);
+
 
     }
 }

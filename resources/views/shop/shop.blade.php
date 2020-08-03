@@ -18,7 +18,7 @@
 
         <main>
             <div class="app">
-                <div class="shop-top-header" style="margin: 0;">
+                <div class="shop-top-header">
                     <div class="shop-search-container">
                         <div class="search-bar">
                             <form class="shop-search-form" action="/searchproducts" method="POST">
@@ -80,128 +80,89 @@
                             </div>
                         </div>
                     </div>
+                    <div class="assurance-container">
+                        <div class="assurance-element">
+                            <img src="{{asset('/customer_page_images/body/Assurance-image-1.svg')}}">
+                            <p>FREE NEXT DAY NATIONWIDE DELIVERY</p>
+                        </div>
+                        <div class="assurance-element">
+                            <img src="{{asset('/customer_page_images/body/Assurance-image-2.svg')}}">
+                            <p>BAMBOO QUALITY APPROVED OVER 100 FUNCTIONAL CHECKS</p>
+                        </div>
+                        <div class="assurance-element">
+                            <img src="{{asset('/customer_page_images/body/Assurance-image-3.svg')}}">
+                            <p>NO QUIBBLE MONEY BACK</p>
+                        </div>
+                        <div class="assurance-element">
+                            <img src="{{asset('/customer_page_images/body/Assurance-image-4.svg')}}">
+                            <p>12 MONTH GUARANTEE</p>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="let-top-container">
-                    <div class="center-title-container">
-                        <p> {{$title}} </p>
-                    </div>
-                </div>
 
-                @if($appleData !== null && count($appleData)>0)
-                    <div class="shop-devices-container apple-devices-container">
-                        <div class="center-title-container">
-                            <p>Shop <strong>Apple</strong></p>
-                        </div>
-                        <div class="devices">
-                            @foreach($appleData as $appleDevice)
-                            <a href="/shop/item/{{$appleDevice->id}}"><div class="shop-device">
-                                <img src="{{$appleDevice->product_image}}">
-                                <p>{{$appleDevice->product_name}}</p>
-                            </div></a>
-                        @endforeach
-                        </div>
-
-                        <div class="shop-form-container">
-                            <form action="/shop/allitems" method="GET">
-                                
-                                <input type="hidden" name="sort" value="apple">
-                                <button type="submit" class="btn btn-primary btn-blue">Shop all Apple Mobile Phones</button>
-                            </form>
-                        </div>
-                    </div>
-                @endif
-
-                @if($samsungData !== null && count($samsungData)>0)
-                    <div class="shop-devices-container samsung-devices-container">
-                        <div class="center-title-container">
-                            <p>Shop <strong>Samsung</strong></p>
-                        </div>
-                        <div class="devices">
-                            @foreach($samsungData as $samsungDevice)
-                            <a href="/shop/item/{{$samsungDevice->id}}"><div class="shop-device">
-                                <img src="{{$samsungDevice->product_image}}">
-                                <p>{{$samsungDevice->product_name}}</p>
-                            </div></a>
-                        @endforeach
-                        </div>
-                        <div class="shop-form-container">
-                            <form action="/shop/allitems" method="GET">
-                                
-                                <input type="hidden" name="sort" value="samsung">
-                                <button type="submit" class="btn btn-primary btn-blue">Shop all Samsung Mobile Phones</button>
-                            </form>
-                        </div>
-                    </div>
-                @endif
-
-                @if($brands !== null)
-
-                    <div class="shop-brands-container">
-                        <div class="center-title-container">
-                            <p>Shop <strong>Brand</strong></p>
-                        </div>
-                        <div class="brands-container">
-                            @foreach($brands as $brand)
-                            <div class="brand-container">
-                                
-                                
-                            </div>
-                            @endforeach
-                        </div>
-                        <div class="shop-form-container">
-                            <form action="/shop/allitems" method="GET">
-                               
-                                <input type="hidden" name="sort" value="brands">
-                                <button type="submit" class="btn btn-primary btn-blue">Shop all Brands</button>
-                            </form>
-                        </div>
-
-                    </div>
-
-                @endif
-
-                <div class="shop-grade-container">
-                    <div class="center-title-container">
-                        <p>Shop by<strong>Grade</strong></p>
-                    </div>
-                    <div class="grades-container">
-                        <div class="grade-container">
-                            <p><strong>A+</strong></p>
-                        </div>
-                        <div class="grade-container">
-                            <p><strong>A</strong></p>
-                        </div>
-                        <div class="grade-container">
-                            <p><strong>B</strong></p>
-                        </div>
-                        <div class="grade-container">
-                            <p><strong>C</strong></p>
-                        </div>
-                    </div>
-                    <div class="shop-form-container">
+                <div class="shop-view-container">
+                    <div class="shop-sidebar">
                         <form action="/shop/allitems" method="GET">
-                            <input type="hidden" name="sort" value="grades">
-                            <button type="submit" class="btn btn-primary btn-blue">Shop all Grades</button>
-                        </form>
-                    </div>
-                </div>
+                            <div class="sidebar-sort-container">
+                                <p>SORT BY</p>
 
-                <div class="assurance-container">
-                    <div class="assurance-element">
-                        <img src="{{asset('/customer_page_images/body/Assurance-image-1.svg')}}">
-                        <p>FREE NEXT DAY NATIONWIDE DELIVERY</p>
+                            </div>
+
+                            <div class="sidebar-filters-container">
+
+                            </div>
+                            <div class="sidebar-category-container">
+
+                            </div>
+                            <div class="sidebar-brand-container">
+
+                            </div>
+                            <div class="sidebar-grade-container">
+
+                            </div>
+                            <div class="sidebar-price-container">
+
+                            </div>
+                            <div class="sidebar-memory-container">
+
+                            </div>
+                            <div class="sidebar-network-container">
+
+                            </div>
+                            <div class="sidebar-colour-container">
+
+                            </div>
+                            <div class="sidebar-apply-container">
+                                <button type="submit" class="btn btn-primary btn-orange">Apply Filters</button>
+                            </div>
+                    </form>
                     </div>
-                    <div class="assurance-element">
-                        <img src="{{asset('/customer_page_images/body/Assurance-image-2.svg')}}">
-                        <p>BAMBOO QUALITY APPROVED OVER 100 FUNCTIONAL CHECKS</p>
-                    </div>
-                    <div class="assurance-element">
-                        <img src="{{asset('/customer_page_images/body/Assurance-image-3.svg')}}">
-                        <p>NO QUIBBLE MONEY BACK</p>
-                    </div>
-                    <div class="assurance-element">
-                        <img src="{{asset('/customer_page_images/body/Assurance-image-4.svg')}}">
-                        <p>12 MONTH GUARANTEE</p>
+                    <div class="shop-devices">
+                        @foreach($products as $product)
+                        <div class="product-container">
+                            <a href="/shop/item/{{$product->id}}">
+                                <div class="product-data-container">
+                                    <img src="{{$product->product_image}}">
+                                    <p class="product-name">{{$product->product_name}}</p>
+                                </div>
+                            </a>
+                            <div class="buttons-container">
+                                <a href="/shop/item/{{$product->id}}" class="btn btn-primary btn-blue view-phone">
+                                    View phone
+                                </a>
+                                @if(Auth::user())
+                                <div class="btn btn-primary btn-orange" onclick="addToWishList()">
+                                    View phone
+                                </div>
+                                @else
+                                <a class="btn btn-primary btn-orange" data-toggle="modal" data-target="#loginModal">
+                                    <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                </a>
+                                @endif
+                            </div>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
 
@@ -340,13 +301,19 @@
                 </div>
             </div>
         </main>
+
         <footer>@include('customer.layouts.footer')</footer>
+
         <script>
 
             function showRegistrationForm(){
                 if(!document.getElementsByClassName('modal-second-element')[0].classList.contains('modal-second-element-active')){
                     document.getElementsByClassName('modal-second-element')[0].classList.add('modal-second-element-active');
                 }
+            }
+
+            function addToWishList(){
+                console.log("hepek");
             }
 
         </script>
