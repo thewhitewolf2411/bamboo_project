@@ -89,22 +89,54 @@
                     <div class="product-image-container">
                         <img src="{{$itemData->product_image}}">
                     </div>
-                    <div class="product-data-container">
-                        <div class="product-name-container">
-                            <p>{{$itemData->product_name}}</p>
+                    <div class="product-data">
+                        <div class="product-selected product-name-container">
+                            <p class="product-title">{{$itemData->product_name}}</p>
                         </div>
                         <div class="product-selected product-network-container">
                             <p>Product Network:</p>
+                            
                         </div>
                         <div class="product-selected product-memory-container">
                             <p>Product Memory:</p>
+                            <p>{{$itemData->product_memory}}</p>
                         </div>
-                        <div class="product-selected product-color-container">
+                        <div class="product-selected">
                             <p>Product Colour:</p>
+                            <div class="product-color-container" style="background: {{$itemData->product_colour}}"></div>
                         </div>
                         <div class="product-selected product-grade-container">
                             <p>Product Grade:</p>
+                            <p>{{$itemData->product_grade}}</p>
                         </div>
+                        <div class="product-selected product-price-container">
+                            <p>Product Grade:</p>
+                            <p>{{$itemData->product_price}}</p>
+                        </div>
+                        @if(Auth::user())
+                        <div class="add-to-container">
+
+                            <div class="add-to-cart-container">
+                                <input type="hidden" name="product-id" value="{{$itemData->id}}">
+                                <button type="submit" class="btn btn-primary btn-blue">Add to Basket</button>
+                            </div>
+
+                            <div class="add-to-wishlist-container">
+                                <input type="hidden" name="product-id" value="{{$itemData->id}}">
+                                <button type="submit" class="btn btn-primary btn-orange">Add to Basket</button>
+                            </div>
+                        </div>
+                        @else
+                        <div class="add-to-container">
+                            <div class="add-to-cart-container">
+                                <button type="submit" class="btn btn-primary btn-blue">Add to Basket</button>
+                            </div>
+
+                            <div class="add-to-wishlist-container">
+                                <button type="submit" class="btn btn-primary btn-orange">Add to Basket</button>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
 
@@ -217,11 +249,11 @@
 
                     <div class="product-description-right">
                         <div class="assurance-element">
-                            <img src="{{asset('/customer_page_images/body/Assuranc')}}">
+                            <img src="{{asset('/customer_page_images/body/Assurance-image-3.svg')}}">
                             <p>NO QUIBBLE MONEY BACK</p>
                         </div>
                         <div class="assurance-element">
-                            <img src="">
+                            <img src="{{asset('/customer_page_images/body/Assurance-image-4.svg')}}">
                             <p>12 MONTH GUARANTEE</p>
                         </div>
                     </div>

@@ -12427,6 +12427,17 @@ h3, h4, h5 {
   flex-wrap: wrap;
 }
 
+.product-description-right .assurance-element {
+  width: 45%;
+  align-items: center;
+}
+
+.product-description-right .assurance-element p {
+  margin: 0;
+  padding: 0;
+  padding-top: 20px;
+}
+
 .product-description-text {
   width: 80%;
   height: 50%;
@@ -12465,6 +12476,44 @@ h3, h4, h5 {
   width: calc(100vw - 300px);
   margin: 0 auto;
   border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+}
+
+.warranty-container .product-description-right {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.single-product-container {
+  padding: 50px 150px;
+  display: flex;
+}
+
+.product-image-container {
+  width: 50%;
+}
+
+.product-data {
+  width: 50%;
+}
+
+.product-image-container img {
+  height: 300px;
+}
+
+.product-title {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.product-selected {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.product-color-container {
+  width: 120px;
+  height: 40px;
+  border-radius: 8px;
 }
 
 .sell-top-container {

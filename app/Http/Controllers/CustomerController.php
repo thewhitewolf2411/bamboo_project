@@ -109,22 +109,6 @@ class CustomerController extends Controller
     
             $cart = new Cart($oldCart);
     
-            $date = date("Y/m/d") . " " . date("h:i:sa");
-    
-            $order = new Order;
-    
-            $order->order_placed = $date;
-            $order->product_id = $request->id;
-            $order->user_id = Auth::user()->id;
-            $order->user_email = Auth::user()->email;
-            $order->product_total = $request->quantity * $request->price;
-            $order->order_total = $request->quantity * $request->price;
-            $order->order_status = 0;
-            $order->payment_status = 0;
-            $order->shipping_status = 0;
-            $order->quantity = $request->quantity;
-            $order->status = $request->state;
-    
             $cart->add($order);
     
             $request->session()->put('cart', $cart);

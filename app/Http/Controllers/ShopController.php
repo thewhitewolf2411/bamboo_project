@@ -50,8 +50,8 @@ class ShopController extends Controller
             break;
             case "mobile":
                 $data = Product::get();
-                $appleData = Product::where('category_id', 1)->where('brand_id', 1)->get();
-                $samsungData = Product::where('category_id', 1)->where('brand_id', 2)->get();
+                $appleData = Product::where('category_id', 1)->where('brand_id', 1)->limit(4)->get();
+                $samsungData = Product::where('category_id', 1)->where('brand_id', 2)->limit(4)->get();
                 $brands = Brand::get();
                 $title = "Shop Mobile Phones";
             break;
