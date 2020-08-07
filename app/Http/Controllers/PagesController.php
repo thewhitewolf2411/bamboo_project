@@ -17,6 +17,27 @@ class PagesController extends Controller
      */
     public function index()
     {
+        if(Auth::user()){
+            $role = Auth::user()->type_of_user; 
+
+            // Check user role
+            switch ($role) {
+                case 0:
+                    return \redirect('/');
+                    break;
+                case 1:
+                    return \redirect('/portal');
+                    break; 
+                case 2:
+                    return \redirect('/portal');
+                    break; 
+                case 3:
+                    return \redirect('/portal');
+                    break; 
+                }
+        }
+
+
         $products = Product::all();
         return view('welcome')->with('products', $products);
     }
@@ -49,4 +70,5 @@ class PagesController extends Controller
             return redirect('/');
         }
     }
+
 }

@@ -27,65 +27,31 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Recycle</p>
+                        <p>Customer Care</p>
                     </div>
                 </div>
                 <div class="portal-content-container">
-                    <a href="/portal/customer-care">
+                    <a href="/portal/customer-care/trade-in">
                         <div class="portal-content-element">
-                            <p><i class="fa fa-child"></i>Customer Care</p>
+                        <p><i class="fa fa-shopping-cart"></i>Trade-Ins</p>
                         </div>
                     </a>
-                    <a href="/portal/categories">
+                    <a href="/portal/customer-care/destroy-device">
                         <div class="portal-content-element">
-                        <p><i class="fa fa-folder-open-o"></i>Categories / Brands</p>
+                        <p><i class="fa fa-trash-o"></i>Devices to be destroyed</p>
                         </div>
                     </a>
-                    <a href="/portal/product">
+                    <a href="/portal/customer-care/trade-pack">
                         <div class="portal-content-element">
-                            <p><i class="fa fa-barcode"></i>Product</p>
+                        <p><i class="fa fa-envelope-o"></i>Trade pack dispach</p>
                         </div>
                     </a>
-                    <a href="/portal/quarantine">
+                    <a href="/portal/customer-care/seller">
                         <div class="portal-content-element">
-                            <p><i class="fa fa-stethoscope"></i>Quarantine</p>
+                        <p><i class="fa fa-child"></i>Sellers</p>
                         </div>
                     </a>
-                    <a href="/portal/testing">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-tachometer"></i>Testing</p>
-                        </div>
-                    </a>
-                    <a href="/portal/payments">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-credit-card"></i>Payments</p>
-                        </div>
-                    </a>
-                    <a href="/portal/reports">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-line-chart"></i>Reports</p>
-                        </div>
-                    </a>
-                    <a href="/portal/feeds">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-cloud-download"></i>Feeds</p>
-                        </div>
-                    </a>
-                    <a href="/portal/users">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-user"></i>Users</p>
-                        </div>
-                    </a>
-                    <a href="/portal/settngs">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-cogs"></i>Settings</p>
-                        </div>
-                    </a>
-                    <a href="/portal/cms">
-                        <div class="portal-content-element">
-                        <p><i class="fa fa-file"></i>CMS</p>
-                        </div>
-                    </a>
+
                 </div>
             </div>
         </div>

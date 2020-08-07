@@ -40,13 +40,13 @@ class LoginController extends Controller
                 return '/portal';
                 break; 
             case 2:
-                return '/admin';
+                return '/portal';
                 break; 
             case 3:
-                return '/admin';
+                return '/portal';
                 break; 
             default:
-                return '/login'; 
+                return '/'; 
                 break;
             }
     }

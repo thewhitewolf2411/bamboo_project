@@ -18,6 +18,7 @@ class CreateProductCategoryTable extends Migration
             $table->string('category_name');
             $table->string('category_description');
             $table->string('category_image');
+            $table->integer('total_produts')->default(0);
             $table->timestamps();
         });
     }

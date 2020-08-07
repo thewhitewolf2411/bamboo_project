@@ -17,6 +17,7 @@ class CreateBrandTable extends Migration
             $table->id();
             $table->string('brand_name');
             $table->string('brand_image');
+            $table->integer('total_produts')->default(0);
             $table->timestamps();
         });
     }
