@@ -76,7 +76,7 @@
                             <p><i class="fa fa-user"></i>Users</p>
                         </div>
                     </a>
-                    <a href="/portal/settngs">
+                    <a href="/portal/settings">
                         <div class="portal-content-element">
                             <p><i class="fa fa-cogs"></i>Settings</p>
                         </div>

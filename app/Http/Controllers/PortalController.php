@@ -188,17 +188,49 @@ class PortalController extends Controller
 
     //quarantine
 
+    public function showQuarantinePage(){
+        return view('portal.quarantine');
+    }
+
     //testing
+
+    public function showTestingPage(){
+        return view('portal.testing');
+    }
 
     //payments
 
+    public function showPaymentPage(){
+        return view('portal.payments');
+    }
+
     //reports
+
+    public function showReportsPage(){
+        return view('portal.reports');
+    }
 
     //feeds
 
+    public function showFeedsPage(){
+        return view('portal.feeds');
+    }
+
     //users
+
+    public function showUsersPage(){
+        return view('portal.users');
+    }
 
     //settings
 
+    public function showSettingsPage(){
+        return view('portal.settings');
+    }
+
     //cms
+
+    public function showCmsPage(){
+        return view('portal.cms');
+    }
 }

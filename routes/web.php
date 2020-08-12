@@ -80,3 +80,19 @@ Route::get('/portal/product/delete/{id}', 'PortalController@deleteProduct')->mid
 Route::get('/portal/product/edit/{id}', 'PortalController@showEditProductPage')->middleware('auth');
 Route::get('/portal/product/add','PortalController@showAddProductView')->middleware('auth');
 Route::post('/portal/product/addproduct','PortalController@addProduct')->middleware('auth');
+
+Route::get('/portal/quarantine', 'PortalController@showQuarantinePage')->middleware('auth');
+
+Route::get('/portal/testing', 'PortalController@showTestingPage')->middleware('auth');
+
+Route::get('/portal/payments', 'PortalController@showPaymentPage')->middleware('auth');
+
+Route::get('/portal/reports', 'PortalController@showReportsPage')->middleware('auth');
+
+Route::get('/portal/feeds', 'PortalController@showFeedsPage')->middleware('auth');
+
+Route::get('/portal/user', 'PortalController@showUsersPage')->middleware('auth');
+
+Route::get('/portal/settings','PortalController@showSettingsPage')->middleware('auth');
+
+Route::get('/portal/cms', 'PortalController@showCmsPage')->middleware('auth');
