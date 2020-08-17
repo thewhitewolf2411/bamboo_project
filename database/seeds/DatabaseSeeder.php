@@ -33,5 +33,23 @@ class DatabaseSeeder extends Seeder
             'account_disabled'=>false,
         ]);
 
+        DB::table('users')->insert([
+
+            'first_name'=>'Eren',
+            'last_name'=>'Yeager',
+            'email'=>'eren@yeager.com',
+            'password'=>Hash::make('Lambda12'),
+            'birthdate'=>'24.11.1993',
+            'current_phone'=>'2',
+            'preffered_os'=>'iOS',
+            'sub'=>false,
+            'username'=>'eyeager',
+            'delivery_address'=>'Sarajevo',
+            'billing_address'=>'Sarajevo',
+            'contact_number'=>'061172442',
+            'type_of_user'=>0,
+            'account_disabled'=>false,
+        ]);
+
     }
 }

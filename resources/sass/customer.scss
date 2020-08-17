@@ -13,7 +13,7 @@ main p, a, span{
 }
 
 .home-element{
-    padding: 60px;
+    padding: 60px 150px;
 }
 
 .home-title-container{
@@ -100,7 +100,7 @@ main p, a, span{
 .shopping-content-container{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     opacity: 0;
     width: 0;
     height: 0;
@@ -310,13 +310,26 @@ main p, a, span{
 
 .devices-container{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    max-width: 1300px;
+    width: 1300px;
+    margin-top: 50px;
+}
+
+.popular-devices{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .device-container{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.device-container img{
+    width: 250px;
 }
 
 .category-text{
@@ -339,7 +352,8 @@ main p, a, span{
     background: linear-gradient(#A3D147, #59DDC1);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
+    height: 1200px;
 
 }
 
@@ -350,12 +364,10 @@ main p, a, span{
 }
 
 .about-element-container{
-    width: 40%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-left: 150px;
-    
+    width: 50%;
 }
 
 .about-bamboo-text{
@@ -381,19 +393,17 @@ main p, a, span{
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    margin-bottom: 150px;
-    margin-top: 50px;
 }
 
 
 
 .sustainability-element-container{
-    width: 40%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-right: 150px;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .about-images{
@@ -725,7 +735,7 @@ main p, a, span{
     height: 250px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 

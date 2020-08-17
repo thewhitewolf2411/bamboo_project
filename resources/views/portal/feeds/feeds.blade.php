@@ -27,38 +27,45 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Customer Care</p>
+                        <p>Feeds</p>
                     </div>
                 </div>
                 <div class="portal-content-container">
-                    <a href="/portal/customer-care/trade-in">
+                    <a href="/portal/feeds/export-import">
                         <div class="portal-content-element">
-                        <p><i class="fa fa-shopping-cart"></i>Trade-Ins</p>
+                            <p><i class="fa fa-download"></i>Export/Import</p>
                         </div>
                     </a>
-                    <a href="/portal/customer-care/destroy-device">
+                    <a href="/portal/feeds/summary">
                         <div class="portal-content-element">
-                        <p><i class="fa fa-trash-o"></i>Devices to be destroyed</p>
+                            <p><i class="fa fa-bars"></i>Summary</p>
                         </div>
                     </a>
-                    <a href="/portal/customer-care/trade-pack">
+                    <a href="/portal/feeds/external">
                         <div class="portal-content-element">
-                        <p><i class="fa fa-envelope-o"></i>Trade pack dispach</p>
+                            <p><i class="fa fa-bars"></i>External</p>
                         </div>
                     </a>
-                    <a href="/portal/customer-care/seller">
-                        <div class="portal-content-element">
-                        <p><i class="fa fa-child"></i>Sellers</p>
-                        </div>
-                    </a>
-
                 </div>
             </div>
         </div>
     </main>
 
 </body>
+<script>
 
+$(document).ready(function(){
+
+    var elem = $('.portal-links-container > .portal-header-element')[7];
+    
+    console.log(elem.children[0]);
+
+    elem.children[0].style.color = "#fff";
+    elem.children[0].children[0].style.opacity = 1;
+
+});
+
+</script>
 
 
 </html>

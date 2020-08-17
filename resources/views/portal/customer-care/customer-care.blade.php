@@ -27,28 +27,28 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Payments</p>
+                        <p>Customer Care</p>
                     </div>
                 </div>
                 <div class="portal-content-container">
-                    <a href="/portal/payments/awaiting">
+                    <a href="/portal/customer-care/trade-in">
                         <div class="portal-content-element">
-                            <p><i class="fa fa-money"></i>Payments Awaiting Assignment</p>
+                        <p><i class="fa fa-shopping-cart"></i>Trade-Ins</p>
                         </div>
                     </a>
-                    <a href="/portal/payments">
+                    <a href="/portal/customer-care/destroy-device">
                         <div class="portal-content-element">
-                            <p><i class="fa fa-credit-card"></i>Pending Payment Jobs</p>
+                        <p><i class="fa fa-trash-o"></i>Devices to be destroyed</p>
                         </div>
                     </a>
-                    <a href="/portal/payments/completed">
+                    <a href="/portal/customer-care/trade-pack">
                         <div class="portal-content-element">
-                            <p><i class="fa fa-gbp"></i>Completed Payment Jobs</p>
+                        <p><i class="fa fa-envelope-o"></i>Trade pack dispach</p>
                         </div>
                     </a>
-                    <a href="/portal/payments/report">
+                    <a href="/portal/customer-care/seller">
                         <div class="portal-content-element">
-                            <p><i class="fa fa-table"></i>Payment Report</p>
+                        <p><i class="fa fa-child"></i>Sellers</p>
                         </div>
                     </a>
 
@@ -59,6 +59,20 @@
 
 </body>
 
+<script>
+
+$(document).ready(function(){
+
+    var elem = $('.portal-links-container > .portal-header-element')[0];
+    
+    console.log(elem.children[0]);
+
+    elem.children[0].style.color = "#fff";
+    elem.children[0].children[0].style.opacity = 1;
+
+});
+
+</script>
 
 
 </html>

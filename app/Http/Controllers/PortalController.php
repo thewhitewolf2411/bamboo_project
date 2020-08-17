@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Eloquent\Category;
 use App\Eloquent\Product;
 use App\Eloquent\Brand;
+use App\Eloquent\PortalUsers;
+use Auth;
 
 use Storage;
 
@@ -16,26 +18,38 @@ class PortalController extends Controller
         $this->middleware('auth');
     }
 
+    public function portal(){
+        if(Auth::User()->type_of_user == 1 || Auth::User()->type_of_user == 3){
+
+            $portal_user = PortalUsers::where('user_id', Auth::User()->id)->first();
+
+            return view('portal')->with('user_data', $portal_user);
+        }
+        else{
+            return redirect('/');
+        }
+    }
+
     //customer care
 
     public function showCustomerCare(){
-        return view('portal.customer-care');
+        return view('portal.customer-care.customer-care');
     }
 
     public function showTradeIn(){
-
+        return view('portal.customer-care.trade-in');
     }
 
     public function showDestroyDevice(){
-
+        return view('portal.customer-care.destroy');
     }
 
     public function showTradePack(){
-
+        return view('portal.customer-care.trade-pack');
     }
 
     public function showSeller(){
-
+        return view('portal.customer-care.seller');
     }
 
     //categories
@@ -45,7 +59,7 @@ class PortalController extends Controller
         $products = Product::all();
         $brands = Brand::all();
 
-        return view('portal.categories')->with('categories', $categories)->with('products', $products)->with('brands', $brands);
+        return view('portal.categories.categories')->with('categories', $categories)->with('products', $products)->with('brands', $brands);
     }
 
     public function showAddCategoryView(){
@@ -53,11 +67,13 @@ class PortalController extends Controller
     }
 
     public function ShowEditCategoryView($id){
-
+        $category = Category::where('id', $id)->get();
+        return view('portal.categories.editcategory');
     }
 
     public function deleteCategory($id){
-
+        Category::where('id', $id)->delete();
+        return \redirect('/portal/categories');
     }
 
     public function showAddBrandsView(){
@@ -65,11 +81,13 @@ class PortalController extends Controller
     }
 
     public function ShowEditBrandsView($id){
-
+        Brand::where('id', $id)->get();
+        return view('portal.categories.editbrand');
     }
 
     public function deleteBrands($id){
-
+        Brand::where('id', $id)->delete();
+        return \redirect('/portal/categories');
     }
 
     public function addCategory(Request $request){
@@ -118,7 +136,7 @@ class PortalController extends Controller
 
         $products = Product::all();
 
-        return view('portal.product')->with('products', $products);
+        return view('portal.product.product')->with('products', $products);
 
     }
 
@@ -131,7 +149,8 @@ class PortalController extends Controller
     }
 
     public function showEditProductPage($id){
-        
+        $product = Product::where('id', $id)->get();
+        return view('portal.product.editproduct')->with('product', $product);
     }
 
     public function deleteProduct($id){
@@ -189,48 +208,48 @@ class PortalController extends Controller
     //quarantine
 
     public function showQuarantinePage(){
-        return view('portal.quarantine');
+        return view('portal.quarantine.quarantine');
     }
 
     //testing
 
     public function showTestingPage(){
-        return view('portal.testing');
+        return view('portal.testing.testing');
     }
 
     //payments
 
     public function showPaymentPage(){
-        return view('portal.payments');
+        return view('portal.payments.payments');
     }
 
     //reports
 
     public function showReportsPage(){
-        return view('portal.reports');
+        return view('portal.reports.reports');
     }
 
     //feeds
 
     public function showFeedsPage(){
-        return view('portal.feeds');
+        return view('portal.feeds.feeds');
     }
 
     //users
 
     public function showUsersPage(){
-        return view('portal.users');
+        return view('portal.users.users');
     }
 
     //settings
 
     public function showSettingsPage(){
-        return view('portal.settings');
+        return view('portal.settings.settings');
     }
 
     //cms
 
     public function showCmsPage(){
-        return view('portal.cms');
+        return view('portal.cms.cms');
     }
 }

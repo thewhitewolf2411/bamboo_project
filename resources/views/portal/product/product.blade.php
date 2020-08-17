@@ -55,10 +55,10 @@
                             <td><div class="table-element">{{$product->product_quantity}}</div></td>
                             <td><div class="table-element">{{$product->product_name}}</div></td>
                             <td><div class="table-element">
-                                <a href="/portal/brands/edit/{{$product->id}}">
+                                <a href="/portal/product/edit/{{$product->id}}">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <a href="/portal/brands/delete/{{$product->id}}">
+                                <a href="/portal/product/delete/{{$product->id}}">
                                     <i class="fa fa-times remove"></i>
                                 </a>
                                 </div>
@@ -75,6 +75,19 @@
     </main>
 
 </body>
+<script>
 
+$(document).ready(function(){
+
+    var elem = $('.portal-links-container > .portal-header-element')[2];
+    
+    console.log(elem.children[0]);
+
+    elem.children[0].style.color = "#fff";
+    elem.children[0].children[0].style.opacity = 1;
+
+});
+
+</script>
 
 </html>

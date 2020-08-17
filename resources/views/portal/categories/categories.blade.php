@@ -55,10 +55,10 @@
                             <td><div class="table-element">{{$category->total_produts}}</div></td>
                             <td><div class="table-element">{{$category->category_name}}</div></td>
                             <td><div class="table-element">
-                                <a href="/portal/brands/edit/{{$category->id}}">
+                                <a href="/portal/categories/edit/{{$category->id}}">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <a href="/portal/brands/delete/{{$category->id}}">
+                                <a href="/portal/categories/delete/{{$category->id}}">
                                     <i class="fa fa-times remove"></i>
                                 </a>
                                 </div>
@@ -121,6 +121,19 @@
     </main>
 
 </body>
+<script>
 
+$(document).ready(function(){
+
+    var elem = $('.portal-links-container > .portal-header-element')[1];
+    
+    console.log(elem.children[0]);
+
+    elem.children[0].style.color = "#fff";
+    elem.children[0].children[0].style.opacity = 1;
+
+});
+
+</script>
 
 </html>

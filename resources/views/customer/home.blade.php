@@ -43,7 +43,7 @@
                         <p>1. YOU SEARCH FOR A NEW DEVICE</p>
                     </div>
                     <div class="how-text-container">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius euismod sollicitudin. Pellentesque convallis, diam ac vulputate suscipit, mi tortor molestie massa.</p>
+                        <p>Simply select your new device or accessory that is the Right Device, Right Price, Right Quality. Rest assured with Boo Approved products!</p>
                     </div>
                 </div>
                 <div class="how-text-element">
@@ -51,7 +51,7 @@
                         <p>3. YOU HAVE A SHINY NEW DEVICE</p>
                     </div>
                     <div class="how-text-container">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius euismod sollicitudin. Pellentesque convallis, diam ac vulputate suscipit, mi tortor molestie massa.</p>
+                        <p>Enjoy your new device with a 12 month warranty</p>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                     <img src="{{asset('/customer_page_images/body/How-Icon-3.svg')}}">
                 </div>
                 <div class="url-footer-container" id="start-shopping">
-                    <a href="#">Start Shopping</a>
+                    <a href="/shop">Start Shopping</a>
                 </div>
             </div>
 
@@ -77,7 +77,7 @@
                     <p>2. FREE NEXT DAY DELIVERY</p>
                 </div>
                 <div class="how-text-container">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius euismod sollicitudin. Pellentesque convallis, diam ac vulputate suscipit, mi tortor molestie massa.</p>
+                    <p>Contact less delivery straight to your door.</p>
                 </div>
             </div>
 
@@ -87,10 +87,10 @@
             <div class="how-second-text-container">
                 <div class="how-text-element">
                     <div class="how-text-title-container">
-                        <p>2. WE SEND YOU A FREE POST BOX</p>
+                        <p>2. FREE DELIVERY OPTIONS</p>
                     </div>
                     <div class="how-text-container">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius euismod sollicitudin. Pellentesque convallis, diam ac vulputate suscipit, mi tortor molestie massa.</p>
+                        <p>Once you have completed your sales order, you simply request for a free sales pack or print your own labels to send in your device.</p>
                     </div>
                 </div>
             </div>
@@ -107,25 +107,25 @@
                     <img src="{{asset('/customer_page_images/body/How-Icon-6.svg')}}">
                 </div>
                 <div class="url-footer-container" id="start-selling">
-                    <a href="#">Start Selling</a>
+                    <a href="/sell">Start Selling</a>
                 </div>
             </div>
 
             <div class="how-first-text-container">
                 <div class="how-text-element">
                     <div class="how-text-title-container">
-                        <p>1. YOU SEARCH FOR A NEW DEVICE</p>
+                        <p>1. REGISTER YOUR DEVICE TO SELL</p>
                     </div>
                     <div class="how-text-container">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius euismod sollicitudin. Pellentesque convallis, diam ac vulputate suscipit, mi tortor molestie massa.</p>
+                        <p>Find your old device and how much it's worth. Choose your preferred payment option with all your details.</p>
                     </div>
                 </div>
                 <div class="how-text-element">
                     <div class="how-text-title-container">
-                        <p>3. GET PAID! WOOHOO!</p>
+                        <p>3. FAST SAME DAY PAYMENT</p>
                     </div>
                     <div class="how-text-container">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque varius euismod sollicitudin. Pellentesque convallis, diam ac vulputate suscipit, mi tortor molestie massa.</p>
+                        <p>When we receive your device, we will check  it against your order. If it is all correct, payment will be made on the same day of receipt. Woohoo!</p>
                     </div>
                 </div>
             </div>
@@ -249,9 +249,12 @@
                 <div class="center-title-container">
                     <p>About bamboo</p>
                 </div>
-                <p class="about-bamboo-text">Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent non est id leo viverra porttitor. Vivamus iaculis nisl non hend.</p>
+                <p class="about-bamboo-text">Bamboo Mobile is a recognised international, independent mobile phone distributor, and recycler which has been operating for over 10 years by a management team of industry professionals.<br>
+                    Adding value to products, Bamboo purchased all types of mobile handsets which then customises, with a multitude of services ranging from refurbishing, language flashing, and reworking to prepare for distribution.<br>
+                    A professional work ethic and dedicated management team with over 50 years combined experience in the mobile industry, has seen the company become an established entity and trusted partner in the marketplace.<br>
+                    Working with High Street Retailers, Authorised Distributors and Repairers, Insurance Companies, Independent Retails and Exporters, Bamboo assist their key partners and add value throughout the supply chain, delivering product solutions to individuals and companies.</p>
                 <div class="grading-show-more-container">
-                    <a href="#"><div class="grading-show-more-btn">
+                    <a href="/setpage/about"><div class="grading-show-more-btn">
                         <p>Read More</p>
                     </div></a>
                 </div>    
@@ -278,7 +281,10 @@
                 <div class="center-title-container">
                     <p>Sustainability</p>
                 </div>
-                <p class="about-bamboo-text">Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent non est id leo viverra porttitor. Vivamus iaculis nisl non hend.</p>
+                <p class="about-bamboo-text">Buy from us
+                    The large variety of stock Bamboo Distribution has available means we can offer new refurbished and used, power tested mobile phones and electronic products. Our flexible order quantities allow us to cater to the needs of our customers while competitive pricing guarantees value for money.<br>
+                    Sell to us<br>
+                    At Bamboo Distribution we are always buying any quantity of mobile phones and electronic products in any condition. If getting good value, quick payment and great service is important to you please contact us today! We look forward to hearing from you.</p>
                 <div class="grading-show-more-container">
                     <a href="#"><div class="grading-show-more-btn">
                         <p>Read More</p>
@@ -291,7 +297,7 @@
     <div class="home-element home-links-container">
         
         <div class="home-links-element">
-            <a href="#">
+            <a href="/setpage/news">
                 <div class="home-link-container" id="news">
                     <p>News & Blog</p>
                     <img src="{{asset('/customer_page_images/body/home-link-images/home-links-1.svg')}}">
@@ -300,7 +306,7 @@
         </div>
 
         <div class="home-links-element">
-            <a href="#">
+            <a href="/setpage/support">
                 <div class="home-link-container" id="service">
                     <p>Service & Support</p>
                     <img src="{{asset('/customer_page_images/body/home-link-images/home-links-2.svg')}}">
@@ -309,7 +315,7 @@
         </div>
 
         <div class="home-links-element">
-            <a href="#">
+            <a href="/setpage/contact">
                 <div class="home-link-container" id="contact">
                     <p>Contact us</p>
                     <img src="{{asset('/customer_page_images/body/home-link-images/home-links-3.svg')}}">

@@ -10,7 +10,7 @@
                 <a class="menu_button_text" href="/portal/customer-care"><i class="fa fa-child"></i>Customer Care</a>
             </div>
             <div class="portal-header-element">
-                <a class="menu_button_text" href="/portal/category"><i class="fa fa-folder-open-o"></i>Categories / Brands</a>
+                <a class="menu_button_text" href="/portal/categories"><i class="fa fa-folder-open-o"></i>Categories / Brands</a>
             </div>
             <div class="portal-header-element">
                 <a class="menu_button_text" href="/portal/product"><i class="fa fa-barcode"></i>Product</a>
@@ -47,3 +47,5 @@
     </div>
 
 </div>
+
+

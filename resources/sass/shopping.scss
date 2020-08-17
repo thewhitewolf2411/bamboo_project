@@ -74,6 +74,18 @@
     background: url('/images/Bamboo_header3.png');
     background-size: cover;
     background-position: center;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.latest-product-container{
+    opacity: 0;
+}
+
+.latest-product-active{
+    opacity: 1;
 }
 
 .shop-categories-container{

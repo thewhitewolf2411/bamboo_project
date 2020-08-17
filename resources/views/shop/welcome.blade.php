@@ -56,7 +56,17 @@
                         </div>
                     </div>
                     <div class="shop-header-background">
-                        
+                        <div class="latest-offer-container">
+                            <div class="latest-offer-scroller">
+                                @foreach($latestProducts as $latestProduct)
+                                <div class="latest-product-container">
+                                    <p>LATEST OFFER</p>
+                                    <p>{{$latestProduct->product_name}}</p>
+                                    <p>from only £{{$latestProduct->base_price}}</p>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
                     <div class="trustpilot-container">
                         <div class="trustpilot-element">
@@ -426,6 +436,16 @@
                     document.getElementsByClassName('modal-second-element')[0].classList.add('modal-second-element-active');
                 }
             }
+
+            $('document').ready(function(){
+                var slideElements = $('.latest-product-container');
+                for(var i=0; i<slideElements.length; i++){
+                    if(i == 0){
+                        slideElements[i].classList.add('latest-product-active');
+                        break;
+                    }
+                }
+            });
 
         </script>
     </body>

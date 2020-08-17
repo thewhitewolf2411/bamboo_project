@@ -23,7 +23,8 @@ class PagesController extends Controller
             // Check user role
             switch ($role) {
                 case 0:
-                    return \redirect('/');
+                    $products = Product::all();
+                    return view('welcome')->with('products', $products);
                     break;
                 case 1:
                     return \redirect('/portal');
@@ -36,7 +37,6 @@ class PagesController extends Controller
                     break; 
                 }
         }
-
 
         $products = Product::all();
         return view('welcome')->with('products', $products);
@@ -59,16 +59,6 @@ class PagesController extends Controller
         
     }
 
-    public function portal(){
-        if(Auth::User()->type_of_user == 1 || Auth::User()->type_of_user == 3){
 
-            $portal_user = PortalUsers::where('user_id', Auth::User()->id)->first();
-
-            return view('portal')->with('user_data', $portal_user);
-        }
-        else{
-            return redirect('/');
-        }
-    }
 
 }

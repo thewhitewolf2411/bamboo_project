@@ -27,8 +27,8 @@
                     @case("how")
                         @include('customer.how')
                         @break
-                    @case("sell")
-                        @include('customer.sell')
+                    @case("news")
+                        @include('customer.news')
                         @break
                     @case("faqs")
                         @include('customer.faqs')
@@ -45,6 +45,14 @@
                 @endswitch
             @else
                 @include('customer.home')
+            @endif
+
+            @if(session('showLogin'))
+                <script>
+                    $(window).on('load',function(){
+                        $('#loginModal').modal('show');
+                    });
+                </script>
             @endif
 
             <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

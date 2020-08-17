@@ -27,27 +27,51 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Receipt & Testing</p>
+                        <p>Payments</p>
                     </div>
                 </div>
                 <div class="portal-content-container">
-                    <a href="/portal/testing/receive">
+                    <a href="/portal/payments/awaiting">
                         <div class="portal-content-element">
-                            <p><i class="fa fa-qrcode"></i>Receive Trade-In</p>
+                            <p><i class="fa fa-money"></i>Payments Awaiting Assignment</p>
                         </div>
                     </a>
-                    <a href="/portal/testing/find">
+                    <a href="/portal/payments">
                         <div class="portal-content-element">
-                            <p><i class="fa fa-barcode"></i>Find Trade-in Product</p>
+                            <p><i class="fa fa-credit-card"></i>Pending Payment Jobs</p>
                         </div>
                     </a>
+                    <a href="/portal/payments/completed">
+                        <div class="portal-content-element">
+                            <p><i class="fa fa-gbp"></i>Completed Payment Jobs</p>
+                        </div>
+                    </a>
+                    <a href="/portal/payments/report">
+                        <div class="portal-content-element">
+                            <p><i class="fa fa-table"></i>Payment Report</p>
+                        </div>
+                    </a>
+
                 </div>
             </div>
         </div>
     </main>
 
 </body>
+<script>
 
+$(document).ready(function(){
+
+    var elem = $('.portal-links-container > .portal-header-element')[5];
+    
+    console.log(elem.children[0]);
+
+    elem.children[0].style.color = "#fff";
+    elem.children[0].children[0].style.opacity = 1;
+
+});
+
+</script>
 
 
 </html>

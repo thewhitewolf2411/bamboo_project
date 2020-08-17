@@ -24,7 +24,8 @@ class ShopController extends Controller
 
     public function showShopView(){
         $products = Product::all();
-        return view ('shop.welcome')->with('products', $products);
+        $latestProducts = Product::orderBy('id', 'desc')->take(3)->get();
+        return view ('shop.welcome')->with('products', $products)->with('latestProducts', $latestProducts);
     }
 
     public function showLetView(){

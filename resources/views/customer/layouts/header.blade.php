@@ -15,18 +15,10 @@
         
         <div class="hovers-header">
             <div class="hover-link" id="user-hover-link">
-                @if(Auth::User())
                 <a href="/setpage/account"><i class="fa fa-user-o" aria-hidden="true"></i><p class="showhover">Account</p></a>
-                @else
-                <a data-toggle="modal" data-target="#loginModal"><i class="fa fa-user-o" aria-hidden="true"></i><p class="showhover">Account</p></a>
-                @endif
             </div>
             <div class="hover-link" id="wishlist-hover-link">
-                @if(Auth::User())
                 <a href="/setpage/wishlist"><i class="fa fa-heart-o" aria-hidden="true"></i><p class="showhover">Wishlist</p></a>
-                @else
-                <a data-toggle="modal" data-target="#loginModal"><i class="fa fa-heart-o" aria-hidden="true"></i><p class="showhover">Wishlist</p></a>
-                @endif
             </div>
             <div class="hover-link" id="card-hover-link">
                 <a href="/cart"><i class="fa fa-keyboard-o" aria-hidden="true"></i><p class="showhover">Basket</p></a>

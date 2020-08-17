@@ -16,6 +16,7 @@ class CustomerController extends Controller
     public function setPage($parameter){
         $page = "home";
         $categories = null;
+        $showLogin = false;
 
         switch($parameter){
             case "home":
@@ -27,9 +28,8 @@ class CustomerController extends Controller
             case "how":
                 $page="how";
             break;
-            case "sell":
-                $categories = $this->getAllCategories();
-                $page="sell";
+            case "news":
+                $page="news";
             break;
             case "faqs":
                 $page="faqs";
@@ -45,15 +45,15 @@ class CustomerController extends Controller
                     return redirect('/userprofile');
                 }
                 else{
-                    return redirect('/login');
+                    $showLogin = true;
                 }
             break;
             case "wishlist":
                 if(Auth::user()){
-
+                    return redirect('/userprofile/wishlist');
                 }
                 else{
-                    return redirect('/login');
+                    $showLogin = true;
                 }
             break;
             default:
@@ -64,13 +64,14 @@ class CustomerController extends Controller
         $products = Product::all();
 
         if($categories == null){
-            return redirect('/')->with('page', $page)->with('products', $products);
+            return redirect('/')->with('page', $page)->with('products', $products)->with('showLogin', $showLogin);
         }
         else{
             return redirect('/')
                     ->with('page', $page)
                     ->with('categories', $categories)
-                    ->with('products', $products);
+                    ->with('products', $products)
+                    ->with('showLogin', $showLogin);
         }
         
     }
@@ -214,5 +215,9 @@ class CustomerController extends Controller
             return redirect('/');
         }
 
+    }
+
+    public function showWishlist(){
+        return view('customer.wishlist');
     }
 }

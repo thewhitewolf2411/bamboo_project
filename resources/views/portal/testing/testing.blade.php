@@ -27,23 +27,18 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Feeds</p>
+                        <p>Receipt & Testing</p>
                     </div>
                 </div>
                 <div class="portal-content-container">
-                    <a href="/portal/feeds/export-import">
+                    <a href="/portal/testing/receive">
                         <div class="portal-content-element">
-                            <p><i class="fa fa-download"></i>Export/Import</p>
+                            <p><i class="fa fa-qrcode"></i>Receive Trade-In</p>
                         </div>
                     </a>
-                    <a href="/portal/feeds/summary">
+                    <a href="/portal/testing/find">
                         <div class="portal-content-element">
-                            <p><i class="fa fa-bars"></i>Summary</p>
-                        </div>
-                    </a>
-                    <a href="/portal/feeds/external">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-bars"></i>External</p>
+                            <p><i class="fa fa-barcode"></i>Find Trade-in Product</p>
                         </div>
                     </a>
                 </div>
@@ -52,7 +47,20 @@
     </main>
 
 </body>
+<script>
 
+$(document).ready(function(){
+
+    var elem = $('.portal-links-container > .portal-header-element')[4];
+    
+    console.log(elem.children[0]);
+
+    elem.children[0].style.color = "#fff";
+    elem.children[0].children[0].style.opacity = 1;
+
+});
+
+</script>
 
 
 </html>

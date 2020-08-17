@@ -25,6 +25,7 @@ Route::get('/setpage/{parameter}', [
 ]);
 
 Route::get('/userprofile', 'CustomerController@showProfile');
+Route::get('/userprofile/wishlist', 'CustomerController@showWishlist');
 
 Route::get('/products/{category}', 'CustomerController@customerCategoryView')->name('customerproducts');
 Route::get('/product/{product}', 'CustomerController@showProduct')->name('showproduct');
@@ -57,13 +58,16 @@ Route::post('/addCategory', 'AdminController@addCategory')->middleware('auth');
 Route::post('/addProduct', 'AdminController@addProduct')->middleware('auth');
 
 //Portal get Route
-Route::get('/portal', 'PagesController@portal')->name('portal')->middleware('auth');
+
+Route::get('/portal', 'PortalController@portal')->name('portal')->middleware('auth');
+
+//customer-care
 Route::get('/portal/customer-care', 'PortalController@showCustomerCare')->name('customerCare')->middleware('auth');
 Route::get('/portal/customer-care/trade-in', 'PortalController@showTradeIn')->name('tradeIn')->middleware('auth');
 Route::get('/portal/customer-care/destroy-device', 'PortalController@showDestroyDevice')->name('destroyDevice')->middleware('auth');
 Route::get('/portal/customer-care/trade-pack', 'PortalController@showTradePack')->name('tradePack')->middleware('auth');
 Route::get('/portal/customer-care/seller', 'PortalController@showSeller')->name('seller')->middleware('auth');
-
+//categories, brands
 Route::get('/portal/categories', 'PortalController@showCategories')->name('showCategories')->middleware('auth');
 Route::get('/portal/categories/add', 'PortalController@showAddCategoryView')->middleware('auth');
 Route::get('/portal/categories/edit/{id}', 'PortalController@ShowEditCategoryView')->middleware('auth');
@@ -75,24 +79,33 @@ Route::get('/portal/brands/edit/{id}', 'PortalController@ShowEditBrandsView')->m
 Route::get('/portal/brands/delete/{id}', 'PortalController@deleteBrands')->middleware('auth');
 Route::post('/portal/brands/addbrabnd','PortalController@addBrand')->middleware('auth');
 
+//products
 Route::get('/portal/product', 'PortalController@showProductsPage')->middleware('auth');
 Route::get('/portal/product/delete/{id}', 'PortalController@deleteProduct')->middleware('auth');
 Route::get('/portal/product/edit/{id}', 'PortalController@showEditProductPage')->middleware('auth');
 Route::get('/portal/product/add','PortalController@showAddProductView')->middleware('auth');
 Route::post('/portal/product/addproduct','PortalController@addProduct')->middleware('auth');
 
+//quarantine
 Route::get('/portal/quarantine', 'PortalController@showQuarantinePage')->middleware('auth');
 
+//testing
 Route::get('/portal/testing', 'PortalController@showTestingPage')->middleware('auth');
 
+//payments
 Route::get('/portal/payments', 'PortalController@showPaymentPage')->middleware('auth');
 
+//reports
 Route::get('/portal/reports', 'PortalController@showReportsPage')->middleware('auth');
 
+//feeds
 Route::get('/portal/feeds', 'PortalController@showFeedsPage')->middleware('auth');
 
+//users
 Route::get('/portal/user', 'PortalController@showUsersPage')->middleware('auth');
 
+//settings
 Route::get('/portal/settings','PortalController@showSettingsPage')->middleware('auth');
 
+//cms
 Route::get('/portal/cms', 'PortalController@showCmsPage')->middleware('auth');
