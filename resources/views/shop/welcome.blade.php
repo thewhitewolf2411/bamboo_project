@@ -61,10 +61,28 @@
                                 @foreach($latestProducts as $latestProduct)
                                 <div class="latest-product-container">
                                     <p>LATEST OFFER</p>
-                                    <p>{{$latestProduct->product_name}}</p>
+                                    <p class="latest-product-big">{{$latestProduct->product_name}}</p>
                                     <p>from only £{{$latestProduct->base_price}}</p>
+                                    <a href="/shop/item/{{$latestProduct->id}}" class="btn btn-primary btn-white">Shop now</a>
                                 </div>
                                 @endforeach
+                            </div>
+                            <div class="circles-container">
+                                <a onclick="">
+                                    <div class="circle-container">
+                                    
+                                    </div>
+                                </a>
+                                <a onclick="">
+                                    <div class="circle-container">
+                                    
+                                    </div>
+                                </a>
+                                <a onclick="">
+                                    <div class="circle-container">
+                                    
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -439,13 +457,35 @@
 
             $('document').ready(function(){
                 var slideElements = $('.latest-product-container');
+                var circles = $('.circle-container');
                 for(var i=0; i<slideElements.length; i++){
                     if(i == 0){
                         slideElements[i].classList.add('latest-product-active');
+                        circles[i].classList.add('circle-container-active');
                         break;
                     }
                 }
             });
+
+            var k = 0;
+
+            setInterval(() => {
+                k++;
+                console.log(k);
+                if(k == 3){k = 0;}
+
+                var slideElements = $('.latest-product-container');
+                var circles = $('.circle-container');
+
+                for(var i = 0; i<3; i++){
+                    slideElements[i].classList.remove('latest-product-active');
+                    circles[i].classList.remove('circle-container-active');
+                }
+
+                slideElements[k].classList.add('latest-product-active');
+                circles[k].classList.add('circle-container-active');
+                
+            }, 10000);
 
         </script>
     </body>

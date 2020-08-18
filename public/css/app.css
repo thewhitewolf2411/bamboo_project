@@ -10361,7 +10361,7 @@ main p, a, span {
 }
 
 .grading-show-more-container {
-  padding: 20px;
+  margin-top: 20px;
 }
 
 .grading-show-more-btn {
@@ -10782,6 +10782,7 @@ main p, a, span {
 .contact-form-container {
   height: 0;
   opacity: 0;
+  display: none;
 }
 
 .contact-div-hidden {
@@ -10792,6 +10793,8 @@ main p, a, span {
   padding: 100px 250px;
   height: auto;
   opacity: 1;
+  display: flex;
+  justify-content: space-between;
 }
 
 .form-group {
@@ -10810,7 +10813,6 @@ main p, a, span {
 }
 
 #telephone-form-container {
-  display: flex;
   justify-content: space-between;
 }
 
@@ -10853,7 +10855,7 @@ main p, a, span {
 
 .contact-footer {
   background: #A375BC;
-  margin-top: 130px;
+  margin-top: 150px;
   display: flex;
   padding: 25px 250px;
   align-items: center;
@@ -11798,6 +11800,12 @@ h3, h4, h5 {
   border: 1px solid #23AAF7 !important;
 }
 
+.btn-white {
+  background: #fff !important;
+  border: 1px solid #fff !important;
+  color: #000;
+}
+
 .row-height-140 {
   height: 140px !important;
   min-height: 140px !important;
@@ -11940,12 +11948,70 @@ h3, h4, h5 {
   align-items: center;
 }
 
+.latest-offer-container {
+  width: 100%;
+  height: 100%;
+  padding: 50px 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .latest-product-container {
   opacity: 0;
+  width: 0;
+  height: 100%;
+  transition: 0.2s linear;
+}
+
+.latest-product-container p {
+  font-size: 36px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.latest-product-container a {
+  margin: 0;
+  width: 160px;
+}
+
+.latest-product-big {
+  font-size: 48px !important;
+}
+
+.latest-offer-scroller {
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
 
 .latest-product-active {
   opacity: 1;
+  width: 100%;
+  transition: 0.2s linear;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.circles-container {
+  display: flex;
+  width: 100px;
+}
+
+.circle-container {
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  opacity: 0.5;
+  border-radius: 50%;
+  transition: 0.2s linear;
+}
+
+.circle-container-active {
+  opacity: 1;
+  transition: 0.2s linear;
 }
 
 .shop-categories-container {
@@ -12537,6 +12603,24 @@ h3, h4, h5 {
   width: 120px;
   height: 40px;
   border-radius: 8px;
+}
+
+.add-to-container {
+  display: flex;
+  align-items: center;
+}
+
+.add-to-container p {
+  color: #57D591;
+  font-size: 18px;
+}
+
+.add-to-container form {
+  display: flex;
+}
+
+.add-to-cart-container {
+  margin-right: 2em;
 }
 
 .sell-top-container {

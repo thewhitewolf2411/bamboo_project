@@ -222,7 +222,7 @@ main p, a, span{
 }
 
 .grading-show-more-container{
-    padding: 20px;
+    margin-top: 20px;
 }
 
 .grading-show-more-btn{
@@ -642,6 +642,7 @@ main p, a, span{
 .contact-form-container{
     height: 0;
     opacity: 0;
+    display: none;
 }
 
 .contact-div-hidden{
@@ -653,6 +654,8 @@ main p, a, span{
     padding: 100px 250px;
     height: auto;
     opacity: 1;
+    display: flex;
+    justify-content: space-between;
 }
 
 .form-group{
@@ -671,7 +674,6 @@ main p, a, span{
 }
 
 #telephone-form-container{
-    display: flex;
     justify-content: space-between;
 }
 
@@ -714,7 +716,7 @@ main p, a, span{
 
 .contact-footer{
     background: #A375BC;
-    margin-top: 130px;
+    margin-top: 150px;
     display: flex;
     padding: 25px 250px;
     align-items: center;

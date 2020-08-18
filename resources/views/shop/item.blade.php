@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -87,7 +89,7 @@
                 <div class="single-product-container">
 
                     <div class="product-image-container">
-                        <img src="{{$itemData->product_image}}">
+                        <img src="{{asset('/storage/product_images').'/'.$itemData->product_image}}">
                     </div>
                     <div class="product-data">
                         <div class="product-selected product-name-container">
@@ -95,7 +97,6 @@
                         </div>
                         <div class="product-selected product-network-container">
                             <p>Product Network:</p>
-                            
                         </div>
                         <div class="product-selected product-memory-container">
                             <p>Product Memory:</p>
@@ -115,25 +116,32 @@
                         </div>
                         @if(Auth::user())
                         <div class="add-to-container">
+                            <form action="/addtocart" method="POST">
+                                <div class="add-to-cart-container">
+                                    @csrf
+                                    <input type="hidden" name="productid" value="{{$itemData->id}}">
+                                    <button type="submit" class="btn btn-primary btn-blue">Add to Basket</button>
+                                </div>
+                            </form>
+                            <form action="/addtowishlist" method="POST">
+                                <div class="add-to-wishlist-container">
+                                    <input type="hidden" name="productid" value="{{$itemData->id}}">
+                                    <button type="submit" class="btn btn-primary btn-orange">Add to Wishlist</button>
+                                </div>
+                            </form>
 
-                            <div class="add-to-cart-container">
-                                <input type="hidden" name="product-id" value="{{$itemData->id}}">
-                                <button type="submit" class="btn btn-primary btn-blue">Add to Basket</button>
-                            </div>
-
-                            <div class="add-to-wishlist-container">
-                                <input type="hidden" name="product-id" value="{{$itemData->id}}">
-                                <button type="submit" class="btn btn-primary btn-orange">Add to Basket</button>
-                            </div>
+                            @if(Session::has('productaddedtocart'))
+                                <p>Product was added to the cart. </p>
+                            @endif
                         </div>
                         @else
                         <div class="add-to-container">
                             <div class="add-to-cart-container">
-                                <button type="submit" class="btn btn-primary btn-blue">Add to Basket</button>
+                                <button type="submit" class="btn btn-primary btn-blue" onclick="showModal()">Add to Basket</button>
                             </div>
 
                             <div class="add-to-wishlist-container">
-                                <button type="submit" class="btn btn-primary btn-orange">Add to Basket</button>
+                                <button type="submit" class="btn btn-primary btn-orange" onclick="showModal()">Add to Wishlist</button>
                             </div>
                         </div>
                         @endif
@@ -262,12 +270,6 @@
 
                 <div class="bl-100"></div>
 
-                <div class="similar-devices">
-                    <div class="center-title-container">
-                        <p>Similar devices</p>
-                    </div>
-                </div>
-
                 <div class="home-element sign-up">
         
                     <div class="center-title-container">
@@ -362,11 +364,13 @@
                 }
             }
 
-            function addToWishList(){
-                console.log("hepek");
+            function showModal(){
+                $('#loginModal').modal('show');
             }
 
         </script>
     </body>
+
+
 
 </html>

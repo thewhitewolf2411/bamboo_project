@@ -286,7 +286,7 @@
                     Sell to us<br>
                     At Bamboo Distribution we are always buying any quantity of mobile phones and electronic products in any condition. If getting good value, quick payment and great service is important to you please contact us today! We look forward to hearing from you.</p>
                 <div class="grading-show-more-container">
-                    <a href="#"><div class="grading-show-more-btn">
+                    <a href="/setpage/about"><div class="grading-show-more-btn">
                         <p>Read More</p>
                     </div></a>
                 </div>   

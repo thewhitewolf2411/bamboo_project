@@ -104,23 +104,22 @@ class CustomerController extends Controller
     public function addProductToCart(Request $request){
 
         if(Auth::User()){
-            $product = Product::find($request->id);
+            $product = Product::find($request->productid);
 
             $oldCart = Session::has('cart') ? Session::get('cart') : null;
     
             $cart = new Cart($oldCart);
     
-            $cart->add($order);
+            $cart->add($product);
     
             $request->session()->put('cart', $cart);
     
-            return redirect('/cart');
+            return redirect('/shop/item/'.$request->productid)->with('productaddedtocart', true);
         }
         else{
             return redirect('/register');
         }
         
-
     }
 
     public function removeFromCart(Request $request){
@@ -161,24 +160,9 @@ class CustomerController extends Controller
 
         $oldCart = Session::get('cart');
 
-        $cart = new Cart($oldCart);
+        dd($oldCart);
 
-        $products = [];
-        $cartItems= [];
-
-        foreach($cart as $item){
-
-            foreach($item as $cartItem){
-
-                array_push($cartItems, $cartItem);
-            }
-        }
-
-        foreach($cartItems as $cartItem){
-            array_push($products, Product::where('id', $cartItem->product_id)->get());
-        }
-
-        return view('customer.cart')->with('cart', $cartItems)->with('products', $products);
+        #return view('customer.cart')->with('cart', $cartItems)->with('products', $products);
 
     }
 
@@ -198,6 +182,11 @@ class CustomerController extends Controller
 
         return redirect('/');
 
+    }
+
+    public function addProductToWishList($id){
+        $userid = Auth::user()->id;
+        $productid = $id;
     }
 
     public function showProfile(){

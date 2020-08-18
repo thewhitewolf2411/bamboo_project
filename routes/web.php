@@ -42,16 +42,19 @@ Route::get('/shop/allitems', 'ShopController@showAllItems');
 
 Route::post('/shop/choosephone', 'ShopController@choosePhone');
 
+
 //selling
 Route::get('/sell', 'SellController@showSellView');
 Route::get('/sell/why','SellController@showSellWhy');
 
 
 //User post Route
-Route::post('/addtocart/{id}', 'CustomerController@addProductToCart')->name('addproducttocart');
+Route::post('/addtocart', 'CustomerController@addProductToCart')->name('addproducttocart');
 Route::post('/removefromcart', 'CustomerController@removeFromCart')->name('removefromcart');
 Route::post('/checkoutcart', 'CustomerController@sheckoutcart')->name('sheckoutcart');
 
+Route::post('/addtowishlist', 'CustomerController@addProductToWishList')->name('addproducttowishlist');
+Route::post('/removefromwislist', 'CustomerController@removeFromWishList')->name('removeproductfromwishlist');
 
 //Admin post route
 Route::post('/addCategory', 'AdminController@addCategory')->middleware('auth');

@@ -53,9 +53,6 @@
                     </div>
                 </a>
             </div>
-
-
-
         </div>
         
     </div>
@@ -188,82 +185,30 @@
 
     function showContactForm(contact){
 
-        var hideElem = document.getElementsByClassName('contact-div');
-
-        if(contact=="message"){
-            if(!document.getElementById('message-form-container').classList.contains('contact-form-container-active')){
-                for(var i = 0; i<hideElem.length; i++){
-                    if(i!=0){
-                        hideElem[i].classList.add('contact-div-hidden');
-                    }
-                }
-                document.getElementById('message-form-container').classList.add('contact-form-container-active');
-            }
-            else{
-                for(var i = 0; i<hideElem.length; i++){
-                    if(i!=0){
-                        hideElem[i].classList.remove('contact-div-hidden');
-                    }
-                }
-                document.getElementById('message-form-container').classList.remove('contact-form-container-active');
-            }
+        contactbuttons = document.getElementsByClassName('ways-container')[0].getElementsByClassName('ways-element');
+        contactforms = document.getElementsByClassName('contact-form-container');
+        for(var i = 0; i<contactbuttons.length; i++){
+            contactbuttons[i].classList.add('contact-div-hidden');
+            contactforms[i].classList.remove('contact-form-container-active');
         }
 
-        if(contact=="live"){
-            if(!document.getElementById('live-form-container').classList.contains('contact-form-container-active')){
-                for(var i = 0; i<hideElem.length; i++){
-                    if(i!=1){
-                        hideElem[i].classList.add('contact-div-hidden');
-                    }
-                }
-                document.getElementById('live-form-container').classList.add('contact-form-container-active');
-            }
-            else{
-                for(var i = 0; i<hideElem.length; i++){
-                    if(i!=1){
-                        hideElem[i].classList.remove('contact-div-hidden');
-                    }
-                }
-                document.getElementById('live-form-container').classList.remove('contact-form-container-active');
-            }
-        }
-
-        if(contact=="telephone"){
-            if(!document.getElementById('telephone-form-container').classList.contains('contact-form-container-active')){
-                for(var i = 0; i<hideElem.length; i++){
-                    if(i!=2){
-                        hideElem[i].classList.add('contact-div-hidden');
-                    }
-                }
-                document.getElementById('telephone-form-container').classList.add('contact-form-container-active');
-            }
-            else{
-                for(var i = 0; i<hideElem.length; i++){
-                    if(i!=2){
-                        hideElem[i].classList.remove('contact-div-hidden');
-                    }
-                }
-                document.getElementById('telephone-form-container').classList.remove('contact-form-container-active');
-            }
-        }
-
-        if(contact=="whatsapp"){
-            if(!document.getElementById('whatsapp-form-container').classList.contains('contact-form-container-active')){
-                for(var i = 0; i<hideElem.length; i++){
-                    if(i!=3){
-                        hideElem[i].classList.add('contact-div-hidden');
-                    }
-                }
-                document.getElementById('whatsapp-form-container').classList.add('contact-form-container-active');
-            }
-            else{
-                for(var i = 0; i<hideElem.length; i++){
-                    if(i!=3){
-                        hideElem[i].classList.remove('contact-div-hidden');
-                    }
-                }
-                document.getElementById('whatsapp-form-container').classList.remove('contact-form-container-active');
-            }
+        switch(contact){
+            case "message":
+            contactbuttons[0].classList.remove('contact-div-hidden');
+            contactforms[0].classList.add('contact-form-container-active');
+            break;
+            case "live":
+            contactbuttons[1].classList.remove('contact-div-hidden');
+            contactforms[1].classList.add('contact-form-container-active');
+            break;
+            case "telephone":
+            contactbuttons[2].classList.remove('contact-div-hidden');
+            contactforms[2].classList.add('contact-form-container-active');
+            break;
+            case "whatsapp":
+            contactbuttons[3].classList.remove('contact-div-hidden');
+            contactforms[3].classList.add('contact-form-container-active');
+            break;
         }
 
     }
