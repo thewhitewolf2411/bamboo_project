@@ -27,24 +27,47 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Sellers</p>
+                        <p>{{$title}}</p>
                     </div>
                 </div>
-                <div class="portal-content-container">
 
+                <div class="portal-table-container">
+
+                    <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td>Id</td>
+                            <td>Username</td>
+                            <td>First Name</td>
+                            <td>Surename</td>
+                            <td>Email Address</td>
+                            <td>Created</td>
+                            <td>
+                                <a href="/portal/user/add">
+                                <i class="fa fa-plus-circle"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                    </table>
 
                 </div>
+
             </div>
         </div>
     </main>
 
 </body>
 
+
+
+</html>
+
+
 <script>
 
 $(document).ready(function(){
 
-    var elem = $('.portal-links-container > .portal-header-element')[0];
+    var elem = $('.portal-links-container > .portal-header-element')[8];
     
     console.log(elem.children[0]);
 
@@ -54,6 +77,3 @@ $(document).ready(function(){
 });
 
 </script>
-
-
-</html>

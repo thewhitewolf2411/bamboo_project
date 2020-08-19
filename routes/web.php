@@ -106,6 +106,12 @@ Route::get('/portal/feeds', 'PortalController@showFeedsPage')->middleware('auth'
 
 //users
 Route::get('/portal/user', 'PortalController@showUsersPage')->middleware('auth');
+Route::get('/portal/user/add', 'PortalController@showAddUserPage')->middleware('auth');
+Route::get('/portal/user/edit/{id}', 'PortalController@editUser')->middleware('auth');
+Route::get('/portal/user/delete/{id}', 'PortalController@deleteUser')->middleware('auth');
+
+Route::post('/portal/user/adduser', 'PortalController@addUser')->middleware('auth');
+Route::post('/portal/user/search', 'PortalController@searchUser')->middleware('auth');
 
 //settings
 Route::get('/portal/settings','PortalController@showSettingsPage')->middleware('auth');

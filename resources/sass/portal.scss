@@ -219,3 +219,12 @@ tr:nth-child(even) {
     height: 70px;
     max-height: 70px;
 }
+
+.portal-search-form-container form{
+    display: flex;
+    align-items: center;
+}
+
+.portal-search-form-container form>input{
+    margin: 0;
+}

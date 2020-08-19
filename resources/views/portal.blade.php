@@ -71,7 +71,7 @@
                             <p><i class="fa fa-cloud-download"></i>Feeds</p>
                         </div>
                     </a>
-                    <a href="/portal/users">
+                    <a href="/portal/user">
                         <div class="portal-content-element">
                             <p><i class="fa fa-user"></i>Users</p>
                         </div>

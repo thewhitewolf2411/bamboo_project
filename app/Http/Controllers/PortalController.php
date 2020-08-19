@@ -7,6 +7,7 @@ use App\Eloquent\Category;
 use App\Eloquent\Product;
 use App\Eloquent\Brand;
 use App\Eloquent\PortalUsers;
+use App\User;
 use Auth;
 
 use Storage;
@@ -238,7 +239,44 @@ class PortalController extends Controller
     //users
 
     public function showUsersPage(){
-        return view('portal.users.users');
+
+        $match = ['type_of_user' => 1, 'type_of_user' => 2, 'type_of_user' => 3];
+        $users = User::where($match)->get();
+
+        return view('portal.users.users')->with('users', $users);
+    }
+
+    public function showAddUserPage(){
+        return view('portal.users.adduser')->with('title', 'Add User');
+    }
+
+    public function editUser($id){
+        $userdata = User::where('id', $id)->get();
+        $userdata = $userdata[0];
+        return view('portal.users.adduser')->with('userdata', $userdata)->with('title', 'Edit User '.$userdata->first_name);
+    }
+
+    public function deleteUser($id){
+        User::where('id', $id)->delete();
+        return \redirect()->back();
+    }
+    //post metode
+    public function addUser(Request $request){
+
+    }
+
+    public function searchUser(Request $request){
+        $user = null;
+        $match = ['type_of_user' => 1, 'type_of_user' => 2, 'type_of_user' => 3];
+        if($request->select_search_by_field == 1){
+            $user = User::where('id', $request->searchname)->where($match)->get();
+            $user = $user[0];
+        }
+        else if($request->select_search_by_field == 2){
+            $user = User::where('first_name', $request->searchname)->where($match)->get();
+            $user = $user[0];
+        }
+        return view('portal.users.adduser')->with('userdata', $user)->with('title', "Search result: ".$user->first_name);
     }
 
     //settings

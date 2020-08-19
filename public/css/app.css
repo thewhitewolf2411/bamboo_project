@@ -13086,6 +13086,15 @@ tr:nth-child(even) {
   max-height: 70px;
 }
 
+.portal-search-form-container form {
+  display: flex;
+  align-items: center;
+}
+
+.portal-search-form-container form > input {
+  margin: 0;
+}
+
 .register-elements-container {
   width: 50%;
 }
