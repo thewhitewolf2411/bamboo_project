@@ -12,6 +12,7 @@ use Auth;
 use Schema;
 
 use Storage;
+use File;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -206,6 +207,14 @@ class PortalController extends Controller
 
         $product->save();
 
+        $category = Category::where('id', $request->category)->get()[0];
+        $category->total_produts = $category->total_produts+1;
+        $category->save();
+
+        $brand = Brand::where('id', $request->brand)->get()[0];
+        $brand->total_produts = $brand->total_produts + 1;
+        $brand->save();
+
         return \redirect('/portal/product');
 
     }
@@ -306,25 +315,30 @@ class PortalController extends Controller
             $sheet->setCellValue($datarows[$i] . "1", $columns[$i]);
         }
 
+        $products = null;
+
         if($export_feed_parameter == "0"){
             $products = Product::all();
-
-            foreach($products as $key=>$product){
-                $product = array_values($product->toArray());
-                
-                for($i=0; $i<count($datarows); $i++){
-                    $sheet->setCellValue($datarows[$i] . ($key+2), $product[$i]);
-                }
-            }
-
-
-
-            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
-            $writer->save(public_path() . "/" . $filename);
-            
-            $this->downloadFile(public_path() . "/" . $filename);
-            
         }
+        else{
+            $products = Product::where('category_id', $export_feed_parameter)->get();
+        }
+
+        foreach($products as $key=>$product){
+            $product = array_values($product->toArray());
+            
+            for($i=0; $i<count($datarows); $i++){
+                $sheet->setCellValue($datarows[$i] . ($key+2), $product[$i]);
+            }
+        }
+
+
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
+        $writer->save(public_path() . "/" . $filename);
+        
+        $this->downloadFile(public_path() . "/" . $filename);
+        
 
     }
 
@@ -340,7 +354,7 @@ class PortalController extends Controller
             readfile($file);
 
             // if file is downloaded delete all created files from the sistem
-            $this->deleteCreatedFile($file);
+            File::delete($file);
             exit;
         }
     }
