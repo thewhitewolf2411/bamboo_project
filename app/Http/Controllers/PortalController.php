@@ -9,8 +9,12 @@ use App\Eloquent\Brand;
 use App\Eloquent\PortalUsers;
 use App\User;
 use Auth;
+use Schema;
 
 use Storage;
+
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class PortalController extends Controller
 {
@@ -212,11 +216,48 @@ class PortalController extends Controller
         return view('portal.quarantine.quarantine');
     }
 
+    public function showAwaitingResponse(){
+        return view('portal.quarantine.awaiting');
+    }
+
+    public function showQuarantineReturn(){
+        return view('portal.quarantine.return');
+    }
+
+    public function showQuarantineRetest(){
+        return view('portal.quarantine.retest');
+    }
+
+    public function showQuarantineStock(){
+        return view('portal.quarantine.stock');
+    }
+
+    public function showQuarantineManual(){
+        return view('portal.quarantine.manually');
+    }
+
     //testing
 
     public function showTestingPage(){
         return view('portal.testing.testing');
     }
+
+    public function showReceiveTradeIn(){
+        return view('portal.testing.receive');
+    }
+
+    public function showFindTradeIn(){
+        return view('portal.testing.find');
+    }
+
+    public function find(Request $request){
+        dd($request);
+    }
+
+    public function receive(Request $request){
+        dd($request);
+    }
+
 
     //payments
 
@@ -234,6 +275,79 @@ class PortalController extends Controller
 
     public function showFeedsPage(){
         return view('portal.feeds.feeds');
+    }
+
+    public function showExportImportPage(){
+        $categories = Category::all();
+        return view('portal.feeds.export-import')->with('categories', $categories);
+    }
+
+    public function showFeedsSummaryPage(){
+        return view('portal.feeds.summary');
+    }
+
+    public function showFeedsExternalPage(){
+        return view('portal.feeds.external');
+    }
+
+    public function feedsExport(Request $request){
+
+        $export_feed_parameter = $request->export_feed_parameter;
+        
+        $filename = "/feed_type_".$export_feed_parameter."[" . date("Y-m-d") ."_". date("h-i-s") . "].xlsx";
+
+        $columns = Schema::getColumnListing('products'); 
+        $datarows = range("A", "Z");
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        for($i=0; $i<count($datarows); $i++){
+            $sheet->setCellValue($datarows[$i] . "1", $columns[$i]);
+        }
+
+        if($export_feed_parameter == "0"){
+            $products = Product::all();
+
+            foreach($products as $key=>$product){
+                $product = array_values($product->toArray());
+                
+                for($i=0; $i<count($datarows); $i++){
+                    $sheet->setCellValue($datarows[$i] . ($key+2), $product[$i]);
+                }
+            }
+
+
+
+            $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
+            $writer->save(public_path() . "/" . $filename);
+            
+            $this->downloadFile(public_path() . "/" . $filename);
+            
+        }
+
+    }
+
+    public function downloadFile($file){
+        if (file_exists($file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+
+            // if file is downloaded delete all created files from the sistem
+            $this->deleteCreatedFile($file);
+            exit;
+        }
+    }
+
+
+    public function feedsImport(Request $request){
+        dd($request);
     }
 
     //users
@@ -260,7 +374,7 @@ class PortalController extends Controller
         User::where('id', $id)->delete();
         return \redirect()->back();
     }
-    //post metode
+
     public function addUser(Request $request){
 
     }

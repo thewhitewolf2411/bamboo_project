@@ -91,9 +91,19 @@ Route::post('/portal/product/addproduct','PortalController@addProduct')->middlew
 
 //quarantine
 Route::get('/portal/quarantine', 'PortalController@showQuarantinePage')->middleware('auth');
+Route::get('/portal/quarantine/awaiting-response', 'PortalController@showAwaitingResponse')->middleware('auth');
+Route::get('/portal/quarantine/return', 'PortalController@showQuarantineReturn')->middleware('auth');
+Route::get('/portal/quarantine/retest', 'PortalController@showQuarantineRetest')->middleware('auth');
+Route::get('/portal/quarantine/stock', 'PortalController@showQuarantineStock')->middleware('auth');
+Route::get('/portal/quarantine/manual', 'PortalController@showQuarantineManual')->middleware('auth');
 
 //testing
 Route::get('/portal/testing', 'PortalController@showTestingPage')->middleware('auth');
+Route::get('/portal/testing/receive', 'PortalController@showReceiveTradeIn')->middleware('auth');
+Route::get('/portal/testing/find', 'PortalController@showFindTradeIn')->middleware('auth');
+
+Route::post('/portal/testing/find/find', 'PortalController@find')->middleware('auth');
+Route::post('/portal/testing/receive/receive', 'PortalController@receive')->middleware('auth');
 
 //payments
 Route::get('/portal/payments', 'PortalController@showPaymentPage')->middleware('auth');
@@ -103,6 +113,12 @@ Route::get('/portal/reports', 'PortalController@showReportsPage')->middleware('a
 
 //feeds
 Route::get('/portal/feeds', 'PortalController@showFeedsPage')->middleware('auth');
+Route::get('/portal/feeds/export-import', 'PortalController@showExportImportPage')->middleware('auth');
+Route::get('/portal/feeds/summary', 'PortalController@showFeedsSummaryPage')->middleware('auth');
+Route::get('/portal/feeds/external', 'PortalController@showFeedsExternalPage')->middleware('auth');
+
+Route::post('/portal/feeds/export-import/export', 'PortalController@feedsExport');
+Route::post('/portal/feeds/export-import/import', 'PortalController@feedsImport');
 
 //users
 Route::get('/portal/user', 'PortalController@showUsersPage')->middleware('auth');

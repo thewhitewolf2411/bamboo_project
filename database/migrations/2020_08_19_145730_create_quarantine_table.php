@@ -21,6 +21,7 @@ class CreateQuarantineTable extends Migration
             $table->boolean('products_to_retest')->default(false);
             $table->boolean('add_to_stock')->default(false);
             $table->boolean('manually_managed')->default(false);
+            $table->integer('days_in_quarantine');
             $table->timestamps();
         });
     }

@@ -223,8 +223,71 @@ tr:nth-child(even) {
 .portal-search-form-container form{
     display: flex;
     align-items: center;
+    padding: 0px 50px;
 }
 
 .portal-search-form-container form>input{
     margin: 0;
+}
+.portal-search-form-container form>label{
+    margin: 0;
+    margin-right: 15px;
+}
+
+#searchinput{
+    width: 40%;
+    margin-right: 50px;
+}
+
+#search_by_field{
+    width: 200px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.export-import-container{
+    padding: 50px;
+    border: 1px solid #428bca;
+    box-shadow: 0 1px px rgba(0,0,0,0.05);
+    border-radius: 4px;
+}
+
+.export-import-container form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+
+    height: 150px;
+}
+
+.export-import-container form>label{
+    margin: 0;
+    margin-right: 15px;
+}
+
+.bb-grey{
+    width: 80%;
+    border-top: 1px solid #e5e5e5;
+    margin: 20px auto;
+}
+
+.export-import-submit-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    padding: 10px;
+
+    background-color: #f5f5f5;
+    border-top: 1px solid #e5e5e5;
 }

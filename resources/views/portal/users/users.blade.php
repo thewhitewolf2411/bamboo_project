@@ -34,7 +34,7 @@
                     <form action="/portal/user/search" method="POST">
                         @csrf
                         <label for="">Search:</label>
-                        <input type="text" name="searchname" class="form-control">
+                        <input id="searchinput" type="text" name="searchname" class="form-control">
                         <select class="form-control" id="search_by_field" name="select_search_by_field"><option value="1">User ID</option><option value="2" selected="">Name</option></select>
                     </form>
                 </div>
