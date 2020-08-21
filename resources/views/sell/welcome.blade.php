@@ -19,17 +19,17 @@
         <main>
             <div class="sell-top-container">
                 <div class="top-upper-elements-container">
-                    <a href="">
+                    <a href="/sell/shop/mobile">
                         <div class="top-element-container">
                             <p>Sell Mobile Phones</p>
                         </div>
                     </a>
-                    <a href="">
+                    <a href="/sell/shop/tablets">
                         <div class="top-element-container">
                             <p>Sell Tablets</p>
                         </div>
                     </a>
-                    <a href="">
+                    <a href="/sell/shop/watches">
                         <div class="top-element-container">
                             <p>Sell Watches</p>
                         </div>

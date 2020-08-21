@@ -52,7 +52,7 @@
                     <form action="/portal/feeds/export-import/import" method="POST" enctype="multipart/form-data">
                         @csrf
                         <label><b>Import Feed:</b></label>
-                        <input type="file" name="imported-csv" class="form-control" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" name="imported_csv" class="form-control" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
                         <div class="export-import-submit-container">
                             <button type="submit" name="import-feed" class="btn btn-primary btn-blue">Upload Feed</button>
                         </div>

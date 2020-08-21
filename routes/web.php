@@ -46,6 +46,8 @@ Route::post('/shop/choosephone', 'ShopController@choosePhone');
 //selling
 Route::get('/sell', 'SellController@showSellView');
 Route::get('/sell/why','SellController@showSellWhy');
+Route::get('/sell/shop/{parameter}', 'SellController@showSellShop');
+Route::get('/sell/shop/item/{parameter}', 'SellController@showSellItem');
 
 
 //User post Route

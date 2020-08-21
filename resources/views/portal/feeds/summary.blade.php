@@ -30,7 +30,31 @@
                         <p>Feeds Summary</p>
                     </div>
                 </div>
+                <div class="portal-table-container">
 
+                    <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td>Feed Process ID</td>
+                            <td>Feed Type</td>
+                            <td>Status</td>
+                            <td>Created</td>
+                            <td>Modified</td>
+                        </tr>
+
+                        @foreach($feeds as $feed)
+
+                        <tr>
+                            <td><div class="table-element">{{$feed->id}}</div></td>
+                            <td><div class="table-element">{{$feed->feed_type}}</div></td>
+                            <td><div class="table-element">{{$feed->status}}</div></td>
+                            <td><div class="table-element">{{$feed->created_at}}</div></td>
+                            <td><div class="table-element">{{$feed->updated_at}}</div></td>
+                        </tr>
+
+                        @endforeach
+                    </table>
+
+                    </div>
 
             </div>
         </div>

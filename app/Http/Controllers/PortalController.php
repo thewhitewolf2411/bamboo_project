@@ -7,6 +7,7 @@ use App\Eloquent\Category;
 use App\Eloquent\Product;
 use App\Eloquent\Brand;
 use App\Eloquent\PortalUsers;
+use App\Eloquent\Feed;
 use App\User;
 use Auth;
 use Schema;
@@ -292,7 +293,8 @@ class PortalController extends Controller
     }
 
     public function showFeedsSummaryPage(){
-        return view('portal.feeds.summary');
+        $feeds = Feed::all();
+        return view('portal.feeds.summary')->with('feeds', $feeds);
     }
 
     public function showFeedsExternalPage(){
@@ -359,9 +361,77 @@ class PortalController extends Controller
         }
     }
 
-
     public function feedsImport(Request $request){
-        dd($request);
+
+        $products = Product::all();
+        foreach($products as $product){
+            $product->delete();
+        }
+
+        $inputFileName = $request->file('imported_csv')->getClientOriginalName();
+        $inputFileType = 'Xlsx';
+
+        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
+        /**  Advise the Reader that we only want to load cell data  **/
+        $reader->setReadDataOnly(true);
+
+        $worksheetData = $reader->listWorksheetInfo($request->file('imported_csv'));
+        $worksheetData = $worksheetData[0];
+        $sheetName = $worksheetData['worksheetName'];
+        $reader->setLoadSheetsOnly($sheetName);
+        $spreadsheet = $reader->load($request->file('imported_csv'));
+        $worksheet = $spreadsheet->getActiveSheet();
+
+        $importeddata = $worksheet->toArray();
+
+        unset($importeddata[0]);
+
+        foreach($importeddata as $key=>$datarow){
+            $product = new Product();
+
+            $product->product_name = $datarow[1];
+            $product->product_image = $datarow[2];
+            $product->product_description = $datarow[3];
+            $product->category_id = $datarow[4];
+            $product->brand_id = $datarow[5];
+            $product->product_code_name = $datarow[6];
+            $product->product_code_value = $datarow[7];
+            $product->product_network = $datarow[8];
+            $product->product_memory = $datarow[9];
+            $product->product_colour = $datarow[10];
+            $product->product_grade = $datarow[11];
+            $product->product_dimensions = $datarow[12];
+            $product->product_processor = $datarow[13];
+            $product->product_weight = $datarow[14];
+            $product->product_screen = $datarow[15];
+            $product->product_system = $datarow[16];
+            $product->product_connectivity = $datarow[17];
+            $product->product_battery = $datarow[18];
+            $product->product_signal = $datarow[19];
+            $product->product_camera = $datarow[20];
+            $product->product_camera_2 = $datarow[21];
+            $product->product_sim = $datarow[22];
+            $product->product_memory_slots = $datarow[23];
+            $product->product_quantity = $datarow[24];
+            $product->base_price = $datarow[25];
+
+            $product->save();
+
+            $category = Category::where('id', $datarow[4])->get()[0];
+            $category->total_produts = $category->total_produts+1;
+            $category->save();
+    
+            $brand = Brand::where('id', $datarow[5])->get()[0];
+            $brand->total_produts = $brand->total_produts + 1;
+            $brand->save();
+        }
+
+        $feed = new Feed();
+        $feed->feed_type = "All devices";
+        $feed->status = "Done";
+        $feed->save();
+
+        return \redirect('/portal/feeds/export-import');
     }
 
     //users

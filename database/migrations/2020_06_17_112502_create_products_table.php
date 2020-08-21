@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('product_name');
             $table->string('product_image');
-            $table->string('product_description',1000);
+            $table->string('product_description',1000)->nullable();
             $table->smallInteger('category_id');
             $table->smallInteger('brand_id');
             $table->string('product_code_name');
