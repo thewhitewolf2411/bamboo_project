@@ -65,9 +65,8 @@ class PortalController extends Controller
 
         $categories = Category::all();
         $products = Product::all();
-        $brands = Brand::all();
 
-        return view('portal.categories.categories')->with('categories', $categories)->with('products', $products)->with('brands', $brands);
+        return view('portal.categories.categories')->with('categories', $categories)->with('products', $products);
     }
 
     public function showAddCategoryView(){
@@ -283,6 +282,22 @@ class PortalController extends Controller
         return view('portal.payments.payments');
     }
 
+    public function showPaymentAwaitingPage(){
+        return view('portal.payments.awaiting');
+    }
+
+    public function showPaymentPendingPage(){
+        return view('portal.payments.pending');
+    }
+
+    public function showPaymentCompletedPage(){
+        return view('portal.payments.completed');
+    }
+
+    public function showPaymentReportsPage(){
+        return view('portal.payments.reports');
+    }
+
     //reports
 
     public function showReportsPage(){
@@ -489,6 +504,47 @@ class PortalController extends Controller
 
     public function showSettingsPage(){
         return view('portal.settings.settings');
+    }
+
+    public function showSettingsProductOptionsPage(){
+        return view('portal.settings.product-options');
+    }
+
+    public function showSettingsConditionsPage(){
+        return view('portal.settings.conditions');
+    }
+
+    public function showSettingsTestingQuestionsPage(){
+        return view('portal.settings.testing-questions');
+    }
+
+    public function showSettingsWebsitesPage(){
+        return view('portal.settings.websites');
+    }
+
+    public function showSettingsStoresPage(){
+        return view('portal.settings.stores');
+    }
+
+    public function showSettingsPaymentsOptionsPage(){
+        return view('portal.settings.payment-options');
+    }
+
+    public function showSettingsDeliveryOptionsPage(){
+        return view('portal.settings.delivery-options');
+    }
+
+    public function showSettingsCheckoutOptionsPage(){
+        return view('portal.settings.checkout-options');
+    }
+
+    public function showSettingsPromotionalCodesPage(){
+        return view('portal.settings.promotional-codes');
+    }
+
+    public function showSettingsBrandsPage(){
+        $brands = Brand::all();
+        return view('portal.settings.brands')->with('brands', $brands);
     }
 
     //cms

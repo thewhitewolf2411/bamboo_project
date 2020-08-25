@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Quarantine</title>
+    <title>Bamboo Recycle::Payment Options</title>
 </head>
 
 <body class="portal-body">
@@ -28,35 +28,10 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Quarantine</p>
+                        <p>Payment Options</p>
                     </div>
                 </div>
                 <div class="portal-content-container">
-                    <a href="/portal/quarantine/awaiting-response">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-comment-o"></i>Awaiting Seller Response</p>
-                        </div>
-                    </a>
-                    <a href="/portal/quarantine/return">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-paper-plane-o"></i>Return To Seller</p>
-                        </div>
-                    </a>
-                    <a href="/portal/quarantine/retest">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-tachometer"></i>Products To Retest</p>
-                        </div>
-                    </a>
-                    <a href="/portal/quarantine/stock">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-share-square-o"></i>Add To Stock</p>
-                        </div>
-                    </a>
-                    <a href="/portal/quarantine/manual">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-plus-square-o"></i>Manually Managed</p>
-                        </div>
-                    </a>
 
                 </div>
             </div>
@@ -68,7 +43,7 @@
 
 $(document).ready(function(){
 
-    var elem = $('.portal-links-container > .portal-header-element')[3];
+    var elem = $('.portal-links-container > .portal-header-element')[9];
     
     console.log(elem.children[0]);
 

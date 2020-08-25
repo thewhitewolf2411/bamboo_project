@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+    <title>Bamboo Recycle::Seller Payments</title>
 </head>
 
 <body class="portal-body">
@@ -36,7 +37,7 @@
                             <p><i class="fa fa-money"></i>Payments Awaiting Assignment</p>
                         </div>
                     </a>
-                    <a href="/portal/payments">
+                    <a href="/portal/payments/pending">
                         <div class="portal-content-element">
                             <p><i class="fa fa-credit-card"></i>Pending Payment Jobs</p>
                         </div>
@@ -46,7 +47,7 @@
                             <p><i class="fa fa-gbp"></i>Completed Payment Jobs</p>
                         </div>
                     </a>
-                    <a href="/portal/payments/report">
+                    <a href="/portal/payments/reports">
                         <div class="portal-content-element">
                             <p><i class="fa fa-table"></i>Payment Report</p>
                         </div>

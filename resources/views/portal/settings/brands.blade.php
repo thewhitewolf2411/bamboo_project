@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Categories</title>
+    <title>Bamboo Recycle::Brands</title>
 </head>
 
 <body class="portal-body">
@@ -28,12 +28,12 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Categories</p>
+                        <p>Brands</p>
                     </div>
                 </div>
                 <div class="portal-table-container">
 
-                    <table class="portal-table" id="categories-table">
+                    <table class="portal-table" id="brands-table">
                         <tr>
                             <td>Id</td>
                             <td>Image</td>
@@ -41,30 +41,30 @@
                             <td>Total Products in Tree</td>
                             <td>Tree</td>
                             <td>
-                                <a href="/portal/categories/add">
+                                <a href="/portal/brands/add">
                                 <i class="fa fa-plus-circle"></i>
                                 </a>
                             </td>
                         </tr>
 
-                        @foreach($categories as $category )
+                        @foreach($brands as $brand )
 
-                        <tr>
-                            <td><div class="table-element">{{$category->id}}</td>
-                            <td ><div class="table-element"><img src="{{asset('/storage/category_images').'/'.$category->category_image}}" height="50px"></div></td>
-                            <td><div class="table-element">{{$category->category_name}}</div></td>
-                            <td><div class="table-element">{{$category->total_produts}}</div></td>
-                            <td><div class="table-element">{{$category->category_name}}</div></td>
-                            <td><div class="table-element">
-                                <a href="/portal/categories/edit/{{$category->id}}">
-                                    <i class="fa fa-pencil"></i>
-                                </a>
-                                <a href="/portal/categories/delete/{{$category->id}}">
-                                    <i class="fa fa-times remove"></i>
-                                </a>
-                                </div>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td><div class="table-element">{{$brand->id}}</td>
+                                <td ><div class="table-element"><img src="{{asset('/storage/brand_images').'/'.$brand->brand_image}}" height="50px"></div></td>
+                                <td><div class="table-element">{{$brand->brand_name}}</div></td>
+                                <td><div class="table-element">{{$brand->total_produts}}</div></td>
+                                <td><div class="table-element">{{$brand->brand_name}}</div></td>
+                                <td><div class="table-element">
+                                    <a href="/portal/brands/edit/{{$brand->id}}">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <a href="/portal/brands/delete/{{$brand->id}}">
+                                        <i class="fa fa-times remove"></i>
+                                    </a>
+                                    </div>
+                                </td>
+                            </tr>
 
                         @endforeach
                     </table>
@@ -80,7 +80,7 @@
 
 $(document).ready(function(){
 
-    var elem = $('.portal-links-container > .portal-header-element')[1];
+    var elem = $('.portal-links-container > .portal-header-element')[9];
     
     console.log(elem.children[0]);
 

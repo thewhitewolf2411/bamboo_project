@@ -109,6 +109,10 @@ Route::post('/portal/testing/receive/receive', 'PortalController@receive')->midd
 
 //payments
 Route::get('/portal/payments', 'PortalController@showPaymentPage')->middleware('auth');
+Route::get('/portal/payments/awaiting', 'PortalController@showPaymentAwaitingPage')->middleware('auth');
+Route::get('/portal/payments/pending', 'PortalController@showPaymentPendingPage')->middleware('auth');
+Route::get('/portal/payments/completed', 'PortalController@showPaymentCompletedPage')->middleware('auth');
+Route::get('/portal/payments/reports', 'PortalController@showPaymentReportsPage')->middleware('auth');
 
 //reports
 Route::get('/portal/reports', 'PortalController@showReportsPage')->middleware('auth');
@@ -133,6 +137,17 @@ Route::post('/portal/user/search', 'PortalController@searchUser')->middleware('a
 
 //settings
 Route::get('/portal/settings','PortalController@showSettingsPage')->middleware('auth');
+Route::get('/portal/settings/product-options','PortalController@showSettingsProductOptionsPage')->middleware('auth');
+Route::get('/portal/settings/conditions','PortalController@showSettingsConditionsPage')->middleware('auth');
+Route::get('/portal/settings/testing-questions','PortalController@showSettingsTestingQuestionsPage')->middleware('auth');
+Route::get('/portal/settings/websites','PortalController@showSettingsWebsitesPage')->middleware('auth');
+Route::get('/portal/settings/stores','PortalController@showSettingsStoresPage')->middleware('auth');
+Route::get('/portal/settings/payments-options','PortalController@showSettingsPaymentsOptionsPage')->middleware('auth');
+Route::get('/portal/settings/delivery-options','PortalController@showSettingsDeliveryOptionsPage')->middleware('auth');
+Route::get('/portal/settings/checkout-options','PortalController@showSettingsCheckoutOptionsPage')->middleware('auth');
+Route::get('/portal/settings/promotional-codes','PortalController@showSettingsPromotionalCodesPage')->middleware('auth');
+Route::get('/portal/settings/brands','PortalController@showSettingsBrandsPage')->middleware('auth');
+Route::get('/portal/settings/barcode-id','PortalController@showSettingsBarcodeIdPage')->middleware('auth');
 
 //cms
 Route::get('/portal/cms', 'PortalController@showCmsPage')->middleware('auth');

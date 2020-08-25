@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+    <title>Bamboo Recycle::Settings</title>
 </head>
 
 <body class="portal-body">
@@ -79,11 +80,6 @@
                     <a href="/portal/settings/brands">
                         <div class="portal-content-element">
                             <p><i class="fa fa-ticket"></i>Brands</p>
-                        </div>
-                    </a>
-                    <a href="/portal/settings/barcode-id">
-                        <div class="portal-content-element">
-                        <p><i class="fa fa-dot-circle-o"></i>Barcode ID Encode/Decode</p>
                         </div>
                     </a>
                 </div>
