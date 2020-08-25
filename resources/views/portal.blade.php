@@ -27,7 +27,7 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Recycle</p>
+                        <p>Mobile</p>
                     </div>
                 </div>
                 <div class="portal-content-container">

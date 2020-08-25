@@ -3,7 +3,7 @@
     <div class="portal-header background-black">
 
         <div class="portal-header-element">
-            <a class="navbar-brand" href="/portal">RECYCLE</a>
+            <a class="navbar-brand" href="/portal">MOBILE</a>
         </div>
         <div class="portal-links-container">
             <div class="portal-header-element">
