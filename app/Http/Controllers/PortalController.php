@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Eloquent\Category;
 use App\Eloquent\Product;
+use App\Eloquent\ProductData;
 use App\Eloquent\Brand;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Feed;
@@ -194,9 +195,6 @@ class PortalController extends Controller
         $product->product_sim = $request->product_sim;
         $product->product_memory_slots = $request->product_memory_slots;
         $product->product_quantity = $request->product_quantity;
-        $product->base_price = $request->product_price;
-
-
 
         $filenameWithExt = $request->file('product_image')->getClientOriginalName();
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -208,11 +206,21 @@ class PortalController extends Controller
 
         $product->save();
 
-        $category = Category::where('id', $request->category)->get()[0];
+        $productData = new ProductData();
+        $productData->product_id = $product->id;
+        $productData->buying_price = $request->product_buying_price;
+        $productData->selling_price = $request->product_selling_price;
+
+        $productData->save();
+
+        #dd($request);
+
+        $category = Category::where('id', $request->category)->get();
+        dd($category);
         $category->total_produts = $category->total_produts+1;
         $category->save();
 
-        $brand = Brand::where('id', $request->brand)->get()[0];
+        $brand = Brand::where('id', $request->brand)->get();
         $brand->total_produts = $brand->total_produts + 1;
         $brand->save();
 

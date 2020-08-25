@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAvalibleProductsTable extends Migration
+class CreateProductInformationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateAvalibleProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('avalible_products', function (Blueprint $table) {
+        Schema::create('product_information', function (Blueprint $table) {
             $table->id();
             $table->integer('product_id');
-            $table->boolean('avalible')->default(false);
+            $table->integer('buying_price')->nullable();
+            $table->integer('selling_price')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateAvalibleProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('avalible_products');
+        Schema::dropIfExists('product_information');
     }
 }

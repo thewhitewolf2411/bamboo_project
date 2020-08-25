@@ -190,8 +190,14 @@
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
-                                    <label for="product_price">Product Price:</label>
-                                    <input type="number" name="product_price" id="product_price" required>
+                                    <label for="product_price">Product Selling Price:</label>
+                                    <input type="number" name="product_selling_price" id="product_selling_price">
+                                  </div>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <div class="form-group">
+                                    <label for="product_price">Product Buying Price:</label>
+                                    <input type="number" name="product_buying_price" id="product_buying_price">
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">

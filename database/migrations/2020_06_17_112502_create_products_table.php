@@ -39,7 +39,6 @@ class CreateProductsTable extends Migration
             $table->string('product_sim');
             $table->string('product_memory_slots');
             $table->smallInteger('product_quantity');
-            $table->integer('base_price');
             $table->timestamps();
         });
     
