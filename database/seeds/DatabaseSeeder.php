@@ -51,5 +51,20 @@ class DatabaseSeeder extends Seeder
             'account_disabled'=>false,
         ]);
 
+        DB::table('portal_users')->insert([
+            'user_id' => 1,
+            'customer_care' => true,
+            'categories' => true,
+            'product' => true,
+            'quarantine' => true,
+            'testing' => true,
+            'payments' => true,
+            'reports' => true,
+            'feeds' => true,
+            'users' => true,
+            'settings' => true,
+            'cms' => true,
+        ]);
+
     }
 }

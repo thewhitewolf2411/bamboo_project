@@ -32,41 +32,41 @@
     <div class="footer-row" id="footer-row-2">
         <div class="footer-row-6">
             <span>ABOUT US</span>
-            <a href="#">About Bamboo</a>
+            <a href="/setpage/about">About Bamboo</a>
         </div>
         <div class="footer-row-6">
             <span>HOW IT WORKS</span>
-            <a href="#">Shopping</a>
-            <a href="#">Selling</a>
+            <a href="/setpage/how">Shopping</a>
+            <a href="/setpage/how">Selling</a>
         </div>
         <div class="footer-row-6">
             <span>SERVICE & SUPPORT</span>
-            <a href="#">Buying a device</a>
-            <a href="#">Selling a device</a>
-            <a href="#">Tech</a>
-            <a href="#">Delivery</a>
-            <a href="#">Your Order</a>
-            <a href="#">Your Account</a>
-            <a href="#">General Questions</a>
+            <a href="/setpage/support">Buying a device</a>
+            <a href="/setpage/support">Selling a device</a>
+            <a href="/setpage/support">Tech</a>
+            <a href="/setpage/support">Delivery</a>
+            <a href="/setpage/support">Your Order</a>
+            <a href="/setpage/support">Your Account</a>
+            <a href="/setpage/support">General Questions</a>
         </div>
         <div class="footer-row-6">
             <span>RESPONSIBILITIES</span>
-            <a href="#">Environment</a>
-            <a href="#">Charity Partners</a>
+            <a href="/environment">Environment</a>
+            <a href="/charity">Charity Partners</a>
         </div>
         <div class="footer-row-6">
             <span>NEWS & BLOG</span>
-            <a href="#">News</a>
-            <a href="#">Blog</a>
+            <a href="/setpage/news">News</a>
+            <a href="/setpage/news">Blog</a>
         </div>
         <div class="footer-row-6">
             <span>LEGAL</span>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms & Conditions</a>
-            <a href="#">Site map</a>
-            <a href="#">Cookies</a>
-            <a href="#">Modern Slavery Statement</a>
-            <a href="#">Corporate Site</a>
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms & Conditions</a>
+            <a href="/map">Site map</a>
+            <a href="/cookies">Cookies</a>
+            <a href="/slavery">Modern Slavery Statement</a>
+            <a href="/corporate">Corporate Site</a>
         </div>
     </div>
 

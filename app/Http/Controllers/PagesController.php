@@ -59,6 +59,44 @@ class PagesController extends Controller
         
     }
 
+    public function showEnvironmentPage(){
+        $products = Product::all();
+        return view('customer.footer-links.environment')->with('products', $products);
+    }
 
+    public function showCharityPage(){
+        $products = Product::all();
+        return view('customer.footer-links.charity')->with('products', $products);
+    }
+
+    public function showPrivacyPage(){
+        $products = Product::all();
+        return view('customer.footer-links.privacy')->with('products', $products);
+    }
+
+    public function showTermsPage(){
+        $products = Product::all();
+        return view('customer.footer-links.terms')->with('products', $products);
+    }
+
+    public function showMapPage(){
+        $products = Product::all();
+        return view('customer.footer-links.map')->with('products', $products);
+    }
+
+    public function showCookiesPage(){
+        $products = Product::all();
+        return view('customer.footer-links.cookies')->with('products', $products);
+    }
+
+    public function showSlaveryPage(){
+        $products = Product::all();
+        return view('customer.footer-links.slavery')->with('products', $products);
+    }
+
+    public function showCorporatePage(){
+        $products = Product::all();
+        return view('customer.footer-links.corporate')->with('products', $products);
+    }
 
 }

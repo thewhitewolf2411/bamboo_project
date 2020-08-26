@@ -30,26 +30,89 @@
                         <p>{{$title}}</p>
                     </div>
                 </div>
-
-                <div class="portal-table-container">
-
-                    <table class="portal-table" id="categories-table">
-                        <tr>
-                            <td>Id</td>
-                            <td>Username</td>
-                            <td>First Name</td>
-                            <td>Surename</td>
-                            <td>Email Address</td>
-                            <td>Created</td>
-                            <td>
-                                <a href="/portal/user/add">
-                                <i class="fa fa-plus-circle"></i>
-                                </a>
-                            </td>
-                        </tr>
-
-                    </table>
-
+                @if(Session::get('error'))
+                    <div class="alert alert-danger">
+                        <ul>
+                            <li>{{Session::get('error')}}</li>
+                        </ul>
+                    </div>
+                @endif
+                <div class="register-form-container">
+                    <form method="POST" action="/portal/user/adduser">
+                        @csrf
+                        <div class="d-flex">
+                            <div class="form-group p20">
+                                <input type="text" class="form-control" placeholder="First Name" name="first_name" required>
+                            </div>
+                            <div class="form-group p20">
+                                <input type="text" class="form-control" placeholder="Last Name" name="last_name" required>
+                            </div>
+                        </div>
+                        <div class="form-group p20">
+                            <input type="text" class="form-control" placeholder="Username" name="username" required>
+                        </div>
+                        <div class="form-group p20">
+                            <input type="email" class="form-control" placeholder="Email" name="email" required>
+                        </div>
+                        <div class="form-group p20">
+                            <input type="password" class="form-control" placeholder="Password" name="password" required>
+                        </div>
+                        <div class="form-group p20">
+                            <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" required>
+                        </div>
+                        <div class="portal-title">
+                            <p>Access Level</p>
+                        </div>
+                        <div class="d-flex flex-wrap p20 access-container">
+                            <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="customer_care" id="customer_care">
+                                <label class="form-check-label" for="customer_care">Customer Care</label>
+                            </div>
+                            <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="categories" id="categories">
+                                <label class="form-check-label" for="categories">Categories</label>
+                            </div>
+                            <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="product" id="product">
+                                <label class="form-check-label" for="product">Product</label>
+                            </div>
+                            <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="quarantine" id="quarantine">
+                                <label class="form-check-label" for="quarantine">Quarantine</label>
+                            </div>
+                            <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="testing" id="testing">
+                                <label class="form-check-label" for="testing">Testing</label>
+                            </div>
+                            <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="payments" id="payments">
+                                <label class="form-check-label" for="payments">Payments</label>
+                            </div>
+                            <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="reports" id="reports">
+                                <label class="form-check-label" for="reports">Reports</label>
+                            </div>
+                            <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="feeds" id="feeds">
+                                <label class="form-check-label" for="feeds">Feeds</label>
+                            </div>
+                            <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="users" id="users">
+                                <label class="form-check-label" for="users">Users</label>
+                            </div>
+                            <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="settings" id="settings">
+                                <label class="form-check-label" for="settings">Settings</label>
+                            </div>
+                            <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="cms" id="cms">
+                                <label class="form-check-label" for="cms">CMS</label>
+                            </div>
+                        </div>
+                        <div class="form-group p20">
+                            <button type="submit" class="btn btn-primary btn-blue">Add new user</button>
+                        </div>
+                    </form>
                 </div>
 
             </div>

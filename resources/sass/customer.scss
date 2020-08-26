@@ -1232,3 +1232,36 @@ main p, a, span{
 .faq-question-text p{
     font-size: 18px;
 }
+
+.enviroment-title-container{
+    background: url("/customer_page_images/body/Environmental-Green.png");
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.enviroment-title-container p{
+    color: #fff;
+}
+
+.environment-first-element{
+    padding: 50px 150px;
+}
+
+.border-bottom{
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.5);
+}
+
+.p50-0{
+    padding: 50px 0px 25px 0px;
+}
+
+.p50-150{
+    padding: 50px 150px;
+}
+
+.p20{
+    padding: 20px;
+}

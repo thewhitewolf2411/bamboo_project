@@ -203,6 +203,36 @@
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
+                                    <label for="product_price">Product Buying Price:</label>
+                                    <input type="number" name="product_buying_price" id="product_buying_price">
+                                  </div>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <div class="form-group">
+                                    <label for="product_price">Product Buying Price:</label>
+                                    <input type="number" name="product_buying_price" id="product_buying_price">
+                                  </div>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <div class="form-group">
+                                    <label for="product_price">Product Buying Price:</label>
+                                    <input type="number" name="product_buying_price" id="product_buying_price">
+                                  </div>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <div class="form-group">
+                                    <label for="product_price">Product Buying Price:</label>
+                                    <input type="number" name="product_buying_price" id="product_buying_price">
+                                  </div>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <div class="form-group">
+                                    <label for="product_price">Product Buying Price:</label>
+                                    <input type="number" name="product_buying_price" id="product_buying_price">
+                                  </div>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <div class="form-group">
 
                                     <button type="submit" class="btn btn-primary btn-blue">Save product</button>
                                   </div>

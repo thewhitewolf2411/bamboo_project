@@ -19,7 +19,6 @@ class PortalUsers extends Model
      * @var array
      */
     protected $fillable = [
-        'warehouse_receipt_and_dispatch_portal', 'warehouse_stock_management_portal', 'phone_testing_portal',
-        'customer_care_portal', 'administration_portal', 'warehouse_administration_console',
+        'user_id','customer-care','categories','product','quarantine','testing','payments','reports','feeds','users','settings','cms'
     ];
 }

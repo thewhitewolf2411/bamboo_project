@@ -11368,6 +11368,39 @@ main p, a, span {
   font-size: 18px;
 }
 
+.enviroment-title-container {
+  background: url("/customer_page_images/body/Environmental-Green.png");
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.enviroment-title-container p {
+  color: #fff;
+}
+
+.environment-first-element {
+  padding: 50px 150px;
+}
+
+.border-bottom {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.p50-0 {
+  padding: 50px 0px 25px 0px;
+}
+
+.p50-150 {
+  padding: 50px 150px;
+}
+
+.p20 {
+  padding: 20px;
+}
+
 header {
   position: fixed;
   top: 0;
@@ -13156,6 +13189,10 @@ input[type=number] {
   padding: 10px;
   background-color: #f5f5f5;
   border-top: 1px solid #e5e5e5;
+}
+
+.access-container input {
+  width: auto;
 }
 
 .register-elements-container {

@@ -15,6 +15,7 @@ use Schema;
 
 use Storage;
 use File;
+use Hash;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -27,11 +28,12 @@ class PortalController extends Controller
     }
 
     public function portal(){
-        if(Auth::User()->type_of_user == 1 || Auth::User()->type_of_user == 3){
+        if(Auth::User()->type_of_user == 1 || Auth::User()->type_of_user == 2 || Auth::User()->type_of_user == 3){
 
-            $portal_user = PortalUsers::where('user_id', Auth::User()->id)->first();
+            $user_id = Auth::user()->id;
+            $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-            return view('portal')->with('user_data', $portal_user);
+            return view('portal')->with('portalUser', $portalUser);
         }
         else{
             return redirect('/');
@@ -194,6 +196,18 @@ class PortalController extends Controller
         $product->product_sim = $request->product_sim;
         $product->product_memory_slots = $request->product_memory_slots;
         $product->product_quantity = $request->product_quantity;
+        $product->product_price_a_plus = $request->product_price_a_plus;
+        $product->product_price_a = $request->product_price_a;
+        $product->product_price_b = $request->product_price_b;
+        $product->product_price_c = $request->product_price_c;
+        $product->product_price_d = $request->product_price_d;
+        $product->product_price_f = $request->product_price_f;
+        $product->product_selling_price_a_plus = $request->product_selling_price_a_plus;
+        $product->product_selling_price_a = $request->product_selling_price_a;
+        $product->product_selling_price_b = $request->product_selling_price_b;
+        $product->product_selling_price_c = $request->product_selling_price_c;
+        $product->product_selling_price_d = $request->product_selling_price_d;
+        $product->product_selling_price_f = $request->product_selling_price_f;
 
         $filenameWithExt = $request->file('product_image')->getClientOriginalName();
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -331,7 +345,7 @@ class PortalController extends Controller
         $filename = "/feed_type_".$export_feed_parameter."[" . date("Y-m-d") ."_". date("h-i-s") . "].xlsx";
 
         $columns = Schema::getColumnListing('products'); 
-        $datarows = range("A", "Z");
+        $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM'];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -436,7 +450,18 @@ class PortalController extends Controller
             $product->product_sim = $datarow[22];
             $product->product_memory_slots = $datarow[23];
             $product->product_quantity = $datarow[24];
-            $product->base_price = $datarow[25];
+            $product->product_price_a_plus = $datarow[25];
+            $product->product_price_a = $datarow[26];
+            $product->product_price_b = $datarow[27];
+            $product->product_price_c = $datarow[28];
+            $product->product_price_d = $datarow[29];
+            $product->product_price_f = $datarow[30];
+            $product->product_selling_price_a_plus = $datarow[31];
+            $product->product_selling_price_a = $datarow[32];
+            $product->product_selling_price_b = $datarow[33];
+            $product->product_selling_price_c = $datarow[34];
+            $product->product_selling_price_d = $datarow[35];
+            $product->product_selling_price_f = $datarow[36];
 
             $product->save();
 
@@ -462,7 +487,7 @@ class PortalController extends Controller
     public function showUsersPage(){
 
         $match = ['type_of_user' => 1, 'type_of_user' => 2, 'type_of_user' => 3];
-        $users = User::where($match)->get();
+        $users = User::where('type_of_user', 1)->orWhere('type_of_user', 2)->orWhere('type_of_user', 3)->get();
 
         return view('portal.users.users')->with('users', $users);
     }
@@ -484,6 +509,73 @@ class PortalController extends Controller
 
     public function addUser(Request $request){
 
+        if($request->password !== $request->confirm_password){
+            return \redirect('/portal/user/add')->with('error', "Password mismach.");
+        }
+        
+        if(count(User::where('email', $request->email)->get())>0){
+            return \redirect('/portal/user/add')->with('error', "User Exists.");
+        }
+
+        $user = new User();
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->birthdate = "01.08.2020";
+        $user->current_phone = 0;
+        $user->preffered_os = 'none';
+        $user->sub = 0;
+        $user->delivery_address = "none";
+        $user->billing_address = "none";
+        $user->contact_number = "none";
+        $user->bamboo_credit = 0;
+        $user->username = $request->username;
+        $user->worker_email = "customersupport@bamboorecycle.com";
+        $user->type_of_user = 1;
+        $user->account_disabled = 0;
+
+        $user->save();
+
+        $portalUser = new PortalUsers();
+        $portalUser->user_id = $user->id;
+        if($request->customer_care == "on"){
+            $portalUser->customer_care = true;
+        }
+        if($request->categories == "on"){
+            $portalUser->categories = true;
+        }
+        if($request->product == "on"){
+            $portalUser->product = true;
+        }
+        if($request->quarantine == "on"){
+            $portalUser->quarantine = true;
+        }
+        if($request->testing == "on"){
+            $portalUser->testing = true;
+        }
+        if($request->payments == "on"){
+            $portalUser->payments = true;
+        }
+        if($request->reports == "on"){
+            $portalUser->reports = true;
+        }
+        if($request->feeds == "on"){
+            $portalUser->feeds = true;
+        }
+        if($request->users == "on"){
+            $portalUser->users = true;
+        }
+        if($request->settings == "on"){
+            $portalUser->settings = true;
+        }
+        if($request->cms == "on"){
+            $portalUser->cms = true;
+        }
+
+        $portalUser->save();
+
+        return \redirect('/portal/user');
     }
 
     public function searchUser(Request $request){

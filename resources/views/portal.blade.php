@@ -31,61 +31,83 @@
                     </div>
                 </div>
                 <div class="portal-content-container">
+                    @if($portalUser->customer_care)
                     <a href="/portal/customer-care">
                         <div class="portal-content-element">
                             <p><i class="fa fa-child"></i>Customer Care</p>
                         </div>
                     </a>
+                    @endif
+                    @if($portalUser->categories)
                     <a href="/portal/categories">
                         <div class="portal-content-element">
                         <p><i class="fa fa-folder-open-o"></i>Categories / Brands</p>
                         </div>
                     </a>
+                    @endif
+                    @if($portalUser->product)
                     <a href="/portal/product">
                         <div class="portal-content-element">
                             <p><i class="fa fa-barcode"></i>Product</p>
                         </div>
                     </a>
+                    @endif
+                    @if($portalUser->quarantine)
                     <a href="/portal/quarantine">
                         <div class="portal-content-element">
                             <p><i class="fa fa-stethoscope"></i>Quarantine</p>
                         </div>
                     </a>
+                    @endif
+                    @if($portalUser->testing)
                     <a href="/portal/testing">
                         <div class="portal-content-element">
                             <p><i class="fa fa-tachometer"></i>Testing</p>
                         </div>
                     </a>
+                    @endif
+                    @if($portalUser->payments)
                     <a href="/portal/payments">
                         <div class="portal-content-element">
                             <p><i class="fa fa-credit-card"></i>Payments</p>
                         </div>
                     </a>
+                    @endif
+                    @if($portalUser->reports)
                     <a href="/portal/reports">
                         <div class="portal-content-element">
                             <p><i class="fa fa-line-chart"></i>Reports</p>
                         </div>
                     </a>
+                    @endif
+                    @if($portalUser->feeds)
                     <a href="/portal/feeds">
                         <div class="portal-content-element">
                             <p><i class="fa fa-cloud-download"></i>Feeds</p>
                         </div>
                     </a>
+                    @endif
+                    @if($portalUser->users)
                     <a href="/portal/user">
                         <div class="portal-content-element">
                             <p><i class="fa fa-user"></i>Users</p>
                         </div>
                     </a>
+                    @endif
+                    @if($portalUser->settings)
                     <a href="/portal/settings">
                         <div class="portal-content-element">
                             <p><i class="fa fa-cogs"></i>Settings</p>
                         </div>
                     </a>
+                    @endif
+                    @if($portalUser->cms)
                     <a href="/portal/cms">
                         <div class="portal-content-element">
                         <p><i class="fa fa-file"></i>CMS</p>
                         </div>
                     </a>
+                    @endif
                 </div>
             </div>
         </div>

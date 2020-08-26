@@ -24,6 +24,17 @@ Route::get('/setpage/{parameter}', [
     'uses'=>'CustomerController@setPage'
 ]);
 
+//Footer pages
+Route::get('/environment', 'PagesController@showEnvironmentPage');
+Route::get('/charity', 'PagesController@showCharityPage');
+Route::get('/privacy', 'PagesController@showPrivacyPage');
+Route::get('/terms', 'PagesController@showTermsPage');
+Route::get('/map', 'PagesController@showMapPage');
+Route::get('/cookies', 'PagesController@showCookiesPage');
+Route::get('/slavery', 'PagesController@showSlaveryPage');
+Route::get('/corporate', 'PagesController@showCorporatePage');
+
+//User profile
 Route::get('/userprofile', 'CustomerController@showProfile');
 Route::get('/userprofile/wishlist', 'CustomerController@showWishlist');
 

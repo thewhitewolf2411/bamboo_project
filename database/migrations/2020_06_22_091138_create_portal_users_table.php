@@ -16,25 +16,17 @@ class CreatePortalUsersTable extends Migration
         Schema::create('portal_users', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->boolean('superuser')->default(false);
-            //Warehouse Receipt & Dispach Portal
-            $table->boolean('trade_pack_dispach_system')->default(false);
-            $table->boolean('dispach_portal_delivery_receiving_system')->default(false);
-            //Warehouse Stock Management Portal
-            $table->boolean('device_tester_stock_managment')->default(false);
-            $table->boolean('stock_managment')->default(false);
-            $table->boolean('stock_managment_delivery_receiving_system')->default(false);
-            $table->boolean('quarantine_managamnet_and_customer_returns')->default(false);
-            $table->boolean('tray_managment_system')->default(false);
-            $table->boolean('sales_and_dispach')->default(false);
-            $table->boolean('stock_transfer')->default(false);
-            $table->boolean('device_managment')->default(false);
-            //Phone Testing Portal
-            $table->boolean('box_managment_system')->default(false);
-            $table->boolean('device_testing')->default(false);
-            //Warehouse Administration Console 
-            $table->boolean('user_managment')->default(false);
-            $table->boolean('reports_and_statistics')->default(false);
+            $table->boolean('customer_care')->default(false);
+            $table->boolean('categories')->default(false);
+            $table->boolean('product')->default(false);
+            $table->boolean('quarantine')->default(false);
+            $table->boolean('testing')->default(false);
+            $table->boolean('payments')->default(false);
+            $table->boolean('reports')->default(false);
+            $table->boolean('feeds')->default(false);
+            $table->boolean('users')->default(false);
+            $table->boolean('settings')->default(false);
+            $table->boolean('cms')->default(false);
             $table->timestamps();
         });
     }
