@@ -9,6 +9,9 @@ use App\Eloquent\ProductData;
 use App\Eloquent\Brand;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Feed;
+use App\Eloquent\Conditions;
+use App\Eloquent\Websites;
+use App\Eloquent\TestingQuestions;
 use App\User;
 use Auth;
 use Schema;
@@ -153,8 +156,9 @@ class PortalController extends Controller
 
         $categories = Category::all();
         $brands = Brand::all();
+        $conditions = Conditions::all();
 
-        return view('portal.add.product')->with(['categories'=>$categories, 'brands'=>$brands]);
+        return view('portal.add.product')->with(['categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions]);
     }
 
     public function showEditProductPage($id){
@@ -196,18 +200,8 @@ class PortalController extends Controller
         $product->product_sim = $request->product_sim;
         $product->product_memory_slots = $request->product_memory_slots;
         $product->product_quantity = $request->product_quantity;
-        $product->product_price_a_plus = $request->product_price_a_plus;
-        $product->product_price_a = $request->product_price_a;
-        $product->product_price_b = $request->product_price_b;
-        $product->product_price_c = $request->product_price_c;
-        $product->product_price_d = $request->product_price_d;
-        $product->product_price_f = $request->product_price_f;
-        $product->product_selling_price_a_plus = $request->product_selling_price_a_plus;
-        $product->product_selling_price_a = $request->product_selling_price_a;
-        $product->product_selling_price_b = $request->product_selling_price_b;
-        $product->product_selling_price_c = $request->product_selling_price_c;
-        $product->product_selling_price_d = $request->product_selling_price_d;
-        $product->product_selling_price_f = $request->product_selling_price_f;
+        $product->product_buying_price = $request->product_price_a_plus;
+        $product->product_selling_price = $request->product_selling_price_a_plus;
 
         $filenameWithExt = $request->file('product_image')->getClientOriginalName();
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -345,7 +339,7 @@ class PortalController extends Controller
         $filename = "/feed_type_".$export_feed_parameter."[" . date("Y-m-d") ."_". date("h-i-s") . "].xlsx";
 
         $columns = Schema::getColumnListing('products'); 
-        $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM'];
+        $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC'];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -394,7 +388,7 @@ class PortalController extends Controller
 
             // if file is downloaded delete all created files from the sistem
             File::delete($file);
-            exit;
+            return redirect('/portal/feeds/export-import');
         }
     }
 
@@ -450,18 +444,8 @@ class PortalController extends Controller
             $product->product_sim = $datarow[22];
             $product->product_memory_slots = $datarow[23];
             $product->product_quantity = $datarow[24];
-            $product->product_price_a_plus = $datarow[25];
-            $product->product_price_a = $datarow[26];
-            $product->product_price_b = $datarow[27];
-            $product->product_price_c = $datarow[28];
-            $product->product_price_d = $datarow[29];
-            $product->product_price_f = $datarow[30];
-            $product->product_selling_price_a_plus = $datarow[31];
-            $product->product_selling_price_a = $datarow[32];
-            $product->product_selling_price_b = $datarow[33];
-            $product->product_selling_price_c = $datarow[34];
-            $product->product_selling_price_d = $datarow[35];
-            $product->product_selling_price_f = $datarow[36];
+            $product->product_buying_price = $datarow[25];
+            $product->product_selling_price = $datarow[26];
 
             $product->save();
 
@@ -603,15 +587,66 @@ class PortalController extends Controller
     }
 
     public function showSettingsConditionsPage(){
-        return view('portal.settings.conditions');
+        $conditions = Conditions::all();
+        return view('portal.settings.conditions')->with('conditions', $conditions);
+    }
+
+    public function showSettingsAddConditionsPage(){
+        return view('portal.add.condition');
+    }
+
+    public function addCondition(Request $request){
+
+        $condition = new Conditions();
+        $condition->name = $request->condition_name;
+        $condition->alias = $request->condition_alias;
+        $condition->importance = $request->condition_importance;
+
+        $condition->save();
+
+        return redirect('/portal/settings/conditions');
     }
 
     public function showSettingsTestingQuestionsPage(){
-        return view('portal.settings.testing-questions');
+        $categories = Category::all();
+        return view('portal.settings.testing-questions')->with('categories', $categories);
+    }
+
+    public function showCategoryQuestionsPage($id){
+
+        $categoryQuestions = TestingQuestions::where('category_id', $id)->get();
+        return view('portal.settings.questions')->with('categoryQuestions', $categoryQuestions);
     }
 
     public function showSettingsWebsitesPage(){
-        return view('portal.settings.websites');
+        $websites = Websites::all();
+        return view('portal.settings.websites')->with('websites', $websites);
+    }
+
+    public function showAddWebsitePage(){
+        return view('portal.add.website');
+    }
+
+    public function addWebsite(Request $request){
+        $website = new Websites();
+        $website->website_name = $request->website_name;
+        $website->website_address = $request->website_address;
+
+        $filenameWithExt = $request->file('website_image')->getClientOriginalName();
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = $request->file('website_image')->getClientOriginalExtension();
+        $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        $path = $request->file('website_image')->storeAs('public/website_images',$fileNameToStore);
+
+        $website->website_image = $fileNameToStore;
+        $website->save();
+        return redirect('/portal/settings/websites');
+    }
+
+    public function deleteWebsite($id){
+        $website = Websites::where('id', $id);
+        $website->delete();
+        return redirect('/portal/settings/websites');
     }
 
     public function showSettingsStoresPage(){

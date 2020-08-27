@@ -149,9 +149,19 @@ Route::post('/portal/user/search', 'PortalController@searchUser')->middleware('a
 //settings
 Route::get('/portal/settings','PortalController@showSettingsPage')->middleware('auth');
 Route::get('/portal/settings/product-options','PortalController@showSettingsProductOptionsPage')->middleware('auth');
+
 Route::get('/portal/settings/conditions','PortalController@showSettingsConditionsPage')->middleware('auth');
+Route::get('/portal/settings/conditions/add','PortalController@showSettingsAddConditionsPage')->middleware('auth');
+Route::post('/portal/settings/conditions/addcondition','PortalController@addCondition')->middleware('auth');
+
 Route::get('/portal/settings/testing-questions','PortalController@showSettingsTestingQuestionsPage')->middleware('auth');
+Route::get('/portal/settings/testing-questions/{id}', 'PortalController@showCategoryQuestionsPage')->middleware('auth');
+
 Route::get('/portal/settings/websites','PortalController@showSettingsWebsitesPage')->middleware('auth');
+Route::get('/portal/settings/websites/add','PortalController@showAddWebsitePage')->middleware('auth');
+Route::post('/portal/settings/websites/addwebsite', 'PortalController@addWebsite')->middleware('auth');
+Route::get('/portal/settings/websites/deletewebsite/{id}', 'PortalController@deleteWebsite')->middleware('auth');
+
 Route::get('/portal/settings/stores','PortalController@showSettingsStoresPage')->middleware('auth');
 Route::get('/portal/settings/payments-options','PortalController@showSettingsPaymentsOptionsPage')->middleware('auth');
 Route::get('/portal/settings/delivery-options','PortalController@showSettingsDeliveryOptionsPage')->middleware('auth');

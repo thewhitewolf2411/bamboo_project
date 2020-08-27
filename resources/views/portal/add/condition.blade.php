@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Testing Questions</title>
+    <title>Bamboo Recycle::Add Condition</title>
 </head>
 
 <body class="portal-body">
@@ -28,21 +28,45 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Testing Questions</p>
+                        <p>Add Condition</p>
                     </div>
                 </div>
-                <div class="portal-content-container">
-                @foreach($categories as $category)
-                    <a href="/portal/settings/testing-questions/{{$category->id}}">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-list"></i>{{$category->category_name}}</p>
+
+                <div class="add-product-container">
+                    <form action="/portal/settings/conditions/addcondition" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="product-tab">
+                            <div class="form-group select_brand_button">
+                                <label for="condition_name">Condition name:</label>
+                                <input name="condition_name" class="form-control" type="text" required>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <label for="condition_alias">Condition alias:</label>
+                                <input class="form-control" name="condition_alias" type="text" required></input>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <label for="condition_importance">Condition importance:</label>
+                                <input class="form-control" name="condition_importance" type="number" required></input>
+                            </div>
+
+                            <div class="form-group select_brand_button">
+                                <div class="form-group">
+
+                                    <button type="submit" class="btn btn-primary btn-blue">Save Details</button>
+                                  </div>
+                            </div>
                         </div>
-                    </a>
-                @endforeach
+
+                    </form>
                 </div>
+
+
             </div>
+
         </div>
+
     </main>
+
 
 </body>
 <script>
@@ -59,6 +83,4 @@ $(document).ready(function(){
 });
 
 </script>
-
-
 </html>

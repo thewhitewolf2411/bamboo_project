@@ -31,7 +31,36 @@
                         <p>Conditions</p>
                     </div>
                 </div>
-                <div class="portal-content-container">
+                <div class="portal-table-container">
+
+                    <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td>Id</td>
+                            <td>Name</td>
+                            <td>Importance</td>
+                            <td>
+                                <a href="/portal/settings/conditions/add">
+                                <i class="fa fa-plus-circle"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+
+                        @foreach($conditions as $condition)
+                        <tr>
+                            <td><div class="table-element">{{$condition->id}}</td>
+                            <td><div class="table-element">{{$condition->name}}</div></td>
+                            <td><div class="table-element">{{$condition->importance}}</div></td>
+                            <td><div class="table-element">
+                                <a href="/portal/conditions/edit/{{$condition->id}}">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+
+                    </table>
 
                 </div>
             </div>

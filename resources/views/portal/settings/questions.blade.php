@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Testing Questions</title>
 </head>
 
 <body class="portal-body">
@@ -28,20 +27,30 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Testing Questions</p>
+                        <p>Products</p>
                     </div>
                 </div>
-                <div class="portal-content-container">
-                @foreach($categories as $category)
-                    <a href="/portal/settings/testing-questions/{{$category->id}}">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-list"></i>{{$category->category_name}}</p>
-                        </div>
-                    </a>
-                @endforeach
+                <div class="portal-table-container">
+
+                    <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td>Id</td>
+                            <td>Question</td>
+                            <td>Answer 1</td>
+                            <td>Answer 2</td>
+                            <td>Tree</td>
+                            <td>
+                                <a href="/portal/product/add">
+                                <i class="fa fa-plus-circle"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+
                 </div>
             </div>
         </div>
+
     </main>
 
 </body>
@@ -59,6 +68,5 @@ $(document).ready(function(){
 });
 
 </script>
-
 
 </html>

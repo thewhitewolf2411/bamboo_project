@@ -39,18 +39,8 @@ class CreateProductsTable extends Migration
             $table->string('product_sim');
             $table->string('product_memory_slots');
             $table->smallInteger('product_quantity');
-            $table->integer('product_price_a_plus');
-            $table->integer('product_price_a');
-            $table->integer('product_price_b');
-            $table->integer('product_price_c');
-            $table->integer('product_price_d');
-            $table->integer('product_price_f');
-            $table->integer('product_selling_price_a_plus');
-            $table->integer('product_selling_price_a');
-            $table->integer('product_selling_price_b');
-            $table->integer('product_selling_price_c');
-            $table->integer('product_selling_price_d');
-            $table->integer('product_selling_price_f');
+            $table->integer('product_buying_price');
+            $table->integer('product_selling_price');
             $table->timestamps();
         });
     

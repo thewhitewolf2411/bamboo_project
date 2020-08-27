@@ -102,12 +102,9 @@
                                 <div class="form-group">
                                     <label for="product_grade">Category:</label>
                                     <select class="form-control" id="product_grade" name="product_grade" required>
-                                        <option value="A+" >A+</option>
-                                        <option value="A" >A</option>
-                                        <option value="B" >B</option>
-                                        <option value="C" >C</option>
-                                        <option value="D" >D</option>
-                                        <option value="F" >F</option>
+                                        @foreach($conditions as $condition)
+                                        <option value="{{$condition->name}}" >{{$condition->name}}</option>
+                                        @endforeach
                                     </select>
                                   </div>
                             </div>
@@ -193,36 +190,6 @@
                                 <div class="form-group">
                                     <label for="product_price">Product Selling Price:</label>
                                     <input type="number" name="product_selling_price" id="product_selling_price">
-                                  </div>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_price">Product Buying Price:</label>
-                                    <input type="number" name="product_buying_price" id="product_buying_price">
-                                  </div>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_price">Product Buying Price:</label>
-                                    <input type="number" name="product_buying_price" id="product_buying_price">
-                                  </div>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_price">Product Buying Price:</label>
-                                    <input type="number" name="product_buying_price" id="product_buying_price">
-                                  </div>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_price">Product Buying Price:</label>
-                                    <input type="number" name="product_buying_price" id="product_buying_price">
-                                  </div>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_price">Product Buying Price:</label>
-                                    <input type="number" name="product_buying_price" id="product_buying_price">
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">

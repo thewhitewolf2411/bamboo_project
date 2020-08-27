@@ -41,7 +41,7 @@
                     @if($portalUser->categories)
                     <a href="/portal/categories">
                         <div class="portal-content-element">
-                        <p><i class="fa fa-folder-open-o"></i>Categories / Brands</p>
+                        <p><i class="fa fa-folder-open-o"></i>Categories</p>
                         </div>
                     </a>
                     @endif

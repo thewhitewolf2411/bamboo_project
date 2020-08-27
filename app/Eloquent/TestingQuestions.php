@@ -19,6 +19,6 @@ class TestingQuestions extends Model
      * @var array
      */
     protected $fillable = [
-        
+        'category_id','question','answer_1','answer_2'
     ];
 }
