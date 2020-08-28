@@ -139,7 +139,7 @@ class PortalController extends Controller
         $brand->brand_image = $fileNameToStore;
         $brand->save();
 
-        return \redirect('/portal/categories');
+        return \redirect('/portal/settings/brands');
     }
 
     //products
@@ -615,7 +615,12 @@ class PortalController extends Controller
     public function showCategoryQuestionsPage($id){
 
         $categoryQuestions = TestingQuestions::where('category_id', $id)->get();
-        return view('portal.settings.questions')->with('categoryQuestions', $categoryQuestions);
+        return view('portal.settings.questions')->with('categoryQuestions', $categoryQuestions)->with('categoryid', $id);
+    }
+
+    public function showCategoryAddQuestionPage($id){
+        $brandid = $id;
+        return view('portal.add.question')->with('brandid', $brandid);
     }
 
     public function showSettingsWebsitesPage(){

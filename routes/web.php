@@ -156,6 +156,7 @@ Route::post('/portal/settings/conditions/addcondition','PortalController@addCond
 
 Route::get('/portal/settings/testing-questions','PortalController@showSettingsTestingQuestionsPage')->middleware('auth');
 Route::get('/portal/settings/testing-questions/{id}', 'PortalController@showCategoryQuestionsPage')->middleware('auth');
+Route::get('/portal/settings/testing-questions/{id}/addquestion', 'PortalController@showCategoryAddQuestionPage')->middleware('auth');
 
 Route::get('/portal/settings/websites','PortalController@showSettingsWebsitesPage')->middleware('auth');
 Route::get('/portal/settings/websites/add','PortalController@showAddWebsitePage')->middleware('auth');

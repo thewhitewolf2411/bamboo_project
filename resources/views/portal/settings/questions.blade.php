@@ -27,11 +27,10 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Products</p>
+                        <p>Questions</p>
                     </div>
                 </div>
                 <div class="portal-table-container">
-
                     <table class="portal-table" id="categories-table">
                         <tr>
                             <td>Id</td>
@@ -40,7 +39,7 @@
                             <td>Answer 2</td>
                             <td>Tree</td>
                             <td>
-                                <a href="/portal/product/add">
+                                <a href="/portal/settings/testing-questions/{{$categoryid}}/addquestion">
                                 <i class="fa fa-plus-circle"></i>
                                 </a>
                             </td>
