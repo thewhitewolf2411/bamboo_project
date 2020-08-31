@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Categories</title>
+    <title>Bamboo Recycle::Buying Products</title>
 </head>
 
 <body class="portal-body">
@@ -28,7 +28,7 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Categories</p>
+                        <p>Avalible Buying Products</p>
                     </div>
                 </div>
                 <div class="portal-table-container">
@@ -38,29 +38,32 @@
                             <td><div class="table-element">Id</div></td>
                             <td><div class="table-element">Image</div></td>
                             <td><div class="table-element">Name</div></td>
-                            <td><div class="table-element">Total Products in Tree</div></td>
-                            <td><div class="table-element">Tree</div></td>
+                            <td><div class="table-element">Category</div></td>
+                            <td><div class="table-element">Brand</div></td>
+                            <td><div class="table-element">Grade</div></td>
+                            <td><div class="table-element">Price</div></td>
                             <td><div class="table-element">
-                                <a href="/portal/categories/add">
+                                <a href="/portal/product/addbuyingproduct">
                                 <i class="fa fa-plus-circle"></i>
-                                </a>
-                                </div>
+                                </a></div>
                             </td>
                         </tr>
 
-                        @foreach($categories as $category )
+                        @foreach($buyingProducts as $buyingProduct )
 
                         <tr>
-                            <td><div class="table-element">{{$category->id}}</td>
-                            <td ><div class="table-element"><img src="{{asset('/storage/category_images').'/'.$category->category_image}}" height="50px"></div></td>
-                            <td><div class="table-element">{{$category->category_name}}</div></td>
-                            <td><div class="table-element">{{$category->total_produts}}</div></td>
-                            <td><div class="table-element">{{$category->category_name}}</div></td>
+                            <td><div class="table-element">{{$buyingProduct->id}}</td>
+                            <td ><div class="table-element"><img src="{{asset('/storage/product_images').'/'.$buyingProduct->product_image}}" height="50px"></div></td>
+                            <td><div class="table-element">{{$buyingProduct->product_name}}</div></td>
+                            <td><div class="table-element">{{$buyingProduct->getCategory($buyingProduct->category_id)}}</div></td>
+                            <td><div class="table-element">{{$buyingProduct->getBrand($buyingProduct->brand_id)}}</div></td>
+                            <td><div class="table-element">{{$buyingProduct->product_grade}}</div></td>
+                            <td><div class="table-element">{{$buyingProduct->product_buying_price}} £</div></td>
                             <td><div class="table-element">
-                                <a href="/portal/categories/edit/{{$category->id}}">
+                                <a href="/portal/product/editsbuyingproduct/{{$buyingProduct->id}}">
                                     <i class="fa fa-pencil"></i>
                                 </a>
-                                <a href="/portal/categories/delete/{{$category->id}}">
+                                <a onclick="return confirm('Are you sure? This will delete this product from customer view!')" href="/portal/product/removebuyingproduct/{{$buyingProduct->id}}">
                                     <i class="fa fa-times remove"></i>
                                 </a>
                                 </div>
@@ -81,7 +84,7 @@
 
 $(document).ready(function(){
 
-    var elem = $('.portal-links-container > .portal-header-element')[1];
+    var elem = $('.portal-links-container > .portal-header-element')[2];
     
     console.log(elem.children[0]);
 

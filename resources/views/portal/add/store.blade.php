@@ -16,8 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-
-    <title>Bamboo Recycle::Products</title>
+    <title>Bamboo Recycle::Add Website</title>
 </head>
 
 <body class="portal-body">
@@ -29,35 +28,52 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Products</p>
+                        <p>Add Website</p>
                     </div>
                 </div>
-                <div class="portal-content-container">
 
-                    <a href="/portal/product/selling-products">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-barcode"></i>Selling Products</p>
+                <div class="add-product-container">
+                    <form action="/portal/settings/stores/addstore" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="product-tab">
+                            <div class="form-group select_brand_button">
+                                <label for="website_image">Store image:</label>
+                                <input name="store_image" class="form-control" type="file" required accept="image/png, image/jpeg">
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <label for="website_name">Store name:</label>
+                                <input class="form-control" name="store_name" type="text" required></input>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <label for="website_address">Store address:</label>
+                                <input class="form-control" name="store_address" type="text" required></input>
+                            </div>
+
+                            <div class="form-group select_brand_button">
+                                <div class="form-group">
+
+                                    <button type="submit" class="btn btn-primary btn-blue">Save Store</button>
+                                  </div>
+                            </div>
                         </div>
-                    </a>
 
-                    <a href="/portal/product/buying-products">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-barcode"></i>Buying Products</p>
-                        </div>
-                    </a>
-
+                    </form>
                 </div>
+
+
             </div>
+
         </div>
 
     </main>
+
 
 </body>
 <script>
 
 $(document).ready(function(){
 
-    var elem = $('.portal-links-container > .portal-header-element')[2];
+    var elem = $('.portal-links-container > .portal-header-element')[9];
     
     console.log(elem.children[0]);
 
@@ -67,5 +83,4 @@ $(document).ready(function(){
 });
 
 </script>
-
 </html>

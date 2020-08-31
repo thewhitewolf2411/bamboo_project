@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Add Product</title>
+    <title>Bamboo Recycle::Add Buying Product</title>
 </head>
 
 <body class="portal-body">
@@ -28,11 +28,11 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Add Product</p>
+                        <p>Add Buying Product</p>
                     </div>
                 </div>
                 <div class="add-product-container">
-                    <form action="/portal/product/addproduct" method="POST" enctype="multipart/form-data">
+                    <form action="/portal/product/addbuyingproduct/add" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="product-tab">
                             <div class="form-group select_brand_button">
@@ -184,12 +184,6 @@
                                 <div class="form-group">
                                     <label for="product_quantity">Product Quantity:</label>
                                     <input type="number" name="product_quantity" id="product_quantity" required>
-                                  </div>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_price">Product Selling Price:</label>
-                                    <input type="number" name="product_selling_price" id="product_selling_price">
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">

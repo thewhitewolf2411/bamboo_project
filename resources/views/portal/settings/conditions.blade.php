@@ -53,7 +53,7 @@
                             <td><div class="table-element">{{$condition->importance}}</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/conditions/edit/{{$condition->id}}">
-                                    <i class="fa fa-pencil"></i>
+                                    <i class="fa fa-times"></i>
                                 </a>
                                 </div>
                             </td>

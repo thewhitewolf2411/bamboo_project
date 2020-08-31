@@ -97,10 +97,17 @@ Route::post('/portal/brands/addbrabnd','PortalController@addBrand')->middleware(
 
 //products
 Route::get('/portal/product', 'PortalController@showProductsPage')->middleware('auth');
-Route::get('/portal/product/delete/{id}', 'PortalController@deleteProduct')->middleware('auth');
-Route::get('/portal/product/edit/{id}', 'PortalController@showEditProductPage')->middleware('auth');
-Route::get('/portal/product/add','PortalController@showAddProductView')->middleware('auth');
-Route::post('/portal/product/addproduct','PortalController@addProduct')->middleware('auth');
+Route::get('/portal/product/selling-products', 'PortalController@showSellingProductsPage')->middleware('auth');
+Route::get('/portal/product/buying-products', 'PortalController@showBuyingProductsPage')->middleware('auth');
+
+Route::get('/portal/product/addbuyingproduct', 'PortalController@showAddBuyingProductPage')->middleware('auth');
+Route::post('/portal/product/addbuyingproduct/add', 'PortalController@addBuyingProduct')->middleware('auth');
+
+Route::get('portal/product/addsellingproduct', 'PortalController@showAddSellingProductPage')->middleware('auth');
+Route::post('/portal/product/addsellingproduct/add', 'PortalController@addSellingProduct')->middleware('auth');
+
+Route::get('/portal/product/removebuyingproduct/{id}', 'PortalController@removeBuyingProduct')->middleware('auth');
+Route::get('/portal/product/removesellingproduct/{id}', 'PortalController@removeSellingProduct')->middleware('auth');
 
 //quarantine
 Route::get('/portal/quarantine', 'PortalController@showQuarantinePage')->middleware('auth');
@@ -164,6 +171,10 @@ Route::post('/portal/settings/websites/addwebsite', 'PortalController@addWebsite
 Route::get('/portal/settings/websites/deletewebsite/{id}', 'PortalController@deleteWebsite')->middleware('auth');
 
 Route::get('/portal/settings/stores','PortalController@showSettingsStoresPage')->middleware('auth');
+Route::get('/portal/settings/stores/add', 'PortalController@showAddStorePage')->middleware('auth');
+Route::post('/portal/settings/stores/addstore', 'PortalController@addStore')->middleware('auth');
+Route::get('/portal/settings/stores/deletestore/{id}', 'PortalController@deleteStore')->middleware('auth');
+
 Route::get('/portal/settings/payments-options','PortalController@showSettingsPaymentsOptionsPage')->middleware('auth');
 Route::get('/portal/settings/delivery-options','PortalController@showSettingsDeliveryOptionsPage')->middleware('auth');
 Route::get('/portal/settings/checkout-options','PortalController@showSettingsCheckoutOptionsPage')->middleware('auth');

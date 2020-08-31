@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Eloquent\Category;
-use App\Eloquent\Product;
+use App\Eloquent\BuyingProduct;
+use App\Eloquent\SellingProduct;
 use App\Eloquent\ProductData;
 use App\Eloquent\Brand;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Feed;
 use App\Eloquent\Conditions;
 use App\Eloquent\Websites;
+use App\Eloquent\Stores;
 use App\Eloquent\TestingQuestions;
 use App\User;
 use Auth;
@@ -69,9 +71,12 @@ class PortalController extends Controller
     public function showCategories(){
 
         $categories = Category::all();
-        $products = Product::all();
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
 
-        return view('portal.categories.categories')->with('categories', $categories)->with('products', $products);
+        $products = $buyingProducts->merge($sellingProducts);
+
+        return view('portal.categories.categories')->with('categories', $categories)->with(['products' => $products, 'buyingProducts'=>$buyingProducts, 'sellingProducts'=>$sellingProducts]);
     }
 
     public function showAddCategoryView(){
@@ -146,36 +151,56 @@ class PortalController extends Controller
 
     public function showProductsPage(){
 
-        $products = Product::all();
+        $categories = Category::all();
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
 
-        return view('portal.product.product')->with('products', $products);
+        $products = $buyingProducts->merge($sellingProducts);
+
+        return view('portal.product.product')->with(['products' => $products, 'buyingProducts'=>$buyingProducts, 'sellingProducts'=>$sellingProducts]);
 
     }
 
-    public function showAddProductView(){
+    public function showSellingProductsPage(){
+        $categories = Category::all();
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
+
+        return view('portal.product.sellingproduct')->with(['products' => $products, 'buyingProducts'=>$buyingProducts, 'sellingProducts'=>$sellingProducts]);
+    }
+
+    public function showBuyingProductsPage(){
+        $categories = Category::all();
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
+
+        return view('portal.product.buyingproduct')->with(['products' => $products, 'buyingProducts'=>$buyingProducts, 'sellingProducts'=>$sellingProducts]);
+    }
+
+    public function showAddBuyingProductPage(){
 
         $categories = Category::all();
         $brands = Brand::all();
         $conditions = Conditions::all();
 
-        return view('portal.add.product')->with(['categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions]);
+        return view('portal.add.buyingproduct')->with(['categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions]);
     }
 
-    public function showEditProductPage($id){
-        $product = Product::where('id', $id)->get();
-        return view('portal.product.editproduct')->with('product', $product);
-    }
-
-    public function deleteProduct($id){
+    public function showAddSellingProductPage(){
+        $categories = Category::all();
+        $brands = Brand::all();
+        $conditions = Conditions::all();
         
-        Product::where('id', $id)->delete();
-        return \redirect('/portal/product');
-        
+        return view('portal.add.sellingproduct')->with(['categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions]);
     }
 
-    public function addProduct(Request $request){
+    public function addBuyingProduct(Request $request){
 
-        $product = new Product();
+        $product = new BuyingProduct();
 
         $product->product_name = $request->product_name;
         $product->product_description = $request->wordbox_description;
@@ -200,8 +225,7 @@ class PortalController extends Controller
         $product->product_sim = $request->product_sim;
         $product->product_memory_slots = $request->product_memory_slots;
         $product->product_quantity = $request->product_quantity;
-        $product->product_buying_price = $request->product_price_a_plus;
-        $product->product_selling_price = $request->product_selling_price_a_plus;
+        $product->product_buying_price = $request->product_buying_price;
 
         $filenameWithExt = $request->file('product_image')->getClientOriginalName();
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -213,26 +237,54 @@ class PortalController extends Controller
 
         $product->save();
 
-        $productData = new ProductData();
-        $productData->product_id = $product->id;
-        $productData->buying_price = $request->product_buying_price;
-        $productData->selling_price = $request->product_selling_price;
-
-        $productData->save();
-
-        #dd($request);
-
-        $category = Category::where('id', $request->category)->get();
-        dd($category);
+        $category = Category::where('id', $request->category)->first();
         $category->total_produts = $category->total_produts+1;
         $category->save();
 
-        $brand = Brand::where('id', $request->brand)->get();
+        $brand = Brand::where('id', $request->brand)->first();
         $brand->total_produts = $brand->total_produts + 1;
         $brand->save();
 
-        return \redirect('/portal/product');
+        return \redirect('/portal/product/buying-products');
+    }
 
+    public function addSellingProduct(Request $request){
+        $product = new SellingProduct();
+        
+        $product->product_name = $request->product_name;
+        $product->category_id = $request->category;
+        $product->brand_id = $request->brand;
+        $product->product_memory = $request->product_memory;
+        $product->product_colour = $request->product_color;
+        $product->product_network = $request->product_network;
+        $product->product_grade_1 = $request->product_grade_1;
+        $product->product_grade_2 = $request->product_grade_2;
+        $product->product_grade_3 = $request->product_grade_3;
+        $product->product_selling_price_1 = $request->product_selling_price_1;
+        $product->product_selling_price_2 = $request->product_selling_price_2;
+        $product->product_selling_price_3 = $request->product_selling_price_3;
+
+        $filenameWithExt = $request->file('product_image')->getClientOriginalName();
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = $request->file('product_image')->getClientOriginalExtension();
+        $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        $path = $request->file('product_image')->storeAs('public/product_images',$fileNameToStore);
+
+        $product->product_image = $fileNameToStore;
+
+        $product->save();
+
+        return \redirect('/portal/product/selling-products');
+    }
+
+    public function removeBuyingProduct($id){
+        BuyingProduct::where('id', $id)->delete();
+        return \redirect('/portal/product/buying-products');
+    }
+
+    public function removeSellingProduct($id){
+        SellingProduct::where('id', $id)->delete();
+        return \redirect('/portal/product/selling-products');
     }
 
     //quarantine
@@ -655,7 +707,34 @@ class PortalController extends Controller
     }
 
     public function showSettingsStoresPage(){
-        return view('portal.settings.stores');
+        $stores = Stores::all();
+        return view('portal.settings.stores')->with('stores', $stores);
+    }
+
+    public function showAddStorePage(){
+        return view('portal.add.store');
+    }
+
+    public function addStore(Request $request){
+        $store = new Stores();
+        $store->store_name = $request->store_name;
+        $store->store_address = $request->store_address;
+
+        $filenameWithExt = $request->file('store_image')->getClientOriginalName();
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = $request->file('store_image')->getClientOriginalExtension();
+        $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        $path = $request->file('store_image')->storeAs('public/store_images',$fileNameToStore);
+
+        $store->store_image = $fileNameToStore;
+        $store->save();
+        return redirect('/portal/settings/stores');
+    }
+
+    public function deleteStore($id){
+        $store = Stores::where('id', $id);
+        $store->delete();
+        return redirect('/portal/settings/stores');
     }
 
     public function showSettingsPaymentsOptionsPage(){

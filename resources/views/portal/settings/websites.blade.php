@@ -59,7 +59,7 @@
                             <td><div class="table-element"><i class="fa fa-check green"></i></div></td>
                             <td><div class="table-element">
                                 <a href="/portal/settings/websites/deletewebsite/{{$website->id}}">
-                                    <i class="fa fa-pencil"></i>
+                                    <i class="fa fa-times"></i>
                                 </a>
                                 </div>
                             </td>

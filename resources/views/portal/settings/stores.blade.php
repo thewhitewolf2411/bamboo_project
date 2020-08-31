@@ -31,7 +31,40 @@
                         <p>Stores</p>
                     </div>
                 </div>
-                <div class="portal-content-container">
+                <div class="portal-table-container">
+
+                    <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td>Id</td>
+                            <td>Logo</td>
+                            <td>Name</td>
+                            <td>Address</td>
+                            <td>Mobile</td>
+                            <td>
+                                <a href="/portal/settings/stores/add">
+                                <i class="fa fa-plus-circle"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+
+                        @foreach($stores as $store)
+                        <tr>
+                            <td><div class="table-element">{{$store->id}}</td>
+                            <td><div class="table-element"><img src="{{asset('/storage/store_images').'/'.$store->store_image}}" height="50px"></div></td>
+                            <td><div class="table-element">{{$store->store_name}}</div></td>
+                            <td><div class="table-element">{{$store->store_address}}</div></td>
+                            <td><div class="table-element"><i class="fa fa-check green"></i></div></td>
+                            <td><div class="table-element">
+                                <a href="/portal/settings/stores/deletestore/{{$store->id}}">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+
+                    </table>
 
                 </div>
             </div>
