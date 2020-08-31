@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Order;
-use App\Eloquent\Product;
+use App\Eloquent\BuyingProduct;
+use App\Eloquent\SellingProduct;
 
 class PagesController extends Controller
 {
@@ -23,7 +24,10 @@ class PagesController extends Controller
             // Check user role
             switch ($role) {
                 case 0:
-                    $products = Product::all();
+                    $buyingProducts = BuyingProduct::all();
+                    $sellingProducts = SellingProduct::all();
+            
+                    $products = $buyingProducts->merge($sellingProducts);
                     return view('welcome')->with('products', $products);
                     break;
                 case 1:
@@ -38,7 +42,10 @@ class PagesController extends Controller
                 }
         }
 
-        $products = Product::all();
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
         return view('welcome')->with('products', $products);
     }
 
@@ -60,42 +67,66 @@ class PagesController extends Controller
     }
 
     public function showEnvironmentPage(){
-        $products = Product::all();
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
         return view('customer.footer-links.environment')->with('products', $products);
     }
 
     public function showCharityPage(){
-        $products = Product::all();
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
         return view('customer.footer-links.charity')->with('products', $products);
     }
 
     public function showPrivacyPage(){
-        $products = Product::all();
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
         return view('customer.footer-links.privacy')->with('products', $products);
     }
 
     public function showTermsPage(){
-        $products = Product::all();
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
         return view('customer.footer-links.terms')->with('products', $products);
     }
 
     public function showMapPage(){
-        $products = Product::all();
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
         return view('customer.footer-links.map')->with('products', $products);
     }
 
     public function showCookiesPage(){
-        $products = Product::all();
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
         return view('customer.footer-links.cookies')->with('products', $products);
     }
 
     public function showSlaveryPage(){
-        $products = Product::all();
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
         return view('customer.footer-links.slavery')->with('products', $products);
     }
 
     public function showCorporatePage(){
-        $products = Product::all();
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
         return view('customer.footer-links.corporate')->with('products', $products);
     }
 

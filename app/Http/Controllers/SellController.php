@@ -6,26 +6,26 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Order;
-use App\Eloquent\Product;
-use App\Eloquent\AvalibleProducts;
+use App\Eloquent\BuyingProduct;
+use App\Eloquent\SellingProduct;
 
 class SellController extends Controller
 {
     public function showSellView(){
 
-        $products = Product::all();
+        $products = BuyingProduct::all();
         return view('sell.welcome')->with('products', $products);;
     }
 
     public function showSellWhy(){
-        $products = Product::all();
+        $products = BuyingProduct::all();
         return view('sell.why')->with('products', $products);
     }
 
 
     public function showSellShop($parameter){
         
-        $products = AvalibleProducts::all();
+        $products = SellingProduct::all();
         dd($products);
 
         switch($parameter){

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Order;
-use App\Eloquent\Product;
+use App\Eloquent\BuyingProduct;
 use App\Eloquent\ProductData;
 use App\Eloquent\Brand;
 
@@ -23,18 +23,18 @@ class ShopController extends Controller
     */
 
     public function showShopView(){
-        $products = Product::all();
-        $latestProducts = Product::orderBy('id', 'desc')->take(3)->get();
+        $products = BuyingProduct::all();
+        $latestProducts = BuyingProduct::orderBy('id', 'desc')->take(3)->get();
         return view ('shop.welcome')->with('products', $products)->with('latestProducts', $latestProducts);
     }
 
     public function showLetView(){
-        $products = Product::all();
+        $products = BuyingProduct::all();
         return view ('shop.let')->with('products', $products);
     }
 
     public function showWhyView(){
-        $products = Product::all();
+        $products = BuyingProduct::all();
         return view ('shop.why')->with('products', $products);
     }
 
@@ -50,9 +50,9 @@ class ShopController extends Controller
                 $title = "Shop Latest Offers";
             break;
             case "mobile":
-                $data = Product::get();
-                $appleData = Product::where('category_id', 1)->where('brand_id', 1)->limit(4)->get();
-                $samsungData = Product::where('category_id', 1)->where('brand_id', 2)->limit(4)->get();
+                $data = BuyingProduct::get();
+                $appleData = BuyingProduct::where('category_id', 1)->where('brand_id', 1)->limit(4)->get();
+                $samsungData = BuyingProduct::where('category_id', 1)->where('brand_id', 2)->limit(4)->get();
                 $brands = Brand::get();
                 $title = "Shop Mobile Phones";
             break;
@@ -70,13 +70,13 @@ class ShopController extends Controller
             break;
         }
 
-        $products = Product::all();
+        $products = BuyingProduct::all();
         return view('shop.products')->with('products', $products)->with('title', $title)->with('data', $data)->with('appleData', $appleData)->with('samsungData', $samsungData)->with('brands', $brands);
     }
 
     public function showItem($id){
-        $itemData = Product::where('id', $id)->first();
-        $products = Product::all();
+        $itemData = BuyingProduct::where('id', $id)->first();
+        $products = BuyingProduct::all();
         return view('shop.item')->with('products', $products)->with('itemData', $itemData);
     }
 
@@ -84,7 +84,7 @@ class ShopController extends Controller
 
         $sortData = "";
 
-        $products = Product::all();
+        $products = BuyingProduct::all();
 
         return view('shop.shop')->with("sortData", $sortData)->with('products', $products);
     }

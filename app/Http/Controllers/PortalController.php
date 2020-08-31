@@ -372,7 +372,8 @@ class PortalController extends Controller
 
     public function showExportImportPage(){
         $categories = Category::all();
-        return view('portal.feeds.export-import')->with('categories', $categories);
+        $brands = Brand::all();
+        return view('portal.feeds.export-import')->with(['categories'=>$categories, 'brands'=>$brands]);
     }
 
     public function showFeedsSummaryPage(){
@@ -387,26 +388,31 @@ class PortalController extends Controller
     public function feedsExport(Request $request){
 
         $export_feed_parameter = $request->export_feed_parameter;
+
+        $columns = "";
+        $datarows = "";
+        $products = "";
+
+        if($export_feed_parameter == 1){
+            $columns = Schema::getColumnListing('buying_products');
+            //28 
+            $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB'];
+            $products = BuyingProduct::all();
+        }
+        else if($export_feed_parameter == 2){
+            $columns = Schema::getColumnListing('selling_products'); 
+            //16
+            $products = SellingProduct::all();
+            $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P'];
+        }
         
         $filename = "/feed_type_".$export_feed_parameter."[" . date("Y-m-d") ."_". date("h-i-s") . "].xlsx";
-
-        $columns = Schema::getColumnListing('products'); 
-        $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB','AC'];
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         for($i=0; $i<count($datarows); $i++){
             $sheet->setCellValue($datarows[$i] . "1", $columns[$i]);
-        }
-
-        $products = null;
-
-        if($export_feed_parameter == "0"){
-            $products = Product::all();
-        }
-        else{
-            $products = Product::where('category_id', $export_feed_parameter)->get();
         }
 
         foreach($products as $key=>$product){
@@ -416,7 +422,6 @@ class PortalController extends Controller
                 $sheet->setCellValue($datarows[$i] . ($key+2), $product[$i]);
             }
         }
-
 
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
@@ -446,7 +451,17 @@ class PortalController extends Controller
 
     public function feedsImport(Request $request){
 
-        $products = Product::all();
+        $export_feed_parameter = $request->export_feed_parameter;
+
+        $products = "";
+
+        if($export_feed_parameter == 1){
+            $products = BuyingProduct::all();
+        }
+        else if($export_feed_parameter == 2){
+            $products = SellingProduct::all();
+        }
+
         foreach($products as $product){
             $product->delete();
         }
@@ -470,50 +485,74 @@ class PortalController extends Controller
         unset($importeddata[0]);
 
         foreach($importeddata as $key=>$datarow){
-            $product = new Product();
 
-            $product->product_name = $datarow[1];
-            $product->product_image = $datarow[2];
-            $product->product_description = $datarow[3];
-            $product->category_id = $datarow[4];
-            $product->brand_id = $datarow[5];
-            $product->product_code_name = $datarow[6];
-            $product->product_code_value = $datarow[7];
-            $product->product_network = $datarow[8];
-            $product->product_memory = $datarow[9];
-            $product->product_colour = $datarow[10];
-            $product->product_grade = $datarow[11];
-            $product->product_dimensions = $datarow[12];
-            $product->product_processor = $datarow[13];
-            $product->product_weight = $datarow[14];
-            $product->product_screen = $datarow[15];
-            $product->product_system = $datarow[16];
-            $product->product_connectivity = $datarow[17];
-            $product->product_battery = $datarow[18];
-            $product->product_signal = $datarow[19];
-            $product->product_camera = $datarow[20];
-            $product->product_camera_2 = $datarow[21];
-            $product->product_sim = $datarow[22];
-            $product->product_memory_slots = $datarow[23];
-            $product->product_quantity = $datarow[24];
-            $product->product_buying_price = $datarow[25];
-            $product->product_selling_price = $datarow[26];
+            $message="";
 
-            $product->save();
+            if($export_feed_parameter == 1){
+                $product = new BuyingProduct();
 
-            $category = Category::where('id', $datarow[4])->get()[0];
-            $category->total_produts = $category->total_produts+1;
-            $category->save();
+                $product->product_name = $datarow[1];
+                $product->product_image = $datarow[2];
+                $product->product_description = $datarow[3];
+                $product->category_id = $datarow[4];
+                $product->brand_id = $datarow[5];
+                $product->product_code_name = $datarow[6];
+                $product->product_code_value = $datarow[7];
+                $product->product_network = $datarow[8];
+                $product->product_memory = $datarow[9];
+                $product->product_colour = $datarow[10];
+                $product->product_grade = $datarow[11];
+                $product->product_dimensions = $datarow[12];
+                $product->product_processor = $datarow[13];
+                $product->product_weight = $datarow[14];
+                $product->product_screen = $datarow[15];
+                $product->product_system = $datarow[16];
+                $product->product_connectivity = $datarow[17];
+                $product->product_battery = $datarow[18];
+                $product->product_signal = $datarow[19];
+                $product->product_camera = $datarow[20];
+                $product->product_camera_2 = $datarow[21];
+                $product->product_sim = $datarow[22];
+                $product->product_memory_slots = $datarow[23];
+                $product->product_quantity = $datarow[24];
+                $product->product_buying_price = $datarow[25];
     
-            $brand = Brand::where('id', $datarow[5])->get()[0];
-            $brand->total_produts = $brand->total_produts + 1;
-            $brand->save();
-        }
+                $product->save();
+    
+                $category = Category::where('id', $datarow[4])->get()[0];
+                $category->total_produts = $category->total_produts+1;
+                $category->save();
+        
+                $brand = Brand::where('id', $datarow[5])->get()[0];
+                $brand->total_produts = $brand->total_produts + 1;
+                $brand->save();
 
-        $feed = new Feed();
-        $feed->feed_type = "All devices";
-        $feed->status = "Done";
-        $feed->save();
+                $feed = new Feed();
+                $feed->feed_type = "All buying devices";
+                $feed->status = "Done";
+                $feed->save();
+            }
+            else if($export_feed_parameter == 2){
+                $product = new SellingProduct();
+                
+                $product->product_name = $datarow[1];
+                $product->product_image = $datarow[2];
+                $product->category_id = $datarow[3];
+                $product->brand_id = $datarow[4];
+                $product->product_memory = $datarow[5];
+                $product->product_colour = $datarow[6];
+                $product->product_network = $datarow[7];
+                $product->product_grade_1 = $datarow[8];
+                $product->product_grade_2 = $datarow[9];
+                $product->product_grade_3 = $datarow[10];
+                $product->product_selling_price_1 = $datarow[11];
+                $product->product_selling_price_2 = $datarow[12];
+                $product->product_selling_price_3 = $datarow[13];
+    
+                $product->save();
+            }
+
+        }
 
         return \redirect('/portal/feeds/export-import');
     }

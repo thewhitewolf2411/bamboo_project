@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+    <title>Portal::Feeds Export/Import</title>
 </head>
 
 <body class="portal-body">
@@ -38,10 +39,8 @@
                         @csrf
                         <label><b>Export Feed:</b></label>
                         <select class="form-control" id="search_by_field" name="export_feed_parameter">
-                            <option value="0" selected>All</option>
-                            @foreach($categories as $category)
-                            <option value="{{$category->id}}">{{$category->category_name}}</option>
-                            @endforeach
+                            <option value="1">Buying products</option>
+                            <option value="2">Selling products</option>
                         </select>
                         <div class="export-import-submit-container">
                             <button type="submit" name="export-feed" class="btn btn-primary btn-blue">Export Feed</button>
@@ -51,6 +50,10 @@
                     <div class="bb-grey"></div>
                     <form action="/portal/feeds/export-import/import" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <select class="form-control" id="search_by_field" name="export_feed_parameter">
+                            <option value="1">Buying products</option>
+                            <option value="2">Selling products</option>
+                        </select>
                         <label><b>Import Feed:</b></label>
                         <input type="file" name="imported_csv" class="form-control" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
                         <div class="export-import-submit-container">

@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Session;
 use App\Eloquent\Category;
-use App\Eloquent\Product;
 use App\Eloquent\User;
 use App\Eloquent\Cart;
 use App\Eloquent\Order;
+use App\Eloquent\BuyingProduct;
+use App\Eloquent\SellingProduct;
 use Auth;
 
 class CustomerController extends Controller
@@ -61,7 +62,10 @@ class CustomerController extends Controller
             break;
         }
 
-        $products = Product::all();
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
 
         if($categories == null){
             return redirect('/')->with('page', $page)->with('products', $products)->with('showLogin', $showLogin);
@@ -85,7 +89,7 @@ class CustomerController extends Controller
         $products = "";
 
         $category_id = $category_id[0];
-        $products = Product::where('category_id', $category_id)->get();
+        $products = BuyingProduct::where('category_id', $category_id)->get();
 
         return view('customer.products')
                 ->with('products', $products)
@@ -95,7 +99,7 @@ class CustomerController extends Controller
 
     public function showProduct($product_id){
         
-        $product = Product::where('id', $product_id)->get();
+        $product = BuyingProduct::where('id', $product_id)->get();
         $product = $product[0];
 
         return view('customer.product')->with('product', $product);
@@ -104,7 +108,7 @@ class CustomerController extends Controller
     public function addProductToCart(Request $request){
 
         if(Auth::User()){
-            $product = Product::find($request->productid);
+            $product = BuyingProduct::find($request->productid);
 
             $oldCart = Session::has('cart') ? Session::get('cart') : null;
     
@@ -117,40 +121,14 @@ class CustomerController extends Controller
             return redirect('/shop/item/'.$request->productid)->with('productaddedtocart', true);
         }
         else{
-            return redirect('/register');
+            return redirect('/');
         }
         
     }
 
     public function removeFromCart(Request $request){
 
-        $deleteid = $request->deleteid;
-        $sessiondata = Session::get('cart')->items;
-        Session::forget('cart');
-
-
-        foreach($sessiondata as $key=>$item){
-            if($key != $deleteid){
-                $order = new Order;
-                $oldCart = Session::has('cart') ? Session::get('cart') : null;
-                $cart = new Cart($oldCart);
-
-                $order->order_placed = $item->order_placed;
-                $order->product_id = $item->product_id;
-                $order->user_id = $item->user_id;
-                $order->user_email = $item->user_email;
-                $order->product_total = $item->product_total;
-                $order->order_total = $item->order_total;
-                $order->order_status = $item->order_status;
-                $order->payment_status = $item->payment_status;
-                $order->shipping_status = $item->shipping_status;
-                $order->quantity = $item->quantity;
-                $order->status = $item->status;
-
-                $cart->add($order);
-                $request->session()->put('cart', $cart);
-            }
-        }
+        dd($request);
 
         return redirect('/cart');
 

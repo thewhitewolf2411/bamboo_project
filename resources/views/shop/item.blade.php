@@ -111,8 +111,8 @@
                             <p>{{$itemData->product_grade}}</p>
                         </div>
                         <div class="product-selected product-price-container">
-                            <p>Product Grade:</p>
-                            <p>{{$itemData->product_price}}</p>
+                            <p>Product price:</p>
+                            <p>{{$itemData->product_buying_price}}£</p>
                         </div>
                         @if(Auth::user())
                         <div class="add-to-container">
