@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Crypt as Crypt;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class DatabaseSeeder extends Seeder
             'first_name'=>'admin',
             'last_name'=>'admin',
             'email'=>'admin@gmail.com',
-            'password'=>Hash::make('Lambda12'),
+            'password'=>Crypt::encrypt('Lambda12'),
             'birthdate'=>'24.11.1993',
             'current_phone'=>'3',
             'preffered_os'=>'Android',
@@ -38,7 +39,7 @@ class DatabaseSeeder extends Seeder
             'first_name'=>'Eren',
             'last_name'=>'Yeager',
             'email'=>'eren@yeager.com',
-            'password'=>Hash::make('Lambda12'),
+            'password'=>Crypt::encrypt('Lambda12'),
             'birthdate'=>'24.11.1993',
             'current_phone'=>'2',
             'preffered_os'=>'iOS',

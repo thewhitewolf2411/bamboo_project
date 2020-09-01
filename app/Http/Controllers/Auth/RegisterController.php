@@ -8,6 +8,9 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Auth;
+
+use Crypt;
 
 class RegisterController extends Controller
 {
@@ -23,6 +26,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+    
 
     /**
      * Where to redirect users after registration.
@@ -64,17 +68,34 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
-        dd($data);
+        $sub = 0;
+        if($data['sub'] == true){
+            $sub = 1;
+        }
 
-        return User::create([
-            'first_name' => $data['first-name'],
-            'last_name' => $data['last-name'],
-            'email' => $data['email'],
-            'birthdate' => $data['birthdate'],
-            'password' => Hash::make($data['password']),
-            'current_phone' => $data['current-phone'],
-            'preffered_os' => $data['preferred-os'],
-            'sub' => $data['sub'],
-        ]);
+        $user = new User();
+
+        $user->first_name = $data['first-name'];
+        $user->last_name = $data['last-name'];
+        $user->email = $data['email'];
+        $user->birthdate = $data['birthdate'];
+        $user->password = Crypt::encrypt($data['password']);
+        if(isset($data['preferred-os'])){
+            $user->preffered_os = $data['preferred-os'];
+        }
+        else{
+            $user->preffered_os = null;
+        }
+        if(isset($data['current-phone'])){
+            $user->current_phone = $data['current-phone'];
+        }
+        else{
+            $user->current_phone = null;
+        }
+        $user->sub = 1;
+
+        $user->save();
+
+        return $user;
     }
 }

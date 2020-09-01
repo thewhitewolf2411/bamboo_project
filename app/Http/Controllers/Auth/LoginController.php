@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use Illuminate\Http\Request;
+use App\User;
+use Crypt;
+use Str;
 
 class LoginController extends Controller
 {
@@ -22,6 +26,39 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function login(Request $request)
+    {
+        $user = "";
+
+        if(Str::contains($request->username, "@")){
+            $user      = User::where('email', $request->input('username'))->first();
+        }
+        else{
+            $user      = User::where('username', $request->input('username'))->first();
+        }
+
+        $decrypted = $request->password; 
+
+        if ($user) {
+            if (Crypt::decrypt($user->password) == $decrypted) {
+                Auth::login($user);
+
+                return $this->sendLoginResponse($request);
+            }
+        }
+
+        return $this->sendFailedLoginResponse($request);
+    }
+
     /**
      * Where to redirect users after login.
      *
@@ -34,7 +71,7 @@ class LoginController extends Controller
         // Check user role
         switch ($role) {
             case 0:
-                return '/';
+                return '/userprofile';
                 break;
             case 1:
                 return '/portal';
@@ -46,7 +83,7 @@ class LoginController extends Controller
                 return '/portal';
                 break; 
             default:
-                return '/'; 
+                return '/userprofile'; 
                 break;
             }
     }
