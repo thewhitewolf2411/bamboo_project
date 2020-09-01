@@ -61,6 +61,8 @@ Route::get('/sell/why','SellController@showSellWhy');
 Route::get('/sell/shop/{parameter}', 'SellController@showSellShop');
 Route::get('/sell/shop/item/{parameter}', 'SellController@showSellItem');
 
+Route::post('/sell/searchproducts','SellController@searchAvalibleProducts');
+
 
 //User post Route
 Route::post('/addtocart', 'CustomerController@addProductToCart')->name('addproducttocart');

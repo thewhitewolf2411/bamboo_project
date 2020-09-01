@@ -44,5 +44,9 @@ class SellController extends Controller
 
     public function showSellItem($id){
         dd($id);
-    }   
+    }
+    
+    public function searchAvalibleProducts(Request $request){
+        dd($request);
+    }
 }

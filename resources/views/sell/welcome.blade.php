@@ -78,9 +78,9 @@
                 </div>
                 <div class="sell-search-container">
                     <div class="search-bar">
-                        <form class="sell-search-form" action="/searchproducts" method="POST">
+                        <form class="sell-search-form" action="/sell/searchproducts" method="POST">
                             @csrf
-                            <input type="text" placeholder="Enter your model, IMEI or Serial number">
+                            <input type="text" name="search_argument" placeholder="Enter your model, IMEI or Serial number">
                             <button type="submit"><i class="fa fa-search"></i></button>
                         </form>
                         <a href=""><div class="d-flex mt-50">
