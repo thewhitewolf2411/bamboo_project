@@ -36,6 +36,8 @@
 
 </form>
 
+
+
 <script>
 
     var price = document.getElementById('price');

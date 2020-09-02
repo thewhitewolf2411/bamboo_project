@@ -89,37 +89,45 @@ class SellController extends Controller
 
     public function sellItems(Request $request){
 
+        if(Auth::user()){
+            $data = $request->all();
+        
+            $data = array_values($data);
+            $data = array_slice($data, 1, -1);
+    
+            $items = array();
+            $barcode = $request->order_code;
+    
+            for($i = 0; $i<count($data); $i+=2){
+                $item = array();
+                array_push($item, $data[$i], $data[$i+1]);
+                array_push($items, $item);
+            }
+    
+            foreach($items as $item){     
+    
+                $tradein = new Tradein();
+                $tradein->barcode = $barcode;
+                $tradein->user_id = Auth::user()->id;
+                $tradein->product_id = $item[0];
+                $tradein->product_state = $item[1];
+                $tradein->save();
+    
+            }
+    
+            Session::forget('cart');
+            Session::forget('type');
+    
+            return redirect('/');
+        }
+        else{
+            $showLogin = true;
+            return redirect('/cart')->with('showLogin', $showLogin);
+        }
+
         #dd($request->all());
 
-        $data = $request->all();
-        
-        $data = array_values($data);
-        $data = array_slice($data, 1, -1);
 
-        $items = array();
-        $barcode = $request->order_code;
-
-        for($i = 0; $i<count($data); $i+=2){
-            $item = array();
-            array_push($item, $data[$i], $data[$i+1]);
-            array_push($items, $item);
-        }
-
-        foreach($items as $item){     
-
-            $tradein = new Tradein();
-            $tradein->barcode = $barcode;
-            $tradein->user_id = Auth::user()->id;
-            $tradein->product_id = $item[0];
-            $tradein->product_state = $item[1];
-            $tradein->save();
-
-        }
-
-        Session::forget('cart');
-        Session::forget('type');
-
-        return redirect('/');
         
     }
 }

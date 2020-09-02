@@ -14,6 +14,7 @@ use App\Eloquent\Conditions;
 use App\Eloquent\Websites;
 use App\Eloquent\Stores;
 use App\Eloquent\TestingQuestions;
+use App\Eloquent\Tradein;
 use App\User;
 use Auth;
 use Schema;
@@ -52,6 +53,8 @@ class PortalController extends Controller
     }
 
     public function showTradeIn(){
+        $tradeins = Tradein::all();
+        dd($tradeins);
         return view('portal.customer-care.trade-in');
     }
 
