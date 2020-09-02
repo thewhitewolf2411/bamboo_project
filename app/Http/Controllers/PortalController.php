@@ -54,8 +54,7 @@ class PortalController extends Controller
 
     public function showTradeIn(){
         $tradeins = Tradein::all();
-        dd($tradeins);
-        return view('portal.customer-care.trade-in');
+        return view('portal.customer-care.trade-in')->with('tradeins', $tradeins);
     }
 
     public function showDestroyDevice(){
