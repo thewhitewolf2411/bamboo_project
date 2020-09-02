@@ -104,7 +104,7 @@
                                 </div>
                                 <div class="profile-element-container">
                                     <p class="profile-small">Password</p>
-                                    <p class="profile-large">{{$userdata->password}}</p>
+                                    <input type="password" class="profile-large" value="{{$userdata->password}}" disabled></input>
                                 </div>
                             </div>
                             <div class="element-three-top-container">

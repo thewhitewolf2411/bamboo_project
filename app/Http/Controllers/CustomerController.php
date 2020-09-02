@@ -11,6 +11,7 @@ use App\Eloquent\Order;
 use App\Eloquent\BuyingProduct;
 use App\Eloquent\SellingProduct;
 use Auth;
+use Crypt;
 
 class CustomerController extends Controller
 {
@@ -136,29 +137,26 @@ class CustomerController extends Controller
 
     public function showCart(){
 
-        $oldCart = Session::get('cart');
+        $cartItems = Session::has('cart') ? Session::get('cart') : null;
+        $type = Session::has('type') ? Session::get('type') : null;
 
-        dd($oldCart);
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
 
-        #return view('customer.cart')->with('cart', $cartItems)->with('products', $products);
+        $products = $buyingProducts->merge($sellingProducts);
 
-    }
+        $sellingProducts = array();
 
-    public function sheckoutcart(){
-
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-
-        if(($oldCart)){
-            foreach($oldCart as $cartItem){
-                foreach($cartItem as $item){
-                    $item->save();
-                }
+        if($cartItems != null){
+            foreach($cartItems->items as $key=>$item){
+                $product = SellingProduct::where('id', $item['item'])->first();
+                
+                array_push($sellingProducts, $product);
             }
         }
 
-        Session::forget('cart');
 
-        return redirect('/');
+        return view('customer.cart')->with('cart', $cartItems)->with('products', $products)->with('type', $type)->with('sellingProducts', $sellingProducts);
 
     }
 
@@ -172,11 +170,13 @@ class CustomerController extends Controller
         if(Auth::user()){
             //get current user data
             $userdata = Auth::user();
-            $userorders = Order::where('user_id', $userdata->id)->get();
+            #$userorders = Order::where('user_id', $userdata->id)->get();
+
+            $userdata->password = Crypt::decrypt($userdata->password);
 
             return view('customer.profile')
-                ->with('userdata', $userdata)
-                ->with('userorders', $userorders);
+                ->with('userdata', $userdata);
+#                ->with('userorders', $userorders);
         }
         else{
             return redirect('/');

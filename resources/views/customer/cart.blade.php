@@ -17,8 +17,63 @@
         <header>@include('customer.layouts.header')</header>
         <main>
 
+        @if($type == null)
+            <p>Your Cart is empty</p>
+        @endif
+
+        @if($type=='tradein')
+            <form action="/cart/sell" method="post">
+                @csrf
+
+                @foreach($sellingProducts as $item)
+                    <div class="d-flex">
+                        <div>{{$item->product_name}}</div>
+                        <div>{{$item->product_memory}}</div>
+                        <div>{{$item->product_colour}}</div>
+                        <div>{{$item->product_network}}</div>
+                        <input type="hidden" name="product_{{$item->id}}_id" value="{{$item->id}}">
+                    </div>
+                    @foreach($cart->items as $cartItem)
+                        @if($cartItem['item'] == $item->id)
+                            @if($cartItem['state'] == $item->product_grade_1)
+                            <div class="d-flex flex-column">
+                                <div>State : {{$item->product_grade_1}}</div>
+                                <div>Our price : {{$item->product_selling_price_1}}</div>
+                                <input type="hidden" name="product_{{$item->id}}_state" value="{{$item->product_grade_1}}">
+                            </div>
+                            @elseif($cartItem['state'] == $item->product_grade_2)
+                            <div class="d-flex flex-column">
+                                <div>State : {{$item->product_grade_2}}</div>
+                                <div>Our price : {{$item->product_selling_price_2}}</div>
+                                <input type="hidden" name="product_{{$item->id}}_state" value="{{$item->product_grade_2}}">
+                            </div>
+                            @elseif($cartItem['state'] == $item->product_grade_3)
+                            <div class="d-flex flex-column">
+                                <div>State : {{$item->product_grade_3}}</div>
+                                <div>Our price : {{$item->product_selling_price_3}}</div>
+                                <input type="hidden" name="product_{{$item->id}}_state" value="{{$item->product_grade_3}}">
+                            </div>
+                            @endif
+                        @endif
+                    @endforeach
+
+                @endforeach
+
+                <input type="hidden" name="order_code" id="order_code" value="">
+
+                <button class="btn btn-primary btn-blue" type="submit">Potvrdi</div>
+
+            </form>
+        @endif
+
 
         </main>
         <footer>@include('customer.layouts.footer')</footer>    
     </body>
+    <script>
+
+        var rand = Math.floor(10000000 + Math.random() * 900000);
+        document.getElementById('order_code').value = rand;
+
+    </script>
 </html>

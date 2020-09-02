@@ -19,8 +19,10 @@ class Cart{
 
     }
 
-    public function add($order){
-        array_push($this->items, $order);
-        
+    public function add($item, $price){
+
+        $storedItem = ['state'=>$price, 'item'=>$item];
+ 
+        array_push($this->items, $storedItem);
     }
 }
