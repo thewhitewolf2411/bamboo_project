@@ -132,6 +132,8 @@ Route::get('/portal/testing/find', 'PortalController@showFindTradeIn')->middlewa
 Route::post('/portal/testing/find/find', 'PortalController@find')->middleware('auth');
 Route::post('/portal/testing/receive/receive', 'PortalController@receive')->middleware('auth');
 
+Route::get('/portal/testing/receive/receive/{id}','PortalController@testItem');
+
 //payments
 Route::get('/portal/payments', 'PortalController@showPaymentPage')->middleware('auth');
 Route::get('/portal/payments/awaiting', 'PortalController@showPaymentAwaitingPage')->middleware('auth');

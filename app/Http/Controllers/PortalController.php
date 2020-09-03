@@ -334,7 +334,13 @@ class PortalController extends Controller
     }
 
     public function receive(Request $request){
-        dd($request);
+        $tradeins = Tradein::where('barcode', $request->scanid)->get();
+        return view('portal.testing.order')->with('tradeins', $tradeins);
+    }
+
+    public function testItem($id){
+        $questions = TestingQuestions::all();
+        return view('portal.testing.questions')->with('questions', $questions);
     }
 
 

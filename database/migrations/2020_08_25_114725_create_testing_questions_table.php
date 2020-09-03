@@ -15,10 +15,9 @@ class CreateTestingQuestionsTable extends Migration
     {
         Schema::create('testing_questions', function (Blueprint $table) {
             $table->id();
-            $table->integer('category_id');
             $table->string('question');
-            $table->boolean('answer_1');
-            $table->boolean('answer_2');
+            $table->string('answer_1');
+            $table->string('answer_2');
             $table->timestamps();
         });
     }

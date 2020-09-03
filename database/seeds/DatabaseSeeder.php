@@ -67,5 +67,77 @@ class DatabaseSeeder extends Seeder
             'cms' => true,
         ]);
 
+        DB::table('testing_questions')->insert([
+
+            'question'=>'IMEI verification',
+            'answer_1'=>'IMEI match',
+            'answer_2'=>'IMEI mismatch',
+
+        ]);
+
+        DB::table('testing_questions')->insert([
+
+            'question'=>'Model',
+            'answer_1'=>'Correct',
+            'answer_2'=>'Incorrect',
+
+        ]);
+
+        DB::table('testing_questions')->insert([
+
+            'question'=>'Colour',
+            'answer_1'=>'Correct',
+            'answer_2'=>'Incorrect',
+
+        ]);
+
+        DB::table('testing_questions')->insert([
+
+            'question'=>'Checkmend verification',
+            'answer_1'=>'Clear',
+            'answer_2'=>'Blocked',
+
+        ]);
+
+        DB::table('testing_questions')->insert([
+
+            'question'=>'Missing/Fake parts?',
+            'answer_1'=>'Yes',
+            'answer_2'=>'No',
+
+        ]);
+
+        DB::table('testing_questions')->insert([
+
+            'question'=>'Device Fully functional?',
+            'answer_1'=>'Yes',
+            'answer_2'=>'No',
+
+        ]);
+
+        DB::table('testing_questions')->insert([
+
+            'question'=>'Signs of water damage?',
+            'answer_1'=>'Yes',
+            'answer_2'=>'No',
+
+        ]);
+
+        DB::table('testing_questions')->insert([
+
+            'question'=>'FMIP/Google Lock?',
+            'answer_1'=>'Yes',
+            'answer_2'=>'No',
+
+        ]);
+
+        DB::table('testing_questions')->insert([
+
+            'question'=>'Pin lock/Password lock?',
+            'answer_1'=>'Yes',
+            'answer_2'=>'No',
+
+        ]);
+
     }
 }

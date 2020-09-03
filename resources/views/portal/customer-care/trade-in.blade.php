@@ -31,8 +31,41 @@
                         <p>Trade-Ins</p>
                     </div>
                 </div>
-                <div class="portal-content-container">
+                <div class="portal-table-container">
 
+                    <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td><div class="table-element">Trade-in ID</div></td>
+                            <td><div class="table-element">Trade-in barcode number</div></td>
+                            <td><div class="table-element">Date Placed</div></td>
+                            <td><div class="table-element">Product</div></td>
+                            <td><div class="table-element">Trade-in Status</div></td>
+                            <td>
+
+                            </td>
+                        </tr>
+
+                        @foreach($tradeins as $tradein)
+
+                        <tr>
+                            <td><div class="table-element">{{$tradein->id}}</td>
+                            <td ><div class="table-element">{{$tradein->barcode}}</div></td>
+                            <td><div class="table-element">{{$tradein->created_at}}</div></td>
+                            <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                            <td><div class="table-element">{{$tradein->product_state}}</div></td>
+                            <td><div class="table-element">
+                                <a href="">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <a onclick="" href="">
+                                    
+                                </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        @endforeach
+                    </table>
 
                 </div>
             </div>
