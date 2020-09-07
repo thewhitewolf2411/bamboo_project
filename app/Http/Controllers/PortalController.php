@@ -15,6 +15,7 @@ use App\Eloquent\Websites;
 use App\Eloquent\Stores;
 use App\Eloquent\TestingQuestions;
 use App\Eloquent\Tradein;
+use App\Eloquent\Tradeout;
 use App\User;
 use Auth;
 use Schema;
@@ -57,9 +58,23 @@ class PortalController extends Controller
         return view('portal.customer-care.trade-in')->with('tradeins', $tradeins);
     }
 
+    public function showTradeInDetails($id){
+        $tradein = Tradein::where('id', $id)->first();
+        return view('portal.customer-care.trade-in-details')->with('tradein', $tradein);
+    }
+
+    public function PrintTradeInLabel(Request $request){
+        header('Content-Type: application/pdf');
+    }
+
     public function showTradeOut(){
-        $tradeouts = TradeOut::all();
+        $tradeouts = Tradeout::all();
         return view('portal.customer-care.trade-out')->with('tradeouts', $tradeouts);
+    }
+
+    public function showTradeOutDetails($id){
+        $tradeout = Tradeout::where('id', $id)->first();
+        return view('portal.customer-care.trade-out-details')->with('tradeout', $tradeout);
     }
 
     public function showDestroyDevice(){

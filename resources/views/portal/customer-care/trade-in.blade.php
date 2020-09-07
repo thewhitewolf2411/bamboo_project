@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+    <script src="/js/PrintTradeIn.js"></script>
+
     <title>Bamboo Recycle::Trade-Ins</title>
 </head>
 
@@ -54,11 +56,20 @@
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                             <td><div class="table-element">{{$tradein->product_state}}</div></td>
                             <td><div class="table-element">
-                                <a href="">
-                                    <i class="fa fa-pencil"></i>
+                                <a href="/portal/customer-care/trade-in/{{$tradein->id}}">
+                                    <i class="fa fa-search"></i>
                                 </a>
-                                <a onclick="" href="">
-                                    
+                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->id}})>
+                                    <i class="fa fa-print"></i>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-asterisk" style="color:red !important;"></i>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-ban" style="color:red !important;"></i>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-times" style="color:red !important;"></i>
                                 </a>
                                 </div>
                             </td>
@@ -66,6 +77,12 @@
 
                         @endforeach
                     </table>
+
+                    <form id="print_trade_pack_form" name="form-print-trade-pack" enctype="multipart/form-data" action="/portal/customer-care/trade-in/printlabel" method="post">
+                        @csrf
+                        <input type="hidden" id="print_trade_pack_trade_in_id" name="hidden_print_trade_pack_trade_in_id">
+                        <input type="submit" id="print_trade_pack_trade_in_trigger" name="print_trade_pack_trade_in" value="Print Trade Pack Trade-In">
+                    </form>
 
                 </div>
             </div>

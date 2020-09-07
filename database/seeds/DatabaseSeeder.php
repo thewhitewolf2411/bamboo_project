@@ -443,5 +443,59 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
+        DB::table('selling_products')->insert([
+
+            'product_name'=>'iPhone X',
+            'product_image'=>'default_category_image.jpg',
+            'category_id'=>1,
+            'brand_id'=>1,
+            'product_memory'=>'128GB',
+            'product_colour'=>'White',
+            'product_network'=>'Unlocked',
+            'product_grade_1'=>'New',
+            'product_grade_2'=>'Good',
+            'product_grade_3'=>'Faulty',
+            'product_selling_price_1'=>300,
+            'product_selling_price_2'=>200,
+            'product_selling_price_3'=>100,
+
+        ]);
+
+        DB::table('selling_products')->insert([
+
+            'product_name'=>'iPhone 12',
+            'product_image'=>'default_category_image.jpg',
+            'category_id'=>1,
+            'brand_id'=>1,
+            'product_memory'=>'256GB',
+            'product_colour'=>'White',
+            'product_network'=>'Unlocked',
+            'product_grade_1'=>'New',
+            'product_grade_2'=>'Good',
+            'product_grade_3'=>'Faulty',
+            'product_selling_price_1'=>350,
+            'product_selling_price_2'=>220,
+            'product_selling_price_3'=>110,
+
+        ]);
+
+        DB::table('selling_products')->insert([
+
+            'product_name'=>'Samsung Galaxy S20',
+            'product_image'=>'default_category_image.jpg',
+            'category_id'=>1,
+            'brand_id'=>2,
+            'product_memory'=>'256GB',
+            'product_colour'=>'White',
+            'product_network'=>'Unlocked',
+            'product_grade_1'=>'New',
+            'product_grade_2'=>'Good',
+            'product_grade_3'=>'Faulty',
+            'product_selling_price_1'=>250,
+            'product_selling_price_2'=>120,
+            'product_selling_price_3'=>60,
+
+        ]);
+
     }
 }

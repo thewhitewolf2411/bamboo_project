@@ -11401,6 +11401,10 @@ main p, a, span {
   padding: 20px;
 }
 
+#news-main {
+  background: red;
+}
+
 header {
   position: fixed;
   top: 0;
@@ -13193,6 +13197,10 @@ input[type=number] {
 
 .access-container input {
   width: auto;
+}
+
+#print_trade_pack_form {
+  display: none;
 }
 
 .register-elements-container {

@@ -87,6 +87,12 @@ Route::get('/portal', 'PortalController@portal')->name('portal')->middleware('au
 //customer-care
 Route::get('/portal/customer-care', 'PortalController@showCustomerCare')->name('customerCare')->middleware('auth');
 Route::get('/portal/customer-care/trade-in', 'PortalController@showTradeIn')->name('tradeIn')->middleware('auth');
+Route::get('/portal/customer-care/trade-in/{id}', 'PortalController@showTradeInDetails')->name('tradeInDetails')->middleware('auth');
+Route::post('/portal/customer-care/trade-in/printlabel', 'PortalController@PrintTradeInLabel')->name('tradeInLabel')->middleware('auth');
+
+Route::get('/portal/customer-care/trade-out', 'PortalController@showTradeOut')->name('tradeOut')->middleware('auth');
+Route::get('/portal/customer-care/trade-out/{id}', 'PortalController@showTradeOutDetails')->name('tradeOutDetails')->middleware('auth');
+
 Route::get('/portal/customer-care/destroy-device', 'PortalController@showDestroyDevice')->name('destroyDevice')->middleware('auth');
 Route::get('/portal/customer-care/trade-pack', 'PortalController@showTradePack')->name('tradePack')->middleware('auth');
 Route::get('/portal/customer-care/seller', 'PortalController@showSeller')->name('seller')->middleware('auth');

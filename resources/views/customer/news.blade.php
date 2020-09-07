@@ -1,1 +1,3 @@
-news
+<main id="news-main">
+
+</main>

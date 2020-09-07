@@ -37,7 +37,7 @@
                         <p><i class="fa fa-shopping-cart"></i>Trade-Ins</p>
                         </div>
                     </a>
-                    <a href="/portal/customer-care/trade-in">
+                    <a href="/portal/customer-care/trade-out">
                         <div class="portal-content-element">
                         <p><i class="fa fa-shopping-cart"></i>Trade-Outs</p>
                         </div>
