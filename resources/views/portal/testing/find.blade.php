@@ -35,7 +35,7 @@
                     <form action="/portal/testing/find/find" method="POST">
                         @csrf
                         <label for="searchinput">Scan Or Type Trade-In ID:</label>
-                        <input id="searchinput" type="number" name="scanid" class="form-control">
+                        <input id="searchinput" type="number" name="scanid" class="form-control" autofocus>
                         <button type="submit" class="btn btn-primary btn-blue">Search</button>
                     </form>
                 </div>

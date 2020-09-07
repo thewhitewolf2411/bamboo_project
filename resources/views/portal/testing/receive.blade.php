@@ -35,7 +35,7 @@
                     <form action="/portal/testing/receive/receive" method="POST">
                         @csrf
                         <label for="searchinput">Scan Or Type Trade-In ID:</label>
-                        <input id="searchinput" type="number" name="scanid" class="form-control">
+                        <input id="searchinput" type="number" name="scanid" class="form-control" autofocus>
                         <button type="submit" class="btn btn-primary btn-blue">Search</button>
                     </form>
 
@@ -58,6 +58,8 @@ $(document).ready(function(){
     elem.children[0].children[0].style.opacity = 1;
 
 });
+
+
 
 </script>
 

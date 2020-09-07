@@ -57,6 +57,11 @@ class PortalController extends Controller
         return view('portal.customer-care.trade-in')->with('tradeins', $tradeins);
     }
 
+    public function showTradeOut(){
+        $tradeouts = TradeOut::all();
+        return view('portal.customer-care.trade-out')->with('tradeouts', $tradeouts);
+    }
+
     public function showDestroyDevice(){
         return view('portal.customer-care.destroy');
     }

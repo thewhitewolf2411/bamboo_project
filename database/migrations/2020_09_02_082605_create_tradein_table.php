@@ -26,7 +26,6 @@ class CreateTradeinTable extends Migration
             $table->boolean('different_device_model')->nullable();
             $table->boolean('device_missing')->nullable();
             $table->boolean('device_present_as_described')->nullable();
-            $table->boolean('');
 
             $table->timestamps();
         });

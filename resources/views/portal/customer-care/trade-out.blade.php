@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Customer Care</title>
+    <title>Bamboo Recycle::Trade-Ins</title>
 </head>
 
 <body class="portal-body">
@@ -28,35 +28,44 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Customer Care</p>
+                        <p>Trade-Ins</p>
                     </div>
                 </div>
-                <div class="portal-content-container">
-                    <a href="/portal/customer-care/trade-in">
-                        <div class="portal-content-element">
-                        <p><i class="fa fa-shopping-cart"></i>Trade-Ins</p>
-                        </div>
-                    </a>
-                    <a href="/portal/customer-care/trade-in">
-                        <div class="portal-content-element">
-                        <p><i class="fa fa-shopping-cart"></i>Trade-Outs</p>
-                        </div>
-                    </a>
-                    <a href="/portal/customer-care/destroy-device">
-                        <div class="portal-content-element">
-                        <p><i class="fa fa-trash-o"></i>Devices to be destroyed</p>
-                        </div>
-                    </a>
-                    <a href="/portal/customer-care/trade-pack">
-                        <div class="portal-content-element">
-                        <p><i class="fa fa-envelope-o"></i>Trade pack dispach</p>
-                        </div>
-                    </a>
-                    <a href="/portal/customer-care/seller">
-                        <div class="portal-content-element">
-                        <p><i class="fa fa-child"></i>Sellers</p>
-                        </div>
-                    </a>
+                <div class="portal-table-container">
+
+                    <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td><div class="table-element">Trade-in ID</div></td>
+                            <td><div class="table-element">Trade-in barcode number</div></td>
+                            <td><div class="table-element">Date Placed</div></td>
+                            <td><div class="table-element">Product</div></td>
+                            <td><div class="table-element">Trade-out Status</div></td>
+                            <td>
+
+                            </td>
+                        </tr>
+
+                        @foreach($tradeouts as $tradeout)
+
+                        <tr>
+                            <td><div class="table-element">{{$tradeout->id}}</td>
+                            <td ><div class="table-element">{{$tradeout->barcode}}</div></td>
+                            <td><div class="table-element">{{$tradeout->created_at}}</div></td>
+                            <td><div class="table-element">{{$tradeout->getProductName($tradein->product_id)}}</div></td>
+                            <td><div class="table-element">{{$tradeout->product_state}}</div></td>
+                            <td><div class="table-element">
+                                <a href="">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                                <a onclick="" href="">
+                                    
+                                </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        @endforeach
+                    </table>
 
                 </div>
             </div>
