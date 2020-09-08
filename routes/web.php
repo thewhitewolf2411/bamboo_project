@@ -96,6 +96,7 @@ Route::get('/portal/customer-care/trade-out/{id}', 'PortalController@showTradeOu
 Route::get('/portal/customer-care/destroy-device', 'PortalController@showDestroyDevice')->name('destroyDevice')->middleware('auth');
 Route::get('/portal/customer-care/trade-pack', 'PortalController@showTradePack')->name('tradePack')->middleware('auth');
 Route::get('/portal/customer-care/seller', 'PortalController@showSeller')->name('seller')->middleware('auth');
+
 //categories, brands
 Route::get('/portal/categories', 'PortalController@showCategories')->name('showCategories')->middleware('auth');
 Route::get('/portal/categories/add', 'PortalController@showAddCategoryView')->middleware('auth');
@@ -136,9 +137,13 @@ Route::get('/portal/testing/receive', 'PortalController@showReceiveTradeIn')->mi
 Route::get('/portal/testing/find', 'PortalController@showFindTradeIn')->middleware('auth');
 
 Route::post('/portal/testing/find/find', 'PortalController@find')->middleware('auth');
-Route::post('/portal/testing/receive/receive', 'PortalController@receive')->middleware('auth');
+Route::post('/portal/testing/receive/1', 'PortalController@receive')->middleware('auth');
+Route::post('/portal/testing/receive/2', 'PortalController@receive')->middleware('auth');
+Route::post('/portal/testing/receive/3', 'PortalController@receive')->middleware('auth');
 
-Route::get('/portal/testing/receive/receive/{id}','PortalController@testItem');
+Route::get('/portal/testing/receive/{id}/1','PortalController@testItem');
+
+Route::post('/portal/testing/checkimei', 'PortalController@checkimei');
 
 //payments
 Route::get('/portal/payments', 'PortalController@showPaymentPage')->middleware('auth');
@@ -199,3 +204,9 @@ Route::get('/portal/settings/barcode-id','PortalController@showSettingsBarcodeId
 
 //cms
 Route::get('/portal/cms', 'PortalController@showCmsPage')->middleware('auth');
+
+//Trays
+Route::get('/portal/trays', 'PortalController@showTraysPage')->middleware('auth');
+
+//Boxes
+Route::get('/portal/boxes', 'PortalController@showBoxesPage')->middleware('auth');

@@ -19,6 +19,9 @@ use App\Eloquent\Tradeout;
 use App\User;
 use Auth;
 use Schema;
+use DNS1D;
+use DNS2D;
+use PDF;
 
 use Storage;
 use File;
@@ -64,7 +67,26 @@ class PortalController extends Controller
     }
 
     public function PrintTradeInLabel(Request $request){
-        header('Content-Type: application/pdf');
+
+        #dd($request);
+
+        $tradein = Tradein::where('id', $request->hidden_print_trade_pack_trade_in_id)->first();
+        $user = User::where('id',$tradein->user_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id);
+
+        $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
+        #dd($barcode);
+        $this->generateTradeInHTML($barcode, $user, $product, $tradein);
+    }
+
+    public function generateTradeInHTML($barcode, $user, $product, $tradein){
+        $html = "";
+        $html .= $barcode;
+
+        $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
+        PDF::loadHTML($html)->setPaper('a4', 'landscape')->setWarnings(false)->save($filename);
+
+        $this->downloadFile($filename);
     }
 
     public function showTradeOut(){
@@ -361,6 +383,10 @@ class PortalController extends Controller
     public function testItem($id){
         $questions = TestingQuestions::all();
         return view('portal.testing.questions')->with('questions', $questions);
+    }
+
+    public function checkimei(Request $request){
+        dd($request);
     }
 
 
@@ -830,4 +856,18 @@ class PortalController extends Controller
     public function showCmsPage(){
         return view('portal.cms.cms');
     }
+
+    //trays
+
+    public function showTraysPage(){
+        return view('portal.trays.trays');
+    }
+
+    //boxes
+
+    public function showBoxesPage(){
+        return view('portal.boxes.boxes');
+    }
+
+
 }

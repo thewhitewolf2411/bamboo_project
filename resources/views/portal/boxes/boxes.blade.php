@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Receive Trade-In</title>
+    <title>Bamboo Recycle::Boxes Managment</title>
 </head>
 
 <body class="portal-body">
@@ -28,22 +28,10 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Receive Trade-In</p>
+                        <p>Boxes managment</p>
                     </div>
                 </div>
-                <div class="portal-search-form-container">
-                    
-                    <div class="d-flex ">
-                    @foreach($tradeins as $tradein)
-                        <a href="/portal/testing/receive/{{$tradein->id}}/1"><div class="d-flex flex-column shadow bg-white rounded ml-5 mr-5">
-                            <div class="" style="width:200px;">Product name: {{$tradein->getProductName($tradein->product_id)}}</div>
-                            <div class="" style="width:200px;">Customer state: {{$tradein->product_state}}</div>
-                            <div class="" style="width:200px;">Price {{$tradein->getProductPrice($tradein->product_id, $tradein->product_state)}} £</div>
-                        </div></a>
-                    @endforeach
-                    </div>
 
-                </div>
 
             </div>
         </div>
@@ -54,7 +42,7 @@
 
 $(document).ready(function(){
 
-    var elem = $('.portal-links-container > .portal-header-element')[4];
+    var elem = $('.portal-links-container > .portal-header-element')[12];
     
     console.log(elem.children[0]);
 

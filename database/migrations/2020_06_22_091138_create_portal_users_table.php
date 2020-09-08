@@ -27,6 +27,8 @@ class CreatePortalUsersTable extends Migration
             $table->boolean('users')->default(false);
             $table->boolean('settings')->default(false);
             $table->boolean('cms')->default(false);
+            $table->boolean('trays')->default(false);
+            $table->boolean('boxes')->default(false);
             $table->timestamps();
         });
     }

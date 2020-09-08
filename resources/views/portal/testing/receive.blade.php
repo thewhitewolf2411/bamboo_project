@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="portal-search-form-container">
-                    <form action="/portal/testing/receive/receive" method="POST">
+                    <form action="/portal/testing/receive/1" method="POST">
                         @csrf
                         <label for="searchinput">Scan Or Type Trade-In ID:</label>
                         <input id="searchinput" type="number" name="scanid" class="form-control" autofocus>

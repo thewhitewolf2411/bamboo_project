@@ -65,6 +65,8 @@ class DatabaseSeeder extends Seeder
             'users' => true,
             'settings' => true,
             'cms' => true,
+            'trays' => true,
+            'boxes' => true,
         ]);
 
         DB::table('testing_questions')->insert([

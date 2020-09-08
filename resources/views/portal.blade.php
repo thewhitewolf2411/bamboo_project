@@ -108,6 +108,20 @@
                         </div>
                     </a>
                     @endif
+                    @if($portalUser->trays)
+                    <a href="/portal/trays">
+                        <div class="portal-content-element">
+                        <p><i class="fa fa-inbox"></i>Trays Managment</p>
+                        </div>
+                    </a>
+                    @endif
+                    @if($portalUser->boxes)
+                    <a href="/portal/boxes">
+                        <div class="portal-content-element">
+                        <p><i class="fa fa-cube"></i>Boxes</p>
+                        </div>
+                    </a>
+                    @endif
                 </div>
             </div>
         </div>

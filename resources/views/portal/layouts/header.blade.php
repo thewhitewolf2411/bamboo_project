@@ -39,6 +39,12 @@
             <div class="portal-header-element">
                 <a class="menu_button_text" href="/portal/cms"><i class="fa fa-file"></i>CMS</a>
             </div>
+            <div class="portal-header-element">
+                <a class="menu_button_text" href="/portal/trays"><i class="fa fa-inbox"></i>Trays</a>
+            </div>
+            <div class="portal-header-element">
+                <a class="menu_button_text" href="/portal/boxes"><i class="fa fa-cube"></i>Boxes</a>
+            </div>
         </div>
         <div class="portal-header-element">
             <a href="/logout"><i class="fa fa-sign-out"></i></a>
