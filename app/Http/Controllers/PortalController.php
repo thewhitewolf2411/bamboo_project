@@ -68,23 +68,69 @@ class PortalController extends Controller
 
     public function PrintTradeInLabel(Request $request){
 
-        #dd($request);
-
         $tradein = Tradein::where('id', $request->hidden_print_trade_pack_trade_in_id)->first();
         $user = User::where('id',$tradein->user_id)->first();
         $product = SellingProduct::where('id', $tradein->product_id);
 
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
-        #dd($barcode);
         $this->generateTradeInHTML($barcode, $user, $product, $tradein);
     }
 
     public function generateTradeInHTML($barcode, $user, $product, $tradein){
         $html = "";
-        $html .= $barcode;
+        $html .= "<style>p{margin:0;}</style>";
+        $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
+        $html .= "<br><br>";
+        $html .= "<p>" . $user->first_name . " " . $user->last_name . "</p>";
+        $html .= "<p>Bamboo Distribution Limited</p>";
+        $html .= "<p>Unit 11, Io Centre</p>";
+        $html .= "<p>Unit 11, Io Centre</p>";
+        $html .= "<p>Waltham Abbey</p>";
+        $html .= "<p>Essex</p>";
+        $html .= "<p>En9 1as</p>";
+        $html .= "<p>United Kingdom</p>";
+        $html .= "<br><br>";
+        $html .= "<p>Order#". $tradein->barcode . " Date: " . $tradein->created_at .  "</p>";
+        $html .= "<p>Dear" . $user->first_name . " " . $user->last_name . ",</p>";
+        $html .= "<p>Thank you very much for using Bamboo Recycle to recycle your mobile device(s). This package contains your TradePack which you can use to post your recycled device(s) back to Bamboo. Please follow the instructions below on how toreturn your recycled device(s) to Bamboo:</p>";
+        $html .= "  <ol>
+                        <li>Gather your recycled device(s) and remove any sim cards or memory cards from thedevice(s).</li>
+                        <li>Place the device(s) into the Trade Pack that you received from Bamboo with this package. (Please rememberwe only require the handset, unless of course the device you're recycling is brand new and boxed.)</li>
+                        <li>Next, seal the Trade Pack by folding over the sticky flap at the top.</li>
+                        <li>Finally, you must then place the Freepost Label, found on the bottom left of this letter, onto the front of the TradePack then post your Trade Pack back to Bamboo!</li>
+                    </ol> ";
+        $html .= "<p>Once your recycled device(s) are received by Bamboo you will be sent an email confirming this. Your device(s) will thenbe tested to make sure they match the conditions that were set when placing the order. After each device has beensuccessfully tested you will receive a final email confirming payment for the device using the method that you selected.(Please note: Payment will be made on a per device basis.)<br>If you have any problems returning your device(s) please view the FAQs section on our website or contact us directly byemailing customersupport@bamboorecycle.com with your enquiry.</p>";
+        $html .= "<p>Kind Regards,</p>";
+        $html .= "<p>Bamboo Mobile</p>";
+        $html .= "<h3>Freepost return address</h3>";
+        $html .=    "<div style='display:flex; justify-content: space-between;'><div style='width:30%;'>
+                                                <p>FREEPOST 555880PR</p>
+                                                <p>Bamboo Recycle (9100)</p>
+                                                <p>C/O Bamboo Distribution Ltd</p>
+                                                <p>Unit 1, I.O Centre</p>
+                                                <p>Lea Road</p>
+                                                <p>Waltham Abbey</p>
+                                                <p>Hertfordshire</p>
+                                                <p>EN9 1AS</p>
+                                                <div style='border:1px solid black; padding:15px;'>". $barcode ."</div>
+                                                </div>
+                                                <div style='width:30%;'>
+                                                <p>FREEPOST 555880PR</p>
+                                                <p>Bamboo Recycle (9100)</p>
+                                                <p>C/O Bamboo Distribution Ltd</p>
+                                                <p>Unit 1, I.O Centre</p>
+                                                <p>Lea Road</p>
+                                                <p>Waltham Abbey</p>
+                                                <p>Hertfordshire</p>
+                                                <p>EN9 1AS</p>
+                                                <div style='border:1px solid black; padding:15px;'>". $barcode ."</div>
+                                                </div>
+                    </div>";
+                    #echo $html;
+                    #dd();
 
         $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
-        PDF::loadHTML($html)->setPaper('a4', 'landscape')->setWarnings(false)->save($filename);
+        PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
 
         $this->downloadFile($filename);
     }
@@ -381,11 +427,19 @@ class PortalController extends Controller
     }
 
     public function testItem($id){
-        $questions = TestingQuestions::all();
-        return view('portal.testing.questions')->with('questions', $questions);
+        $tradein = Tradein::where('id', $id)->first();
+        $user  = User::where('id', $tradein->user_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
+        
+
+        return view('portal.testing.questions')->with(['tradein'=>$tradein, 'user'=>$user, 'product'=>$product]);
     }
 
     public function checkimei(Request $request){
+        dd($request);
+    }
+
+    public function setTradeInStatus(Request $request){
         dd($request);
     }
 
@@ -757,10 +811,11 @@ class PortalController extends Controller
         return view('portal.settings.testing-questions')->with('categories', $categories);
     }
 
-    public function showCategoryQuestionsPage($id){
+    public function showCategoryQuestionsPage($productId, $id){
 
-        $categoryQuestions = TestingQuestions::where('category_id', $id)->get();
-        return view('portal.settings.questions')->with('categoryQuestions', $categoryQuestions)->with('categoryid', $id);
+        dd($productid, $id);
+        
+        return view('portal.settings.questions');
     }
 
     public function showCategoryAddQuestionPage($id){

@@ -142,6 +142,7 @@ Route::post('/portal/testing/receive/2', 'PortalController@receive')->middleware
 Route::post('/portal/testing/receive/3', 'PortalController@receive')->middleware('auth');
 
 Route::get('/portal/testing/receive/{id}/1','PortalController@testItem');
+Route::post('/portal/testing/receive/settradeinstatus', 'PortalController@setTradeInStatus');
 
 Route::post('/portal/testing/checkimei', 'PortalController@checkimei');
 

@@ -19,6 +19,7 @@ class CreateTradeinTable extends Migration
             $table->integer('barcode');
             $table->integer('product_id');
             $table->string('product_state');
+            $table->boolean('received')->default(false);
             $table->boolean('proccessed_before')->nullable()->default(null);
             $table->boolean('device_status_missing')->nullable()->default(null);
             $table->boolean('has_device_been_21_days')->nullable()->default(null);

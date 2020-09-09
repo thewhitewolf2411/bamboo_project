@@ -22,7 +22,7 @@ class Tradein extends Model
      * @var array
      */
     protected $fillable = [
-        'barcode','product_id','product_state',
+        'barcode','product_id','product_state', 'proccessed_before','device_status_missing','has_device_been_21_days','status','different_device_model','device_missing','device_present_as_described'
     ];
 
 

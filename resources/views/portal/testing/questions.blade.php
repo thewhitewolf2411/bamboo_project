@@ -32,18 +32,43 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Check IMEI</p>
+                        <p>Process Trade-In #{{$tradein->barcode}}</p>
                     </div>
                 </div>
                 <div class="portal-search-form-container">
                     
                     <div class="d-flex portal-search-form-container">
 
-                        <form>
-                            <label for="checkimei">Check IMEI:</label>
-                            <input id="trade_in_product_id" type="hidden" name="" value="">
-                            <input id="checkimei" type="number" name="checkimei" class="form-control" autofocus required>
-                            <button id="check-imei" type="submit" class="btn btn-primary btn-blue check-imei">Check</button>
+                        <form action="/portal/testing/receive/settradeinstatus" method="POST" class="d-flex flex-column">
+
+
+                            <div class="w-100 p-3">
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-75 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                    <div class="d-flex w-25 border p-3"><p>Received</p></div>
+                                </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex flex-column w-75 border p-3 align-items-baseline">
+                                        <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                        <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
+                                    </div>
+                                    <div class="d-flex w-25 border p-3"><input type="checkbox" name="received" onclick=""></div>
+                                </div>
+                                
+                            </div>
+
+                            <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
+
+                            <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
+                                <a href="/portal/testing/receive" style="margin: 0;">
+                                    <div class="btn btn-primary btn-blue">
+                                        <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
+                                    </div>
+                                </a>
+                                <button id="check-imei" type="submit" class="btn btn-primary btn-blue check-imei" disabled>Receive Product</button>
+                            </div>
+
                         </form>
 
                     </div>
@@ -66,68 +91,8 @@ $(document).ready(function(){
 
 });
 
-$("#check-imei").click(function(event){
-    console.log("karina");
-    //var trade_in_product_id = $('#trade_in_product_id').val();
-    var trade_in_product_id = 1;
 
-//IMEI
-var imei = $('#checkimei').val();
 
-//AJAX call
-$.ajax({
-    url: "v2.bamboorecycle.com/admin/testing/testing/imei-check-ajax.html?trade-in-product-id=" + trade_in_product_id + "&imei=" + encodeURIComponent(imei),
-})
-.done(function(get_imei_result) {
-
-    console.log(get_imei_result);    //Eval result
-    var imei_result = eval( "(" + get_imei_result + ")" );
-
-    //If success
-    if(imei_result.result == true)
-    {
-        //alert('checkIMEI function - TODO in next Phases of the project');
-        //imei_result.checkmend = new Object(); //TODO temp
-        //imei_result.checkmend.status = 'stolen'; //TODO temp
-
-        //If checkmend 'stolen' status is get
-        if(imei_result.checkmend.status == 'stolen') //TODO might be different status name
-        {
-            //Remove modal attributes from 'Quarantine' button
-            $('#quarantine_button').removeAttr("data-toggle");
-            $('#quarantine_button').removeAttr("data-target");
-            $('#quarantine_button').removeAttr("data-original-title");
-
-            //Add new onclick attribute
-            $('#quarantine_button').attr("onclick", "setAsStolen();");
-
-            //Disable 'Next' button
-            $('button[value=Next]').toggleClass('disabled', true);
-
-            //Set success message
-            setMessage('warning', 'IMEI CheckMEND check for current Trade-In Product has found that this device is stolen.');
-        }
-        else
-        {
-            //Set success message
-            setMessage('success', 'IMEI CheckMEND check for current Trade-In Product has been successful.');
-
-            //Set 'Quarantine' button to modal
-            setQuarantineButtonToModal();
-
-            //Enable 'Next' button
-            $('button[value=Next]').toggleClass('disabled', false);
-            $('button[value=Next]').prop('disabled', false);
-        }
-    }
-    //If no success
-    else
-    {
-        //Set error message
-        setAndShowMessage('error', imei_result.error_message);
-    }
-    });
-  });
 
 </script>
 
