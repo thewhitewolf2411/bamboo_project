@@ -537,6 +537,19 @@ class PortalController extends Controller
 
         dd($result);
 
+        $result = (json_decode($result['result_json']));
+
+        $result_data = "";
+
+        $result_status = $result->result;
+
+        if($result_status == "failed"){
+            $result_data = $result->reasondata;
+        }
+
+        
+
+        dd($result_status, $result_data);
 
     }
 
@@ -550,7 +563,8 @@ class PortalController extends Controller
 
 			// Create Authorisation header
 		  $authorisation_header = base64_encode(49 . ':' . $signature_hash);
-			$content_length = strlen($request_body);
+            $content_length = strlen($request_body);
+
 
 			$ws->connect();
 
