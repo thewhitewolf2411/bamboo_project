@@ -36,11 +36,13 @@
                     </div>
                 </div>
                 <div class="portal-search-form-container">
-                    
+
                     <div class="d-flex portal-search-form-container">
+                        @if(!$tradein->received && $tradein->device_missing == null)
 
                         <form action="/portal/testing/receive/settradeinstatus" method="POST" class="d-flex flex-column">
 
+                            @csrf
 
                             <div class="w-100 p-3">
                                 <div class="d-flex w-100">
@@ -53,7 +55,7 @@
                                         <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                     </div>
-                                    <div class="d-flex w-25 border p-3"><input type="checkbox" name="received" onclick=""></div>
+                                    <div class="d-flex w-25 border p-3"><input id="checkbox-received" type="checkbox" name="received"></div>
                                 </div>
                                 
                             </div>
@@ -66,11 +68,153 @@
                                         <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
                                     </div>
                                 </a>
-                                <button id="check-imei" type="submit" class="btn btn-primary btn-blue check-imei" disabled>Receive Product</button>
+                                <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei" disabled>Receive Product</button>
                             </div>
 
                         </form>
 
+                        @elseif($tradein->received && !isset($tradein->device_missing))
+                        <form action="/portal/testing/receive/devicemissing" method="POST" class="d-flex flex-column">
+
+                            @csrf
+
+                            <div class="w-100 p-3">
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Is device present?</p></div>
+                                </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                        <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                        <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
+                                    </div>
+                                    <div class="d-flex w-25 border p-3"><label for="missing-yes">Device is present.</label><input id="missing-yes" type="radio" name="missing" value="present"></div>
+                                    <div class="d-flex w-25 border p-3"><label for="missing-yes">Device is not present</label><input id="missing-no" type="radio" name="missing" value="missing"></div>
+                                </div>
+                                
+                            </div>
+
+                            <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
+
+                            <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
+                                <a href="/portal/testing/receive" style="margin: 0;">
+                                    <div class="btn btn-primary btn-blue">
+                                        <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
+                                    </div>
+                                </a>
+                                <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Confirm</button>
+                            </div>
+
+                        </form>
+                        @elseif($tradein->device_missing == true || $tradein->device_missing == false)
+                        
+                            @if(!$tradein->device_missing & !isset($tradein->device_correct))
+                            <form action="/portal/testing/receive/devicecorrect" method="POST" class="d-flex flex-column">
+
+                                @csrf
+    
+                                <div class="w-100 p-3">
+                                    <div class="d-flex w-100">
+                                        <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                        <div class="d-flex w-50 border p-3"><p>Is device correct?</p></div>
+                                    </div>
+                                    <div class="d-flex w-100">
+                                        <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                            <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
+                                            <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                            <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
+                                        </div>
+                                        <div class="d-flex w-25 border p-3"><label for="correct-device-yes">Yes.</label><input id="correct-device-yes" type="radio" name="correct_device" value="yes"></div>
+                                        <div class="d-flex w-25 border p-3"><label for="correct-device-no">No.</label><input id="correct-device-no" type="radio" name="correct_device" value="no"></div>
+                                    </div>
+                                    
+                                </div>
+    
+                                <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
+    
+                                <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
+                                    <a href="/portal/testing/receive" style="margin: 0;">
+                                        <div class="btn btn-primary btn-blue">
+                                            <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
+                                        </div>
+                                    </a>
+                                    <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Confirm</button>
+                                </div>
+    
+                            </form>
+                            @elseif(!$tradein->device_missing && $tradein->device_correct && !isset($tradein->visible_imei))
+                            <form action="/portal/testing/receive/deviceimeivisibility" method="POST" class="d-flex flex-column">
+
+                                @csrf
+    
+                                <div class="w-100 p-3">
+                                    <div class="d-flex w-100">
+                                        <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                        <div class="d-flex w-50 border p-3"><p>Is device IMEI number visible?</p></div>
+                                    </div>
+                                    <div class="d-flex w-100">
+                                        <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                            <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
+                                            <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                            <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
+                                        </div>
+                                        <div class="d-flex w-25 border p-3"><label for="visible_imei_yes">Yes.</label><input id="visible_imei_yes" type="radio" name="visible_imei" value="yes"></div>
+                                        <div class="d-flex w-25 border p-3"><label for="visible_imei_no">No.</label><input id="visible_imei_no" type="radio" name="visible_imei" value="no"></div>
+                                    </div>
+                                    
+                                </div>
+    
+                                <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
+    
+                                <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
+                                    <a href="/portal/testing/receive" style="margin: 0;">
+                                        <div class="btn btn-primary btn-blue">
+                                            <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
+                                        </div>
+                                    </a>
+                                    <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Confirm</button>
+                                </div>
+    
+                            </form>
+                            @endif
+
+                        @endif
+
+                        @if($tradein->received && !$tradein->device_missing && $tradein->device_present_as_described && !$tradein->marked_as_risk && $tradein->visible_imei)
+                        <form action="/portal/testing/receive/checkimei" method="POST" class="d-flex flex-column">
+
+                            @csrf
+
+                            <div class="w-100 p-3">
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Please enter IMEI number</p></div>
+                                </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                        <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                        <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
+                                    </div>
+                                    <div class="d-flex w-50 border p-3"><input id="imei_number" type="text" name="imei_number"></div>
+                                </div>
+                                
+                            </div>
+
+                            <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
+
+                            <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
+                                <a href="/portal/testing/receive" style="margin: 0;">
+                                    <div class="btn btn-primary btn-blue">
+                                        <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
+                                    </div>
+                                </a>
+                                <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Check IMEI</button>
+                            </div>
+
+                        </form>
+                        @endif
                     </div>
 
                 </div>
@@ -91,6 +235,9 @@ $(document).ready(function(){
 
 });
 
+$("#checkbox-received").click(function() {
+  $("#receive-button").attr("disabled", !this.checked);
+});
 
 
 

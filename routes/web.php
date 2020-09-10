@@ -143,8 +143,10 @@ Route::post('/portal/testing/receive/3', 'PortalController@receive')->middleware
 
 Route::get('/portal/testing/receive/{id}/1','PortalController@testItem');
 Route::post('/portal/testing/receive/settradeinstatus', 'PortalController@setTradeInStatus');
-
-Route::post('/portal/testing/checkimei', 'PortalController@checkimei');
+Route::post('/portal/testing/receive/devicemissing', 'PortalController@isDeviceMissing');
+Route::post('/portal/testing/receive/devicecorrect', 'PortalController@isDeviceCorrect');
+Route::post('/portal/testing/receive/deviceimeivisibility', 'PortalController@deviceImeiVisibility');
+Route::post('/portal/testing/receive/checkimei', 'PortalController@checkimei');
 
 //payments
 Route::get('/portal/payments', 'PortalController@showPaymentPage')->middleware('auth');

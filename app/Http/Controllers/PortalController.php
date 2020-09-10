@@ -435,13 +435,158 @@ class PortalController extends Controller
         return view('portal.testing.questions')->with(['tradein'=>$tradein, 'user'=>$user, 'product'=>$product]);
     }
 
-    public function checkimei(Request $request){
-        dd($request);
+    public function setTradeInStatus(Request $request){
+
+        $tradein = Tradein::where('id', $request->tradein_id)->first();
+        $tradein->received = true;
+        $tradein->save();
+
+        return redirect()->back();
     }
 
-    public function setTradeInStatus(Request $request){
-        dd($request);
+    public function isDeviceMissing(Request $request){
+        $tradein = Tradein::where('id', $request->tradein_id)->first();
+
+        if($request->missing == "present"){
+            $tradein->device_missing = false;
+        }
+        else if($request->missing == "missing"){
+            $tradein->device_missing = true;
+        }
+
+        if($tradein->device_missing){
+            $tradein->marked_for_quarantine = true;
+        }
+
+        $tradein->save();
+        return redirect()->back();
     }
+
+    public function isDeviceCorrect(Request $request){
+        $tradein = Tradein::where('id', $request->tradein_id)->first();
+
+        if($request->correct_device == "yes"){
+            $tradein->device_correct = true;
+        }
+        else if($request->correct_device == "no"){
+            $tradein->device_correct = false;
+        }
+
+        $tradein->save();
+        return redirect()->back();
+    }
+
+    public function deviceImeiVisibility(Request $request){
+        $tradein = Tradein::where('id', $request->tradein_id)->first();
+
+        if($request->visible_imei == "yes"){
+            $tradein->visible_imei = true;
+        }
+        else{
+            $tradein->visible_imei = false;
+            $tradein->marked_as_risk = true;
+        }
+
+        $tradein->save();
+
+        return redirect()->back();
+    }
+
+    public function checkimei(Request $request){
+        $tradein = Tradein::where('id', $request->tradein_id)->first();
+        $imei_number = $request->imei_number;
+
+        $url = 'https://gapi.checkmend.com/duediligence/' . 1 . '/' . $imei_number;
+
+        $options_array  = false;
+        $response_config_array  = false;
+
+        $options['category']  = 1;
+        $options['reason_data'] = true;
+        $options['make_model'] 	  = true;
+        $options['cdma_validate'] = false;
+
+        if($options)
+        {
+            if(isset($options['test_mode']))
+            {
+                $options_array['testmode']	=  ($options['test_mode'] ? $options['test_mode'] : 0);
+            }
+            if(isset($options['category']))
+            {
+                $options_array['category'] =  ($options['category']);
+            }
+
+            if(isset($options['reason_data']))
+            {
+                $options_array['responseconfig']['reasondata'] = ($options['reason_data'] ? 'true' : 'false' );
+            }
+            if(isset($options['cdma_validate']))
+            {
+                $options_array['responseconfig']['cdmavalidate'] =  ($options['cdma_validate'] ? 'true' : 'false' );
+            }
+            if(isset($options['make_model']))
+            {
+                $options_array['responseconfig']['makemodel'] =  ($options['make_model'] ? 'true' : 'false' );
+            }
+        }
+
+        $request_body = json_encode($options_array);
+
+        $result =  $this->send_request($url, $request_body);
+
+        dd($result);
+
+
+    }
+
+    private function send_request($url, $request_body, $options = false){
+			$ws = new browser_ckmd();
+
+			// Login Details
+			$username  			  = 49;
+			$signature_hash = sha1("0bc72ef89eac143151bd" . $request_body);
+			$password   		  = $signature_hash;
+
+			// Create Authorisation header
+		  $authorisation_header = base64_encode(49 . ':' . $signature_hash);
+			$content_length = strlen($request_body);
+
+			$ws->connect();
+
+			curl_setopt($ws->connection, CURLOPT_POST, false); // dont perform an normal post
+			curl_setopt($ws->connection, CURLOPT_HTTPHEADER,  array('Authorization: Basic ' . $authorisation_header,'Accept: application/json','Content-type: application/json', 'Content-length:' .$content_length) 	);
+			curl_setopt($ws->connection, CURLOPT_HTTPAUTH,  CURLAUTH_BASIC	);
+			curl_setopt($ws->connection, CURLOPT_URL, $url);
+			curl_setopt($ws->connection, CURLOPT_TIMEOUT, 5);
+			curl_setopt($ws->connection, CURLOPT_POSTFIELDS, $request_body);
+			curl_setopt($ws->connection, CURLOPT_HEADER, false); // Do not return headers
+			curl_setopt($ws->connection, CURLOPT_RETURNTRANSFER,1);
+			curl_setopt($ws->connection, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ws->connection, CURLOPT_FOLLOWLOCATION, true);
+
+			set_time_limit(20);
+
+			$result['result_json']  = curl_exec($ws->connection);
+
+			$ws->error_number  = curl_errno($ws->connection);
+			$ws->error_message = curl_error($ws->connection);
+
+			if($ws->error_number)
+			{
+				$result['error_number'] = $ws->error_number;
+			}
+			if($ws->error_message)
+			{
+				$result['error_message'] = $ws->error_message;
+			}
+
+
+			// Has to be last
+			$ws->disconnect();
+
+			return $result;
+		}
 
 
     //payments
@@ -925,4 +1070,19 @@ class PortalController extends Controller
     }
 
 
+}
+
+class browser_ckmd
+{
+    var $connection;
+
+    function connect()
+    {
+        $this->connection = curl_init();
+    }
+
+    function disconnect()
+    {
+        curl_close($this->connection);
+    }
 }

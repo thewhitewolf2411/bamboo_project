@@ -20,14 +20,17 @@ class CreateTradeinTable extends Migration
             $table->integer('product_id');
             $table->string('product_state');
             $table->boolean('received')->default(false);
-            $table->boolean('proccessed_before')->nullable()->default(null);
-            $table->boolean('device_status_missing')->nullable()->default(null);
-            $table->boolean('has_device_been_21_days')->nullable()->default(null);
-            $table->boolean('status')->nullable()->default(null);
-            $table->boolean('different_device_model')->nullable()->default(null);
             $table->boolean('device_missing')->nullable()->default(null);
-            $table->boolean('device_present_as_described')->nullable()->default(null);
-
+            $table->boolean('device_correct')->nullable()->default(null);
+            $table->boolean('device_present_as_described')->default(true);
+            $table->boolean('chekmend_passed')->default(true);
+            $table->boolean('marked_as_risk')->default(false);
+            $table->boolean('marked_for_quarantine')->default(false);
+            $table->string('change_device')->nullable()->default(null);
+            $table->boolean('visible_imei')->nullable()->default(null);
+            $table->boolean('proccessed_before')->nullable()->default(null);
+            $table->string('bamboo_grade')->nullable()->default(null);
+            $table->boolean('grade_changed')->default(false);
             $table->timestamps();
         });
     }
