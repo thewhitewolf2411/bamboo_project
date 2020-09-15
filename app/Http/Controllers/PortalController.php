@@ -296,8 +296,6 @@ class PortalController extends Controller
         $product->product_description = $request->wordbox_description;
         $product->category_id = $request->category;
         $product->brand_id = $request->brand;
-        $product->product_code_name = $request->productCode;
-        $product->product_code_value = $request->productcodevalue;
         $product->product_network = $request->product_network;
         $product->product_memory = $request->product_memory;
         $product->product_colour = $request->product_color;
@@ -439,6 +437,7 @@ class PortalController extends Controller
 
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         $tradein->received = true;
+        $tradein->proccessed_before = true;
         $tradein->save();
 
         return redirect()->back();
@@ -496,7 +495,7 @@ class PortalController extends Controller
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         $imei_number = $request->imei_number;
 
-        $url = 'https://gapi.checkmend.com/duediligence/' . 1 . '/' . $imei_number;
+        $url = 'https://gapi.checkmend.com/duediligence/' . 2 . '/' . $imei_number;
 
         $options_array  = false;
         $response_config_array  = false;
@@ -535,75 +534,91 @@ class PortalController extends Controller
 
         $result =  $this->send_request($url, $request_body);
 
-        dd($result);
-
         $result = (json_decode($result['result_json']));
 
         $result_data = "";
 
         $result_status = $result->result;
-
-        if($result_status == "failed"){
-            $result_data = $result->reasondata;
-        }
-
+        $result_data = $result->reasondata;
         
 
-        dd($result_status, $result_data);
+        if($result_status === "passed"){
+            $tradein->marked_for_quarantine = false;
+            $tradein->chekmend_passed = true;
+        }
+        else if($result_status === "failed"){
+            $tradein->marked_as_risk = true;
+            $tradein->marked_for_quarantine = true;
+        }
+        else if($result_status === "caution"){
+            $tradein->marked_as_risk = true;
+            $tradein->marked_for_quarantine = true;
+        }
+
+
+        $tradein->save();
+
+        return redirect()->back();
 
     }
 
     private function send_request($url, $request_body, $options = false){
-			$ws = new browser_ckmd();
+        $ws = new browser_ckmd();
 
-			// Login Details
-			$username  			  = 49;
-			$signature_hash = sha1("0bc72ef89eac143151bd" . $request_body);
-			$password   		  = $signature_hash;
+        // Login Details
+        $username  			  = 545;
+        $signature_hash = sha1("de8beafe711efb004f0d" . $request_body);
+        $password   		  = $signature_hash;
 
-			// Create Authorisation header
-		  $authorisation_header = base64_encode(49 . ':' . $signature_hash);
-            $content_length = strlen($request_body);
-
-
-			$ws->connect();
-
-			curl_setopt($ws->connection, CURLOPT_POST, false); // dont perform an normal post
-			curl_setopt($ws->connection, CURLOPT_HTTPHEADER,  array('Authorization: Basic ' . $authorisation_header,'Accept: application/json','Content-type: application/json', 'Content-length:' .$content_length) 	);
-			curl_setopt($ws->connection, CURLOPT_HTTPAUTH,  CURLAUTH_BASIC	);
-			curl_setopt($ws->connection, CURLOPT_URL, $url);
-			curl_setopt($ws->connection, CURLOPT_TIMEOUT, 5);
-			curl_setopt($ws->connection, CURLOPT_POSTFIELDS, $request_body);
-			curl_setopt($ws->connection, CURLOPT_HEADER, false); // Do not return headers
-			curl_setopt($ws->connection, CURLOPT_RETURNTRANSFER,1);
-			curl_setopt($ws->connection, CURLOPT_SSL_VERIFYPEER, false);
-			curl_setopt($ws->connection, CURLOPT_FOLLOWLOCATION, true);
-
-			set_time_limit(20);
-
-			$result['result_json']  = curl_exec($ws->connection);
-
-			$ws->error_number  = curl_errno($ws->connection);
-			$ws->error_message = curl_error($ws->connection);
-
-			if($ws->error_number)
-			{
-				$result['error_number'] = $ws->error_number;
-			}
-			if($ws->error_message)
-			{
-				$result['error_message'] = $ws->error_message;
-			}
+        // Create Authorisation header
+        $authorisation_header = base64_encode(545 . ':' . $signature_hash);
+        $content_length = strlen($request_body);
 
 
-			// Has to be last
-			$ws->disconnect();
+        $ws->connect();
 
-			return $result;
-		}
+        curl_setopt($ws->connection, CURLOPT_POST, false); // dont perform an normal post
+        curl_setopt($ws->connection, CURLOPT_HTTPHEADER,  array('Authorization: Basic ' . $authorisation_header,'Accept: application/json','Content-type: application/json', 'Content-length:' .$content_length) 	);
+        curl_setopt($ws->connection, CURLOPT_HTTPAUTH,  CURLAUTH_BASIC	);
+        curl_setopt($ws->connection, CURLOPT_URL, $url);
+        curl_setopt($ws->connection, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ws->connection, CURLOPT_POSTFIELDS, $request_body);
+        curl_setopt($ws->connection, CURLOPT_HEADER, false); // Do not return headers
+        curl_setopt($ws->connection, CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ws->connection, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ws->connection, CURLOPT_FOLLOWLOCATION, true);
+
+        set_time_limit(20);
+
+        $result['result_json']  = curl_exec($ws->connection);
+
+        $ws->error_number  = curl_errno($ws->connection);
+        $ws->error_message = curl_error($ws->connection);
+
+        if($ws->error_number)
+        {
+            $result['error_number'] = $ws->error_number;
+        }
+        if($ws->error_message)
+        {
+            $result['error_message'] = $ws->error_message;
+        }
 
 
-    //payments
+        // Has to be last
+        $ws->disconnect();
+
+        return $result;
+    }
+
+
+    public function checkDeviceStatus(Request $request){
+        $tradein = Tradein::where('id', $request->tradein_id)->first();
+
+        
+    }
+    
+        //payments
 
     public function showPaymentPage(){
         return view('portal.payments.payments');
@@ -663,7 +678,7 @@ class PortalController extends Controller
         if($export_feed_parameter == 1){
             $columns = Schema::getColumnListing('buying_products');
             //28 
-            $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','AA','AB'];
+            $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
             $products = BuyingProduct::all();
         }
         else if($export_feed_parameter == 2){
@@ -763,26 +778,24 @@ class PortalController extends Controller
                 $product->product_description = $datarow[3];
                 $product->category_id = $datarow[4];
                 $product->brand_id = $datarow[5];
-                $product->product_code_name = $datarow[6];
-                $product->product_code_value = $datarow[7];
-                $product->product_network = $datarow[8];
-                $product->product_memory = $datarow[9];
-                $product->product_colour = $datarow[10];
-                $product->product_grade = $datarow[11];
-                $product->product_dimensions = $datarow[12];
-                $product->product_processor = $datarow[13];
-                $product->product_weight = $datarow[14];
-                $product->product_screen = $datarow[15];
-                $product->product_system = $datarow[16];
-                $product->product_connectivity = $datarow[17];
-                $product->product_battery = $datarow[18];
-                $product->product_signal = $datarow[19];
-                $product->product_camera = $datarow[20];
-                $product->product_camera_2 = $datarow[21];
-                $product->product_sim = $datarow[22];
-                $product->product_memory_slots = $datarow[23];
-                $product->product_quantity = $datarow[24];
-                $product->product_buying_price = $datarow[25];
+                $product->product_network = $datarow[6];
+                $product->product_memory = $datarow[7];
+                $product->product_colour = $datarow[8];
+                $product->product_grade = $datarow[9];
+                $product->product_dimensions = $datarow[10];
+                $product->product_processor = $datarow[11];
+                $product->product_weight = $datarow[12];
+                $product->product_screen = $datarow[13];
+                $product->product_system = $datarow[14];
+                $product->product_connectivity = $datarow[15];
+                $product->product_battery = $datarow[16];
+                $product->product_signal = $datarow[17];
+                $product->product_camera = $datarow[18];
+                $product->product_camera_2 = $datarow[19];
+                $product->product_sim = $datarow[20];
+                $product->product_memory_slots = $datarow[21];
+                $product->product_quantity = $datarow[22];
+                $product->product_buying_price = $datarow[23];
     
                 $product->save();
     

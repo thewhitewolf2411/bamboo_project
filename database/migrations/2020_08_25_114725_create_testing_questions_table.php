@@ -15,9 +15,15 @@ class CreateTestingQuestionsTable extends Migration
     {
         Schema::create('testing_questions', function (Blueprint $table) {
             $table->id();
-            $table->string('question');
-            $table->string('answer_1');
-            $table->string('answer_2');
+            $table->integer('order_id');
+            $table->boolean('fake_missing_parts')->nullable()->default(null);
+            $table->string('fake_missing_parts_image')->nullable()->default(null);
+            $table->boolean('device_fully_functional')->nullable()->default(null);
+            $table->string('device_fully_functional_reasons')->nullable()->default(null);
+            $table->boolean('signs_of_water_damage')->nullable()->default(null);
+            $table->boolean('FIMP_Google_lock')->nullable()->default(null);
+            $table->boolean('pin_lock')->nullable()->default(null);
+            $table->string('cosmetic_condition')->nullable()->default(null);
             $table->timestamps();
         });
     }

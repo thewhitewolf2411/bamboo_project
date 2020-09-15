@@ -20,8 +20,6 @@ class CreateBuyingProductsTable extends Migration
             $table->string('product_description',1000)->nullable();
             $table->smallInteger('category_id');
             $table->smallInteger('brand_id');
-            $table->string('product_code_name');
-            $table->integer('product_code_value');
             $table->string('product_network');
             $table->string('product_memory');
             $table->string('product_colour');

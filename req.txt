@@ -1,0 +1,7 @@
+Trays go on a trolley
+Trolley goes into a box
+Each brand has it's own tray.
+Quarantine has 3 parts:
+	1 Awaiting response
+	2 Customer refused->send device back()
+	3 Customer accepted->return back to testing();

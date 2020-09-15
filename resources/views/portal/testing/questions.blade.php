@@ -181,7 +181,7 @@
 
                         @endif
 
-                        @if($tradein->received && !$tradein->device_missing && $tradein->device_present_as_described && !$tradein->marked_as_risk && $tradein->visible_imei)
+                        @if($tradein->received && !$tradein->device_missing && $tradein->device_present_as_described && !$tradein->marked_as_risk && $tradein->visible_imei && !$tradein->chekmend_passed)
                         <form action="/portal/testing/receive/checkimei" method="POST" class="d-flex flex-column">
 
                             @csrf
@@ -214,7 +214,138 @@
                             </div>
 
                         </form>
+                        @elseif(!$tradein->marked_as_risk && $tradein->chekmend_passed)
+
+                            <form action="/portal/testing/receive/checkdevicestatus" method="POST" class="d-flex flex-column">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="fake_missing_parts">
+                                        Does device has any fake or missing parts?
+                                    </label>
+                                    <select class="form-control" id="fake_missing_parts" name="fake_missing_parts">
+                                        <option disabled selected value> -- select an option -- </option>
+                                        <option id="fake_missing_parts_false" value="false">No</option>
+                                        <option id="fake_missing_parts_true" value="true">Yes</option>
+                                    </select>
+                                </div>
+
+                                <script>
+                                    
+                                    $('#fake_missing_parts').change(function(){
+                                        var boolval = $(this).val();
+                                        if(boolval == "true"){
+                                            if(document.getElementById('fake-missing-part-image').classList.contains('form-group-hidden')){
+                                                document.getElementById('fake-missing-part-image').classList.remove('form-group-hidden');
+                                            }
+                                        }else{
+                                            document.getElementById('fake-missing-part-image').classList.add('form-group-hidden');
+                                        }
+
+                                    });
+
+                                </script>
+
+                                <div class="form-group form-group-hidden w-50" id="fake-missing-part-image">
+                                    <input type="file" name="fake_missing_part_image">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="device_fully_functional">
+                                        Is device fully functional?
+                                    </label>
+                                    <select class="form-control" id="device_fully_functional" name="device_fully_functional">
+                                        <option disabled selected value> -- select an option -- </option>
+                                        <option id="device_fully_functional_false" value="false">No</option>
+                                        <option id="device_fully_functional_true" value="true">Yes</option>
+                                    </select>
+                                </div>
+
+                                <script>
+                                    
+                                    $('#device_fully_functional').change(function(){
+                                        var boolval = $(this).val();
+                                        if(boolval == "false"){
+                                            if(document.getElementById('device-fully-functional-options').classList.contains('form-group-hidden')){
+                                                document.getElementById('device-fully-functional-options').classList.remove('form-group-hidden');
+                                            }
+                                        }else{
+                                            document.getElementById('device-fully-functional-options').classList.add('form-group-hidden');
+                                        }
+
+                                    });
+
+                                </script>
+
+                                <div class="form-group form-group-hidden w-50" id="device-fully-functional-options">
+                                    <label for="device_fully_functional_reasons">Please rectify reason for device not being fully functional?</label>
+                                    <select class="form-control" id="device_fully_functional_reasons" name="device_fully_functional_reasons">
+                                        <option disabled selected value> -- select an option -- </option>
+                                        <option value="option1">option1</option>
+                                        <option value="option2">option2</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="water_damage">
+                                        Does device have any signs of water damage?
+                                    </label>
+                                    <select class="form-control" id="water_damage" name="water_damage">
+                                        <option disabled selected value> -- select an option -- </option>
+                                        <option id="water_damage_false" value="false">No</option>
+                                        <option id="water_damage_true" value="true">Yes</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="fimp_or_google_lock">
+                                        Does device has FIMP or Google Lock?
+                                    </label>
+                                    <select class="form-control" id="fimp_or_google_lock" name="fimp_or_google_lock">
+                                        <option disabled selected value> -- select an option -- </option>
+                                        <option id="fimp_or_google_lock_false" value="false">No</option>
+                                        <option id="fimp_or_google_lock_true" value="true">Yes</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pin_lock">
+                                        Does device have PIN lock?
+                                    </label>
+                                    <select class="form-control" id="pin_lock" name="pin_lock">
+                                        <option disabled selected value> -- select an option -- </option>
+                                        <option id="pin_lock_false" value="false">No</option>
+                                        <option id="pin_lock_true" value="true">Yes</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="device_cosmetic_connection">
+                                        What is device cosmetic connection?
+                                    </label>
+                                    <textarea id="device_cosmetic_connection" name="device_cosmetic_connection" class="form-control">
+
+                                    </textarea>
+                                </div>
+
+                                <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
+
+                                <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
+                                    <a href="/portal/testing/receive" style="margin: 0;">
+                                        <div class="btn btn-primary btn-blue">
+                                            <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
+                                        </div>
+                                    </a>
+                                    <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Potvrdi</button>
+                                </div>
+
+                                <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
+                                    <a class="btn btn-primary btn-blue" href="/portal/testing/receive/{{$tradein->id}}/1/report">View Report</a>
+                                </div>
+                            </form>
+
+
                         @endif
+
                     </div>
 
                 </div>
