@@ -214,7 +214,7 @@
                             </div>
 
                         </form>
-                        @elseif(!$tradein->marked_as_risk && $tradein->chekmend_passed)
+                        @elseif(!$tradein->marked_as_risk && $tradein->chekmend_passed && $testingquestion)
 
                             <form action="/portal/testing/receive/checkdevicestatus" method="POST" class="d-flex flex-column">
                                 @csrf
@@ -222,7 +222,7 @@
                                     <label for="fake_missing_parts">
                                         Does device has any fake or missing parts?
                                     </label>
-                                    <select class="form-control" id="fake_missing_parts" name="fake_missing_parts">
+                                    <select class="form-control" id="fake_missing_parts" name="fake_missing_parts" required>
                                         <option disabled selected value> -- select an option -- </option>
                                         <option id="fake_missing_parts_false" value="false">No</option>
                                         <option id="fake_missing_parts_true" value="true">Yes</option>
@@ -236,9 +236,11 @@
                                         if(boolval == "true"){
                                             if(document.getElementById('fake-missing-part-image').classList.contains('form-group-hidden')){
                                                 document.getElementById('fake-missing-part-image').classList.remove('form-group-hidden');
+                                                document.getElementById('fake_missing_part_image').required = true;
                                             }
                                         }else{
                                             document.getElementById('fake-missing-part-image').classList.add('form-group-hidden');
+                                            document.getElementById('fake_missing_part_image').required = false;
                                         }
 
                                     });
@@ -246,14 +248,14 @@
                                 </script>
 
                                 <div class="form-group form-group-hidden w-50" id="fake-missing-part-image">
-                                    <input type="file" name="fake_missing_part_image">
+                                    <input type="file" id="fake_missing_part_image" name="fake_missing_part_image" accept="image/*">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="device_fully_functional">
                                         Is device fully functional?
                                     </label>
-                                    <select class="form-control" id="device_fully_functional" name="device_fully_functional">
+                                    <select class="form-control" id="device_fully_functional" name="device_fully_functional" required>
                                         <option disabled selected value> -- select an option -- </option>
                                         <option id="device_fully_functional_false" value="false">No</option>
                                         <option id="device_fully_functional_true" value="true">Yes</option>
@@ -267,9 +269,11 @@
                                         if(boolval == "false"){
                                             if(document.getElementById('device-fully-functional-options').classList.contains('form-group-hidden')){
                                                 document.getElementById('device-fully-functional-options').classList.remove('form-group-hidden');
+                                                document.getElementById('device_fully_functional_reasons').required = true;
                                             }
                                         }else{
                                             document.getElementById('device-fully-functional-options').classList.add('form-group-hidden');
+                                            document.getElementById('device_fully_functional_reasons').required = false;
                                         }
 
                                     });
@@ -289,7 +293,7 @@
                                     <label for="water_damage">
                                         Does device have any signs of water damage?
                                     </label>
-                                    <select class="form-control" id="water_damage" name="water_damage">
+                                    <select class="form-control" id="water_damage" name="water_damage" required>
                                         <option disabled selected value> -- select an option -- </option>
                                         <option id="water_damage_false" value="false">No</option>
                                         <option id="water_damage_true" value="true">Yes</option>
@@ -300,7 +304,7 @@
                                     <label for="fimp_or_google_lock">
                                         Does device has FIMP or Google Lock?
                                     </label>
-                                    <select class="form-control" id="fimp_or_google_lock" name="fimp_or_google_lock">
+                                    <select class="form-control" id="fimp_or_google_lock" name="fimp_or_google_lock" required>
                                         <option disabled selected value> -- select an option -- </option>
                                         <option id="fimp_or_google_lock_false" value="false">No</option>
                                         <option id="fimp_or_google_lock_true" value="true">Yes</option>
@@ -311,7 +315,7 @@
                                     <label for="pin_lock">
                                         Does device have PIN lock?
                                     </label>
-                                    <select class="form-control" id="pin_lock" name="pin_lock">
+                                    <select class="form-control" id="pin_lock" name="pin_lock" required>
                                         <option disabled selected value> -- select an option -- </option>
                                         <option id="pin_lock_false" value="false">No</option>
                                         <option id="pin_lock_true" value="true">Yes</option>
@@ -322,9 +326,7 @@
                                     <label for="device_cosmetic_connection">
                                         What is device cosmetic connection?
                                     </label>
-                                    <textarea id="device_cosmetic_connection" name="device_cosmetic_connection" class="form-control">
-
-                                    </textarea>
+                                    <textarea id="device_cosmetic_connection" name="device_cosmetic_connection" class="form-control" required></textarea>
                                 </div>
 
                                 <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
@@ -343,6 +345,58 @@
                                 </div>
                             </form>
 
+
+                        @else
+                            
+                            <div class="container">
+                                <h3>Order status:</h3>
+                                <div class="d-flex">
+                                    <div class="d-flex flex-column border p-1">
+                                        <p class="text-center">Order id:</p><br>
+                                        <p class="text-center">{{$tradein->id}}</p>
+                                    </div>
+                                    <div class="d-flex flex-column border p-1">
+                                        <p class="text-center">Order code:</p><br>
+                                        <p class="text-center">{{$tradein->barcode}}</p>
+                                    </div>
+                                    <div class="d-flex flex-column border p-1">
+                                        <p class="text-center">Product name:</p><br>
+                                        <p class="text-center">{{$product->product_name}}</p>
+                                    </div>
+                                    <div class="d-flex flex-column border p-1">
+                                        <p class="text-center">Customer product grade:</p><br>
+                                        <p class="text-center">{{$tradein->product_state}}</p>
+                                    </div>
+                                    <div class="d-flex flex-column border p-1">
+                                        <p class="text-center">Order received?</p><br>
+                                        <p class="text-center">@if($tradein->received) Yes @else No @endif</p>
+                                    </div>
+                                    <div class="d-flex flex-column border p-1">
+                                        <p class="text-center">Is device missing?</p><br>
+                                        <p class="text-center">@if($tradein->missing) Yes @else No @endif</p>
+                                    </div>
+                                    <div class="d-flex flex-column border p-1">
+                                        <p class="text-center">Is device correct?</p><br>
+                                        <p class="text-center">@if($tradein->device_correct) Yes @else No @endif</p>
+                                    </div>
+                                    <div class="d-flex flex-column border p-1">
+                                        <p class="text-center">Is device IMEI number visible?</p><br>
+                                        <p class="text-center">@if($tradein->visible_imei) Yes @else No @endif</p>
+                                    </div>
+                                    <div class="d-flex flex-column border p-1">
+                                        <p class="text-center">IMEI Number status</p><br>
+                                        <p class="text-center">@if(!$tradein->checkmend_passed) Passed @else Failed @endif</p>
+                                    </div>
+                                    <div class="d-flex flex-column border p-1">
+                                        <p class="text-center">Is device marked as risk?</p><br>
+                                        <p class="text-center">@if($tradein->marked_as_risk) Yes @else No @endif</p>
+                                    </div>
+                                    <div class="d-flex flex-column border p-1">
+                                        <p class="text-center">Is device marked for quarantine?</p><br>
+                                        <p class="text-center">@if(!$tradein->marked_for_quarantine) Yes @else No @endif</p>
+                                    </div>
+                                </div>
+                            </div>
 
                         @endif
 

@@ -429,8 +429,15 @@ class PortalController extends Controller
         $user  = User::where('id', $tradein->user_id)->first();
         $product = SellingProduct::where('id', $tradein->product_id)->first();
         
+        $testingquestion = TestingQuestions::where('order_id', $tradein->id)->first();
+        if($testingquestion !== null){
+            return view('portal.testing.questions')->with(['tradein'=>$tradein, 'user'=>$user, 'product'=>$product, 'testingquestion'=>false, 'testingquestions'=>$testingquestion]);
+        }
+        else{
+            return view('portal.testing.questions')->with(['tradein'=>$tradein, 'user'=>$user, 'product'=>$product, 'testingquestion'=>true]);
+        }
 
-        return view('portal.testing.questions')->with(['tradein'=>$tradein, 'user'=>$user, 'product'=>$product]);
+        
     }
 
     public function setTradeInStatus(Request $request){
@@ -615,6 +622,55 @@ class PortalController extends Controller
     public function checkDeviceStatus(Request $request){
         $tradein = Tradein::where('id', $request->tradein_id)->first();
 
+        $testingQuestions = new TestingQuestions();
+        $testingQuestions->order_id = $tradein->id;
+
+        if($request->fake_missing_parts === "true"){
+            $testingQuestions->fake_missing_parts = true;
+            $tradein->marked_for_quarantine = true;
+        }
+        else{
+            $testingQuestions->fake_missing_parts = false;
+        }
+
+        if($request->device_fully_functional === "false"){
+            $testingQuestions->device_fully_functional = false;
+            $tradein->marked_for_quarantine = true;
+        }
+        else{
+            $testingQuestions->device_fully_functional = true;
+        }
+
+        if($request->water_damage === "true"){
+            $testingQuestions->signs_of_water_damage = true;
+            $tradein->marked_for_quarantine = true;
+        }
+        else{
+            $testingQuestions->signs_of_water_damage = false;
+        }
+
+        if($request->fimp_or_google_lock === "true"){
+            $testingQuestions->FIMP_Google_lock = true;
+            $tradein->marked_for_quarantine = true;
+        }
+        else{
+            $testingQuestions->FIMP_Google_lock = false;
+        }
+
+        if($request->pin_lock === "true"){
+            $testingQuestions->pin_lock = true;
+            $tradein->marked_for_quarantine = true;
+        }
+        else{
+            $testingQuestions->pin_lock = false;
+        }
+
+        $testingQuestions->cosmetic_condition = $request->device_cosmetic_connection;
+
+        $testingQuestions->save();
+        $tradein->save();
+
+        return redirect()->back();
         
     }
     
