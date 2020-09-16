@@ -213,5 +213,8 @@ Route::get('/portal/cms', 'PortalController@showCmsPage')->middleware('auth');
 //Trays
 Route::get('/portal/trays', 'PortalController@showTraysPage')->middleware('auth');
 
+//Trolleys
+Route::get('/portal/trolleys', 'PortalController@showTrolleysPage')->middleware('auth');
+
 //Boxes
 Route::get('/portal/boxes', 'PortalController@showBoxesPage')->middleware('auth');

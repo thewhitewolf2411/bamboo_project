@@ -115,6 +115,13 @@
                         </div>
                     </a>
                     @endif
+                    @if($portalUser->trolleys)
+                    <a href="/portal/trays">
+                        <div class="portal-content-element">
+                        <p><i class="fa fa-shopping-cart"></i>Trolley Managment</p>
+                        </div>
+                    </a>
+                    @endif
                     @if($portalUser->boxes)
                     <a href="/portal/boxes">
                         <div class="portal-content-element">

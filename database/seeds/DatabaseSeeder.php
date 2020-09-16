@@ -66,6 +66,7 @@ class DatabaseSeeder extends Seeder
             'settings' => true,
             'cms' => true,
             'trays' => true,
+            'trolleys' => true,
             'boxes' => true,
         ]);
 

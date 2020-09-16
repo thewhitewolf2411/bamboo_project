@@ -12919,8 +12919,7 @@ h3, h4, h5 {
 
 .portal-header-container {
   background: #222222;
-  max-height: 52px;
-  height: 52px;
+  height: 104px;
 }
 
 .portal-header-container a {
@@ -12938,7 +12937,7 @@ h3, h4, h5 {
   max-width: 1300px;
   margin-left: auto;
   margin-right: auto;
-  height: 52px;
+  height: 104px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -12961,7 +12960,7 @@ h3, h4, h5 {
 }
 
 .portal-header-element {
-  height: 100%;
+  height: 50%;
   width: 130px;
   display: flex;
   flex-direction: row;
@@ -12974,7 +12973,7 @@ h3, h4, h5 {
   height: 100%;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: space-evenly;
 }
 
@@ -13075,7 +13074,7 @@ h3, h4, h5 {
 }
 
 .portal-main {
-  margin-top: 80px;
+  margin-top: 128px;
   min-height: auto;
 }
 

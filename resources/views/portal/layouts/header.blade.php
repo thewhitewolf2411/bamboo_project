@@ -43,6 +43,9 @@
                 <a class="menu_button_text" href="/portal/trays"><i class="fa fa-inbox"></i>Trays</a>
             </div>
             <div class="portal-header-element">
+                <a class="menu_button_text" href="/portal/trays"><i class="fa fa-shopping-cart"></i>Trolleys</a>
+            </div>
+            <div class="portal-header-element">
                 <a class="menu_button_text" href="/portal/boxes"><i class="fa fa-cube"></i>Boxes</a>
             </div>
         </div>

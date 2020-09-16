@@ -1146,6 +1146,10 @@ class PortalController extends Controller
         return view('portal.trays.trays');
     }
 
+    public function showTrolleysPage(){
+        return view('portal.trolleys.trolleys');
+    }
+
     //boxes
 
     public function showBoxesPage(){
