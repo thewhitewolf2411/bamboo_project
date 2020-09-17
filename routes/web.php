@@ -140,9 +140,9 @@ Route::post('/portal/testing/find/find', 'PortalController@find')->middleware('a
 Route::post('/portal/testing/receive/1', 'PortalController@receive')->middleware('auth');
 Route::post('/portal/testing/receive/2', 'PortalController@receive')->middleware('auth');
 Route::post('/portal/testing/receive/3', 'PortalController@receive')->middleware('auth');
-
 Route::get('/portal/testing/receive/{id}/1','PortalController@testItem');
 Route::get('/portal/testing/receive/{id}/1/report','PortalController@testItem');
+
 Route::post('/portal/testing/receive/checkdevicestatus', 'PortalController@checkDeviceStatus');
 Route::post('/portal/testing/receive/settradeinstatus', 'PortalController@setTradeInStatus');
 Route::post('/portal/testing/receive/devicemissing', 'PortalController@isDeviceMissing');

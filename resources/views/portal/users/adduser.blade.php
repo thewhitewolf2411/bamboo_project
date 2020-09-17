@@ -108,6 +108,18 @@
                                 <input type="checkbox" class="form-check-input" name="cms" id="cms">
                                 <label class="form-check-label" for="cms">CMS</label>
                             </div>
+                            <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="trays" id="trays">
+                                <label class="form-check-label" for="cms">Trays Managment</label>
+                            </div>
+                            <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="trolleys" id="trolleys">
+                                <label class="form-check-label" for="cms">Trolley Managment</label>
+                            </div>
+                            <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="boxes" id="boxes">
+                                <label class="form-check-label" for="cms">Box Managment</label>
+                            </div>
                         </div>
                         <div class="form-group p20">
                             <button type="submit" class="btn btn-primary btn-blue">Add new user</button>

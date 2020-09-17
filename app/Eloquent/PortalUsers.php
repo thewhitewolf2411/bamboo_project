@@ -19,6 +19,6 @@ class PortalUsers extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id','customer-care','categories','product','quarantine','testing','payments','reports','feeds','users','settings','cms','trays','boxes'
+        'user_id','customer-care','categories','product','quarantine','testing','payments','reports','feeds','users','settings','cms','trays', 'trolleys','boxes'
     ];
 }

@@ -25,10 +25,10 @@ class CreateTradeinTable extends Migration
             $table->boolean('received')->default(false);
             $table->boolean('device_missing')->nullable()->default(null);
             $table->boolean('device_correct')->nullable()->default(null);
-            $table->boolean('device_present_as_described')->default(true);
+            $table->boolean('device_present_as_described')->nullable()->default(null);
             $table->boolean('chekmend_passed')->nullable()->default(null);
-            $table->boolean('marked_as_risk')->default(false);
-            $table->boolean('marked_for_quarantine')->default(false);
+            $table->boolean('marked_as_risk')->nullable()->default(null);
+            $table->boolean('marked_for_quarantine')->nullable()->default(null);
             $table->string('change_device')->nullable()->default(null);
             $table->boolean('visible_imei')->nullable()->default(null);
             $table->boolean('proccessed_before')->nullable()->default(null);

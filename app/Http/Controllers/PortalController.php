@@ -22,6 +22,7 @@ use Schema;
 use DNS1D;
 use DNS2D;
 use PDF;
+use Crypt;
 
 use Storage;
 use File;
@@ -53,17 +54,27 @@ class PortalController extends Controller
     //customer care
 
     public function showCustomerCare(){
-        return view('portal.customer-care.customer-care');
+        if(!$this->checkAuthLevel(1)){return redirect('/');}
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return view('portal.customer-care.customer-care')->with('portalUser', $portalUser);
     }
 
     public function showTradeIn(){
+        if(!$this->checkAuthLevel(1)){return redirect('/');}
         $tradeins = Tradein::all();
-        return view('portal.customer-care.trade-in')->with('tradeins', $tradeins);
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return view('portal.customer-care.trade-in')->with('tradeins', $tradeins)->with('portalUser', $portalUser);
     }
 
     public function showTradeInDetails($id){
+        if(!$this->checkAuthLevel(1)){return redirect('/');}
         $tradein = Tradein::where('id', $id)->first();
-        return view('portal.customer-care.trade-in-details')->with('tradein', $tradein);
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return view('portal.customer-care.trade-in-details')->with('tradein', $tradein)->with('portalUser', $portalUser);
     }
 
     public function PrintTradeInLabel(Request $request){
@@ -77,6 +88,7 @@ class PortalController extends Controller
     }
 
     public function generateTradeInHTML($barcode, $user, $product, $tradein){
+
         $html = "";
         $html .= "<style>p{margin:0;}</style>";
         $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
@@ -136,29 +148,46 @@ class PortalController extends Controller
     }
 
     public function showTradeOut(){
+        if(!$this->checkAuthLevel(1)){return redirect('/');}
         $tradeouts = Tradeout::all();
-        return view('portal.customer-care.trade-out')->with('tradeouts', $tradeouts);
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return view('portal.customer-care.trade-out')->with('tradeouts', $tradeouts)->with('portalUser', $portalUser);
     }
 
     public function showTradeOutDetails($id){
+        if(!$this->checkAuthLevel(1)){return redirect('/');}
         $tradeout = Tradeout::where('id', $id)->first();
-        return view('portal.customer-care.trade-out-details')->with('tradeout', $tradeout);
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return view('portal.customer-care.trade-out-details')->with('tradeout', $tradeout)->with('portalUser', $portalUser);
     }
 
     public function showDestroyDevice(){
-        return view('portal.customer-care.destroy');
+        if(!$this->checkAuthLevel(1)){return redirect('/');}
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return view('portal.customer-care.destroy')->with('portalUser', $portalUser);
     }
 
     public function showTradePack(){
-        return view('portal.customer-care.trade-pack');
+        if(!$this->checkAuthLevel(1)){return redirect('/');}
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser);
     }
 
     public function showSeller(){
-        return view('portal.customer-care.seller');
+        if(!$this->checkAuthLevel(1)){return redirect('/');}
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return view('portal.customer-care.seller')->with('portalUser', $portalUser);
     }
 
     //categories
     public function showCategories(){
+
+        if(!$this->checkAuthLevel(2)){return redirect('/');}
 
         $categories = Category::all();
         $buyingProducts = BuyingProduct::all();
@@ -166,35 +195,56 @@ class PortalController extends Controller
 
         $products = $buyingProducts->merge($sellingProducts);
 
-        return view('portal.categories.categories')->with('categories', $categories)->with(['products' => $products, 'buyingProducts'=>$buyingProducts, 'sellingProducts'=>$sellingProducts]);
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.categories.categories')->with('categories', $categories)->with(['products' => $products, 'buyingProducts'=>$buyingProducts, 'sellingProducts'=>$sellingProducts, 'portalUser'=>$portalUser]);
     }
 
     public function showAddCategoryView(){
-        return view('portal.add.category');
+        if(!$this->checkAuthLevel(2)){return redirect('/');}
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return view('portal.add.category')->with('portalUser', $portalUser);
     }
 
     public function ShowEditCategoryView($id){
+        if(!$this->checkAuthLevel(2)){return redirect('/');}
         $category = Category::where('id', $id)->get();
-        return view('portal.categories.editcategory');
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return view('portal.categories.editcategory')->with('portalUser', $portalUser);
     }
 
     public function deleteCategory($id){
+        if(!$this->checkAuthLevel(2)){return redirect('/');}
         Category::where('id', $id)->delete();
-        return \redirect('/portal/categories');
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return \redirect('/portal/categories')->with('portalUser', $portalUser);
     }
 
     public function showAddBrandsView(){
-        return view('portal.add.brand');
+        if(!$this->checkAuthLevel(2)){return redirect('/');}
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return view('portal.add.brand')->with('portalUser', $portalUser);
     }
 
     public function ShowEditBrandsView($id){
+        if(!$this->checkAuthLevel(2)){return redirect('/');}
         Brand::where('id', $id)->get();
-        return view('portal.categories.editbrand');
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return view('portal.categories.editbrand')->with('portalUser', $portalUser);
     }
 
     public function deleteBrands($id){
+        if(!$this->checkAuthLevel(2)){return redirect('/');}
         Brand::where('id', $id)->delete();
-        return \redirect('/portal/categories');
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return \redirect('/portal/categories')->with('portalUser', $portalUser);
     }
 
     public function addCategory(Request $request){
@@ -240,6 +290,7 @@ class PortalController extends Controller
     //products
 
     public function showProductsPage(){
+        if(!$this->checkAuthLevel(3)){return redirect('/');}
 
         $categories = Category::all();
         $buyingProducts = BuyingProduct::all();
@@ -247,45 +298,64 @@ class PortalController extends Controller
 
         $products = $buyingProducts->merge($sellingProducts);
 
-        return view('portal.product.product')->with(['products' => $products, 'buyingProducts'=>$buyingProducts, 'sellingProducts'=>$sellingProducts]);
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.product.product')->with(['products' => $products, 'buyingProducts'=>$buyingProducts, 'sellingProducts'=>$sellingProducts,'portalUser'=>$portalUser]);
 
     }
 
     public function showSellingProductsPage(){
+        if(!$this->checkAuthLevel(3)){return redirect('/');}
         $categories = Category::all();
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
 
         $products = $buyingProducts->merge($sellingProducts);
 
-        return view('portal.product.sellingproduct')->with(['products' => $products, 'buyingProducts'=>$buyingProducts, 'sellingProducts'=>$sellingProducts]);
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.product.sellingproduct')->with(['products' => $products, 'buyingProducts'=>$buyingProducts, 'sellingProducts'=>$sellingProducts,'portalUser'=>$portalUser]);
     }
 
     public function showBuyingProductsPage(){
+        if(!$this->checkAuthLevel(3)){return redirect('/');}
         $categories = Category::all();
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
 
         $products = $buyingProducts->merge($sellingProducts);
 
-        return view('portal.product.buyingproduct')->with(['products' => $products, 'buyingProducts'=>$buyingProducts, 'sellingProducts'=>$sellingProducts]);
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.product.buyingproduct')->with(['products' => $products, 'buyingProducts'=>$buyingProducts, 'sellingProducts'=>$sellingProducts,'portalUser'=>$portalUser]);
     }
 
     public function showAddBuyingProductPage(){
+        if(!$this->checkAuthLevel(3)){return redirect('/');}
 
         $categories = Category::all();
         $brands = Brand::all();
         $conditions = Conditions::all();
 
-        return view('portal.add.buyingproduct')->with(['categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions]);
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.add.buyingproduct')->with(['categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions,'portalUser'=>$portalUser]);
     }
 
     public function showAddSellingProductPage(){
+        if(!$this->checkAuthLevel(3)){return redirect('/');}
         $categories = Category::all();
         $brands = Brand::all();
         $conditions = Conditions::all();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
         
-        return view('portal.add.sellingproduct')->with(['categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions]);
+        return view('portal.add.sellingproduct')->with(['categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions,'portalUser'=>$portalUser]);
     }
 
     public function addBuyingProduct(Request $request){
@@ -366,75 +436,137 @@ class PortalController extends Controller
     }
 
     public function removeBuyingProduct($id){
+        if(!$this->checkAuthLevel(3)){return redirect('/');}
         BuyingProduct::where('id', $id)->delete();
+
         return \redirect('/portal/product/buying-products');
     }
 
     public function removeSellingProduct($id){
+        if(!$this->checkAuthLevel(3)){return redirect('/');}
         SellingProduct::where('id', $id)->delete();
+
         return \redirect('/portal/product/selling-products');
     }
 
     //quarantine
 
     public function showQuarantinePage(){
-        return view('portal.quarantine.quarantine');
+        if(!$this->checkAuthLevel(4)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.quarantine.quarantine')->with('portalUser', $portalUser);
     }
 
     public function showAwaitingResponse(){
-        return view('portal.quarantine.awaiting');
+        if(!$this->checkAuthLevel(4)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.quarantine.awaiting')->with('portalUser', $portalUser);
     }
 
     public function showQuarantineReturn(){
-        return view('portal.quarantine.return');
+        if(!$this->checkAuthLevel(4)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.quarantine.return')->with('portalUser', $portalUser);
     }
 
     public function showQuarantineRetest(){
-        return view('portal.quarantine.retest');
+        if(!$this->checkAuthLevel(4)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.quarantine.retest')->with('portalUser', $portalUser);
     }
 
     public function showQuarantineStock(){
-        return view('portal.quarantine.stock');
+        if(!$this->checkAuthLevel(4)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.quarantine.stock')->with('portalUser', $portalUser);
     }
 
     public function showQuarantineManual(){
-        return view('portal.quarantine.manually');
+        if(!$this->checkAuthLevel(4)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.quarantine.manually')->with('portalUser', $portalUser);
     }
 
     //testing
 
     public function showTestingPage(){
-        return view('portal.testing.testing');
+        if(!$this->checkAuthLevel(5)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.testing.testing')->with('portalUser', $portalUser);
     }
 
     public function showReceiveTradeIn(){
-        return view('portal.testing.receive');
+        if(!$this->checkAuthLevel(5)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.testing.receive')->with('portalUser', $portalUser);
     }
 
     public function showFindTradeIn(){
-        return view('portal.testing.find');
+        if(!$this->checkAuthLevel(5)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.testing.find')->with('portalUser', $portalUser);
     }
 
     public function find(Request $request){
+        if(!$this->checkAuthLevel(5)){return redirect('/');}
         dd($request);
     }
 
     public function receive(Request $request){
+        if(!$this->checkAuthLevel(5)){return redirect('/');}
         $tradeins = Tradein::where('barcode', $request->scanid)->get();
-        return view('portal.testing.order')->with('tradeins', $tradeins);
+
+        $tradeindate = $tradeins->created_at;
+        dd($tradeindate);
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        
+        return view('portal.testing.order')->with('tradeins', $tradeins)->with('portalUser', $portalUser);
     }
 
     public function testItem($id){
+        if(!$this->checkAuthLevel(5)){return redirect('/');}
         $tradein = Tradein::where('id', $id)->first();
         $user  = User::where('id', $tradein->user_id)->first();
         $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
         
         $testingquestion = TestingQuestions::where('order_id', $tradein->id)->first();
         if($testingquestion !== null){
-            return view('portal.testing.questions')->with(['tradein'=>$tradein, 'user'=>$user, 'product'=>$product, 'testingquestion'=>false, 'testingquestions'=>$testingquestion]);
+            return view('portal.testing.questions')->with(['tradein'=>$tradein, 'user'=>$user, 'product'=>$product, 'testingquestion'=>false, 'testingquestions'=>$testingquestion,'portalUser'=>$portalUser]);
         }
         else{
-            return view('portal.testing.questions')->with(['tradein'=>$tradein, 'user'=>$user, 'product'=>$product, 'testingquestion'=>true]);
+            return view('portal.testing.questions')->with(['tradein'=>$tradein, 'user'=>$user, 'product'=>$product, 'testingquestion'=>true,'portalUser'=>$portalUser]);
         }
 
         
@@ -451,6 +583,7 @@ class PortalController extends Controller
     }
 
     public function isDeviceMissing(Request $request){
+
         $tradein = Tradein::where('id', $request->tradein_id)->first();
 
         if($request->missing == "present"){
@@ -677,50 +810,100 @@ class PortalController extends Controller
         //payments
 
     public function showPaymentPage(){
-        return view('portal.payments.payments');
+        if(!$this->checkAuthLevel(6)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.payments.payments')->with('portalUser', $portalUser);
     }
 
     public function showPaymentAwaitingPage(){
-        return view('portal.payments.awaiting');
+        if(!$this->checkAuthLevel(6)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.payments.awaiting')->with('portalUser', $portalUser);
     }
 
     public function showPaymentPendingPage(){
-        return view('portal.payments.pending');
+        if(!$this->checkAuthLevel(6)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.payments.pending')->with('portalUser', $portalUser);
     }
 
     public function showPaymentCompletedPage(){
-        return view('portal.payments.completed');
+        if(!$this->checkAuthLevel(6)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.payments.completed')->with('portalUser', $portalUser);
     }
 
     public function showPaymentReportsPage(){
-        return view('portal.payments.reports');
+        if(!$this->checkAuthLevel(6)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.payments.reports')->with('portalUser', $portalUser);
     }
 
     //reports
 
     public function showReportsPage(){
-        return view('portal.reports.reports');
+        if(!$this->checkAuthLevel(7)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.reports.reports')->with('portalUser', $portalUser);
     }
 
     //feeds
 
     public function showFeedsPage(){
-        return view('portal.feeds.feeds');
+        if(!$this->checkAuthLevel(8)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.feeds.feeds')->with('portalUser', $portalUser);
     }
 
     public function showExportImportPage(){
+        if(!$this->checkAuthLevel(8)){return redirect('/');}
         $categories = Category::all();
         $brands = Brand::all();
-        return view('portal.feeds.export-import')->with(['categories'=>$categories, 'brands'=>$brands]);
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.feeds.export-import')->with(['categories'=>$categories, 'brands'=>$brands, 'portalUser'=>$portalUser]);
     }
 
     public function showFeedsSummaryPage(){
+        if(!$this->checkAuthLevel(8)){return redirect('/');}
         $feeds = Feed::all();
-        return view('portal.feeds.summary')->with('feeds', $feeds);
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.feeds.summary')->with('feeds', $feeds)->with('portalUser', $portalUser);
     }
 
     public function showFeedsExternalPage(){
-        return view('portal.feeds.external');
+        if(!$this->checkAuthLevel(8)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.feeds.external')->with('portalUser', $portalUser);
     }
 
     public function feedsExport(Request $request){
@@ -896,25 +1079,44 @@ class PortalController extends Controller
     //users
 
     public function showUsersPage(){
+        if(!$this->checkAuthLevel(9)){return redirect('/');}
 
         $match = ['type_of_user' => 1, 'type_of_user' => 2, 'type_of_user' => 3];
         $users = User::where('type_of_user', 1)->orWhere('type_of_user', 2)->orWhere('type_of_user', 3)->get();
 
-        return view('portal.users.users')->with('users', $users);
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.users.users')->with('users', $users)->with('portalUser', $portalUser);
     }
 
     public function showAddUserPage(){
-        return view('portal.users.adduser')->with('title', 'Add User');
+        if(!$this->checkAuthLevel(9)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.users.adduser')->with('title', 'Add User')->with('portalUser', $portalUser);
     }
 
     public function editUser($id){
+        if(!$this->checkAuthLevel(9)){return redirect('/');}
         $userdata = User::where('id', $id)->get();
         $userdata = $userdata[0];
-        return view('portal.users.adduser')->with('userdata', $userdata)->with('title', 'Edit User '.$userdata->first_name);
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.users.adduser')->with('userdata', $userdata)->with('title', 'Edit User '.$userdata->first_name)->with('portalUser', $portalUser);
     }
 
     public function deleteUser($id){
+        if(!$this->checkAuthLevel(9)){return redirect('/');}
         User::where('id', $id)->delete();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
         return \redirect()->back();
     }
 
@@ -932,7 +1134,7 @@ class PortalController extends Controller
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
+        $user->password = Crypt::encrypt($request->password);
         $user->birthdate = "01.08.2020";
         $user->current_phone = 0;
         $user->preffered_os = 'none';
@@ -983,6 +1185,15 @@ class PortalController extends Controller
         if($request->cms == "on"){
             $portalUser->cms = true;
         }
+        if($request->trays == "on"){
+            $portalUser->trays = true;
+        }
+        if($request->trolleys == "on"){
+            $portalUser->trolleys = true;
+        }
+        if($request->boxes == "boxes"){
+            $portalUser->cms = true;
+        }
 
         $portalUser->save();
 
@@ -1006,23 +1217,44 @@ class PortalController extends Controller
     //settings
 
     public function showSettingsPage(){
-        return view('portal.settings.settings');
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.settings.settings')->with('portalUser', $portalUser);
     }
 
     public function showSettingsProductOptionsPage(){
-        return view('portal.settings.product-options');
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.settings.product-options')->with('portalUser', $portalUser);
     }
 
     public function showSettingsConditionsPage(){
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
         $conditions = Conditions::all();
-        return view('portal.settings.conditions')->with('conditions', $conditions);
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.settings.conditions')->with('conditions', $conditions)->with('portalUser', $portalUser);
     }
 
     public function showSettingsAddConditionsPage(){
-        return view('portal.add.condition');
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.add.condition')->with('portalUser', $portalUser);
     }
 
     public function addCondition(Request $request){
+        
 
         $condition = new Conditions();
         $condition->name = $request->condition_name;
@@ -1031,33 +1263,60 @@ class PortalController extends Controller
 
         $condition->save();
 
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
         return redirect('/portal/settings/conditions');
     }
 
     public function showSettingsTestingQuestionsPage(){
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
         $categories = Category::all();
-        return view('portal.settings.testing-questions')->with('categories', $categories);
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.settings.testing-questions')->with('categories', $categories)->with('portalUser', $portalUser);
     }
 
     public function showCategoryQuestionsPage($productId, $id){
-
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
         dd($productid, $id);
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
         
-        return view('portal.settings.questions');
+        return view('portal.settings.questions')->with('portalUser', $portalUser);
     }
 
     public function showCategoryAddQuestionPage($id){
         $brandid = $id;
-        return view('portal.add.question')->with('brandid', $brandid);
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.add.question')->with('brandid', $brandid)->with('portalUser', $portalUser);
     }
 
     public function showSettingsWebsitesPage(){
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
         $websites = Websites::all();
-        return view('portal.settings.websites')->with('websites', $websites);
+        
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.settings.websites')->with('websites', $websites)->with('portalUser', $portalUser);
     }
 
     public function showAddWebsitePage(){
-        return view('portal.add.website');
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.add.website')->with('portalUser', $portalUser);
     }
 
     public function addWebsite(Request $request){
@@ -1073,22 +1332,37 @@ class PortalController extends Controller
 
         $website->website_image = $fileNameToStore;
         $website->save();
-        return redirect('/portal/settings/websites');
+        return redirect('/portal/settings/websites')->with('portalUser', $portalUser);
     }
 
     public function deleteWebsite($id){
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
         $website = Websites::where('id', $id);
         $website->delete();
-        return redirect('/portal/settings/websites');
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return redirect('/portal/settings/websites')->with('portalUser', $portalUser);
     }
 
     public function showSettingsStoresPage(){
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
         $stores = Stores::all();
-        return view('portal.settings.stores')->with('stores', $stores);
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.settings.stores')->with('stores', $stores)->with('portalUser', $portalUser);
     }
 
     public function showAddStorePage(){
-        return view('portal.add.store');
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.add.store')->with('portalUser', $portalUser);
     }
 
     public function addStore(Request $request){
@@ -1108,52 +1382,175 @@ class PortalController extends Controller
     }
 
     public function deleteStore($id){
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
         $store = Stores::where('id', $id);
         $store->delete();
         return redirect('/portal/settings/stores');
     }
 
     public function showSettingsPaymentsOptionsPage(){
-        return view('portal.settings.payment-options');
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.settings.payment-options')->with('portalUser', $portalUser);
     }
 
     public function showSettingsDeliveryOptionsPage(){
-        return view('portal.settings.delivery-options');
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.settings.delivery-options')->with('portalUser', $portalUser);
     }
 
     public function showSettingsCheckoutOptionsPage(){
-        return view('portal.settings.checkout-options');
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.settings.checkout-options')->with('portalUser', $portalUser);
     }
 
     public function showSettingsPromotionalCodesPage(){
-        return view('portal.settings.promotional-codes');
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.settings.promotional-codes')->with('portalUser', $portalUser);
     }
 
     public function showSettingsBrandsPage(){
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
         $brands = Brand::all();
-        return view('portal.settings.brands')->with('brands', $brands);
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.settings.brands')->with('brands', $brands)->with('portalUser', $portalUser);
     }
 
     //cms
 
     public function showCmsPage(){
-        return view('portal.cms.cms');
+        if(!$this->checkAuthLevel(11)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.cms.cms')->with('portalUser', $portalUser);
     }
 
     //trays
 
     public function showTraysPage(){
-        return view('portal.trays.trays');
+        if(!$this->checkAuthLevel(12)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.trays.trays')->with('portalUser', $portalUser);
     }
 
+    //trolleys
+
     public function showTrolleysPage(){
-        return view('portal.trolleys.trolleys');
+        if(!$this->checkAuthLevel(13)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.trolleys.trolleys')->with('portalUser', $portalUser);
     }
 
     //boxes
 
     public function showBoxesPage(){
-        return view('portal.boxes.boxes');
+        if(!$this->checkAuthLevel(14)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.boxes.boxes')->with('portalUser', $portalUser);
+    }
+
+
+    //Auth Level
+
+    public function checkAuthLevel($data){
+        $user = Auth::user();
+        $userid = $user->id;
+        $portaluser = PortalUsers::where('user_id', $userid)->first();
+
+        switch($data){
+            
+            case 1:
+                return $portaluser->customer_care;
+            break;
+
+            case 2:
+                return $portaluser->categories;
+            break;
+
+            case 3:
+                return $portaluser->product;
+            break;
+
+            case 4:
+                return $portaluser->quarantine;
+            break;
+
+            case 5:
+                return $portaluser->testing;
+            break;
+
+            case 6:
+                return $portaluser->payments;
+            break;
+
+            case 7:
+                return $portaluser->reports;
+            break;
+
+            case 8:
+                return $portaluser->feeds;
+            break;
+
+            case 9:
+                return $portaluser->users;
+            break;
+
+            case 10:
+                return $portaluser->settings;
+            break;
+
+            case 11:
+                return $portaluser->cms;
+            break;
+
+            case 12:
+                return $portaluser->trays;
+            break;
+
+            case 13:
+                return $portaluser->trolleys;
+            break;
+
+            case 14:
+                return $portaluser->customercare;
+            break;
+
+            default:
+                dd("here");
+                return true;
+            break;
+        }
+
+
     }
 
 
