@@ -34,12 +34,12 @@
                 <div class="portal-content-container">
                     <a href="/portal/customer-care/trade-in">
                         <div class="portal-content-element">
-                        <p><i class="fa fa-shopping-cart"></i>Trade-Ins</p>
+                        <p><i class="fa fa-shopping-cart"></i>Recycles</p>
                         </div>
                     </a>
                     <a href="/portal/customer-care/trade-out">
                         <div class="portal-content-element">
-                        <p><i class="fa fa-shopping-cart"></i>Trade-Outs</p>
+                        <p><i class="fa fa-shopping-cart"></i>Sellings</p>
                         </div>
                     </a>
                     <a href="/portal/customer-care/destroy-device">

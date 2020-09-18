@@ -20,6 +20,7 @@ class CreateTradeinTable extends Migration
             $table->integer('product_id');
             $table->string('product_state');
             $table->smallInteger('job_state')->nullable()->default(null);
+            $table->integer('order_price')->nullable()->default(null);
             //0 received tradein without label
             //1 sent label / job complete
             $table->boolean('received')->default(false);
@@ -34,6 +35,7 @@ class CreateTradeinTable extends Migration
             $table->boolean('proccessed_before')->nullable()->default(null);
             $table->string('bamboo_grade')->nullable()->default(null);
             $table->boolean('grade_changed')->default(false);
+            $table->boolean('older_than_14_days')->nullable()->default(null);
             
             $table->timestamps();
         });

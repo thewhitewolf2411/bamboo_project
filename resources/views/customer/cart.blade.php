@@ -40,18 +40,21 @@
                                 <div>State : {{$item->product_grade_1}}</div>
                                 <div>Our price : {{$item->product_selling_price_1}}</div>
                                 <input type="hidden" name="product_{{$item->id}}_state" value="{{$item->product_grade_1}}">
+                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->product_selling_price_1}}">
                             </div>
                             @elseif($cartItem['state'] == $item->product_grade_2)
                             <div class="d-flex flex-column">
                                 <div>State : {{$item->product_grade_2}}</div>
                                 <div>Our price : {{$item->product_selling_price_2}}</div>
                                 <input type="hidden" name="product_{{$item->id}}_state" value="{{$item->product_grade_2}}">
+                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->product_selling_price_2}}">
                             </div>
                             @elseif($cartItem['state'] == $item->product_grade_3)
                             <div class="d-flex flex-column">
                                 <div>State : {{$item->product_grade_3}}</div>
                                 <div>Our price : {{$item->product_selling_price_3}}</div>
                                 <input type="hidden" name="product_{{$item->id}}_state" value="{{$item->product_grade_3}}">
+                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->product_selling_price_3}}">
                             </div>
                             @endif
                         @endif

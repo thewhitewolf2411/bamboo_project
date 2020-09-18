@@ -23,7 +23,8 @@ use DNS1D;
 use DNS2D;
 use PDF;
 use Crypt;
-
+use Carbon\Carbon;
+use Session;
 use Storage;
 use File;
 use Hash;
@@ -543,9 +544,6 @@ class PortalController extends Controller
         if(!$this->checkAuthLevel(5)){return redirect('/');}
         $tradeins = Tradein::where('barcode', $request->scanid)->get();
 
-        $tradeindate = $tradeins->created_at;
-        dd($tradeindate);
-
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
         
@@ -575,11 +573,85 @@ class PortalController extends Controller
     public function setTradeInStatus(Request $request){
 
         $tradein = Tradein::where('id', $request->tradein_id)->first();
-        $tradein->received = true;
-        $tradein->proccessed_before = true;
-        $tradein->save();
 
-        return redirect()->back();
+        $days = 14;
+        $dayToCheck = Carbon::now();
+        
+        if($tradein->created_at->diff($dayToCheck)->days <= $days){
+            $tradein->received = true;
+            $tradein->proccessed_before = true;
+            $tradein->older_than_14_days = false;
+            $tradein->save();
+    
+            return redirect()->back();
+        }
+        else{
+            $condition = $tradein->product_state;
+            $offered_price = $tradein->ordered_price;
+            $product_id = $tradein->product_id;
+
+            $product = SellingProduct::where('id', $product_id)->first();
+
+            if($condition == "New"){
+                if($product->product_selling_price_1 >= $offered_price){
+                    $tradein->received = true;
+                    $tradein->proccessed_before = true;
+                    $tradein->older_than_14_days = false;
+                    $tradein->save();
+            
+                    return redirect()->back();
+                }
+                else{
+                    $tradein->received = true;
+                    $tradein->proccessed_before = true;
+                    $tradein->older_than_14_days = true;
+                    $tradein->save();
+            
+                    return redirect()->back();
+                }
+            }
+            if($condition == "Good"){
+                if($product->product_selling_price_2 >= $offered_price){
+                    $tradein->received = true;
+                    $tradein->proccessed_before = true;
+                    $tradein->older_than_14_days = false;
+                    $tradein->save();
+            
+                    return redirect()->back();
+                }
+                else{
+                    $tradein->received = true;
+                    $tradein->proccessed_before = true;
+                    $tradein->older_than_14_days = true;
+                    $tradein->save();
+            
+                    return redirect()->back();
+                }
+            }
+            if($condition == "Faulty"){
+                if($product->product_selling_price_1 >= $offered_price){
+                    $tradein->received = true;
+                    $tradein->proccessed_before = true;
+                    $tradein->older_than_14_days = false;
+                    $tradein->save();
+            
+                    return redirect()->back();
+                }
+                else{
+                    $tradein->received = true;
+                    $tradein->proccessed_before = true;
+                    $tradein->older_than_14_days = true;
+                    $tradein->save();
+            
+                    return redirect()->back();
+                }
+            }
+            
+        }
+
+        
+
+
     }
 
     public function isDeviceMissing(Request $request){
@@ -697,6 +769,8 @@ class PortalController extends Controller
 
 
         $tradein->save();
+
+        #('Imei_check_data', $result_data);
 
         return redirect()->back();
 

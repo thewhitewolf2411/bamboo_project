@@ -94,23 +94,27 @@ class SellController extends Controller
         
             $data = array_values($data);
             $data = array_slice($data, 1, -1);
-    
+            #dd($data);
             $items = array();
             $barcode = $request->order_code;
-    
-            for($i = 0; $i<count($data); $i+=2){
+
+            foreach($data as $dataitem){
                 $item = array();
-                array_push($item, $data[$i], $data[$i+1]);
+                array_push($item, $dataitem);
                 array_push($items, $item);
             }
-    
+            #dd($data);
+            #dd($data[0],$data[1], $data[2]);
+
+            $items = array_chunk($data, 3);
+
             foreach($items as $item){     
-    
                 $tradein = new Tradein();
                 $tradein->barcode = $barcode;
                 $tradein->user_id = Auth::user()->id;
                 $tradein->product_id = $item[0];
                 $tradein->product_state = $item[1];
+                $tradein->order_price = $item[2];
                 $tradein->save();
     
             }
