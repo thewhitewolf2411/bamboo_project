@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+    <script src="/js/PrintTradeIn.js"></script>
+
     <title>Bamboo Recycle::Trade Pack Dispach</title>
 </head>
 
@@ -31,8 +33,49 @@
                         <p>Trade Pack Dispach</p>
                     </div>
                 </div>
-                <div class="portal-content-container">
+                <div class="portal-table-container">
+                <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td><div class="table-element">Trade-in ID</div></td>
+                            <td><div class="table-element">Trade-in barcode number</div></td>
+                            <td><div class="table-element">Date Placed</div></td>
+                            <td><div class="table-element">Product</div></td>
+                            <td><div class="table-element">Label Status</div></td>
+                            <td>
 
+                            </td>
+                        </tr>
+
+                        @foreach($tradeins as $tradein)
+
+                        <tr>
+                            <td><div class="table-element">{{$tradein->id}}</td>
+                            <td ><div class="table-element">{{$tradein->barcode}}</div></td>
+                            <td><div class="table-element">{{$tradein->created_at}}</div></td>
+                            <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                            <td><div class="table-element">@if($tradein->job_state == 1)Printed @elseif ($tradein->job_state == 2) Sent @elseif($tradein->job_state == 3) Order received @endif</div></td>
+                            <td><div class="table-element">
+                                <a href="/portal/customer-care/trade-in/{{$tradein->id}}">
+                                    <i class="fa fa-search"></i>
+                                </a>
+                                <a href="javascript:void(0)" onclick = setAsSent({{$tradein->id}})>
+                                    <i class="fa fa-paper-plane"></i>
+                                </a>
+                                <a href="">
+                                    <i class="fa fa-times" style="color:red !important;"></i>
+                                </a>
+                                </div>
+                            </td>
+                        </tr>
+
+                        @endforeach
+                    </table>
+
+                    <form id="set_label_as_sent_form" name="form-print-trade-pack" enctype="multipart/form-data" action="/portal/customer-care/trade-in/setassent" method="post">
+                        @csrf
+                        <input type="hidden" id="set_trade_in_as_sent" name="set_trade_in_as_sent">
+                        <input type="submit" id="set_trade_in_as_sent_trigger" name="set_trade_in_as_sent_trigger" value="Set trade-in label as sent Trade-In">
+                    </form>
 
                 </div>
             </div>

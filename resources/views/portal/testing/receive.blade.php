@@ -21,6 +21,10 @@
 
 <body class="portal-body">
 
+    @if(session()->has('download'))
+        @dd("here")
+    @endif
+
     <header>@include('portal.layouts.header')</header>
 
     <main class="portal-main">

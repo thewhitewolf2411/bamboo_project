@@ -35,6 +35,38 @@
                 </div>
                 <div class="portal-table-container">
 
+                    <div class="py-4 d-flex align-items-center">
+
+                        <div class="d-flex align-items-center">
+                            <label for="number_of_trade_labels">Select number of trade labels to print:</label>
+                            <select class="form-control ml-3" name="number_of_trade_labels" id="number_of_trade_labels">
+                                <option value="" selected disabled>Make a selection</option>
+                                @if(count($tradeins)>=10 && count($tradeins)<20)
+                                <option onclick=setNumberOfTradePacks(10) value="10">10</option>
+                                @endif
+                                @if(count($tradeins)>=20 && count($tradeins)<50)
+                                <option onclick=setNumberOfTradePacks(20) value="20">20</option>
+                                @endif
+                                @if(count($tradeins)>=50 && count($tradeins)<100)
+                                <option onclick=setNumberOfTradePacks(50) value="50">50</option>
+                                @endif
+                                @if(count($tradeins)>=100 && count($tradeins)<200)
+                                <option onclick=setNumberOfTradePacks(100) value="100">100</option>
+                                @endif
+                                @if(count($tradeins)>=500)
+                                <option onclick=setNumberOfTradePacks(500) value="500">500</option>
+                                @endif
+                              </select>
+                        </div>
+                        <div class="d-flex align-items-center px-5">
+                            <button id="bulk_label_print_button" class="btn btn-primary btn-blue" disabled onclick = printTradePackTradeInBulk()>
+                                <p style="color: #fff;">Bulk Print trade Label</p>
+                            </button>
+                        </div>
+
+                    </div>
+
+
                     <table class="portal-table" id="categories-table">
                         <tr>
                             <td><div class="table-element">Trade-in ID</div></td>
@@ -63,12 +95,6 @@
                                     <i class="fa fa-print"></i>
                                 </a>
                                 <a href="">
-                                    <i class="fa fa-asterisk" style="color:red !important;"></i>
-                                </a>
-                                <a href="">
-                                    <i class="fa fa-ban" style="color:red !important;"></i>
-                                </a>
-                                <a href="">
                                     <i class="fa fa-times" style="color:red !important;"></i>
                                 </a>
                                 </div>
@@ -82,6 +108,12 @@
                         @csrf
                         <input type="hidden" id="print_trade_pack_trade_in_id" name="hidden_print_trade_pack_trade_in_id">
                         <input type="submit" id="print_trade_pack_trade_in_trigger" name="print_trade_pack_trade_in" value="Print Trade Pack Trade-In">
+                    </form>
+
+                    <form id="print_trade_pack_bulk_form" name="print_trade_pack_bulk_form" enctype="multipart/form-data" action="/portal/customer-care/trade-in/printlabelbulk" method="post">
+                        @csrf
+                        <input type="number" name="number_of_bulk_prints" id="number_of_bulk_prints">
+                        <input type="submit" id="print_trade_pack_bulk_form_trigger" name="print_trade_pack_bulk_form" value="Print Trade Pack Trade-In Bulk">
                     </form>
 
                 </div>

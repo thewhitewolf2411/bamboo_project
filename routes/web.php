@@ -89,12 +89,14 @@ Route::get('/portal/customer-care', 'PortalController@showCustomerCare')->name('
 Route::get('/portal/customer-care/trade-in', 'PortalController@showTradeIn')->name('tradeIn')->middleware('auth');
 Route::get('/portal/customer-care/trade-in/{id}', 'PortalController@showTradeInDetails')->name('tradeInDetails')->middleware('auth');
 Route::post('/portal/customer-care/trade-in/printlabel', 'PortalController@PrintTradeInLabel')->name('tradeInLabel')->middleware('auth');
+Route::post('/portal/customer-care/trade-in/printlabelbulk', 'PortalController@PrintTradeInLabelBulk')->name('tradeInLabel')->middleware('auth');
 
 Route::get('/portal/customer-care/trade-out', 'PortalController@showTradeOut')->name('tradeOut')->middleware('auth');
 Route::get('/portal/customer-care/trade-out/{id}', 'PortalController@showTradeOutDetails')->name('tradeOutDetails')->middleware('auth');
 
 Route::get('/portal/customer-care/destroy-device', 'PortalController@showDestroyDevice')->name('destroyDevice')->middleware('auth');
 Route::get('/portal/customer-care/trade-pack', 'PortalController@showTradePack')->name('tradePack')->middleware('auth');
+Route::post('/portal/customer-care/trade-in/setassent', 'PortalController@setTradePackAsSent')->name('tradePack')->middleware('auth');
 Route::get('/portal/customer-care/seller', 'PortalController@showSeller')->name('seller')->middleware('auth');
 
 //categories, brands
@@ -149,6 +151,7 @@ Route::post('/portal/testing/receive/devicemissing', 'PortalController@isDeviceM
 Route::post('/portal/testing/receive/devicecorrect', 'PortalController@isDeviceCorrect');
 Route::post('/portal/testing/receive/deviceimeivisibility', 'PortalController@deviceImeiVisibility');
 Route::post('/portal/testing/receive/checkimei', 'PortalController@checkimei');
+Route::post('/portal/testing/receive/printnewlabel', 'PortalController@printNewLabel');
 
 //payments
 Route::get('/portal/payments', 'PortalController@showPaymentPage')->middleware('auth');

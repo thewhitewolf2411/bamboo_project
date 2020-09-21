@@ -16,6 +16,7 @@ use App\Eloquent\Stores;
 use App\Eloquent\TestingQuestions;
 use App\Eloquent\Tradein;
 use App\Eloquent\Tradeout;
+use App\Eloquent\Quarantine;
 use App\User;
 use Auth;
 use Schema;
@@ -63,7 +64,7 @@ class PortalController extends Controller
 
     public function showTradeIn(){
         if(!$this->checkAuthLevel(1)){return redirect('/');}
-        $tradeins = Tradein::all();
+        $tradeins = Tradein::where('job_state', null)->get();
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -78,6 +79,64 @@ class PortalController extends Controller
         return view('portal.customer-care.trade-in-details')->with('tradein', $tradein)->with('portalUser', $portalUser);
     }
 
+    public function PrintTradeInLabelBulk(Request $request){
+        #dd($request);
+
+        $html = "";
+
+        $numberOfBulkPrints = $request->number_of_bulk_prints;
+        if($numberOfBulkPrints == 10){
+            $tradeins = Tradein::where('job_state', null)
+                                ->take(10)
+                                ->get();
+
+        }
+        elseif($numberOfBulkPrints === 20){
+            $tradeins = Tradein::where('job_state', null)
+                                ->take(20)
+                                ->get();
+        }
+        elseif($numberOfBulkPrints === 50){
+            $tradeins = Tradein::where('job_state', null)
+            ->take(50)
+            ->get();
+        }
+        elseif($numberOfBulkPrints === 100){
+            $tradeins = Tradein::where('job_state', null)
+            ->take(100)
+            ->get();
+        }
+        elseif($numberOfBulkPrints === 500){
+            $tradeins = Tradein::where('job_state', null)
+            ->take(500)
+            ->get();
+        }
+        else{
+            return redirect()->back();
+        }
+        foreach($tradeins as $tradein){
+
+            $user = User::where('id',$tradein->user_id)->first();
+            $product = SellingProduct::where('id', $tradein->product_id);
+            $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
+
+            $ti = Tradein::where('id', $tradein->id)->first();
+            $ti->job_state = 1;
+            $ti->save();
+
+            $html .= $this->generateTradeInHTMLBulk($barcode, $user, $product, $tradein);
+
+        }
+
+        #echo $html;
+        #die();
+
+        $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
+        PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
+
+        $this->downloadBulk($filename);
+    }
+
     public function PrintTradeInLabel(Request $request){
 
         $tradein = Tradein::where('id', $request->hidden_print_trade_pack_trade_in_id)->first();
@@ -88,12 +147,11 @@ class PortalController extends Controller
         $this->generateTradeInHTML($barcode, $user, $product, $tradein);
     }
 
-    public function generateTradeInHTML($barcode, $user, $product, $tradein){
-
+    public function generateTradeInHTMLBulk($barcode, $user, $product, $tradein){
         $html = "";
-        $html .= "<style>p{margin:0;}</style>";
+        $html .= "<style>p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;} .page_break{page-break-after: always;}</style>";
+        $html .= "<body>";
         $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
-        $html .= "<br><br>";
         $html .= "<p>" . $user->first_name . " " . $user->last_name . "</p>";
         $html .= "<p>Bamboo Distribution Limited</p>";
         $html .= "<p>Unit 11, Io Centre</p>";
@@ -104,7 +162,7 @@ class PortalController extends Controller
         $html .= "<p>United Kingdom</p>";
         $html .= "<br><br>";
         $html .= "<p>Order#". $tradein->barcode . " Date: " . $tradein->created_at .  "</p>";
-        $html .= "<p>Dear" . $user->first_name . " " . $user->last_name . ",</p>";
+        $html .= "<p>Dear " . $user->first_name . " " . $user->last_name . ",</p>";
         $html .= "<p>Thank you very much for using Bamboo Recycle to recycle your mobile device(s). This package contains your TradePack which you can use to post your recycled device(s) back to Bamboo. Please follow the instructions below on how toreturn your recycled device(s) to Bamboo:</p>";
         $html .= "  <ol>
                         <li>Gather your recycled device(s) and remove any sim cards or memory cards from thedevice(s).</li>
@@ -116,7 +174,8 @@ class PortalController extends Controller
         $html .= "<p>Kind Regards,</p>";
         $html .= "<p>Bamboo Mobile</p>";
         $html .= "<h3>Freepost return address</h3>";
-        $html .=    "<div style='display:flex; justify-content: space-between;'><div style='width:30%;'>
+        $html .=    "<div class='page_break' style='clear:both; position:relative; display:flex;'>
+                        <div style='width:190pt; height:150px;' >
                                                 <p>FREEPOST 555880PR</p>
                                                 <p>Bamboo Recycle (9100)</p>
                                                 <p>C/O Bamboo Distribution Ltd</p>
@@ -125,9 +184,9 @@ class PortalController extends Controller
                                                 <p>Waltham Abbey</p>
                                                 <p>Hertfordshire</p>
                                                 <p>EN9 1AS</p>
-                                                <div style='border:1px solid black; padding:15px;'>". $barcode ."</div>
-                                                </div>
-                                                <div style='width:30%;'>
+                                                <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $tradein->barcode ."</p></div>
+                        </div>
+                        <div style='margin-left:200pt; margin-top:-150px; width:190pt; height:150px;'>
                                                 <p>FREEPOST 555880PR</p>
                                                 <p>Bamboo Recycle (9100)</p>
                                                 <p>C/O Bamboo Distribution Ltd</p>
@@ -136,11 +195,75 @@ class PortalController extends Controller
                                                 <p>Waltham Abbey</p>
                                                 <p>Hertfordshire</p>
                                                 <p>EN9 1AS</p>
-                                                <div style='border:1px solid black; padding:15px;'>". $barcode ."</div>
-                                                </div>
+                                                <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $tradein->barcode ."</p></div>
+                        </div>
+                    </div></body>";
+        #echo $html;
+        #die();
+
+
+
+        return $html;
+
+        $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
+        PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
+
+        $this->downloadBulk($filename);
+    }
+
+    public function generateTradeInHTML($barcode, $user, $product, $tradein){
+
+        $html = "";
+        $html .= "<style>p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
+        $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
+        $html .= "<p>" . $user->first_name . " " . $user->last_name . "</p>";
+        $html .= "<p>Bamboo Distribution Limited</p>";
+        $html .= "<p>Unit 11, Io Centre</p>";
+        $html .= "<p>Unit 11, Io Centre</p>";
+        $html .= "<p>Waltham Abbey</p>";
+        $html .= "<p>Essex</p>";
+        $html .= "<p>En9 1as</p>";
+        $html .= "<p>United Kingdom</p>";
+        $html .= "<br><br>";
+        $html .= "<p>Order#". $tradein->barcode . " Date: " . $tradein->created_at .  "</p>";
+        $html .= "<p>Dear " . $user->first_name . " " . $user->last_name . ",</p>";
+        $html .= "<p>Thank you very much for using Bamboo Recycle to recycle your mobile device(s). This package contains your TradePack which you can use to post your recycled device(s) back to Bamboo. Please follow the instructions below on how toreturn your recycled device(s) to Bamboo:</p>";
+        $html .= "  <ol>
+                        <li>Gather your recycled device(s) and remove any sim cards or memory cards from thedevice(s).</li>
+                        <li>Place the device(s) into the Trade Pack that you received from Bamboo with this package. (Please rememberwe only require the handset, unless of course the device you're recycling is brand new and boxed.)</li>
+                        <li>Next, seal the Trade Pack by folding over the sticky flap at the top.</li>
+                        <li>Finally, you must then place the Freepost Label, found on the bottom left of this letter, onto the front of the TradePack then post your Trade Pack back to Bamboo!</li>
+                    </ol> ";
+        $html .= "<p>Once your recycled device(s) are received by Bamboo you will be sent an email confirming this. Your device(s) will thenbe tested to make sure they match the conditions that were set when placing the order. After each device has beensuccessfully tested you will receive a final email confirming payment for the device using the method that you selected.(Please note: Payment will be made on a per device basis.)<br>If you have any problems returning your device(s) please view the FAQs section on our website or contact us directly byemailing customersupport@bamboorecycle.com with your enquiry.</p>";
+        $html .= "<p>Kind Regards,</p>";
+        $html .= "<p>Bamboo Mobile</p>";
+        $html .= "<h3>Freepost return address</h3>";
+        $html .=    "<div style='clear:both; position:relative; display:flex;'>
+                        <div style='width:190pt; height:150px;' >
+                                                <p>FREEPOST 555880PR</p>
+                                                <p>Bamboo Recycle (9100)</p>
+                                                <p>C/O Bamboo Distribution Ltd</p>
+                                                <p>Unit 1, I.O Centre</p>
+                                                <p>Lea Road</p>
+                                                <p>Waltham Abbey</p>
+                                                <p>Hertfordshire</p>
+                                                <p>EN9 1AS</p>
+                                                <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $tradein->barcode ."</p></div>
+                        </div>
+                        <div style='margin-left:200pt; margin-top:-150px; width:190pt; height:150px;'>
+                                                <p>FREEPOST 555880PR</p>
+                                                <p>Bamboo Recycle (9100)</p>
+                                                <p>C/O Bamboo Distribution Ltd</p>
+                                                <p>Unit 1, I.O Centre</p>
+                                                <p>Lea Road</p>
+                                                <p>Waltham Abbey</p>
+                                                <p>Hertfordshire</p>
+                                                <p>EN9 1AS</p>
+                                                <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $tradein->barcode ."</p></div>
+                        </div>
                     </div>";
-                    #echo $html;
-                    #dd();
+        #echo $html;
+        #die();
 
         $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
         PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
@@ -175,7 +298,16 @@ class PortalController extends Controller
         if(!$this->checkAuthLevel(1)){return redirect('/');}
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser);
+
+        $tradeins = Tradein::whereIn('job_state', [1, 3])->get();
+        return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser)->with('tradeins', $tradeins);
+    }
+
+    public function setTradePackAsSent(Request $request){
+        $tradein = Tradein::where('id', $request->set_trade_in_as_sent)->first();
+        $tradein->job_state = 2;
+        $tradein->save();
+        return redirect()->back();
     }
 
     public function showSeller(){
@@ -523,6 +655,8 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
+        
+
         return view('portal.testing.receive')->with('portalUser', $portalUser);
     }
 
@@ -546,7 +680,7 @@ class PortalController extends Controller
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        
+       
         return view('portal.testing.order')->with('tradeins', $tradeins)->with('portalUser', $portalUser);
     }
 
@@ -556,10 +690,11 @@ class PortalController extends Controller
         $user  = User::where('id', $tradein->user_id)->first();
         $product = SellingProduct::where('id', $tradein->product_id)->first();
 
+
+        $testingquestion = TestingQuestions::where('order_id', $tradein->id)->get();
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
         
-        $testingquestion = TestingQuestions::where('order_id', $tradein->id)->first();
         if($testingquestion !== null){
             return view('portal.testing.questions')->with(['tradein'=>$tradein, 'user'=>$user, 'product'=>$product, 'testingquestion'=>false, 'testingquestions'=>$testingquestion,'portalUser'=>$portalUser]);
         }
@@ -573,6 +708,21 @@ class PortalController extends Controller
     public function setTradeInStatus(Request $request){
 
         $tradein = Tradein::where('id', $request->tradein_id)->first();
+        $tradein->job_state = 3;
+
+        $testingquestion = "";
+
+        #dd(TestingQuestions::where('order_id', $tradein->id)->first());
+
+        if(TestingQuestions::where('order_id', $tradein->id)->first() == null){
+            $testingquestion = new TestingQuestions();
+            $testingquestion->order_id = $tradein->id;
+            $testingquestion->save();
+        }
+        else{
+            $testingquestion = TestingQuestions::where('order_id', $tradein->id)->first();
+        }
+
 
         $days = 14;
         $dayToCheck = Carbon::now();
@@ -743,6 +893,8 @@ class PortalController extends Controller
         }
 
         $request_body = json_encode($options_array);
+        
+        #dd($request_body);
 
         $result =  $this->send_request($url, $request_body);
 
@@ -752,7 +904,6 @@ class PortalController extends Controller
 
         $result_status = $result->result;
         $result_data = $result->reasondata;
-        
 
         if($result_status === "passed"){
             $tradein->marked_for_quarantine = false;
@@ -880,8 +1031,72 @@ class PortalController extends Controller
         return redirect()->back();
         
     }
+
+    public function printNewLabel(Request $request){
+        $tradein = Tradein::where('id', $request->tradein_id)->first();
+
+        $tradein->job_state = 4;
+
+
+        $newBarcode = "";
+
+        $sellingProduct = SellingProduct::where('id', $tradein->product_id)->first();
+        $brands = Brand::all();
+
+        if($tradein->marked_for_quarantine == true){
+            $newBarcode .= "90";
+
+            $quarantine = new Quarantine();
+
+
+        }
+        else{
+            foreach($brands as $brand){
+                if($sellingProduct->brand_id == $brand->id){
+                    if($brand->id < 10){
+                        $newBarcode .= $tradein->job_state . "0" . $brand->id;
+                        $newBarcode .= mt_rand(10000, 99999);
+                    }
+                    else{
+                        $newBarcode .= $tradein->job_state . $brand->id;
+                        mt_rand(10000, 99999);
+                    }
+                }
+            }
+        }
+
+        $tradein->barcode = $newBarcode;
+        $tradein->save();
+
+
+
+        $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
+
+        $this->generateNewLabel($barcode, $sellingProduct, $tradein);
+
+        return redirect('/portal/testing/receive/')->with(['download'=>true, 'filename'=>'labeltradeout-' . $tradein->barcode . ".pdf"]);
+
+    }
+
+    public function generateNewLabel($barcode,$product, $tradein){
+        $html = "";
+        $html .= "<style>body{display:flex; justify-content:center; align-items:center; height:100%; widht:100%;} p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
+        $html .= "<body>";
+        $html .=    "<div style='clear:both; position:relative; display:flex; justify-content:center; align-items:center;'>
+                        <div style='width:190pt; height:150px;' >
+                            <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $tradein->barcode ."</p></div>
+                        </div>
+                    </div>";
+        $html .= "</body>";
+        #echo $html;
+        #die();
+
+        $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
+        PDF::loadHTML($html)->setPaper('a6', 'landscape')->setWarnings(false)->save($filename);
+        
+    }
     
-        //payments
+    //payments
 
     public function showPaymentPage(){
         if(!$this->checkAuthLevel(6)){return redirect('/');}
@@ -1027,7 +1242,7 @@ class PortalController extends Controller
 
     }
 
-    public function downloadFile($file){
+    public function downloadBulk($file){
         if (file_exists($file)) {
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
@@ -1038,6 +1253,21 @@ class PortalController extends Controller
             header('Content-Length: ' . filesize($file));
             readfile($file);
 
+            // if file is downloaded delete all created files from the sistem
+            File::delete($file);
+        }
+    }
+
+    public function downloadFile($file){
+        if (file_exists($file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
             // if file is downloaded delete all created files from the sistem
             File::delete($file);
             return redirect('/portal/feeds/export-import');
