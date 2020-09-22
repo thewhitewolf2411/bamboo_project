@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Trays Managment</title>
+    <title>Bamboo Recycle::Tray</title>
 </head>
 
 <body class="portal-body">
@@ -28,22 +28,7 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Trays managment</p>
-                    </div>
-                </div>
-
-                <div class="portal-search-form-container">
-                    <form action="/portal/trays/tray/" method="GET">
-                        <div class="form-group d-flex align-items-center justify-content-between">
-                            <label style="margin: 0;" for="tray_id_scan">Please Scan or Type the Tray Number:</label>
-                            <input style="margin: 0; width: 50%;" class="form-control" type="number" name="tray_id_scan" id="tray_id_scan" autofocus>
-                            <button type="submit" class="btn btn-primary btn-blue">Go</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="portal-title-container">
-                    <div class="portal-title">
-                        <p>All trays</p>
+                        <p>Tray {{$tray->id}}</p>
                     </div>
                 </div>
 
@@ -52,27 +37,37 @@
                         <tr>
                             <td><div class="table-element">Tray ID</div></td>
                             <td><div class="table-element">Tray name</div></td>
-                            <td><div class="table-element">Assigned trolley</div></td>
                             <td><div class="table-element">No of Devices</div></td>
-                            <td><div class="table-element">Delete Tray</div></td>
+                            <td><div class="table-element">Print tray Label</div></td>
+                            <td><div class="table-element">Assign tray to trolley</div></td>
                         </tr>
-                        @foreach($trays as $tray)
                         <tr>
-                            <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">{{$tray->id}}</div></a></td>
-                            <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">{{$tray->tray_name}}</div></a></td>
-                            <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">@if($tray->trolley_id == null) <p style="color:red;">Unassigned</p> @else <p style="color:green;"> {{$tray->getTrolleyName($tray->trolley_id)}} </p> @endif</div></a></td>
-                            <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">{{$tray->number_of_devices}}</div></a></td>
-                            <td><div class="table-element"><a href="/portals/trays/delete/{{$tray->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete tray</p></div></a></div></td>
+                            <td><div class="table-element">{{$tray->id}}</div></td>
+                            <td><div class="table-element">{{$tray->tray_name}}</div></td>
+                            <td><div class="table-element">{{$tray->number_of_devices}}</div></td>
+                            <td><div class="table-element"><a href="/portal/trays/tray/printlabel/{{$tray->id}}"><div class="btn btn-primary btn-blue"><p style="color:#fff">Print Tray label</p></div></a></div></td>
+                            <td><div class="table-element">
+
+                                <form action="/portal/trays/tray/addtotrolley" class="d-flex flex-column" onsubmit="return confirm('Are you sure you want to change assigned trolley of this tray?')" method="post">
+                            
+                                    @csrf
+                                    <input type="hidden" name="tray_id" value="{{$tray->id}}">
+                                    <select required class="form-control" name="trolley_select">
+                                        <option value="" disabled @if($tray->trolley_id == null) selected @endif >Select Trolley</option>
+                                        @foreach($trolleys as $trolley)
+                                        <option value="{{$trolley->id}}" @if($tray->trolley_id == $trolley->id) selected @endif >{{$tray->getTrolleyName($trolley->id)}}</option>
+                                        @endforeach
+                                    </select>
+                                    
+                                    <button type="submit" class="btn btn-primary btn-blue">Submit</button>
+                                </form>
+
+
+                            </div></td>
                         </tr>
-                        @endforeach
                     </table>
                 </div>
 
-                <div class="container">
-                    <a href="/portal/trays/create"><div class="btn btn-primary btn-blue">
-                        <p style="color: #fff;">Create Tray</p>
-                    </div></a>
-                </div>
             </div>
         </div>
     </main>

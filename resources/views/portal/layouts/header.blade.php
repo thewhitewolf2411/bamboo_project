@@ -68,7 +68,7 @@
             @endif
             @if($portalUser->trolleys)
             <div class="portal-header-element">
-                <a class="menu_button_text" href="/portal/trays"><i class="fa fa-shopping-cart"></i>Trolleys</a>
+                <a class="menu_button_text" href="/portal/trolleys"><i class="fa fa-shopping-cart"></i>Trolleys</a>
             </div>
             @endif
             @if($portalUser->boxes)

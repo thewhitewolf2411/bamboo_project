@@ -17,6 +17,9 @@ use App\Eloquent\TestingQuestions;
 use App\Eloquent\Tradein;
 use App\Eloquent\Tradeout;
 use App\Eloquent\Quarantine;
+use App\Eloquent\Tray;
+use App\Eloquent\Trolley;
+use App\Eloquent\Box;
 use App\User;
 use Auth;
 use Schema;
@@ -299,7 +302,7 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $tradeins = Tradein::whereIn('job_state', [1, 3])->get();
+        $tradeins = Tradein::whereIn('job_state', array(1,2,3,4,5))->get();
         return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser)->with('tradeins', $tradeins);
     }
 
@@ -671,7 +674,24 @@ class PortalController extends Controller
 
     public function find(Request $request){
         if(!$this->checkAuthLevel(5)){return redirect('/');}
-        dd($request);
+        
+        $tradein = Tradein::where('barcode', $request->scanid)->first();
+
+        if($tradein == null){
+
+            return redirect()->back()->with('error', 'There is no such device');
+
+        }
+
+        if($tradein->job_state <5){
+            return redirect('/portal/testing/receive');
+        }
+        else{
+            $user_id = Auth::user()->id;
+            $portalUser = PortalUsers::where('user_id', $user_id)->first();
+            return view('portal.testing.testdevice')->with(['tradein'=>$tradein, 'portalUser'=>$portalUser]);
+        }
+
     }
 
     public function receive(Request $request){
@@ -1074,8 +1094,6 @@ class PortalController extends Controller
 
         $this->generateNewLabel($barcode, $sellingProduct, $tradein);
 
-        return redirect('/portal/testing/receive/')->with(['download'=>true, 'filename'=>'labeltradeout-' . $tradein->barcode . ".pdf"]);
-
     }
 
     public function generateNewLabel($barcode,$product, $tradein){
@@ -1093,7 +1111,17 @@ class PortalController extends Controller
 
         $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
         PDF::loadHTML($html)->setPaper('a6', 'landscape')->setWarnings(false)->save($filename);
+
+        $this->downloadFile($filename);
         
+    }
+
+    public function sendtotray(Request $request){
+        $tradein = Tradein::where('id', $request->tradein_id)->first();
+        
+        $tradein->job_state = 5;
+        $tradein->save();
+        return redirect('/portal/testing/');
     }
     
     //payments
@@ -1757,7 +1785,101 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.trays.trays')->with('portalUser', $portalUser);
+        $trays = Tray::all();
+
+        return view('portal.trays.trays')->with(['portalUser'=>$portalUser, 'trays'=>$trays]);
+    }
+
+    public function showAddTrayPage(){
+        if(!$this->checkAuthLevel(12)){return redirect('/');}
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $trolleys = Trolley::all();
+
+        return view('portal.add.tray')->with(['portalUser'=>$portalUser, 'trolleys'=>$trolleys]);
+    }
+
+    public function addTray(Request $request){
+
+        $tray = new Tray();
+
+        $tray->tray_name = $request->tray_name;
+
+        $tray->save();
+
+        return redirect('/portal/trays');
+    }
+
+    public function showTrayPage(Request $request){
+        $trayid = $request->tray_id_scan;
+
+        $tray = Tray::where('id', $trayid)->first();
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $trolleys = Trolley::all();
+
+        return view('portal.trays.tray')->with(['portalUser'=>$portalUser, 'tray'=>$tray, 'trolleys'=>$trolleys]);
+    }
+
+    public function printTrayLabel($id){
+
+        $barcode = DNS1D::getBarcodeHTML($id, 'C128');
+
+        $this->generateTrayLabel($barcode, $id);
+    }
+
+    public function generateTrayLabel($barcode, $id){
+        $html = "";
+        $html .= "<style>body{display:flex; justify-content:center; align-items:center; height:100%; widht:100%;} p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
+        $html .= "<body>";
+        $html .=    "<div style='clear:both; position:relative; display:flex; justify-content:center; align-items:center;'>
+                        <div style='width:190pt; height:150px;' >
+                            <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $id ."</p></div>
+                        </div>
+                    </div>";
+        $html .= "</body>";
+        #echo $html;
+        #die();
+
+        $filename = "labeltray-" . $id . ".pdf";
+        PDF::loadHTML($html)->setPaper('a6', 'landscape')->setWarnings(false)->save($filename);
+
+        $this->downloadFile($filename);
+        
+    }
+
+    public function addTrayToTrolley(Request $request){
+
+        $tray = Tray::where('id', $request->tray_id)->first();
+
+        if($tray->trolley_id == null){
+            $tray->trolley_id = $request->trolley_select;
+
+            $tray->save();
+    
+            $trolley = Trolley::where('id', $tray->trolley_id)->first();
+            $trolley->number_of_trays +=1 ;
+            $trolley->save();
+        }
+        else{
+            $trolley = Trolley::where('id', $tray->trolley_id)->first();
+            $trolley->number_of_trays -=1 ;
+            $trolley->save();
+
+            $tray->trolley_id = $request->trolley_select;
+
+            $trolley = Trolley::where('id', $tray->trolley_id)->first();
+            $trolley->number_of_trays +=1 ;
+            $trolley->save();
+
+            $tray->save();
+        }
+
+
+
+        return redirect()->back();
     }
 
     //trolleys
@@ -1768,7 +1890,73 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.trolleys.trolleys')->with('portalUser', $portalUser);
+        $trolleys = Trolley::all();
+
+        return view('portal.trolleys.trolleys')->with(['portalUser'=>$portalUser, 'trolleys'=>$trolleys]);
+    }
+
+    public function showAddTrolleyPage(){
+        if(!$this->checkAuthLevel(12)){return redirect('/');}
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $trolleys = Trolley::all();
+
+        return view('portal.add.trolley')->with(['portalUser'=>$portalUser, 'trolleys'=>$trolleys]);
+    }
+
+    public function showTrolleyPage(Request $request){
+
+        $trolleyid = $request->trolley_id_scan;
+
+        $trolley = Trolley::where('id', $trolleyid)->first();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $trolleyTrays = Tray::where('trolley_id', $trolleyid)->get();
+
+
+        return view('portal.trolleys.trolley')->with(['portalUser'=>$portalUser, 'trolley'=>$trolley, 'trolleyTrays'=>$trolleyTrays]);
+    }
+
+    public function printTrolleyLabel($id){
+
+        $barcode = DNS1D::getBarcodeHTML($id, 'C128');
+
+        $this->generateTrolleyLabel($barcode, $id);
+    }
+
+    public function generateTrolleyLabel($barcode, $id){
+        $html = "";
+        $html .= "<style>body{display:flex; justify-content:center; align-items:center; height:100%; widht:100%;} p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
+        $html .= "<body>";
+        $html .=    "<div style='clear:both; position:relative; display:flex; justify-content:center; align-items:center;'>
+                        <div style='width:190pt; height:150px;' >
+                            <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $id ."</p></div>
+                        </div>
+                    </div>";
+        $html .= "</body>";
+        #echo $html;
+        #die();
+
+        $filename = "labeltrolley-" . $id . ".pdf";
+        PDF::loadHTML($html)->setPaper('a6', 'landscape')->setWarnings(false)->save($filename);
+
+        $this->downloadFile($filename);
+        
+    }
+
+    public function addTrolley(Request $request){
+
+        $trolley = new Trolley();
+
+        $trolley->trolley_name = $request->trolley_name;
+        $trolley->trolley_type = $request->trolley_type;
+
+        $trolley->save();
+
+        return redirect('/portal/trolleys');
     }
 
     //boxes
@@ -1845,11 +2033,10 @@ class PortalController extends Controller
             break;
 
             case 14:
-                return $portaluser->customercare;
+                return $portaluser->boxes;
             break;
 
             default:
-                dd("here");
                 return true;
             break;
         }

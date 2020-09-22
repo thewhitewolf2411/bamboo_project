@@ -18,7 +18,9 @@
     <script
 			  src="https://code.jquery.com/jquery-3.5.1.js"
 			  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-			  crossorigin="anonymous"></script>
+              crossorigin="anonymous"></script>
+    
+              <script src="/js/PrintTradeIn.js"></script>
 
     <title>Bamboo Recycle::Receive Trade-In</title>
 </head>
@@ -265,8 +267,8 @@
 
                         @endif
 
-                        @if($tradein->received == true && $tradein->device_missing == false && $tradein->chekmend_passed == true && $tradein->visible_imei == true && $tradein->older_than_14_days == false && $tradein->marked_for_quarantine == false)
-                        <form action="/portal/testing/receive/printnewlabel" method="POST" class="d-flex flex-column">
+                        @if($tradein->received == true && $tradein->device_missing == false && $tradein->chekmend_passed == true && $tradein->visible_imei == true && $tradein->older_than_14_days == false && $tradein->marked_for_quarantine == false && $tradein->job_state <= 4)
+                        <form id="change-label-form-p"  action="/portal/testing/receive/printnewlabel" method="POST" class="d-flex flex-column">
                             @csrf
 
                             <div class="w-100 p-3">
@@ -282,19 +284,120 @@
                                     </div>
                                     <div class="d-flex w-50 border p-3"><p>Device has passed checkmend check, and is now ready for testing.</p></div>
                                 </div>
-                                <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
+                                <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3"> 
                                     <a href="/portal/testing/receive" style="margin: 0;">
                                         <div class="btn btn-primary btn-blue">
                                             <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
                                         </div>
                                     </a>
-                                    <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Print new label and send device to corresponding tray. </button>
+                                    <button id="change-label-button" type="button" class="btn btn-primary btn-blue check-imei">Print new label </button>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
+                        </form>
+                        <form id="change-label-form-v" style="opacity: 0;" action="/portal/testing/receive/sendtotray" method="POST" class="d-flex flex-column">
+                            @csrf
+
+                            <div class="w-100 p-3">
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Status</p></div>
+                                </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                        <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                        <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
+                                    </div>
+                                    <div class="d-flex w-50 border p-3"><p>New label has been printed.</p></div>
+                                </div>
+                                <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3"> 
+                                    <a href="/portal/testing/receive" style="margin: 0;">
+                                        <div class="btn btn-primary btn-blue">
+                                            <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
+                                        </div>
+                                    </a>
+                                    <button id="change-label-button" type="submit" class="btn btn-primary btn-blue check-imei">Send device to tray</button>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
+                        </form>
+                        <script>
+
+                            $('#change-label-button').click(function(e){
+                                $('#change-label-form-p').css('opacity', '0');
+                                $('#change-label-form-p').css('height', '0');                        
+                                $('#change-label-form-v').css('opacity', '1');
+                                $('#change-label-form-v').css('height', 'auto');
+                                $('#change-label-form-p').submit();
+                            });
+
+                        </script>
+                        @endif
+
+                        @if($tradein->job_state == 4)
+                        <form id="change-label-form-v" action="/portal/testing/receive/sendtotray" method="POST" class="d-flex flex-column">
+                            @csrf
+
+                            <div class="w-100 p-3">
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Status</p></div>
+                                </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                        <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                        <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
+                                    </div>
+                                    <div class="d-flex w-50 border p-3"><p>New label has been printed.</p></div>
+                                </div>
+                                <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3"> 
+                                    <a href="/portal/testing/receive" style="margin: 0;">
+                                        <div class="btn btn-primary btn-blue">
+                                            <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
+                                        </div>
+                                    </a>
+                                    <button id="change-label-button" type="submit" class="btn btn-primary btn-blue check-imei">Send device to tray</button>
                                 </div>
                             </div>
 
                             <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
                         </form>
                         @endif
+
+                        @if($tradein->job_state == 5)
+                        <form id="change-label-form-v" method="POST" class="d-flex flex-column">
+                            @csrf
+
+                            <div class="w-100 p-3">
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Status</p></div>
+                                </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                        <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                        <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
+                                    </div>
+                                    <div class="d-flex w-50 border p-3"><p>Device has been send to tray.</p></div>
+                                </div>
+                                <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3"> 
+                                    <a href="/portal/testing/receive" style="margin: 0;">
+                                        <div class="btn btn-primary btn-blue">
+                                            <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
+                        </form>
+                        @endif
+
 
                     </div>
 

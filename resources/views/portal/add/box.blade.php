@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Receive Trade-In</title>
+    <title>Bamboo Recycle::Add Box</title>
 </head>
 
 <body class="portal-body">
@@ -28,17 +28,24 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Receive Trade-In</p>
+                        <p>Add Box</p>
                     </div>
                 </div>
-                <div class="portal-search-form-container">
-                    <form action="/portal/testing/receive/1" method="POST">
-                        @csrf
-                        <label for="searchinput">Scan Or Type Trade-In ID:</label>
-                        <input id="searchinput" type="number" name="scanid" class="form-control" autofocus>
-                        <button type="submit" class="btn btn-primary btn-blue">Search</button>
-                    </form>
 
+                <div class="portal-search-form-container">
+                    <form action="/portal/trays/createtray" method="POST">
+                        <div class="container form-group d-flex flex-column align-items-center justify-content-between">
+                           
+                            <input required style="margin: 0; width: 30%; margin-bottom:15px;" class="p-2 form-control" type="number" name="tray_name" id="tray_name" placeholder="Tray name">
+                            <select required style="margin:0; width:30%; margin-bottom:15px;" class="p-2 form-control">
+                                <option value="">Select a trolley</option>
+                                @foreach($trolleys as $trolley)
+                                    <option value="{{$trolley->trolley_name}}">{{$trolley->trolley_name}}</option>
+                                @endforeach
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-blue">Create Tray</button>
+                        </div>
+                    </form>
                 </div>
 
             </div>
@@ -50,7 +57,7 @@
 
 $(document).ready(function(){
 
-    var elem = $('.portal-links-container > .portal-header-element')[4];
+    var elem = $('.portal-links-container > .portal-header-element')[11];
     
     console.log(elem.children[0]);
 
@@ -58,8 +65,6 @@ $(document).ready(function(){
     elem.children[0].children[0].style.opacity = 1;
 
 });
-
-
 
 </script>
 

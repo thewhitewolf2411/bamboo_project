@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Receive Trade-In</title>
+    <title>Bamboo Recycle::Trolley</title>
 </head>
 
 <body class="portal-body">
@@ -28,17 +28,31 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Receive Trade-In</p>
+                        <p>Trolley {{$trolley->id}}</p>
                     </div>
                 </div>
-                <div class="portal-search-form-container">
-                    <form action="/portal/testing/receive/1" method="POST">
-                        @csrf
-                        <label for="searchinput">Scan Or Type Trade-In ID:</label>
-                        <input id="searchinput" type="number" name="scanid" class="form-control" autofocus>
-                        <button type="submit" class="btn btn-primary btn-blue">Search</button>
-                    </form>
 
+                <div class="portal-table-container">
+                    <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td><div class="table-element">Trolley ID</div></td>
+                            <td><div class="table-element">Trolley</div></td>
+                            <td><div class="table-element">No of Trays</div></td>
+                            <td><div class="table-element">No of Devices</div></td>
+                            <td><div class="table-element">Trolley Type</div></td>
+                            <td><div class="table-element">Delete Trolley</div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="table-element">{{$trolley->id}}</div></a></td>
+                            <td><div class="table-element">{{$trolley->trolley_name}}</div></a></td>
+                            <td><div class="table-element">{{$trolley->number_of_trays}}</div></a></td>
+                            <td><div class="table-element">{{$trolley->getNumberOfDevices($trolley->id)}}</div></a></td>
+                            <td><div class="table-element">{{$trolley->getTrolleyTypeName($trolley->trolley_type)}}</div></a></td>
+                            <td><div class="table-element"><a href="/portal/trolleys/trolley/printlabel/{{$trolley->id}}"><div class="btn btn-primary btn-blue"><p style="color: #fff;">Print Trolley label</p></div></a></div></td>
+                        </tr>
+                    </table>
+
+                    
                 </div>
 
             </div>
@@ -50,7 +64,7 @@
 
 $(document).ready(function(){
 
-    var elem = $('.portal-links-container > .portal-header-element')[4];
+    var elem = $('.portal-links-container > .portal-header-element')[12];
     
     console.log(elem.children[0]);
 
@@ -58,8 +72,6 @@ $(document).ready(function(){
     elem.children[0].children[0].style.opacity = 1;
 
 });
-
-
 
 </script>
 

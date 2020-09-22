@@ -31,6 +31,7 @@
                         <p>Find Trade-In Product</p>
                     </div>
                 </div>
+
                 <div class="portal-search-form-container">
                     <form action="/portal/testing/find/find" method="POST">
                         @csrf
@@ -39,6 +40,12 @@
                         <button type="submit" class="btn btn-primary btn-blue">Search</button>
                     </form>
                 </div>
+
+                @if(Session::has('error'))
+                    <div class="p-5">
+                        <div class="alert alert-danger">{{Session::get('error')}}</div>
+                    </div>
+                @endif
 
             </div>
         </div>

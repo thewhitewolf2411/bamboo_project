@@ -26,3 +26,4 @@ function setAsSent(trade_pack_job_trade_in_id){
     $('#set_trade_in_as_sent_trigger').click();
 
 }
+

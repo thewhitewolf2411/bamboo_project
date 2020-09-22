@@ -15,8 +15,9 @@ class CreateTraysTable extends Migration
     {
         Schema::create('trays', function (Blueprint $table) {
             $table->id();
-            $table->integer('tray_id');
-            $table->integer('trade_in_id');
+            $table->string('tray_name');
+            $table->integer('trolley_id')->nullable();
+            $table->integer('number_of_devices')->default(0);
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTrolleysTable extends Migration
+class CreateTrayContentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateTrolleysTable extends Migration
      */
     public function up()
     {
-        Schema::create('trolleys', function (Blueprint $table) {
+        Schema::create('tray_content', function (Blueprint $table) {
             $table->id();
-            $table->string('trolley_name');
-            $table->integer('number_of_trays')->default(0);
-            $table->string('trolley_type');
+            $table->integer('tray_id');
+            $table->integer('trade_in_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateTrolleysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trolleys');
+        Schema::dropIfExists('tray_content');
     }
 }

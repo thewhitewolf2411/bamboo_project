@@ -116,7 +116,7 @@
                     </a>
                     @endif
                     @if($portalUser->trolleys)
-                    <a href="/portal/trays">
+                    <a href="/portal/trolleys">
                         <div class="portal-content-element">
                         <p><i class="fa fa-shopping-cart"></i>Trolley Managment</p>
                         </div>

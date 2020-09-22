@@ -117,7 +117,26 @@ class DatabaseSeeder extends Seeder
             'brand_image'=>'Image 16_1597675717.png',
             'total_produts'=>1
         ]);
-        
+
+        DB::table('trays')->insert([
+            'tray_name'=>'Apple',
+        ]);
+
+        DB::table('trays')->insert([
+            'tray_name'=>'Samsung',
+        ]);
+
+        DB::table('trays')->insert([
+            'tray_name'=>'Huawei',
+        ]);
+
+        DB::table('trays')->insert([
+            'tray_name'=>'Google',
+        ]);
+
+        DB::table('trays')->insert([
+            'tray_name'=>'Oneplus',
+        ]);
         /*DB::table('buying_products')->insert([
 
             'product_name'=>'iPhone X',

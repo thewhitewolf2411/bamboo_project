@@ -145,13 +145,14 @@ Route::post('/portal/testing/receive/3', 'PortalController@receive')->middleware
 Route::get('/portal/testing/receive/{id}/1','PortalController@testItem');
 Route::get('/portal/testing/receive/{id}/1/report','PortalController@testItem');
 
-Route::post('/portal/testing/receive/checkdevicestatus', 'PortalController@checkDeviceStatus');
-Route::post('/portal/testing/receive/settradeinstatus', 'PortalController@setTradeInStatus');
-Route::post('/portal/testing/receive/devicemissing', 'PortalController@isDeviceMissing');
-Route::post('/portal/testing/receive/devicecorrect', 'PortalController@isDeviceCorrect');
-Route::post('/portal/testing/receive/deviceimeivisibility', 'PortalController@deviceImeiVisibility');
-Route::post('/portal/testing/receive/checkimei', 'PortalController@checkimei');
-Route::post('/portal/testing/receive/printnewlabel', 'PortalController@printNewLabel');
+Route::post('/portal/testing/receive/checkdevicestatus', 'PortalController@checkDeviceStatus')->middleware('auth');
+Route::post('/portal/testing/receive/settradeinstatus', 'PortalController@setTradeInStatus')->middleware('auth');
+Route::post('/portal/testing/receive/devicemissing', 'PortalController@isDeviceMissing')->middleware('auth');
+Route::post('/portal/testing/receive/devicecorrect', 'PortalController@isDeviceCorrect')->middleware('auth');
+Route::post('/portal/testing/receive/deviceimeivisibility', 'PortalController@deviceImeiVisibility')->middleware('auth');
+Route::post('/portal/testing/receive/checkimei', 'PortalController@checkimei')->middleware('auth');
+Route::post('/portal/testing/receive/printnewlabel', 'PortalController@printNewLabel')->middleware('auth');
+Route::post('/portal/testing/receive/sendtotray', 'PortalController@sendtotray')->middleware('auth');
 
 //payments
 Route::get('/portal/payments', 'PortalController@showPaymentPage')->middleware('auth');
@@ -215,9 +216,25 @@ Route::get('/portal/cms', 'PortalController@showCmsPage')->middleware('auth');
 
 //Trays
 Route::get('/portal/trays', 'PortalController@showTraysPage')->middleware('auth');
+Route::get('/portal/trays/create', 'PortalController@showAddTrayPage')->middleware('auth');
+Route::post('/portal/trays/createtray', 'PortalController@addTray')->middleware('auth');
+
+Route::get('/portal/trays/tray/', 'PortalController@showTrayPage')->middleware('auth');
+Route::get('/portal/trays/tray/printlabel/{id}', 'PortalController@printTrayLabel')->middleware('auth');
+
+Route::post('/portal/trays/tray/addtotrolley', 'PortalController@addTrayToTrolley')->middleware('auth');
 
 //Trolleys
 Route::get('/portal/trolleys', 'PortalController@showTrolleysPage')->middleware('auth');
+Route::get('/portal/trolleys/create', 'PortalController@showAddTrolleyPage')->middleware('auth');
+Route::post('/portal/trolleys/createtrolley', 'PortalController@addTrolley')->middleware('auth');
+
+Route::get('/portal/trolleys/trolley/', 'PortalController@showTrolleyPage')->middleware('auth');
+Route::get('/portal/trolleys/trolley/printlabel/{id}', 'PortalController@printTrolleyLabel')->middleware('auth');
+
+
 
 //Boxes
 Route::get('/portal/boxes', 'PortalController@showBoxesPage')->middleware('auth');
+Route::get('/portal/boxes/create', 'PortalController@showAddBoxPage')->middleware('auth');
+Route::post('/portal/boxes/createbox', 'PortalController@addBox')->middleware('auth');
