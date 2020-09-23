@@ -18,7 +18,9 @@ use App\Eloquent\Tradein;
 use App\Eloquent\Tradeout;
 use App\Eloquent\Quarantine;
 use App\Eloquent\Tray;
+use App\Eloquent\TrayContent;
 use App\Eloquent\Trolley;
+use App\Eloquent\TrolleyContent;
 use App\Eloquent\Box;
 use App\User;
 use Auth;
@@ -679,7 +681,7 @@ class PortalController extends Controller
         if(!$this->checkAuthLevel(5)){return redirect('/');}
         
         $tradein = Tradein::where('barcode', $request->scanid)->first();
-
+        #dd($tradein);
         if($tradein == null){
 
             return redirect()->back()->with('error', 'There is no such device');
@@ -687,7 +689,7 @@ class PortalController extends Controller
         }
 
         if($tradein->job_state <5){
-            return redirect('/portal/testing/receive');
+            return redirect('/portal/testing/find');
         }
         else{
             $user_id = Auth::user()->id;
@@ -880,15 +882,15 @@ class PortalController extends Controller
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         $imei_number = $request->imei_number;
 
-        $imei_number = 123456123456123;
+        #$imei_number = 123456123456123;
 
-        $url = 'https://gapi.checkmend.com/duediligence/' . 1 . '/' . $imei_number;
+        $url = 'https://gapi.checkmend.com/duediligence/' . 2 . '/' . $imei_number;
 
         $options_array  = false;
         $response_config_array  = false;
 
-        $options['category']  = 0;
-        $options['reason_data'] = false;
+        $options['category']  = 8;
+        $options['reason_data'] = true;
         $options['make_model'] 	  = true;
         $options['cdma_validate'] = true;
 
@@ -924,6 +926,8 @@ class PortalController extends Controller
         $result = (json_decode($result['result_json']));
 
         $result_data = "";
+
+        #dd($result);
 
         $result_status = $result->result;
         $result_data = $result->reasondata;
@@ -1064,6 +1068,7 @@ class PortalController extends Controller
 
         if($tradein->marked_for_quarantine == true){
             $newBarcode .= "90";
+            $newBarcode .= mt_rand(10000, 99999);
 
             $quarantine = new Quarantine();
 
@@ -1119,6 +1124,22 @@ class PortalController extends Controller
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         
         $tradein->job_state = 5;
+
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        $tray = Tray::where('id', $product->brand_id)->first();
+
+        $trayContent = new TrayContent();
+
+        $trayContent->tray_id = $tray->id;
+        $trayContent->trade_in_id = $tradein->id;
+
+        $trayContent->save();
+
+        $tray->number_of_devices = count(TrayContent::where('tray_id', $tray->id)->get());
+
+        $tray->save();
+
         $tradein->save();
         return redirect('/portal/testing/');
     }

@@ -28,7 +28,7 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Receive Trade-In</p>
+                        <p>Test Device</p>
                     </div>
                 </div>
                 <div class="portal-search-form-container">

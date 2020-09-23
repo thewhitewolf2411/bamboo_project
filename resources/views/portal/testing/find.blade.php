@@ -28,14 +28,14 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Find Trade-In Product</p>
+                        <p>Find device to test</p>
                     </div>
                 </div>
 
                 <div class="portal-search-form-container">
                     <form action="/portal/testing/find/find" method="POST">
                         @csrf
-                        <label for="searchinput">Scan Or Type Trade-In ID:</label>
+                        <label for="searchinput">Scan Or Type Device ID or tray id:</label>
                         <input id="searchinput" type="number" name="scanid" class="form-control" autofocus>
                         <button type="submit" class="btn btn-primary btn-blue">Search</button>
                     </form>
