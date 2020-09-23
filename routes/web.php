@@ -233,7 +233,6 @@ Route::get('/portal/trolleys/trolley/', 'PortalController@showTrolleyPage')->mid
 Route::get('/portal/trolleys/trolley/printlabel/{id}', 'PortalController@printTrolleyLabel')->middleware('auth');
 
 
-
 //Boxes
 Route::get('/portal/boxes', 'PortalController@showBoxesPage')->middleware('auth');
 Route::get('/portal/boxes/create', 'PortalController@showAddBoxPage')->middleware('auth');

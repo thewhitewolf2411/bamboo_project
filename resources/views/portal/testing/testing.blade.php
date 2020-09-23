@@ -39,7 +39,7 @@
                     </a>
                     <a href="/portal/testing/find">
                         <div class="portal-content-element">
-                            <p><i class="fa fa-barcode"></i>Find Trade-in Product</p>
+                            <p><i class="fa fa fa-asl-interpreting"></i>Device Testing</p>
                         </div>
                     </a>
                 </div>

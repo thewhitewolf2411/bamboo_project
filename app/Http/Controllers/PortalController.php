@@ -146,6 +146,9 @@ class PortalController extends Controller
         $user = User::where('id',$tradein->user_id)->first();
         $product = SellingProduct::where('id', $tradein->product_id);
 
+        $tradein->job_state = 1;
+        $tradein->save();
+
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
         $this->generateTradeInHTML($barcode, $user, $product, $tradein);
     }
@@ -877,15 +880,17 @@ class PortalController extends Controller
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         $imei_number = $request->imei_number;
 
-        $url = 'https://gapi.checkmend.com/duediligence/' . 2 . '/' . $imei_number;
+        $imei_number = 123456123456123;
+
+        $url = 'https://gapi.checkmend.com/duediligence/' . 1 . '/' . $imei_number;
 
         $options_array  = false;
         $response_config_array  = false;
 
-        $options['category']  = 1;
-        $options['reason_data'] = true;
+        $options['category']  = 0;
+        $options['reason_data'] = false;
         $options['make_model'] 	  = true;
-        $options['cdma_validate'] = false;
+        $options['cdma_validate'] = true;
 
         if($options)
         {
@@ -913,8 +918,6 @@ class PortalController extends Controller
         }
 
         $request_body = json_encode($options_array);
-        
-        #dd($request_body);
 
         $result =  $this->send_request($url, $request_body);
 
@@ -953,18 +956,14 @@ class PortalController extends Controller
         // Login Details
         $username  			  = 545;
         $signature_hash = sha1("de8beafe711efb004f0d" . $request_body);
-        $password   		  = $signature_hash;
 
         // Create Authorisation header
         $authorisation_header = base64_encode(545 . ':' . $signature_hash);
         $content_length = strlen($request_body);
 
-
         $ws->connect();
 
-        curl_setopt($ws->connection, CURLOPT_POST, false); // dont perform an normal post
         curl_setopt($ws->connection, CURLOPT_HTTPHEADER,  array('Authorization: Basic ' . $authorisation_header,'Accept: application/json','Content-type: application/json', 'Content-length:' .$content_length) 	);
-        curl_setopt($ws->connection, CURLOPT_HTTPAUTH,  CURLAUTH_BASIC	);
         curl_setopt($ws->connection, CURLOPT_URL, $url);
         curl_setopt($ws->connection, CURLOPT_TIMEOUT, 5);
         curl_setopt($ws->connection, CURLOPT_POSTFIELDS, $request_body);
