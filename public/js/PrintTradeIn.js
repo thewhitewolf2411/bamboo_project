@@ -27,3 +27,7 @@ function setAsSent(trade_pack_job_trade_in_id){
 
 }
 
+function selectDeviceForTesting(barcode){
+    $('#searchinput').val(barcode);
+    $('#select_device_for_testing_button').click();
+}

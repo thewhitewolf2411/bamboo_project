@@ -680,22 +680,59 @@ class PortalController extends Controller
     public function find(Request $request){
         if(!$this->checkAuthLevel(5)){return redirect('/');}
         
-        $tradein = Tradein::where('barcode', $request->scanid)->first();
-        #dd($tradein);
-        if($tradein == null){
+        $barcode = $request->scanid;
 
-            return redirect()->back()->with('error', 'There is no such device');
+        if(substr($barcode, 0, 2) == "40"){
+            $tradein = Tradein::where('barcode', $request->scanid)->first();
+            #dd($tradein);
+            if($tradein == null){
+    
+                return redirect()->back()->with('error', 'There is no such device');
+    
+            }
+    
+            if($tradein->job_state <5){
+                return redirect('/portal/testing/find');
+            }
+            else{
+                $user_id = Auth::user()->id;
+                $portalUser = PortalUsers::where('user_id', $user_id)->first();
+                return view('portal.testing.testdevice')->with(['tradein'=>$tradein, 'portalUser'=>$portalUser]);
+            }    
+        }else if(substr($barcode, 0, 2) == "50"){
 
+            $id = null;
+            if(substr($barcode, -2, 1) == 0){
+                $id = substr($barcode, -1, 1);
+            }
+            else{
+                $id = substr($barcode, -2, 2);
+            }
+            #dd($id);
+
+            $tray = Tray::where('id', $id)->first();
+
+            if($tray == null){
+                return redirect()->back()->with('error', 'There is no such tray or device');
+            }
+            else{
+                $tradein_ids = array();
+
+                $trayContent = TrayContent::where('tray_id', $tray->id)->get();
+
+                foreach($trayContent as $content){
+                    array_push($tradein_ids, $content->trade_in_id);
+                }
+
+                $tradeins = Tradein::whereIn('id', $tradein_ids)->get();
+
+                $user_id = Auth::user()->id;
+                $portalUser = PortalUsers::where('user_id', $user_id)->first();
+                return view('portal.testing.tray-content')->with(['tradeins'=>$tradeins, 'portalUser'=>$portalUser]);
+            }
         }
 
-        if($tradein->job_state <5){
-            return redirect('/portal/testing/find');
-        }
-        else{
-            $user_id = Auth::user()->id;
-            $portalUser = PortalUsers::where('user_id', $user_id)->first();
-            return view('portal.testing.testdevice')->with(['tradein'=>$tradein, 'portalUser'=>$portalUser]);
-        }
+
 
     }
 
@@ -1001,9 +1038,12 @@ class PortalController extends Controller
 
 
     public function checkDeviceStatus(Request $request){
+
+        dd($request);
+
         $tradein = Tradein::where('id', $request->tradein_id)->first();
 
-        $testingQuestions = new TestingQuestions();
+        $testingQuestions = TestingQuestions::where('order_id', $request->tradein_id);
         $testingQuestions->order_id = $tradein->id;
 
         if($request->fake_missing_parts === "true"){
@@ -1261,7 +1301,7 @@ class PortalController extends Controller
             $columns = Schema::getColumnListing('selling_products'); 
             //16
             $products = SellingProduct::all();
-            $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P'];
+            $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O'];
         }
         
         $filename = "/feed_type_".$export_feed_parameter."[" . date("Y-m-d") ."_". date("h-i-s") . "].xlsx";
@@ -1413,12 +1453,11 @@ class PortalController extends Controller
                 $product->product_memory = $datarow[5];
                 $product->product_colour = $datarow[6];
                 $product->product_network = $datarow[7];
-                $product->product_grade_1 = $datarow[8];
-                $product->product_grade_2 = $datarow[9];
-                $product->product_grade_3 = $datarow[10];
-                $product->product_selling_price_1 = $datarow[11];
-                $product->product_selling_price_2 = $datarow[12];
-                $product->product_selling_price_3 = $datarow[13];
+                $product->customer_grade_price_1 = $datarow[8];
+                $product->customer_grade_price_2 = $datarow[9];
+                $product->customer_grade_price_3 = $datarow[10];
+                $product->customer_grade_price_4 = $datarow[11];
+                $product->customer_grade_price_5 = $datarow[12];
     
                 $product->save();
             }
@@ -1845,9 +1884,18 @@ class PortalController extends Controller
 
     public function printTrayLabel($id){
 
-        $barcode = DNS1D::getBarcodeHTML($id, 'C128');
+        $traybarcode = "507892";
+        if($id<10){
+            $traybarcode .= "0" . $id;
+        }
+        else{
+            $traybarcode .= $id;
+        }
+        
 
-        $this->generateTrayLabel($barcode, $id);
+        $barcode = DNS1D::getBarcodeHTML($traybarcode, 'C128');
+
+        $this->generateTrayLabel($barcode, $traybarcode);
     }
 
     public function generateTrayLabel($barcode, $id){

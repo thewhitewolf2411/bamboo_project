@@ -57,8 +57,8 @@
                             <td><div class="table-element">{{$sellingProduct->product_name}}</div></td>
                             <td><div class="table-element">{{$sellingProduct->getCategory($sellingProduct->category_id)}}</div></td>
                             <td><div class="table-element">{{$sellingProduct->getBrand($sellingProduct->brand_id)}}</div></td>
-                            <td><div class="table-element">{{$sellingProduct->product_grade_1}}<br>{{$sellingProduct->product_grade_2}}<br>{{$sellingProduct->product_grade_3}}</div></td>
-                            <td><div class="table-element">{{$sellingProduct->product_selling_price_1}}£<br>{{$sellingProduct->product_selling_price_2}}£<br>{{$sellingProduct->product_selling_price_3}}£</div></td>
+                            <td style="height:auto !important; max-height:none !important;"><div class="table-element" style="height:auto !important; max-height:none !important;">Excellent Working<br>Good Working<br>Poor working<br>Damaged working<br>Faulty</div></td>
+                            <td><div class="table-element">{{$sellingProduct->customer_grade_price_1}}£<br>{{$sellingProduct->customer_grade_price_2}}£<br>{{$sellingProduct->customer_grade_price_3 }}£<br>{{$sellingProduct->customer_grade_price_4 }}£<br>{{$sellingProduct->customer_grade_price_5 }}£</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/product/editsellingproduct/{{$sellingProduct->id}}">
                                     <i class="fa fa-pencil"></i>

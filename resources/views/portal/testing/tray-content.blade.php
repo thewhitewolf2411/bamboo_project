@@ -16,7 +16,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Find Trade-in</title>
+    <script src="/js/PrintTradeIn.js"></script>
+
+    <title>Bamboo Recycle::Tray Content</title>
 </head>
 
 <body class="portal-body">
@@ -28,24 +30,23 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Find device to test</p>
+                        <p>Tray Content</p>
                     </div>
                 </div>
 
-                <div class="portal-search-form-container">
-                    <form action="/portal/testing/find/find" method="POST">
-                        @csrf
-                        <label for="searchinput">Scan Or Type Device Barcode or Tray Barcode:</label>
-                        <input id="searchinput" type="number" name="scanid" class="form-control" autofocus>
-                        <button type="submit" class="btn btn-primary btn-blue">Search</button>
-                    </form>
-                </div>
+                    @foreach($tradeins as $tradein)
+                        <a onclick="selectDeviceForTesting({{$tradein->barcode}})" class="ml-0 mr-0"><div class="d-flex flex-column shadow bg-white rounded ml-5 mr-5 p-3 hover">
+                            <div class="" style="width:200px;">Product name: {{$tradein->getProductName($tradein->product_id)}}</div>
+                            <div class="" style="width:200px;">Customer state: {{$tradein->product_state}}</div>
+                            <div class="" style="width:200px;">Price {{$tradein->getProductPrice($tradein->product_id, $tradein->product_state)}} £</div>
+                        </div></a>
+                    @endforeach
 
-                @if(Session::has('error'))
-                    <div class="p-5">
-                        <div class="alert alert-danger">{{Session::get('error')}}</div>
-                    </div>
-                @endif
+                <form id="select_device_for_testing_form" action="/portal/testing/find/find" method="POST" style="display:none;">
+                    @csrf
+                    <input id="searchinput" type="number" name="scanid" class="form-control" autofocus>
+                    <button id="select_device_for_testing_button" type="submit" class="btn btn-primary btn-blue">Search</button>
+                </form>
 
             </div>
         </div>
@@ -64,6 +65,8 @@ $(document).ready(function(){
     elem.children[0].children[0].style.opacity = 1;
 
 });
+
+
 
 </script>
 

@@ -58,16 +58,25 @@ class SellController extends Controller
 
     public function addSellItemToCart(Request $request){
 
+        #dd($request);
+
+
         $grade = SellingProduct::where('id', $request->phoneid)->first();
 
-        if($grade->product_selling_price_1 == $request->grade){
-            $grade = $grade->product_grade_1;
+        if($grade->customer_grade_price_1 == $request->grade){
+            $grade = $grade->customer_grade_price_1;
         }
-        else if($grade->product_selling_price_2 == $request->grade){
-            $grade = $grade->product_grade_2;
+        else if($grade->customer_grade_price_2 == $request->grade){
+            $grade = $grade->customer_grade_price_2;
         }
-        else if($grade->product_selling_price_3 == $request->grade){
-            $grade = $grade->product_grade_3;
+        else if($grade->customer_grade_price_3 == $request->grade){
+            $grade = $grade->customer_grade_price_3;
+        }
+        else if($grade->customer_grade_price_4 == $request->grade){
+            $grade = $grade->customer_grade_price_4;
+        }
+        else if($grade->customer_grade_price_5 == $request->grade){
+            $grade = $grade->customer_grade_price_5;
         }
 
         $product = SellingProduct::where('id',$request->phoneid)->first();
@@ -91,7 +100,7 @@ class SellController extends Controller
 
         if(Auth::user()){
             $data = $request->all();
-        
+
             $data = array_values($data);
             $data = array_slice($data, 1, -1);
             #dd($data);
@@ -116,7 +125,7 @@ class SellController extends Controller
                 $tradein->product_state = $item[1];
                 $tradein->order_price = $item[2];
                 $tradein->save();
-    
+
             }
     
             Session::forget('cart');

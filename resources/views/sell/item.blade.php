@@ -22,13 +22,15 @@
     <label for="grade">Select network:</label>
 
     <select id="grade" name="grade" onchange="gradeChanged(this)">
-        <option value="{{$product->product_selling_price_1}}" selected>Grade 1</option>
-        <option value="{{$product->product_selling_price_2}}">Grade 2</option>
-        <option value="{{$product->product_selling_price_3}}">Grade 3</option>
+        <option value="{{$product->customer_grade_price_1 }}, " selected>Excellent working</option>
+        <option value="{{$product->customer_grade_price_2 }}">Good working</option>
+        <option value="{{$product->customer_grade_price_3 }}">Poor working</option>
+        <option value="{{$product->customer_grade_price_4 }}">Damaged working</option>
+        <option value="{{$product->customer_grade_price_5 }}">Faulty</option>
     </select> 
 
     <label for="price">Your price:</label>
-    <input type="text" name="price" id="price" value="{{$product->product_selling_price_1}}" disabled></input>
+    <input type="text" name="price" id="price" value="{{$product->customer_grade_price_1}}" disabled></input>
     <input type="hidden" name="phoneid" value="{{$product->id}}"></input>
     <input type="hidden" name="type" value="tradein"></input>
 

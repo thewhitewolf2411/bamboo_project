@@ -54,11 +54,22 @@
                                     if(document.getElementById('fake-missing-part-image').classList.contains('form-group-hidden')){
                                         document.getElementById('fake-missing-part-image').classList.remove('form-group-hidden');
                                         document.getElementById('fake_missing_part_image').required = true;
+
+                                        if(document.getElementById('customer_grade').value == 'Faulty'){
+                                            document.getElementById('bamboo_grade').value = 'WSI - WSD - NW - PND - FMIP';
+                                            document.getElementById('mark_for_quarantine').value = 'true';
+                                        }
                                     }
                                 }else{
                                     document.getElementById('fake-missing-part-image').classList.add('form-group-hidden');
                                     document.getElementById('fake_missing_part_image').required = false;
+
+                                    if(document.getElementById('customer_grade').value == 'Excellent working'){
+                                            document.getElementById('bamboo_grade').value = 'Grade A';
+                                    }
                                 }
+
+                                
                             });
                         </script>
 
@@ -84,10 +95,17 @@
                                     if(document.getElementById('device-fully-functional-options').classList.contains('form-group-hidden')){
                                         document.getElementById('device-fully-functional-options').classList.remove('form-group-hidden');
                                         document.getElementById('device_fully_functional_reasons').required = true;
+                                        if(document.getElementById('customer_grade').value == 'Faulty'){
+                                            document.getElementById('bamboo_grade').value = 'WSI - WSD - NW - PND - FMIP';
+                                            document.getElementById('mark_for_quarantine').value = 'true';
+                                        }
                                     }
                                 }else{
                                     document.getElementById('device-fully-functional-options').classList.add('form-group-hidden');
                                     document.getElementById('device_fully_functional_reasons').required = false;
+                                    if(document.getElementById('customer_grade').value == 'Excellent working'){
+                                            document.getElementById('bamboo_grade').value = 'Grade A';
+                                        }
                                 }
                             });
                         </script>
@@ -125,6 +143,22 @@
                             </select>
                         </div>
 
+                        <script>
+                            $('#water_damage').change(function(){
+                                var boolval = $(this).val();
+                                if(boolval == "false"){
+                                    if(document.getElementById('customer_grade').value == 'Faulty'){
+                                        document.getElementById('bamboo_grade').value = 'WSI - WSD - NW - PND - FMIP';
+                                        document.getElementById('mark_for_quarantine').value = 'true';
+                                    }
+                                }else{
+                                if(document.getElementById('customer_grade').value == 'Excellent working'){
+                                        document.getElementById('bamboo_grade').value = 'Grade A';
+                                    }
+                                }
+                            });
+                        </script>
+
                         <div class="form-group">
                             <label for="fimp_or_google_lock">
                                 Does device has FIMP or Google Lock?
@@ -135,6 +169,22 @@
                                 <option id="fimp_or_google_lock_true" value="true">Yes</option>
                             </select>
                         </div>
+
+                        <script>
+                            $('#fimp_or_google_lock').change(function(){
+                                var boolval = $(this).val();
+                                if(boolval == "false"){
+                                    if(document.getElementById('customer_grade').value == 'Faulty'){
+                                        document.getElementById('bamboo_grade').value = 'WSI - WSD - NW - PND - FMIP';
+                                        document.getElementById('mark_for_quarantine').value = 'true';
+                                    }
+                                }else{
+                                if(document.getElementById('customer_grade').value == 'Excellent working'){
+                                        document.getElementById('bamboo_grade').value = 'Grade A';
+                                    }
+                                }
+                            });
+                        </script>
 
                         <div class="form-group">
                             <label for="pin_lock">
@@ -147,13 +197,85 @@
                             </select>
                         </div>
 
+                        <script>
+                            $('#pin_lock').change(function(){
+                                var boolval = $(this).val();
+                                if(boolval == "false"){
+                                    if(document.getElementById('customer_grade').value == 'Faulty'){
+                                        document.getElementById('bamboo_grade').value = 'WSI - WSD - NW - PND - FMIP';
+                                        document.getElementById('mark_for_quarantine').value = 'true';
+                                    }
+                                }else{
+                                if(document.getElementById('customer_grade').value == 'Excellent working'){
+                                        document.getElementById('bamboo_grade').value = 'Grade A';
+                                    }
+                                }
+                            });
+                        </script>
+
+                        <div class="form-group">
+                            <label for="cosmetic_condition">
+                                What is the device cosmetic condition?
+                            </label>
+                            <select class="form-control" id="cosmetic_condition" name="cosmetic_condition" required>
+                                <option disabled selected value> -- select an option -- </option>
+                                <option value="Grade A">Grade A</option>
+                                <option value="Grade B">Grade B</option>
+                                <option value="Grade C">Grade C</option>
+                                <option value="WSI - WSD">WSI - WSD</option>
+                                <option value="WSI - WSD - NW - PND - FMIP">WSI - WSD - NW - PND - FMIP</option>
+                            </select>
+                        </div>
+
+                        
+                        <script>
+                            $('#cosmetic_condition').change(function(){
+                                var boolval = $(this).val();
+                                console.log(boolval);
+
+                                switch(boolval){
+                                    case "Grade A":
+                                        document.getElementById('bamboo_grade').value = 'Grade A';
+                                    break;
+                                    case "Grade B":
+                                        document.getElementById('bamboo_grade').value = 'Grade B';
+                                    break;
+                                    case "Grade C":
+                                        document.getElementById('bamboo_grade').value = 'Grade C';
+                                    break;
+                                    case "WSI - WSD":
+                                        document.getElementById('bamboo_grade').value = 'WSI - WSD';
+                                    break;
+                                    case "WSI - WSD - NW - PND - FMIP":
+                                        document.getElementById('bamboo_grade').value = 'WSI - WSD - NW - PND - FMIP';
+                                    break;
+                                }
+
+                            });
+                        </script>
+
+                        <div class="form-group d-flex">
+
+                            <div class="form-group w-50">
+                                <label for="customer_grade">Customer Grade</label>
+                                <input type="text" id="customer_grade" name="customer_grade" value="{{$tradein->product_state}}" disabled>
+                            </div>
+                            <div class="form-group w-50">
+                                <label for="bamboo_grade">Bamboo Grade</label>
+                                <input type="text" id="bamboo_grade" name="bamboo_grade" value="" disabled>
+                            </div>
+
+                        </div>
+
+                        <input type="hidden" id="mark_for_quarantine" name="mark_for_quarantine" value="">
+
                         <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
                             <a href="/portal/testing/receive" style="margin: 0;">
                                 <div class="btn btn-primary btn-blue">
                                     <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
                                 </div>
                             </a>
-                            <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Potvrdi</button>
+                            <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Submit testing</button>
                         </div>
                         
                     </form>

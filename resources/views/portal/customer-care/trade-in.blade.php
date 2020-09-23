@@ -73,7 +73,7 @@
                             <td><div class="table-element">Trade-in barcode number</div></td>
                             <td><div class="table-element">Date Placed</div></td>
                             <td><div class="table-element">Product</div></td>
-                            <td><div class="table-element">Trade-in Status</div></td>
+                            <td><div class="table-element">Customer grade</div></td>
                             <td>
 
                             </td>

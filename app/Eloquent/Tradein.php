@@ -33,14 +33,20 @@ class Tradein extends Model
     public function getProductPrice($id, $state){
         $product = SellingProduct::where('id', $id)->first();
         $price = "";
-        if($state == "New"){
-            $price = $product->product_selling_price_1;
+        if($state == "Excellent working"){
+            $price = $product->customer_grade_price_1;
         }
-        else if($state == "Good"){
-            $price = $product->product_selling_price_2;
+        else if($state == "Good working"){
+            $price = $product->customer_grade_price_2;
+        }
+        else if($state == "Poor working"){
+            $price = $product->customer_grade_price_3;
+        }
+        else if($state == "Damaged working"){
+            $price = $product->customer_grade_price_4;
         }
         else if($state == "Faulty"){
-            $price = $product->product_selling_price_3;
+            $price = $product->customer_grade_price_5;
         }
 
         return $price;

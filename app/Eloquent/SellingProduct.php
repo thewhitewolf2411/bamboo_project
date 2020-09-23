@@ -20,7 +20,7 @@ class SellingProduct extends Model
      */
     protected $fillable = [
         'product_name','product_image','category_id','brand_id','product_memory',
-        'product_colour','product_grade_1','product_grade_2', 'product_grade_3','product_selling_price_1','product_selling_price_2','product_selling_price_3'
+        'product_colour','customer_grade_price_1','customer_grade_price_2', 'customer_grade_price_3','customer_grade_price_4','customer_grade_price_5'
     ];
 
     public function getBrand($brand_id){

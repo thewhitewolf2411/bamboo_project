@@ -33,28 +33,43 @@
                         <div>{{$item->product_network}}</div>
                         <input type="hidden" name="product_{{$item->id}}_id" value="{{$item->id}}">
                     </div>
+                    
                     @foreach($cart->items as $cartItem)
                         @if($cartItem['item'] == $item->id)
-                            @if($cartItem['state'] == $item->product_grade_1)
+                            @if($cartItem['state'] == $item->customer_grade_price_1)
                             <div class="d-flex flex-column">
-                                <div>State : {{$item->product_grade_1}}</div>
-                                <div>Our price : {{$item->product_selling_price_1}}</div>
-                                <input type="hidden" name="product_{{$item->id}}_state" value="{{$item->product_grade_1}}">
-                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->product_selling_price_1}}">
+                                <div>State : Excellent working</div>
+                                <div>Our price : {{$item->customer_grade_price_1}}</div>
+                                <input type="hidden" name="product_{{$item->id}}_state" value="Excellent working">
+                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->customer_grade_price_1}}">
                             </div>
-                            @elseif($cartItem['state'] == $item->product_grade_2)
+                            @elseif($cartItem['state'] == $item->customer_grade_price_2)
                             <div class="d-flex flex-column">
-                                <div>State : {{$item->product_grade_2}}</div>
-                                <div>Our price : {{$item->product_selling_price_2}}</div>
-                                <input type="hidden" name="product_{{$item->id}}_state" value="{{$item->product_grade_2}}">
-                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->product_selling_price_2}}">
+                                <div>State : Good working</div>
+                                <div>Our price : {{$item->customer_grade_price_2}}</div>
+                                <input type="hidden" name="product_{{$item->id}}_state" value="Good working">
+                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->customer_grade_price_2}}">
                             </div>
-                            @elseif($cartItem['state'] == $item->product_grade_3)
+                            @elseif($cartItem['state'] == $item->customer_grade_price_3)
                             <div class="d-flex flex-column">
-                                <div>State : {{$item->product_grade_3}}</div>
-                                <div>Our price : {{$item->product_selling_price_3}}</div>
-                                <input type="hidden" name="product_{{$item->id}}_state" value="{{$item->product_grade_3}}">
-                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->product_selling_price_3}}">
+                                <div>State : Poor working</div>
+                                <div>Our price : {{$item->customer_grade_price_3}}</div>
+                                <input type="hidden" name="product_{{$item->id}}_state" value="Poor working">
+                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->customer_grade_price_3}}">
+                            </div>
+                            @elseif($cartItem['state'] == $item->customer_grade_price_4)
+                            <div class="d-flex flex-column">
+                                <div>State : Damaged working</div>
+                                <div>Our price : {{$item->customer_grade_price_4}}</div>
+                                <input type="hidden" name="product_{{$item->id}}_state" value="Damaged working">
+                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->customer_grade_price_4}}">
+                            </div>
+                            @elseif($cartItem['state'] == $item->customer_grade_price_5)
+                            <div class="d-flex flex-column">
+                                <div>State : Faulty</div>
+                                <div>Our price : {{$item->customer_grade_price_5}}</div>
+                                <input type="hidden" name="product_{{$item->id}}_state" value="Faulty">
+                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->customer_grade_price_5}}">
                             </div>
                             @endif
                         @endif

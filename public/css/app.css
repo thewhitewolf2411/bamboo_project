@@ -13230,6 +13230,10 @@ input[type=number] {
   display: none;
 }
 
+.hover:hover {
+  cursor: pointer;
+}
+
 .register-elements-container {
   width: 50%;
 }
