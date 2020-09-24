@@ -53,17 +53,6 @@
                                     </select>
                                   </div>
                             </div>
-                            <div class="form-group select_product_code">
-                                <div class="form-group">
-                                    <label for="productCode">Product Code:</label>
-                                    <select class="form-control" id="productCode" name="productCode" required>
-                                        <option value="EAN">EAN</option>
-                                        <option value="ISBN">ISBN</option>
-                                        <option value="UPC">UPC</option>
-                                    </select>
-                                    <input type="number" class="form-control" id="productcodevalue" name="productcodevalue" required>
-                                  </div>
-                            </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="category">Category:</label>
@@ -100,7 +89,7 @@
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
-                                    <label for="product_grade">Category:</label>
+                                    <label for="product_grade">Condition:</label>
                                     <select class="form-control" id="product_grade" name="product_grade" required>
                                         @foreach($conditions as $condition)
                                         <option value="{{$condition->name}}" >{{$condition->name}}</option>

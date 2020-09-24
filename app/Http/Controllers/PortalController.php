@@ -69,7 +69,9 @@ class PortalController extends Controller
 
     public function showTradeIn(){
         if(!$this->checkAuthLevel(1)){return redirect('/');}
-        $tradeins = Tradein::where('job_state', null)->get();
+        #$tradeins = Tradein::where('job_state', null)->get();
+
+        $tradeins = Tradein::all()->where('job_state', null)->groupBy('barcode');
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -144,15 +146,20 @@ class PortalController extends Controller
 
     public function PrintTradeInLabel(Request $request){
 
-        $tradein = Tradein::where('id', $request->hidden_print_trade_pack_trade_in_id)->first();
-        $user = User::where('id',$tradein->user_id)->first();
-        $product = SellingProduct::where('id', $tradein->product_id);
+        $tradeins = Tradein::where('barcode', $request->hidden_print_trade_pack_trade_in_id)->get();
+        $user = User::where('id',$tradeins[0]->user_id)->first();
+        $productIds = array();
 
-        $tradein->job_state = 1;
-        $tradein->save();
+        foreach($tradeins as $tradein){
+            $tradein->job_state = 1;
+            $tradein->save();
 
-        $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
-        $this->generateTradeInHTML($barcode, $user, $product, $tradein);
+            array_push($productIds, $tradein->product_id);
+        }
+        $products = SellingProduct::whereIn('id', $productIds)->get();
+
+        $barcode = DNS1D::getBarcodeHTML($request->hidden_print_trade_pack_trade_in_id, 'C128');
+        $this->generateTradeInHTML($barcode, $user, $products, $tradein);
     }
 
     public function generateTradeInHTMLBulk($barcode, $user, $product, $tradein){
@@ -277,6 +284,15 @@ class PortalController extends Controller
         PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
 
         $this->downloadFile($filename);
+    }
+
+    public function deleteTradeInFromSystem(Request $request){
+        $tradein = Tradein::where('barcode', $request->delete_trade_in_id)->get();
+        foreach($tradein as $ti){
+            $ti->delete();
+        }
+
+        return redirect()->back();
     }
 
     public function showTradeOut(){
@@ -1039,57 +1055,16 @@ class PortalController extends Controller
 
     public function checkDeviceStatus(Request $request){
 
-        dd($request);
-
         $tradein = Tradein::where('id', $request->tradein_id)->first();
+
+        dd($request->all(), $tradein);
 
         $testingQuestions = TestingQuestions::where('order_id', $request->tradein_id);
         $testingQuestions->order_id = $tradein->id;
 
-        if($request->fake_missing_parts === "true"){
-            $testingQuestions->fake_missing_parts = true;
-            $tradein->marked_for_quarantine = true;
-        }
-        else{
-            $testingQuestions->fake_missing_parts = false;
-        }
 
-        if($request->device_fully_functional === "false"){
-            $testingQuestions->device_fully_functional = false;
-            $tradein->marked_for_quarantine = true;
-        }
-        else{
-            $testingQuestions->device_fully_functional = true;
-        }
-
-        if($request->water_damage === "true"){
-            $testingQuestions->signs_of_water_damage = true;
-            $tradein->marked_for_quarantine = true;
-        }
-        else{
-            $testingQuestions->signs_of_water_damage = false;
-        }
-
-        if($request->fimp_or_google_lock === "true"){
-            $testingQuestions->FIMP_Google_lock = true;
-            $tradein->marked_for_quarantine = true;
-        }
-        else{
-            $testingQuestions->FIMP_Google_lock = false;
-        }
-
-        if($request->pin_lock === "true"){
-            $testingQuestions->pin_lock = true;
-            $tradein->marked_for_quarantine = true;
-        }
-        else{
-            $testingQuestions->pin_lock = false;
-        }
-
-        $testingQuestions->cosmetic_condition = $request->device_cosmetic_connection;
-
-        $testingQuestions->save();
-        $tradein->save();
+        
+  
 
         return redirect()->back();
         

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Eloquent\SellingProduct;
 use App\Eloquent\Category;
+use App\Eloquent\Brand;
 
 class Tradein extends Model
 {
@@ -28,6 +29,19 @@ class Tradein extends Model
 
     public function getProductName($id){
         return SellingProduct::where('id', $id)->first()->product_name;
+    }
+
+    public function getBrandName($productId){
+
+        $sellingProduct = SellingProduct::where('id', $productId)->first();
+        $brand = Brand::where('id', $sellingProduct->brand_id)->first();
+        return $brand->brand_name;
+    }
+
+    public function getCategoryName($productId){
+        $sellingProduct = SellingProduct::where('id', $productId)->first();
+        $brand = Brand::where('id', $sellingProduct->brand_id)->first();
+        return $brand->brand_name;
     }
 
     public function getProductPrice($id, $state){

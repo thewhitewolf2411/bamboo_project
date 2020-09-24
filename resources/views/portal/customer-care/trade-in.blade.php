@@ -69,33 +69,30 @@
 
                     <table class="portal-table" id="categories-table">
                         <tr>
-                            <td><div class="table-element">Trade-in ID</div></td>
                             <td><div class="table-element">Trade-in barcode number</div></td>
                             <td><div class="table-element">Date Placed</div></td>
-                            <td><div class="table-element">Product</div></td>
+                            <td><div class="table-element">Products</div></td>
                             <td><div class="table-element">Customer grade</div></td>
                             <td>
 
                             </td>
                         </tr>
 
-                        @foreach($tradeins as $tradein)
-
+                        @foreach($tradeins as $key=>$order)
                         <tr>
-                            <td><div class="table-element">{{$tradein->id}}</td>
-                            <td ><div class="table-element">{{$tradein->barcode}}</div></td>
-                            <td><div class="table-element">{{$tradein->created_at}}</div></td>
-                            <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
-                            <td><div class="table-element">{{$tradein->product_state}}</div></td>
+                            <td ><div class="table-element">{{$key}}</div></td>
+                            <td><div class="table-element">{{$order[0]->created_at}}</div></td>
+                            <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} <br> @endforeach</div></td>
+                            <td><div class="table-element">@foreach($order as $tradein){{$tradein->product_state}} <br> @endforeach</div></td>
                             <td><div class="table-element">
-                                <a href="/portal/customer-care/trade-in/{{$tradein->id}}">
+                                <a title="See trade in details" href="/portal/customer-care/trade-in/{{$tradein->barcode}}">
                                     <i class="fa fa-search"></i>
                                 </a>
-                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->id}})>
+                                <a href="javascript:void(0)" title="Print trade-in label" onclick = printTradePackTradeIn({{$tradein->barcode}})>
                                     <i class="fa fa-print"></i>
                                 </a>
-                                <a href="">
-                                    <i class="fa fa-times" style="color:red !important;"></i>
+                                <a onclick = deleteTradeInDetailsFromSystem({{$tradein->barcode}})>
+                                    <i title="Delete trade in from system" class="fa fa-times" style="color:red !important;"></i>
                                 </a>
                                 </div>
                             </td>
@@ -114,6 +111,12 @@
                         @csrf
                         <input type="number" name="number_of_bulk_prints" id="number_of_bulk_prints">
                         <input type="submit" id="print_trade_pack_bulk_form_trigger" name="print_trade_pack_bulk_form" value="Print Trade Pack Trade-In Bulk">
+                    </form>
+
+                    <form onsubmit="return confirm('Are you sure you want to delete this tradein from system?')" style="display:none;" id="delete_trade_pack_form" name="delete_trade_pack_form" action="/portal/customer-care/tradein/deletetradein" method="post">
+                        @csrf
+                        <input type="number" name="delete_trade_in_id" id="delete_trade_in_id">
+                        <input type="submit" id="delete_trade_in_button" name="delete_trade_in_button" value="Print Trade Pack Trade-In Bulk">
                     </form>
 
                 </div>

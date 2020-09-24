@@ -93,6 +93,7 @@ Route::post('/portal/customer-care/trade-in/printlabelbulk', 'PortalController@P
 
 Route::get('/portal/customer-care/trade-out', 'PortalController@showTradeOut')->name('tradeOut')->middleware('auth');
 Route::get('/portal/customer-care/trade-out/{id}', 'PortalController@showTradeOutDetails')->name('tradeOutDetails')->middleware('auth');
+Route::post('/portal/customer-care/tradein/deletetradein', 'PortalController@deleteTradeInFromSystem')->middleware('auth');
 
 Route::get('/portal/customer-care/destroy-device', 'PortalController@showDestroyDevice')->name('destroyDevice')->middleware('auth');
 Route::get('/portal/customer-care/trade-pack', 'PortalController@showTradePack')->name('tradePack')->middleware('auth');

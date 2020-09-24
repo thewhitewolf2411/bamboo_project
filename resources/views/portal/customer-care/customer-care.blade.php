@@ -54,7 +54,7 @@
                     </a>
                     <a href="/portal/customer-care/seller">
                         <div class="portal-content-element">
-                        <p><i class="fa fa-child"></i>Sellers</p>
+                        <p><i class="fa fa-child"></i>Customers</p>
                         </div>
                     </a>
 

@@ -34,6 +34,7 @@
                 <div class="portal-search-form-container">
                     <form action="/portal/testing/receive/checkdevicestatus" method="POST" class="d-flex flex-column">
                         @csrf
+
                         <div class="form-group">
                             <label for="fake_missing_parts">
                                 Does device has any fake or missing parts?
@@ -54,19 +55,10 @@
                                     if(document.getElementById('fake-missing-part-image').classList.contains('form-group-hidden')){
                                         document.getElementById('fake-missing-part-image').classList.remove('form-group-hidden');
                                         document.getElementById('fake_missing_part_image').required = true;
-
-                                        if(document.getElementById('customer_grade').value == 'Faulty'){
-                                            document.getElementById('bamboo_grade').value = 'WSI - WSD - NW - PND - FMIP';
-                                            document.getElementById('mark_for_quarantine').value = 'true';
-                                        }
-                                    }
+                                       }
                                 }else{
                                     document.getElementById('fake-missing-part-image').classList.add('form-group-hidden');
                                     document.getElementById('fake_missing_part_image').required = false;
-
-                                    if(document.getElementById('customer_grade').value == 'Excellent working'){
-                                            document.getElementById('bamboo_grade').value = 'Grade A';
-                                    }
                                 }
 
                                 
@@ -95,17 +87,10 @@
                                     if(document.getElementById('device-fully-functional-options').classList.contains('form-group-hidden')){
                                         document.getElementById('device-fully-functional-options').classList.remove('form-group-hidden');
                                         document.getElementById('device_fully_functional_reasons').required = true;
-                                        if(document.getElementById('customer_grade').value == 'Faulty'){
-                                            document.getElementById('bamboo_grade').value = 'WSI - WSD - NW - PND - FMIP';
-                                            document.getElementById('mark_for_quarantine').value = 'true';
-                                        }
                                     }
                                 }else{
                                     document.getElementById('device-fully-functional-options').classList.add('form-group-hidden');
                                     document.getElementById('device_fully_functional_reasons').required = false;
-                                    if(document.getElementById('customer_grade').value == 'Excellent working'){
-                                            document.getElementById('bamboo_grade').value = 'Grade A';
-                                        }
                                 }
                             });
                         </script>
@@ -143,22 +128,6 @@
                             </select>
                         </div>
 
-                        <script>
-                            $('#water_damage').change(function(){
-                                var boolval = $(this).val();
-                                if(boolval == "false"){
-                                    if(document.getElementById('customer_grade').value == 'Faulty'){
-                                        document.getElementById('bamboo_grade').value = 'WSI - WSD - NW - PND - FMIP';
-                                        document.getElementById('mark_for_quarantine').value = 'true';
-                                    }
-                                }else{
-                                if(document.getElementById('customer_grade').value == 'Excellent working'){
-                                        document.getElementById('bamboo_grade').value = 'Grade A';
-                                    }
-                                }
-                            });
-                        </script>
-
                         <div class="form-group">
                             <label for="fimp_or_google_lock">
                                 Does device has FIMP or Google Lock?
@@ -170,22 +139,6 @@
                             </select>
                         </div>
 
-                        <script>
-                            $('#fimp_or_google_lock').change(function(){
-                                var boolval = $(this).val();
-                                if(boolval == "false"){
-                                    if(document.getElementById('customer_grade').value == 'Faulty'){
-                                        document.getElementById('bamboo_grade').value = 'WSI - WSD - NW - PND - FMIP';
-                                        document.getElementById('mark_for_quarantine').value = 'true';
-                                    }
-                                }else{
-                                if(document.getElementById('customer_grade').value == 'Excellent working'){
-                                        document.getElementById('bamboo_grade').value = 'Grade A';
-                                    }
-                                }
-                            });
-                        </script>
-
                         <div class="form-group">
                             <label for="pin_lock">
                                 Does device have PIN lock?
@@ -196,22 +149,6 @@
                                 <option id="pin_lock_true" value="true">Yes</option>
                             </select>
                         </div>
-
-                        <script>
-                            $('#pin_lock').change(function(){
-                                var boolval = $(this).val();
-                                if(boolval == "false"){
-                                    if(document.getElementById('customer_grade').value == 'Faulty'){
-                                        document.getElementById('bamboo_grade').value = 'WSI - WSD - NW - PND - FMIP';
-                                        document.getElementById('mark_for_quarantine').value = 'true';
-                                    }
-                                }else{
-                                if(document.getElementById('customer_grade').value == 'Excellent working'){
-                                        document.getElementById('bamboo_grade').value = 'Grade A';
-                                    }
-                                }
-                            });
-                        </script>
 
                         <div class="form-group">
                             <label for="cosmetic_condition">
@@ -228,32 +165,6 @@
                         </div>
 
                         
-                        <script>
-                            $('#cosmetic_condition').change(function(){
-                                var boolval = $(this).val();
-                                console.log(boolval);
-
-                                switch(boolval){
-                                    case "Grade A":
-                                        document.getElementById('bamboo_grade').value = 'Grade A';
-                                    break;
-                                    case "Grade B":
-                                        document.getElementById('bamboo_grade').value = 'Grade B';
-                                    break;
-                                    case "Grade C":
-                                        document.getElementById('bamboo_grade').value = 'Grade C';
-                                    break;
-                                    case "WSI - WSD":
-                                        document.getElementById('bamboo_grade').value = 'WSI - WSD';
-                                    break;
-                                    case "WSI - WSD - NW - PND - FMIP":
-                                        document.getElementById('bamboo_grade').value = 'WSI - WSD - NW - PND - FMIP';
-                                    break;
-                                }
-
-                            });
-                        </script>
-
                         <div class="form-group d-flex">
 
                             <div class="form-group w-50">
@@ -267,14 +178,13 @@
 
                         </div>
 
-                        <input type="hidden" id="mark_for_quarantine" name="mark_for_quarantine" value="">
-
                         <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
                             <a href="/portal/testing/receive" style="margin: 0;">
                                 <div class="btn btn-primary btn-blue">
                                     <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
                                 </div>
                             </a>
+                            <input type="hidden" id="tradein_id" name="tradein_id" value="{{$tradein->id}}">
                             <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Submit testing</button>
                         </div>
                         

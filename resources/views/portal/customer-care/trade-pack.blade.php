@@ -67,7 +67,7 @@
                                     <i class="fa fa fa-print"></i>
                                 </a>
                                 @endif
-                                <a href="">
+                                <a title="Return device to print" href="">
                                     <i class="fa fa-times" style="color:red !important;"></i>
                                 </a>
                                 </div>

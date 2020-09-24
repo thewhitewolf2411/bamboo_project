@@ -79,7 +79,7 @@
                     </a>
                     <a href="/portal/settings/brands">
                         <div class="portal-content-element">
-                            <p><i class="fa fa-ticket"></i>Brands</p>
+                            <p><i class="fa fa-ticket"></i>Manufacturers</p>
                         </div>
                     </a>
                 </div>
