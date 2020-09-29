@@ -157,6 +157,109 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="profile-element profile-element-four">
+                    
+                        <div class="profile-element-two-text py-3">
+                            <h4>ORDER HISTORY</h4>
+                        </div>
+
+                        <div class="profile-element-two-text py-3">
+                            <h4 style="color: #23AAF7;">Shopping</h4>
+                        </div>
+
+                        <div class="customer-orders customer-buying py-3">
+                            <div class="d-flex order-row order-row-border-black">
+                                <div class="w-25 p-2">
+                                    <p class="profile-small">Order #</p>
+                                </div>
+                                <div class="w-50 p-2">
+                                    <p class="profile-small">Date</p>
+                                </div>
+                                <div class="w-25 p-2">
+
+                                </div>
+                                <div class="w-25 p-2">
+                                    <p class="profile-small">View more</p>
+                                </div>
+                            </div>
+
+                            @foreach($tradeouts as $tradeout)
+                            <div class="d-flex order-row order-row-border-black">
+                                <div class="w-25 p-2">
+                                    <p class="text-secondary">Order #{{$tradeout->id}}</p>
+                                </div>
+                                <div class="w-50 p-2">
+                                    <p class="text-secondary">{{$tradeout->created_at->format('d/m/Y')}}</p>
+                                </div>
+                                <div class="w-25 p-2">
+                                    <a href="">
+                                        <div class="btn btn-danger">
+                                            <p class="profile-large" style="color: #fff;">Cancel Order</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="w-25 p-2">
+                                    <a onclick="">
+                                        <div class="btn btn-primary btn-orange">
+                                            <p class="profile-large" style="color: #fff;">View details</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+
+                        <div class="profile-element-two-text py-3">
+                            <h4 style="color: #F28E33;">Selling</h4>
+                        </div>
+
+                        <div class="customer-orders customer-selling py-3">
+                            <div class="d-flex order-row order-row-border-black">
+                                <div class="w-25 p-2">
+                                    <p class="profile-small">Order #</p>
+                                </div>
+                                <div class="w-50 p-2">
+                                    <p class="profile-small">Date</p>
+                                </div>
+                                <div class="w-25 p-2">
+
+                                </div>
+                                <div class="w-25 p-2">
+                                    <p class="profile-small">View more</p>
+                                </div>
+                            </div>
+
+                            @foreach($tradeins as $tradein)
+                            <div class="d-flex order-row">
+                                <div class="w-25 p-2">
+                                    <p class="profile-large">Order #{{$tradein->barcode}}</p>
+                                </div>
+                                <div class="w-50 p-2">
+                                    <p class="profile-large">{{$tradein->created_at->format('d/m/Y')}}</p>
+                                </div>
+                                <div class="w-25 p-2">
+                                    @if($tradein->job_state == null )
+                                    <a href="">
+                                        <div class="btn btn-danger">
+                                            <p class="profile-large" style="color: #fff;">Cancel Order</p>
+                                        </div>
+                                    </a>
+                                    @endif
+                                </div>
+                                <div class="w-25 p-2">
+                                    <a onclick="">
+                                        <div class="btn btn-primary btn-orange">
+                                            <p class="profile-large" style="color: #fff;">View details</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+
+
+                    </div>
                 </div>
             </div>
         </main>

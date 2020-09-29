@@ -86,8 +86,9 @@ Route::get('/portal', 'PortalController@portal')->name('portal')->middleware('au
 
 //customer-care
 Route::get('/portal/customer-care', 'PortalController@showCustomerCare')->name('customerCare')->middleware('auth');
-Route::get('/portal/customer-care/trade-in', 'PortalController@showTradeIn')->name('tradeIn')->middleware('auth');
+Route::get('/portal/customer-care/trade-in/all/{search?}', 'PortalController@showTradeIn')->name('tradeIn')->middleware('auth');
 Route::get('/portal/customer-care/trade-in/{id}', 'PortalController@showTradeInDetails')->name('tradeInDetails')->middleware('auth');
+Route::get('/portal/customer-care/trade-in/{id}/details', 'PortalController@showMoreTradeInDetails')->name('tradeInDetails')->middleware('auth');
 Route::post('/portal/customer-care/trade-in/printlabel', 'PortalController@PrintTradeInLabel')->name('tradeInLabel')->middleware('auth');
 Route::post('/portal/customer-care/trade-in/printlabelbulk', 'PortalController@PrintTradeInLabelBulk')->name('tradeInLabel')->middleware('auth');
 

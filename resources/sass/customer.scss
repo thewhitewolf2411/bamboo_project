@@ -1062,6 +1062,14 @@ main p, a, span{
     padding: 30px;
 }
 
+.profile-element-four{
+    flex-direction: column !important;
+}
+
+.order-row-border-black{
+    border-bottom: 1px solid #000;
+}
+
 //support css
 .support-title-container{
     background: url('/customer_page_images/body/Technical-Blue-Purple.png');

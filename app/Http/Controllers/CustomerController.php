@@ -10,6 +10,8 @@ use App\Eloquent\Cart;
 use App\Eloquent\Order;
 use App\Eloquent\BuyingProduct;
 use App\Eloquent\SellingProduct;
+use App\Eloquent\Tradein;
+use App\Eloquent\Tradeout;
 use Auth;
 use Crypt;
 
@@ -172,11 +174,17 @@ class CustomerController extends Controller
             $userdata = Auth::user();
             #$userorders = Order::where('user_id', $userdata->id)->get();
 
+            $tradeins = Tradein::where('user_id', $userdata->id)->get();
+            $tradeouts = Tradeout::where('user_id', $userdata->id)->get();
+
+            #dd($tradeins, $tradeouts);
+
             $userdata->password = Crypt::decrypt($userdata->password);
 
             return view('customer.profile')
-                ->with('userdata', $userdata);
+                ->with(['userdata'=>$userdata, 'tradeins'=>$tradeins, 'tradeouts'=>$tradeouts]);
 #                ->with('userorders', $userorders);
+
         }
         else{
             return redirect('/');

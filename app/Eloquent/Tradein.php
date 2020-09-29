@@ -40,8 +40,13 @@ class Tradein extends Model
 
     public function getCategoryName($productId){
         $sellingProduct = SellingProduct::where('id', $productId)->first();
-        $brand = Brand::where('id', $sellingProduct->brand_id)->first();
-        return $brand->brand_name;
+        $category = Category::where('id', $sellingProduct->brand_id)->first();
+        return $category->category_name;
+    }
+
+    public function getCategoryId($productId){
+        $sellingProduct = SellingProduct::where('id', $productId)->first();
+        return $sellingProduct->category_id;
     }
 
     public function getProductPrice($id, $state){

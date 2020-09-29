@@ -218,8 +218,6 @@ tr:nth-child(even) {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 70px;
-    max-height: 70px;
 }
 
 .portal-search-form-container form{
@@ -330,4 +328,16 @@ input[type=number] {
 
 .hover:hover{
     cursor: pointer;
+}
+
+.details p{
+    margin: 0 !important;
+    margin-bottom: 20px !important;
+}
+
+#view_trade_in_product_info{
+    border: 1px solid #888;
+    border-radius: 5px;
+    padding: 20px 20px 0;
+    margin-bottom: 20px;
 }

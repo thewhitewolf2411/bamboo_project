@@ -66,6 +66,21 @@
 
                     </div>
 
+                    <div class="py-4 d-flex align-items-center">
+                        <form class="d-flex align-items-center" action="/portal/customer-care/trade-in/all/" method="get">              
+                            <label for="searchtradeins">Select product type:</label>
+                            <select id="search" name="search" class="form-control mx-3">
+                                <option value="0">All</option>
+                                <option value="1">Mobile phones</option>
+                                <option value="2">Tablets</option>
+                                <option value="3">Smartwatches</option>
+                                
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-blue">Search</button>
+                        </form>
+
+                    </div>
+
 
                     <table class="portal-table" id="categories-table">
                         <tr>

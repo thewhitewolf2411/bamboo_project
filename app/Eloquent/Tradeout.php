@@ -19,6 +19,6 @@ class Tradeout extends Model
      * @var array
      */
     protected $fillable = [
-        'category_id','question','answer_1','answer_2'
+        'user_id', 'product_id', 'order_state',
     ];
 }

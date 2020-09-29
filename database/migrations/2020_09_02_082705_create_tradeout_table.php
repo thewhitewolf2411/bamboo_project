@@ -15,6 +15,9 @@ class CreateTradeoutTable extends Migration
     {
         Schema::create('tradeout', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
+            $table->integer('product_id');
+            $table->integer('order_state');
             $table->timestamps();
         });
     }

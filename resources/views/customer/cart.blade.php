@@ -26,11 +26,11 @@
                 @csrf
 
                 @foreach($sellingProducts as $item)
-                    <div class="d-flex">
-                        <div>{{$item->product_name}}</div>
-                        <div>{{$item->product_memory}}</div>
-                        <div>{{$item->product_colour}}</div>
-                        <div>{{$item->product_network}}</div>
+                    <div class="d-flex flex-column">
+                        <div>Product name: {{$item->product_name}}</div>
+                        <div>Product memory: {{$item->product_memory}}</div>
+                        <div>Product color: {{$item->product_colour}}</div>
+                        <div>Product network: {{$item->product_network}}</div>
                         <input type="hidden" name="product_{{$item->id}}_id" value="{{$item->id}}">
                     </div>
                     

@@ -67,23 +67,56 @@ class PortalController extends Controller
         return view('portal.customer-care.customer-care')->with('portalUser', $portalUser);
     }
 
-    public function showTradeIn(){
+    public function showTradeIn(Request $request){
         if(!$this->checkAuthLevel(1)){return redirect('/');}
+
+        $tradeins = null;
+
+        if($request->all() == null || $request->search == 0){
+            $tradeins = Tradein::all()->where('job_state', null)->groupBy('barcode');
+
+            $user_id = Auth::user()->id;
+            $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        }
+        else{
+            $tradeins = Tradein::all()->where('job_state', null);
+            $user_id = Auth::user()->id;
+            $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+            foreach($tradeins as $tradein){
+                print_r($tradein->getCategoryId($tradein->product_id) != $request->search);
+                    if($tradein->getCategoryId($tradein->product_id) != $request->search){
+                        $tradeins = $tradeins->except($tradein->id);
+                }
+            }
+
+            $tradeins = $tradeins->groupBy('barcode');
+        }
+
+        
         #$tradeins = Tradein::where('job_state', null)->get();
 
-        $tradeins = Tradein::all()->where('job_state', null)->groupBy('barcode');
-
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        #dd($tradeins);
+        
         return view('portal.customer-care.trade-in')->with('tradeins', $tradeins)->with('portalUser', $portalUser);
     }
 
     public function showTradeInDetails($id){
         if(!$this->checkAuthLevel(1)){return redirect('/');}
-        $tradein = Tradein::where('id', $id)->first();
+        $tradein = Tradein::where('barcode', $id)->get();
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        return view('portal.customer-care.trade-in-details')->with('tradein', $tradein)->with('portalUser', $portalUser);
+        $user = User::where('id', $tradein[0]->user_id)->first();
+        return view('portal.customer-care.trade-in-details')->with('tradeins', $tradein)->with('portalUser', $portalUser)->with('user', $user)->with('barcode', $id);
+    }
+
+    public function showMoreTradeInDetails($id){
+        if(!$this->checkAuthLevel(1)){return redirect('/');}
+        $tradeins = Tradein::where('id', $id)->first();
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        $user = User::where('id', $tradeins[0]->user_id)->first();
+        return view('portal.customer-care.trade-in-product-details')->with('tradeins', $tradein)->with('portalUser', $portalUser)->with('user', $user);
     }
 
     public function PrintTradeInLabelBulk(Request $request){

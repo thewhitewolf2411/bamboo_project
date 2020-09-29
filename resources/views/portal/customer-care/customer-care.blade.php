@@ -32,9 +32,9 @@
                     </div>
                 </div>
                 <div class="portal-content-container">
-                    <a href="/portal/customer-care/trade-in">
+                    <a href="/portal/customer-care/trade-in/all/">
                         <div class="portal-content-element">
-                        <p><i class="fa fa-shopping-cart"></i>Recycles</p>
+                        <p><i class="fa fa-shopping-cart"></i>Recycle</p>
                         </div>
                     </a>
                     <a href="/portal/customer-care/trade-out">
@@ -49,7 +49,7 @@
                     </a>
                     <a href="/portal/customer-care/trade-pack">
                         <div class="portal-content-element">
-                        <p><i class="fa fa-envelope-o"></i>Trade pack dispach</p>
+                        <p><i class="fa fa-envelope-o"></i>Awaiting Receipt</p>
                         </div>
                     </a>
                     <a href="/portal/customer-care/seller">

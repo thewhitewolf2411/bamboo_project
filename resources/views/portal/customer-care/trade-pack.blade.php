@@ -18,7 +18,7 @@
 
     <script src="/js/PrintTradeIn.js"></script>
 
-    <title>Bamboo Recycle::Trade Pack Dispach</title>
+    <title>Bamboo Recycle::Awaiting Receipt</title>
 </head>
 
 <body class="portal-body">
@@ -30,9 +30,10 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Trade Pack Dispach</p>
+                        <p>Awaiting Receipt</p>
                     </div>
                 </div>
+
                 <div class="portal-table-container">
                 <table class="portal-table" id="categories-table">
                         <tr>
