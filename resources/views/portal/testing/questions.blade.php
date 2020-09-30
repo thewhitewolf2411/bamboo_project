@@ -42,38 +42,57 @@
                     <div class="d-flex flex-column portal-search-form-container">
                        
 
-                        @if($tradein->received == false)
-                        <form action="/portal/testing/receive/settradeinstatus" method="POST" class="d-flex flex-column">
-                            @csrf
-                            <div class="w-100 p-3">
-                                <div class="d-flex w-100">
-                                    <div class="d-flex w-75 border p-3"><p class="mr-0 ml-0">Product</p></div>
-                                    <div class="d-flex w-25 border p-3"><p>Received</p></div>
-                                </div>
-                                <div class="d-flex w-100">
-                                    <div class="d-flex flex-column w-75 border p-3 align-items-baseline">
-                                        <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
-                                        <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
-                                        <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
+                        @if(Session::has('result'))
+                        
+                            <form action="/portal/testing/receive/usercheckimei" method="POST" class="d-flex flex-column">
+                                @csrf
+                                <div class="w-100 p-3">
+                                    <div class="d-flex w-100">
+                                        <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                        <div class="d-flex w-50 border p-3"><p>Checkmend results</p></div>
                                     </div>
-                                    <div class="d-flex w-25 border p-3"><input id="checkbox-received" type="checkbox" name="received"></div>
+                                    <div class="d-flex w-100">
+                                        <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                            <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
+                                            <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                            <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
+                                        </div>
+
+                                        <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                            <p class="mr-0 ml-0">Checkmend: {{Session::get('result')->result}}</p><br>
+                                            <p class="mr-0 ml-0">Code: {{Session::get('result')->reasondata->code}}</p><br>
+                                            <p class="mr-0 ml-0">Model: {{Session::get('result')->reasondata->makemodel}}</p><br>
+                                            <p class="mr-0 ml-0">Network: {{Session::get('result')->reasondata->network}}</p><br>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-50 border p-3"><p>Is the model correct?</p></div>
                                 </div>
                                 
-                            </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-25 border p-3"><label for="missing-yes">Model is correct.</label><input id="correct-yes" type="radio" name="correct" value="yes" required></div>
+                                    <div class="d-flex w-25 border p-3"><label for="missing-yes">Model is not correct.</label><input id="correct-no" type="radio" name="correct" value="no"></div>
+                                </div>
 
-                            <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
+                                <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
+                                    <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
+                                    <a href="/portal/testing/receive" style="margin: 0;">
+                                        <div class="btn btn-primary btn-blue">
+                                            <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
+                                        </div>
+                                    </a>
+                                    <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Submit</button>
+                                </div>
+                            
+                            </form>
 
-                            <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
-                                <a href="/portal/testing/receive" style="margin: 0;">
-                                    <div class="btn btn-primary btn-blue">
-                                        <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
-                                    </div>
-                                </a>
-                                <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei" disabled>Receive Product</button>
-                            </div>
+                        @endif
 
-                        </form>
-                        @elseif($tradein->marked_for_quarantine == true)
+
+                        @if($tradein->marked_for_quarantine == true)
 
                             <form action="/portal/testing/receive/printnewlabel" method="POST" class="d-flex flex-column">
                                 @csrf
@@ -127,7 +146,7 @@
                                                 <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
                                                 <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                             </div>
-                                            <div class="d-flex w-25 border p-3"><label for="missing-yes">Device is present.</label><input id="missing-yes" type="radio" name="missing" value="present"></div>
+                                            <div class="d-flex w-25 border p-3"><label for="missing-yes">Device is present.</label><input id="missing-yes" type="radio" name="missing" value="present" required></div>
                                             <div class="d-flex w-25 border p-3"><label for="missing-yes">Device is not present</label><input id="missing-no" type="radio" name="missing" value="missing"></div>
                                         </div>
                                         
@@ -166,7 +185,7 @@
                                                         <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
                                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                                     </div>
-                                                    <div class="d-flex w-25 border p-3"><label for="visible_imei_yes">Yes.</label><input id="visible_imei_yes" type="radio" name="visible_imei" value="yes"></div>
+                                                    <div class="d-flex w-25 border p-3"><label for="visible_imei_yes">Yes.</label><input id="visible_imei_yes" type="radio" name="visible_imei" value="yes" required></div>
                                                     <div class="d-flex w-25 border p-3"><label for="visible_imei_no">No.</label><input id="visible_imei_no" type="radio" name="visible_imei" value="no"></div>
                                                 </div>
                                                 
@@ -185,7 +204,7 @@
         
                                         </form>
 
-                                        @elseif(isset($tradein->visible_imei) == true && $tradein->visible_imei == true && isset($tradein->chekmend_passed) == false)
+                                        @elseif(isset($tradein->visible_imei) == true && $tradein->visible_imei == true && isset($tradein->chekmend_passed) == false && !Session::has('result'))
 
                                         <form action="/portal/testing/receive/checkimei" method="POST" class="d-flex flex-column">
 

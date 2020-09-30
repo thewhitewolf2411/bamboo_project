@@ -55,10 +55,33 @@
                                     if(document.getElementById('fake-missing-part-image').classList.contains('form-group-hidden')){
                                         document.getElementById('fake-missing-part-image').classList.remove('form-group-hidden');
                                         document.getElementById('fake_missing_part_image').required = true;
-                                       }
+
+                                        $('#customer_grade').val("Faulty");
+                                        $('#bamboo_grade').prop('disabled', false);
+
+                                        var newOptions = {
+                                            "WSI":"WSI",
+                                            "WSD":"WSD",
+                                            "NWSI":"NWSI",
+                                            "NWSD":"NWSD",
+                                            "PND":"PND",
+                                            "CATASTROHIC":"CATASTROHIC"
+                                        }
+
+                                        $('#bamboo_grade').empty();
+                                        $.each(newOptions, function(key, value){
+                                            $('#bamboo_grade').append($("<option></option>")
+                                            .attr("value", value).text(key));
+                                        });
+
+
+                                    }
                                 }else{
                                     document.getElementById('fake-missing-part-image').classList.add('form-group-hidden');
                                     document.getElementById('fake_missing_part_image').required = false;
+
+                                    $('#customer_grade').val("{!! $tradein->product_state !!}");
+                                    $('#bamboo_grade').prop('disabled', true);
                                 }
 
                                 
@@ -87,6 +110,24 @@
                                     if(document.getElementById('device-fully-functional-options').classList.contains('form-group-hidden')){
                                         document.getElementById('device-fully-functional-options').classList.remove('form-group-hidden');
                                         document.getElementById('device_fully_functional_reasons').required = true;
+
+                                        $('#customer_grade').val("Faulty");
+                                        $('#bamboo_grade').prop('disabled', false);
+
+                                        var newOptions = {
+                                            "WSI":"WSI",
+                                            "WSD":"WSD",
+                                            "NWSI":"NWSI",
+                                            "NWSD":"NWSD",
+                                            "PND":"PND",
+                                            "CATASTROHIC":"CATASTROHIC"
+                                        }
+
+                                        $('#bamboo_grade').empty();
+                                        $.each(newOptions, function(key, value){
+                                            $('#bamboo_grade').append($("<option></option>")
+                                            .attr("value", value).text(key));
+                                        });
                                     }
                                 }else{
                                     document.getElementById('device-fully-functional-options').classList.add('form-group-hidden');
@@ -172,8 +213,15 @@
                                 <input type="text" id="customer_grade" name="customer_grade" value="{{$tradein->product_state}}" disabled>
                             </div>
                             <div class="form-group w-50">
-                                <label for="bamboo_grade">Bamboo Grade</label>
-                                <input type="text" id="bamboo_grade" name="bamboo_grade" value="" disabled>
+                                <label for="bamboo_grade">Bamboo Grade:</label>
+                                <select class="form-control" id="bamboo_grade" name="bamboo_grade" style="padding:12px; height:50px; margin-top:6px; margin-bottom:16px; " disabled>
+                                    <option disabled selected value> -- select an option -- </option>
+                                    <option value="Grade A">Grade A</option>
+                                    <option value="Grade B">Grade B</option>
+                                    <option value="Grade C">Grade C</option>
+                                    <option value="WSI - WSD">WSI - WSD</option>
+                                    <option value="WSI - WSD - NW - PND - FMIP">WSI - WSD - NW - PND - FMIP</option>
+                                </select>
                             </div>
 
                         </div>

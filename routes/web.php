@@ -153,6 +153,7 @@ Route::post('/portal/testing/receive/devicemissing', 'PortalController@isDeviceM
 Route::post('/portal/testing/receive/devicecorrect', 'PortalController@isDeviceCorrect')->middleware('auth');
 Route::post('/portal/testing/receive/deviceimeivisibility', 'PortalController@deviceImeiVisibility')->middleware('auth');
 Route::post('/portal/testing/receive/checkimei', 'PortalController@checkimei')->middleware('auth');
+Route::post('/portal/testing/receive/usercheckimei', 'PortalController@userCheckImei')->middleware('auth');
 Route::post('/portal/testing/receive/printnewlabel', 'PortalController@printNewLabel')->middleware('auth');
 Route::post('/portal/testing/receive/sendtotray', 'PortalController@sendtotray')->middleware('auth');
 

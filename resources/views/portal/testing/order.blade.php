@@ -33,9 +33,9 @@
                 </div>
                 <div class="portal-search-form-container">
                     
-                    <div class="d-flex ">
+                    <div class="d-flex flex-wrap">
                     @foreach($tradeins as $tradein)
-                        <a href="/portal/testing/receive/{{$tradein->id}}/1" class="ml-0 mr-0"><div class="d-flex flex-column shadow bg-white rounded ml-5 mr-5 p-3">
+                        <a href="/portal/testing/receive/{{$tradein->id}}/1" class="p-3 ml-0 mr-0"><div class="d-flex flex-column shadow bg-white rounded ml-5 mr-5 p-3">
                             <div class="" style="width:200px;">Product name: {{$tradein->getProductName($tradein->product_id)}}</div>
                             <div class="" style="width:200px;">Customer state: {{$tradein->product_state}}</div>
                             <div class="" style="width:200px;">Price {{$tradein->getProductPrice($tradein->product_id, $tradein->product_state)}} £</div>

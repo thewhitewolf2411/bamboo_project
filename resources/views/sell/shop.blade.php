@@ -66,15 +66,167 @@
                     </div>
                 </div>
             </div>
+            <div class="assurance-container">
+                <div class="assurance-element">
+                    <img src="{{asset('/customer_page_images/body/Assurance-image-1.svg')}}">
+                    <p>FREE NEXT DAY NATIONWIDE DELIVERY</p>
+                </div>
+                <div class="assurance-element">
+                    <img src="{{asset('/customer_page_images/body/Assurance-image-2.svg')}}">
+                    <p>BAMBOO QUALITY APPROVED OVER 100 FUNCTIONAL CHECKS</p>
+                </div>
+                <div class="assurance-element">
+                    <img src="{{asset('/customer_page_images/body/Assurance-image-3.svg')}}">
+                    <p>NO QUIBBLE MONEY BACK</p>
+                </div>
+                <div class="assurance-element">
+                    <img src="{{asset('/customer_page_images/body/Assurance-image-4.svg')}}">
+                    <p>12 MONTH GUARANTEE</p>
+                </div>
+            </div>
 
-            @foreach($products as $product)
+            <div class="d-flex p-5">
 
-            <a href="/sell/shop/item/{{$product->id}}">
-                <div><p>{{$product->product_name}}</p></div>
-            </a>
+                <div class="sidebar w-25">
 
-            @endforeach
+                    <div class="sidebar-element d-flex">
+                        <p>View:</p>
+                        <select name="number" id="number_select" class="form-control w-50" onchange="if(this.value) window.location.href+='&number='+this.value" >
+                            <option value="24">24 items</option>
+                            <option value="36">36 items</option>
+                            <option value="48">48 items</option>
+                            <option value="60">60 items</option>
+                        </select>
 
+                    </div>
+
+                    <div class="sidebar-element d-flex">
+                        <p>Category:</p>
+                        <p>@if($category=='mobile') Mobile Phones @elseif($category=='tablets') Tablets @elseif($category=='watches') Smartwatches @endif</p>
+                    </div>
+
+                </div>
+
+                <div class="products d-flex flex-wrap w-75">
+                    @foreach($products as $product)
+
+                        <a href="/sell/shop/item/{{$product->id}}">
+
+                            <div class="product">
+                                <div class="selling-product-image-container">
+                                    <img src="{{$product->product_image}}">
+                                </div>
+                                <div class="product-data-container">
+                                    <h5>{{$product->product_name}}</h5>
+                                    <p class="text-secondary">Maximum price: {{$product->customer_grade_price_1}}£</p>
+                                    <p class="text-secondary">Color: {{$product->product_colour}}</p>
+                                </div>
+
+                            </div>
+
+                        </a>
+
+                    @endforeach
+                </div>
+
+            </div>
+
+            <div class="pages d-flex justify-content-end w-100 p-5">
+                <div class="d-flex">
+                    @foreach($pages as $page)
+                        <div class="d-flex px-3">
+                            <a href="?page={{$page}}">
+                                @if($currentpage == $page)
+                                <div class="page-number-active">
+                                    {{$page}}
+                                </div>
+                                @else
+                                <div class="page-number">
+                                    {{$page}}
+                                </div>
+                                @endif
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <form id="search-parameters" method="GET" action="/sell/shop/mobile">
+
+                <input type="hidden" name="page" value="{{$currentpage}}">
+                <input type="hidden" name="number">
+    
+            </form>
+
+
+            <div class="let-footer">
+                <div class="contact-footer-image">
+                    <img src="{{asset('/shop_images/letboo/035.svg')}}">
+                </div>
+                <div class="contact-footer-text">
+                    <p class="service-header-1" >Save up to £300</p>
+                    <p class="service-header-2">By trading in your old device when you make a purchase.</p>
+                </div>
+                <div class="contact-footer-arrow">
+                    <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                </div>
+            </div>
+
+            <div class="shop-by-category">
+                <div class="center-title-container">
+                    <p>Shop by category</p>
+                </div>
+                <div class="shop-categories-container">
+                    <a href="/sell/shop/mobile">
+                        <div class="category-container">
+                            <p class="shop-title">Shop</p>
+                            <p class="category-title">Mobile Phones</p>
+                            <div class="rounded-background-image" id="rounded-mobile">
+                                <img src="{{asset('/shop_images/category-image-1.png')}}">
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/sell/shop/tablets">
+                        <div class="category-container">
+                            <p class="shop-title">Shop</p>
+                            <p class="category-title">Tablets</p>
+                            <div class="rounded-background-image" id="rounded-tablets">
+                                <img src="{{asset('/shop_images/category-image-2.png')}}">
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/sell/shop/watches">
+                        <div class="category-container">
+                            <p class="shop-title">Shop</p>
+                            <p class="category-title">Watches</p>
+                            <div class="rounded-background-image" id="rounded-watches">
+                                <img src="{{asset('/shop_images/category-image-3.png')}}">
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+            <div class="home-element sign-up">
+        
+                <div class="center-title-container">
+                    <p>Sign up to our newsletter!</p>
+                </div>
+        
+                <div class="text-center-container">
+                    <p>amazing offers, hints and tips and just awesome-ness</p>
+                </div>
+        
+                <form action="/" method="POST">
+                    @csrf
+        
+                    <input class="email-input" type="email" placeholder="Enter email address here">
+                    <input class="email-submit" type="submit" value="Sign me up!">
+        
+                </form>
+        
+            </div>
 
             <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -140,6 +292,7 @@
         </main>
 
         <footer>@include('customer.layouts.footer')</footer>
+
         <script>
 
             function showRegistrationForm(){

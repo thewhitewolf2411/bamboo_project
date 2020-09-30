@@ -2,7 +2,8 @@
 
 namespace App\Eloquent;
 
-use App\Product;
+use App\Eloqunet\BuyingProduct;
+use App\Eloquent\SellingProduct;
 use App\Order;
 use Illuminate\Http\Request;
 use DB;
@@ -19,9 +20,9 @@ class Cart{
 
     }
 
-    public function add($item, $price){
+    public function add($price, $item, $type){
 
-        $storedItem = ['state'=>$price, 'item'=>$item];
+        $storedItem = ['price'=>$price, 'product'=>$item, 'type'=>$type];
  
         array_push($this->items, $storedItem);
     }

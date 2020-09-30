@@ -111,13 +111,13 @@ class CustomerController extends Controller
     public function addProductToCart(Request $request){
 
         if(Auth::User()){
-            $product = BuyingProduct::find($request->productid);
+            $product = BuyingProduct::where('id',$request->productid)->first();
 
             $oldCart = Session::has('cart') ? Session::get('cart') : null;
     
             $cart = new Cart($oldCart);
     
-            $cart->add($product);
+            $cart->add($product->product_buying_price, $product, "tradeout");
     
             $request->session()->put('cart', $cart);
     
@@ -140,25 +140,10 @@ class CustomerController extends Controller
     public function showCart(){
 
         $cartItems = Session::has('cart') ? Session::get('cart') : null;
-        $type = Session::has('type') ? Session::get('type') : null;
 
-        $buyingProducts = BuyingProduct::all();
-        $sellingProducts = SellingProduct::all();
+        $products = SellingProduct::all();
 
-        $products = $buyingProducts->merge($sellingProducts);
-
-        $sellingProducts = array();
-
-        if($cartItems != null){
-            foreach($cartItems->items as $key=>$item){
-                $product = SellingProduct::where('id', $item['item'])->first();
-                
-                array_push($sellingProducts, $product);
-            }
-        }
-
-
-        return view('customer.cart')->with('cart', $cartItems)->with('products', $products)->with('type', $type)->with('sellingProducts', $sellingProducts);
+        return view('customer.cart')->with('cart', $cartItems)->with('products', $products);
 
     }
 

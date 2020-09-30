@@ -17,144 +17,176 @@
         <header>@include('customer.layouts.header')</header>
         <main>
 
-        @if($type == null)
-            <p>Your Cart is empty</p>
-        @endif
-
-        @if($type=='tradein')
-            <form action="/cart/sell" method="post">
-                @csrf
-
-                @foreach($sellingProducts as $item)
-                    <div class="d-flex flex-column">
-                        <div>Product name: {{$item->product_name}}</div>
-                        <div>Product memory: {{$item->product_memory}}</div>
-                        <div>Product color: {{$item->product_colour}}</div>
-                        <div>Product network: {{$item->product_network}}</div>
-                        <input type="hidden" name="product_{{$item->id}}_id" value="{{$item->id}}">
-                    </div>
-                    
-                    @foreach($cart->items as $cartItem)
-                        @if($cartItem['item'] == $item->id)
-                            @if($cartItem['state'] == $item->customer_grade_price_1)
-                            <div class="d-flex flex-column">
-                                <div>State : Excellent working</div>
-                                <div>Our price : {{$item->customer_grade_price_1}}</div>
-                                <input type="hidden" name="product_{{$item->id}}_state" value="Excellent working">
-                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->customer_grade_price_1}}">
-                            </div>
-                            @elseif($cartItem['state'] == $item->customer_grade_price_2)
-                            <div class="d-flex flex-column">
-                                <div>State : Good working</div>
-                                <div>Our price : {{$item->customer_grade_price_2}}</div>
-                                <input type="hidden" name="product_{{$item->id}}_state" value="Good working">
-                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->customer_grade_price_2}}">
-                            </div>
-                            @elseif($cartItem['state'] == $item->customer_grade_price_3)
-                            <div class="d-flex flex-column">
-                                <div>State : Poor working</div>
-                                <div>Our price : {{$item->customer_grade_price_3}}</div>
-                                <input type="hidden" name="product_{{$item->id}}_state" value="Poor working">
-                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->customer_grade_price_3}}">
-                            </div>
-                            @elseif($cartItem['state'] == $item->customer_grade_price_4)
-                            <div class="d-flex flex-column">
-                                <div>State : Damaged working</div>
-                                <div>Our price : {{$item->customer_grade_price_4}}</div>
-                                <input type="hidden" name="product_{{$item->id}}_state" value="Damaged working">
-                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->customer_grade_price_4}}">
-                            </div>
-                            @elseif($cartItem['state'] == $item->customer_grade_price_5)
-                            <div class="d-flex flex-column">
-                                <div>State : Faulty</div>
-                                <div>Our price : {{$item->customer_grade_price_5}}</div>
-                                <input type="hidden" name="product_{{$item->id}}_state" value="Faulty">
-                                <input type="hidden" name="product_{{$item->id}}_price" value="{{$item->customer_grade_price_5}}">
-                            </div>
-                            @endif
-                        @endif
-                    @endforeach
-
-                @endforeach
-
-                <input type="hidden" name="order_code" id="order_code" value="">
-
-                <button class="btn btn-primary btn-blue" type="submit">Potvrdi</div>
-
-            </form>
-        @endif
-
-
-        </main>
-        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><img src="{{ url('/customer_page_images/body/modal-close.svg') }}"></span>
-                </button>
+            <div class="center-title-container">
+                <p style="display: flex; align-items: center;"><i style="color: #000; opacity: 1;" class="fa fa-keyboard-o" aria-hidden="true"></i>Basket</p>
             </div>
-            <div class="modal-body">
-                <div class="modal-first-element">
-                    <div class="register-elements-container">
-                        <h3>New Customers</h3>
-                        <button onclick="showRegistrationForm()" class="btn btn-primary">
-                            Sign up
-                        </button>
+
+            <div class="d-flex p-5">
+
+                <div class="d-flex flex-column w-75">
+                    <div class="center-title-container">
+                        <p style="color: #23AAF7;">Buying items</p>
                     </div>
+                    <div class="d-flex flex-column w-100">
+                        @foreach($cart->items as $key=>$cartitem)
+                            @if($cartitem['type'] == 'tradeout')
+                                <div class="cart-product d-flex justify-content-between">
+                                    <div class="cart-product-image w-25">
+                                        <img src="{{$cartitem['product']->product_image}}">
+                                    </div>
+                                    <div class="d-flex flex-column w-25">
+                                        <h6 class="m-0 mb-3 font-weight-bold">{{$cartitem['product']->product_name}}</h6>
+                                        <p class="m-0">Network: {{$cartitem['product']->product_network}}</p>
+                                        <p class="m-0">Memory: {{$cartitem['product']->product_memory}}</p>
+                                        <p class="m-0">Colour: {{$cartitem['product']->product_colour}}</p>
+                                        <p class="m-0">Grade: {{$cartitem['product']->product_grade}}</p>
+                                    </div>
+                                    <div class="d-flex flex-column w-25">
+                                        <h6 class="m-0 mb-3 font-weight-bold">Item price</h6>
+                                        <p class="m-0">Price: £{{$cartitem['product']->product_buying_price}}</p>
+                                    </div>
+                                    <div class="d-flex flex-column w-25">
+                                        <h6 class="m-0 mb-3 font-weight-bold">Total Price</h6>
+                                        <p class="m-0 font-weight-bold">Total Price: £{{$cartitem['product']->product_buying_price}}</p>
+                                    </div>
+                                </div>
+                            @endif
 
-                    <div class="login-form-container">
-                        <h3>Sign in</h3>
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <div class="form-group">
-                                <input id="login" type="text" class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Username or Email" name="login" value="{{ old('username') ?: old('email') }}" required autofocus>
-    
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                            </div>
-                            <div class="form-group">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" name="password" required autocomplete="current-password">
+                        @endforeach
+                    </div>
+                    <div class="center-title-container">
+                        <p style="color: #F28E33;">Selling items</p>
+                    </div>
+                    <div class="d-flex flex-column w-100">
+                        @foreach($cart->items as $key=>$cartitem)
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        @if($cartitem['type'] == 'tradein')
+                            <div class="cart-product d-flex justify-content-between">
+                                <div class="cart-product-image w-25">
+                                    <img src="{{$cartitem['product']->product_image}}">
+                                </div>
+                                <div class="d-flex flex-column w-25">
+                                    <h6 class="m-0 mb-3 font-weight-bold">{{$cartitem['product']->product_name}}</h6>
+                                    <p class="m-0">Network: {{$cartitem['product']->product_network}}</p>
+                                    <p class="m-0">Memory: {{$cartitem['product']->product_memory}}</p>
+                                    <p class="m-0">Colour: {{$cartitem['product']->product_colour}}</p>
+                                    <p class="m-0">Grade: {{$cartitem['product']->product_grade}}</p>
+                                </div>
+                                <div class="d-flex flex-column w-25">
+                                    <h6 class="m-0 mb-3 font-weight-bold">Item price</h6>
+                                    <p class="m-0">Price: £{{$cartitem['price']}}</p>
+                                </div>
+                                <div class="d-flex flex-column w-25">
+                                    <h6 class="m-0 mb-3 font-weight-bold">Total Price</h6>
+                                    <p class="m-0 font-weight-bold">Total Price: £{{$cartitem['price']}}</p>
+                                </div>
                             </div>
-                            <div class="form-group mb-0" style="display:flex; flex-direction: row; justify-content:space-between; align-items:center;">
-                                @if (Route::has('password.request'))
-                                    <a class="btn-link" style="color: #000; margin:0;" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-                            </div>    
-                        </form>
+                        @endif
+
+                        @endforeach
                     </div>
                 </div>
-                <div class="modal-second-element">
-                    <div class="register-form-container">
-                        @include('auth.register')
+
+                <div class="d-flex flex-column w-25 p-3">
+                    <div class="center-title-container">
+                        <p style="display: flex; align-items: center;">Order Summary</p>
+                    </div>
+
+                    <div class="form-container">
+
+                        <form action="/cart/sell" method="POST">
+                            @csrf
+        
+                            @foreach($cart->items as $key=>$cartitem)
+        
+                                <input type="hidden" name="ordertype-{{$key}}" value="{{$cartitem['type']}}">
+                                <input type="hidden" name="orderproduct-{{$key}}" value="{{$cartitem['product']}}">
+                                <input type="hidden" name="productprice-{{$key}}" value="{{$cartitem['price']}}">
+        
+                            @endforeach
+        
+                            <button type="submit" class="btn btn-primary w-100">Submit Order</button>
+        
+                        </form>
+        
+        
+                    </div>
+                </div>
+
+            </div>
+
+ 
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"><img src="{{ url('/customer_page_images/body/modal-close.svg') }}"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-first-element">
+                            <div class="register-elements-container">
+                                <h3>New Customers</h3>
+                                <button onclick="showRegistrationForm()" class="btn btn-primary">
+                                    Sign up
+                                </button>
+                            </div>
+
+                            <div class="login-form-container">
+                                <h3>Sign in</h3>
+                                <form method="POST" action="{{ route('login') }}">
+                                    @csrf
+                                    <div class="form-group">
+                                        <input id="login" type="text" class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Username or Email" name="login" value="{{ old('username') ?: old('email') }}" required autofocus>
+            
+                                            @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" name="password" required autocomplete="current-password">
+
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group mb-0" style="display:flex; flex-direction: row; justify-content:space-between; align-items:center;">
+                                        @if (Route::has('password.request'))
+                                            <a class="btn-link" style="color: #000; margin:0;" href="{{ route('password.request') }}">
+                                                {{ __('Forgot Your Password?') }}
+                                            </a>
+                                        @endif
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ __('Login') }}
+                                        </button>
+                                    </div>    
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-second-element">
+                            <div class="register-form-container">
+                                @include('auth.register')
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        </main>
 
-@if(session('showLogin'))
-    <script>
-        $(window).on('load',function(){
-            $('#loginModal').modal('show');
-        });
-    </script>
-@endif
+
+        @if(session('showLogin'))
+            <script>
+                $(window).on('load',function(){
+                    $('#loginModal').modal('show');
+                });
+            </script>
+        @endif
         <footer>@include('customer.layouts.footer')</footer>    
     </body>
     <script>

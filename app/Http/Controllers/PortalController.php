@@ -921,13 +921,16 @@ class PortalController extends Controller
 
         if($request->missing == "present"){
             $tradein->device_missing = false;
+            $tradein->received = true;
         }
         else if($request->missing == "missing"){
             $tradein->device_missing = true;
+            $tradein->received = true;
         }
 
         if($tradein->device_missing){
             $tradein->marked_for_quarantine = true;
+            $tradein->received = true;
         }
 
         $tradein->save();
@@ -968,6 +971,8 @@ class PortalController extends Controller
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         $imei_number = $request->imei_number;
 
+        #dd($imei_number);
+
         #$imei_number = 123456123456123;
 
         $url = 'https://gapi.checkmend.com/duediligence/' . 2 . '/' . $imei_number;
@@ -975,7 +980,7 @@ class PortalController extends Controller
         $options_array  = false;
         $response_config_array  = false;
 
-        $options['category']  = 8;
+        $options['category']  = 9;
         $options['reason_data'] = true;
         $options['make_model'] 	  = true;
         $options['cdma_validate'] = true;
@@ -1011,32 +1016,12 @@ class PortalController extends Controller
 
         $result = (json_decode($result['result_json']));
 
-        $result_data = "";
-
         #dd($result);
 
-        $result_status = $result->result;
-        $result_data = $result->reasondata;
-
-        if($result_status === "passed"){
-            $tradein->marked_for_quarantine = false;
-            $tradein->chekmend_passed = true;
-        }
-        else if($result_status === "failed"){
-            $tradein->marked_as_risk = true;
-            $tradein->marked_for_quarantine = true;
-        }
-        else if($result_status === "caution"){
-            $tradein->marked_as_risk = true;
-            $tradein->marked_for_quarantine = true;
-        }
-
-
+        $tradein->imei_number = $imei_number;
         $tradein->save();
 
-        #('Imei_check_data', $result_data);
-
-        return redirect()->back();
+        return redirect()->back()->with(['result'=>$result]);
 
     }
 
@@ -1085,6 +1070,30 @@ class PortalController extends Controller
         return $result;
     }
 
+    public function userCheckImei(Request $request){
+        #dd($request);
+
+        if($request->correct == "yes"){
+            $tradein = Tradein::where('id', $request->tradein_id)->first();
+
+            $tradein->marked_as_risk = false;
+            $tradein->marked_for_quarantine = false;
+            $tradein->chekmend_passed = true;
+            $tradein->device_correct = true;
+            $tradein->save();
+            return redirect()->back();
+        }
+        else{
+            $tradein = Tradein::where('id', $request->tradein_id)->first();
+
+            $tradein->marked_as_risk = false;
+            $tradein->marked_for_quarantine = true;
+            $tradein->chekmend_passed = false;
+            $tradein->device_correct = false;
+            $tradein->save();
+            return redirect()->back();
+        }
+    }
 
     public function checkDeviceStatus(Request $request){
 
