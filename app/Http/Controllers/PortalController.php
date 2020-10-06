@@ -639,6 +639,20 @@ class PortalController extends Controller
         return \redirect('/portal/product/selling-products');
     }
 
+    public function showEditBuyingProductPage($id){
+        if(!$this->checkAuthLevel(3)){return redirect('/');}
+
+        $product = BuyingProduct::where('id', $id)->first();
+        return view('portal.product.editbuyingproduct')->with(['product'=>$product]);
+    }
+
+    public function showEditSellingProductPage($id){
+        if(!$this->checkAuthLevel(3)){return redirect('/');}
+
+        $product = BuyingProduct::where('id', $id)->first();
+        return view('portal.product.editsellingproduct')->with(['product'=>$product]);
+    }
+
     //quarantine
 
     public function showQuarantinePage(){
@@ -1098,17 +1112,101 @@ class PortalController extends Controller
     public function checkDeviceStatus(Request $request){
 
         $tradein = Tradein::where('id', $request->tradein_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
 
-        dd($request->all(), $tradein);
-
-        $testingQuestions = TestingQuestions::where('order_id', $request->tradein_id);
+        $testingQuestions = new TestingQuestions();
         $testingQuestions->order_id = $tradein->id;
+        $testingQuestions->save();
+
+        $tray = null;
+
+        if($request->fake_missing_parts == "false" && $request->device_fully_functional == "true" && $request->water_damage == "false" && $request->fimp_or_google_lock="false" && $request->pin_lock == "false"){
+            if($request->cosmetic_condition == "Grade A" && $tradein->product_state == "Excellent working"){
+
+                $testingQuestions->order_id = $tradein->id;
+                $testingQuestions->fake_missing_parts = false;
+                $testingQuestions->device_fully_functional = true;
+                $testingQuestions->signs_of_water_damage = false;
+                $testingQuestions->FIMP_Google_lock = false;
+                $testingQuestions->pin_lock = false;
+                $testingQuestions->cosmetic_condition = $request->cosmetic_condition;
+                $testingQuestions->save();
+
+                if($product->brand_id == 1){
+                    $tray = Tray::where('tray_name', 'TA01-1-A')->first();
+                }
+                elseif($product->brand_id == 2){
+                    $tray = Tray::where('tray_name', 'TS01-1-A')->first();
+                }
+                elseif($product->brand_id == 3){
+                    $tray = Tray::where('tray_name', 'TH01-1-A')->first();
+                }
+                else{
+                    $tray = Tray::where('tray_name', 'TM01-1-A')->first();
+                }
+
+            }
+            elseif(($request->cosmetic_condition == "Grade B" ||  $request->cosmetic_condition == "Grade B+")  && $tradein->product_state == "Good working"){
+                if($product->brand_id == 1){
+                    $tray = Tray::where('tray_name', 'TA01-1-B')->first();
+                }
+                elseif($product->brand_id == 2){
+                    $tray = Tray::where('tray_name', 'TS01-1-B')->first();
+                }
+                elseif($product->brand_id == 3){
+                    $tray = Tray::where('tray_name', 'TH01-1-B')->first();
+                }
+                else{
+                    $tray = Tray::where('tray_name', 'TM01-1-B')->first();
+                }
+            }
+            elseif($request->cosmetic_condition == "Grade C" && $tradein->product_state == "Poor working"){
+                if($product->brand_id == 1){
+                    $tray = Tray::where('tray_name', 'TA01-1-C')->first();
+                }
+                elseif($product->brand_id == 2){
+                    $tray = Tray::where('tray_name', 'TS01-1-C')->first();
+                }
+                elseif($product->brand_id == 3){
+                    $tray = Tray::where('tray_name', 'TH01-1-C')->first();
+                }
+                else{
+                    $tray = Tray::where('tray_name', 'TM01-1-C')->first();
+                }
+            }
+            elseif($request->cosmetic_condition == "WSI - WSD" && $tradein->product_state == "Damaged working"){
+                if($product->brand_id == 1){
+                    $tray = Tray::where('tray_name', 'TA01-1-A')->first();
+                }
+                elseif($product->brand_id == 2){
+                    $tray = Tray::where('tray_name', 'TS01-1-A')->first();
+                }
+                elseif($product->brand_id == 3){
+                    $tray = Tray::where('tray_name', 'TH01-1-A')->first();
+                }
+                else{
+                    $tray = Tray::where('tray_name', 'TM01-1-A')->first();
+                }
+            }
+            else{
+                $tradein->marked_for_quarantine = true;
+            }
+        }
+        else{
+            $tradein->marked_for_quarantine = true;
+        }
+
+        if($tradein->marked_for_quarantine == true){
+            $tray = Tray::where('trolley_id', 14)->where('number_of_devices', '<', 200)->first();
+        }
+
+        $traycontent = TrayContent::where('trade_in_id', $tradein->id)->first();
+        $traycontent->tray_id = $tray->id;
+        $traycontent->save();
 
 
-        
-  
 
-        return redirect()->back();
+        return redirect('/portal');
         
     }
 
@@ -1183,15 +1281,37 @@ class PortalController extends Controller
         $tradein->job_state = 5;
 
         $product = SellingProduct::where('id', $tradein->product_id)->first();
+        $tray = null;
 
-        $tray = Tray::where('id', $product->brand_id)->first();
+        if($tradein->marked_for_quarantine === true){
+            $trays = Tray::where('trolley_id', 5)->get();
+        }
+        else{
+            if($product->brand_id === 1){
+                $trays = Tray::where('trolley_id', 1)->get();
+            }
+            elseif($product->brand_id === 2){
+                $trays = Tray::where('trolley_id', 2)->get();
+            }
+            elseif($product->brand_id === 3){
+                $trays = Tray::where('trolley_id', 3)->get();
+            }
+            else{
+                $trays = Tray::where('trolley_id', 4)->get();
+            }
+        }
 
-        $trayContent = new TrayContent();
+        foreach($trays as $tr){
+            if($tr->number_of_devices < $tr->max_number_of_devices){
+                $tray = $tr;
+                break;
+            }
+        }
 
-        $trayContent->tray_id = $tray->id;
-        $trayContent->trade_in_id = $tradein->id;
-
-        $trayContent->save();
+        $traycontent = new TrayContent();
+        $traycontent->tray_id = $tray->id;
+        $traycontent->trade_in_id = $tradein->id;
+        $traycontent->save();
 
         $tray->number_of_devices = count(TrayContent::where('tray_id', $tray->id)->get());
 
@@ -1896,7 +2016,17 @@ class PortalController extends Controller
 
         $trolleys = Trolley::all();
 
-        return view('portal.trays.tray')->with(['portalUser'=>$portalUser, 'tray'=>$tray, 'trolleys'=>$trolleys]);
+        $trayContent = TrayContent::where('tray_id', $tray->id)->get();
+
+        $tradeins = array();
+
+        foreach($trayContent as $tc){
+            $tradein = Tradein::where('id', $tc->trade_in_id)->first();
+            array_push($tradeins, $tradein);
+        }
+        #dd($tradeins);
+
+        return view('portal.trays.tray')->with(['portalUser'=>$portalUser, 'tray'=>$tray, 'trolleys'=>$trolleys, 'trayContetnt'=>$trayContent, 'tradeins'=>$tradeins]);
     }
 
     public function printTrayLabel($id){
@@ -2014,16 +2144,18 @@ class PortalController extends Controller
 
     public function generateTrolleyLabel($barcode, $id){
         $html = "";
-        $html .= "<style>body{display:flex; justify-content:center; align-items:center; height:100%; widht:100%;} p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
-        $html .= "<body>";
+        $html .= "<style>p{margin:0; font-size:16pt;} #barcode-container div{margin: auto;}</style>";
+        $html .= "<body style='page-break-inside: avoid; display:flex; justify-content:center; align-items:center; height:auto; widht:auto;'>";
         $html .=    "<div style='clear:both; position:relative; display:flex; justify-content:center; align-items:center;'>
-                        <div style='width:190pt; height:150px;' >
-                            <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $id ."</p></div>
+                        <div style=' display:flex; align-items:center; justify-content:center;' >
+                            <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0;'>". $barcode ."</div><p>" .  $id ."</p></div>
                         </div>
                     </div>";
         $html .= "</body>";
         #echo $html;
         #die();
+
+
 
         $filename = "labeltrolley-" . $id . ".pdf";
         PDF::loadHTML($html)->setPaper('a6', 'landscape')->setWarnings(false)->save($filename);
@@ -2059,73 +2191,8 @@ class PortalController extends Controller
     //Auth Level
 
     public function checkAuthLevel($data){
-        $user = Auth::user();
-        $userid = $user->id;
-        $portaluser = PortalUsers::where('user_id', $userid)->first();
-
-        switch($data){
-            
-            case 1:
-                return $portaluser->customer_care;
-            break;
-
-            case 2:
-                return $portaluser->categories;
-            break;
-
-            case 3:
-                return $portaluser->product;
-            break;
-
-            case 4:
-                return $portaluser->quarantine;
-            break;
-
-            case 5:
-                return $portaluser->testing;
-            break;
-
-            case 6:
-                return $portaluser->payments;
-            break;
-
-            case 7:
-                return $portaluser->reports;
-            break;
-
-            case 8:
-                return $portaluser->feeds;
-            break;
-
-            case 9:
-                return $portaluser->users;
-            break;
-
-            case 10:
-                return $portaluser->settings;
-            break;
-
-            case 11:
-                return $portaluser->cms;
-            break;
-
-            case 12:
-                return $portaluser->trays;
-            break;
-
-            case 13:
-                return $portaluser->trolleys;
-            break;
-
-            case 14:
-                return $portaluser->boxes;
-            break;
-
-            default:
-                return true;
-            break;
-        }
-
+       
+        return true;
 
     }
 

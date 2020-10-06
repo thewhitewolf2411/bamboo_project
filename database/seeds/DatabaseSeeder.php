@@ -53,21 +53,34 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('portal_users')->insert([
-            'user_id' => 1,
-            'customer_care' => true,
-            'categories' => true,
-            'product' => true,
-            'quarantine' => true,
-            'testing' => true,
-            'payments' => true,
-            'reports' => true,
-            'feeds' => true,
-            'users' => true,
-            'settings' => true,
-            'cms' => true,
-            'trays' => true,
-            'trolleys' => true,
-            'boxes' => true,
+            'user_id'=>1,
+            'recycle'=>true,
+            'trade_pack_despatch'=>true,
+            'awaiting_receipt'=>true,
+            'receiving'=>true,
+            'device_testing'=>true,
+            'trolley_management'=>true,
+            'trays_managment'=>true,
+            'box_management'=>true,
+            'quarantine_managment'=>true,
+            'warehouse_management'=>true,
+            'customer_care'=>true,
+            'order_management'=>true,
+            'create_order'=>true,
+            'customer_accounts'=>true,
+            'administration'=>true,
+            'salvage_models'=>true,
+            'feeds'=>true,
+            'users'=>true,
+            'reports'=>true,
+            'cms'=>true,
+            'categories'=>true,
+            'settings'=>true,
+            'payments'=>true,
+            'payments_awaiting_assignment'=>true,
+            'pending_payments'=>true,
+            'completed_payment'=>true,
+            'payment_report'=>true
         ]);
 
         DB::table('product_category')->insert([
@@ -91,367 +104,908 @@ class DatabaseSeeder extends Seeder
         DB::table('brand')->insert([
             'brand_name'=>'Apple',
             'brand_image'=>'Image 13_1597675760.png',
-            'total_produts'=>3
+            'total_produts'=>0
         ]);
 
         DB::table('brand')->insert([
             'brand_name'=>'Samsung',
             'brand_image'=>'Image 14_1597675775.png',
-            'total_produts'=>3
+            'total_produts'=>0
         ]);
 
         DB::table('brand')->insert([
             'brand_name'=>'Huawei',
             'brand_image'=>'/Image 15_1597675746.png',
-            'total_produts'=>1
+            'total_produts'=>0
         ]);
 
         DB::table('brand')->insert([
             'brand_name'=>'Google',
             'brand_image'=>'Image 16_1597675717.png',
-            'total_produts'=>1
+            'total_produts'=>0
         ]);
 
         DB::table('brand')->insert([
             'brand_name'=>'Oneplus',
             'brand_image'=>'Image 16_1597675717.png',
-            'total_produts'=>1
+            'total_produts'=>0
+        ]);
+
+        //Default conditions
+        DB::table('conditions')->insert([
+            'name'=>'A',
+            'alias'=>'A',
+            'importance'=>100
+        ]);
+
+        DB::table('conditions')->insert([
+            'name'=>'B+',
+            'alias'=>'B+',
+            'importance'=>80
+        ]);
+
+        DB::table('conditions')->insert([
+            'name'=>'B',
+            'alias'=>'B',
+            'importance'=>60
+        ]);
+
+        DB::table('conditions')->insert([
+            'name'=>'C',
+            'alias'=>'C',
+            'importance'=>40
+        ]);
+
+        DB::table('conditions')->insert([
+            'name'=>'WSI',
+            'alias'=>'WSI',
+            'importance'=>20
+        ]);
+
+        DB::table('conditions')->insert([
+            'name'=>'WSD',
+            'alias'=>'WSD',
+            'importance'=>20
+        ]);
+
+        DB::table('conditions')->insert([
+            'name'=>'NWSI',
+            'alias'=>'NWSI',
+            'importance'=>20
+        ]);
+
+        DB::table('conditions')->insert([
+            'name'=>'NWSD',
+            'alias'=>'NWSD',
+            'importance'=>20
+        ]);
+
+        DB::table('conditions')->insert([
+            'name'=>'PND',
+            'alias'=>'PND',
+            'importance'=>20
+        ]);
+
+        DB::table('conditions')->insert([
+            'name'=>'Catastrophic',
+            'alias'=>'Catastrophic',
+            'importance'=>10
+        ]);
+
+        //receiving trolleys
+
+        DB::table('trolleys')->insert([
+
+            'trolley_name'=>'RA01',
+            'number_of_trays'=>6,
+            'trolley_type'=>'Receiving Trolley'
+
+        ]);
+
+        DB::table('trolleys')->insert([
+
+            'trolley_name'=>'RS01',
+            'number_of_trays'=>6,
+            'trolley_type'=>'Receiving Trolley'
+
+        ]);
+
+        DB::table('trolleys')->insert([
+
+            'trolley_name'=>'RH01',
+            'number_of_trays'=>6,
+            'trolley_type'=>'Receiving Trolley'
+
+        ]);
+
+        DB::table('trolleys')->insert([
+
+            'trolley_name'=>'RM01',
+            'number_of_trays'=>6,
+            'trolley_type'=>'Receiving Trolley'
+
+        ]);
+
+        DB::table('trolleys')->insert([
+
+            'trolley_name'=>'RQ01',
+            'number_of_trays'=>6,
+            'trolley_type'=>'Receiving Trolley'
+
+        ]);
+
+        //receiving trays
+        //trolley 1
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RA01-1',
+            'trolley_id'=>1,
+            'number_of_devices'=>0,
+
         ]);
 
         DB::table('trays')->insert([
-            'tray_name'=>'Apple',
+
+            'tray_name'=>'RA01-2',
+            'trolley_id'=>1,
+            'number_of_devices'=>0,
+
         ]);
 
         DB::table('trays')->insert([
-            'tray_name'=>'Samsung',
+
+            'tray_name'=>'RA01-3',
+            'trolley_id'=>1,
+            'number_of_devices'=>0,
+
         ]);
 
         DB::table('trays')->insert([
-            'tray_name'=>'Huawei',
+
+            'tray_name'=>'RA01-4',
+            'trolley_id'=>1,
+            'number_of_devices'=>0,
+
         ]);
 
         DB::table('trays')->insert([
-            'tray_name'=>'Google',
+
+            'tray_name'=>'RA01-5',
+            'trolley_id'=>1,
+            'number_of_devices'=>0,
+
         ]);
 
         DB::table('trays')->insert([
-            'tray_name'=>'Oneplus',
-        ]);
-        /*DB::table('buying_products')->insert([
 
-            'product_name'=>'iPhone X',
-            'product_image'=>'default_category_image.jpg',
-            'product_description'=>'iPhone X',
-            'category_id'=>1,
-            'brand_id'=>1,
-            'product_code_name'=>'abc',
-            'product_code_value'=>123456789,
-            'product_network'=>'Unlocked',
-            'product_memory'=>'128GB',
-            'product_colour'=>'White',
-            'product_grade'=>'A+',
-            'product_dimensions'=>'default',
-            'product_processor'=>'default',
-            'product_weight'=>'default',
-            'product_screen'=>'6.1in',
-            'product_system'=>'iOS',
-            'product_connectivity'=>'WiFi, Bluetooth',
-            'product_battery'=>'24hrs',
-            'product_signal'=>'3g,4g',
-            'product_camera'=>'12MP',
-            'product_camera_2'=>'8MP',
-            'product_sim'=>'nanosim',
-            'product_memory_slots'=>'No',
-            'product_quantity'=>3,
-            'product_buying_price'=>300
-        ]);
-
-        DB::table('buying_products')->insert([
-
-            'product_name'=>'iPhone 12',
-            'product_image'=>'default_category_image.jpg',
-            'product_description'=>'iPhone 12',
-            'category_id'=>1,
-            'brand_id'=>1,
-            'product_code_name'=>'abc',
-            'product_code_value'=>123456789,
-            'product_network'=>'Unlocked',
-            'product_memory'=>'256GB',
-            'product_colour'=>'White',
-            'product_grade'=>'B',
-            'product_dimensions'=>'default',
-            'product_processor'=>'default',
-            'product_weight'=>'default',
-            'product_screen'=>'6.1in',
-            'product_system'=>'iOS',
-            'product_connectivity'=>'WiFi, Bluetooth',
-            'product_battery'=>'24hrs',
-            'product_signal'=>'3g,4g',
-            'product_camera'=>'12MP',
-            'product_camera_2'=>'8MP',
-            'product_sim'=>'nanosim',
-            'product_memory_slots'=>'No',
-            'product_quantity'=>3,
-            'product_buying_price'=>200
-        ]);
-
-        DB::table('buying_products')->insert([
-
-            'product_name'=>'iPhone 9',
-            'product_image'=>'default_category_image.jpg',
-            'product_description'=>'iPhone 9',
-            'category_id'=>1,
-            'brand_id'=>1,
-            'product_code_name'=>'abc',
-            'product_code_value'=>123456789,
-            'product_network'=>'Unlocked',
-            'product_memory'=>'64GB',
-            'product_colour'=>'White',
-            'product_grade'=>'A+',
-            'product_dimensions'=>'default',
-            'product_processor'=>'default',
-            'product_weight'=>'default',
-            'product_screen'=>'6.1in',
-            'product_system'=>'iOS',
-            'product_connectivity'=>'WiFi, Bluetooth',
-            'product_battery'=>'24hrs',
-            'product_signal'=>'3g,4g',
-            'product_camera'=>'12MP',
-            'product_camera_2'=>'8MP',
-            'product_sim'=>'nanosim',
-            'product_memory_slots'=>'No',
-            'product_quantity'=>3,
-            'product_buying_price'=>120
-        ]);
-
-        DB::table('buying_products')->insert([
-
-            'product_name'=>'iPhone X',
-            'product_image'=>'default_category_image.jpg',
-            'product_description'=>'iPhone X',
-            'category_id'=>1,
-            'brand_id'=>1,
-            'product_code_name'=>'abc',
-            'product_code_value'=>123456789,
-            'product_network'=>'Unlocked',
-            'product_memory'=>'128GB',
-            'product_colour'=>'White',
-            'product_grade'=>'A',
-            'product_dimensions'=>'default',
-            'product_processor'=>'default',
-            'product_weight'=>'default',
-            'product_screen'=>'6.1in',
-            'product_system'=>'iOS',
-            'product_connectivity'=>'WiFi, Bluetooth',
-            'product_battery'=>'24hrs',
-            'product_signal'=>'3g,4g',
-            'product_camera'=>'12MP',
-            'product_camera_2'=>'8MP',
-            'product_sim'=>'nanosim',
-            'product_memory_slots'=>'No',
-            'product_quantity'=>3,
-            'product_buying_price'=>200
-        ]);
-
-        DB::table('buying_products')->insert([
-
-            'product_name'=>'Samsung Galaxy S10',
-            'product_image'=>'default_category_image.jpg',
-            'product_description'=>'Samsung Galaxy S10',
-            'category_id'=>1,
-            'brand_id'=>2,
-            'product_code_name'=>'abc',
-            'product_code_value'=>123456789,
-            'product_network'=>'Unlocked',
-            'product_memory'=>'128GB',
-            'product_colour'=>'Black',
-            'product_grade'=>'A',
-            'product_dimensions'=>'default',
-            'product_processor'=>'default',
-            'product_weight'=>'default',
-            'product_screen'=>'6.1in',
-            'product_system'=>'Android',
-            'product_connectivity'=>'WiFi, Bluetooth',
-            'product_battery'=>'24hrs',
-            'product_signal'=>'3g,4g',
-            'product_camera'=>'12MP',
-            'product_camera_2'=>'8MP',
-            'product_sim'=>'nanosim',
-            'product_memory_slots'=>'No',
-            'product_quantity'=>3,
-            'product_buying_price'=>200
-        ]);
-
-        DB::table('buying_products')->insert([
-
-            'product_name'=>'Samsung Galaxy S20',
-            'product_image'=>'default_category_image.jpg',
-            'product_description'=>'Samsung Galaxy S10',
-            'category_id'=>1,
-            'brand_id'=>2,
-            'product_code_name'=>'abc',
-            'product_code_value'=>123456789,
-            'product_network'=>'Unlocked',
-            'product_memory'=>'128GB',
-            'product_colour'=>'Black',
-            'product_grade'=>'C',
-            'product_dimensions'=>'default',
-            'product_processor'=>'default',
-            'product_weight'=>'default',
-            'product_screen'=>'6.1in',
-            'product_system'=>'Android',
-            'product_connectivity'=>'WiFi, Bluetooth',
-            'product_battery'=>'24hrs',
-            'product_signal'=>'3g,4g',
-            'product_camera'=>'12MP',
-            'product_camera_2'=>'8MP',
-            'product_sim'=>'nanosim',
-            'product_memory_slots'=>'No',
-            'product_quantity'=>3,
-            'product_buying_price'=>90
-        ]);
-
-        DB::table('buying_products')->insert([
-
-            'product_name'=>'Samsung Galaxy S20',
-            'product_image'=>'default_category_image.jpg',
-            'product_description'=>'Samsung Galaxy S10',
-            'category_id'=>1,
-            'brand_id'=>2,
-            'product_code_name'=>'abc',
-            'product_code_value'=>123456789,
-            'product_network'=>'Unlocked',
-            'product_memory'=>'256GB',
-            'product_colour'=>'Black',
-            'product_grade'=>'C',
-            'product_dimensions'=>'default',
-            'product_processor'=>'default',
-            'product_weight'=>'default',
-            'product_screen'=>'6.1in',
-            'product_system'=>'Android',
-            'product_connectivity'=>'WiFi, Bluetooth',
-            'product_battery'=>'24hrs',
-            'product_signal'=>'3g,4g',
-            'product_camera'=>'12MP',
-            'product_camera_2'=>'8MP',
-            'product_sim'=>'nanosim',
-            'product_memory_slots'=>'No',
-            'product_quantity'=>3,
-            'product_buying_price'=>110
-        ]);
-
-        DB::table('buying_products')->insert([
-
-            'product_name'=>'Huaweii P20 Pro',
-            'product_image'=>'default_category_image.jpg',
-            'product_description'=>'Huaweii P20 Pro',
-            'category_id'=>1,
-            'brand_id'=>3,
-            'product_code_name'=>'abc',
-            'product_code_value'=>123456789,
-            'product_network'=>'Unlocked',
-            'product_memory'=>'256GB',
-            'product_colour'=>'Black',
-            'product_grade'=>'CB',
-            'product_dimensions'=>'default',
-            'product_processor'=>'default',
-            'product_weight'=>'default',
-            'product_screen'=>'6.1in',
-            'product_system'=>'Android',
-            'product_connectivity'=>'WiFi, Bluetooth',
-            'product_battery'=>'24hrs',
-            'product_signal'=>'3g,4g',
-            'product_camera'=>'12MP',
-            'product_camera_2'=>'8MP',
-            'product_sim'=>'nanosim',
-            'product_memory_slots'=>'No',
-            'product_quantity'=>3,
-            'product_buying_price'=>220
-        ]);
-
-        DB::table('buying_products')->insert([
-
-            'product_name'=>'Google Nexus 5',
-            'product_image'=>'default_category_image.jpg',
-            'product_description'=>'Google Nexus 5',
-            'category_id'=>1,
-            'brand_id'=>4,
-            'product_code_name'=>'abc',
-            'product_code_value'=>123456789,
-            'product_network'=>'Unlocked',
-            'product_memory'=>'256GB',
-            'product_colour'=>'Black',
-            'product_grade'=>'C',
-            'product_dimensions'=>'default',
-            'product_processor'=>'default',
-            'product_weight'=>'default',
-            'product_screen'=>'6.1in',
-            'product_system'=>'Android',
-            'product_connectivity'=>'WiFi, Bluetooth',
-            'product_battery'=>'24hrs',
-            'product_signal'=>'3g,4g',
-            'product_camera'=>'12MP',
-            'product_camera_2'=>'8MP',
-            'product_sim'=>'nanosim',
-            'product_memory_slots'=>'No',
-            'product_quantity'=>3,
-            'product_buying_price'=>40
-        ]);
-
-
-        DB::table('selling_products')->insert([
-
-            'product_name'=>'iPhone X',
-            'product_image'=>'default_category_image.jpg',
-            'category_id'=>1,
-            'brand_id'=>1,
-            'product_memory'=>'128GB',
-            'product_colour'=>'White',
-            'product_network'=>'Unlocked',
-            'product_grade_1'=>'New',
-            'product_grade_2'=>'Good',
-            'product_grade_3'=>'Faulty',
-            'product_selling_price_1'=>300,
-            'product_selling_price_2'=>200,
-            'product_selling_price_3'=>100,
+            'tray_name'=>'RA01-6',
+            'trolley_id'=>1,
+            'number_of_devices'=>0,
 
         ]);
 
-        DB::table('selling_products')->insert([
+        //trolley 02
 
-            'product_name'=>'iPhone 12',
-            'product_image'=>'default_category_image.jpg',
-            'category_id'=>1,
-            'brand_id'=>1,
-            'product_memory'=>'256GB',
-            'product_colour'=>'White',
-            'product_network'=>'Unlocked',
-            'product_grade_1'=>'New',
-            'product_grade_2'=>'Good',
-            'product_grade_3'=>'Faulty',
-            'product_selling_price_1'=>350,
-            'product_selling_price_2'=>220,
-            'product_selling_price_3'=>110,
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RS01-1',
+            'trolley_id'=>2,
+            'number_of_devices'=>0,
 
         ]);
 
-        DB::table('selling_products')->insert([
+        DB::table('trays')->insert([
 
-            'product_name'=>'Samsung Galaxy S20',
-            'product_image'=>'default_category_image.jpg',
-            'category_id'=>1,
-            'brand_id'=>2,
-            'product_memory'=>'256GB',
-            'product_colour'=>'White',
-            'product_network'=>'Unlocked',
-            'product_grade_1'=>'New',
-            'product_grade_2'=>'Good',
-            'product_grade_3'=>'Faulty',
-            'product_selling_price_1'=>250,
-            'product_selling_price_2'=>120,
-            'product_selling_price_3'=>60,
+            'tray_name'=>'RS01-2',
+            'trolley_id'=>2,
+            'number_of_devices'=>0,
 
-        ]);*/
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RS01-3',
+            'trolley_id'=>2,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RS01-4',
+            'trolley_id'=>2,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RS01-5',
+            'trolley_id'=>2,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RS01-6',
+            'trolley_id'=>2,
+            'number_of_devices'=>0,
+
+        ]);
+
+        //trolley 03
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RH01-1',
+            'trolley_id'=>3,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RH01-2',
+            'trolley_id'=>3,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RH01-3',
+            'trolley_id'=>3,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RH01-4',
+            'trolley_id'=>3,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RH01-5',
+            'trolley_id'=>3,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RH01-6',
+            'trolley_id'=>3,
+            'number_of_devices'=>0,
+
+        ]);
+
+        //Trolley 04
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RM01-1',
+            'trolley_id'=>4,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RM01-2',
+            'trolley_id'=>4,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RM01-3',
+            'trolley_id'=>4,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RM01-4',
+            'trolley_id'=>4,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RM01-5',
+            'trolley_id'=>4,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RM01-6',
+            'trolley_id'=>4,
+            'number_of_devices'=>0,
+
+        ]);
+
+        //trolley 05
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RQ01-1',
+            'trolley_id'=>5,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RQ01-2',
+            'trolley_id'=>5,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RQ01-3',
+            'trolley_id'=>5,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RQ01-4',
+            'trolley_id'=>5,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RQ01-5',
+            'trolley_id'=>5,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'RQ01-6',
+            'trolley_id'=>5,
+            'number_of_devices'=>0,
+
+        ]);
+
+        //Testing trolleys
+
+        DB::table('trolleys')->insert([
+
+            'trolley_name'=>'TA01',
+            'number_of_trays'=>6,
+            'trolley_type'=>'Testing Trolley'
+
+        ]);
+
+        DB::table('trolleys')->insert([
+
+            'trolley_name'=>'TA02',
+            'number_of_trays'=>6,
+            'trolley_type'=>'Testing Trolley'
+
+        ]);
+
+        DB::table('trolleys')->insert([
+
+            'trolley_name'=>'TS01',
+            'number_of_trays'=>6,
+            'trolley_type'=>'Testing Trolley'
+
+        ]);
+
+        DB::table('trolleys')->insert([
+
+            'trolley_name'=>'TS02',
+            'number_of_trays'=>6,
+            'trolley_type'=>'Testing Trolley'
+
+        ]);
+
+        DB::table('trolleys')->insert([
+
+            'trolley_name'=>'TH01',
+            'number_of_trays'=>6,
+            'trolley_type'=>'Testing Trolley'
+
+        ]);
+
+        DB::table('trolleys')->insert([
+
+            'trolley_name'=>'TH02',
+            'number_of_trays'=>6,
+            'trolley_type'=>'Testing Trolley'
+
+        ]);
+
+        DB::table('trolleys')->insert([
+
+            'trolley_name'=>'TM01',
+            'number_of_trays'=>6,
+            'trolley_type'=>'Testing Trolley'
+
+        ]);
+
+        DB::table('trolleys')->insert([
+
+            'trolley_name'=>'TM02',
+            'number_of_trays'=>6,
+            'trolley_type'=>'Testing Trolley'
+
+        ]);
+
+        DB::table('trolleys')->insert([
+
+            'trolley_name'=>'TQ01',
+            'number_of_trays'=>6,
+            'trolley_type'=>'Testing Trolley'
+
+        ]);
+
+        //testing trays
+        //TA01
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TA01-1-A',
+            'trolley_id'=>6,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TA01-2-B+',
+            'trolley_id'=>6,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TA01-3-B',
+            'trolley_id'=>6,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TA01-4-C',
+            'trolley_id'=>6,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TA01-5-WSI',
+            'trolley_id'=>6,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TA01-6-WDS',
+            'trolley_id'=>6,
+            'number_of_devices'=>0,
+
+        ]);
+
+        //TA02
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TA02-1-NWSI',
+            'trolley_id'=>7,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TA02-2-NWSD',
+            'trolley_id'=>7,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TA02-3-CATASTROPHIC',
+            'trolley_id'=>7,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TA02-4',
+            'trolley_id'=>7,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TA02-5',
+            'trolley_id'=>7,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TA02-6',
+            'trolley_id'=>7,
+            'number_of_devices'=>0,
+
+        ]);
+
+        //TS01
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TS01-1-A',
+            'trolley_id'=>8,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TS01-2-B+',
+            'trolley_id'=>8,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TS01-3-B',
+            'trolley_id'=>8,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TS01-4-C',
+            'trolley_id'=>8,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TS01-5-WSI',
+            'trolley_id'=>8,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TS01-6-WDS',
+            'trolley_id'=>8,
+            'number_of_devices'=>0,
+
+        ]);
+
+        //TS02
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TS02-1-NWSI',
+            'trolley_id'=>9,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TS02-2-NWSD',
+            'trolley_id'=>9,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TS02-3-CATASTROPHIC',
+            'trolley_id'=>9,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TS02-4',
+            'trolley_id'=>9,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TS02-5',
+            'trolley_id'=>9,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TS02-6',
+            'trolley_id'=>9,
+            'number_of_devices'=>0,
+
+        ]);
+
+        //TH01
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TH01-1-A',
+            'trolley_id'=>10,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TH01-2-B+',
+            'trolley_id'=>10,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TH01-3-B',
+            'trolley_id'=>10,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TH01-4-C',
+            'trolley_id'=>10,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TH01-5-WSI',
+            'trolley_id'=>10,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TH01-6-WDS',
+            'trolley_id'=>10,
+            'number_of_devices'=>0,
+
+        ]);
+
+        //TH02
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TH02-1-NWSI',
+            'trolley_id'=>11,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TH02-2-NWSD',
+            'trolley_id'=>11,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TH02-3-CATASTROPHIC',
+            'trolley_id'=>11,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TH02-4',
+            'trolley_id'=>11,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TH02-5',
+            'trolley_id'=>11,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TH02-6',
+            'trolley_id'=>11,
+            'number_of_devices'=>0,
+
+        ]);
+
+        //TM01
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TM01-1-A',
+            'trolley_id'=>12,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TM01-2-B+',
+            'trolley_id'=>12,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TM01-3-B',
+            'trolley_id'=>12,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TM01-4-C',
+            'trolley_id'=>12,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TM01-5-WSI',
+            'trolley_id'=>12,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TM01-6-WDS',
+            'trolley_id'=>12,
+            'number_of_devices'=>0,
+
+        ]);
+
+        //TM02
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TM02-1-NWSI',
+            'trolley_id'=>13,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TM02-2-NWSD',
+            'trolley_id'=>13,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TM02-3-CATASTROPHIC',
+            'trolley_id'=>13,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TM02-4',
+            'trolley_id'=>13,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TM02-5',
+            'trolley_id'=>13,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TM02-6',
+            'trolley_id'=>13,
+            'number_of_devices'=>0,
+
+        ]);
+
+        //TQ01
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TQ01-1',
+            'trolley_id'=>14,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TQ01-2',
+            'trolley_id'=>14,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TQ01-3',
+            'trolley_id'=>14,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TQ01-4',
+            'trolley_id'=>14,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TQ01-5',
+            'trolley_id'=>14,
+            'number_of_devices'=>0,
+
+        ]);
+
+        DB::table('trays')->insert([
+
+            'tray_name'=>'TQ01-6',
+            'trolley_id'=>14,
+            'number_of_devices'=>0,
+
+        ]);
+
+
 
     }
 }

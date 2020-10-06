@@ -50,7 +50,6 @@
                         </tr>
 
                         @foreach($sellingProducts as $sellingProduct )
-
                         <tr>
                             <td><div class="table-element">{{$sellingProduct->id}}</td>
                             <td ><div class="table-element"><img src="{{asset('/storage/product_images').'/'.$sellingProduct->product_image}}" height="50px"></div></td>

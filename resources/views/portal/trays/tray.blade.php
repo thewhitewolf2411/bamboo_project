@@ -28,7 +28,7 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Tray {{$tray->id}}</p>
+                        <p>Tray {{$tray->tray_name}}</p>
                     </div>
                 </div>
 
@@ -65,6 +65,23 @@
 
                             </div></td>
                         </tr>
+                    </table>
+
+                    <div class="portal-title-container">
+                        <div class="portal-title">
+                            <p>Tray {{$tray->tray_name}} Content</p>
+                        </div>
+                    </div>
+
+                    <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td><div class="table-element">Tradein ID</div></td>
+                            <td><div class="table-element">Tradein Barcode</div></td>
+                        </tr>
+                        @foreach($tradeins as $tradein)
+                            <td><div class="table-element">{{$tradein->id}}</div></td>
+                            <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                        @endforeach
                     </table>
                 </div>
 

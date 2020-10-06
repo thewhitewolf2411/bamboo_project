@@ -127,6 +127,9 @@ Route::post('/portal/product/addsellingproduct/add', 'PortalController@addSellin
 Route::get('/portal/product/removebuyingproduct/{id}', 'PortalController@removeBuyingProduct')->middleware('auth');
 Route::get('/portal/product/removesellingproduct/{id}', 'PortalController@removeSellingProduct')->middleware('auth');
 
+Route::get('/portal/product/editsbuyingproduct/{id}', 'PortalController@showEditBuyingProductPage')->middleware('auth');
+Route::get('/portal/product/editsellingproduct/{id}', 'PortalController@showEditBuyingProductPage')->middleware('auth');
+
 //quarantine
 Route::get('/portal/quarantine', 'PortalController@showQuarantinePage')->middleware('auth');
 Route::get('/portal/quarantine/awaiting-response', 'PortalController@showAwaitingResponse')->middleware('auth');

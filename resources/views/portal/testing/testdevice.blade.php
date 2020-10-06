@@ -198,10 +198,14 @@
                             <select class="form-control" id="cosmetic_condition" name="cosmetic_condition" required>
                                 <option disabled selected value> -- select an option -- </option>
                                 <option value="Grade A">Grade A</option>
+                                <option value="Grade B+">Grade B+</option>
                                 <option value="Grade B">Grade B</option>
                                 <option value="Grade C">Grade C</option>
-                                <option value="WSI - WSD">WSI - WSD</option>
-                                <option value="WSI - WSD - NW - PND - FMIP">WSI - WSD - NW - PND - FMIP</option>
+                                <option value="WSI">WSI</option>
+                                <option value="WSD">WSD</option>
+                                <option value="NW">NW</option>
+                                <option value="PND">PND</option>
+                                <option value="FMIP">FMIP</option>
                             </select>
                         </div>
 
