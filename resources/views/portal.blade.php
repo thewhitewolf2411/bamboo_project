@@ -31,6 +31,108 @@
                     </div>
                 </div>
                 <div class="portal-content-container">
+
+                    @if($portalUser->recycle)
+                    <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100">
+                        <div class="">
+                            <h5>Recycle</h5>
+                        </div>
+                        <div class="d-flex flex-wrap">
+                            @if($portalUser->trade_pack_despatch)
+
+                            <a href="/portal/customer-care/trade-pack" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                     <p>Trade-pack Despatch </p>
+                                </div>
+                            </a>
+    
+                            @endif
+
+                            @if($portalUser->awaiting_receipt)
+
+                            <a href="" class="col-2 my-2">
+                                <div class="portal-content-element" >
+                                     <p>Awaiting Receipt </p>
+                                </div>
+                            </a>
+    
+                            @endif
+
+                            @if($portalUser->receiving)
+
+                            <a href="/portal/testing/receive" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                     <p>Receiving </p>
+                                </div>
+                            </a>
+    
+                            @endif
+
+                            @if($portalUser->device_testing)
+
+                            <a href="/portal/testing/find" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                     <p>Device Testing </p>
+                                </div>
+                            </a>
+    
+                            @endif
+
+                            @if($portalUser->trolley_management)
+
+                            <a href="/portal/trolleys" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                     <p>Trolley Management</p>
+                                </div>
+                            </a>
+    
+                            @endif
+
+                            @if($portalUser->trays_managment)
+
+                            <a href="/portal/trays" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                     <p>Trays Management </p>
+                                </div>
+                            </a>
+    
+                            @endif
+
+                            @if($portalUser->box_management)
+
+                            <a href="/portal/boxes" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                     <p>Box Management </p>
+                                </div>
+                            </a>
+    
+                            @endif
+
+                            @if($portalUser->quarantine_managment)
+
+                            <a href="/portal/quarantine" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                     <p>Quarantine Management </p>
+                                </div>
+                            </a>
+    
+                            @endif
+
+                            @if($portalUser->warehouse_management)
+
+                            <a href="" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                     <p>Warehouse Management </p>
+                                </div>
+                            </a>
+    
+                            @endif
+
+                        </div>
+
+                    </div>
+                    @endif
+
                     @if($portalUser->customer_care)
                     <a href="/portal/customer-care">
                         <div class="portal-content-element">

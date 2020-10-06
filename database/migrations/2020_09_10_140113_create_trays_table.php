@@ -18,6 +18,7 @@ class CreateTraysTable extends Migration
             $table->string('tray_name');
             $table->integer('trolley_id')->nullable();
             $table->integer('number_of_devices')->default(0);
+            $table->integer('max_number_of_devices')->default(200);
             $table->timestamps();
         });
     }

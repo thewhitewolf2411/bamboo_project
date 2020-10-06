@@ -24,8 +24,13 @@ class SellingProduct extends Model
     ];
 
     public function getBrand($brand_id){
-        $brandName = Brand::where('id', $brand_id)->get('brand_name');
-        return $brandName[0]->brand_name;
+        $brandName = Brand::where('id', $brand_id)->first();
+        #dd($brandName[0]->brand_name);
+        if($brandName == null){
+            return "Unknown";
+        }
+        $brandName = $brandName->brand_name;
+        return $brandName;
     }
 
     public function getCategory($category_id){

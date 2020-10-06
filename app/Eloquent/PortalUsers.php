@@ -19,6 +19,33 @@ class PortalUsers extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id','customer-care','categories','product','quarantine','testing','payments','reports','feeds','users','settings','cms','trays', 'trolleys','boxes'
+        'user_id',
+        'recycle',
+            'trade_pack_despatch',
+            'awaiting_receipt',
+            'receiving',
+            'device_testing',
+            'trolley_management',
+            'trays_managment',
+            'box_management',
+            'quarantine_managment',
+            'warehouse_management',
+        'customer_care',
+            'order_management',
+            'create_order',
+            'customer_accounts',
+        'administration',
+            'salvage_models',
+            'feeds',
+            'users',
+            'reports',
+            'cms',
+            'categories',
+            'settings',
+        'payments',
+            'payments_awaiting_assignment',
+            'pending_payments',
+            'completed_payment',
+            'payment_report'
     ];
 }
