@@ -23,6 +23,8 @@
 
             <div class="d-flex p-5">
 
+            @if(isset($cart))
+
                 <div class="d-flex flex-column w-75">
                     <div class="center-title-container">
                         <p style="color: #23AAF7;">Buying items</p>
@@ -59,29 +61,28 @@
                     </div>
                     <div class="d-flex flex-column w-100">
                         @foreach($cart->items as $key=>$cartitem)
-
-                        @if($cartitem['type'] == 'tradein')
-                            <div class="cart-product d-flex justify-content-between">
-                                <div class="cart-product-image w-25">
-                                    <img src="{{$cartitem['product']->product_image}}">
+                            @if($cartitem['type'] == 'tradein')
+                                <div class="cart-product d-flex justify-content-between">
+                                    <div class="cart-product-image w-25">
+                                        <img src="{{$cartitem['product']->product_image}}">
+                                    </div>
+                                    <div class="d-flex flex-column w-25">
+                                        <h6 class="m-0 mb-3 font-weight-bold">{{$cartitem['product']->product_name}}</h6>
+                                        <p class="m-0">Network: {{$cartitem['product']->product_network}}</p>
+                                        <p class="m-0">Memory: {{$cartitem['product']->product_memory}}</p>
+                                        <p class="m-0">Colour: {{$cartitem['product']->product_colour}}</p>
+                                        <p class="m-0">Grade: {{$cartitem['product']->product_grade}}</p>
+                                    </div>
+                                    <div class="d-flex flex-column w-25">
+                                        <h6 class="m-0 mb-3 font-weight-bold">Item price</h6>
+                                        <p class="m-0">Price: £{{$cartitem['price']}}</p>
+                                    </div>
+                                    <div class="d-flex flex-column w-25">
+                                        <h6 class="m-0 mb-3 font-weight-bold">Total Price</h6>
+                                        <p class="m-0 font-weight-bold">Total Price: £{{$cartitem['price']}}</p>
+                                    </div>
                                 </div>
-                                <div class="d-flex flex-column w-25">
-                                    <h6 class="m-0 mb-3 font-weight-bold">{{$cartitem['product']->product_name}}</h6>
-                                    <p class="m-0">Network: {{$cartitem['product']->product_network}}</p>
-                                    <p class="m-0">Memory: {{$cartitem['product']->product_memory}}</p>
-                                    <p class="m-0">Colour: {{$cartitem['product']->product_colour}}</p>
-                                    <p class="m-0">Grade: {{$cartitem['product']->product_grade}}</p>
-                                </div>
-                                <div class="d-flex flex-column w-25">
-                                    <h6 class="m-0 mb-3 font-weight-bold">Item price</h6>
-                                    <p class="m-0">Price: £{{$cartitem['price']}}</p>
-                                </div>
-                                <div class="d-flex flex-column w-25">
-                                    <h6 class="m-0 mb-3 font-weight-bold">Total Price</h6>
-                                    <p class="m-0 font-weight-bold">Total Price: £{{$cartitem['price']}}</p>
-                                </div>
-                            </div>
-                        @endif
+                            @endif
 
                         @endforeach
                     </div>
@@ -93,6 +94,8 @@
                     </div>
 
                     <div class="form-container">
+
+                    
 
                         <form action="/cart/sell" method="POST">
                             @csrf
@@ -109,11 +112,16 @@
         
                         </form>
         
-        
                     </div>
                 </div>
 
             </div>
+
+            @else
+
+                Your basket is empty
+
+            @endif
 
  
         <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

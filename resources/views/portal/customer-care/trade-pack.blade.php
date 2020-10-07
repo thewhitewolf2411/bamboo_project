@@ -64,7 +64,7 @@
                                     <i class="fa fa-paper-plane"></i>
                                 </a>
                                 @else
-                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->id}})>
+                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}})>
                                     <i class="fa fa fa-print"></i>
                                 </a>
                                 @endif
@@ -77,6 +77,12 @@
 
                         @endforeach
                     </table>
+
+                    <form id="print_trade_pack_form" name="form-print-trade-pack" enctype="multipart/form-data" action="/portal/customer-care/trade-in/printlabel" method="post">
+                        @csrf
+                        <input type="hidden" id="print_trade_pack_trade_in_id" name="hidden_print_trade_pack_trade_in_id">
+                        <input type="submit" id="print_trade_pack_trade_in_trigger" name="print_trade_pack_trade_in" value="Print Trade Pack Trade-In">
+                    </form>
 
                     <form id="set_label_as_sent_form" name="form-print-trade-pack" enctype="multipart/form-data" action="/portal/customer-care/trade-in/setassent" method="post">
                         @csrf
