@@ -13083,7 +13083,7 @@ h3, h4, h5 {
 }
 
 .portal-app-container {
-  max-width: 1100px;
+  max-width: 1220px;
   margin: auto;
 }
 
@@ -13168,6 +13168,10 @@ h3, h4, h5 {
 .portal-main {
   margin-top: 128px;
   min-height: auto;
+}
+
+.portal-main a {
+  outline: none;
 }
 
 .portal-title p {
@@ -13333,6 +13337,15 @@ input[type=number] {
   border-radius: 5px;
   padding: 20px 20px 0;
   margin-bottom: 20px;
+}
+
+.dropdown-toggle {
+  background: transparent !important;
+  border: none !important;
+}
+
+.btn-secondary:not(:disabled):not(.disabled):active:focus, .btn-secondary:not(:disabled):not(.disabled).active:focus, .show > .btn-secondary.dropdown-toggle:focus {
+  box-shadow: none;
 }
 
 .register-elements-container {
