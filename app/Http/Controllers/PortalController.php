@@ -1201,12 +1201,22 @@ class PortalController extends Controller
         }
 
         $traycontent = TrayContent::where('trade_in_id', $tradein->id)->first();
+
+        $tray2 = Tray::where('id', $traycontent->tray_id)->first();
+        $tray2->number_of_devices = $tray2->number_of_devices - 1;
+        $tray2->save();
+
         $traycontent->tray_id = $tray->id;
         $traycontent->save();
 
 
+        $tray->number_of_devices = $tray->number_of_devices + 1;
+        $tray->save();
 
-        return redirect('/portal');
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.testing.totray')->with(['tray_name'=>$tray->tray_name, 'portalUser'=>$portalUser]);
         
     }
 
@@ -1308,6 +1318,8 @@ class PortalController extends Controller
             }
         }
 
+        #dd($tray);
+
         $traycontent = new TrayContent();
         $traycontent->tray_id = $tray->id;
         $traycontent->trade_in_id = $tradein->id;
@@ -1318,7 +1330,10 @@ class PortalController extends Controller
         $tray->save();
 
         $tradein->save();
-        return redirect('/portal/testing/');
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.testing.totray')->with(['tray_name'=>$tray->tray_name, 'portalUser'=>$portalUser]);
     }
     
     //payments
