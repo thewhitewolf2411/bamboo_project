@@ -106,7 +106,7 @@ class SellController extends Controller
 
         $grade = SellingProduct::where('id', $request->productid)->first();
 
-        #dd($grade);
+        #dd($request->all());
 
         if($grade->customer_grade_price_1 == $request->grade){
             $grade = $grade->customer_grade_price_1;
@@ -123,6 +123,8 @@ class SellController extends Controller
         else if($grade->customer_grade_price_5 == $request->grade){
             $grade = $grade->customer_grade_price_5;
         }
+
+        #dd($grade);
 
         $product = SellingProduct::where('id',$request->productid)->first();
 

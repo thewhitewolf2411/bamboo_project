@@ -70,6 +70,7 @@ class DatabaseSeeder extends Seeder
             'customer_accounts'=>true,
             'administration'=>true,
             'salvage_models'=>true,
+            'sales_models'=>true,
             'feeds'=>true,
             'users'=>true,
             'reports'=>true,

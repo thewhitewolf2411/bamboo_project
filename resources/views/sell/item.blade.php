@@ -42,8 +42,9 @@
                     </div>
                     <div class="product-selected product-grade-container">
                         <p>Product Grade:</p>
-                        <select class="form-control" id="grade" onchange="gradeChanged(this)">
-                            <option value="{{$product->customer_grade_price_1 }}" selected>Excellent working</option>
+                        <select class="form-control" id="grade-select" onchange="gradeChanged(this)">
+                            <option value="" selected disabled>Select your grade</option>
+                            <option value="{{$product->customer_grade_price_1 }}">Excellent working</option>
                             <option value="{{$product->customer_grade_price_2 }}">Good working</option>
                             <option value="{{$product->customer_grade_price_3 }}">Poor working</option>
                             <option value="{{$product->customer_grade_price_4 }}">Damaged working</option>
@@ -61,9 +62,9 @@
                             <div class="add-to-cart-container">
                                 @csrf
                                 <input type="hidden" name="productid" value="{{$product->id}}">
-                                <input type="hidden" name="grade" id="grade" value="{{$product->customer_grade_price_1}}"></input>
+                                <input type="hidden" name="grade" id="grade" value=""></input>
                                 <input type="hidden" name="type" value="tradein"></input>
-                                <button type="submit" class="btn btn-primary btn-orange">Add selling cart</button>
+                                <button type="submit" class="btn btn-primary btn-orange">Add to cart</button>
                             </div>
                         </form>
 
@@ -211,6 +212,8 @@
             var value = selectObject.value;
             document.getElementById('product-price').innerHTML = '£' + value;
             document.getElementById('grade').value = value;
+
+            console.log(document.getElementById('grade').value);
 
         }
 

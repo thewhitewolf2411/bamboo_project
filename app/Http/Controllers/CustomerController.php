@@ -109,7 +109,6 @@ class CustomerController extends Controller
     }
 
     public function addProductToCart(Request $request){
-
         if(Auth::User()){
             $product = BuyingProduct::where('id',$request->productid)->first();
 

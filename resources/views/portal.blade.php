@@ -33,14 +33,14 @@
                 <div class="portal-content-container">
 
                     @if($portalUser->recycle)
-                    <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100">
+                    <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100 w-100 my-3">
                         <div class="">
                             <h5>Recycle</h5>
                         </div>
-                        <div class="d-flex flex-wrap">
+                        <div class="d-flex flex-wrap w-100">
                             @if($portalUser->trade_pack_despatch)
 
-                            <a href="/portal/customer-care/trade-pack" class="col-2 my-2">
+                            <a href="/portal/customer-care/trade-in/all" class="col-2 my-2">
                                 <div class="portal-content-element">
                                      <p>Trade-pack Despatch </p>
                                 </div>
@@ -50,7 +50,7 @@
 
                             @if($portalUser->awaiting_receipt)
 
-                            <a href="" class="col-2 my-2">
+                            <a href="/portal/customer-care/trade-pack" class="col-2 my-2">
                                 <div class="portal-content-element" >
                                      <p>Awaiting Receipt </p>
                                 </div>
@@ -134,103 +134,185 @@
                     @endif
 
                     @if($portalUser->customer_care)
-                    <a href="/portal/customer-care">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-child"></i>Customer Care</p>
+                    <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100 w-100 my-3">
+                        <div class="">
+                            <h5>Customer Care</h5>
                         </div>
-                    </a>
-                    @endif
-                    @if($portalUser->categories)
-                    <a href="/portal/categories">
-                        <div class="portal-content-element">
-                        <p><i class="fa fa-folder-open-o"></i>Categories</p>
+                        <div class="d-flex flex-wrap w-100">
+                            @if($portalUser->trade_pack_despatch)
+
+                            <a href="/portal/customer-care/trade-pack" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Trade-pack Despatch </p>
+                                </div>
+                            </a>
+
+                            @endif
+
+                            @if($portalUser->order_management)
+
+                            <a href="/portal/customer-care/trade-pack" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Order Management</p>
+                                </div>
+                            </a>
+
+                            @endif
+
+                            @if($portalUser->create_order)
+
+                            <a href="/portal/customer-care/trade-pack" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Trade-pack Despatch </p>
+                                </div>
+                            </a>
+
+                            @endif
                         </div>
-                    </a>
+
+                    </div>
                     @endif
-                    @if($portalUser->product)
-                    <a href="/portal/product">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-barcode"></i>Product</p>
+
+                    @if($portalUser->administration)
+                    <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100 w-100 my-3">
+                        <div class="">
+                            <h5>Administration</h5>
                         </div>
-                    </a>
-                    @endif
-                    @if($portalUser->quarantine)
-                    <a href="/portal/quarantine">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-stethoscope"></i>Quarantine</p>
+                        <div class="d-flex flex-wrap w-100">
+                            @if($portalUser->salvage_models)
+
+                            <a href="/portal/product/selling-products" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Salvage Models </p>
+                                </div>
+                            </a>
+
+                            @endif
+
+                            @if($portalUser->sales_models)
+
+                            <a href="/portal/product/buying-products" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Sales Models </p>
+                                </div>
+                            </a>
+
+                            @endif
+
+                            @if($portalUser->feeds)
+
+                            <a href="/portal/feeds" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Feeds</p>
+                                </div>
+                            </a>
+
+                            @endif
+
+                            @if($portalUser->users)
+
+                            <a href="/portal/user" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Users </p>
+                                </div>
+                            </a>
+
+                            @endif
+
+                            @if($portalUser->reports)
+
+                            <a href="/portal/reports" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Reports </p>
+                                </div>
+                            </a>
+
+                            @endif
+
+                            @if($portalUser->cms)
+
+                            <a href="/portal/cms" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>CMS </p>
+                                </div>
+                            </a>
+
+                            @endif
+
+                            @if($portalUser->categories)
+
+                            <a href="/portal/categories" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Categories </p>
+                                </div>
+                            </a>
+
+                            @endif
+
+                            @if($portalUser->settings)
+
+                            <a href="/portal/settings" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Settings </p>
+                                </div>
+                            </a>
+
+                            @endif
                         </div>
-                    </a>
+
+                    </div>
                     @endif
-                    @if($portalUser->testing)
-                    <a href="/portal/testing">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-tachometer"></i>Testing</p>
-                        </div>
-                    </a>
-                    @endif
+
                     @if($portalUser->payments)
-                    <a href="/portal/payments">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-credit-card"></i>Payments</p>
+                    <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100 w-100 my-3">
+                        <div class="">
+                            <h5>Payments</h5>
                         </div>
-                    </a>
-                    @endif
-                    @if($portalUser->reports)
-                    <a href="/portal/reports">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-line-chart"></i>Reports</p>
+                        <div class="d-flex flex-wrap w-100">
+                            @if($portalUser->payments_awaiting_assignment)
+
+                            <a href="/portal/payments/awaiting" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Payments Awaiting Assignment </p>
+                                </div>
+                            </a>
+
+                            @endif
+
+                            @if($portalUser->pending_payments)
+
+                            <a href="/portal/payments/pending" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Pending Payments</p>
+                                </div>
+                            </a>
+
+                            @endif
+
+                            @if($portalUser->completed_payment)
+
+                            <a href="/portal/payments/completed" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Completed Payment </p>
+                                </div>
+                            </a>
+
+                            @endif
+
+                            @if($portalUser->payment_report)
+
+                            <a href="/portal/payments/reports" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Payment Report </p>
+                                </div>
+                            </a>
+
+                            @endif
                         </div>
-                    </a>
+
+                    </div>
                     @endif
-                    @if($portalUser->feeds)
-                    <a href="/portal/feeds">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-cloud-download"></i>Feeds</p>
-                        </div>
-                    </a>
-                    @endif
-                    @if($portalUser->users)
-                    <a href="/portal/user">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-user"></i>Users</p>
-                        </div>
-                    </a>
-                    @endif
-                    @if($portalUser->settings)
-                    <a href="/portal/settings">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-cogs"></i>Settings</p>
-                        </div>
-                    </a>
-                    @endif
-                    @if($portalUser->cms)
-                    <a href="/portal/cms">
-                        <div class="portal-content-element">
-                        <p><i class="fa fa-file"></i>CMS</p>
-                        </div>
-                    </a>
-                    @endif
-                    @if($portalUser->trays)
-                    <a href="/portal/trays">
-                        <div class="portal-content-element">
-                        <p><i class="fa fa-inbox"></i>Trays Managment</p>
-                        </div>
-                    </a>
-                    @endif
-                    @if($portalUser->trolleys)
-                    <a href="/portal/trolleys">
-                        <div class="portal-content-element">
-                        <p><i class="fa fa-shopping-cart"></i>Trolley Managment</p>
-                        </div>
-                    </a>
-                    @endif
-                    @if($portalUser->boxes)
-                    <a href="/portal/boxes">
-                        <div class="portal-content-element">
-                        <p><i class="fa fa-cube"></i>Boxes</p>
-                        </div>
-                    </a>
-                    @endif
+
                 </div>
             </div>
         </div>

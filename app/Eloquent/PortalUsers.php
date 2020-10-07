@@ -36,6 +36,7 @@ class PortalUsers extends Model
             'customer_accounts',
         'administration',
             'salvage_models',
+            'sales_models',
             'feeds',
             'users',
             'reports',
