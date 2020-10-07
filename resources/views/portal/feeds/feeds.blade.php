@@ -31,21 +31,25 @@
                     </div>
                 </div>
                 <div class="portal-content-container">
-                    <a href="/portal/feeds/export-import">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-download"></i>Export/Import</p>
+                    <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100 w-100 my-3">
+                        <div class="d-flex flex-wrap w-100">
+                            <a href="/portal/feeds/export-import" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p><i class="fa fa-download"></i>Export/Import</p>
+                                </div>
+                            </a>
+                            <a href="/portal/feeds/summary" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p><i class="fa fa-bars"></i>Summary</p>
+                                </div>
+                            </a>
+                            <a href="/portal/feeds/external" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p><i class="fa fa-bars"></i>External</p>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                    <a href="/portal/feeds/summary">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-bars"></i>Summary</p>
-                        </div>
-                    </a>
-                    <a href="/portal/feeds/external">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-bars"></i>External</p>
-                        </div>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
