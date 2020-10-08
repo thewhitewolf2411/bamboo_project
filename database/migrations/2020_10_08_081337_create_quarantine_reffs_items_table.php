@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBoxesTable extends Migration
+class CreateQuarantineReffsItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateBoxesTable extends Migration
      */
     public function up()
     {
-        Schema::create('boxes', function (Blueprint $table) {
+        Schema::create('quarantine_reffs_items', function (Blueprint $table) {
             $table->id();
-            $table->string('manifacturer');
-            $table->string('box_name');
-            $table->string('description');
+            $table->integer('quarantine_reffs_id');
+            $table->integer('trade_in_id');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateBoxesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('boxes');
+        Schema::dropIfExists('quarantine_reffs_items');
     }
 }

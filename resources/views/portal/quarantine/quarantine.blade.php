@@ -32,31 +32,34 @@
                     </div>
                 </div>
                 <div class="portal-content-container">
-                    <a href="/portal/quarantine/awaiting-response">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-comment-o"></i>Awaiting Seller Response</p>
+
+                    <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100 w-100 my-3">
+                    
+                        <div class="d-flex flex-wrap w-100">
+                            <a href="/portal/quarantine/awaiting-response" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Awaiting Seller Response</p>
+                                </div>
+                            </a>
+                            <a href="/portal/quarantine/return" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Return To Seller</p>
+                                </div>
+                            </a>
+                            <a href="/portal/quarantine/retest" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Products To Retest</p>
+                                </div>
+                            </a>
+                            <a href="/portal/quarantine/stock" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Add To Stock</p>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                    <a href="/portal/quarantine/return">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-paper-plane-o"></i>Return To Seller</p>
-                        </div>
-                    </a>
-                    <a href="/portal/quarantine/retest">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-tachometer"></i>Products To Retest</p>
-                        </div>
-                    </a>
-                    <a href="/portal/quarantine/stock">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-share-square-o"></i>Add To Stock</p>
-                        </div>
-                    </a>
-                    <a href="/portal/quarantine/manual">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-plus-square-o"></i>Manually Managed</p>
-                        </div>
-                    </a>
+                
+                </div>
+
 
                 </div>
             </div>

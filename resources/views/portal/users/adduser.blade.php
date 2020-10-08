@@ -65,61 +65,118 @@
                         </div>
                         <div class="d-flex flex-wrap p20 access-container">
                             <div class="form-group p20 w-25">
+                                <input type="checkbox" class="form-check-input" name="recycle" id="recycle">
+                                <label class="form-check-label" for="recycle">Recycle</label>
+
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="trade_pack_despatch" id="trade_pack_despatch">
+                                    <label class="form-check-label" for="trade_pack_despatch">Trade Pack Despatch</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="awaiting_receipt" id="awaiting_receipt">
+                                    <label class="form-check-label" for="awaiting_receipt">Awaiting Receipt</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="receiving" id="receiving">
+                                    <label class="form-check-label" for="receiving">Receiving</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="device_testing" id="device_testing">
+                                    <label class="form-check-label" for="device_testing">Device Testing</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="trolley_managment" id="trolley_managment">
+                                    <label class="form-check-label" for="trolley_managment">Trolley Management</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="trays_managment" id="trays_managment">
+                                    <label class="form-check-label" for="trays_managment">Trays Management</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="quarantine_managment" id="quarantine_managment">
+                                    <label class="form-check-label" for="quarantine_managment">Quarantine Managment</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="warehouse_management" id="warehouse_management">
+                                    <label class="form-check-label" for="warehouse_management">Warehouse Management</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group p20 w-25">
                                 <input type="checkbox" class="form-check-input" name="customer_care" id="customer_care">
                                 <label class="form-check-label" for="customer_care">Customer Care</label>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="order_management" id="order_management">
+                                    <label class="form-check-label" for="order_management">Order Management</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="create_order" id="create_order">
+                                    <label class="form-check-label" for="create_order">Create Order</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="customer_accounts" id="customer_accounts">
+                                    <label class="form-check-label" for="customer_accounts">Customer Accounts</label>
+                                </div>
                             </div>
+
                             <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="categories" id="categories">
-                                <label class="form-check-label" for="categories">Categories</label>
+                                <input type="checkbox" class="form-check-input" name="administration" id="administration">
+                                <label class="form-check-label" for="administration">Administration</label>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="salvage_models" id="salvage_models">
+                                    <label class="form-check-label" for="salvage_models">Salvage Models</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="sales_models" id="sales_models">
+                                    <label class="form-check-label" for="sales_models">Sales Models</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="feeds" id="feeds">
+                                    <label class="form-check-label" for="feeds">Feeds</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="users" id="users">
+                                    <label class="form-check-label" for="users">Users</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="reports" id="reports">
+                                    <label class="form-check-label" for="reports">Reports</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="cms" id="cms">
+                                    <label class="form-check-label" for="cms">Cms</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="categories" id="categories">
+                                    <label class="form-check-label" for="categories">Categories</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="settings" id="settings">
+                                    <label class="form-check-label" for="settings">Settings</label>
+                                </div>
                             </div>
-                            <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="product" id="product">
-                                <label class="form-check-label" for="product">Product</label>
-                            </div>
-                            <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="quarantine" id="quarantine">
-                                <label class="form-check-label" for="quarantine">Quarantine</label>
-                            </div>
-                            <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="testing" id="testing">
-                                <label class="form-check-label" for="testing">Testing</label>
-                            </div>
+
                             <div class="form-group p20 w-25">
                                 <input type="checkbox" class="form-check-input" name="payments" id="payments">
                                 <label class="form-check-label" for="payments">Payments</label>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="payments_awaiting_assignment" id="payments_awaiting_assignment">
+                                    <label class="form-check-label" for="payments_awaiting_assignment">Payments Awaiting Assignment</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="pending_payments" id="pending_payments">
+                                    <label class="form-check-label" for="pending_payments">Pending Payments</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="completed_payment" id="completed_payment">
+                                    <label class="form-check-label" for="completed_payment">Completed Payment</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="payment_report" id="payment_report">
+                                    <label class="form-check-label" for="payment_report">Payment Report</label>
+                                </div>
                             </div>
-                            <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="reports" id="reports">
-                                <label class="form-check-label" for="reports">Reports</label>
-                            </div>
-                            <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="feeds" id="feeds">
-                                <label class="form-check-label" for="feeds">Feeds</label>
-                            </div>
-                            <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="users" id="users">
-                                <label class="form-check-label" for="users">Users</label>
-                            </div>
-                            <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="settings" id="settings">
-                                <label class="form-check-label" for="settings">Settings</label>
-                            </div>
-                            <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="cms" id="cms">
-                                <label class="form-check-label" for="cms">CMS</label>
-                            </div>
-                            <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="trays" id="trays">
-                                <label class="form-check-label" for="cms">Trays Managment</label>
-                            </div>
-                            <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="trolleys" id="trolleys">
-                                <label class="form-check-label" for="cms">Trolley Managment</label>
-                            </div>
-                            <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="boxes" id="boxes">
-                                <label class="form-check-label" for="cms">Box Managment</label>
-                            </div>
+
                         </div>
                         <div class="form-group p20">
                             <button type="submit" class="btn btn-primary btn-blue">Add new user</button>

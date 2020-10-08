@@ -1006,7 +1006,782 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
+        //Quarantine
+        //Quarantine bay 1
+
+        DB::table('quarantine_bays')->insert([
+            'bay_name'=>'Bay 1',
+            'bay_description'=>'FIMP',
+            'number_of_reffs'=>12
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>1,
+            'reffs_name'=>'FIMP-1',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>1,
+            'reffs_name'=>'FIMP-2',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>1,
+            'reffs_name'=>'FIMP-3',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>1,
+            'reffs_name'=>'FIMP-4',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>1,
+            'reffs_name'=>'FIMP-5',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>1,
+            'reffs_name'=>'FIMP-6',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>1,
+            'reffs_name'=>'FIMP-7',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>1,
+            'reffs_name'=>'FIMP-8',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>1,
+            'reffs_name'=>'FIMP-9',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>1,
+            'reffs_name'=>'FIMP-10',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>1,
+            'reffs_name'=>'FIMP-11',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>1,
+            'reffs_name'=>'FIMP-12',
+        ]);
+
+        //Quarantine Bay 2
+
+        DB::table('quarantine_bays')->insert([
+            'bay_name'=>'Bay 2',
+            'bay_description'=>'Google Lock',
+            'number_of_reffs'=>5
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>2,
+            'reffs_name'=>'GOCK-1',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>2,
+            'reffs_name'=>'GOCK-2',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>2,
+            'reffs_name'=>'GOCK-3',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>2,
+            'reffs_name'=>'GOCK-4',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>2,
+            'reffs_name'=>'GOCK-5',
+        ]);
+
+        //Quarantine Bay 3
+
+        DB::table('quarantine_bays')->insert([
+            'bay_name'=>'Bay 3',
+            'bay_description'=>'Wrong Phone',
+            'number_of_reffs'=>5
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>3,
+            'reffs_name'=>'WRPH-1',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>3,
+            'reffs_name'=>'WRPH-2',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>3,
+            'reffs_name'=>'WRPH-3',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>3,
+            'reffs_name'=>'WRPH-4',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>3,
+            'reffs_name'=>'WRPH-5',
+        ]);
+
+        //Quarantine Bay 4
+
+        DB::table('quarantine_bays')->insert([
+            'bay_name'=>'Bay 4',
+            'bay_description'=>'Device Missing',
+            'number_of_reffs'=>5
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>4,
+            'reffs_name'=>'DEMI-1',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>4,
+            'reffs_name'=>'DEMI-2',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>4,
+            'reffs_name'=>'DEMI-3',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>4,
+            'reffs_name'=>'DEMI-4',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>4,
+            'reffs_name'=>'DEMI-5',
+        ]);
+
+        //Quarantine Bay 5
+
+        DB::table('quarantine_bays')->insert([
+            'bay_name'=>'Bay 5',
+            'bay_description'=>'Blacklisted',
+            'number_of_reffs'=>12
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>5,
+            'reffs_name'=>'BLCK-1',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>5,
+            'reffs_name'=>'BLCK-2',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>5,
+            'reffs_name'=>'BLCK-3',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>5,
+            'reffs_name'=>'BLCK-4',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>5,
+            'reffs_name'=>'BLCK-5',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>5,
+            'reffs_name'=>'BLCK-6',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>5,
+            'reffs_name'=>'BLCK-7',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>5,
+            'reffs_name'=>'BLCK-8',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>5,
+            'reffs_name'=>'BLCK-9',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>5,
+            'reffs_name'=>'BLCK-10',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>5,
+            'reffs_name'=>'BLCK-11',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>5,
+            'reffs_name'=>'BLCK-12',
+        ]);
+
+        //Quarantine Bay 6
+
+        DB::table('quarantine_bays')->insert([
+            'bay_name'=>'Bay 6',
+            'bay_description'=>'Pin Lock',
+            'number_of_reffs'=>12
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>6,
+            'reffs_name'=>'PIN-1',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>6,
+            'reffs_name'=>'PIN-2',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>6,
+            'reffs_name'=>'PIN-3',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>6,
+            'reffs_name'=>'PIN-4',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>6,
+            'reffs_name'=>'PIN-5',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>6,
+            'reffs_name'=>'PIN-6',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>6,
+            'reffs_name'=>'PIN-7',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>6,
+            'reffs_name'=>'PIN-8',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>6,
+            'reffs_name'=>'PIN-9',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>6,
+            'reffs_name'=>'PIN-10',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>6,
+            'reffs_name'=>'PIN-11',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>6,
+            'reffs_name'=>'PIN-12',
+        ]);
+
+        //Quarantine Bay 7
+
+        DB::table('quarantine_bays')->insert([
+            'bay_name'=>'Bay 7',
+            'bay_description'=>'Downgraded',
+            'number_of_reffs'=>12
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>7,
+            'reffs_name'=>'DOWN-1',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>7,
+            'reffs_name'=>'DOWN-2',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>7,
+            'reffs_name'=>'DOWN-3',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>7,
+            'reffs_name'=>'DOWN-4',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>7,
+            'reffs_name'=>'DOWN-5',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>7,
+            'reffs_name'=>'DOWN-6',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>7,
+            'reffs_name'=>'DOWN-7',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>7,
+            'reffs_name'=>'DOWN-8',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>7,
+            'reffs_name'=>'DOWN-9',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>7,
+            'reffs_name'=>'DOWN-10',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>7,
+            'reffs_name'=>'DOWN-11',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>7,
+            'reffs_name'=>'DOWN-12',
+        ]);
+
+        //Quarantine Bay 8
+
+        DB::table('quarantine_bays')->insert([
+            'bay_name'=>'Bay 8',
+            'bay_description'=>'Downgraded',
+            'number_of_reffs'=>12
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>8,
+            'reffs_name'=>'DOWN-13',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>8,
+            'reffs_name'=>'DOWN-14',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>8,
+            'reffs_name'=>'DOWN-15',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>8,
+            'reffs_name'=>'DOWN-16',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>8,
+            'reffs_name'=>'DOWN-17',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>8,
+            'reffs_name'=>'DOWN-18',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>8,
+            'reffs_name'=>'DOWN-19',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>8,
+            'reffs_name'=>'DOWN-20',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>8,
+            'reffs_name'=>'DOWN-21',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>8,
+            'reffs_name'=>'DOWN-22',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>8,
+            'reffs_name'=>'DOWN-23',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>8,
+            'reffs_name'=>'DOWN-24',
+        ]);
+
+        //Quarantine Bay 9
+
+        DB::table('quarantine_bays')->insert([
+            'bay_name'=>'Bay 9',
+            'bay_description'=>'Downgraded',
+            'number_of_reffs'=>12
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>9,
+            'reffs_name'=>'DOWN-25',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>9,
+            'reffs_name'=>'DOWN-26',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>9,
+            'reffs_name'=>'DOWN-27',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>9,
+            'reffs_name'=>'DOWN-28',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>9,
+            'reffs_name'=>'DOWN-29',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>9,
+            'reffs_name'=>'DOWN-30',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>9,
+            'reffs_name'=>'DOWN-31',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>9,
+            'reffs_name'=>'DOWN-32',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>9,
+            'reffs_name'=>'DOWN-33',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>9,
+            'reffs_name'=>'DOWN-34',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>9,
+            'reffs_name'=>'DOWN-35',
+        ]);
+
+        DB::table('quarantine_reffs')->insert([
+            'bay_id'=>9,
+            'reffs_name'=>'DOWN-36',
+        ]);
 
 
+        //boxes
+        //apple
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Apple',
+            'box_name'=>'(A) AP01',
+            'description'=>'Grade A',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Apple',
+            'box_name'=>'(B+) AP01',
+            'description'=>'Grade B+',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Apple',
+            'box_name'=>'(B) AP01',
+            'description'=>'Grade B',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Apple',
+            'box_name'=>'(C) AP01',
+            'description'=>'Grade C',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Apple',
+            'box_name'=>'(WSI) AP01',
+            'description'=>'Grade WSI',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Apple',
+            'box_name'=>'(WSD) AP01',
+            'description'=>'Grade WSD',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Apple',
+            'box_name'=>'(NWSI) AP01',
+            'description'=>'Grade NWSI',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Apple',
+            'box_name'=>'(NWSD) AP01',
+            'description'=>'Grade NWSD',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Apple',
+            'box_name'=>'(CAT) AP01',
+            'description'=>'Grade catastrophic',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Apple',
+            'box_name'=>'(FIMP) AP01',
+            'description'=>'FIMP Locked devices',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Apple',
+            'box_name'=>'(SICK) AP01',
+            'description'=>'SIM Locked devices',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Apple',
+            'box_name'=>'(TAB) AP01',
+            'description'=>'Tablet mixed grades',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Apple',
+            'box_name'=>'(SM) AP01',
+            'description'=>'Smart Watches mixed grades',
+        ]);
+
+        //samsung
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Samsung',
+            'box_name'=>'(A) SA01',
+            'description'=>'Grade A',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Samsung',
+            'box_name'=>'(B+) SA01',
+            'description'=>'Grade B+',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Samsung',
+            'box_name'=>'(B) SA01',
+            'description'=>'Grade B',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Samsung',
+            'box_name'=>'(C) SA01',
+            'description'=>'Grade C',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Samsung',
+            'box_name'=>'(WSI) SA01',
+            'description'=>'Grade WSI',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Samsung',
+            'box_name'=>'(WSD) SA01',
+            'description'=>'Grade WSD',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Samsung',
+            'box_name'=>'(NWSI) SA01',
+            'description'=>'Grade NWSI',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Samsung',
+            'box_name'=>'(NWSD) SA01',
+            'description'=>'Grade NWSD',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Samsung',
+            'box_name'=>'(CAT) SA01',
+            'description'=>'Grade catastrophic',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Samsung',
+            'box_name'=>'(GOCK) SA01',
+            'description'=>'Google Locked devices',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Samsung',
+            'box_name'=>'(SICK) SA01',
+            'description'=>'SIM Locked devices',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Samsung',
+            'box_name'=>'(TAB) SA01',
+            'description'=>'Tablets mixed grades',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Samsung',
+            'box_name'=>'(SW) SA01',
+            'description'=>'Smart Watches mixed grades',
+        ]);
+
+        //Huawei
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Huawei',
+            'box_name'=>'(A) HU01',
+            'description'=>'Grade A',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Huawei',
+            'box_name'=>'(B+) HU01',
+            'description'=>'Grade B+',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Huawei',
+            'box_name'=>'(B) HU01',
+            'description'=>'Grade B',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Huawei',
+            'box_name'=>'(C) HU01',
+            'description'=>'Grade C',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Huawei',
+            'box_name'=>'(WSI) HU01',
+            'description'=>'Grade WSI',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Huawei',
+            'box_name'=>'(WSD) HU01',
+            'description'=>'Grade WSD',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Huawei',
+            'box_name'=>'(NWSI) HU01',
+            'description'=>'Grade NWSI',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Huawei',
+            'box_name'=>'(NWSD) HU01',
+            'description'=>'Grade NWSD',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Huawei',
+            'box_name'=>'(CAT) HU01',
+            'description'=>'Grade catastrophic',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Huawei',
+            'box_name'=>'(GOCK) HU01',
+            'description'=>'Google Locked devices',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Huawei',
+            'box_name'=>'(SICK) HU01',
+            'description'=>'SIM Locked devices',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Huawei',
+            'box_name'=>'(TAB) HU01',
+            'description'=>'Tablets mixed grades',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Huawei',
+            'box_name'=>'(SW) HU01',
+            'description'=>'Smart Watches mixed grades',
+        ]);
+
+        //Miscenalious
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Miscenalious',
+            'box_name'=>'(A) MI01',
+            'description'=>'Grade A',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Miscenalious',
+            'box_name'=>'(B+) MI01',
+            'description'=>'Grade B+',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Miscenalious',
+            'box_name'=>'(B) MI01',
+            'description'=>'Grade B',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Miscenalious',
+            'box_name'=>'(C) MI01',
+            'description'=>'Grade C',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Miscenalious',
+            'box_name'=>'(WSI) MI01',
+            'description'=>'Grade WSI',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Miscenalious',
+            'box_name'=>'(WSD) MI01',
+            'description'=>'Grade WSD',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Miscenalious',
+            'box_name'=>'(NWSI) MI01',
+            'description'=>'Grade NWSI',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Miscenalious',
+            'box_name'=>'(NWSD) MI01',
+            'description'=>'Grade MWSD',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Miscenalious',
+            'box_name'=>'(CAT) MI01',
+            'description'=>'Grade catastrophic',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Miscenalious',
+            'box_name'=>'(GOCK) MI01',
+            'description'=>'Google Locked devices',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Miscenalious',
+            'box_name'=>'(SICK) MI01',
+            'description'=>'SIM Locked devices',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Miscenalious',
+            'box_name'=>'(TAB) MI01',
+            'description'=>'Tablets mixed grades',
+        ]);
+        DB::table('boxes')->insert([
+            'manifacturer'=>'Miscenalious',
+            'box_name'=>'(SW) MI01',
+            'description'=>'Smart Watches mixed grades',
+        ]);
     }
 }

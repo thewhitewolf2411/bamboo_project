@@ -1665,6 +1665,8 @@ class PortalController extends Controller
 
     public function addUser(Request $request){
 
+        dd($request->all());
+
         if($request->password !== $request->confirm_password){
             return \redirect('/portal/user/add')->with('error', "Password mismach.");
         }

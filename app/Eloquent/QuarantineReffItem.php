@@ -4,14 +4,14 @@ namespace App\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Quarantine extends Model
+class QuarantineReffItem extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'quarantine';
+    protected $table = 'quarantine_reffs_items';
 
     /**
      * The attributes that are mass assignable.
@@ -19,6 +19,6 @@ class Quarantine extends Model
      * @var array
      */
     protected $fillable = [
-        'product_id','awaiting_seller_response','return_to_seller','products_to_retest','add_to_stock','manually_managed'
+        'quarantine_reffs_id','trade_in_id'
     ];
 }

@@ -136,7 +136,6 @@ Route::get('/portal/quarantine/awaiting-response', 'PortalController@showAwaitin
 Route::get('/portal/quarantine/return', 'PortalController@showQuarantineReturn')->middleware('auth');
 Route::get('/portal/quarantine/retest', 'PortalController@showQuarantineRetest')->middleware('auth');
 Route::get('/portal/quarantine/stock', 'PortalController@showQuarantineStock')->middleware('auth');
-Route::get('/portal/quarantine/manual', 'PortalController@showQuarantineManual')->middleware('auth');
 
 //testing
 Route::get('/portal/testing', 'PortalController@showTestingPage')->middleware('auth');
