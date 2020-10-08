@@ -139,21 +139,11 @@
                             <h5>Customer Care</h5>
                         </div>
                         <div class="d-flex flex-wrap w-100">
-                            @if($portalUser->trade_pack_despatch)
-
-                            <a href="/portal/customer-care/trade-pack" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p>Trade-pack Despatch </p>
-                                </div>
-                            </a>
-
-                            @endif
-
                             @if($portalUser->order_management)
 
                             <a href="/portal/customer-care/trade-pack" class="col-2 my-2">
                                 <div class="portal-content-element">
-                                    <p>Order Management</p>
+                                    <p>Order Management </p>
                                 </div>
                             </a>
 
@@ -163,7 +153,17 @@
 
                             <a href="/portal/customer-care/trade-pack" class="col-2 my-2">
                                 <div class="portal-content-element">
-                                    <p>Trade-pack Despatch </p>
+                                    <p>Create Order</p>
+                                </div>
+                            </a>
+
+                            @endif
+
+                            @if($portalUser->customer_accounts)
+
+                            <a href="/portal/customer-care/seller" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Customer Accounts </p>
                                 </div>
                             </a>
 
