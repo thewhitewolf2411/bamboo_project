@@ -93,6 +93,10 @@
                                     <label class="form-check-label" for="trays_managment">Trays Management</label>
                                 </div>
                                 <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="box_managment" id="box_managment">
+                                    <label class="form-check-label" for="box_managment">Box Management</label>
+                                </div>
+                                <div class="form-group p20 w-25">
                                     <input type="checkbox" class="form-check-input" name="quarantine_managment" id="quarantine_managment">
                                     <label class="form-check-label" for="quarantine_managment">Quarantine Managment</label>
                                 </div>

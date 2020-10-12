@@ -36,7 +36,15 @@
                         <label for="">Search:</label>
                         <input id="searchinput" type="text" name="searchname" class="form-control">
                         <select class="form-control" id="search_by_field" name="select_search_by_field"><option value="1">User ID</option><option value="2" selected="">Name</option></select>
+
                     </form>
+                    @if((Session::get('error') != null))
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li>{{Session::get('error')}}</li>
+                            </ul>
+                        </div>
+                    @endif
                 </div>
 
                 <div></div>

@@ -1665,7 +1665,7 @@ class PortalController extends Controller
 
     public function addUser(Request $request){
 
-        dd($request->all());
+        #dd($request->all());
 
         if($request->password !== $request->confirm_password){
             return \redirect('/portal/user/add')->with('error', "Password mismach.");
@@ -1697,26 +1697,56 @@ class PortalController extends Controller
 
         $portalUser = new PortalUsers();
         $portalUser->user_id = $user->id;
+        if($request->recycle == "on"){
+            $portalUser->recycle = true;
+        }
+        if($request->trade_pack_despatch == "on"){
+            $portalUser->trade_pack_despatch = true;
+        }
+        if($request->awaiting_receipt == "on"){
+            $portalUser->awaiting_receipt = true;
+        }
+        if($request->receiving == "on"){
+            $portalUser->receiving = true;
+        }
+        if($request->device_testing == "on"){
+            $portalUser->device_testing = true;
+        }
+        if($request->trolley_managment == "on"){
+            $portalUser->trolley_management = true;
+        }
+        if($request->trays_managment == "on"){
+            $portalUser->trays_managment = true;
+        }
+        if($request->box_managment == "on"){
+            $portalUser->box_management = true;
+        }
+        if($request->quarantine_managment == "on"){
+            $portalUser->quarantine_managment = true;
+        }
+        if($request->warehouse_management == "on"){
+            $portalUser->warehouse_management = true;
+        }
         if($request->customer_care == "on"){
             $portalUser->customer_care = true;
         }
-        if($request->categories == "on"){
-            $portalUser->categories = true;
+        if($request->order_management == "on"){
+            $portalUser->order_management = true;
         }
-        if($request->product == "on"){
-            $portalUser->product = true;
+        if($request->create_order == "on"){
+            $portalUser->create_order = true;
         }
-        if($request->quarantine == "on"){
-            $portalUser->quarantine = true;
+        if($request->customer_accounts == "on"){
+            $portalUser->customer_accounts = true;
         }
-        if($request->testing == "on"){
-            $portalUser->testing = true;
+        if($request->administration == "on"){
+            $portalUser->administration = true;
         }
-        if($request->payments == "on"){
-            $portalUser->payments = true;
+        if($request->salvage_models == "on"){
+            $portalUser->salvage_models = true;
         }
-        if($request->reports == "on"){
-            $portalUser->reports = true;
+        if($request->sales_models == "on"){
+            $portalUser->sales_models = true;
         }
         if($request->feeds == "on"){
             $portalUser->feeds = true;
@@ -1724,21 +1754,31 @@ class PortalController extends Controller
         if($request->users == "on"){
             $portalUser->users = true;
         }
-        if($request->settings == "on"){
-            $portalUser->settings = true;
+        if($request->reports == "on"){
+            $portalUser->reports = true;
         }
         if($request->cms == "on"){
             $portalUser->cms = true;
         }
-        if($request->trays == "on"){
-            $portalUser->trays = true;
+        if($request->settings == "on"){
+            $portalUser->settings = true;
         }
-        if($request->trolleys == "on"){
-            $portalUser->trolleys = true;
+        if($request->payments == "on"){
+            $portalUser->payments = true;
         }
-        if($request->boxes == "boxes"){
-            $portalUser->cms = true;
+        if($request->payments_awaiting_assignment == "on"){
+            $portalUser->payments_awaiting_assignment = true;
         }
+        if($request->pending_payments == "on"){
+            $portalUser->pending_payments = true;
+        }
+        if($request->completed_payment == "on"){
+            $portalUser->completed_payment = true;
+        }
+        if($request->payment_report == "on"){
+            $portalUser->payment_report = true;
+        }
+
 
         $portalUser->save();
 
@@ -1749,14 +1789,30 @@ class PortalController extends Controller
         $user = null;
         $match = ['type_of_user' => 1, 'type_of_user' => 2, 'type_of_user' => 3];
         if($request->select_search_by_field == 1){
-            $user = User::where('id', $request->searchname)->where($match)->get();
-            $user = $user[0];
+            $user = User::where('id', $request->searchname)->where($match)->first();
+            #dd($user);
+            if($user != null){
+                $user = $user[0];
+            }
+            else{
+                return \redirect()->back()->with('error', "User not found. Please check your search parameters.");
+            }
+            
         }
         else if($request->select_search_by_field == 2){
-            $user = User::where('first_name', $request->searchname)->where($match)->get();
-            $user = $user[0];
+            $user = User::where('first_name', $request->searchname)->where($match)->first();
+            if($user != null){
+                $user = $user[0];
+            }
+            else{
+                return \redirect()->back()->with('error', "User not found. Please check your search parameters.");
+            }
         }
-        return view('portal.users.adduser')->with('userdata', $user)->with('title', "Search result: ".$user->first_name);
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.users.adduser')->with('userdata', $user)->with('title', "Search result: ".$user->first_name)->with('portalUser', $portalUser);
     }
 
     //settings
