@@ -35,9 +35,68 @@
                     <form action="/portal/testing/receive/checkdevicestatus" method="POST" class="d-flex flex-column">
                         @csrf
 
+
+                        <div class="form-group">
+                            <label for="fimp_or_google_lock">
+                                Does device have FIMP or Google Lock?
+                            </label>
+                            <select class="form-control" id="fimp_or_google_lock" name="fimp_or_google_lock" required>
+                                <option disabled selected value> -- select an option -- </option>
+                                <option id="fimp_or_google_lock_false" value="false">No</option>
+                                <option id="fimp_or_google_lock_true" value="true">Yes</option>
+                            </select>
+                        </div>
+
+                        <script>
+                            $('#fimp_or_google_lock').change(function(){
+                                var boolval = $(this).val();
+                                if(boolval == "true"){
+                                    $('#fake_missing_parts').removeAttr('required');
+                                    $('#fake_missing_parts').attr('disabled', true);
+
+                                    $('#device_fully_functional').removeAttr('required');
+                                    $('#device_fully_functional').attr('disabled', true);
+
+                                    $('#water_damage').removeAttr('required');
+                                    $('#water_damage').attr('disabled', true);
+
+                                    $('#pin_lock').removeAttr('required');
+                                    $('#pin_lock').attr('disabled', true);
+
+                                    var newOptions = {
+                                            "WSI":"WSI",
+                                            "WSD":"WSD",
+                                            "NWSI":"NWSI",
+                                            "NWSD":"NWSD",
+                                            "PND":"PND",
+                                            "CATASTROHIC":"CATASTROHIC"
+                                    }
+
+                                    $('#cosmetic_condition').empty();
+                                    $.each(newOptions, function(key, value){
+                                        $('#cosmetic_condition').append($("<option></option>")
+                                        .attr("value", value).text(key));
+                                    });
+                                }
+                                else{
+                                    $('#fake_missing_parts').attr('required', true);
+                                    $('#fake_missing_parts').attr('disabled', false);
+
+                                    $('#device_fully_functional').attr('required', true);
+                                    $('#device_fully_functional').attr('disabled', false);
+
+                                    $('#water_damage').attr('required', true);
+                                    $('#water_damage').attr('disabled', false);
+
+                                    $('#pin_lock').attr('required', true);
+                                    $('#pin_lock').attr('disabled', false);
+                                }
+                            });
+                        </script>
+
                         <div class="form-group">
                             <label for="fake_missing_parts">
-                                Does device has any fake or missing parts?
+                                Does device have any fake or missing parts?
                             </label>
                             <select class="form-control" id="fake_missing_parts" name="fake_missing_parts" required>
                                 <option disabled selected value> -- select an option -- </option>
@@ -45,7 +104,6 @@
                                 <option id="fake_missing_parts_true" value="true">Yes</option>
                             </select>
                         </div>
-                        <form action="/portal/testing/receive/checkimei" method="POST" class="d-flex flex-column">
 
                         <script>
                             
@@ -166,17 +224,6 @@
                                 <option disabled selected value> -- select an option -- </option>
                                 <option id="water_damage_false" value="false">No</option>
                                 <option id="water_damage_true" value="true">Yes</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="fimp_or_google_lock">
-                                Does device has FIMP or Google Lock?
-                            </label>
-                            <select class="form-control" id="fimp_or_google_lock" name="fimp_or_google_lock" required>
-                                <option disabled selected value> -- select an option -- </option>
-                                <option id="fimp_or_google_lock_false" value="false">No</option>
-                                <option id="fimp_or_google_lock_true" value="true">Yes</option>
                             </select>
                         </div>
 

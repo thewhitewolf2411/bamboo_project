@@ -31,18 +31,26 @@
                         <p>Receive Trade-In</p>
                     </div>
                 </div>
-                <div class="portal-search-form-container">
+                <div class="portal-search-form-container mb-5">
                     <form action="/portal/testing/receive/1" method="POST">
                         @csrf
                         <label for="searchinput">Scan Or Type Trade-In ID:</label>
                         <input id="searchinput" type="number" name="scanid" class="form-control" autofocus>
                         <button type="submit" class="btn btn-primary btn-blue">Search</button>
                     </form>
+               </div>
 
+               @if(Session::has('error'))
+
+                <div class="alert alert-danger" role="alert">
+                    {{Session::get('error')}}
                 </div>
+
+                @endif
 
             </div>
         </div>
+
     </main>
 
 </body>

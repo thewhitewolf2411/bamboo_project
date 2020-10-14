@@ -47,6 +47,14 @@
                     </div>
                 </div>
 
+                @if(Session::has('success'))
+
+                <div class="alert alert-success" role="alert">
+                    {{Session::get('success')}}
+                </div>
+
+                @endif
+
                 <div class="portal-table-container">
                     <table class="portal-table" id="categories-table">
                         <tr>
@@ -55,6 +63,7 @@
                             <td><div class="table-element">Assigned trolley</div></td>
                             <td><div class="table-element">No of Devices</div></td>
                             <td><div class="table-element">Delete Tray</div></td>
+                            <td><div class="table-element">Print Tray Label</div></td>
                         </tr>
                         @foreach($trays as $tray)
                         <tr>
@@ -62,7 +71,8 @@
                             <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">{{$tray->tray_name}}</div></a></td>
                             <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">@if($tray->trolley_id == null) <p style="color:red;">Unassigned</p> @else <p style="color:green;"> {{$tray->getTrolleyName($tray->trolley_id)}} </p> @endif</div></a></td>
                             <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">{{$tray->number_of_devices}}</div></a></td>
-                            <td><div class="table-element"><a href="/portals/trays/delete/{{$tray->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete tray</p></div></a></div></td>
+                            <td><div class="table-element"><a onclick="return confirm('Are you sure? This will remove tray from system, and remove all devices from the system and remove its records from corrseponding trolleys?')" href="/portal/trays/delete/{{$tray->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete tray</p></div></a></div></td>
+                            <td><div class="table-element"><a href="/portal/trays/tray/printlabel/{{$tray->tray_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print Tray Label</p></div></a></div></td>
                         </tr>
                         @endforeach
                     </table>

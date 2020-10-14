@@ -80,7 +80,14 @@
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_color">Product Color:</label>
-                                    <input type="color" name="product_color" id="product_color" required>
+                                    <select class="form-control" name="product_color" id="product_color" required>
+                                        <option value="white">White</option>
+                                        <option value="black">Black</option>
+                                        <option value="red">Red</option>
+                                        <option value="yellow">Yellow</option>
+                                        <option value="coral">Coral</option>
+                                        <option value="blue">Blue</option>
+                                    </select>
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">
@@ -88,14 +95,18 @@
                                     <label for="product_grade">Product Grade:</label>
                                     <div class="d-flex">
                                         <div class="form-group mr-2">
-                                            <input type="text" name="product_grade_1" value="New" readonly>
-                                            <input type="text" name="product_grade_2" value="Good" readonly>
-                                            <input type="text" name="product_grade_3" value="Faulty" readonly>
+                                            <input type="text" name="product_grade_1" value="Excellent working" readonly>
+                                            <input type="text" name="product_grade_2" value="Good working" readonly>
+                                            <input type="text" name="product_grade_3" value="Poor working" readonly>
+                                            <input type="text" name="product_grade_4" value="Damaged working" readonly>
+                                            <input type="text" name="product_grade_5" value="Faulty" readonly>
                                         </div>
                                         <div class="form-group ml-2">
-                                            <input type="number" name="product_selling_price_1" id="product_selling_price_1" placeholder="Enter price for grade 'New'">
-                                            <input type="number" name="product_selling_price_2" id="product_selling_price_2" placeholder="Enter price for grade 'Good'">
-                                            <input type="number" name="product_selling_price_3" id="product_selling_price_3" placeholder="Enter price for grade 'New'">
+                                            <input type="number" name="customer_grade_price_1" id="customer_grade_price_1" placeholder="Enter price for grade 'Excellent working'">
+                                            <input type="number" name="customer_grade_price_2" id="customer_grade_price_2" placeholder="Enter price for grade 'Good working'">
+                                            <input type="number" name="customer_grade_price_3" id="customer_grade_price_3" placeholder="Enter price for grade 'Poor working'">
+                                            <input type="number" name="customer_grade_price_4" id="customer_grade_price_4" placeholder="Enter price for grade 'Damaged working'">
+                                            <input type="number" name="customer_grade_price_5" id="customer_grade_price_5" placeholder="Enter price for grade 'Faulty'">
                                         </div>
                                     </div>
                                 </div>

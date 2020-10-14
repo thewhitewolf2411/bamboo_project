@@ -47,6 +47,14 @@
                     </div>
                 </div>
 
+                @if(Session::has('success'))
+
+                <div class="alert alert-success" role="alert">
+                    {{Session::get('success')}}
+                </div>
+
+                @endif
+
                 <div class="portal-table-container">
                     <table class="portal-table" id="categories-table">
                         <tr>
@@ -65,7 +73,7 @@
                             <td><a href="/portal/trolleys/trolley?trolley_id_scan={{$trolley->id}}"><div class="table-element">{{$trolley->number_of_trays}}</div></a></td>
                             <td><a href="/portal/trolleys/trolley?trolley_id_scan={{$trolley->id}}"><div class="table-element">{{$trolley->getNumberOfDevices($trolley->id)}}</div></a></td>
                             <td><a href="/portal/trolleys/trolley?trolley_id_scan={{$trolley->id}}"><div class="table-element">{{$trolley->trolley_type}}</div></a></td>
-                            <td><div class="table-element"><a href="/portals/trolleys/delete/{{$trolley->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete Trolley</p></div></a></div></td>
+                            <td><div class="table-element"><a onclick="return confirm('Are you sure? This will remove trolley from system and remove all trays and devices from the system?')" href="/portal/trolleys/delete/{{$trolley->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete Trolley</p></div></a></div></td>
                             <td><div class="table-element"><a href="/portal/trolleys/trolley/printlabel/{{$trolley->trolley_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print Trolley Label</p></div></a></div></td>
                         </tr>
                         @endforeach

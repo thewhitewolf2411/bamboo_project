@@ -434,7 +434,7 @@ class PortalController extends Controller
         Brand::where('id', $id)->delete();
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        return \redirect('/portal/categories')->with('portalUser', $portalUser);
+        return \redirect('/portal/settings/brands')->with('portalUser', $portalUser);
     }
 
     public function addCategory(Request $request){
@@ -605,13 +605,11 @@ class PortalController extends Controller
         $product->product_memory = $request->product_memory;
         $product->product_colour = $request->product_color;
         $product->product_network = $request->product_network;
-        $product->product_grade_1 = $request->product_grade_1;
-        $product->product_grade_2 = $request->product_grade_2;
-        $product->product_grade_3 = $request->product_grade_3;
-        $product->product_selling_price_1 = $request->product_selling_price_1;
-        $product->product_selling_price_2 = $request->product_selling_price_2;
-        $product->product_selling_price_3 = $request->product_selling_price_3;
-
+        $product->customer_grade_price_1 = $request->customer_grade_price_1;
+        $product->customer_grade_price_2 = $request->customer_grade_price_2;
+        $product->customer_grade_price_3 = $request->customer_grade_price_3;
+        $product->customer_grade_price_4 = $request->customer_grade_price_4;
+        $product->customer_grade_price_5 = $request->customer_grade_price_5;
         $filenameWithExt = $request->file('product_image')->getClientOriginalName();
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
         $extension = $request->file('product_image')->getClientOriginalExtension();
@@ -801,7 +799,11 @@ class PortalController extends Controller
 
     public function receive(Request $request){
         if(!$this->checkAuthLevel(5)){return redirect('/');}
-        $tradeins = Tradein::where('barcode', $request->scanid)->get();
+        $tradeins = Tradein::where('barcode', $request->scanid)->where('job_state', '>=', 1)->get();
+
+        if(count($tradeins)<1){
+            return redirect()->back()->with('error', 'Trade pack despach has not been sent, or the order doesn\'t exists. Please try again');
+        }
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -2104,15 +2106,8 @@ class PortalController extends Controller
 
     public function printTrayLabel($id){
 
-        $traybarcode = "507892";
-        if($id<10){
-            $traybarcode .= "0" . $id;
-        }
-        else{
-            $traybarcode .= $id;
-        }
-        
-
+        $traybarcode = $id;
+     
         $barcode = DNS1D::getBarcodeHTML($traybarcode, 'C128');
 
         $this->generateTrayLabel($barcode, $traybarcode);
@@ -2168,6 +2163,25 @@ class PortalController extends Controller
 
 
         return redirect()->back();
+    }
+
+    public function deleteTray($id){
+        $tray = Tray::where('id', $id)->first();
+        $traycontent = TrayContent::where('tray_id', $id)->get();
+        $trolley = Trolley::where('id', $tray->trolley_id)->first();
+
+        foreach($traycontent as $trayitem){
+            $tradein = Tradein::where('id', $trayitem->trade_in_id)->first();
+            $tradein->delete();
+        }
+
+        $tray->delete();
+
+        $trolley->number_of_trays = $trolley->number_of_trays-1;
+        $trolley->save();
+
+        return redirect()->back()->with('success', 'You have succesfully deleted the tray');
+
     }
 
     //trolleys
@@ -2247,6 +2261,26 @@ class PortalController extends Controller
         $trolley->save();
 
         return redirect('/portal/trolleys');
+    }
+
+    public function deleteTrolley($id){
+        $trolley = Trolley::where('id', $id)->first();
+        $trays = Tray::where('trolley_id', $id)->get();
+        
+        foreach($trays as $tray){
+            $traycontent = TrayContent::where('tray_id', $id)->get();
+    
+            foreach($traycontent as $trayitem){
+                $tradein = Tradein::where('id', $trayitem->trade_in_id)->first();
+                $tradein->delete();
+            }
+
+            $tray->delete();
+        }
+
+        $trolley->delete();
+
+        return redirect()->back()->with('success', 'You have succesfully deleted the trolley and it\'s content.');
     }
 
     //boxes

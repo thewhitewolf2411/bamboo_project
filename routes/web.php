@@ -227,6 +227,8 @@ Route::post('/portal/trays/createtray', 'PortalController@addTray')->middleware(
 Route::get('/portal/trays/tray/', 'PortalController@showTrayPage')->middleware('auth');
 Route::get('/portal/trays/tray/printlabel/{id}', 'PortalController@printTrayLabel')->middleware('auth');
 
+Route::get('/portal/trays/delete/{id}', 'PortalController@deleteTray')->middleware('auth');
+
 Route::post('/portal/trays/tray/addtotrolley', 'PortalController@addTrayToTrolley')->middleware('auth');
 
 //Trolleys
@@ -236,6 +238,8 @@ Route::post('/portal/trolleys/createtrolley', 'PortalController@addTrolley')->mi
 
 Route::get('/portal/trolleys/trolley/', 'PortalController@showTrolleyPage')->middleware('auth');
 Route::get('/portal/trolleys/trolley/printlabel/{id}', 'PortalController@printTrolleyLabel')->middleware('auth');
+
+Route::get('/portal/trolleys/delete/{id}', 'PortalController@deleteTrolley')->middleware('auth');
 
 
 //Boxes
