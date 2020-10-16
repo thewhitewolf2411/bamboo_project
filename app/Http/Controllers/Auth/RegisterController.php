@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 
+use Klaviyo\Klaviyo as Klaviyo;
+use Klaviyo\Model\EventModel as KlaviyoEvent;
+
 use Crypt;
 
 class RegisterController extends Controller
@@ -67,6 +70,20 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
+        /*$client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Filled out Profile',
+                'customer_properties' => array(
+                    '$email' => 'someone@mailinator.com'    
+                ),
+                'properties' => array(
+                    'Added Social Accounts' => False
+                )
+            )
+        );
+        dd($client);*/
 
         $sub = 0;
         if($data['sub'] == true){

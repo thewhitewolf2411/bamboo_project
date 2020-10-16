@@ -151,7 +151,7 @@
 
                             @if($portalUser->create_order)
 
-                            <a href="/portal/customer-care/trade-pack" class="col-2 my-2">
+                            <a href="/portal/customer-care/createorder" class="col-2 my-2">
                                 <div class="portal-content-element">
                                     <p>Create Order</p>
                                 </div>

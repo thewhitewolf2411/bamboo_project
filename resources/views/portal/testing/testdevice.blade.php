@@ -95,6 +95,17 @@
                         </script>
 
                         <div class="form-group">
+                            <label for="pin_lock">
+                                Does device have PIN lock?
+                            </label>
+                            <select class="form-control" id="pin_lock" name="pin_lock" required>
+                                <option disabled selected value> -- select an option -- </option>
+                                <option id="pin_lock_false" value="false">No</option>
+                                <option id="pin_lock_true" value="true">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label for="fake_missing_parts">
                                 Does device have any fake or missing parts?
                             </label>
@@ -228,17 +239,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="pin_lock">
-                                Does device have PIN lock?
-                            </label>
-                            <select class="form-control" id="pin_lock" name="pin_lock" required>
-                                <option disabled selected value> -- select an option -- </option>
-                                <option id="pin_lock_false" value="false">No</option>
-                                <option id="pin_lock_true" value="true">Yes</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
                             <label for="cosmetic_condition">
                                 What is the device cosmetic condition?
                             </label>
@@ -256,7 +256,6 @@
                             </select>
                         </div>
 
-                        
                         <div class="form-group d-flex">
 
                             <div class="form-group w-50">

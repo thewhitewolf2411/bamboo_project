@@ -75,10 +75,10 @@
                             <td>{{$user->created_at}}</td>
                             <td>
                                 <div class="table-element">
-                                    <a href="/portal/user/edit/{{$user->id}}">
+                                    <a href="/portal/user/edit/{{$user->id}}" title="Edit user details">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a href="/portal/user/delete/{{$user->id}}">
+                                    <a href="/portal/user/delete/{{$user->id}}" title="Delete user">
                                         <i class="fa fa-times remove"></i>
                                     </a>
                                 </div>

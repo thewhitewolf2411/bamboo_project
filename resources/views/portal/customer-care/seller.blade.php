@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Customer Accounts</title>
 </head>
 
 <body class="portal-body">
@@ -28,24 +27,101 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Customer Accounts</p>
+                        <p>Users</p>
                     </div>
                 </div>
-                <div class="portal-content-container">
+                <div class="portal-search-form-container">
+                    <form action="/portal/user/search" method="POST" style="margin-bottom:50px;">
+                        @csrf
+                        <label for="">Search:</label>
+                        <input id="searchinput" type="text" name="searchname" class="form-control">
+                        <select class="form-control" id="search_by_field" name="select_search_by_field"><option value="1">User ID</option><option value="2" selected="">Name</option></select>
+
+                    </form>
+                    @if((Session::get('error') != null))
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li>{{Session::get('error')}}</li>
+                            </ul>
+                        </div>
+                    @endif
+
+                    @if(Session::has('success'))
+
+                    <div class="alert alert-success" role="alert">
+                        {{Session::get('success')}}
+                    </div>
+
+                    @endif
 
 
                 </div>
+
+                <div></div>
+
+                <div class="portal-table-container">
+
+                    <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td>Id</td>
+                            <td>Username</td>
+                            <td>First Name</td>
+                            <td>Surename</td>
+                            <td>Email Address</td>
+                            <td>Created</td>
+                            <td>Account disabled</td>
+                            <td>
+                                Options
+                            </td>
+                        </tr>
+                        @foreach($users as $user)
+                        <tr>
+                            <td>{{$user->id}}</td>
+                            <td>{{$user->username}}</td>
+                            <td>{{$user->first_name}}</td>
+                            <td>{{$user->last_name}}</td>
+                            <td>{{$user->email}}</td>
+                            <td>{{$user->created_at}}</td>
+                            <td>@if($user->account_disabled) Yes @else No @endif</td>
+                            <td>
+                                <div class="table-element">
+                                    <a href="/portal/customer-care/seller/{{$user->id}}" title="See user details">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    @if(!$user->account_disabled)
+                                    <a onclick="return confirm('Are you sure? This will stop user from being able to do any purchases and/or buyings from customer website?')" href="/portal/customer-care/seller/disable/{{$user->id}}" title="Disable user account">
+                                        <i class="fa fa-times remove"></i>
+                                    </a>
+                                    @else
+                                    <a onclick="return confirm('Are you sure? This will stop user from being able to do any purchases and/or buyings from customer website?')" href="/portal/customer-care/seller/enable/{{$user->id}}" title="Enable user account">
+                                        <i class="fa fa-check"></i>
+                                    </a>
+                                    @endif
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+
+                    </table>
+
+                </div>
+
             </div>
         </div>
     </main>
 
 </body>
 
+
+
+</html>
+
+
 <script>
 
 $(document).ready(function(){
 
-    var elem = $('.portal-links-container > .portal-header-element')[0];
+    var elem = $('.portal-links-container > .portal-header-element')[8];
     
     console.log(elem.children[0]);
 
@@ -55,6 +131,3 @@ $(document).ready(function(){
 });
 
 </script>
-
-
-</html>

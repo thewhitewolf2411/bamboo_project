@@ -15,6 +15,7 @@ use App\Eloquent\Tradeout;
 use Auth;
 use Crypt;
 
+
 class CustomerController extends Controller
 {
     public function setPage($parameter){

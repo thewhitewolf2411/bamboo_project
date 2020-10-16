@@ -112,11 +112,12 @@ class PortalController extends Controller
 
     public function showMoreTradeInDetails($id){
         if(!$this->checkAuthLevel(1)){return redirect('/');}
-        $tradeins = Tradein::where('id', $id)->first();
+        $tradein = Tradein::where('id', $id)->first();
+
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        $user = User::where('id', $tradeins[0]->user_id)->first();
-        return view('portal.customer-care.trade-in-product-details')->with('tradeins', $tradein)->with('portalUser', $portalUser)->with('user', $user);
+        $user = User::where('id', $tradein->user_id)->first();
+        return view('portal.customer-care.trade-in-product-details')->with('tradein', $tradein)->with('portalUser', $portalUser)->with('user', $user);
     }
 
     public function PrintTradeInLabelBulk(Request $request){
@@ -371,7 +372,44 @@ class PortalController extends Controller
         if(!$this->checkAuthLevel(1)){return redirect('/');}
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        return view('portal.customer-care.seller')->with('portalUser', $portalUser);
+
+        $users = User::where('type_of_user', 0)->get();
+
+        return view('portal.customer-care.seller')->with(['portalUser'=>$portalUser, 'users'=>$users]);
+    }
+
+    public function showSellerDetails($id){
+
+    }
+
+    public function disableSellerAccount($id){
+        $user = User::where('id', $id)->first();
+        $user->account_disabled = true;
+        $user->save();
+
+        return redirect()->back()->with('success', 'Account id '. $user->id . ' has been succesfully disabled.');
+    }
+
+    public function enableSellerAccount($id){
+        $user = User::where('id', $id)->first();
+        $user->account_disabled = false;
+        $user->save();
+
+        return redirect()->back()->with('success', 'Account id '. $user->id . ' has been succesfully enabled.');
+    }
+
+    public function createOrder(){
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        return view('portal.customer-care.createorder');
+    }
+
+    public function markForReprint($id){
+        $tradein = Tradein::where('id', $id)->first();
+        $tradein->job_state = null;
+        $tradein->save();
+
+        return redirect()->back()->with('success', 'Tradein with id '. $tradein->id . ' has been sent to reprint.');
     }
 
     //categories
@@ -1512,7 +1550,7 @@ class PortalController extends Controller
             readfile($file);
             // if file is downloaded delete all created files from the sistem
             File::delete($file);
-            return redirect('/portal/feeds/export-import');
+            return \redirect()->back()->with('success','You have succesfully exported products.');
         }
     }
 
@@ -1618,7 +1656,7 @@ class PortalController extends Controller
 
         }
 
-        return \redirect('/portal/feeds/export-import');
+        return \redirect()->back()->with('success','You have succesfully imported products.');
     }
 
     //users
@@ -2099,7 +2137,7 @@ class PortalController extends Controller
             $tradein = Tradein::where('id', $tc->trade_in_id)->first();
             array_push($tradeins, $tradein);
         }
-        #dd($tradeins);
+        dd($tradeins);
 
         return view('portal.trays.tray')->with(['portalUser'=>$portalUser, 'tray'=>$tray, 'trolleys'=>$trolleys, 'trayContetnt'=>$trayContent, 'tradeins'=>$tradeins]);
     }

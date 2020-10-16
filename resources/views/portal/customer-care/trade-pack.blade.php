@@ -34,8 +34,16 @@
                     </div>
                 </div>
 
+                @if(Session::has('success'))
+
+                <div class="alert alert-success" role="alert">
+                    {{Session::get('success')}}
+                </div>
+
+                @endif
+
                 <div class="portal-table-container">
-                <table class="portal-table" id="categories-table">
+                    <table class="portal-table" id="categories-table">
                         <tr>
                             <td><div class="table-element">Trade-in ID</div></td>
                             <td><div class="table-element">Trade-in barcode number</div></td>
@@ -56,19 +64,19 @@
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                             <td><div class="table-element">@if($tradein->job_state == 1)Printed @elseif ($tradein->job_state == 2) Sent @elseif($tradein->job_state == 3) Order received @elseif($tradein->job_state == 4) Device received @elseif($tradein->job_state == 5) Device in tray @endif</div></td>
                             <td><div class="table-element">
-                                <a href="/portal/customer-care/trade-in/{{$tradein->id}}">
+                                <a href="/portal/customer-care/trade-in/{{$tradein->id}}/details" title="View tradein details">
                                     <i class="fa fa-search"></i>
                                 </a>
                                 @if($tradein->job_state <=2)
-                                <a href="javascript:void(0)" onclick = setAsSent({{$tradein->id}})>
+                                <a href="javascript:void(0)" onclick = setAsSent({{$tradein->id}}) title="Mark tradepack as sent">
                                     <i class="fa fa-paper-plane"></i>
                                 </a>
                                 @else
-                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}})>
+                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint barcode">
                                     <i class="fa fa fa-print"></i>
                                 </a>
                                 @endif
-                                <a title="Return device to print" href="">
+                                <a title="Return device to print" href="/portal/customer-care/trade-pack/markforreprint/{{$tradein->id}}" title="Return device to print">
                                     <i class="fa fa-times" style="color:red !important;"></i>
                                 </a>
                                 </div>
