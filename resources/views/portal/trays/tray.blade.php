@@ -78,11 +78,15 @@
                         <tr>
                             <td><div class="table-element">Tradein ID</div></td>
                             <td><div class="table-element">Tradein Barcode</div></td>
+                            <td><div class="table-element">Product name</div></td>
+                            <td><div class="table-element">IMEI Number</div></td>
                         </tr>
                         @foreach($tradeins as $tradein)
                         <tr>
                             <td><div class="table-element">{{$tradein->id}}</div></td>
                             <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                            <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                            <td><div class="table-element">{{$tradein->imei_number}}</div></td>
                         </tr>
                         @endforeach
                     </table>

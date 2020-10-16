@@ -30,7 +30,7 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Awaiting Receipt</p>
+                        <p>{{$title}}</p>
                     </div>
                 </div>
 

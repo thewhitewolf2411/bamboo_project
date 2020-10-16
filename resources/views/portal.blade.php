@@ -141,7 +141,7 @@
                         <div class="d-flex flex-wrap w-100">
                             @if($portalUser->order_management)
 
-                            <a href="/portal/customer-care/trade-pack" class="col-2 my-2">
+                            <a href="/portal/customer-care/order-managment" class="col-2 my-2">
                                 <div class="portal-content-element">
                                     <p>Order Management </p>
                                 </div>

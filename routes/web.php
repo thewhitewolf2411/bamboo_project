@@ -105,6 +105,7 @@ Route::get('/portal/customer-care/seller/disable/{id}', 'PortalController@disabl
 Route::get('/portal/customer-care/seller/enable/{id}', 'PortalController@enableSellerAccount')->middleware('auth');
 Route::get('/portal/customer-care/createorder', 'PortalController@createOrder')->middleware('auth');
 Route::get('/portal/customer-care/trade-pack/markforreprint/{id}', 'PortalController@markForReprint')->middleware('auth');
+Route::get('/portal/customer-care/order-managment', 'PortalController@showOrderManagment')->middleware('auth');
 
 //categories, brands
 Route::get('/portal/categories', 'PortalController@showCategories')->name('showCategories')->middleware('auth');

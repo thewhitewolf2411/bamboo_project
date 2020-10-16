@@ -357,8 +357,8 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $tradeins = Tradein::whereIn('job_state', array(1,2,3,4,5))->get();
-        return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser)->with('tradeins', $tradeins);
+        $tradeins = Tradein::whereIn('job_state', array(1,2))->get();
+        return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Awaiting receipt');
     }
 
     public function setTradePackAsSent(Request $request){
@@ -410,6 +410,15 @@ class PortalController extends Controller
         $tradein->save();
 
         return redirect()->back()->with('success', 'Tradein with id '. $tradein->id . ' has been sent to reprint.');
+    }
+
+    public function showOrderManagment(){
+        if(!$this->checkAuthLevel(1)){return redirect('/');}
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $tradeins = Tradein::whereIn('job_state', array(3,4,5,6))->get();
+        return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Order Management');
     }
 
     //categories
@@ -2137,7 +2146,6 @@ class PortalController extends Controller
             $tradein = Tradein::where('id', $tc->trade_in_id)->first();
             array_push($tradeins, $tradein);
         }
-        dd($tradeins);
 
         return view('portal.trays.tray')->with(['portalUser'=>$portalUser, 'tray'=>$tray, 'trolleys'=>$trolleys, 'trayContetnt'=>$trayContent, 'tradeins'=>$tradeins]);
     }
