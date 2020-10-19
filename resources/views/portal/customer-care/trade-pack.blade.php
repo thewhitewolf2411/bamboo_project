@@ -64,8 +64,11 @@
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                             <td><div class="table-element">@if($tradein->job_state == 1)Printed @elseif ($tradein->job_state == 2) Sent @elseif($tradein->job_state == 3) Order received @elseif($tradein->job_state == 4) Device received @elseif($tradein->job_state == 5) Device in tray @endif</div></td>
                             <td><div class="table-element">
-                                <a href="/portal/customer-care/trade-in/{{$tradein->id}}/details" title="View tradein details">
+                                <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
                                     <i class="fa fa-search"></i>
+                                </a>
+                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint barcode">
+                                    <i class="fa fa fa-print"></i>
                                 </a>
                                 @if($tradein->job_state <=2)
                                 <a href="javascript:void(0)" onclick = setAsSent({{$tradein->id}}) title="Mark tradepack as sent">

@@ -2,7 +2,7 @@
 <html>
     <head>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+        
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -12,6 +12,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+        <script src="{{ asset('js/Shop.js') }}"></script>
     </head>
 
     <body>
@@ -91,11 +93,11 @@
 
                     <div class="sidebar-element d-flex">
                         <p>View:</p>
-                        <select name="number" id="number_select" class="form-control w-50" onchange="if(this.value) window.location.href+='&number='+this.value" >
-                            <option value="24">24 items</option>
-                            <option value="36">36 items</option>
-                            <option value="48">48 items</option>
-                            <option value="60">60 items</option>
+                        <select id="number_select" class="form-control w-50" >
+                            <option value="&number=24">24 items</option>
+                            <option value="&number=36">36 items</option>
+                            <option value="&number=48">48 items</option>
+                            <option value="&number=60">60 items</option>
                         </select>
 
                     </div>
@@ -103,6 +105,16 @@
                     <div class="sidebar-element d-flex">
                         <p>Category:</p>
                         <p>@if($category=='mobile') Mobile Phones @elseif($category=='tablets') Tablets @elseif($category=='watches') Smartwatches @endif</p>
+                    </div>
+
+                    <div class="sidebar-element d-flex" >
+                        <p>View:</p>
+                        <select id="brand_select" class="form-control w-50">
+                            @foreach($brands as $brand)
+                                <option value="&brand={{$brand->id}}">{{$brand->brand_name}}</option>
+                            @endforeach
+                        </select>
+
                     </div>
 
                 </div>
@@ -300,6 +312,44 @@
                     document.getElementsByClassName('modal-second-element')[0].classList.add('modal-second-element-active');
                 }
             }
+
+            $(window).on('load', function(){
+                if(window.location.href.indexOf('number') > -1){
+                    var param = 'number';
+                    var url = window.location.href;
+                    var tempArray = url.split("?");
+                    var baseURL = tempArray[1];
+                    var additionalURL = tempArray[1];
+                    var temp = "";
+                    if (additionalURL) {
+                        tempArray = additionalURL.split("&");
+                        for (var i=0; i<tempArray.length; i++){
+                            if(tempArray[i].split('=')[0] == param){
+                                $("#number_select").val(tempArray[i].split('=')[1]);
+                            }
+                        }
+                    }
+                }
+
+                if(window.location.href.indexOf('brand') > -1){
+                    var param = 'brand';
+                    var url = window.location.href;
+                    var tempArray = url.split("?");
+                    var baseURL = tempArray[1];
+                    var additionalURL = tempArray[1];
+                    var temp = "";
+                    if (additionalURL) {
+                        tempArray = additionalURL.split("&");
+                        for (var i=0; i<tempArray.length; i++){
+                            if(tempArray[i].split('=')[0] == param){
+                                $("#brand_select").val(tempArray[i].split('=')[1]);
+                            }
+                        }
+                    }
+                }
+            });
+
+
 
         </script>
     </body>

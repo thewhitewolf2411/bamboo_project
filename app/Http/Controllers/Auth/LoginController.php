@@ -37,21 +37,20 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        $user = "";
+        $decrypted = $request->input('password');
+        $user = null;
 
-        if(Str::contains($request->username, "@")){
-            $user      = User::where('email', $request->input('username'))->first();
+        if(strpos($request->email, '@') !== false){
+            $user = User::where('email', $request->input('email'))->first();
         }
         else{
-            $user      = User::where('username', $request->input('username'))->first();
+            $user = User::where('username',  $request->input('username'))->first();
         }
 
-        $decrypted = $request->password; 
 
-        if ($user) {
+        if($user) {
             if (Crypt::decrypt($user->password) == $decrypted) {
                 Auth::login($user);
-
                 return $this->sendLoginResponse($request);
             }
         }
@@ -64,7 +63,6 @@ class LoginController extends Controller
      *
      * @var string
      */
-    //protected $redirectTo = "/";
     public function redirectTo(){
         // User role
         $role = Auth::user()->type_of_user; 

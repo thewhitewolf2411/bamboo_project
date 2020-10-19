@@ -19,6 +19,9 @@ class CreateTradeinTable extends Migration
             $table->integer('barcode');
             $table->integer('product_id');
             $table->string('product_state');
+            $table->string('color');
+            $table->string('network');
+            $table->string('memory');
             $table->smallInteger('job_state')->nullable()->default(null);
             $table->integer('order_price')->nullable()->default(null);
             //0 received tradein without label

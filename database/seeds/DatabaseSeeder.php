@@ -1783,5 +1783,222 @@ class DatabaseSeeder extends Seeder
             'box_name'=>'(SW) MI01',
             'description'=>'Smart Watches mixed grades',
         ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>1,
+            'color_value'=>'Black'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>1,
+            'color_value'=>'Green'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>1,
+            'color_value'=>'Yellow'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>1,
+            'color_value'=>'Purple'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>1,
+            'color_value'=>'Red'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>1,
+            'color_value'=>'White'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>4,
+            'color_value'=>'White'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>4,
+            'color_value'=>'Black'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>4,
+            'color_value'=>'Orange'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>3,
+            'color_value'=>'White'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>3,
+            'color_value'=>'Amber'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>3,
+            'color_value'=>'Crystal'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>3,
+            'color_value'=>'Black'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>3,
+            'color_value'=>'Pearl White'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>5,
+            'color_value'=>'Thunder Purple'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>5,
+            'color_value'=>'Mirror Black'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>5,
+            'color_value'=>'Midnight Black'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>2,
+            'color_value'=>'Aura Glow'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>2,
+            'color_value'=>'Aura White'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>2,
+            'color_value'=>'Aura Black'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>2,
+            'color_value'=>'Aura Pink'
+        ]);
+
+        DB::table('colours')->insert([
+            'brand_id'=>2,
+            'color_value'=>'Aura Red'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>1,
+            'memory_value'=>'128GB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>1,
+            'memory_value'=>'256GB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>1,
+            'memory_value'=>'512GB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>2,
+            'memory_value'=>'128GB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>2,
+            'memory_value'=>'256GB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>2,
+            'memory_value'=>'512GB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>2,
+            'memory_value'=>'1TB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>3,
+            'memory_value'=>'128GB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>3,
+            'memory_value'=>'256GB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>3,
+            'memory_value'=>'512GB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>4,
+            'memory_value'=>'128GB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>4,
+            'memory_value'=>'256GB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>4,
+            'memory_value'=>'512GB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>5,
+            'memory_value'=>'128GB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>5,
+            'memory_value'=>'256GB'
+        ]);
+
+        DB::table('memory')->insert([
+            'brand_id'=>5,
+            'memory_value'=>'512GB'
+        ]);
+
+        DB::table('networks')->insert([
+            'brand_id'=>1,
+            'network_value'=>'Unlocked'
+        ]);
+
+        DB::table('networks')->insert([
+            'brand_id'=>2,
+            'network_value'=>'Unlocked'
+        ]);
+
+        DB::table('networks')->insert([
+            'brand_id'=>3,
+            'network_value'=>'Unlocked'
+        ]);
+
+        DB::table('networks')->insert([
+            'brand_id'=>4,
+            'network_value'=>'Unlocked'
+        ]);
+
+        DB::table('networks')->insert([
+            'brand_id'=>5,
+            'network_value'=>'Unlocked'
+        ]);
+
+
     }
 }

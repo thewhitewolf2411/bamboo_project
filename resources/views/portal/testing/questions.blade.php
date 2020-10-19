@@ -206,6 +206,11 @@
 
                                         @elseif(isset($tradein->visible_imei) == true && $tradein->visible_imei == true && isset($tradein->chekmend_passed) == false && !Session::has('result'))
 
+                                        @if(Session::has('error'))
+                                            <div class="alert alert-danger" role="alert">
+                                                {{Session::get('error')}}
+                                            </div>
+                                        @endif
                                         <form action="/portal/testing/receive/checkimei" method="POST" class="d-flex flex-column">
 
                                             @csrf
@@ -221,7 +226,7 @@
                                                         <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
                                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                                     </div>
-                                                    <div class="d-flex w-50 border p-3"><input id="imei_number" type="text" name="imei_number"></div>
+                                                    <div class="d-flex w-50 border p-3"><input id="imei_number" type="number" name="imei_number" required title="15 characters required"></div>
                                                 </div>
                                                 
                                             </div>

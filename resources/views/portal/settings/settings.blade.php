@@ -32,56 +32,62 @@
                     </div>
                 </div>
                 <div class="portal-content-container">
-                    <a href="/portal/settings/product-options">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-barcode"></i>Product Options</p>
+
+                    <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100 w-100 my-3">
+                        <div class="d-flex flex-wrap w-100">
+                            <a href="/portal/settings/product-options" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Product Options</p>
+                                </div>
+                            </a>
+                            <a href="/portal/settings/conditions" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                <p>Conditions</p>
+                                </div>
+                            </a>
+                            <a href="/portal/settings/testing-questions" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Testing Questions</p>
+                                </div>
+                            </a>
+                            <a href="/portal/settings/websites" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Websites</p>
+                                </div>
+                            </a>
+                            <a href="/portal/settings/stores" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Stores</p>
+                                </div>
+                            </a>
+                            <a href="/portal/settings/payments-options" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Payments Options</p>
+                                </div>
+                            </a>
+                            <a href="/portal/settings/delivery-options" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Delivery Options</p>
+                                </div>
+                            </a>
+                            <a href="/portal/settings/checkout-options" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Checkout Options</p>
+                                </div>
+                            </a>
+                            <a href="/portal/settings/promotional-codes" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Promotional Codes</p>
+                                </div>
+                            </a>
+                            <a href="/portal/settings/brands" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Manufacturers</p>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                    <a href="/portal/settings/conditions">
-                        <div class="portal-content-element">
-                        <p><i class="fa fa-sort-numeric-asc"></i>Conditions</p>
-                        </div>
-                    </a>
-                    <a href="/portal/settings/testing-questions">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-list"></i>Testing Questions</p>
-                        </div>
-                    </a>
-                    <a href="/portal/settings/websites">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-list-alt"></i>Websites</p>
-                        </div>
-                    </a>
-                    <a href="/portal/settings/stores">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-list-alt"></i>Stores</p>
-                        </div>
-                    </a>
-                    <a href="/portal/settings/payments-options">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-credit-card"></i>Payments Options</p>
-                        </div>
-                    </a>
-                    <a href="/portal/settings/delivery-options">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-envelope-o"></i>Delivery Options</p>
-                        </div>
-                    </a>
-                    <a href="/portal/settings/checkout-options">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-plus-square-o"></i>Checkout Options</p>
-                        </div>
-                    </a>
-                    <a href="/portal/settings/promotional-codes">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-star-o"></i>Promotional Codes</p>
-                        </div>
-                    </a>
-                    <a href="/portal/settings/brands">
-                        <div class="portal-content-element">
-                            <p><i class="fa fa-ticket"></i>Manufacturers</p>
-                        </div>
-                    </a>
+                    </div>
+                    
                 </div>
             </div>
         </div>

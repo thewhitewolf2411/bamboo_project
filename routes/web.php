@@ -37,6 +37,7 @@ Route::get('/corporate', 'PagesController@showCorporatePage');
 
 //User profile
 Route::get('/userprofile', 'CustomerController@showProfile');
+Route::get('/userprofile/{id}', 'CustomerController@showOrderDetails');
 Route::get('/userprofile/wishlist', 'CustomerController@showWishlist');
 
 Route::get('/products/{category}', 'CustomerController@customerCategoryView')->name('customerproducts');
@@ -75,6 +76,11 @@ Route::post('/checkoutcart', 'CustomerController@sheckoutcart')->name('sheckoutc
 
 Route::post('/addtowishlist', 'CustomerController@addProductToWishList')->name('addproducttowishlist');
 Route::post('/removefromwislist', 'CustomerController@removeFromWishList')->name('removeproductfromwishlist');
+
+//user change profile details
+Route::post('/userprofile/changename', 'CustomerController@changeName');
+Route::post('/userprofile/changeuserinformation', 'CustomerController@changeDetails');
+Route::post('/userprofile/changesubscription', 'CustomerController@changeSubscription');
 
 //Admin post route
 Route::post('/addCategory', 'AdminController@addCategory')->middleware('auth');
@@ -196,6 +202,15 @@ Route::post('/portal/user/search', 'PortalController@searchUser')->middleware('a
 //settings
 Route::get('/portal/settings','PortalController@showSettingsPage')->middleware('auth');
 Route::get('/portal/settings/product-options','PortalController@showSettingsProductOptionsPage')->middleware('auth');
+Route::get('/portal/settings/product-options/selling-colours','PortalController@showSellingColourPage')->middleware('auth');
+Route::get('/portal/settings/conditions/selling-networks','PortalController@showSellingNetworksPage')->middleware('auth');
+Route::get('/portal/settings/testing-questions/selling-memory','PortalController@showSellingMemoryPage')->middleware('auth');
+Route::get('/portal/settings/colours/add', 'PortalController@addColourPage')->middleware('auth');
+Route::get('/portal/settings/networks/add', 'PortalController@addNetworkPage')->middleware('auth');
+Route::get('/portal/settings/memories/add', 'PortalController@addMemoryPage')->middleware('auth');
+Route::post('/portal/settings/productoptions/addcolour', 'PortalController@addColour')->middleware('auth');
+Route::post('/portal/settings/productoptions/addnetwork', 'PortalController@addNetwork')->middleware('auth');
+Route::post('/portal/settings/productoptions/addmemory', 'PortalController@addMemory')->middleware('auth');
 
 Route::get('/portal/settings/conditions','PortalController@showSettingsConditionsPage')->middleware('auth');
 Route::get('/portal/settings/conditions/add','PortalController@showSettingsAddConditionsPage')->middleware('auth');
@@ -251,4 +266,5 @@ Route::get('/portal/trolleys/delete/{id}', 'PortalController@deleteTrolley')->mi
 //Boxes
 Route::get('/portal/boxes', 'PortalController@showBoxesPage')->middleware('auth');
 Route::get('/portal/boxes/create', 'PortalController@showAddBoxPage')->middleware('auth');
+Route::get('/portal/boxes/box', 'PortalController@showBoxPage')->middleware('auth');
 Route::post('/portal/boxes/createbox', 'PortalController@addBox')->middleware('auth');

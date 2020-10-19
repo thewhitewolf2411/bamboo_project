@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Trolley Managment</title>
+    <title>Bamboo Recycle::Box</title>
 </head>
 
 <body class="portal-body">
@@ -28,32 +28,9 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Boxes managment</p>
+                        <p>Box {{$box->box_name}}</p>
                     </div>
                 </div>
-
-                <div class="portal-search-form-container">
-                    <form action="/portal/trolleys/trolley" method="GET">
-                        <div class="form-group d-flex align-items-center justify-content-between">
-                            <label style="margin: 0;" for="trolley_id_scan">Please Scan or Type the Box Number:</label>
-                            <input style="margin: 0; width: 50%;" class="form-control" type="number" name="trolley_id_scan" id="trolley_id_scan" autofocus>
-                            <button type="submit" class="btn btn-primary btn-blue">Go</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="portal-title-container">
-                    <div class="portal-title">
-                        <p>All boxes</p>
-                    </div>
-                </div>
-
-                @if(Session::has('success'))
-
-                <div class="alert alert-success" role="alert">
-                    {{Session::get('success')}}
-                </div>
-
-                @endif
 
                 <div class="portal-table-container">
                     <table class="portal-table" id="categories-table">
@@ -65,7 +42,6 @@
                             <td><div class="table-element">Delete Box</div></td>
                             <td><div class="table-element">Print Box Label</div></td>
                         </tr>
-                        @foreach($boxes as $box)
                         <tr>
                             <td><a href="/portal/boxes/box?box_id_scan={{$box->box_name}}"><div class="table-element">{{$box->id}}</div></a></td>
                             <td><a href="/portal/boxes/box?box_id_scan={{$box->box_name}}"><div class="table-element">{{$box->box_name}}</div></a></td>
@@ -74,15 +50,23 @@
                             <td><div class="table-element"><a onclick="return confirm('Are you sure? This will remove trolley from system and remove all trays and devices from the system?')" href="/portal/boxes/delete={{$box->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete Trolley</p></div></a></div></td>
                             <td><div class="table-element"><a href="/portal/trolleys/trolley/printlabel/{{$box->box_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print box Label</p></div></a></div></td>
                         </tr>
-                        @endforeach
                     </table>
+
+                    <div class="portal-title-container">
+                        <div class="portal-title">
+                            <p>Box {{$box->trolley_name}} devices</p>
+                        </div>
+                    </div>
+
+                    <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td><div class="table-element">Device name</div></td>
+                            <td><div class="table-element">Device barcode</div></td>
+                        </tr>
+                    </table>
+                    
                 </div>
 
-                <div class="container">
-                    <a href="/portal/boxes/create"><div class="btn btn-primary btn-blue">
-                        <p style="color: #fff;">Create Box</p>
-                    </div></a>
-                </div>
             </div>
         </div>
     </main>

@@ -1,3 +1,9 @@
+@if(Session::has('regerror'))
+<div class="alert alert-danger" role="alert">
+  {{@Session::get('regerror')}}
+</div>
+@endif
+
 <form method="POST" action="{{ route('register') }}">
     @csrf
 
@@ -51,20 +57,20 @@
 
     <div class="newsletter-subscription">
         <label class="news-label">
-            <input id="radio-checked-yes" type="radio" name="sub" value="true" checked="checked">
+            <input id="radio-checked-yes" type="radio" name="sub" value="true" required>
 
             <div class="news-label-content">
                 <p><b>Yes,</b> I would love to hear about the latest amazing offers, hints & tips</p>
                 <div class="news-label-selected-container">
-                    <img id="select-image-yes" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" width="48px" height="48px">
-                    <p id="select-text-yes">Selected</p>
+                    <img id="select-image-yes" src="{{asset('/customer_page_images/body/Icon-Tick-Selected-clear.svg')}}" width="48px" height="48px">
+                    <p id="select-text-yes">Select</p>
                 </div>
             </div>
 
         </label>
 
           <label class="news-label">
-            <input id="radio-checked-no" type="radio" name="sub" value="false">
+            <input id="radio-checked-no" type="radio" name="sub" value="false" required>
 
             <div class="news-label-content">
                 <p><b>No,</b>  I do not want to hear about the latest amazing offers, hints & tips</p>
@@ -78,7 +84,7 @@
 
     <div class="form-group mb-0 d-flex justify-content-between" style="padding: 50px 0 50px 0;">
         <div class="terms-container">
-            <input type="checkbox" id="terms" name="terms" required checked>
+            <input type="checkbox" id="terms" name="terms" required>
             <label for="terms">I agree to Bamboo Mobile Terms and Conditions</label>
         </div>
 

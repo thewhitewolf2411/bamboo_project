@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Product Options</title>
+    <title>Bamboo Recycle::Networks</title>
 </head>
 
 <body class="portal-body">
@@ -28,30 +28,39 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Product Options</p>
+                        <p>Networks</p>
                     </div>
                 </div>
-                <div class="portal-content-container">
+                <div class="portal-table-container">
 
-                    <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100 w-100 my-3">
-                        <div class="d-flex flex-wrap w-100">
-                            <a href="/portal/settings/product-options/selling-colours" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p>Avalible selling colours</p>
+                    <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td>Id</td>
+                            <td>Brand</td>
+                            <td>Value</td>
+                            <td>
+                                <a href="/portal/settings/networks/add">
+                                <i class="fa fa-plus-circle"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+
+                        @foreach($networks as $network)
+                        <tr>
+                            <td><div class="table-element">{{$network->id}}</td>
+                            <td><div class="table-element">{{$network->getBrandName($network->brand_id)}}</div></td>
+                            <td><div class="table-element">{{$network->network_value}}</div></td>
+                            <td><div class="table-element">
+                                <a href="/portal/conditions/edit/{{$network->id}}">
+                                    <i class="fa fa-times"></i>
+                                </a>
                                 </div>
-                            </a>
-                            <a href="/portal/settings/conditions/selling-networks" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                <p>Avalible selling networks</p>
-                                </div>
-                            </a>
-                            <a href="/portal/settings/testing-questions/selling-memory" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p>Avalible selling memory</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                            </td>
+                        </tr>
+                        @endforeach
+
+                    </table>
 
                 </div>
             </div>

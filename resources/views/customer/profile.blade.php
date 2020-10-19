@@ -2,6 +2,7 @@
 <html>
     <head>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <script src="{{ asset('js/Customer.js') }}"></script>
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <!-- jQuery -->
@@ -45,10 +46,10 @@
                                 </div>
                                 <div class="profile-element-two-btns">
                                     <div class="url-footer-container" id="start-shopping">
-                                        <a href="#">Start Shopping</a>
+                                        <a href="/shop">Start Shopping</a>
                                     </div>
                                     <div class="url-footer-container" id="start-selling">
-                                        <a href="#">Start Selling</a>
+                                        <a href="/sell">Start Selling</a>
                                     </div>
                                 </div>
                             </div>
@@ -65,80 +66,131 @@
                         <div class="profile-element-three-left">
                             <div class="element-three-top-container">
                                 <h3>PERSONAL INFORMATION</h3>
-                                <button class="btn btn-primary" style="background: #A375BC;">Edit</button>
+                                <button class="btn btn-primary" onclick="changename()" style="background: #A375BC;">Edit</button>
                             </div>
-                            <div class="element-three-top">
-                                <div class="profile-element-container">
-                                    <p class="profile-small">First Name</p>
-                                    <p class="profile-large">{{$userdata->first_name}}</p>
+                            @if(Session::has('success'))
+                                <div class="alert alert-success my-5" role="alert">
+                                    @foreach(Session::get('success') as $message)
+                                        <li>{{$message}}</li>
+                                    @endforeach
                                 </div>
-                                <div class="profile-element-container">
-                                    <p class="profile-small">Last Name</p>
-                                    <p class="profile-large">{{$userdata->last_name}}</p>
-                                </div>
+                            @endif
+
+                            @if(Session::has('error'))
+                            <div class="alert alert-danger my-5" role="alert">
+                                {{Session::get('error')}}
                             </div>
-                            <div class="element-three-bottom">
-                                <div class="profile-element-container">
-                                    <p class="profile-small">Delivery address</p>
-                                    <p class="profile-large">{{$userdata->delivery_address}}</p>
+                            @endif
+                            <form id="change-name" action="/userprofile/changename"  method="POST">
+                                @csrf
+                                <input type="hidden" name="user" value="{{Auth::user()->id}}">
+                                <div class="element-three-top">
+                                    <div class="profile-element-container p-1">
+                                        <label for="name" class="profile-small">First Name</label>
+                                        <input id="input-name" name="name" type="text" class="form-control" value="{{$userdata->first_name}}" disabled required></input>
+                                    </div>
+                                    <div class="profile-element-container p-1">
+                                        <label for="lastname" class="profile-small">Last Name</label>
+                                        <input id="input-lastname" name="lastname" type="text" class="form-control" value="{{$userdata->last_name}}" disabled required></input>
+                                    </div>
                                 </div>
-                                <div class="profile-element-container">
-                                    <p class="profile-small">Billing addreses</p>
-                                    <p class="profile-large">{{$userdata->billing_address}}</p>
+                                <div class="element-three-bottom ">
+                                    <div class="profile-element-container p-1">
+                                        <label for="delivery-address" class="profile-small">Delivery address</label>
+                                        <input id="delivery-address" name="delivery_address" type="text" class="form-control" value="{{$userdata->delivery_address}}" disabled required></input>
+                                    </div>
+                                    <div class="profile-element-container p-1">
+                                        <label for="billing-address" class="profile-small">Billing address</label>
+                                        <input id="billing-address" name="billing_address" type="text" class="form-control" value="{{$userdata->billing_address}}" disabled required></input>
+                                    </div>
+                                    <div class="profile-element-container p-1">
+                                        <label for="contact-number" class="profile-small">Contact number</label>
+                                        <input id="contact-number" name="contact_number" type="text" class="form-control" value="{{$userdata->contact_number}}" disabled required></input>
+                                    </div>
                                 </div>
-                                <div class="profile-element-container">
-                                    <p class="profile-small">Contact number</p>
-                                    <p class="profile-large">{{$userdata->contact_number}}</p>
-                                </div>
-                            </div>
+                                <button id="update-name-submit" type="submit" class="btn btn-primary btn-hidden" style="background: #A375BC;" disabled>Update</button>
+                            </form>
+
                         </div>
                         <div class="profile-element-three-right">
                             <div class="element-three-top-container">
                                 <h3>ACCOUNT INFORMATION</h3>
-                                <button class="btn btn-primary" style="background: #A375BC;">Edit</button>
+                                <button class="btn btn-primary" style="background: #A375BC;" onclick="changeaccountdetails()">Edit</button>
                             </div>
-                            <div class="element-three-top">
-                                <div class="profile-element-container">
-                                    <p class="profile-small">Email address</p>
-                                    <p class="profile-large">{{$userdata->email}}</p>
+                            @if(Session::has('success-details'))
+                                <div class="alert alert-success my-5" role="alert">
+                                    @foreach(Session::get('success-details') as $message)
+                                        <li>{{$message}}</li>
+                                    @endforeach
                                 </div>
-                                <div class="profile-element-container">
-                                    <p class="profile-small">Password</p>
-                                    <input type="password" class="profile-large" value="{{$userdata->password}}" disabled></input>
-                                </div>
+                            @endif
+                            @if(Session::has('error-details'))
+                            <div class="alert alert-danger my-5" role="alert">
+                                {{Session::get('error-details')}}
                             </div>
+                            @endif
+                            <form id="change-user-information" action="/userprofile/changeuserinformation"  method="POST">
+                                @csrf
+                                <div class="element-three-top">
+                                    <div class="profile-element-container p-1">
+                                        <label for="email" class="profile-small">First Name</label>
+                                        <input id="input-email" name="email" type="email" class="form-control" value="{{$userdata->email}}" disabled required></input>
+                                    </div>
+                                    <div class="profile-element-container p-1">
+                                        <label for="password" class="profile-small">First Name</label>
+                                        <input id="input-password" name="password" type="password" class="form-control" value="{{$userdata->password}}" disabled required></input>
+                                    </div>
+                                </div>
+                                <button id="update-details-submit" type="submit" class="btn btn-primary btn-hidden" style="background: #A375BC;" disabled>Update</button>
+                            </form>
                             <div class="element-three-top-container">
                                 <h3>Newsletter subscription</h3>
-                                <button class="btn btn-primary" style="background: #A375BC;">Save</button>
+                                <button class="btn btn-primary" style="background: #A375BC;" onclick="changesubscription()">Edit</button>
                             </div>
                             <div class="element-three-bottom">
-                                <div class="newsletter-subscription">
-                                    <label class="news-label">
-                                        <input id="radio-checked-yes" type="radio" name="sub" value="true" checked="checked">
-                            
-                                        <div class="news-label-content">
-                                            <p><b>Yes,</b> I would love to hear about the latest amazing offers, hints & tips</p>
-                                            <div class="news-label-selected-container">
-                                                <img id="select-image-yes" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" width="48px" height="48px">
-                                                <p id="select-text-yes">Selected</p>
+                                @if(Session::has('success-subscription'))
+                                    <div class="alert alert-success my-5" role="alert">
+                                        {{Session::get('success-subscription')}}
+                                    </div>
+                                @endif
+                                @if(Session::has('error-subscription'))
+                                    <div class="alert alert-danger my-5" role="alert">
+                                        {{Session::get('error-subscription')}}
+                                    </div>
+                                @endif
+                                <form action="/userprofile/changesubscription" method="POST">
+                                    @csrf
+                                    <div class="newsletter-subscription">
+                                        
+                                        <label class="news-label">
+                                            <input id="radio-checked-yes" type="radio" name="sub" value="true" disabled @if($userdata->sub == 1) checked="checked" @endif>
+                                
+                                            <div class="news-label-content">
+                                                <p><b>Yes,</b> I would love to hear about the latest amazing offers, hints & tips</p>
+                                                <div class="news-label-selected-container">
+                                                    <img id="select-image-yes" src="{{asset('/customer_page_images/body/Icon-Tick-Selected-clear.svg')}}" width="48px" height="48px">
+                                                    <p id="select-text-yes">Select</p>
+                                                </div>
                                             </div>
-                                        </div>
-                            
-                                      </label>
-                            
-                                      <label class="news-label">
-                                        <input id="radio-checked-no" type="radio" name="sub" value="false">
-                            
-                                        <div class="news-label-content">
-                                            <p><b>No,</b>  I do not want to hear about the latest amazing offers, hints & tips</p>
-                                            <div class="news-label-selected-container">
-                                                <img id="select-image-no" src="{{asset('/customer_page_images/body/Icon-Tick-Selected-clear.svg')}}" width="48px" height="48px">
-                                                <p id="select-text-no">Select</p>
+                                
+                                        </label>
+                                
+                                        <label class="news-label">
+                                            <input id="radio-checked-no" type="radio" name="sub" value="false" disabled @if($userdata->sub == 0) checked="checked" @endif>
+                                
+                                            <div class="news-label-content">
+                                                <p><b>No,</b>  I do not want to hear about the latest amazing offers, hints & tips</p>
+                                                <div class="news-label-selected-container">
+                                                    <img id="select-image-no" src="{{asset('/customer_page_images/body/Icon-Tick-Selected-clear.svg')}}" width="48px" height="48px">
+                                                    <p id="select-text-no">Select</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                      </label>
-                                </div>
+                                        </label>
+                                    </div>
+                                    <button id="update-sub-submit" type="submit" class="btn btn-primary btn-hidden mt-3" style="background: #A375BC;" disabled>Update</button>
+                                </form>
                                 <script>
+
                                         $('input[type=radio][name=sub]').change(function() {
                                             if (this.value == 'true') {
                                                 $('#select-image-yes').attr('src', '/customer_page_images/body/Icon-Tick-Selected.svg');
@@ -248,7 +300,7 @@
                                     @endif
                                 </div>
                                 <div class="w-25 p-2">
-                                    <a onclick="">
+                                    <a href="/userprofile/{{$tradein->barcode}}">
                                         <div class="btn btn-primary btn-orange">
                                             <p class="profile-large" style="color: #fff;">View details</p>
                                         </div>

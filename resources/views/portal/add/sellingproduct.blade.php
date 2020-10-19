@@ -67,31 +67,6 @@
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
-                                    <label for="product_network">Product Network:</label>
-                                    <input type="text" name="product_network" id="product_network" required>
-                                  </div>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_memory">Product Memory:</label>
-                                    <input type="text" name="product_memory" id="product_memory" required>
-                                  </div>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_color">Product Color:</label>
-                                    <select class="form-control" name="product_color" id="product_color" required>
-                                        <option value="white">White</option>
-                                        <option value="black">Black</option>
-                                        <option value="red">Red</option>
-                                        <option value="yellow">Yellow</option>
-                                        <option value="coral">Coral</option>
-                                        <option value="blue">Blue</option>
-                                    </select>
-                                  </div>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
                                     <label for="product_grade">Product Grade:</label>
                                     <div class="d-flex">
                                         <div class="form-group mr-2">

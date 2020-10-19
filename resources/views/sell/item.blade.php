@@ -30,15 +30,27 @@
                     </div>
                     <div class="product-selected product-network-container">
                         <p>Product Network:</p>
-                        <p>{{$product->product_network}}</p>
+                        <select class="form-control" id="grade-select" name="networkinput" onchange="networkChanged(this)">
+                            @foreach($networks as $network)
+                            <option value="{{$network->network_value }}" selected>{{$network->network_value}}</option>
+                            @endforeach
+                        </select> 
                     </div>
                     <div class="product-selected product-memory-container">
                         <p>Product Memory:</p>
-                        <p>{{$product->product_memory}}</p>
+                        <select class="form-control" id="grade-select" name="memoryinput" onchange="memoryChanged(this)">
+                            @foreach($memories as $memory)
+                            <option value="{{$memory->memory_value }}" selected>{{$memory->memory_value}}</option>
+                            @endforeach
+                        </select> 
                     </div>
                     <div class="product-selected">
                         <p>Product Colour:</p>
-                        <div class="product-color-container" style="background: {{$product->product_colour}}"></div>
+                        <select class="form-control" id="grade-select" name="colorinput" onchange="colorChanged(this)">
+                            @foreach($colors as $color)
+                            <option value="{{$color->color_value }}" selected>{{$color->color_value}}</option>
+                            @endforeach
+                        </select> 
                     </div>
                     <div class="product-selected product-grade-container">
                         <p>Product Grade:</p>
@@ -62,6 +74,9 @@
                                 @csrf
                                 <input type="hidden" name="productid" value="{{$product->id}}">
                                 <input type="hidden" name="grade" id="grade" value="{{$product->customer_grade_price_1 }}"></input>
+                                <input type="hidden" name="color" id="color" value="{{$colors[0]->color_value}}"></input>
+                                <input type="hidden" name="network" id="network" value="{{$networks[0]->network_value}}"></input>
+                                <input type="hidden" name="memory" id="memory" value="{{$memories[0]->memory_value}}"></input>
                                 <input type="hidden" name="type" value="tradein"></input>
                                 <button type="submit" class="btn btn-primary btn-orange">Add to cart</button>
                             </div>
@@ -211,9 +226,21 @@
             var value = selectObject.value;
             document.getElementById('product-price').innerHTML = '£' + value;
             document.getElementById('grade').value = value;
+        }
 
-            console.log(document.getElementById('grade').value);
+        function colorChanged(selectObject){
+            var value = selectObject.value;
+            document.getElementById('color').value = value;
+        }
 
+        function memoryChanged(selectObject){
+            var value = selectObject.value;
+            document.getElementById('network').value = value;
+        }
+
+        function networkChanged(selectObject){
+            var value = selectObject.value;
+            document.getElementById('memory').value = value;
         }
 
         function showModal(){

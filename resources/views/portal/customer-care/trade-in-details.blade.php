@@ -94,27 +94,27 @@
 
                     <div class="w-100 details">
                         <div class="portal-title">
-                            <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Seller Details</p>
+                            <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Customer Details</p>
                         </div>
                         <div class="d-flex w-100">
                             <div class="d-flex w-50">
                                 <div class="d-flex flex-column w-50 justify-content-between">
-                                    <p>Name:</p>
+                                    <p>Name: </p>
                                     <p>Contact No.:</p>
                                 </div>
                                 <div class="d-flex flex-column w-50 justify-content-between">
-                                    <p></p>
-                                    <p></p>
+                                    <p>{{$user->first_name}} {{$user->last_name}}</p>
+                                    <p>{{$user->contact_number}}</p>
                                 </div>
                             </div>
                             <div class="d-flex w-50">
                                 <div class="d-flex flex-column w-50 justify-content-between">
-                                    <p>Company Name:</p>
-                                    <p>Email Address:</p>
+                                    <p>Company Name: </p>
+                                    <p>Email Address: </p>
                                 </div>
                                 <div class="d-flex flex-column w-50 justify-content-between">
-                                    <p></p>
-                                    <p></p>
+                                    <p>none</p>
+                                    <p>none</p>
                                 </div>
                             </div>
                         </div>

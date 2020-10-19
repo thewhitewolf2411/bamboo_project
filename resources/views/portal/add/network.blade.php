@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Product Options</title>
+    <title>Bamboo Recycle::Add Network</title>
 </head>
 
 <body class="portal-body">
@@ -28,35 +28,53 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Product Options</p>
+                        <p>Add Network</p>
                     </div>
                 </div>
-                <div class="portal-content-container">
 
-                    <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100 w-100 my-3">
-                        <div class="d-flex flex-wrap w-100">
-                            <a href="/portal/settings/product-options/selling-colours" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p>Avalible selling colours</p>
-                                </div>
-                            </a>
-                            <a href="/portal/settings/conditions/selling-networks" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                <p>Avalible selling networks</p>
-                                </div>
-                            </a>
-                            <a href="/portal/settings/testing-questions/selling-memory" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p>Avalible selling memory</p>
-                                </div>
-                            </a>
+                @if(Session::has('success'))
+
+                <div class="alert alert-success" role="alert">
+                    {{Session::get('success')}}
+                </div>
+
+                @endif
+
+                <div class="add-product-container">
+                    <form action="/portal/settings/productoptions/addnetwork" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="product-tab">
+                            <div class="form-group select_brand_button">
+                                <label for="website_name">Brand</label>
+                                <select required name="brand_id" class="form-control">
+                                    @foreach($brands as $brand)
+                                        <option value="{{$brand->id}}">{{$brand->brand_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <label for="website_address">Network value:</label>
+                                <input class="form-control" name="network_value" type="text" required></input>
+                            </div>
+
+                            <div class="form-group select_brand_button">
+                                <div class="form-group">
+
+                                    <button type="submit" class="btn btn-primary btn-blue">Save network value</button>
+                                  </div>
+                            </div>
                         </div>
-                    </div>
 
+                    </form>
                 </div>
+
+
             </div>
+
         </div>
+
     </main>
+
 
 </body>
 <script>
@@ -73,6 +91,4 @@ $(document).ready(function(){
 });
 
 </script>
-
-
 </html>

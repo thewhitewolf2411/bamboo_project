@@ -68,10 +68,10 @@
                                     </div>
                                     <div class="d-flex flex-column w-25">
                                         <h6 class="m-0 mb-3 font-weight-bold">{{$cartitem['product']->product_name}}</h6>
-                                        <p class="m-0">Network: {{$cartitem['product']->product_network}}</p>
-                                        <p class="m-0">Memory: {{$cartitem['product']->product_memory}}</p>
-                                        <p class="m-0">Colour: {{$cartitem['product']->product_colour}}</p>
-                                        <p class="m-0">Grade: {{$cartitem['product']->product_grade}}</p>
+                                        <p class="m-0">Network: {{$cartitem['network']}}</p>
+                                        <p class="m-0">Memory: {{$cartitem['colour']}}</p>
+                                        <p class="m-0">Colour: {{$cartitem['memory']}}</p>
+                                        <p class="m-0">Grade: {{$cartitem['grade']}}</p>
                                     </div>
                                     <div class="d-flex flex-column w-25">
                                         <h6 class="m-0 mb-3 font-weight-bold">Item price</h6>
@@ -89,13 +89,16 @@
                 </div>
 
                 <div class="d-flex flex-column w-25 p-3">
-                    <div class="center-title-container">
+                    <div class="center-title-container flex-column">
                         <p style="display: flex; align-items: center;">Order Summary</p>
+
+                        <select class="form-control my-3" onchange="changelabelstatus(this)">
+                            <option value="1" selected>Make an order without printing label</option>
+                            <option value="2">Print and send trade label yourself</option>
+                        </select>
                     </div>
 
                     <div class="form-container">
-
-                    
 
                         <form action="/cart/sell" method="POST">
                             @csrf
@@ -105,13 +108,24 @@
                                 <input type="hidden" name="ordertype-{{$key}}" value="{{$cartitem['type']}}">
                                 <input type="hidden" name="orderproduct-{{$key}}" value="{{$cartitem['product']}}">
                                 <input type="hidden" name="productprice-{{$key}}" value="{{$cartitem['price']}}">
+                                <input type="hidden" name="network-{{$key}}" value="{{$cartitem['network']}}">
+                                <input type="hidden" name="colour-{{$key}}" value="{{$cartitem['colour']}}">
+                                <input type="hidden" name="memory-{{$key}}" value="{{$cartitem['memory']}}">
         
                             @endforeach
         
+                            <input type="hidden" id="label_status" name="label_status" value="1">
+
                             <button type="submit" class="btn btn-primary w-100">Submit Order</button>
         
                         </form>
         
+                        <script>
+                            function changelabelstatus(value){
+                                document.getElementById('label_status').value = value.value;
+                            }
+                        </script>
+
                     </div>
                 </div>
 

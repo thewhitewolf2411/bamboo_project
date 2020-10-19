@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Session;
 use App\Eloquent\Category;
-use App\Eloquent\User;
+use App\User;
 use App\Eloquent\Cart;
 use App\Eloquent\Order;
 use App\Eloquent\BuyingProduct;
@@ -177,7 +177,121 @@ class CustomerController extends Controller
 
     }
 
+    public function showOrderDetails($order){
+        $tradein = Tradein::where('barcode', $order)->get();
+
+        return view('customer.orderdetails')->with(['tradein'=>$tradein, 'barcode'=>$order]);
+    }
+
     public function showWishlist(){
         return view('customer.wishlist');
+    }
+
+    public function changeName(Request $request){
+        $user = Auth::user();
+        #dd($request->all(), $user);
+
+        $changed = false;
+        $chagedData = [];
+
+        if($user->first_name != $request->name){
+            $user->first_name = $request->name;
+            $changed = true;
+            array_push($chagedData, 'First name was succesfully changed');
+        }
+        if($user->last_name != $request->lastname){
+            $user->last_name = $request->lastname;
+            $changed = true;
+            array_push($chagedData, 'Last name was succesfully changed');
+        }
+        if($user->delivery_address != $request->delivery_address){
+            $user->delivery_address = $request->delivery_address;
+            $changed = true;
+            array_push($chagedData, 'Delivery address was succesfully changed');
+        }
+        if($user->billing_address != $request->billing_address){
+            $user->billing_address = $request->billing_address;
+            $changed = true;
+            array_push($chagedData, 'Billing address was succesfully changed');
+        }
+        if($user->contact_number != $request->contact_number){
+            $user->contact_number = $request->contact_number;
+            $changed = true;
+            array_push($chagedData, 'Contact number was succesfully changed');
+        }
+
+        if($changed){
+            $user->save();
+            return redirect()->back()->with('success', $chagedData);
+        }
+        else{
+            return redirect()->back()->with('error', 'Nothing was changed. Please try again.');
+        }
+    }
+
+    public function changeDetails(Request $request){
+        $user = Auth::user();
+        #dd($request->all(), $user, Crypt::decrypt($user->password));
+
+        $changed = false;
+        $chagedData = [];
+
+        if($user->email != $request->email){
+            $user->email = $request->email;
+            $changed = true;
+            array_push($chagedData, 'Email was succesfully changed');
+        }
+        if(Crypt::decrypt($user->password) != $request->password){
+            $user->password = Crypt::encrypt($request->password);
+            $changed = true;
+            array_push($chagedData, 'Password was succesfully changed');
+        }
+
+        if($changed){
+            $user->save();
+            return redirect()->back()->with('success-details', $chagedData);
+        }
+        else{
+            return redirect()->back()->with('error-details', 'Nothing was changed. Please try again.');
+        }
+
+    }
+
+    public function changeSubscription(Request $request){
+        $user = Auth::user();
+
+        #dd($request->all());
+
+        $changed = false;
+        $chagedData = [];
+
+        $sub = null;
+
+        if($user->sub == true && $request->sub == "true"){
+            //do nothing
+        }
+        elseif($user->sub == false && $request->sub == "false"){
+            //do nothing
+        }
+        else{
+            if($request->sub == "true"){
+                $sub = true;
+                $changed = true;
+            }
+            else{
+                $sub = false;
+                $changed = true;
+            }
+
+            $user->sub = $sub;
+        }
+
+        if($changed){
+            $user->save();
+            return redirect()->back()->with('success-subscription', 'Your subscription was changed.');
+        }
+        else{
+            return redirect()->back()->with('error-subscription', 'Nothing was changed. Please try again.');
+        }
     }
 }

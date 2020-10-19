@@ -22,6 +22,9 @@ use App\Eloquent\TrayContent;
 use App\Eloquent\Trolley;
 use App\Eloquent\TrolleyContent;
 use App\Eloquent\Box;
+use App\Eloquent\Colour;
+use App\Eloquent\Network;
+use App\Eloquent\Memory;
 use App\User;
 use Auth;
 use Schema;
@@ -649,9 +652,6 @@ class PortalController extends Controller
         $product->product_name = $request->product_name;
         $product->category_id = $request->category;
         $product->brand_id = $request->brand;
-        $product->product_memory = $request->product_memory;
-        $product->product_colour = $request->product_color;
-        $product->product_network = $request->product_network;
         $product->customer_grade_price_1 = $request->customer_grade_price_1;
         $product->customer_grade_price_2 = $request->customer_grade_price_2;
         $product->customer_grade_price_3 = $request->customer_grade_price_3;
@@ -1037,6 +1037,13 @@ class PortalController extends Controller
         #dd($imei_number);
 
         #$imei_number = 123456123456123;
+
+        if(strlen($imei_number)<15){
+            return redirect()->back()->with('error', 'Incorrect IMEI number. Must be 15 characters');
+        }
+        if(strlen($imei_number>15)){
+            return redirect()->back()->with('error', 'Incorrect IMEI number. Must be 15 characters');
+        }
 
         $url = 'https://gapi.checkmend.com/duediligence/' . 2 . '/' . $imei_number;
 
@@ -1651,14 +1658,11 @@ class PortalController extends Controller
                 $product->product_image = $datarow[2];
                 $product->category_id = $datarow[3];
                 $product->brand_id = $datarow[4];
-                $product->product_memory = $datarow[5];
-                $product->product_colour = $datarow[6];
-                $product->product_network = $datarow[7];
-                $product->customer_grade_price_1 = $datarow[8];
-                $product->customer_grade_price_2 = $datarow[9];
-                $product->customer_grade_price_3 = $datarow[10];
-                $product->customer_grade_price_4 = $datarow[11];
-                $product->customer_grade_price_5 = $datarow[12];
+                $product->customer_grade_price_1 = $datarow[5];
+                $product->customer_grade_price_2 = $datarow[6];
+                $product->customer_grade_price_3 = $datarow[7];
+                $product->customer_grade_price_4 = $datarow[8];
+                $product->customer_grade_price_5 = $datarow[9];
     
                 $product->save();
             }
@@ -1894,6 +1898,104 @@ class PortalController extends Controller
         return view('portal.settings.conditions')->with('conditions', $conditions)->with('portalUser', $portalUser);
     }
 
+    public function showSellingColourPage(){
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $colours = Colour::all();
+        return view('portal.settings.productoptions.colour')->with(['portalUser'=>$portalUser, 'colours'=>$colours]);
+
+    }
+
+    public function showSellingNetworksPage(){
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $networks = Network::all();
+
+        return view('portal.settings.productoptions.networks')->with(['portalUser'=>$portalUser, 'networks'=>$networks]);
+
+    }
+
+    public function showSellingMemoryPage(){
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $memories = Memory::all();
+
+        return view('portal.settings.productoptions.memory')->with(['portalUser'=>$portalUser, 'memories'=>$memories]);
+    }
+
+    public function addColourPage(){
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $brands = Brand::all();
+
+        return view('portal.add.colour')->with(['portalUser'=>$portalUser, 'brands'=>$brands]);
+    }
+
+    public function addNetworkPage(){
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $brands = Brand::all();
+
+        return view('portal.add.network')->with(['portalUser'=>$portalUser, 'brands'=>$brands]);
+        
+    }
+
+    public function addMemoryPage(){
+        if(!$this->checkAuthLevel(10)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $brands = Brand::all();
+
+        return view('portal.add.memory')->with(['portalUser'=>$portalUser, 'brands'=>$brands]);
+    }
+
+    public function addColour(Request $request){
+        $color = new Colour();
+
+        $color->brand_id = $request->brand_id;
+        $color->color_value = $request->color_value;
+
+        $color->save();
+        return redirect()->back()->with('success', 'You have succesfully added the color.');
+    }
+
+    public function addNetwork(Request $request){
+        $network = new Network();
+
+        $network->brand_id = $request->brand_id;
+        $network->network_value = $request->network_value;
+
+        $network->save();
+        return redirect()->back()->with('success', 'You have succesfully added the network.');
+    }
+
+    public function addMemory(Request $request){
+        $memory = new Memory();
+
+        $memory->brand_id = $request->brand_id;
+        $memory->memory_value = $request->memory_value;
+
+        $memory->save();
+        return redirect()->back()->with('success', 'You have succesfully added the memory.');
+    }
+
     public function showSettingsAddConditionsPage(){
         if(!$this->checkAuthLevel(10)){return redirect('/');}
 
@@ -2120,13 +2222,19 @@ class PortalController extends Controller
 
     public function addTray(Request $request){
 
+        $trays = Tray::where('tray_name', $request->tray_name)->get();
+
+        if(count($trays)>=1){
+            return redirect('/portal/trays')->with('error', 'Tray with name '.$request->tray_name.' already exists.');
+        }
+
         $tray = new Tray();
 
         $tray->tray_name = $request->tray_name;
 
         $tray->save();
 
-        return redirect('/portal/trays');
+        return redirect('/portal/trays')->with('success', 'You have succesfully created a tray '.$request->tray_name.'.');
     }
 
     public function showTrayPage(Request $request){
@@ -2213,20 +2321,24 @@ class PortalController extends Controller
 
     public function deleteTray($id){
         $tray = Tray::where('id', $id)->first();
-        $traycontent = TrayContent::where('tray_id', $id)->get();
-        $trolley = Trolley::where('id', $tray->trolley_id)->first();
+        if($tray->trolley_id != null){
+            $traycontent = TrayContent::where('tray_id', $id)->get();
+            $trolley = Trolley::where('id', $tray->trolley_id)->first();
+    
+            foreach($traycontent as $trayitem){
+                $tradein = Tradein::where('id', $trayitem->trade_in_id)->first();
+                $tradein->delete();
+            }
 
-        foreach($traycontent as $trayitem){
-            $tradein = Tradein::where('id', $trayitem->trade_in_id)->first();
-            $tradein->delete();
+            $trolley->number_of_trays = $trolley->number_of_trays-1;
+            $trolley->save();
         }
+
+        $trayname = $tray->tray_name;
 
         $tray->delete();
 
-        $trolley->number_of_trays = $trolley->number_of_trays-1;
-        $trolley->save();
-
-        return redirect()->back()->with('success', 'You have succesfully deleted the tray');
+        return redirect()->back()->with('success', 'You have succesfully deleted the tray with name '.$trayname);
 
     }
 
@@ -2337,7 +2449,24 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.boxes.boxes')->with('portalUser', $portalUser);
+        $boxes = Box::all();
+
+        return view('portal.boxes.boxes')->with(['portalUser'=>$portalUser, 'boxes'=>$boxes ]);
+    }
+
+    public function showAddBoxPage(){
+        dd("");
+    }
+
+    public function showBoxPage(Request $request){
+        if(!$this->checkAuthLevel(14)){return redirect('/');}
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $box = Box::where('box_name',$request->box_id_scan)->first();
+
+        return view('portal.boxes.box')->with(['portalUser'=>$portalUser, 'box'=>$box ]);
     }
 
 

@@ -20,9 +20,9 @@ class Cart{
 
     }
 
-    public function add($price, $item, $type){
+    public function add($price, $item, $type, $network, $colour, $memory, $grade){
 
-        $storedItem = ['price'=>$price, 'product'=>$item, 'type'=>$type];
+        $storedItem = ['price'=>$price, 'product'=>$item, 'type'=>$type, 'network'=>$network, 'colour'=>$colour, 'memory'=>$memory, 'grade'=>$grade];
  
         array_push($this->items, $storedItem);
     }

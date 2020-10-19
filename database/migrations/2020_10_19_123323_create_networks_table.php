@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTraysTable extends Migration
+class CreateNetworksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateTraysTable extends Migration
      */
     public function up()
     {
-        Schema::create('trays', function (Blueprint $table) {
+        Schema::create('networks', function (Blueprint $table) {
             $table->id();
-            $table->string('tray_name')->unique();
-            $table->integer('trolley_id')->nullable();
-            $table->integer('number_of_devices')->default(0);
-            $table->integer('max_number_of_devices')->default(200);
+            $table->integer('brand_id');
+            $table->string('network_value');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateTraysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trays');
+        Schema::dropIfExists('networks');
     }
 }
