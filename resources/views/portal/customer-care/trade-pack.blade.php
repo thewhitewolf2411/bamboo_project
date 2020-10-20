@@ -62,7 +62,7 @@
                             <td ><div class="table-element">{{$tradein->barcode}}</div></td>
                             <td><div class="table-element">{{$tradein->created_at}}</div></td>
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
-                            <td><div class="table-element">@if($tradein->job_state == 1)Printed @elseif ($tradein->job_state == 2) Sent @elseif($tradein->job_state == 3) Order received @elseif($tradein->job_state == 4) Device received @elseif($tradein->job_state == 5) Device in tray @endif</div></td>
+                            <td><div class="table-element">@if($tradein->job_state == 1)Printed @elseif ($tradein->job_state == 2) Sent @elseif($tradein->job_state == 3) Order received @elseif($tradein->job_state == 4) Device received @elseif($tradein->job_state == 5) Device in tray @elseif($tradein->job_state == 6) Device tested @endif</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
                                     <i class="fa fa-search"></i>

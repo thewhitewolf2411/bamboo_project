@@ -154,7 +154,7 @@ Route::get('/portal/testing', 'PortalController@showTestingPage')->middleware('a
 Route::get('/portal/testing/receive', 'PortalController@showReceiveTradeIn')->middleware('auth');
 Route::get('/portal/testing/find', 'PortalController@showFindTradeIn')->middleware('auth');
 
-Route::post('/portal/testing/find/find', 'PortalController@find')->middleware('auth');
+Route::get('/portal/testing/find/test', 'PortalController@find')->middleware('auth');
 Route::post('/portal/testing/receive/1', 'PortalController@receive')->middleware('auth');
 Route::post('/portal/testing/receive/2', 'PortalController@receive')->middleware('auth');
 Route::post('/portal/testing/receive/3', 'PortalController@receive')->middleware('auth');

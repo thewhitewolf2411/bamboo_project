@@ -800,7 +800,10 @@ class PortalController extends Controller
             }
     
             if($tradein->job_state <5){
-                return redirect('/portal/testing/find');
+                return redirect('/portal/testing/receive');
+            }
+            else if($tradein->job_state == 6){
+                return redirect()->back()->with('error', 'Device was already tested.');
             }
             else{
                 $user_id = Auth::user()->id;
@@ -859,6 +862,7 @@ class PortalController extends Controller
     }
 
     public function testItem($id){
+
         if(!$this->checkAuthLevel(5)){return redirect('/');}
         $tradein = Tradein::where('id', $id)->first();
         $user  = User::where('id', $tradein->user_id)->first();
@@ -1037,11 +1041,8 @@ class PortalController extends Controller
         #dd($imei_number);
 
         #$imei_number = 123456123456123;
-
-        if(strlen($imei_number)<15){
-            return redirect()->back()->with('error', 'Incorrect IMEI number. Must be 15 characters');
-        }
-        if(strlen($imei_number>15)){
+        #dd(strlen($imei_number)>15 || strlen($imei_number)<15);
+        if(strlen($imei_number)>15 || strlen($imei_number)<15){
             return redirect()->back()->with('error', 'Incorrect IMEI number. Must be 15 characters');
         }
 
@@ -1174,86 +1175,99 @@ class PortalController extends Controller
         $testingQuestions->order_id = $tradein->id;
         $testingQuestions->save();
 
+        #dd($request->all());
+
         $tray = null;
 
-        if($request->fake_missing_parts == "false" && $request->device_fully_functional == "true" && $request->water_damage == "false" && $request->fimp_or_google_lock="false" && $request->pin_lock == "false"){
-            if($request->cosmetic_condition == "Grade A" && $tradein->product_state == "Excellent working"){
-
-                $testingQuestions->order_id = $tradein->id;
-                $testingQuestions->fake_missing_parts = false;
-                $testingQuestions->device_fully_functional = true;
-                $testingQuestions->signs_of_water_damage = false;
-                $testingQuestions->FIMP_Google_lock = false;
-                $testingQuestions->pin_lock = false;
-                $testingQuestions->cosmetic_condition = $request->cosmetic_condition;
-                $testingQuestions->save();
-
-                if($product->brand_id == 1){
-                    $tray = Tray::where('tray_name', 'TA01-1-A')->first();
-                }
-                elseif($product->brand_id == 2){
-                    $tray = Tray::where('tray_name', 'TS01-1-A')->first();
-                }
-                elseif($product->brand_id == 3){
-                    $tray = Tray::where('tray_name', 'TH01-1-A')->first();
-                }
-                else{
-                    $tray = Tray::where('tray_name', 'TM01-1-A')->first();
-                }
-
+        if($request->bamboo_grade == "Grade A" && $tradein->product_state == "Excellent working"){
+            $testingQuestions->order_id = $tradein->id;
+            $testingQuestions->fake_missing_parts = false;
+            $testingQuestions->device_fully_functional = true;
+            $testingQuestions->signs_of_water_damage = false;
+            $testingQuestions->FIMP_Google_lock = false;
+            $testingQuestions->pin_lock = false;
+            $testingQuestions->cosmetic_condition = $request->cosmetic_condition;
+            $testingQuestions->save();
+        }
+        else if($request->bamboo_grade == "Grade B" && $tradein->product_state == "Good working"){
+            $testingQuestions->order_id = $tradein->id;
+            $testingQuestions->fake_missing_parts = false;
+            $testingQuestions->device_fully_functional = true;
+            $testingQuestions->signs_of_water_damage = false;
+            $testingQuestions->FIMP_Google_lock = false;
+            $testingQuestions->pin_lock = false;
+            $testingQuestions->cosmetic_condition = $request->cosmetic_condition;
+            $testingQuestions->save();
+        }
+        else if($request->bamboo_grade == "Grade C" && $tradein->product_state == "Poor working"){
+            $testingQuestions->order_id = $tradein->id;
+            $testingQuestions->fake_missing_parts = false;
+            $testingQuestions->device_fully_functional = true;
+            $testingQuestions->signs_of_water_damage = false;
+            $testingQuestions->FIMP_Google_lock = false;
+            $testingQuestions->pin_lock = false;
+            $testingQuestions->cosmetic_condition = $request->cosmetic_condition;
+            $testingQuestions->save();
+        }
+        else if($tradein->product_state == "Damaged working" && ($request->bamboo_grade == "WSI" || $request->bamboo_grade == "WSD" || $request->bamboo_grade == "WSI" || $request->bamboo_grade == "NW" || $request->bamboo_grade == "PND")){
+            if($request->fimp_or_google_lock == "true"){
+                $testingQuestions->FIMP_Google_lock = true;
             }
-            elseif(($request->cosmetic_condition == "Grade B" ||  $request->cosmetic_condition == "Grade B+")  && $tradein->product_state == "Good working"){
-                if($product->brand_id == 1){
-                    $tray = Tray::where('tray_name', 'TA01-1-B')->first();
-                }
-                elseif($product->brand_id == 2){
-                    $tray = Tray::where('tray_name', 'TS01-1-B')->first();
-                }
-                elseif($product->brand_id == 3){
-                    $tray = Tray::where('tray_name', 'TH01-1-B')->first();
-                }
-                else{
-                    $tray = Tray::where('tray_name', 'TM01-1-B')->first();
-                }
+            if($request->pin_lock == "true"){
+                $testingQuestions->pin_lock = true;
             }
-            elseif($request->cosmetic_condition == "Grade C" && $tradein->product_state == "Poor working"){
-                if($product->brand_id == 1){
-                    $tray = Tray::where('tray_name', 'TA01-1-C')->first();
-                }
-                elseif($product->brand_id == 2){
-                    $tray = Tray::where('tray_name', 'TS01-1-C')->first();
-                }
-                elseif($product->brand_id == 3){
-                    $tray = Tray::where('tray_name', 'TH01-1-C')->first();
-                }
-                else{
-                    $tray = Tray::where('tray_name', 'TM01-1-C')->first();
-                }
+            if($request->fake_missing_parts == "true"){
+                $testingQuestions->fake_missing_parts = true;
             }
-            elseif($request->cosmetic_condition == "WSI - WSD" && $tradein->product_state == "Damaged working"){
-                if($product->brand_id == 1){
-                    $tray = Tray::where('tray_name', 'TA01-1-A')->first();
-                }
-                elseif($product->brand_id == 2){
-                    $tray = Tray::where('tray_name', 'TS01-1-A')->first();
-                }
-                elseif($product->brand_id == 3){
-                    $tray = Tray::where('tray_name', 'TH01-1-A')->first();
-                }
-                else{
-                    $tray = Tray::where('tray_name', 'TM01-1-A')->first();
-                }
+            if($request->device_fully_functional == "false"){
+                $testingQuestions->device_fully_functional = false;
             }
-            else{
-                $tradein->marked_for_quarantine = true;
+            if($request->water_damage == "true"){
+                $testingQuestions->signs_of_water_damage = true;
             }
+            $testingQuestions->save();
+            $tradein->marked_for_quarantine = true;
         }
         else{
+            if($request->fimp_or_google_lock == "true"){
+                $testingQuestions->FIMP_Google_lock = true;
+            }
+            if($request->pin_lock == "true"){
+                $testingQuestions->pin_lock = true;
+            }
+            if($request->fake_missing_parts == "true"){
+                $testingQuestions->fake_missing_parts = true;
+            }
+            if($request->device_fully_functional == "false"){
+                $testingQuestions->device_fully_functional = false;
+            }
+            if($request->water_damage == "true"){
+                $testingQuestions->signs_of_water_damage = true;
+            }
+            $testingQuestions->save();
             $tradein->marked_for_quarantine = true;
         }
 
-        if($tradein->marked_for_quarantine == true){
+        $tradein->job_state = 6;
+        $tradein->save();
+
+
+        if($tradein->marked_for_quarantine){
             $tray = Tray::where('trolley_id', 14)->where('number_of_devices', '<', 200)->first();
+        }
+        else{
+            if($product->brand_id == 1){
+                $tray = Tray::where('tray_name', 'TA01-1-A')->first();
+            }
+            elseif($product->brand_id == 2){
+                $tray = Tray::where('tray_name', 'TS01-1-A')->first();
+            }
+            elseif($product->brand_id == 3){
+                $tray = Tray::where('tray_name', 'TH01-1-A')->first();
+            }
+            else{
+                $tray = Tray::where('tray_name', 'TM01-1-A')->first();
+            }
         }
 
         $traycontent = TrayContent::where('trade_in_id', $tradein->id)->first();

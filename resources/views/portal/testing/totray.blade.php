@@ -36,7 +36,7 @@
 
                 Please put the device with new label into tray {{$tray_name}}.
 
-                <a href="/portal/testing/receive">
+                <a href="/portal/testing/find">
                     <div class="btn btn-primary">
                         <p style="color: #fff;">Back</p>
                     </div>
