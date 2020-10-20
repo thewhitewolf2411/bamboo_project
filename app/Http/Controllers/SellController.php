@@ -36,7 +36,7 @@ class SellController extends Controller
 
     public function showSellShop(Request $request, $parameter){
         
-        #dd($request->all());
+        #dd($request->all(), $parameter);
 
         $brands = Brand::all();
 
@@ -64,12 +64,8 @@ class SellController extends Controller
             $start = $page * $number - $number;
         }
 
-        #dd($start);
-
-
         $products = "";
         $numberofproducts = 0;
-        #dd($parameter);
 
         switch($parameter){
             case "mobile":
@@ -84,23 +80,23 @@ class SellController extends Controller
                 }
             case "tablets":
                 if(isset($request->brand)){
-                    $products = SellingProduct::where('category_id', 1)->where('id', '>=', $start)->where('brand_id', $request->brand)->take($number)->get();
-                    $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
+                    $products = SellingProduct::where('category_id', 2)->where('id', '>=', $start)->where('brand_id', $request->brand)->take($number)->get();
+                    $numberofproducts = count(SellingProduct::where('category_id', 2)->get());
                     break;
                 }else{
-                    $products = SellingProduct::where('category_id', 1)->where('id', '>=', $start)->take($number)->get();
-                    $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
+                    $products = SellingProduct::where('category_id', 2)->where('id', '>=', $start)->take($number)->get();
+                    $numberofproducts = count(SellingProduct::where('category_id', 2)->get());
                     break;
                 }
             break;
             case "watches":
                 if(isset($request->brand)){
-                    $products = SellingProduct::where('category_id', 1)->where('id', '>=', $start)->where('brand_id', $request->brand)->take($number)->get();
-                    $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
+                    $products = SellingProduct::where('category_id', 3)->where('id', '>=', $start)->where('brand_id', $request->brand)->take($number)->get();
+                    $numberofproducts = count(SellingProduct::where('category_id', 3)->get());
                     break;
                 }else{
-                    $products = SellingProduct::where('category_id', 1)->where('id', '>=', $start)->take($number)->get();
-                    $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
+                    $products = SellingProduct::where('category_id', 3)->where('id', '>=', $start)->take($number)->get();
+                    $numberofproducts = count(SellingProduct::where('category_id', 3)->get());
                     break;
                 }
             break;
@@ -115,8 +111,6 @@ class SellController extends Controller
         for($i = 1; $i<=$numberofpages; $i++){
             array_push($pages, $i);
         }
-
-        #dd($products);
 
         return view('sell.shop')->with(['products' => $products, 'pages'=>$pages, 'currentpage'=>$page, 'category'=>$parameter])->with(['brands'=>$brands]);
     }

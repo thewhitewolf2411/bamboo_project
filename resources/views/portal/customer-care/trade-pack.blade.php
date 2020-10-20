@@ -67,19 +67,15 @@
                                 <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
                                     <i class="fa fa-search"></i>
                                 </a>
-                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint barcode">
+                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint tradepack">
                                     <i class="fa fa fa-print"></i>
                                 </a>
-                                @if($tradein->job_state <=2)
+                                @if($tradein->job_state <=1)
                                 <a href="javascript:void(0)" onclick = setAsSent({{$tradein->id}}) title="Mark tradepack as sent">
                                     <i class="fa fa-paper-plane"></i>
                                 </a>
-                                @else
-                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint barcode">
-                                    <i class="fa fa fa-print"></i>
-                                </a>
                                 @endif
-                                <a title="Return device to print" href="/portal/customer-care/trade-pack/markforreprint/{{$tradein->id}}" title="Return device to print">
+                                <a title="Cancel order" href="/userprofile/deleteorder/{id}/{{$tradein->barcode}}">
                                     <i class="fa fa-times" style="color:red !important;"></i>
                                 </a>
                                 </div>

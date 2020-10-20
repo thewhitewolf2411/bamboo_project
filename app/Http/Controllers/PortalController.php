@@ -2469,7 +2469,12 @@ class PortalController extends Controller
     }
 
     public function showAddBoxPage(){
-        dd("");
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $brands = Brand::all();
+
+        return view('portal.add.box')->with(['portalUser'=>$portalUser, 'brands'=>$brands]);
     }
 
     public function showBoxPage(Request $request){
@@ -2481,6 +2486,34 @@ class PortalController extends Controller
         $box = Box::where('box_name',$request->box_id_scan)->first();
 
         return view('portal.boxes.box')->with(['portalUser'=>$portalUser, 'box'=>$box ]);
+    }
+
+    public function addBox(Request $request){
+        
+        $boxes = Box::where('box_name', $request->box_name)->get();
+        if(count($boxes)>=1){
+            return redirect('/portal/boxes')->with('error', 'Box with name '.$request->box_name.' already exists.');
+        }
+        
+        $box = new Box();
+        if($request->brands == "Apple"){
+            $box->manifacturer = "Apple";
+        }
+        elseif($request->brands == "Samsung"){
+            $box->manifacturer = "Samsung";
+        }
+        elseif($request->brands == "Huawei"){
+            $box->manifacturer = "Huawei";
+        }
+        else{
+            $box->manifacturer = "Miscenalious";
+        }
+        $box->box_name = $request->box_name;
+        $box->description = $request->box_description;
+
+        $box->save();
+
+        return redirect('/portal/boxes')->with('error', 'Box with name '.$request->box_name.' already exists.');
     }
 
 

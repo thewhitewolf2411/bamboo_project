@@ -41,6 +41,13 @@
                         </div>
                     </form>
                 </div>
+
+                <div class="container">
+                    <a href="/portal/boxes/create"><div class="btn btn-primary btn-blue">
+                        <p style="color: #fff;">Create Box</p>
+                    </div></a>
+                </div>
+
                 <div class="portal-title-container">
                     <div class="portal-title">
                         <p>All boxes</p>
@@ -76,12 +83,6 @@
                         </tr>
                         @endforeach
                     </table>
-                </div>
-
-                <div class="container">
-                    <a href="/portal/boxes/create"><div class="btn btn-primary btn-blue">
-                        <p style="color: #fff;">Create Box</p>
-                    </div></a>
                 </div>
             </div>
         </div>

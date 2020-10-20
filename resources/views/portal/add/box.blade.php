@@ -33,17 +33,18 @@
                 </div>
 
                 <div class="portal-search-form-container">
-                    <form action="/portal/trays/createtray" method="POST">
+                    <form action="/portal/boxes/createbox" method="POST">
                         <div class="container form-group d-flex flex-column align-items-center justify-content-between">
-                           
-                            <input required style="margin: 0; width: 30%; margin-bottom:15px;" class="p-2 form-control" type="number" name="tray_name" id="tray_name" placeholder="Tray name">
-                            <select required style="margin:0; width:30%; margin-bottom:15px;" class="p-2 form-control">
-                                <option value="">Select a trolley</option>
-                                @foreach($trolleys as $trolley)
-                                    <option value="{{$trolley->trolley_name}}">{{$trolley->trolley_name}}</option>
+                           @csrf
+                            <select style="margin: 0; width: 30%; margin-bottom:15px;" class="p-2 form-control" id="brands" name="brands" required>
+                            <option selected disabled>Please select brand</option>
+                                @foreach($brands as $brand)
+                                    <option value="{{$brand->brand_name}}">{{$brand->brand_name}}</option>
                                 @endforeach
                             </select>
-                            <button type="submit" class="btn btn-primary btn-blue">Create Tray</button>
+                            <input required style="margin: 0; width: 30%; margin-bottom:15px;" class="p-2 form-control" type="text" name="box_name" id="box_name" placeholder="Box name">
+                            <input required style="margin: 0; width: 30%; margin-bottom:15px;" class="p-2 form-control" type="text" name="box_description" id="box_description" placeholder="Box description">
+                            <button type="submit" class="btn btn-primary btn-blue">Create Box</button>
                         </div>
                     </form>
                 </div>

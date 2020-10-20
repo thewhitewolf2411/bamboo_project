@@ -1,5 +1,16 @@
-var SourceUrl = 'http://127.0.0.1:8000/sell/shop/mobile?&number=24';
-console.log(SourceUrl);
+var SourceUrl = "";
+
+if(window.location.href.indexOf('mobile')>-1){
+  var SourceUrl = 'http://127.0.0.1:8000/sell/shop/mobile';
+}
+if(window.location.href.indexOf('tablets')>-1){
+  var SourceUrl = 'http://127.0.0.1:8000/sell/shop/tablets';
+}
+if(window.location.href.indexOf('watches')>-1){
+  var SourceUrl = 'http://127.0.0.1:8000/sell/shop/watches';
+}
+
+
 var queryUrl = "";
 var landingUrl = "";
 $(function() {
@@ -24,6 +35,5 @@ $(function() {
 
 function MakeUrl() {
     var finalUrl = SourceUrl + '?' +queryUrl + landingUrl;
-   
     return finalUrl;
 }

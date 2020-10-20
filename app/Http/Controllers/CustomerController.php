@@ -187,6 +187,18 @@ class CustomerController extends Controller
         return view('customer.wishlist');
     }
 
+    public function deleteOrder($orderid){
+        $tradeins = Tradein::where('barcode', $orderid)->get();
+
+        if(count($tradeins)>=1){
+            foreach($tradeins as $tradein){
+                $tradein->delete();
+            }
+        }
+
+        return redirect()->back();
+    }
+
     public function changeName(Request $request){
         $user = Auth::user();
         #dd($request->all(), $user);
@@ -219,23 +231,6 @@ class CustomerController extends Controller
             $changed = true;
             array_push($chagedData, 'Contact number was succesfully changed');
         }
-
-        if($changed){
-            $user->save();
-            return redirect()->back()->with('success', $chagedData);
-        }
-        else{
-            return redirect()->back()->with('error', 'Nothing was changed. Please try again.');
-        }
-    }
-
-    public function changeDetails(Request $request){
-        $user = Auth::user();
-        #dd($request->all(), $user, Crypt::decrypt($user->password));
-
-        $changed = false;
-        $chagedData = [];
-
         if($user->email != $request->email){
             $user->email = $request->email;
             $changed = true;
@@ -246,24 +241,6 @@ class CustomerController extends Controller
             $changed = true;
             array_push($chagedData, 'Password was succesfully changed');
         }
-
-        if($changed){
-            $user->save();
-            return redirect()->back()->with('success-details', $chagedData);
-        }
-        else{
-            return redirect()->back()->with('error-details', 'Nothing was changed. Please try again.');
-        }
-
-    }
-
-    public function changeSubscription(Request $request){
-        $user = Auth::user();
-
-        #dd($request->all());
-
-        $changed = false;
-        $chagedData = [];
 
         $sub = null;
 
@@ -277,21 +254,22 @@ class CustomerController extends Controller
             if($request->sub == "true"){
                 $sub = true;
                 $changed = true;
+                array_push($chagedData, 'Your subsription was succesfully changed.');
             }
             else{
                 $sub = false;
                 $changed = true;
+                array_push($chagedData, 'Your subsription was succesfully changed.');
             }
 
             $user->sub = $sub;
         }
-
         if($changed){
             $user->save();
-            return redirect()->back()->with('success-subscription', 'Your subscription was changed.');
+            return redirect()->back()->with('success', $chagedData);
         }
         else{
-            return redirect()->back()->with('error-subscription', 'Nothing was changed. Please try again.');
+            return redirect()->back()->with('error', 'Nothing was changed. Please try again.');
         }
     }
 }

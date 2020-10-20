@@ -39,6 +39,7 @@ Route::get('/corporate', 'PagesController@showCorporatePage');
 Route::get('/userprofile', 'CustomerController@showProfile');
 Route::get('/userprofile/{id}', 'CustomerController@showOrderDetails');
 Route::get('/userprofile/wishlist', 'CustomerController@showWishlist');
+Route::get('/userprofile/deleteorder/{id}', 'CustomerController@deleteOrder');
 
 Route::get('/products/{category}', 'CustomerController@customerCategoryView')->name('customerproducts');
 Route::get('/product/{product}', 'CustomerController@showProduct')->name('showproduct');
@@ -79,8 +80,6 @@ Route::post('/removefromwislist', 'CustomerController@removeFromWishList')->name
 
 //user change profile details
 Route::post('/userprofile/changename', 'CustomerController@changeName');
-Route::post('/userprofile/changeuserinformation', 'CustomerController@changeDetails');
-Route::post('/userprofile/changesubscription', 'CustomerController@changeSubscription');
 
 //Admin post route
 Route::post('/addCategory', 'AdminController@addCategory')->middleware('auth');

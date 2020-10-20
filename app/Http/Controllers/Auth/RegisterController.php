@@ -59,7 +59,6 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'username' => ['required', 'string', 'max:255', 'min:3', 'unique:users'],
         ]);
 
     }
@@ -71,7 +70,7 @@ class RegisterController extends Controller
             return redirect('/')->with('regerror','This email is already registered');
         }
 
-        event(new Registered($user = $this->create($request->all())));
+        $user = $this->create($request->all());
         $this->guard()->login($user);
         return redirect($this->redirectPath());
     }
@@ -99,8 +98,10 @@ class RegisterController extends Controller
         );
         dd($client);*/
 
+        #dd($data['sub'] === true);
+
         $sub = 0;
-        if($data['sub'] == true){
+        if($data['sub'] === true){
             $sub = 1;
         }
 
@@ -123,7 +124,7 @@ class RegisterController extends Controller
         else{
             $user->current_phone = null;
         }
-        $user->sub = 1;
+        $user->sub = $sub;
 
         $user->save();
 
