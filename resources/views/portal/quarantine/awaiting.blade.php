@@ -31,6 +31,38 @@
                         <p>Products Awaiting Seller Response</p>
                     </div>
                 </div>
+
+                @if(Session::has('success'))
+
+                <div class="alert alert-success" role="alert">
+                    {{Session::get('success')}}
+                </div>
+
+                @endif
+
+                @if(Session::has('error'))
+
+                <div class="alert alert-danger" role="alert">
+                    {{Session::get('error')}}
+                </div>
+
+                @endif
+
+                <div class="portal-table-container">
+                    <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td><div class="table-element">Tradein ID</div></td>
+                            <td><div class="table-element">Tradein Barcode</div></td>
+                        </tr>
+                        @foreach($tradeins as $tradein)
+                        <tr>
+                            <td><a href=""><div class="table-element">{{$tradein->id}}</div></a></td>
+                            <td><a href=""><div class="table-element">{{$tradein->barcode}}</div></a></td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+
             </div>
 
         </div>

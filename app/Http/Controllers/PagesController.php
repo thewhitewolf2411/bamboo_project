@@ -9,6 +9,9 @@ use App\Eloquent\Order;
 use App\Eloquent\BuyingProduct;
 use App\Eloquent\SellingProduct;
 
+use Klaviyo\Klaviyo as Klaviyo;
+use Klaviyo\Model\EventModel as KlaviyoEvent;
+
 class PagesController extends Controller
 {
     /**
@@ -18,6 +21,7 @@ class PagesController extends Controller
      */
     public function index()
     {
+
         if(Auth::user()){
             $role = Auth::user()->type_of_user; 
 

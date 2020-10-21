@@ -13349,6 +13349,11 @@ input[type=number] {
   box-shadow: none;
 }
 
+.dropdown-item {
+  font-size: 11pt;
+  color: rgba(0, 0, 0, 0.75) !important;
+}
+
 .register-elements-container {
   width: 50%;
 }

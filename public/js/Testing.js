@@ -33,12 +33,7 @@ function testingElementChanged(){
     var bamboo_grade = $('#bamboo_grade');
 
     if(q1 == "true" || q2 == "true"){
-        if(q1 == "true"){
-            $('#pin_lock').prop('disabled', true);
-        }
-        if(q2 == "true"){
-            $('#fimp_or_google_lock').prop('disabled', true);
-        }
+
         $('#fake_missing_parts').prop('disabled', true);
         $('#device_fully_functional').prop('disabled', true);
         $('#water_damage').prop('disabled', true);
@@ -61,30 +56,55 @@ function testingElementChanged(){
         bamboo_grade.val("");
     }
     else{
+        console.log(q4);
+        if(q3 == "true" && $('#fake-missing-part-image').hasClass('form-group-hidden')){
+            $('#fake-missing-part-image').removeClass('form-group-hidden');
+            $('#fake_missing_part_image').prop('required', true);
+        }
+        else if(q3=="false"){
+            $('#fake-missing-part-image').addClass('form-group-hidden');
+            $('#fake_missing_part_image').prop('required', false);
+        }
+
+        if(q4 == "false" && $('#device-fully-functional-options').hasClass('form-group-hidden')){
+            console.log("here");
+            $('#device-fully-functional-options').removeClass('form-group-hidden');
+            $('#device_fully_functional_reasons').prop('required', true);
+        }
+        else if(q4 == "true"){
+            $('#device-fully-functional-options').addClass('form-group-hidden');
+            $('#device_fully_functional_reasons').prop('required', false);
+        }
 
         if(customerGradeVal == 5){
             options = {
                 "Grade A": "Grade A",
                 "Grade B": "Grade B",
                 "Grade C": "Grade C",
+                "WSI": "WSI",
+                "WSD": "WSD",
+                "NW": "NW"
             }
             bamboo_grade.val("Grade A");
             $('#bamboo_grade_val').val("Grade A");
         }
         if(customerGradeVal == 4){
             options = {
-                "Grade A": "Grade A",
                 "Grade B": "Grade B",
-                "Grade C": "Grade C"
+                "Grade C": "Grade C",
+                "WSI": "WSI",
+                "WSD": "WSD",
+                "NW": "NW",
             }
             bamboo_grade.val("Grade B");
             $('#bamboo_grade_val').val("Grade B");
         }
         if(customerGradeVal == 3){
             options = {
-                "Grade A": "Grade A",
-                "Grade B": "Grade B",
-                "Grade C": "Grade C"
+                "Grade C": "Grade C",
+                "WSI": "WSI",
+                "WSD": "WSD",
+                "NW": "NW"
             }
             bamboo_grade.val("Grade C");
             $('#bamboo_grade_val').val("Grade C");

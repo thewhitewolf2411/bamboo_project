@@ -83,23 +83,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
-        /*$client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Filled out Profile',
-                'customer_properties' => array(
-                    '$email' => 'someone@mailinator.com'    
-                ),
-                'properties' => array(
-                    'Added Social Accounts' => False
-                )
-            )
-        );
-        dd($client);*/
-
-        #dd($data['sub'] === true);
-
         $sub = 0;
         if($data['sub'] === true){
             $sub = 1;
@@ -127,6 +110,26 @@ class RegisterController extends Controller
         $user->sub = $sub;
 
         $user->save();
+
+        $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Registered',
+                'customer_properties' => array(
+                    '$email' => $data['email'],
+                    '$name' => $data['first-name'],
+                    '$last_name' => $data['last-name'],
+                    '$birthdate' => $data['birthdate'],
+                    '$newsletter' => $sub
+                ),
+                'properties' => array(
+                    'Registered' => True
+                )
+            )
+        );
+
+        $client->publicAPI->track( $event );  
+
 
         return $user;
     }

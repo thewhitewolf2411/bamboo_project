@@ -715,7 +715,10 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.quarantine.awaiting')->with('portalUser', $portalUser);
+        $tradeinsQ = Tradein::where('quarantine_status', 1)->get();
+        
+
+        return view('portal.quarantine.awaiting')->with(['portalUser'=>$portalUser, 'tradeins'=>$tradeinsQ]);;
     }
 
     public function showQuarantineReturn(){
@@ -778,7 +781,6 @@ class PortalController extends Controller
 
     public function showFindTradeIn(){
         if(!$this->checkAuthLevel(5)){return redirect('/');}
-
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
@@ -786,6 +788,8 @@ class PortalController extends Controller
     }
 
     public function find(Request $request){
+
+        #dd($request);
         if(!$this->checkAuthLevel(5)){return redirect('/');}
         
         $barcode = $request->scanid;
@@ -799,10 +803,7 @@ class PortalController extends Controller
     
             }
     
-            if($tradein->job_state <5){
-                return redirect('/portal/testing/receive');
-            }
-            else if($tradein->job_state == 6){
+            if($tradein->job_state == 6){
                 return redirect()->back()->with('error', 'Device was already tested.');
             }
             else{
@@ -1231,9 +1232,11 @@ class PortalController extends Controller
         else{
             if($request->fimp_or_google_lock == "true"){
                 $testingQuestions->FIMP_Google_lock = true;
+                $tradein->marked_for_quarantine = true;
             }
             if($request->pin_lock == "true"){
                 $testingQuestions->pin_lock = true;
+                $tradein->marked_for_quarantine = true;
             }
             if($request->fake_missing_parts == "true"){
                 $testingQuestions->fake_missing_parts = true;
@@ -1245,14 +1248,19 @@ class PortalController extends Controller
                 $testingQuestions->signs_of_water_damage = true;
             }
             $testingQuestions->save();
-            $tradein->marked_for_quarantine = true;
         }
 
         $tradein->job_state = 6;
         $tradein->save();
 
+        #dd($tradein);
+
 
         if($tradein->marked_for_quarantine){
+            if($tradein->quarantine_status == null){
+                $tradein->quarantine_status = 1;
+                $tradein->save();
+            }
             $tray = Tray::where('trolley_id', 14)->where('number_of_devices', '<', 200)->first();
         }
         else{
@@ -1272,6 +1280,8 @@ class PortalController extends Controller
 
         $traycontent = TrayContent::where('trade_in_id', $tradein->id)->first();
 
+        #dd($traycontent);
+
         $tray2 = Tray::where('id', $traycontent->tray_id)->first();
         $tray2->number_of_devices = $tray2->number_of_devices - 1;
         $tray2->save();
@@ -1286,7 +1296,7 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.testing.totray')->with(['tray_name'=>$tray->tray_name, 'portalUser'=>$portalUser]);
+        return view('portal.testing.totray')->with(['tray_name'=>$tray->tray_name, 'portalUser'=>$portalUser, 'testing'=>true]);
         
     }
 
@@ -1423,7 +1433,7 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.payments.awaiting')->with('portalUser', $portalUser);
+        return view('portal.payments.awaiting');
     }
 
     public function showPaymentPendingPage(){

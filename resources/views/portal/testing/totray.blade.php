@@ -35,12 +35,20 @@
                 </div>
 
                 Please put the device with new label into tray {{$tray_name}}.
-
+                
+                @if($testing ?? '')
+                <a href="/portal/testing/find">
+                    <div class="btn btn-primary">
+                        <p style="color: #fff;">Back</p>
+                    </div>
+                </a>
+                @else
                 <a href="/portal/testing/receive">
                     <div class="btn btn-primary">
                         <p style="color: #fff;">Back</p>
                     </div>
                 </a>
+                @endif
 
             </div>
         </div>
