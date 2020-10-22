@@ -13,8 +13,8 @@
                     Recycle
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    @if($portalUser->trade_pack_despatch)<a class="dropdown-item" href="/portal/customer-care/trade-pack">Trade-pack Despatch</a>@endif
-                    @if($portalUser->awaiting_receipt)<a class="dropdown-item" href="#">Awaiting Receipt</a>@endif
+                    @if($portalUser->trade_pack_despatch)<a class="dropdown-item" href="/portal/customer-care/trade-in/all">Trade-pack Despatch</a>@endif
+                    @if($portalUser->awaiting_receipt)<a class="dropdown-item" href="/portal/customer-care/trade-pack">Awaiting Receipt</a>@endif
                     @if($portalUser->receiving)<a class="dropdown-item" href="/portal/testing/receive">Receiving</a>@endif
                     @if($portalUser->device_testing)<a class="dropdown-item" href="/portal/testing/find">Device Testing</a>@endif
                     @if($portalUser->trolley_management)<a class="dropdown-item" href="/portal/trolleys">Trolley Management</a>@endif
@@ -32,9 +32,9 @@
                     Customer Care
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    @if($portalUser->trade_pack_despatch)<a class="dropdown-item" href="/portal/customer-care/trade-pack">Trade-pack Dispatch</a>@endif
-                    @if($portalUser->order_management)<a class="dropdown-item" href="#">Order Management</a>@endif
-                    @if($portalUser->create_order)<a class="dropdown-item" href="#">Create Order</a>@endif
+                    @if($portalUser->trade_pack_despatch)<a class="dropdown-item" href="/portal/customer-care/order-managment">Order Management</a>@endif
+                    @if($portalUser->order_management)<a class="dropdown-item" href="/portal/customer-care/createorder">Create Order</a>@endif
+                    @if($portalUser->create_order)<a class="dropdown-item" href="/portal/customer-care/seller">Customer Accounts</a>@endif
                 </div>
             </div>
             @endif
@@ -45,7 +45,8 @@
                     Administration
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    @if($portalUser->salvage_models)<a class="dropdown-item" href="#">Salvage Models</a>@endif
+                    @if($portalUser->salvage_models)<a class="dropdown-item" href="/portal/product/selling-products">Salvage Models</a>@endif
+                    @if($portalUser->sales_models)<a class="dropdown-item" href="/portal/product/buying-products">Sales Models</a>@endif
                     @if($portalUser->feeds)<a class="dropdown-item" href="/portal/feeds">Feeds</a>@endif
                     @if($portalUser->users)<a class="dropdown-item" href="/portal/user">Users</a>@endif
                     @if($portalUser->reports)<a class="dropdown-item" href="/portal/reports">Reports</a>@endif

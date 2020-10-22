@@ -56,7 +56,11 @@ function testingElementChanged(){
         bamboo_grade.val("");
     }
     else{
-        console.log(q4);
+
+        if(true == true){
+
+        }
+
         if(q3 == "true" && $('#fake-missing-part-image').hasClass('form-group-hidden')){
             $('#fake-missing-part-image').removeClass('form-group-hidden');
             $('#fake_missing_part_image').prop('required', true);
@@ -76,54 +80,62 @@ function testingElementChanged(){
             $('#device_fully_functional_reasons').prop('required', false);
         }
 
-        if(customerGradeVal == 5){
-            options = {
-                "Grade A": "Grade A",
-                "Grade B": "Grade B",
-                "Grade C": "Grade C",
-                "WSI": "WSI",
-                "WSD": "WSD",
-                "NW": "NW"
-            }
-            bamboo_grade.val("Grade A");
-            $('#bamboo_grade_val').val("Grade A");
+        if(q3 == "true" || q4 == "false" || q5 == "true"){
+            bamboo_grade.val("WSI");
+            $('#bamboo_grade_val').val("WSI");
         }
-        if(customerGradeVal == 4){
-            options = {
-                "Grade B": "Grade B",
-                "Grade C": "Grade C",
-                "WSI": "WSI",
-                "WSD": "WSD",
-                "NW": "NW",
+        else{
+            if(customerGradeVal == 5){
+                options = {
+                    "Grade A": "Grade A",
+                    "Grade B": "Grade B",
+                    "Grade C": "Grade C",
+                    "WSI": "WSI",
+                    "WSD": "WSD",
+                    "NW": "NW"
+                }
+                bamboo_grade.val("Grade A");
+                $('#bamboo_grade_val').val("Grade A");
             }
-            bamboo_grade.val("Grade B");
-            $('#bamboo_grade_val').val("Grade B");
-        }
-        if(customerGradeVal == 3){
-            options = {
-                "Grade C": "Grade C",
-                "WSI": "WSI",
-                "WSD": "WSD",
-                "NW": "NW"
+            if(customerGradeVal == 4){
+                options = {
+                    "Grade B": "Grade B",
+                    "Grade C": "Grade C",
+                    "WSI": "WSI",
+                    "WSD": "WSD",
+                    "NW": "NW",
+                }
+                bamboo_grade.val("Grade B");
+                $('#bamboo_grade_val').val("Grade B");
             }
-            bamboo_grade.val("Grade C");
-            $('#bamboo_grade_val').val("Grade C");
-        }
-        if(customerGradeVal == 2){
-            options = {
-                "WSI": "WSI",
-                "WSD": "WSD"
+            if(customerGradeVal == 3){
+                options = {
+                    "Grade C": "Grade C",
+                    "WSI": "WSI",
+                    "WSD": "WSD",
+                    "NW": "NW"
+                }
+                bamboo_grade.val("Grade C");
+                $('#bamboo_grade_val').val("Grade C");
+            }
+            if(customerGradeVal == 2){
+                options = {
+                    "WSI": "WSI",
+                    "WSD": "WSD"
+                }
+            }
+            if(customerGradeVal == 2){
+                options = {
+                    "WSI": "WSI",
+                    "WSD": "WSD",
+                    "NW": "NW",
+                    "PND": "PND",
+                    "FIMP": "FIMP"
+                }
             }
         }
-        if(customerGradeVal == 2){
-            options = {
-                "WSI": "WSI",
-                "WSD": "WSD",
-                "NW": "NW",
-                "PND": "PND",
-                "FIMP": "FIMP"
-            }
-        }
+
+
         $('#cosmetic_condition').empty(); // remove old options
             $.each(options, function(key,value) {
                 $('#cosmetic_condition').append($("<option></option>")

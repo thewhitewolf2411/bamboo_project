@@ -17,6 +17,7 @@ class CreateTradeinTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('barcode');
+            $table->integer('barcode_original');
             $table->integer('product_id');
             $table->string('product_state');
             $table->string('color');

@@ -40,6 +40,8 @@ use Hash;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Klaviyo\Klaviyo as Klaviyo;
+use Klaviyo\Model\EventModel as KlaviyoEvent;
 
 class PortalController extends Controller
 {
@@ -889,6 +891,8 @@ class PortalController extends Controller
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         $tradein->job_state = 3;
 
+        $client->publicAPI->track( $event );  
+
         $testingquestion = "";
 
         #dd(TestingQuestions::where('order_id', $tradein->id)->first());
@@ -905,6 +909,8 @@ class PortalController extends Controller
 
         $days = 14;
         $dayToCheck = Carbon::now();
+
+        
         
         if($tradein->created_at->diff($dayToCheck)->days <= $days){
             $tradein->received = true;
@@ -1370,6 +1376,29 @@ class PortalController extends Controller
         
         $tradein->job_state = 5;
 
+        $user = User::where('id', $tradein->user_id)->first();
+
+        $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Item received',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$name' => $user->first_name,
+                    '$last_name' => $user->last_name,
+                    '$birthdate' => $user->birthdate,
+                    '$newsletter' => $user->email,
+                    '$products' => $tradein->getProductName($tradein->id),
+                    '$price'=> $tradein->order_price
+                ),
+                'properties' => array(
+                    'Item Sold' => True
+                )
+            )
+        );
+
+        $client->publicAPI->track( $event );  
+
         $product = SellingProduct::where('id', $tradein->product_id)->first();
         $tray = null;
 
@@ -1533,14 +1562,14 @@ class PortalController extends Controller
             $columns = Schema::getColumnListing('selling_products'); 
             //16
             $products = SellingProduct::all();
-            $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O'];
+            $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L'];
         }
         
         $filename = "/feed_type_".$export_feed_parameter."[" . date("Y-m-d") ."_". date("h-i-s") . "].xlsx";
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
-
+        #dd($datarows);
         for($i=0; $i<count($datarows); $i++){
             $sheet->setCellValue($datarows[$i] . "1", $columns[$i]);
         }

@@ -19,6 +19,8 @@ use Session;
 use DNS1D;
 use DNS2D;
 use PDF;
+use Klaviyo\Klaviyo as Klaviyo;
+use Klaviyo\Model\EventModel as KlaviyoEvent;
 
 class SellController extends Controller
 {
@@ -207,16 +209,23 @@ class SellController extends Controller
 
             $tradeinexp = null;
 
+            $name = "";
+            $price = "";
+
             foreach($items as $item){     
                 if($item[0] == 'tradein'){
                     $tradein = new Tradein();
                     $tradein->barcode = $tradeinbarcode;
+                    $tradein->barcode_original = $tradeinbarcode;
                     $tradein->user_id = Auth::user()->id;
                     $tradein->product_id = json_decode($item[1])->id;
                     $tradein->order_price = $item[2];
                     $tradein->color = $item[4];
                     $tradein->network = $item[3];
                     $tradein->memory = $item[5];
+
+                    $name = $tradein->getProductName(json_decode($item[1])->id);
+                    $price = $item[2];
 
                     if(json_decode($item[1])->customer_grade_price_1 == $item[2]){
                         $tradein->product_state = "Excellent working";
@@ -240,6 +249,7 @@ class SellController extends Controller
 
                     $tradein->save();
                     $tradeinexp = $tradein;
+
                 }
                 else if($item[0] == 'tradeout'){
                     $tradeout = new Tradeout();
@@ -249,6 +259,27 @@ class SellController extends Controller
                     $tradeout->save();
                 }
             }
+
+            $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Item Sold',
+                    'customer_properties' => array(
+                        '$email' => Auth::user()->email,
+                        '$name' => Auth::user()->first_name,
+                        '$last_name' => Auth::user()->last_name,
+                        '$birthdate' => Auth::user()->birthdate,
+                        '$newsletter' => Auth::user()->email,
+                        '$products' => $name,
+                        '$price'=> $price
+                    ),
+                    'properties' => array(
+                        'Item Sold' => True
+                    )
+                )
+            );
+    
+            $client->publicAPI->track( $event );  
 
             Session::forget('cart');
             Session::forget('type');
