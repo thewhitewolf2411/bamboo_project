@@ -72,4 +72,31 @@ class Tradein extends Model
         return $price;
     }
 
+    public function getOrderType($id){
+
+        $type = "";
+
+        $tradeins = Tradein::where('barcode', $id)->get();
+        foreach($tradeins as $tradein){
+            if($this->getCategoryId($tradein->product_id) == 2){
+                $type = "Type-3";
+            }
+        }
+
+        if($type != "Type-3"){
+            if(count($tradeins) <= 2){
+                $type = "Type-1";
+            }
+            elseif(count($tradeins) > 2 && count($tradeins) <=5 ){
+                $type = "Type-2";
+            }
+            else{
+                $type = "Type-3";
+            }
+        }
+
+        return $type;
+
+    }
+
 }

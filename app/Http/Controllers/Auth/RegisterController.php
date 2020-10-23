@@ -95,6 +95,11 @@ class RegisterController extends Controller
         $user->email = $data['email'];
         $user->birthdate = $data['birthdate'];
         $user->password = Crypt::encrypt($data['password']);
+
+        $user->delivery_address = $data['delivery_address'];
+        $user->billing_address = $data['billing_address'];
+        $user->contact_number = $data['contact_number'];
+
         if(isset($data['preferred-os'])){
             $user->preffered_os = $data['preferred-os'];
         }

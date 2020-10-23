@@ -13,6 +13,22 @@ use App\Eloquent\Brand;
 class ShopController extends Controller
 {
 
+    protected $user;
+
+    public function __construct(){
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()){
+                $this->user = Auth::user();
+
+                if($this->user->type_of_user > 0){
+                    return redirect('/portal');
+                }
+
+            }
+            return $next($request);
+        });
+    }
+
     /* Note on products
     
     Mobile devices are product_category id = 1

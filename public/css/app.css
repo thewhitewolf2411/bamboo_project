@@ -11419,6 +11419,15 @@ main p, a, span {
   padding: 20px;
 }
 
+#label-trade-in-modal {
+  min-height: 600px;
+}
+
+#tradein-iframe {
+  width: 100%;
+  min-height: 800px;
+}
+
 header {
   position: fixed;
   top: 0;
@@ -13352,6 +13361,10 @@ input[type=number] {
 .dropdown-item {
   font-size: 11pt;
   color: rgba(0, 0, 0, 0.75) !important;
+}
+
+.printcheckbox {
+  margin: 0 !important;
 }
 
 .register-elements-container {

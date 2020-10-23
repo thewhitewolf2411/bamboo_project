@@ -78,7 +78,7 @@
                             <td><a href="/portal/boxes/box?box_id_scan={{$box->box_name}}"><div class="table-element">{{$box->box_name}}</div></a></td>
                             <td><a href="/portal/boxes/box?box_id_scan={{$box->box_name}}"><div class="table-element">{{$box->description}}</div></a></td>
                             <td><a href="/portal/boxes/box?box_id_scan={{$box->box_name}}"><div class="table-element"></div></a></td>
-                            <td><div class="table-element"><a onclick="return confirm('Are you sure? This will remove trolley from system and remove all trays and devices from the system?')" href="/portal/boxes/delete={{$box->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete Trolley</p></div></a></div></td>
+                            <td><div class="table-element"><a onclick="return confirm('Are you sure? This will remove box from system and remove and devices in the the box from the system?')" href="/portal/boxes/delete/{{$box->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete Box</p></div></a></div></td>
                             <td><div class="table-element"><a href="/portal/trolleys/trolley/printlabel/{{$box->box_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print box Label</p></div></a></div></td>
                         </tr>
                         @endforeach

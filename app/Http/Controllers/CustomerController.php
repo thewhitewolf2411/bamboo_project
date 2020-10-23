@@ -18,6 +18,23 @@ use Crypt;
 
 class CustomerController extends Controller
 {
+
+    protected $user;
+
+    public function __construct(){
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()){
+                $this->user = Auth::user();
+
+                if($this->user->type_of_user > 0){
+                    return redirect('/portal');
+                }
+
+            }
+            return $next($request);
+        });
+    }
+
     public function setPage($parameter){
         $page = "home";
         $categories = null;
@@ -129,9 +146,15 @@ class CustomerController extends Controller
         
     }
 
-    public function removeFromCart(Request $request){
+    public function removeFromCart($parameter){
 
-        dd($request);
+        unset((Session::get('cart')->items)[$parameter]);
+
+        $cartItems = Session::get('cart')->items;
+
+        if(count($cartItems) < 1){
+            Session::forget('cart');
+        }
 
         return redirect('/cart');
 

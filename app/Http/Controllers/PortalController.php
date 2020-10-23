@@ -126,40 +126,24 @@ class PortalController extends Controller
     }
 
     public function PrintTradeInLabelBulk(Request $request){
-        #dd($request);
+        #dd($request->all());
 
         $html = "";
+        $barcodes = array();
 
-        $numberOfBulkPrints = $request->number_of_bulk_prints;
-        if($numberOfBulkPrints == 10){
-            $tradeins = Tradein::where('job_state', null)
-                                ->take(10)
-                                ->get();
+        foreach($request->all() as $item){
+            array_push($barcodes, $item);
+        }
 
+        $barcodes = array_slice($barcodes, 1);
+
+        $tradeins = array();
+
+        foreach($barcodes as $barcode){
+            $tradein = Tradein::where('barcode', $barcode)->first();
+            array_push($tradeins, $tradein);
         }
-        elseif($numberOfBulkPrints === 20){
-            $tradeins = Tradein::where('job_state', null)
-                                ->take(20)
-                                ->get();
-        }
-        elseif($numberOfBulkPrints === 50){
-            $tradeins = Tradein::where('job_state', null)
-            ->take(50)
-            ->get();
-        }
-        elseif($numberOfBulkPrints === 100){
-            $tradeins = Tradein::where('job_state', null)
-            ->take(100)
-            ->get();
-        }
-        elseif($numberOfBulkPrints === 500){
-            $tradeins = Tradein::where('job_state', null)
-            ->take(500)
-            ->get();
-        }
-        else{
-            return redirect()->back();
-        }
+
         foreach($tradeins as $tradein){
 
             $user = User::where('id',$tradein->user_id)->first();
@@ -190,7 +174,7 @@ class PortalController extends Controller
         $productIds = array();
 
         foreach($tradeins as $tradein){
-            $tradein->job_state = 1;
+            $tradein->job_state = 2;
             $tradein->save();
 
             array_push($productIds, $tradein->product_id);
@@ -334,6 +318,18 @@ class PortalController extends Controller
         return redirect()->back();
     }
 
+    public function deleteTradeIn($id){
+        $tradein = Tradein::where('barcode', $id)->get();
+
+        $barcode = $id;
+
+        foreach($tradein as $ti){
+            $ti->delete();
+        }
+
+        return redirect()->back()->with('success', 'You have succesfully deleted '. $barcode . ' from system.');
+    }
+
     public function showTradeOut(){
         if(!$this->checkAuthLevel(1)){return redirect('/');}
         $tradeouts = Tradeout::all();
@@ -362,7 +358,8 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $tradeins = Tradein::whereIn('job_state', array(1,2))->get();
+        $tradeins = Tradein::whereIn('job_state', array(1,2))->get()->groupBy('barcode');
+
         return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Awaiting receipt');
     }
 
@@ -422,8 +419,36 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $tradeins = Tradein::whereIn('job_state', array(3,4,5,6))->get();
+        $tradeins = Tradein::whereIn('job_state', array(3,4,5,6))->get()->groupBy('barcode');;
         return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Order Management');
+    }
+
+    public function sendDeviceBackToReceive($barcode){
+        $tradein = Tradein::where('barcode', $barcode)->first();
+
+        $tradein->job_state = 2;
+        $tradein->received = 0;
+        $tradein->device_missing = null;
+        $tradein->device_correct = null;
+        $tradein->chekmend_passed = null;
+        $tradein->imei_number = null;
+        $tradein->marked_as_risk = null;
+        $tradein->marked_for_quarantine = null;
+        $tradein->visible_imei = null;
+        $tradein->bamboo_grade = null;
+        $tradein->save();
+
+        return redirect()->back();
+
+    }
+
+    public function sendDeviceBackToTest($barcode){
+        $tradein = Tradein::where('barcode', $barcode)->first();
+
+        $tradein->job_state = 4;
+        $tradein->save();
+
+        return redirect()->back();
     }
 
     //categories
@@ -796,56 +821,26 @@ class PortalController extends Controller
         
         $barcode = $request->scanid;
 
-        if(substr($barcode, 0, 2) == "40"){
-            $tradein = Tradein::where('barcode', $request->scanid)->first();
-            #dd($tradein);
-            if($tradein == null){
+        $tradein = Tradein::where('barcode', $request->scanid)->first();
+
+        if($tradein == null){
     
-                return redirect()->back()->with('error', 'There is no such device');
-    
-            }
-    
-            if($tradein->job_state == 6){
-                return redirect()->back()->with('error', 'Device was already tested.');
-            }
-            else{
-                $user_id = Auth::user()->id;
-                $portalUser = PortalUsers::where('user_id', $user_id)->first();
-                return view('portal.testing.testdevice')->with(['tradein'=>$tradein, 'portalUser'=>$portalUser]);
-            }    
-        }else if(substr($barcode, 0, 2) == "50"){
+            return redirect()->back()->with('error', 'There is no such device');
 
-            $id = null;
-            if(substr($barcode, -2, 1) == 0){
-                $id = substr($barcode, -1, 1);
-            }
-            else{
-                $id = substr($barcode, -2, 2);
-            }
-            #dd($id);
-
-            $tray = Tray::where('id', $id)->first();
-
-            if($tray == null){
-                return redirect()->back()->with('error', 'There is no such tray or device');
-            }
-            else{
-                $tradein_ids = array();
-
-                $trayContent = TrayContent::where('tray_id', $tray->id)->get();
-
-                foreach($trayContent as $content){
-                    array_push($tradein_ids, $content->trade_in_id);
-                }
-
-                $tradeins = Tradein::whereIn('id', $tradein_ids)->get();
-
-                $user_id = Auth::user()->id;
-                $portalUser = PortalUsers::where('user_id', $user_id)->first();
-                return view('portal.testing.tray-content')->with(['tradeins'=>$tradeins, 'portalUser'=>$portalUser]);
-            }
         }
 
+        if($tradein->job_state < 5){
+            return redirect()->back()->with('error', 'Device has not been received yet');
+        }
+            
+        elseif($tradein->job_state == 6){
+            return redirect()->back()->with('error', 'Device was already tested.');
+        }
+        else{
+            $user_id = Auth::user()->id;
+            $portalUser = PortalUsers::where('user_id', $user_id)->first();
+            return view('portal.testing.testdevice')->with(['tradein'=>$tradein, 'portalUser'=>$portalUser]);
+        }    
 
 
     }
@@ -1236,6 +1231,7 @@ class PortalController extends Controller
             $tradein->marked_for_quarantine = true;
         }
         else{
+
             if($request->fimp_or_google_lock == "true"){
                 $testingQuestions->FIMP_Google_lock = true;
                 $tradein->marked_for_quarantine = true;
@@ -1246,12 +1242,15 @@ class PortalController extends Controller
             }
             if($request->fake_missing_parts == "true"){
                 $testingQuestions->fake_missing_parts = true;
+                $tradein->marked_for_quarantine = true;
             }
             if($request->device_fully_functional == "false"){
                 $testingQuestions->device_fully_functional = false;
+                $tradein->marked_for_quarantine = true;
             }
             if($request->water_damage == "true"){
                 $testingQuestions->signs_of_water_damage = true;
+                $tradein->marked_for_quarantine = true;
             }
             $testingQuestions->save();
         }
@@ -2553,6 +2552,17 @@ class PortalController extends Controller
         $box->save();
 
         return redirect('/portal/boxes')->with('error', 'Box with name '.$request->box_name.' already exists.');
+    }
+
+    public function removeBox($parameter){
+        $box = Box::where('id', $parameter)->first();
+
+        $boxname = $box->box_name;
+
+        $box->delete();
+        
+
+        return redirect('/portal/boxes')->with('success', 'Box with name '.$boxname.' was succesfully deleted.');
     }
 
 

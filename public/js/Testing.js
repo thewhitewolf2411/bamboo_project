@@ -92,7 +92,8 @@ function testingElementChanged(){
                     "Grade C": "Grade C",
                     "WSI": "WSI",
                     "WSD": "WSD",
-                    "NW": "NW"
+                    "NWSI": "NWSD",
+                    "Catastrophic":"Catastrophic"
                 }
                 bamboo_grade.val("Grade A");
                 $('#bamboo_grade_val').val("Grade A");
@@ -103,7 +104,8 @@ function testingElementChanged(){
                     "Grade C": "Grade C",
                     "WSI": "WSI",
                     "WSD": "WSD",
-                    "NW": "NW",
+                    "NWSI": "NWSD",
+                    "Catastrophic":"Catastrophic"
                 }
                 bamboo_grade.val("Grade B");
                 $('#bamboo_grade_val').val("Grade B");
@@ -113,7 +115,8 @@ function testingElementChanged(){
                     "Grade C": "Grade C",
                     "WSI": "WSI",
                     "WSD": "WSD",
-                    "NW": "NW"
+                    "NWSI": "NWSD",
+                    "Catastrophic":"Catastrophic"
                 }
                 bamboo_grade.val("Grade C");
                 $('#bamboo_grade_val').val("Grade C");
@@ -121,16 +124,9 @@ function testingElementChanged(){
             if(customerGradeVal == 2){
                 options = {
                     "WSI": "WSI",
-                    "WSD": "WSD"
-                }
-            }
-            if(customerGradeVal == 2){
-                options = {
-                    "WSI": "WSI",
                     "WSD": "WSD",
-                    "NW": "NW",
-                    "PND": "PND",
-                    "FIMP": "FIMP"
+                    "NWSI": "NWSD",
+                    "Catastrophic":"Catastrophic"
                 }
             }
         }

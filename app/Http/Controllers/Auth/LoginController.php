@@ -37,6 +37,7 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
+
         $decrypted = $request->input('password');
         $user = null;
 
@@ -51,7 +52,9 @@ class LoginController extends Controller
         if($user) {
             if (Crypt::decrypt($user->password) == $decrypted) {
                 Auth::login($user);
-                return $this->sendLoginResponse($request);
+                //return $this->sendLoginResponse($request);
+                #return $next($request);
+                return redirect()->back();
             }
         }
 
@@ -81,7 +84,7 @@ class LoginController extends Controller
                 return '/portal';
                 break; 
             default:
-                return '/userprofile'; 
+                return redirect()->back();
                 break;
             }
     }

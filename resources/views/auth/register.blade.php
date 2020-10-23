@@ -25,6 +25,18 @@
     </div>
 
     <div class="form-group">
+        <input class="form-control" type="text" id="delivery_address" name="delivery_address" placeholder="Delivery address" required autofocus>
+    </div>
+
+    <div class="form-group">
+        <input class="form-control" type="text" id="birthdate" name="billing_address" placeholder="Billing address" required autofocus>
+    </div>
+
+    <div class="form-group">
+        <input class="form-control" type="text" id="contact_number" name="contact_number" placeholder="Contact number" required autofocus>
+    </div>
+
+    <div class="form-group">
         <input type="password" id="psw" class="form-control" placeholder="Select password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required autofocus>
         <div id="message">
             <p>Password must contain the following:</p>
@@ -85,7 +97,7 @@
     <div class="form-group mb-0 d-flex justify-content-between" style="padding: 50px 0 50px 0;">
         <div class="terms-container">
             <input type="checkbox" id="terms" name="terms" required>
-            <label for="terms">I agree to Bamboo Mobile Terms and Conditions</label>
+            <label for="terms">I agree to Bamboo Mobile <a href="/terms">Terms and Conditions</a></label>
         </div>
 
         <button type="submit" class="btn btn-primary">

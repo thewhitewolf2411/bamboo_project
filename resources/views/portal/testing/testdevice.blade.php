@@ -16,7 +16,10 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    
     <script src="{{ asset('js/Testing.js') }}"></script>
+
 
     <title>Bamboo Recycle::Test Device</title>
 </head>
@@ -40,7 +43,7 @@
 
                         <div class="form-group">
                             <label for="fimp_or_google_lock">
-                                Does device have FIMP or Google Lock?
+                                Does device have FMIP or Google Lock?
                             </label>
                             <select class="form-control" id="fimp_or_google_lock" name="fimp_or_google_lock" onchange="testingElementChanged()" required>
                                 <option disabled selected value> -- select an option -- </option>
@@ -88,8 +91,8 @@
 
 
                         <div class="form-group form-group-hidden w-50" id="device-fully-functional-options">
-                            <label for="device_fully_functional_reasons">Please rectify reason for device not being fully functional?</label>
-                            <select class="form-control" id="device_fully_functional_reasons" name="device_fully_functional_reasons">
+                            <label id="multiselect" for="device_fully_functional_reasons">Please rectify reason for device not being fully functional?</label>
+                            <select multiple="" class="form-control" id="device_fully_functional_reasons" name="device_fully_functional_reasons">
                                 <option disabled selected value> -- select an option -- </option>
                                 <option value="1">Audio Tests</option>
                                 <option value="2">Front Microphone</option>
@@ -102,13 +105,13 @@
                                 <option value="1">Glass Condition</option>
                                 <option value="2">Vibration</option>
                                 <option value="2">Original colour</option>
-                                <option value="2">ESN</option>
-                                <option value="2">OEM Parts</option>
                                 <option value="2">Battery health</option>
                                 <option value="2">NFC</option>
                                 <option value="">No Power</option>
                             </select>
+
                         </div>
+                        
 
                         <div class="form-group">
                             <label for="water_damage">
@@ -169,6 +172,12 @@
         </div>
     </main>
 
+<script>
+$(document).ready(function() {
+$('.mdb-select').materialSelect();
+});
+
+</script>
 </body>
 
 </html>

@@ -67,12 +67,14 @@ Route::post('/sell/shop/item/addtocart','SellController@addSellItemToCart');
 
 Route::post('/cart/sell', 'SellController@sellItems');
 
+Route::post('/cart/printtradein', 'SellController@generateTradeInHTML');
+
 Route::post('/sell/searchproducts','SellController@searchAvalibleProducts');
 
 
 //User post Route
 Route::post('/addtocart', 'CustomerController@addProductToCart')->name('addproducttocart');
-Route::post('/removefromcart', 'CustomerController@removeFromCart')->name('removefromcart');
+Route::get('/removefromcart/{parameter}', 'CustomerController@removeFromCart')->name('removefromcart');
 Route::post('/checkoutcart', 'CustomerController@sheckoutcart')->name('sheckoutcart');
 
 Route::post('/addtowishlist', 'CustomerController@addProductToWishList')->name('addproducttowishlist');
@@ -100,6 +102,7 @@ Route::post('/portal/customer-care/trade-in/printlabelbulk', 'PortalController@P
 Route::get('/portal/customer-care/trade-out', 'PortalController@showTradeOut')->name('tradeOut')->middleware('auth');
 Route::get('/portal/customer-care/trade-out/{id}', 'PortalController@showTradeOutDetails')->name('tradeOutDetails')->middleware('auth');
 Route::post('/portal/customer-care/tradein/deletetradein', 'PortalController@deleteTradeInFromSystem')->middleware('auth');
+Route::get('/deleteorder/{id}', 'PortalController@deleteTradeIn')->middleware('auth');
 
 Route::get('/portal/customer-care/destroy-device', 'PortalController@showDestroyDevice')->name('destroyDevice')->middleware('auth');
 Route::get('/portal/customer-care/trade-pack', 'PortalController@showTradePack')->name('tradePack')->middleware('auth');
@@ -111,6 +114,9 @@ Route::get('/portal/customer-care/seller/enable/{id}', 'PortalController@enableS
 Route::get('/portal/customer-care/createorder', 'PortalController@createOrder')->middleware('auth');
 Route::get('/portal/customer-care/trade-pack/markforreprint/{id}', 'PortalController@markForReprint')->middleware('auth');
 Route::get('/portal/customer-care/order-managment', 'PortalController@showOrderManagment')->middleware('auth');
+
+Route::get('/toreceive/{barcode}', 'PortalController@sendDeviceBackToReceive');
+Route::get('/totest/{barcode}', 'PortalController@sendDeviceBackToTest');
 
 //categories, brands
 Route::get('/portal/categories', 'PortalController@showCategories')->name('showCategories')->middleware('auth');
@@ -267,3 +273,4 @@ Route::get('/portal/boxes', 'PortalController@showBoxesPage')->middleware('auth'
 Route::get('/portal/boxes/create', 'PortalController@showAddBoxPage')->middleware('auth');
 Route::get('/portal/boxes/box', 'PortalController@showBoxPage')->middleware('auth');
 Route::post('/portal/boxes/createbox', 'PortalController@addBox')->middleware('auth');
+Route::get('/portal/boxes/delete/{id}', 'PortalController@removeBox')->middleware('auth');

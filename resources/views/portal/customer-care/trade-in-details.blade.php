@@ -132,7 +132,6 @@
                             <td><div class="table-element">Trade-In Product ID</div></td>
                             <td><div class="table-element">Name</div></td>
                             <td><div class="table-element">Customer Status</div></td>
-                            <td><div class="table-element">Internal Status</div></td>
 
                         </tr>
                         @foreach($tradeins as $tradein)
@@ -140,7 +139,6 @@
                             <td><div class="table-element">{{$tradein->barcode}}</div></td>
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                             <td><div class="table-element">{{$tradein->product_state}}</div></td>
-                            <td><div class="table-element"></div></td>
                         </tr>
                         @endforeach
                     </table>

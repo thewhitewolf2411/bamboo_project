@@ -15,6 +15,7 @@ use App\Eloquent\Colour;
 use App\Eloquent\Memory;
 use App\Eloquent\Network;
 use App\Eloquent\Brand;
+use Storage;
 use Session;
 use DNS1D;
 use DNS2D;
@@ -24,6 +25,23 @@ use Klaviyo\Model\EventModel as KlaviyoEvent;
 
 class SellController extends Controller
 {
+
+    protected $user;
+
+    public function __construct(){
+        $this->middleware(function ($request, $next) {
+            if(Auth::user()){
+                $this->user = Auth::user();
+
+                if($this->user->type_of_user > 0){
+                    return redirect('/portal');
+                }
+
+            }
+            return $next($request);
+        });
+    }
+
     public function showSellView(){
 
         $products = BuyingProduct::all();
@@ -212,6 +230,8 @@ class SellController extends Controller
             $name = "";
             $price = "";
 
+            $barcode = "";
+
             foreach($items as $item){     
                 if($item[0] == 'tradein'){
                     $tradein = new Tradein();
@@ -286,12 +306,14 @@ class SellController extends Controller
 
             if($labelstatus == "2"){
 
+                return redirect()->back()->with(['success'=>'Your sell has been completed. Please print this tradepack and follow the instrunctions.', 'barcode'=>$barcode, 'tradein'=>$tradein]);
+
                 $user = Auth::user();
                 $barcode = DNS1D::getBarcodeHTML($tradeinbarcode, 'C128');
                 $this->generateTradeInHTML($barcode, $user, null, $tradeinexp);
             }
             
-            return redirect('/');
+            return redirect()->back()->with('success', 'Your sell has been completed.');
         }
         else{
             $showLogin = true;
@@ -300,12 +322,20 @@ class SellController extends Controller
       
     }
 
-    public function generateTradeInHTML($barcode, $user, $product, $tradein){
+    public function generateTradeInHTML(Request $request){
+
+        #dd($request->user['first_name']);
+        #dd($request->all());
+
+        $name = $request->user['first_name'] . " " . $request->user['last_name'];
+        $barcode = $request->tradein['barcode'];
+        $created_at = $request->tradein['updated_at'];
+        $barcodeimage = DNS1D::getBarcodeHTML($barcode, 'C128');
 
         $html = "";
         $html .= "<style>p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
         $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
-        $html .= "<p>" . $user->first_name . " " . $user->last_name . "</p>";
+        $html .= "<p>" . $name . "</p>";
         $html .= "<p>Bamboo Distribution Limited</p>";
         $html .= "<p>Unit 11, Io Centre</p>";
         $html .= "<p>Unit 11, Io Centre</p>";
@@ -314,8 +344,8 @@ class SellController extends Controller
         $html .= "<p>En9 1as</p>";
         $html .= "<p>United Kingdom</p>";
         $html .= "<br><br>";
-        $html .= "<p>Order#". $tradein->barcode . " Date: " . $tradein->created_at .  "</p>";
-        $html .= "<p>Dear " . $user->first_name . " " . $user->last_name . ",</p>";
+        $html .= "<p>Order#". $barcode . " Date: " . $created_at .  "</p>";
+        $html .= "<p>Dear " . $name . ",</p>";
         $html .= "<p>Thank you very much for using Bamboo Recycle to recycle your mobile device(s). This package contains your TradePack which you can use to post your recycled device(s) back to Bamboo. Please follow the instructions below on how toreturn your recycled device(s) to Bamboo:</p>";
         $html .= "  <ol>
                         <li>Gather your recycled device(s) and remove any sim cards or memory cards from thedevice(s).</li>
@@ -337,7 +367,7 @@ class SellController extends Controller
                                                 <p>Waltham Abbey</p>
                                                 <p>Hertfordshire</p>
                                                 <p>EN9 1AS</p>
-                                                <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $tradein->barcode ."</p></div>
+                                                <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcodeimage ."</div><p>" .  $barcode ."</p></div>
                         </div>
                         <div style='margin-left:200pt; margin-top:-150px; width:190pt; height:150px;'>
                                                 <p>FREEPOST 555880PR</p>
@@ -348,31 +378,17 @@ class SellController extends Controller
                                                 <p>Waltham Abbey</p>
                                                 <p>Hertfordshire</p>
                                                 <p>EN9 1AS</p>
-                                                <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $tradein->barcode ."</p></div>
+                                                <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcodeimage ."</div><p>" .  $barcode ."</p></div>
                         </div>
                     </div>";
         #echo $html;
         #die();
 
-        $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
+        $filename = "labeltradeout-" . $barcode . ".pdf";
         PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
 
-        $this->downloadFile($filename);
-    }
+        return response(['code'=>200, 'filename'=>$filename]);
 
-    public function downloadFile($file){
-        if (file_exists($file)) {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename="'.basename($file).'"');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($file));
-            readfile($file);
-            // if file is downloaded delete all created files from the sistem
-            File::delete($file);
-            return \redirect()->back()->with('success','You have succesfully exported products.');
-        }
+        #$this->downloadFile($filename);
     }
 }

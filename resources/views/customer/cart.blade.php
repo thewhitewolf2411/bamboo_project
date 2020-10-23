@@ -7,7 +7,10 @@
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script
+			  src="https://code.jquery.com/jquery-3.5.1.js"
+			  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+			  crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
@@ -22,6 +25,36 @@
             </div>
 
             <div class="d-flex p-5">
+
+            @if(Session::has('success'))
+
+            <div class="alert alert-success" role="alert">
+                {{Session::get('success')}}
+            </div>
+
+            @endif
+
+            @if(Session::has('barcode'))
+            <script>
+                $.ajax({
+                    url: "/cart/printtradein",
+                    type:"POST",
+                    data:{
+                        user:{!! Auth::User() !!},
+                        tradein:{!! Session::get('tradein') !!},
+                        _token: "{{ csrf_token() }}"
+                    },
+                    success:function(response){
+                        console.log(response['code'], response.code);
+                        if(response['code'] == 200){
+                            $('#tradein-iframe').attr('src', '/' + response['filename']);
+                            $('#label-trade-in-modal').modal('show');
+                        }
+                    },
+                });
+            </script>
+
+            @endif
 
             @if(isset($cart))
 
@@ -53,7 +86,6 @@
                                     </div>
                                 </div>
                             @endif
-
                         @endforeach
                     </div>
                     <div class="center-title-container">
@@ -61,6 +93,7 @@
                     </div>
                     <div class="d-flex flex-column w-100">
                         @foreach($cart->items as $key=>$cartitem)
+                            {{$key}}
                             @if($cartitem['type'] == 'tradein')
                                 <div class="cart-product d-flex justify-content-between">
                                     <div class="cart-product-image w-25">
@@ -81,6 +114,11 @@
                                         <h6 class="m-0 mb-3 font-weight-bold">Total Price</h6>
                                         <p class="m-0 font-weight-bold">Total Price: £{{$cartitem['price']}}</p>
                                     </div>
+                                    <a href="/removefromcart/{{$key}}">
+                                        <div class="btn btn-danger">
+                                            <p class="m-0" style="color: white;">Remove from cart</p>
+                                        </div>
+                                    </a>
                                 </div>
                             @endif
 
@@ -133,7 +171,7 @@
 
             @else
 
-                Your basket is empty
+                <p>Your basket is empty</p>
 
             @endif
 
@@ -199,6 +237,22 @@
                 </div>
             </div>
         </div>
+
+        <div id="label-trade-in-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Trade pack label</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <iframe id="tradein-iframe"></iframe>
+                </div>
+                </div>
+            </div>
+		</div>
         </main>
 
 

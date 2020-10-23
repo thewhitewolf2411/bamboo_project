@@ -36,3 +36,41 @@ function deleteTradeInDetailsFromSystem(id){
     $('#delete_trade_in_id').val(id);
     $('#delete_trade_in_button').click();
 }
+
+function enablebtn(){
+    var k=0;
+    var chckbox = $('.printcheckbox');
+
+    for(var i=0; i<chckbox.length; i++){
+        if(chckbox[i].checked){
+            k++;
+        }
+    }
+
+    if(k>0){
+        $('#print_trade_pack_bulk_form_trigger').prop("disabled", false);
+    }
+
+    else{
+        $('#print_trade_pack_bulk_form_trigger').prop("disabled", true);
+    }
+}
+
+function checkall(chkallbtn){
+
+    var chckbox = $('.printcheckbox');
+ 
+    if(chkallbtn.checked){
+        for(var i=0; i<chckbox.length; i++){
+            chckbox[i].checked = true;
+            $('#print_trade_pack_bulk_form_trigger').prop("disabled", false);
+        }
+    }
+    else{
+        for(var i=0; i<chckbox.length; i++){
+            chckbox[i].checked = false;
+            $('#print_trade_pack_bulk_form_trigger').prop("disabled", true);
+        }
+    }
+
+}

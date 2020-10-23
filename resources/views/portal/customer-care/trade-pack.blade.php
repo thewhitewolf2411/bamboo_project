@@ -18,7 +18,7 @@
 
     <script src="/js/PrintTradeIn.js"></script>
 
-    <title>Bamboo Recycle::Awaiting Receipt</title>
+    <title>Bamboo Recycle::{{$title}}</title>
 </head>
 
 <body class="portal-body">
@@ -55,13 +55,13 @@
                             </td>
                         </tr>
 
-                        @foreach($tradeins as $tradein)
+                        @foreach($tradeins as $key=>$order)
 
                         <tr>
-                            <td><div class="table-element">{{$tradein->id}}</td>
-                            <td ><div class="table-element">{{$tradein->barcode}}</div></td>
-                            <td><div class="table-element">{{$tradein->created_at}}</div></td>
-                            <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                            <td ><div class="table-element">@foreach($order as $tradein){{$tradein->barcode_original}}@endforeach</div></td>
+                            <td><div class="table-element">@foreach($order as $tradein){{$tradein->barcode}} <br> @endforeach</div></td>
+                            <td><div class="table-element">{{$order[0]->created_at}}</div></td>
+                            <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} <br> @endforeach</div></td>
                             <td><div class="table-element">@if($tradein->job_state == 1)Printed @elseif ($tradein->job_state == 2) Sent @elseif($tradein->job_state == 3) Order received @elseif($tradein->job_state == 4) Device received @elseif($tradein->job_state == 5) Device in tray @elseif($tradein->job_state == 6) Device tested @endif</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
@@ -75,9 +75,20 @@
                                     <i class="fa fa-paper-plane"></i>
                                 </a>
                                 @endif
-                                <a title="Cancel order" href="/userprofile/deleteorder/{id}/{{$tradein->barcode}}">
-                                    <i class="fa fa-times" style="color:red !important;"></i>
+                                @if($tradein->job_state == 4)
+                                <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
+                                    <i class="fa fa-times" style="color:blue !important;" title="Return device to receiving" ></i>
                                 </a>
+                                @endif
+                                @if($tradein->job_state >= 5)
+                                <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
+                                    <i class="fa fa-times" style="color:blue !important;"></i>
+                                </a>
+                                <a title="Return device to testing" href="/totesting/{{$tradein->barcode}}">
+                                    <i class="fa fa-times" style="color:black !important;"></i>
+                                </a>
+                                @endif
+                                
                                 </div>
                             </td>
                         </tr>

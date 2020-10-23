@@ -36,37 +36,6 @@
                 <div class="portal-table-container">
 
                     <div class="py-4 d-flex align-items-center">
-
-                        <div class="d-flex align-items-center">
-                            <label for="number_of_trade_labels">Select number of trade labels to print:</label>
-                            <select class="form-control ml-3" name="number_of_trade_labels" id="number_of_trade_labels">
-                                <option value="" selected disabled>Make a selection</option>
-                                @if(count($tradeins)>=10 && count($tradeins)<20)
-                                <option onclick=setNumberOfTradePacks(10) value="10">10</option>
-                                @endif
-                                @if(count($tradeins)>=20 && count($tradeins)<50)
-                                <option onclick=setNumberOfTradePacks(20) value="20">20</option>
-                                @endif
-                                @if(count($tradeins)>=50 && count($tradeins)<100)
-                                <option onclick=setNumberOfTradePacks(50) value="50">50</option>
-                                @endif
-                                @if(count($tradeins)>=100 && count($tradeins)<200)
-                                <option onclick=setNumberOfTradePacks(100) value="100">100</option>
-                                @endif
-                                @if(count($tradeins)>=500)
-                                <option onclick=setNumberOfTradePacks(500) value="500">500</option>
-                                @endif
-                              </select>
-                        </div>
-                        <div class="d-flex align-items-center px-5">
-                            <button id="bulk_label_print_button" class="btn btn-primary btn-blue" disabled onclick = printTradePackTradeInBulk()>
-                                <p style="color: #fff;">Bulk Print trade Label</p>
-                            </button>
-                        </div>
-
-                    </div>
-
-                    <div class="py-4 d-flex align-items-center">
                         <form class="d-flex align-items-center" action="/portal/customer-care/trade-in/all/" method="get">              
                             <label for="searchtradeins">Select product type:</label>
                             <select id="search" name="search" class="form-control mx-3">
@@ -88,44 +57,46 @@
                             <td><div class="table-element">Date Placed</div></td>
                             <td><div class="table-element">Products</div></td>
                             <td><div class="table-element">Customer grade</div></td>
+                            <td><div class="table-element">Order Type</div></td>
+                            <td><div class="table-element">Status</div></td>
                             <td>
-
+                                <div class="table-element"><input type="checkbox" onclick="checkall(this)"></div>
                             </td>
                         </tr>
-
-                        @foreach($tradeins as $key=>$order)
-                        <tr>
-                            <td ><div class="table-element">{{$key}}</div></td>
-                            <td><div class="table-element">{{$order[0]->created_at}}</div></td>
-                            <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} <br> @endforeach</div></td>
-                            <td><div class="table-element">@foreach($order as $tradein){{$tradein->product_state}} <br> @endforeach</div></td>
-                            <td><div class="table-element">
-                                <a title="See trade in details" href="/portal/customer-care/trade-in/{{$tradein->barcode}}">
-                                    <i class="fa fa-search"></i>
-                                </a>
-                                <a href="javascript:void(0)" title="Print trade-in label" onclick = printTradePackTradeIn({{$tradein->barcode}})>
-                                    <i class="fa fa-print"></i>
-                                </a>
-                                <a onclick = deleteTradeInDetailsFromSystem({{$tradein->barcode}})>
-                                    <i title="Delete trade in from system" class="fa fa-times" style="color:red !important;"></i>
-                                </a>
-                                </div>
-                            </td>
-                        </tr>
+                        <form id="print_trade_pack_bulk_form" name="print_trade_pack_bulk_form" class="my-5" enctype="multipart/form-data" action="/portal/customer-care/trade-in/printlabelbulk" method="post">
+                        @csrf
+                            @foreach($tradeins as $key=>$order)
+                            <tr>
+                                <td ><div class="table-element">{{$key}}</div></td>
+                                <td><div class="table-element">{{$order[0]->created_at}}</div></td>
+                                <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} <br> @endforeach</div></td>
+                                <td><div class="table-element">@foreach($order as $tradein){{$tradein->product_state}} <br> @endforeach</div></td>
+                                <td><div class="table-element">{{$order[0]->getOrderType($order[0]->barcode)}}</div></td>
+                                <td><div class="table-element">{{$order[0]->getOrderType($order[0]->barcode)}}</div></td>
+                                <td><div class="table-element">
+                                    <a title="See trade in details" href="/portal/customer-care/trade-in/{{$tradein->barcode}}">
+                                        <i class="fa fa-search"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" title="Print trade-in label" onclick = printTradePackTradeIn({{$tradein->barcode}})>
+                                        <i class="fa fa-print"></i>
+                                    </a>
+                                    <a onclick = deleteTradeInDetailsFromSystem({{$tradein->barcode}})>
+                                        <i title="Delete trade in from system" class="fa fa-times" style="color:red !important;"></i>
+                                    </a>
+                                    <input class="printcheckbox" type="checkbox" name="{{$key}}" value="{{$key}}" onclick="enablebtn()">
+                                    </div>
+                                </td>
+                            </tr>
 
                         @endforeach
+                        <button type="submit" id="print_trade_pack_bulk_form_trigger" class="btn btn-primary mb-5" disabled>Print Trade Pack Trade-In Bulk</button>
+                        </form>
                     </table>
 
                     <form id="print_trade_pack_form" name="form-print-trade-pack" enctype="multipart/form-data" action="/portal/customer-care/trade-in/printlabel" method="post">
                         @csrf
                         <input type="hidden" id="print_trade_pack_trade_in_id" name="hidden_print_trade_pack_trade_in_id">
                         <input type="submit" id="print_trade_pack_trade_in_trigger" name="print_trade_pack_trade_in" value="Print Trade Pack Trade-In">
-                    </form>
-
-                    <form id="print_trade_pack_bulk_form" name="print_trade_pack_bulk_form" enctype="multipart/form-data" action="/portal/customer-care/trade-in/printlabelbulk" method="post">
-                        @csrf
-                        <input type="number" name="number_of_bulk_prints" id="number_of_bulk_prints">
-                        <input type="submit" id="print_trade_pack_bulk_form_trigger" name="print_trade_pack_bulk_form" value="Print Trade Pack Trade-In Bulk">
                     </form>
 
                     <form onsubmit="return confirm('Are you sure you want to delete this tradein from system?')" style="display:none;" id="delete_trade_pack_form" name="delete_trade_pack_form" action="/portal/customer-care/tradein/deletetradein" method="post">

@@ -38,18 +38,6 @@
                         <div class="container form-group d-flex flex-column align-items-center justify-content-between">
                            
                             <input required style="margin: 0; width: 30%; margin-bottom:15px;" class="p-2 form-control" type="text" name="trolley_name" id="trolley_name" placeholder="Trolley Name">
-                            <select name="trolley_type" required style="margin:0; width:30%; margin-bottom:15px;" class="p-2 form-control">
-                                <option value="">Choose Trolley Type:</option>
-                                <option value="1">Testing</option>
-                                <option value="2">New</option>
-                                <option value="3">Working A</option>
-                                <option value="4">Working B</option>
-                                <option value="5">Working C</option>
-                                <option value="6">Faulty</option>
-                                <option value="7">Damaged</option>
-                                <option value="8">Quarantine</option>
-                                <option value="9">Risk</option>
-                            </select>
                             <button type="submit" class="btn btn-primary btn-blue">Create Tray</button>
                         </div>
                     </form>
