@@ -32,8 +32,7 @@
                     </div>
                 </div>
                 <div class="portal-search-form-container mb-5">
-                    <form action="/portal/testing/receive/1" method="POST">
-                        @csrf
+                    <form action="/portal/testing/receiveorder" method="get">
                         <label for="searchinput">Scan Or Type Trade-In ID:</label>
                         <input id="searchinput" type="number" name="scanid" class="form-control" autofocus>
                         <button type="submit" class="btn btn-primary btn-blue">Search</button>

@@ -50,6 +50,7 @@
                             <td><div class="table-element">Date Placed</div></td>
                             <td><div class="table-element">Product</div></td>
                             <td><div class="table-element">Label Status</div></td>
+                            <td><div class="table-element">Customer Sent</div></td>
                             <td>
 
                             </td>
@@ -58,11 +59,12 @@
                         @foreach($tradeins as $key=>$order)
 
                         <tr>
-                            <td ><div class="table-element">@foreach($order as $tradein){{$tradein->barcode_original}}@endforeach</div></td>
+                            <td ><div class="table-element">@foreach($order as $tradein){{$tradein->barcode_original}}<br>@endforeach</div></td>
                             <td><div class="table-element">@foreach($order as $tradein){{$tradein->barcode}} <br> @endforeach</div></td>
                             <td><div class="table-element">{{$order[0]->created_at}}</div></td>
                             <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} <br> @endforeach</div></td>
                             <td><div class="table-element">@if($tradein->job_state == 1)Printed @elseif ($tradein->job_state == 2) Sent @elseif($tradein->job_state == 3) Order received @elseif($tradein->job_state == 4) Device received @elseif($tradein->job_state == 5) Device in tray @elseif($tradein->job_state == 6) Device tested @endif</div></td>
+                            <td><div class="table-element">@if($tradein->sent_themselves) Yes @else No @endif</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
                                     <i class="fa fa-search"></i>
@@ -70,11 +72,7 @@
                                 <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint tradepack">
                                     <i class="fa fa fa-print"></i>
                                 </a>
-                                @if($tradein->job_state <=1)
-                                <a href="javascript:void(0)" onclick = setAsSent({{$tradein->id}}) title="Mark tradepack as sent">
-                                    <i class="fa fa-paper-plane"></i>
-                                </a>
-                                @endif
+
                                 @if($tradein->job_state == 4)
                                 <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
                                     <i class="fa fa-times" style="color:blue !important;" title="Return device to receiving" ></i>

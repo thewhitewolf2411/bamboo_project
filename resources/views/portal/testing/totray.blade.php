@@ -54,22 +54,41 @@
         </div>
     </main>
 
+        <div id="label-trade-in-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Trade pack label</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <iframe id="tradein-iframe"></iframe>
+                </div>
+                </div>
+            </div>
+		</div>
+
 </body>
+
 <script>
-
-$(document).ready(function(){
-
-    var elem = $('.portal-links-container > .portal-header-element')[4];
-    
-    console.log(elem.children[0]);
-
-    elem.children[0].style.color = "#fff";
-    elem.children[0].children[0].style.opacity = 1;
-
-});
-
-
-
+    $.ajax({
+        url: "/cart/printtradein",
+        type:"POST",
+        data:{
+            user:{!! Auth::User() !!},
+            tradein:{!! Session::get('tradein') !!},
+            _token: "{{ csrf_token() }}"
+        },
+        success:function(response){
+            console.log(response['code'], response.code);
+            if(response['code'] == 200){
+                $('#tradein-iframe').attr('src', '/' + response['filename']);
+                $('#label-trade-in-modal').modal('show');
+            }
+        },
+    });
 </script>
 
 

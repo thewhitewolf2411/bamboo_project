@@ -145,7 +145,9 @@ Route::get('/portal/product/removebuyingproduct/{id}', 'PortalController@removeB
 Route::get('/portal/product/removesellingproduct/{id}', 'PortalController@removeSellingProduct')->middleware('auth');
 
 Route::get('/portal/product/editsbuyingproduct/{id}', 'PortalController@showEditBuyingProductPage')->middleware('auth');
-Route::get('/portal/product/editsellingproduct/{id}', 'PortalController@showEditBuyingProductPage')->middleware('auth');
+Route::get('/portal/product/editsellingproduct/{id}', 'PortalController@showEditSellingProductPage')->middleware('auth');
+Route::post('/portal/product/editsellingproduct/edit', 'PortalController@saveEditedSellingProduct')->middleware('auth');
+Route::post('/portal/product/editbuyingproduct/edit', 'PortalController@saveEditedBuyingProduct')->middleware('auth');
 
 //quarantine
 Route::get('/portal/quarantine', 'PortalController@showQuarantinePage')->middleware('auth');
@@ -160,11 +162,14 @@ Route::get('/portal/testing/receive', 'PortalController@showReceiveTradeIn')->mi
 Route::get('/portal/testing/find', 'PortalController@showFindTradeIn')->middleware('auth');
 
 Route::get('/portal/testing/find/test', 'PortalController@find')->middleware('auth');
-Route::post('/portal/testing/receive/1', 'PortalController@receive')->middleware('auth');
-Route::post('/portal/testing/receive/2', 'PortalController@receive')->middleware('auth');
-Route::post('/portal/testing/receive/3', 'PortalController@receive')->middleware('auth');
-Route::get('/portal/testing/receive/{id}/1','PortalController@testItem');
-Route::get('/portal/testing/receive/{id}/1/report','PortalController@testItem');
+Route::get('/portal/testing/receiveorder', 'PortalController@receive')->middleware('auth');
+Route::get('/portal/testing/receive/{id}','PortalController@testItem')->middleware('auth');
+Route::get('/portal/testing/receive/quarantine/{id}', 'PortalController@showOlderOrderPage')->middleware('auth');
+Route::post('/portal/testing/receive/senddevicetouarantine', 'PortalController@sendReceivingDeviceToQuarantine')->middleware('auth');
+Route::get('/portal/testing/checkforimei/{id}', 'PortalController@showCheckForImeiPage')->middleware('auth');
+Route::get('/portal/testing/checkimei/{id}', 'PortalController@showCheckImeiPage')->middleware('auth');
+Route::get('/portal/testing/checkimeiresult/{id}', 'PortalController@showCheckImeiReultPage')->middleware('auth');
+Route::get('/portal/testing/result/{id}','PortalController@showReceivingResultPage');
 
 Route::post('/portal/testing/receive/checkdevicestatus', 'PortalController@checkDeviceStatus')->middleware('auth');
 Route::post('/portal/testing/receive/settradeinstatus', 'PortalController@setTradeInStatus')->middleware('auth');

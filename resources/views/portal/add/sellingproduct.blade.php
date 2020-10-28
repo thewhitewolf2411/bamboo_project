@@ -60,6 +60,18 @@
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">
+                                <label for="product_color">Product color:</label>
+                                <input name="product_color" type="text" required>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <label for="product_network">Product network:</label>
+                                <input name="product_network" type="text" required>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <label for="product_memory">Product memory:</label>
+                                <input name="" type="text" required>
+                            </div>
+                            <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_image">Product image:</label>
                                     <input name="product_image" type="file" accept="image/x-png,image/gif,image/jpeg" required>

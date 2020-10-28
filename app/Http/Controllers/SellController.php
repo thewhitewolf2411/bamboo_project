@@ -240,9 +240,9 @@ class SellController extends Controller
                     $tradein->user_id = Auth::user()->id;
                     $tradein->product_id = json_decode($item[1])->id;
                     $tradein->order_price = $item[2];
-                    $tradein->color = $item[4];
-                    $tradein->network = $item[3];
-                    $tradein->memory = $item[5];
+                    #$tradein->color = $item[4];
+                    #$tradein->network = $item[3];
+                    #$tradein->memory = $item[5];
 
                     $name = $tradein->getProductName(json_decode($item[1])->id);
                     $price = $item[2];
@@ -265,6 +265,7 @@ class SellController extends Controller
 
                     if($labelstatus == "2"){
                         $tradein->job_state = 2;
+                        $tradein->sent_themselves = true;
                     }
 
                     $tradein->save();

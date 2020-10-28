@@ -41,21 +41,21 @@
 
                     <div class="d-flex flex-column portal-search-form-container">
                        
-                        <form action="/portal/testing/receive/devicemissing" method="POST" class="d-flex flex-column">
+                        <form action="/portal/testing/receive/senddevicetouarantine" method="POST" class="d-flex flex-column">
                             @csrf
                             <div class="w-100 p-3">
                                 <div class="d-flex w-100">
                                     <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
-                                    <div class="d-flex w-50 border p-3"><p>Is device present?</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Status</p></div>
                                 </div>
                                 <div class="d-flex w-100">
                                     <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
                                         <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
                                         <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
+                                        <p class="mr-0 ml-0">Order date: {{$tradein->created_at}}</p><br>
                                     </div>
-                                    <div class="d-flex w-25 border p-3"><label for="missing-yes">Device is present.</label><input id="missing-yes" type="radio" name="missing" @if($tradein->received) checked @endif value="present" required></div>
-                                    <div class="d-flex w-25 border p-3"><label for="missing-yes">Device is not present</label><input id="missing-no" type="radio" name="missing" value="missing"></div>
+                                    <div class="d-flex w-50 border p-3"><label for="missing-yes">@foreach(Session::get('message') as $message) {{$message}} <br> @endforeach</label></div>
                                 </div>
                                 
                             </div>
@@ -63,7 +63,7 @@
                             <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
 
                             <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
-                                <a href="/portal/testing/receive" style="margin: 0;">
+                                <a href="/portal/testing/receive/{{$tradein->id}}" style="margin: 0;">
                                     <div class="btn btn-primary btn-blue">
                                         <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
                                     </div>

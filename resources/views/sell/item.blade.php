@@ -30,27 +30,15 @@
                     </div>
                     <div class="product-selected product-network-container">
                         <p>Product Network:</p>
-                        <select class="form-control" id="grade-select" name="networkinput" onchange="networkChanged(this)">
-                            @foreach($networks as $network)
-                            <option value="{{$network->network_value }}" selected>{{$network->network_value}}</option>
-                            @endforeach
-                        </select> 
+                        <input class="form-control" disabled value="{{$product->network }}">
                     </div>
                     <div class="product-selected product-memory-container">
                         <p>Product Memory:</p>
-                        <select class="form-control" id="grade-select" name="memoryinput" onchange="memoryChanged(this)">
-                            @foreach($memories as $memory)
-                            <option value="{{$memory->memory_value }}" selected>{{$memory->memory_value}}</option>
-                            @endforeach
-                        </select> 
+                        <input class="form-control" disabled value="{{$product->memory }}">
                     </div>
                     <div class="product-selected">
                         <p>Product Colour:</p>
-                        <select class="form-control" id="grade-select" name="colorinput" onchange="colorChanged(this)">
-                            @foreach($colors as $color)
-                            <option value="{{$color->color_value }}" selected>{{$color->color_value}}</option>
-                            @endforeach
-                        </select> 
+                        <input class="form-control" disabled value="{{$product->color }}">
                     </div>
                     <div class="product-selected product-grade-container">
                         <p>Product Grade:</p>

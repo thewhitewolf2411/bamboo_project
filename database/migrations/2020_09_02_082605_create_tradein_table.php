@@ -20,13 +20,11 @@ class CreateTradeinTable extends Migration
             $table->integer('barcode_original');
             $table->integer('product_id');
             $table->string('product_state');
-            $table->string('color');
-            $table->string('network');
-            $table->string('memory');
             $table->smallInteger('job_state')->nullable()->default(null);
             $table->integer('order_price')->nullable()->default(null);
             //0 received tradein without label
             //1 sent label / job complete
+            $table->boolean('sent_themselves')->default(false);
             $table->boolean('received')->default(false);
             $table->boolean('device_missing')->nullable()->default(null);
             $table->boolean('device_correct')->nullable()->default(null);

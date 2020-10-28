@@ -715,14 +715,101 @@ class PortalController extends Controller
         if(!$this->checkAuthLevel(3)){return redirect('/');}
 
         $product = BuyingProduct::where('id', $id)->first();
-        return view('portal.product.editbuyingproduct')->with(['product'=>$product]);
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $categories = Category::all();
+        $brands = Brand::all();
+        $conditions = Conditions::all();
+
+        return view('portal.product.editbuyingproduct')->with(['product'=>$product, 'portalUser'=>$portalUser, 'categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions]);
     }
 
     public function showEditSellingProductPage($id){
         if(!$this->checkAuthLevel(3)){return redirect('/');}
 
-        $product = BuyingProduct::where('id', $id)->first();
-        return view('portal.product.editsellingproduct')->with(['product'=>$product]);
+        $product = SellingProduct::where('id', $id)->first();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $categories = Category::all();
+        $brands = Brand::all();
+        $conditions = Conditions::all();
+
+        return view('portal.product.editsellingproduct')->with(['product'=>$product, 'portalUser'=>$portalUser, 'categories'=>$categories, 'brands'=>$brands]);
+    }
+
+    public function saveEditedSellingProduct(Request $request){
+        #dd($request->all());
+
+        $product = SellingProduct::where('id', $request->product_id)->first();
+        $product->product_name = $request->product_name;
+        $product->category_id = $request->category;
+        $product->brand_id = $request->brand;
+        $product->color = $request->product_color;
+        $product->network = $request->product_network;
+        $product->memory = $request->product_memory;
+        $product->customer_grade_price_1 = $request->customer_grade_price_1;
+        $product->customer_grade_price_2 = $request->customer_grade_price_2;
+        $product->customer_grade_price_3 = $request->customer_grade_price_3;
+        $product->customer_grade_price_4 = $request->customer_grade_price_4;
+        $product->customer_grade_price_5 = $request->customer_grade_price_5;
+        $filenameWithExt = $request->file('product_image')->getClientOriginalName();
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = $request->file('product_image')->getClientOriginalExtension();
+        $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        $path = $request->file('product_image')->storeAs('public/product_images',$fileNameToStore);
+
+        $product->product_image = $fileNameToStore;
+
+        $product->save();
+
+        return redirect()->back()->with('product_edited', 'Product Was succesfully edited.');
+    }
+
+    public function saveEditedBuyingProduct(Request $request){
+
+        $product = BuyingProduct::where('id', $request->product_id)->first();
+
+        $product->product_name = $request->product_name;
+        $product->product_description = $request->wordbox_description;
+        $product->category_id = $request->category;
+        $product->brand_id = $request->brand;
+        $product->product_network = $request->product_network;
+        $product->product_memory = $request->product_memory;
+        $product->product_colour = $request->product_color;
+        $product->product_grade = $request->product_grade;
+        $product->product_dimensions = $request->product_dimensions;
+        $product->product_processor = $request->product_processor;
+        $product->product_weight = $request->product_weight;
+        $product->product_screen = $request->product_screen;
+        $product->product_system = $request->product_system;
+        $product->product_connectivity = $request->product_connectivity;
+        $product->product_battery = $request->product_battery;
+        $product->product_signal = $request->product_signal;
+        $product->product_camera = $request->product_main_camera;
+        $product->product_camera_2 = $request->product_secondary_camera;
+        $product->product_sim = $request->product_sim;
+        $product->product_memory_slots = $request->product_memory_slots;
+        $product->product_quantity = $request->product_quantity;
+        $product->product_buying_price = $request->product_buying_price;
+
+        if(($request->has('product_image'))){
+            $filenameWithExt = $request->file('product_image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('product_image')->getClientOriginalExtension();
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('product_image')->storeAs('public/product_images',$fileNameToStore);
+    
+            $product->product_image = $fileNameToStore;
+        }
+
+        $product->save();
+
+        return redirect()->back()->with('product_edited', 'Product Was succesfully edited.');
+
     }
 
     //quarantine
@@ -796,12 +883,8 @@ class PortalController extends Controller
     }
 
     public function showReceiveTradeIn(){
-        if(!$this->checkAuthLevel(5)){return redirect('/');}
-
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-        
 
         return view('portal.testing.receive')->with('portalUser', $portalUser);
     }
@@ -847,6 +930,8 @@ class PortalController extends Controller
 
     public function receive(Request $request){
         if(!$this->checkAuthLevel(5)){return redirect('/');}
+
+        #dd($request->scanid);
         $tradeins = Tradein::where('barcode', $request->scanid)->where('job_state', '>=', 1)->get();
 
         if(count($tradeins)<1){
@@ -866,120 +951,17 @@ class PortalController extends Controller
         $user  = User::where('id', $tradein->user_id)->first();
         $product = SellingProduct::where('id', $tradein->product_id)->first();
 
-
-        $testingquestion = TestingQuestions::where('order_id', $tradein->id)->get();
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
         
-        if($testingquestion !== null){
+        /*if($testingquestion !== null){
             return view('portal.testing.questions')->with(['tradein'=>$tradein, 'user'=>$user, 'product'=>$product, 'testingquestion'=>false, 'testingquestions'=>$testingquestion,'portalUser'=>$portalUser]);
         }
         else{
             return view('portal.testing.questions')->with(['tradein'=>$tradein, 'user'=>$user, 'product'=>$product, 'testingquestion'=>true,'portalUser'=>$portalUser]);
-        }
+        }*/
 
-        
-    }
-
-    public function setTradeInStatus(Request $request){
-
-        $tradein = Tradein::where('id', $request->tradein_id)->first();
-        $tradein->job_state = 3;
-
-        $client->publicAPI->track( $event );  
-
-        $testingquestion = "";
-
-        #dd(TestingQuestions::where('order_id', $tradein->id)->first());
-
-        if(TestingQuestions::where('order_id', $tradein->id)->first() == null){
-            $testingquestion = new TestingQuestions();
-            $testingquestion->order_id = $tradein->id;
-            $testingquestion->save();
-        }
-        else{
-            $testingquestion = TestingQuestions::where('order_id', $tradein->id)->first();
-        }
-
-
-        $days = 14;
-        $dayToCheck = Carbon::now();
-
-        
-        
-        if($tradein->created_at->diff($dayToCheck)->days <= $days){
-            $tradein->received = true;
-            $tradein->proccessed_before = true;
-            $tradein->older_than_14_days = false;
-            $tradein->save();
-    
-            return redirect()->back();
-        }
-        else{
-            $condition = $tradein->product_state;
-            $offered_price = $tradein->ordered_price;
-            $product_id = $tradein->product_id;
-
-            $product = SellingProduct::where('id', $product_id)->first();
-
-            if($condition == "New"){
-                if($product->product_selling_price_1 >= $offered_price){
-                    $tradein->received = true;
-                    $tradein->proccessed_before = true;
-                    $tradein->older_than_14_days = false;
-                    $tradein->save();
-            
-                    return redirect()->back();
-                }
-                else{
-                    $tradein->received = true;
-                    $tradein->proccessed_before = true;
-                    $tradein->older_than_14_days = true;
-                    $tradein->save();
-            
-                    return redirect()->back();
-                }
-            }
-            if($condition == "Good"){
-                if($product->product_selling_price_2 >= $offered_price){
-                    $tradein->received = true;
-                    $tradein->proccessed_before = true;
-                    $tradein->older_than_14_days = false;
-                    $tradein->save();
-            
-                    return redirect()->back();
-                }
-                else{
-                    $tradein->received = true;
-                    $tradein->proccessed_before = true;
-                    $tradein->older_than_14_days = true;
-                    $tradein->save();
-            
-                    return redirect()->back();
-                }
-            }
-            if($condition == "Faulty"){
-                if($product->product_selling_price_1 >= $offered_price){
-                    $tradein->received = true;
-                    $tradein->proccessed_before = true;
-                    $tradein->older_than_14_days = false;
-                    $tradein->save();
-            
-                    return redirect()->back();
-                }
-                else{
-                    $tradein->received = true;
-                    $tradein->proccessed_before = true;
-                    $tradein->older_than_14_days = true;
-                    $tradein->save();
-            
-                    return redirect()->back();
-                }
-            }
-            
-        }
-
-        
+        return view('portal.testing.receiving.present')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
 
 
     }
@@ -988,6 +970,18 @@ class PortalController extends Controller
 
         $tradein = Tradein::where('id', $request->tradein_id)->first();
 
+        $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $tradein->created_at);
+        $now = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', Carbon::now());
+
+        $diff_in_days = $now->diffInDays($from);
+
+        $message = array();
+
+        if($diff_in_days>=14){
+            $tradein->marked_for_quarantine = true;
+            array_push($message, "This order has been identified by system as older than 14 days and has been marked for quarantine. Please confirm this.");
+        }
+
         if($request->missing == "present"){
             $tradein->device_missing = false;
             $tradein->received = true;
@@ -995,6 +989,7 @@ class PortalController extends Controller
         else if($request->missing == "missing"){
             $tradein->device_missing = true;
             $tradein->received = true;
+            array_push($message, "This device has been marked as missing from received order, and has been marked for quarantine. Please confirm this.");
         }
 
         if($tradein->device_missing){
@@ -1003,21 +998,82 @@ class PortalController extends Controller
         }
 
         $tradein->save();
-        return redirect()->back();
+
+        if($tradein->marked_for_quarantine){
+            return redirect('/portal/testing/receive/quarantine/' . $tradein->id)->with('message', $message);
+        }
+        else{
+            return redirect('/portal/testing/checkforimei/' . $tradein->id);
+        }
+
+        
     }
 
-    public function isDeviceCorrect(Request $request){
+    public function showCheckForImeiPage($id){
+        if(!$this->checkAuthLevel(5)){return redirect('/');}
+        $tradein = Tradein::where('id', $id)->first();
+        $user  = User::where('id', $tradein->user_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.testing.receiving.checkimei')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
+    }
+
+    public function sendReceivingDeviceToQuarantine(Request $request){
         $tradein = Tradein::where('id', $request->tradein_id)->first();
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        if($request->correct_device == "yes"){
-            $tradein->device_correct = true;
+        $quarantineTrays = "";
+        $quarantineName = "";
+
+        if($tradein->marked_for_quarantine == true){
+            $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RQ01%')->where('number_of_devices', "<" ,200)->first();
+            $quarantineName = $quarantineTrays->tray_name;
         }
-        else if($request->correct_device == "no"){
-            $tradein->device_correct = false;
+        else{
+            $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RM01%')->where('number_of_devices', "<" ,200)->first();
+            $quarantineName = $quarantineTrays->tray_name;
+            if($tradein->getBrandId($tradein->product_id) == 1){
+                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RA01%')->where('number_of_devices', "<" ,200)->first();
+                $quarantineName = $quarantineTrays->tray_name;
+            }
+            if($tradein->getBrandId($tradein->product_id) == 2){
+                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RS01%')->where('number_of_devices', "<" ,200)->first();
+                $quarantineName = $quarantineTrays->tray_name;
+            }
+            if($tradein->getBrandId($tradein->product_id) == 3){
+                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RH01%')->where('number_of_devices', "<" ,200)->first();
+                $quarantineName = $quarantineTrays->tray_name;
+            }
         }
 
+
+        
+        $traycontent = new TrayContent();
+        $traycontent->tray_id = $quarantineTrays->id;
+        $traycontent->trade_in_id = $tradein->id;
+        $traycontent->save();
+
+
+        $newBarcode = "90";
+        $newBarcode .= mt_rand(10000, 99999);
+        $tradein->barcode = $newBarcode;
         $tradein->save();
-        return redirect()->back();
+
+        return view('portal.testing.totray')->with(['tray_name'=>$quarantineName, 'portalUser'=>$portalUser, 'testing'=>true]);
+    }
+
+    public function showOlderOrderPage($id){
+        $tradein = Tradein::where('id', $id)->first();
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        $user  = User::where('id', $tradein->user_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        return view('portal.testing.receiving.olderorder')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
     }
 
     public function deviceImeiVisibility(Request $request){
@@ -1033,7 +1089,19 @@ class PortalController extends Controller
 
         $tradein->save();
 
-        return redirect()->back();
+        return redirect('/portal/testing/checkimei/' . $tradein->id);
+    }
+
+    public function showCheckImeiPage($id){
+        if(!$this->checkAuthLevel(5)){return redirect('/');}
+        $tradein = Tradein::where('id', $id)->first();
+        $user  = User::where('id', $tradein->user_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.testing.receiving.checkmend')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
     }
 
     public function checkimei(Request $request){
@@ -1042,8 +1110,6 @@ class PortalController extends Controller
 
         #dd($imei_number);
 
-        #$imei_number = 123456123456123;
-        #dd(strlen($imei_number)>15 || strlen($imei_number)<15);
         if(strlen($imei_number)>15 || strlen($imei_number)<15){
             return redirect()->back()->with('error', 'Incorrect IMEI number. Must be 15 characters');
         }
@@ -1089,12 +1155,16 @@ class PortalController extends Controller
 
         $result = (json_decode($result['result_json']));
 
-        #dd($result);
-
         $tradein->imei_number = $imei_number;
         $tradein->save();
 
-        return redirect()->back()->with(['result'=>$result]);
+        $user  = User::where('id', $tradein->user_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return redirect('/portal/testing/checkimeiresult/' . $tradein->id)->with('result', $result);
 
     }
 
@@ -1143,6 +1213,18 @@ class PortalController extends Controller
         return $result;
     }
 
+    public function showCheckImeiReultPage($id){
+        if(!$this->checkAuthLevel(5)){return redirect('/');}
+        $tradein = Tradein::where('id', $id)->first();
+        $user  = User::where('id', $tradein->user_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.testing.receiving.checkmendresult')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
+    }
+
     public function userCheckImei(Request $request){
         #dd($request);
 
@@ -1154,7 +1236,7 @@ class PortalController extends Controller
             $tradein->chekmend_passed = true;
             $tradein->device_correct = true;
             $tradein->save();
-            return redirect()->back();
+            return redirect('/portal/testing/result/' . $tradein->id);
         }
         else{
             $tradein = Tradein::where('id', $request->tradein_id)->first();
@@ -1164,8 +1246,21 @@ class PortalController extends Controller
             $tradein->chekmend_passed = false;
             $tradein->device_correct = false;
             $tradein->save();
-            return redirect()->back();
+            return redirect('/portal/testing/result/' . $tradein->id);
         }
+    }
+
+    public function showReceivingResultPage($id){
+        $tradein = Tradein::where('id', $id)->first();
+        $user  = User::where('id', $tradein->user_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        #return view('portal.testing.receiving.checkmendresult')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
+
+        return view('portal.testing.receiving.resault')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
     }
 
     public function checkDeviceStatus(Request $request){
@@ -1319,10 +1414,6 @@ class PortalController extends Controller
         if($tradein->marked_for_quarantine == true){
             $newBarcode .= "90";
             $newBarcode .= mt_rand(10000, 99999);
-
-            $quarantine = new Quarantine();
-
-
         }
         else{
             foreach($brands as $brand){
@@ -1561,7 +1652,7 @@ class PortalController extends Controller
             $columns = Schema::getColumnListing('selling_products'); 
             //16
             $products = SellingProduct::all();
-            $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L'];
+            $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O'];
         }
         
         $filename = "/feed_type_".$export_feed_parameter."[" . date("Y-m-d") ."_". date("h-i-s") . "].xlsx";
@@ -1710,11 +1801,14 @@ class PortalController extends Controller
                 $product->product_image = $datarow[2];
                 $product->category_id = $datarow[3];
                 $product->brand_id = $datarow[4];
-                $product->customer_grade_price_1 = $datarow[5];
-                $product->customer_grade_price_2 = $datarow[6];
-                $product->customer_grade_price_3 = $datarow[7];
-                $product->customer_grade_price_4 = $datarow[8];
-                $product->customer_grade_price_5 = $datarow[9];
+                $product->memory = $datarow[5];
+                $product->color = $datarow[6];
+                $product->network = $datarow[7];
+                $product->customer_grade_price_1 = $datarow[8];
+                $product->customer_grade_price_2 = $datarow[9];
+                $product->customer_grade_price_3 = $datarow[10];
+                $product->customer_grade_price_4 = $datarow[11];
+                $product->customer_grade_price_5 = $datarow[12];
     
                 $product->save();
             }
