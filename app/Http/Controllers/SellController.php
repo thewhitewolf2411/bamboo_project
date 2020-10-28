@@ -240,6 +240,7 @@ class SellController extends Controller
                     $tradein->user_id = Auth::user()->id;
                     $tradein->product_id = json_decode($item[1])->id;
                     $tradein->order_price = $item[2];
+                    $tradein->job_state = 1;
                     #$tradein->color = $item[4];
                     #$tradein->network = $item[3];
                     #$tradein->memory = $item[5];

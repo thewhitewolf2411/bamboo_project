@@ -78,7 +78,7 @@ class PortalController extends Controller
         $tradeins = null;
 
         if($request->all() == null || $request->search == 0){
-            $tradeins = Tradein::all()->where('job_state', null)->groupBy('barcode');
+            $tradeins = Tradein::all()->where('job_state', 1)->groupBy('barcode');
 
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();

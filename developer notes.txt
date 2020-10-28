@@ -1,0 +1,13 @@
+job_state	description
+1		order request received
+2		trade pack dispached/user printed
+3		received and passed
+4		received and missing
+5		tested
+6		marked for retest
+7		retested
+8		placed in tray
+9		waiting customer response
+10		paid for
+11		return to customer
+12		destroy device
