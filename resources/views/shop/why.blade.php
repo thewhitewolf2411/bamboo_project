@@ -282,6 +282,14 @@
                 </div>
 
             </div>
+
+            @if(session('showLogin') || $errors->all())
+                <script>
+                    $(window).on('load',function(){
+                        $('#loginModal').modal('show');
+                    });
+                </script>
+            @endif
             <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">

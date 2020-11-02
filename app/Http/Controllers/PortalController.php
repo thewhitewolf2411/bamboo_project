@@ -126,7 +126,6 @@ class PortalController extends Controller
     }
 
     public function PrintTradeInLabelBulk(Request $request){
-        #dd($request->all());
 
         $html = "";
         $barcodes = array();
@@ -144,6 +143,14 @@ class PortalController extends Controller
             array_push($tradeins, $tradein);
         }
 
+        foreach($barcodes as $barcode){
+            $tiarr = Tradein::where('barcode', $barcode)->get();
+            foreach($tiarr as $tradein){
+                $tradein->job_state = 2;
+                $tradein->save();
+            }
+        }
+
         foreach($tradeins as $tradein){
 
             $user = User::where('id',$tradein->user_id)->first();
@@ -151,7 +158,7 @@ class PortalController extends Controller
             $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 
             $ti = Tradein::where('id', $tradein->id)->first();
-            $ti->job_state = 1;
+            $ti->job_state = 2;
             $ti->save();
 
             $html .= $this->generateTradeInHTMLBulk($barcode, $user, $product, $tradein);
@@ -985,7 +992,7 @@ class PortalController extends Controller
                         '$birthdate' => $user->birthdate,
                         '$newsletter' => $user->email,
                         '$products' => $tradein->getProductName($tradein->id),
-                        '$price'=> $tradein->order_price;
+                        '$price'=> $tradein->order_price,
                     ),
                     'properties' => array(
                         'Item Sold' => True
@@ -1014,7 +1021,7 @@ class PortalController extends Controller
                         '$birthdate' => $user->birthdate,
                         '$newsletter' => $user->email,
                         '$products' => $tradein->getProductName($tradein->id),
-                        '$price'=> $tradein->order_price;
+                        '$price'=> $tradein->order_price
                     ),
                     'properties' => array(
                         'Item Sold' => True
@@ -1065,7 +1072,7 @@ class PortalController extends Controller
         if($tradein->marked_for_quarantine == true){
             $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RQ01%')->where('number_of_devices', "<" ,200)->first();
             $quarantineName = $quarantineTrays->tray_name;
-            
+
             $user  = User::where('id', $tradein->user_id)->first();
             $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
             $event = new KlaviyoEvent(
@@ -1078,7 +1085,7 @@ class PortalController extends Controller
                         '$birthdate' => $user->birthdate,
                         '$newsletter' => $user->email,
                         '$products' => $tradein->getProductName($tradein->id),
-                        '$price'=> $tradein->order_price;
+                        '$price'=> $tradein->order_price
                     ),
                     'properties' => array(
                         'Item Sold' => True
@@ -1314,7 +1321,7 @@ class PortalController extends Controller
                         '$birthdate' => $user->birthdate,
                         '$newsletter' => $user->email,
                         '$products' => $tradein->getProductName($tradein->id),
-                        '$price'=> $tradein->order_price;
+                        '$price'=> $tradein->order_price
                     ),
                     'properties' => array(
                         'Item Sold' => True

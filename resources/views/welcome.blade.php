@@ -55,7 +55,7 @@
                 @include('customer.home')
             @endif
 
-            @if(session('showLogin'))
+            @if(session('showLogin') || $errors->all())
                 <script>
                     $(window).on('load',function(){
                         $('#loginModal').modal('show');
