@@ -43,7 +43,6 @@
                                 <option value="1">Mobile phones</option>
                                 <option value="2">Tablets</option>
                                 <option value="3">Smartwatches</option>
-                                
                             </select>
                             <button type="submit" class="btn btn-primary btn-blue">Search</button>
                         </form>

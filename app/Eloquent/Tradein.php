@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Eloquent\SellingProduct;
 use App\Eloquent\Category;
 use App\Eloquent\Brand;
+use App\Eloquent\Tray;
+use App\Eloquent\TrayContent;
 
 class Tradein extends Model
 {
@@ -104,4 +106,18 @@ class Tradein extends Model
 
     }
 
+    public function getTrayName($id){
+        #dd($id);
+        $trayid = TrayContent::where('trade_in_id', $id)->first();
+        $trayid = $trayid->tray_id;
+        $trayname = Tray::where('id', $trayid)->first()->tray_name;
+
+        return $trayname;
+    }
+
+    public function getTrayId($id){
+        $trayid = TrayContent::where('trade_in_id', $id)->first()->id;
+
+        return $trayid;
+    }
 }

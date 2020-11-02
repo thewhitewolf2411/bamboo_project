@@ -180,6 +180,7 @@ Route::post('/portal/testing/receive/checkimei', 'PortalController@checkimei')->
 Route::post('/portal/testing/receive/usercheckimei', 'PortalController@userCheckImei')->middleware('auth');
 Route::post('/portal/testing/receive/printnewlabel', 'PortalController@printNewLabel')->middleware('auth');
 Route::post('/portal/testing/receive/sendtotray', 'PortalController@sendtotray')->middleware('auth');
+Route::post('/portal/receiving/printnewlabel' , 'PortalController@downloadSingleFile')->middleware('auth');
 
 //payments
 Route::get('/portal/payments', 'PortalController@showPaymentPage')->middleware('auth');

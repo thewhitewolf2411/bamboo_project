@@ -13227,6 +13227,21 @@ tr:nth-child(even) {
   justify-content: center;
 }
 
+.table-element p {
+  font-size: 1rem;
+}
+
+.table-element p > a {
+  font-size: 1rem;
+  color: red;
+}
+
+.table-element p > a:hover {
+  font-size: 1.1rem;
+  color: darkred;
+  transform: 0.2s linear;
+}
+
 .portal-search-form-container form {
   display: flex;
   align-items: center;

@@ -63,7 +63,7 @@
                             <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
 
                             <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
-                                <a href="/portal/testing/receive" style="margin: 0;">
+                                <a href="/portal/testing/receiveorder?scanid={{$tradein->barcode}}" style="margin: 0;">
                                     <div class="btn btn-primary btn-blue">
                                         <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
                                     </div>

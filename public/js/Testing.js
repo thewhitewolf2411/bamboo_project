@@ -42,9 +42,12 @@ function testingElementChanged(){
         {
             "WSI": "WSI",
             "WSD": "WSD",
+            "NWSI": "NWSI",
+            "NWSD": "NWSD",
             "NW": "NW",
             "PND": "PND",
-            "FIMP": "FIMP"
+            "FIMP": "FIMP",
+            "Catastrophic":"Catastrophic"
         };
 
         $('#cosmetic_condition').empty(); // remove old options
@@ -53,13 +56,9 @@ function testingElementChanged(){
                 .attr("value", value).text(key));
             });
 
-        bamboo_grade.val("");
+        //bamboo_grade.val("");
     }
     else{
-
-        if(true == true){
-
-        }
 
         if(q3 == "true" && $('#fake-missing-part-image').hasClass('form-group-hidden')){
             $('#fake-missing-part-image').removeClass('form-group-hidden');
@@ -71,7 +70,6 @@ function testingElementChanged(){
         }
 
         if(q4 == "false" && $('#device-fully-functional-options').hasClass('form-group-hidden')){
-            console.log("here");
             $('#device-fully-functional-options').removeClass('form-group-hidden');
             $('#device_fully_functional_reasons').prop('required', true);
         }
@@ -104,7 +102,8 @@ function testingElementChanged(){
                     "Grade C": "Grade C",
                     "WSI": "WSI",
                     "WSD": "WSD",
-                    "NWSI": "NWSD",
+                    "NWSI": "NWSI",
+                    "NWSD": "NWSD",
                     "Catastrophic":"Catastrophic"
                 }
                 bamboo_grade.val("Grade B");
@@ -115,17 +114,19 @@ function testingElementChanged(){
                     "Grade C": "Grade C",
                     "WSI": "WSI",
                     "WSD": "WSD",
-                    "NWSI": "NWSD",
+                    "NWSI": "NWSI",
+                    "NWSD": "NWSD",
                     "Catastrophic":"Catastrophic"
                 }
                 bamboo_grade.val("Grade C");
                 $('#bamboo_grade_val').val("Grade C");
             }
-            if(customerGradeVal == 2){
+            if(customerGradeVal == 2 || customerGradeVal == 1){
                 options = {
                     "WSI": "WSI",
                     "WSD": "WSD",
-                    "NWSI": "NWSD",
+                    "NWSI": "NWSI",
+                    "NWSD":"NWSD",
                     "Catastrophic":"Catastrophic"
                 }
             }
@@ -151,9 +152,9 @@ function testingElementChanged(){
         options = {
             "WSI": "WSI",
             "WSD": "WSD",
-            "NW": "NW",
-            "PND": "PND",
-            "FIMP": "FIMP"
+            "NWSI": "NWSI",
+            "NWSD": "NWSD",
+            "Catastrophic":"Catastrophic"
         }
         
         $('#cosmetic_condition').empty(); // remove old options

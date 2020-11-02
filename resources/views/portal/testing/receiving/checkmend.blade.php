@@ -56,7 +56,7 @@
                                     <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
                                     <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                 </div>
-                                <div class="d-flex w-50 border p-3"><input id="imei_number" type="number" name="imei_number" required title="15 characters required"></div>
+                                <div class="d-flex w-50 border p-3"><input id="imei_number" type="number" name="imei_number" @if($tradein->imei_number != null) value="{{$tradein->imei_number}}" @endif required title="15 characters required"></div>
                             </div>
                             
                         </div>
@@ -64,7 +64,7 @@
                         <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
 
                         <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
-                            <a href="/portal/testing/receive" style="margin: 0;">
+                            <a href="/portal/testing/checkforimei/{{$tradein->id}}" style="margin: 0;">
                                 <div class="btn btn-primary btn-blue">
                                     <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
                                 </div>

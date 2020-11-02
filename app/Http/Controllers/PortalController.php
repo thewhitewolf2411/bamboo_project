@@ -403,7 +403,7 @@ class PortalController extends Controller
     public function createOrder(){
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        return view('portal.customer-care.createorder');
+        return view('portal.customer-care.createorder')->with(['portalUser'=>$portalUser]);
     }
 
     public function markForReprint($id){
@@ -901,23 +901,23 @@ class PortalController extends Controller
 
         #dd($request);
         if(!$this->checkAuthLevel(5)){return redirect('/');}
-        
+
+
         $barcode = $request->scanid;
 
         $tradein = Tradein::where('barcode', $request->scanid)->first();
 
         if($tradein == null){
-    
             return redirect()->back()->with('error', 'There is no such device');
-
         }
-
-        if($tradein->job_state < 5){
-            return redirect()->back()->with('error', 'Device has not been received yet');
+        if($tradein->job_state != 3){
+            return redirect()->back()->with('error', 'Device has not been received yet, or has been sent to quarantine.');
         }
-            
-        elseif($tradein->job_state == 6){
+        elseif($tradein->job_state == 5){
             return redirect()->back()->with('error', 'Device was already tested.');
+        }
+        elseif($tradein->marked_for_quarantine){
+            return redirect()->back()->with('error', 'Device was marked for quarantine on receiving and cannot be tested. If this device is in your tray, please remove it.');
         }
         else{
             $user_id = Auth::user()->id;
@@ -932,10 +932,10 @@ class PortalController extends Controller
         if(!$this->checkAuthLevel(5)){return redirect('/');}
 
         #dd($request->scanid);
-        $tradeins = Tradein::where('barcode', $request->scanid)->where('job_state', '>=', 1)->get();
+        $tradeins = Tradein::where('barcode', $request->scanid)->where('job_state', 2)->get();
 
         if(count($tradeins)<1){
-            return redirect()->back()->with('error', 'Trade pack despach has not been sent, or the order doesn\'t exists. Please try again');
+            return redirect()->back()->with('error', 'Trade pack despach has not been sent, or device was already received.');
         }
 
         $user_id = Auth::user()->id;
@@ -953,16 +953,8 @@ class PortalController extends Controller
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        
-        /*if($testingquestion !== null){
-            return view('portal.testing.questions')->with(['tradein'=>$tradein, 'user'=>$user, 'product'=>$product, 'testingquestion'=>false, 'testingquestions'=>$testingquestion,'portalUser'=>$portalUser]);
-        }
-        else{
-            return view('portal.testing.questions')->with(['tradein'=>$tradein, 'user'=>$user, 'product'=>$product, 'testingquestion'=>true,'portalUser'=>$portalUser]);
-        }*/
 
         return view('portal.testing.receiving.present')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
-
 
     }
 
@@ -973,6 +965,8 @@ class PortalController extends Controller
         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $tradein->created_at);
         $now = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', Carbon::now());
 
+        $user = User::where('id', $trayid->user_id)->first();
+
         $diff_in_days = $now->diffInDays($from);
 
         $message = array();
@@ -980,6 +974,25 @@ class PortalController extends Controller
         if($diff_in_days>=14){
             $tradein->marked_for_quarantine = true;
             array_push($message, "This order has been identified by system as older than 14 days and has been marked for quarantine. Please confirm this.");
+            $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Device Older',
+                    'customer_properties' => array(
+                        '$email' => $user->email,
+                        '$name' => $user->first_name,
+                        '$last_name' => $user->last_name,
+                        '$birthdate' => $user->birthdate,
+                        '$newsletter' => $user->email,
+                        '$products' => $tradein->getProductName($tradein->id),
+                        '$price'=> $tradein->order_price;
+                    ),
+                    'properties' => array(
+                        'Item Sold' => True
+                    )
+                )
+            );
+        
         }
 
         if($request->missing == "present"){
@@ -989,7 +1002,26 @@ class PortalController extends Controller
         else if($request->missing == "missing"){
             $tradein->device_missing = true;
             $tradein->received = true;
-            array_push($message, "This device has been marked as missing from received order, and has been marked for quarantine. Please confirm this.");
+            $tradein->job_state = 4;
+            $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Device Missing',
+                    'customer_properties' => array(
+                        '$email' => $user->email,
+                        '$name' => $user->first_name,
+                        '$last_name' => $user->last_name,
+                        '$birthdate' => $user->birthdate,
+                        '$newsletter' => $user->email,
+                        '$products' => $tradein->getProductName($tradein->id),
+                        '$price'=> $tradein->order_price;
+                    ),
+                    'properties' => array(
+                        'Item Sold' => True
+                    )
+                )
+            );
+            array_push($message, "This device has been found as missing from received order, and has been marked for quarantine. Please confirm this.");
         }
 
         if($tradein->device_missing){
@@ -1029,9 +1061,30 @@ class PortalController extends Controller
         $quarantineTrays = "";
         $quarantineName = "";
 
+
         if($tradein->marked_for_quarantine == true){
             $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RQ01%')->where('number_of_devices', "<" ,200)->first();
             $quarantineName = $quarantineTrays->tray_name;
+            
+            $user  = User::where('id', $tradein->user_id)->first();
+            $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Device sent to quarantine',
+                    'customer_properties' => array(
+                        '$email' => $user->email,
+                        '$name' => $user->first_name,
+                        '$last_name' => $user->last_name,
+                        '$birthdate' => $user->birthdate,
+                        '$newsletter' => $user->email,
+                        '$products' => $tradein->getProductName($tradein->id),
+                        '$price'=> $tradein->order_price;
+                    ),
+                    'properties' => array(
+                        'Item Sold' => True
+                    )
+                )
+            );
         }
         else{
             $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RM01%')->where('number_of_devices', "<" ,200)->first();
@@ -1039,6 +1092,7 @@ class PortalController extends Controller
             if($tradein->getBrandId($tradein->product_id) == 1){
                 $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RA01%')->where('number_of_devices', "<" ,200)->first();
                 $quarantineName = $quarantineTrays->tray_name;
+
             }
             if($tradein->getBrandId($tradein->product_id) == 2){
                 $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RS01%')->where('number_of_devices', "<" ,200)->first();
@@ -1050,20 +1104,26 @@ class PortalController extends Controller
             }
         }
 
+        $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;
+        $quarantineTrays->save();
 
-        
         $traycontent = new TrayContent();
         $traycontent->tray_id = $quarantineTrays->id;
         $traycontent->trade_in_id = $tradein->id;
         $traycontent->save();
-
 
         $newBarcode = "90";
         $newBarcode .= mt_rand(10000, 99999);
         $tradein->barcode = $newBarcode;
         $tradein->save();
 
-        return view('portal.testing.totray')->with(['tray_name'=>$quarantineName, 'portalUser'=>$portalUser, 'testing'=>true]);
+        $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
+
+        $sellingProduct = SellingProduct::where('id', $tradein->product_id)->first();
+
+        $response = $this->generateNewLabel($barcode, $sellingProduct, $tradein);
+
+        return view('portal.testing.totray')->with(['response'=>$response, 'barcode'=>$tradein->barcode, 'tray_name'=>$quarantineName, 'portalUser'=>$portalUser, 'tradein'=>$tradein, 'testing'=>true]);
     }
 
     public function showOlderOrderPage($id){
@@ -1164,6 +1224,8 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
+        #$this->showCheckImeiReultPage($tradein->barcode, $result);
+
         return redirect('/portal/testing/checkimeiresult/' . $tradein->id)->with('result', $result);
 
     }
@@ -1240,6 +1302,25 @@ class PortalController extends Controller
         }
         else{
             $tradein = Tradein::where('id', $request->tradein_id)->first();
+            $user  = User::where('id', $tradein->user_id)->first();
+            $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Device failed IMEI check',
+                    'customer_properties' => array(
+                        '$email' => $user->email,
+                        '$name' => $user->first_name,
+                        '$last_name' => $user->last_name,
+                        '$birthdate' => $user->birthdate,
+                        '$newsletter' => $user->email,
+                        '$products' => $tradein->getProductName($tradein->id),
+                        '$price'=> $tradein->order_price;
+                    ),
+                    'properties' => array(
+                        'Item Sold' => True
+                    )
+                )
+            );
 
             $tradein->marked_as_risk = false;
             $tradein->marked_for_quarantine = true;
@@ -1347,10 +1428,11 @@ class PortalController extends Controller
                 $testingQuestions->signs_of_water_damage = true;
                 $tradein->marked_for_quarantine = true;
             }
+            
             $testingQuestions->save();
         }
 
-        $tradein->job_state = 6;
+        $tradein->job_state = 5;
         $tradein->save();
 
         #dd($tradein);
@@ -1396,14 +1478,19 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.testing.totray')->with(['tray_name'=>$tray->tray_name, 'portalUser'=>$portalUser, 'testing'=>true]);
+        $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
+
+        $response = $this->generateNewLabel($barcode, SellingProduct::where('id', $tradein->id), $tradein);
+
+        return view('portal.testing.totray')->with(['tray_name'=>$tray->tray_name, 'portalUser'=>$portalUser, 'testing'=>true, 'tradein'=>$tradein]);
         
     }
 
     public function printNewLabel(Request $request){
+
         $tradein = Tradein::where('id', $request->tradein_id)->first();
 
-        $tradein->job_state = 4;
+        $tradein->job_state = 3;
 
 
         $newBarcode = "";
@@ -1420,11 +1507,11 @@ class PortalController extends Controller
                 if($sellingProduct->brand_id == $brand->id){
                     if($brand->id < 10){
                         $newBarcode .= $tradein->job_state . "0" . $brand->id;
-                        $newBarcode .= mt_rand(10000, 99999);
+                        $newBarcode .= mt_rand(1000, 9999);
                     }
                     else{
                         $newBarcode .= $tradein->job_state . $brand->id;
-                        mt_rand(10000, 99999);
+                        mt_rand(1000, 9999);
                     }
                 }
             }
@@ -1433,11 +1520,44 @@ class PortalController extends Controller
         $tradein->barcode = $newBarcode;
         $tradein->save();
 
-
-
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 
-        $this->generateNewLabel($barcode, $sellingProduct, $tradein);
+        $response = $this->generateNewLabel($barcode, $sellingProduct, $tradein);
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        if($tradein->marked_for_quarantine == true){
+            $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RQ01%')->where('number_of_devices', "<" ,200)->first();
+            $quarantineName = $quarantineTrays->tray_name;
+        }
+        else{
+            $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RM01%')->where('number_of_devices', "<" ,200)->first();
+            $quarantineName = $quarantineTrays->tray_name;
+            if($tradein->getBrandId($tradein->product_id) == 1){
+                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RA01%')->where('number_of_devices', "<" ,200)->first();
+                $quarantineName = $quarantineTrays->tray_name;
+
+            }
+            if($tradein->getBrandId($tradein->product_id) == 2){
+                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RS01%')->where('number_of_devices', "<" ,200)->first();
+                $quarantineName = $quarantineTrays->tray_name;
+            }
+            if($tradein->getBrandId($tradein->product_id) == 3){
+                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RH01%')->where('number_of_devices', "<" ,200)->first();
+                $quarantineName = $quarantineTrays->tray_name;
+            }
+        }
+
+        $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;
+        $quarantineTrays->save();
+
+        $traycontent = new TrayContent();
+        $traycontent->tray_id = $quarantineTrays->id;
+        $traycontent->trade_in_id = $tradein->id;
+        $traycontent->save();
+
+        return view('portal.testing.totray')->with(['tray_name'=>$quarantineName,'response'=>$response,'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein]);
 
     }
 
@@ -1457,7 +1577,7 @@ class PortalController extends Controller
         $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
         PDF::loadHTML($html)->setPaper('a6', 'landscape')->setWarnings(false)->save($filename);
 
-        $this->downloadFile($filename);
+        return response(['code'=>200, 'filename'=>$filename]);
         
     }
 
@@ -1712,6 +1832,13 @@ class PortalController extends Controller
             return \redirect()->back()->with('success','You have succesfully exported products.');
         }
     }
+
+    public function downloadSingleFile(Request $request){
+
+        return response(['code'=>200, 'filename'=>$request->file . ".pdf"]);
+
+    }
+
 
     public function feedsImport(Request $request){
 

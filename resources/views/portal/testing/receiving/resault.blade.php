@@ -55,20 +55,28 @@
                                         <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                     </div>
+                                    @if($tradein->marked_for_quarantine)
                                     <div class="d-flex w-50 border p-3"><p>This device has been marked for quarantine because:</p><br>
                                         <ul>
                                             @if($tradein->device_missing == true) <li><p>Device is Missing</p></li> @endif
                                             @if(isset($tradein->chekmend_passed) == true && $tradein->chekmend_passed == false) <li><p>Device IMEI Check failed</p></li> @endif
                                         </ul>
                                     </div>
+                                    @else
+                                    <div class="d-flex w-50 border p-3">
+                                    
+                                        <p>This device has passed receiving part of the testing.</p><br>
+
+                                    </div>
+                                    @endif
                                 </div>
                                 <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
-                                    <a href="/portal/testing/receive" style="margin: 0;">
+                                    <a href="/portal/testing/checkimeiresult/{{$tradein->id}}" style="margin: 0;">
                                         <div class="btn btn-primary btn-blue">
                                             <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
                                         </div>
                                     </a>
-                                    <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Print new label and send device to quarantine tray. </button>
+                                    <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Print new label and allocate device to tray. </button>
                                 </div>
                             </div>
 

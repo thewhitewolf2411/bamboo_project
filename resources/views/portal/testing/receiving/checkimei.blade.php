@@ -56,8 +56,8 @@
                                         <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                     </div>
-                                    <div class="d-flex w-25 border p-3"><label for="visible_imei_yes">Yes.</label><input id="visible_imei_yes" type="radio" name="visible_imei" value="yes" required></div>
-                                    <div class="d-flex w-25 border p-3"><label for="visible_imei_no">No.</label><input id="visible_imei_no" type="radio" name="visible_imei" value="no"></div>
+                                    <div class="d-flex w-25 border p-3"><label for="visible_imei_yes">Yes.</label><input id="visible_imei_yes" type="radio" name="visible_imei" @if($tradein->visible_imei == true) checked @endif value="yes" required></div>
+                                    <div class="d-flex w-25 border p-3"><label for="visible_imei_no">No.</label><input id="visible_imei_no" type="radio" name="visible_imei" @if($tradein->visible_imei == false) checked @endif value="no"></div>
                                 </div>
                                 
                             </div>
@@ -65,7 +65,7 @@
                             <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
 
                             <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
-                                <a href="/portal/testing/receive" style="margin: 0;">
+                                <a href="/portal/testing/receive/{{$tradein->id}}" style="margin: 0;">
                                     <div class="btn btn-primary btn-blue">
                                         <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
                                     </div>

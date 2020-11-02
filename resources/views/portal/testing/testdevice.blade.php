@@ -36,6 +36,30 @@
                         <p>Test Device</p>
                     </div>
                 </div>
+
+                <div class="portal-table-container">
+
+                    <table class="portal-table" id="categories-table">
+                        <tr>
+                            <td><div class="table-element">Trade-in ID</div></td>
+                            <td><div class="table-element">Trade-in barcode number</div></td>
+                            <td><div class="table-element">Date Placed</div></td>
+                            <td><div class="table-element">Product</div></td>
+                            <td><div class="table-element">Product IMEI number</div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
+                            <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                            <td><div class="table-element">{{$tradein->created_at}}</div></td>
+                            <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                            <td><div class="table-element">{{$tradein->imei_number}}</div></td>
+                        </tr>
+
+                    </table>
+
+
+                </div>
+
                 <div class="portal-search-form-container">
                     <form action="/portal/testing/receive/checkdevicestatus" method="POST" class="d-flex flex-column">
                         @csrf
@@ -145,7 +169,7 @@
                         <div class="form-group d-flex">
 
                             <div class="form-group w-50">
-                                <label for="customer_grade">Customer Grade</label>
+                                <label for="customer_grade">Customer Grade:</label>
                                 <input type="text" id="customer_grade" name="customer_grade" value="{{$tradein->product_state}}" disabled>
                             </div>
                             <div class="form-group w-50">
