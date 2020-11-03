@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+    <script src="{{ asset('js/Sellingproduct.js') }}"></script>
+
     <title>Bamboo Recycle::Edit Salvage Product</title>
 </head>
 
@@ -66,42 +68,97 @@
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">
-                                <label for="product_color">Product color:</label>
-                                <input name="product_color" type="text" value="{{$product->color}}" required>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <label for="product_network">Product network:</label>
-                                <input name="product_network" type="text" value="{{$product->network}}" required>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <label for="product_memory">Product memory:</label>
-                                <input name="product_memory" type="text" value="{{$product->memory}}" required>
-                            </div>
-                            <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_image">Product image:</label>
-                                    <input name="product_image" type="file" accept="image/x-png,image/gif,image/jpeg" value="{{$product->product_image}}" required>
+                                    <input name="product_image" type="file" accept="image/x-png,image/gif,image/jpeg" value="{{$product->product_image}}">
                                 </div>
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
-                                    <label for="product_grade">Product Grade:</label>
-                                    <div class="d-flex">
-                                        <div class="form-group mr-2">
-                                            <input type="text" name="product_grade_1" value="Excellent working" readonly>
-                                            <input type="text" name="product_grade_2" value="Good working" readonly>
-                                            <input type="text" name="product_grade_3" value="Poor working" readonly>
-                                            <input type="text" name="product_grade_4" value="Damaged working" readonly>
-                                            <input type="text" name="product_grade_5" value="Faulty" readonly>
-                                        </div>
-                                        <div class="form-group ml-2">
-                                            <input type="number" name="customer_grade_price_1" id="customer_grade_price_1" value="{{$product->customer_grade_price_1}}" placeholder="Enter price for grade 'Excellent working'">
-                                            <input type="number" name="customer_grade_price_2" id="customer_grade_price_2" value="{{$product->customer_grade_price_2}}" placeholder="Enter price for grade 'Good working'">
-                                            <input type="number" name="customer_grade_price_3" id="customer_grade_price_3" value="{{$product->customer_grade_price_3}}" placeholder="Enter price for grade 'Poor working'">
-                                            <input type="number" name="customer_grade_price_4" id="customer_grade_price_4" value="{{$product->customer_grade_price_4}}" placeholder="Enter price for grade 'Damaged working'">
-                                            <input type="number" name="customer_grade_price_5" id="customer_grade_price_5" value="{{$product->customer_grade_price_5}}" placeholder="Enter price for grade 'Faulty'">
+                                    <div class="portal-title-container">
+                                        <div class="portal-title">
+                                            <p>Different Memory Base Prices expressed in £</p>
                                         </div>
                                     </div>
+                                    @if(Session::has('product_option_deleted'))
+                                    <div class="alert alert-success" role="alert">
+                                        {{Session::get('product_option_deleted')}}
+                                    </div>
+                                    @endif
+                                    <table class="portal-table" id="categories-table">
+                                        <tr>
+                                            <td><div class="table-element">Memory</div></td>
+                                            <td><div class="table-element">Excellent Working</div></td>
+                                            <td><div class="table-element">Good Working</div></td>
+                                            <td><div class="table-element">Damaged working</div></td>
+                                            <td><div class="table-element">Poor working</div></td>
+                                            <td><div class="table-element">Faulty</div></td>
+                                            <td><div class="table-element">Remove option</div></td>
+                                        </tr>
+                                        @foreach($productinformation as $info)
+                                        <tr>
+                                            <input type="hidden" name="info{{$info->id}}" value="{{$info->id}}">
+                                            <th><input class="table-element" type="text" name="memory_{{$info->id}}" value="{{$info->memory}}"></th>
+                                            <th><input class="table-element" type="number" name="price1_{{$info->id}}" value="{{$info->customer_grade_price_1}}"></th>
+                                            <th><input class="table-element" type="number" name="price2_{{$info->id}}" value="{{$info->customer_grade_price_2}}"></th>
+                                            <th><input class="table-element" type="number" name="price3_{{$info->id}}" value="{{$info->customer_grade_price_3}}"></th>
+                                            <th><input class="table-element" type="number" name="price4_{{$info->id}}" value="{{$info->customer_grade_price_4}}"></th>
+                                            <th><input class="table-element" type="number" name="price5_{{$info->id}}" value="{{$info->customer_grade_price_5}}"></th>
+                                            <th><div class="table-element">
+
+                                            <a onclick="return confirm('Are you sure? This will delete this product option from customer view!')" href="/portal/product/removesellingproductoption/{{$info->id}}">
+                                                <i class="fa fa-times remove"></i>
+                                            </a>
+                                            
+                                            </div></th>
+                                        </tr>
+                                        @endforeach
+                                        <tr id="newMemoryRow">
+                                            <th><input class="table-element" type="text" name="memory-new"></th>
+                                            <th><input class="table-element" type="number" name="price1-new"></th>
+                                            <th><input class="table-element" type="number" name="price2-new"></th>
+                                            <th><input class="table-element" type="number" name="price3-new"></th>
+                                            <th><input class="table-element" type="number" name="price4-new"></th>
+                                            <th><input class="table-element" type="number" name="price5-new"></th>
+                                            <td><div class="table-element">
+
+                                            <a onclick="cancelNewMemoryPoint()">
+                                                <i class="fa fa-times remove"></i>
+                                            </a>
+                                            
+                                            </div></td>
+                                        </tr>
+                                        <tr id="newMemoryRowButton">
+                                            <th>
+                                                <div class="table-element">
+                                                    <a onclick="addNewMemoryPoint()">
+                                                        <div class="btn btn-primary">
+                                                            Add new memory point
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </table>
+
+                                    <div class="portal-title-container">
+                                        <div class="portal-title">
+                                            <p>Different Network Base Prices change in £</p>
+                                        </div>
+                                    </div>
+                                    <table class="portal-table" id="categories-table">
+                                        <tr>
+                                            @foreach($productnetworks as $network)
+                                            <td><div class="table-element"><img style="max-width:50px; width:50px" src="{{$network->getNetWorkImage($network->network_id)}}"></div></td>
+                                            @endforeach
+                                        </tr>
+                                        <tr>
+                                            @foreach($productnetworks as $network)
+                                            <td><div class="table-element"><input class="table-element" type="number" name="network_{{$network->id}}" value="{{$network->knockoff_price}}"></div></td>
+                                            @endforeach
+                                        </tr>
+                                    </table>
+
                                 </div>
                             </div>
                             <div class="form-group select_brand_button">

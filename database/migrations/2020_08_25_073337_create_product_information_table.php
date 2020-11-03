@@ -16,8 +16,12 @@ class CreateProductInformationTable extends Migration
         Schema::create('product_information', function (Blueprint $table) {
             $table->id();
             $table->integer('product_id');
-            $table->integer('buying_price')->nullable();
-            $table->integer('selling_price')->nullable();
+            $table->string('memory');
+            $table->integer('customer_grade_price_1');
+            $table->integer('customer_grade_price_2');
+            $table->integer('customer_grade_price_3');
+            $table->integer('customer_grade_price_4');
+            $table->integer('customer_grade_price_5');
             $table->timestamps();
         });
     }

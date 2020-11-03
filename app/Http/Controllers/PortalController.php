@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Eloquent\Category;
 use App\Eloquent\BuyingProduct;
 use App\Eloquent\SellingProduct;
+use App\Eloquent\ProductInformation;
 use App\Eloquent\ProductData;
 use App\Eloquent\Brand;
 use App\Eloquent\PortalUsers;
@@ -24,6 +25,7 @@ use App\Eloquent\TrolleyContent;
 use App\Eloquent\Box;
 use App\Eloquent\Colour;
 use App\Eloquent\Network;
+use App\Eloquent\ProductNetworks;
 use App\Eloquent\Memory;
 use App\User;
 use Auth;
@@ -37,6 +39,7 @@ use Session;
 use Storage;
 use File;
 use Hash;
+use DB;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -582,29 +585,25 @@ class PortalController extends Controller
     public function showSellingProductsPage(){
         if(!$this->checkAuthLevel(3)){return redirect('/');}
         $categories = Category::all();
-        $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
-
-        $products = $buyingProducts->merge($sellingProducts);
+        #$sellingProductInformation = ProductInformation::all();
+        #dd($sellingProductInformation);
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.product.sellingproduct')->with(['products' => $products, 'buyingProducts'=>$buyingProducts, 'sellingProducts'=>$sellingProducts,'portalUser'=>$portalUser]);
+        return view('portal.product.sellingproduct')->with(['sellingProducts'=>$sellingProducts,'portalUser'=>$portalUser]);
     }
 
     public function showBuyingProductsPage(){
         if(!$this->checkAuthLevel(3)){return redirect('/');}
         $categories = Category::all();
         $buyingProducts = BuyingProduct::all();
-        $sellingProducts = SellingProduct::all();
-
-        $products = $buyingProducts->merge($sellingProducts);
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.product.buyingproduct')->with(['products' => $products, 'buyingProducts'=>$buyingProducts, 'sellingProducts'=>$sellingProducts,'portalUser'=>$portalUser]);
+        return view('portal.product.buyingproduct')->with(['buyingProducts'=>$buyingProducts,'portalUser'=>$portalUser]);
     }
 
     public function showAddBuyingProductPage(){
@@ -745,7 +744,17 @@ class PortalController extends Controller
         $brands = Brand::all();
         $conditions = Conditions::all();
 
-        return view('portal.product.editsellingproduct')->with(['product'=>$product, 'portalUser'=>$portalUser, 'categories'=>$categories, 'brands'=>$brands]);
+        $sellingProductInformation = ProductInformation::where('product_id', $id)->get();
+        $productNetworks = ProductNetworks::where('product_id', $id)->get();
+        #dd($productNetworks);
+
+        return view('portal.product.editsellingproduct')->with(['product'=>$product, 'portalUser'=>$portalUser, 'categories'=>$categories, 'brands'=>$brands, 'productinformation'=>$sellingProductInformation, 'productnetworks'=>$productNetworks]);
+    }
+
+    public function showSellingProductOption($id){
+        $sellingProductInformation = ProductInformation::where('id', $id)->first();
+        $sellingProductInformation->delete();
+        return redirect()->back()->with('product_option_deleted', 'Product option deleted succesfully');
     }
 
     public function saveEditedSellingProduct(Request $request){
@@ -755,23 +764,62 @@ class PortalController extends Controller
         $product->product_name = $request->product_name;
         $product->category_id = $request->category;
         $product->brand_id = $request->brand;
-        $product->color = $request->product_color;
-        $product->network = $request->product_network;
-        $product->memory = $request->product_memory;
-        $product->customer_grade_price_1 = $request->customer_grade_price_1;
-        $product->customer_grade_price_2 = $request->customer_grade_price_2;
-        $product->customer_grade_price_3 = $request->customer_grade_price_3;
-        $product->customer_grade_price_4 = $request->customer_grade_price_4;
-        $product->customer_grade_price_5 = $request->customer_grade_price_5;
-        $filenameWithExt = $request->file('product_image')->getClientOriginalName();
-        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        $extension = $request->file('product_image')->getClientOriginalExtension();
-        $fileNameToStore = $filename.'_'.time().'.'.$extension;
-        $path = $request->file('product_image')->storeAs('public/product_images',$fileNameToStore);
-
-        $product->product_image = $fileNameToStore;
-
+        if($request->has('product_image')){
+            $filenameWithExt = $request->file('product_image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('product_image')->getClientOriginalExtension();
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('product_image')->storeAs('public/product_images',$fileNameToStore);
+            $product->product_image = $fileNameToStore;
+        }
         $product->save();
+
+        $deviceInfo = array();
+
+        $productInfo = ProductInformation::where('product_id', $request->product_id)->get();
+        $networks = ProductNetworks::where('product_id', $request->product_id)->get();
+
+        foreach($productInfo as $info){
+            if($request->{"memory_".$info->id} == null || $request->{"price1_".$info->id} == null || $request->{"price2_".$info->id} == null || $request->{"price3_".$info->id} == null || $request->{"price4_".$info->id} == null || $request->{"price5_".$info->id} == null){
+                $info->delete();
+            }
+            else{
+                if($request->{"memory_".$info->id} != $info->memory){
+                    $info->memory = $request->{"memory_".$info->id};
+                    $info->save();
+                }
+                if($request->{"price1_".$info->id} != $info->customer_grade_price_1){
+                    $info->customer_grade_price_1 = $request->{"price1_".$info->id};
+                    $info->save();
+                }
+                if($request->{"price2_".$info->id} != $info->customer_grade_price_2){
+                    $info->customer_grade_price_2 = $request->{"price2_".$info->id};
+                    $info->save();
+                }
+                if($request->{"price3_".$info->id} != $info->customer_grade_price_3){
+                    $info->customer_grade_price_3 = $request->{"price3_".$info->id};
+                    $info->save();
+                }
+                if($request->{"price4_".$info->id} != $info->customer_grade_price_4){
+                    $info->customer_grade_price_4 = $request->{"price4_".$info->id};
+                    $info->save();
+                }
+                if($request->{"price5_".$info->id} != $info->customer_grade_price_5){
+                    $info->customer_grade_price_5 = $request->{"price5_".$info->id};
+                    $info->save();
+                }
+            }
+        }
+
+        $network = $networks[0];
+
+        foreach($networks as $network){
+            
+            if($request->{"network_".$network->id} != $network->knockoff_price){
+                $network->knockoff_price = $request->{"network_".$network->id};
+                $network->save();
+            }
+        }
 
         return redirect()->back()->with('product_edited', 'Product Was succesfully edited.');
     }
@@ -972,7 +1020,7 @@ class PortalController extends Controller
         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $tradein->created_at);
         $now = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', Carbon::now());
 
-        $user = User::where('id', $trayid->user_id)->first();
+        $user = User::where('id', $tradein->user_id)->first();
 
         $diff_in_days = $now->diffInDays($from);
 
@@ -1852,16 +1900,17 @@ class PortalController extends Controller
         $export_feed_parameter = $request->export_feed_parameter;
 
         $products = "";
+        $productInformation = "";
 
         if($export_feed_parameter == 1){
             $products = BuyingProduct::all();
         }
         else if($export_feed_parameter == 2){
             $products = SellingProduct::all();
-        }
-
-        foreach($products as $product){
-            $product->delete();
+            $productInformation = ProductInformation::all();
+            DB::table('selling_products')->truncate();
+            DB::table('product_information')->truncate();
+            DB::table('product_networks')->truncate();
         }
 
         $inputFileName = $request->file('imported_csv')->getClientOriginalName();
@@ -1880,13 +1929,16 @@ class PortalController extends Controller
 
         $importeddata = $worksheet->toArray();
 
-        unset($importeddata[0]);
+        #dd($importeddata, $networks);
 
-        foreach($importeddata as $key=>$datarow){
+        if($importeddata[0][0]==='id'){
+            unset($importeddata[0]);
+        }
+        $importeddata = array_values($importeddata);
 
+        if($export_feed_parameter == 1){
             $message="";
-
-            if($export_feed_parameter == 1){
+            foreach($importeddata as $key=>$datarow){
                 $product = new BuyingProduct();
 
                 $product->product_name = $datarow[1];
@@ -1928,25 +1980,65 @@ class PortalController extends Controller
                 $feed->status = "Done";
                 $feed->save();
             }
-            else if($export_feed_parameter == 2){
-                $product = new SellingProduct();
-                
-                $product->product_name = $datarow[1];
-                $product->product_image = $datarow[2];
-                $product->category_id = $datarow[3];
-                $product->brand_id = $datarow[4];
-                $product->memory = $datarow[5];
-                $product->color = $datarow[6];
-                $product->network = $datarow[7];
-                $product->customer_grade_price_1 = $datarow[8];
-                $product->customer_grade_price_2 = $datarow[9];
-                $product->customer_grade_price_3 = $datarow[10];
-                $product->customer_grade_price_4 = $datarow[11];
-                $product->customer_grade_price_5 = $datarow[12];
+        }
+        else if($export_feed_parameter == 2){
+
+            $networks = Network::all();
+
+            $k = count($importeddata[1]);
+            $z = 0;
     
-                $product->save();
+            foreach($importeddata as $key=>$row){
+                if(count(array_keys($row, null)) === $k){
+                    $z = $key+1;
+                break;
+                }
+            }
+            
+            #dd($importeddata, $k, $z);
+
+            for($i = 0; $i<count($importeddata); $i=$i+$z){
+                $sellingProduct = new SellingProduct();
+                if($importeddata[$i][0] != null){
+                    $sellingProduct->id = $importeddata[$i][0];
+                }
+                $sellingProduct->product_name = $importeddata[$i][1];
+                $sellingProduct->product_image = 'default_image';
+                $sellingProduct->category_id = $importeddata[$i][3];
+                $sellingProduct->brand_id = $importeddata[$i][4];
+                $sellingProduct->save();
+
+                for($var = $i; $var<($i+$z-1); $var++){
+                    if($importeddata[$var][5] !== null){
+                        $sellingProductInformation = new ProductInformation();
+                        $sellingProductInformation->product_id = $sellingProduct->id;
+                        $sellingProductInformation->memory = $importeddata[$var][5];
+                        $sellingProductInformation->customer_grade_price_1 = $importeddata[$var][6];
+                        $sellingProductInformation->customer_grade_price_2 = $importeddata[$var][7];
+                        $sellingProductInformation->customer_grade_price_3 = $importeddata[$var][8];
+                        $sellingProductInformation->customer_grade_price_4 = $importeddata[$var][9];
+                        $sellingProductInformation->customer_grade_price_5 = $importeddata[$var][10];
+                        $sellingProductInformation->save();
+                    }   
+                }
+
+                foreach($networks as $network){
+                    for($var = $i; $var<($i+$z-1); $var++){
+                        if($importeddata[$var][13] !== null && $network->network_name == $importeddata[$var][13]){
+                            $productNetworks = new ProductNetworks();
+                            $productNetworks->network_id = $network->id;
+                            $productNetworks->product_id = $sellingProduct->id;
+                            $productNetworks->knockoff_price = $importeddata[$var][14];
+                            $productNetworks->save();
+                        }
+                    }
+                }
+
             }
 
+        }
+        else{
+            return \redirect()->back()->with('error','Something went wrong, please try again.');
         }
 
         return \redirect()->back()->with('success','You have succesfully imported products.');

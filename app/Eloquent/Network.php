@@ -19,13 +19,8 @@ class Network extends Model
      * @var array
      */
     protected $fillable = [
-        'brand_id','network_value'
+        'network_name','network_image'
     ];
 
-    public function getBrandName($brandid){
-
-        $brand = Brand::where('id', $brandid)->first();
-        return $brand->brand_name;
-    }
 
 }

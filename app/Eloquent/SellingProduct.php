@@ -19,7 +19,7 @@ class SellingProduct extends Model
      * @var array
      */
     protected $fillable = [
-        'product_name','product_image','category_id','customer_grade_price_1','customer_grade_price_2', 'customer_grade_price_3','customer_grade_price_4','customer_grade_price_5'
+        'product_name','product_image','category_id','brand_id'
     ];
 
     public function getBrand($brand_id){

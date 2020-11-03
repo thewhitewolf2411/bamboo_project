@@ -204,8 +204,6 @@
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
-    height: 70px;
-    max-height: 70px;
 }
 
 .portal-table td{
@@ -252,6 +250,25 @@ tr:nth-child(even) {
 .portal-search-form-container form>label{
     margin: 0;
     margin-right: 15px;
+}
+
+#newMemoryRow{
+    display: none;
+    height: 0;
+}
+
+#newMemoryRowButton{
+    display: contents;
+}
+
+.newMemoryRowActive{
+    display: contents !important;
+    height: auto !important;
+    transition: 0.2s linear !important;
+}
+
+.newMemoryRowButtonDisable{
+    display: none !important;
 }
 
 #searchinput{

@@ -133,6 +133,7 @@ Route::post('/portal/brands/addbrabnd','PortalController@addBrand')->middleware(
 //products
 Route::get('/portal/product', 'PortalController@showProductsPage')->middleware('auth');
 Route::get('/portal/product/selling-products', 'PortalController@showSellingProductsPage')->middleware('auth');
+Route::get('/portal/product/removesellingproductoption/{id}', 'PortalController@showSellingProductOption')->middleware('auth');
 Route::get('/portal/product/buying-products', 'PortalController@showBuyingProductsPage')->middleware('auth');
 
 Route::get('/portal/product/addbuyingproduct', 'PortalController@showAddBuyingProductPage')->middleware('auth');

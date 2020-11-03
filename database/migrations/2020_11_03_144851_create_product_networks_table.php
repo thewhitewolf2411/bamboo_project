@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBoxItemsTable extends Migration
+class CreateProductNetworksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateBoxItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('box_items', function (Blueprint $table) {
+        Schema::create('product_networks', function (Blueprint $table) {
             $table->id();
-            $table->integer('box_id');
-            $table->integer('trade_in_id');
+            $table->integer('network_id');
+            $table->integer('product_id');
+            $table->integer('knockoff_price')->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateBoxItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('box_items');
+        Schema::dropIfExists('product_networks');
     }
 }
