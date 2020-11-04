@@ -105,7 +105,7 @@ Route::post('/portal/customer-care/tradein/deletetradein', 'PortalController@del
 Route::get('/deleteorder/{id}', 'PortalController@deleteTradeIn')->middleware('auth');
 
 Route::get('/portal/customer-care/destroy-device', 'PortalController@showDestroyDevice')->name('destroyDevice')->middleware('auth');
-Route::get('/portal/customer-care/trade-pack', 'PortalController@showTradePack')->name('tradePack')->middleware('auth');
+Route::get('/portal/customer-care/trade-pack/{search?}', 'PortalController@showTradePack')->name('tradePack')->middleware('auth');
 Route::post('/portal/customer-care/trade-in/setassent', 'PortalController@setTradePackAsSent')->name('tradePack')->middleware('auth');
 Route::get('/portal/customer-care/seller', 'PortalController@showSeller')->name('seller')->middleware('auth');
 Route::get('/portal/customer-care/seller/{id}', 'PortalController@showSellerDetails')->middleware('auth');
@@ -113,7 +113,7 @@ Route::get('/portal/customer-care/seller/disable/{id}', 'PortalController@disabl
 Route::get('/portal/customer-care/seller/enable/{id}', 'PortalController@enableSellerAccount')->middleware('auth');
 Route::get('/portal/customer-care/createorder', 'PortalController@createOrder')->middleware('auth');
 Route::get('/portal/customer-care/trade-pack/markforreprint/{id}', 'PortalController@markForReprint')->middleware('auth');
-Route::get('/portal/customer-care/order-managment', 'PortalController@showOrderManagment')->middleware('auth');
+Route::get('/portal/customer-care/order-managment/{search?}', 'PortalController@showOrderManagment')->middleware('auth');
 
 Route::get('/toreceive/{barcode}', 'PortalController@sendDeviceBackToReceive');
 Route::get('/totest/{barcode}', 'PortalController@sendDeviceBackToTest');

@@ -102,8 +102,7 @@
                                     <div class="d-flex flex-column w-25">
                                         <h6 class="m-0 mb-3 font-weight-bold">{{$cartitem['product']->product_name}}</h6>
                                         <p class="m-0">Network: {{$cartitem['network']}}</p>
-                                        <p class="m-0">Memory: {{$cartitem['colour']}}</p>
-                                        <p class="m-0">Colour: {{$cartitem['memory']}}</p>
+                                        <p class="m-0">Memory: {{$cartitem['memory']}}</p>
                                         <p class="m-0">Grade: {{$cartitem['grade']}}</p>
                                     </div>
                                     <div class="d-flex flex-column w-25">
@@ -146,8 +145,8 @@
                                 <input type="hidden" name="ordertype-{{$key}}" value="{{$cartitem['type']}}">
                                 <input type="hidden" name="orderproduct-{{$key}}" value="{{$cartitem['product']}}">
                                 <input type="hidden" name="productprice-{{$key}}" value="{{$cartitem['price']}}">
+                                <input type="hidden" name="grade-{{$key}}" value="{{$cartitem['grade']}}">
                                 <input type="hidden" name="network-{{$key}}" value="{{$cartitem['network']}}">
-                                <input type="hidden" name="colour-{{$key}}" value="{{$cartitem['colour']}}">
                                 <input type="hidden" name="memory-{{$key}}" value="{{$cartitem['memory']}}">
         
                             @endforeach

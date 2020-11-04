@@ -130,8 +130,6 @@
                                 </div>
                                 <div class="product-data-container">
                                     <h5>{{$product->product_name}}</h5>
-                                    <p class="text-secondary">Maximum price: {{$product->customer_grade_price_1}}£</p>
-                                    <p class="text-secondary">Color: {{$product->product_colour}}</p>
                                 </div>
 
                             </div>

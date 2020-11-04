@@ -79,34 +79,48 @@ class PortalController extends Controller
         if(!$this->checkAuthLevel(1)){return redirect('/');}
 
         $tradeins = null;
+        $search = null;
 
         if($request->all() == null || $request->search == 0){
             $tradeins = Tradein::all()->where('job_state', 1)->groupBy('barcode');
 
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+            $search = null;
         }
         else{
-            $tradeins = Tradein::all()->where('job_state', null);
-            $user_id = Auth::user()->id;
-            $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-            foreach($tradeins as $tradein){
-                print_r($tradein->getCategoryId($tradein->product_id) != $request->search);
-                    if($tradein->getCategoryId($tradein->product_id) != $request->search){
-                        $tradeins = $tradeins->except($tradein->id);
+            if($request->search <= 3){
+                $tradeins = Tradein::where('job_state', 1)->get();
+                $user_id = Auth::user()->id;
+                $portalUser = PortalUsers::where('user_id', $user_id)->first();
+    
+                $search = $request->search;
+    
+                foreach($tradeins as $tradein){
+                    print_r($tradein->getCategoryId($tradein->product_id) != $request->search);
+                        if($tradein->getCategoryId($tradein->product_id) != $request->search){
+                            $tradeins = $tradeins->except($tradein->id);
+                    }
+                }
+    
+                $tradeins = $tradeins->groupBy('barcode');
+            }
+            else{
+                $tradeins = Tradein::where('barcode', $request->search)->get();
+                if(count($tradeins) < 1){
+                    return redirect()->back()->with('error', 'No Order with that barcode. Please try again.');
+                }
+                else{
+                    $tradeins = $tradeins->groupBy('barcode');
+                    $user_id = Auth::user()->id;
+                    $portalUser = PortalUsers::where('user_id', $user_id)->first();
                 }
             }
 
-            $tradeins = $tradeins->groupBy('barcode');
         }
-
         
-        #$tradeins = Tradein::where('job_state', null)->get();
-
-        #dd($tradeins);
-        
-        return view('portal.customer-care.trade-in')->with('tradeins', $tradeins)->with('portalUser', $portalUser);
+        return view('portal.customer-care.trade-in')->with('tradeins', $tradeins)->with('portalUser', $portalUser)->with('search',$search);
     }
 
     public function showTradeInDetails($id){
@@ -363,14 +377,51 @@ class PortalController extends Controller
         return view('portal.customer-care.destroy')->with('portalUser', $portalUser);
     }
 
-    public function showTradePack(){
+    public function showTradePack(Request $request){
         if(!$this->checkAuthLevel(1)){return redirect('/');}
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $tradeins = Tradein::whereIn('job_state', array(1,2))->get()->groupBy('barcode');
+        if($request->all() == null || $request->search == 0){
+            $tradeins = Tradein::all()->where('job_state', 2)->groupBy('barcode');
 
-        return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Awaiting receipt');
+            $user_id = Auth::user()->id;
+            $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+            $search = null;
+        }
+        else{
+            if($request->search <= 3){
+                $tradeins = Tradein::where('job_state', 2)->get();
+                $user_id = Auth::user()->id;
+                $portalUser = PortalUsers::where('user_id', $user_id)->first();
+    
+                $search = $request->search;
+    
+                foreach($tradeins as $tradein){
+                    print_r($tradein->getCategoryId($tradein->product_id) != $request->search);
+                        if($tradein->getCategoryId($tradein->product_id) != $request->search){
+                            $tradeins = $tradeins->except($tradein->id);
+                    }
+                }
+    
+                $tradeins = $tradeins->groupBy('barcode');
+            }
+            else{
+                $tradeins = Tradein::where('barcode', $request->search)->where('job_state', 2)->get();
+                if(count($tradeins) < 1){
+                    return redirect()->back()->with('error', 'No Order with that barcode. Please try again.');
+                }
+                else{
+                    $tradeins = $tradeins->groupBy('barcode');
+                    $user_id = Auth::user()->id;
+                    $portalUser = PortalUsers::where('user_id', $user_id)->first();
+                }
+            }
+
+        }
+
+        return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Awaiting receipt')->with('search', $search);
     }
 
     public function setTradePackAsSent(Request $request){
@@ -424,13 +475,53 @@ class PortalController extends Controller
         return redirect()->back()->with('success', 'Tradein with id '. $tradein->id . ' has been sent to reprint.');
     }
 
-    public function showOrderManagment(){
+    public function showOrderManagment(Request $request){
         if(!$this->checkAuthLevel(1)){return redirect('/');}
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $tradeins = Tradein::whereIn('job_state', array(3,4,5,6))->get()->groupBy('barcode');;
-        return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Order Management');
+        $tradeins = Tradein::whereIn('job_state', array(3,4,5,6))->get()->groupBy('barcode');
+
+        if($request->all() == null || $request->search == 0){
+            $tradeins = Tradein::all()->where('job_state', 2)->groupBy('barcode');
+
+            $user_id = Auth::user()->id;
+            $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+            $search = null;
+        }
+        else{
+            if($request->search <= 3){
+                $tradeins = Tradein::whereIn('job_state', array(3,4,5,6))->get()->groupBy('barcode');
+                $user_id = Auth::user()->id;
+                $portalUser = PortalUsers::where('user_id', $user_id)->first();
+    
+                $search = $request->search;
+    
+                foreach($tradeins as $tradein){
+                    print_r($tradein->getCategoryId($tradein->product_id) != $request->search);
+                        if($tradein->getCategoryId($tradein->product_id) != $request->search){
+                            $tradeins = $tradeins->except($tradein->id);
+                    }
+                }
+    
+                $tradeins = $tradeins->groupBy('barcode');
+            }
+            else{
+                $tradeins = Tradein::where('barcode', $request->search)->whereIn('job_state', array(3,4,5,6))->get();
+                if(count($tradeins) < 1){
+                    return redirect()->back()->with('error', 'No Order with that barcode. Please try again.');
+                }
+                else{
+                    $tradeins = $tradeins->groupBy('barcode');
+                    $user_id = Auth::user()->id;
+                    $portalUser = PortalUsers::where('user_id', $user_id)->first();
+                }
+            }
+
+        }
+
+        return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Order Management')->with('search', $search);
     }
 
     public function sendDeviceBackToReceive($barcode){
@@ -1229,46 +1320,20 @@ class PortalController extends Controller
             return redirect()->back()->with('error', 'Incorrect IMEI number. Must be 15 characters');
         }
 
-        $url = 'https://gapi.checkmend.com/duediligence/' . 2 . '/' . $imei_number;
+        $url = 'https://gapi.checkmend.com/duediligence/' . 2  . "/" . $imei_number;
 
-        $options_array  = false;
-        $response_config_array  = false;
+        $options = [
+            "category"=>[9],
+            "more"=>"Y"
+        ];
 
-        $options['category']  = 9;
-        $options['reason_data'] = true;
-        $options['make_model'] 	  = true;
-        $options['cdma_validate'] = true;
-
-        if($options)
-        {
-            if(isset($options['test_mode']))
-            {
-                $options_array['testmode']	=  ($options['test_mode'] ? $options['test_mode'] : 0);
-            }
-            if(isset($options['category']))
-            {
-                $options_array['category'] =  ($options['category']);
-            }
-
-            if(isset($options['reason_data']))
-            {
-                $options_array['responseconfig']['reasondata'] = ($options['reason_data'] ? 'true' : 'false' );
-            }
-            if(isset($options['cdma_validate']))
-            {
-                $options_array['responseconfig']['cdmavalidate'] =  ($options['cdma_validate'] ? 'true' : 'false' );
-            }
-            if(isset($options['make_model']))
-            {
-                $options_array['responseconfig']['makemodel'] =  ($options['make_model'] ? 'true' : 'false' );
-            }
-        }
-
-        $request_body = json_encode($options_array);
+        $request_body = json_encode($options);
 
         $result =  $this->send_request($url, $request_body);
 
         $result = (json_decode($result['result_json']));
+
+        dd($result);
 
         $tradein->imei_number = $imei_number;
         $tradein->save();

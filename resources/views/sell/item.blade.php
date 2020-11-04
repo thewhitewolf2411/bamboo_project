@@ -12,6 +12,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+        <script src="{{asset('js/Price.js')}}"></script>
     </head>
 
     <body>
@@ -28,45 +30,78 @@
                     <div class="product-selected product-name-container">
                         <p class="product-title">{{$product->product_name}}</p>
                     </div>
-                    <div class="product-selected product-network-container">
-                        <p>Product Network:</p>
-                        <input class="form-control" disabled value="{{$product->network }}">
+                    <div class="product-selected product-network-container" id="product-network-container">
+                        <p>Select Network:</p>
+
+                        <div class="d-flex">
+                        @foreach($networks as $network)
+                            <div><label class="network-container mr-3" id="{{$network->getNetWorkName($network->network_id)}}" for="network-{{$network->id}}"><img src="{{$network->getNetWorkImage($network->network_id)}}"></label></div>
+                        @endforeach
+                        </div>
+
+                        <div class="d-flex">
+                        @foreach($networks as $network)
+                            <input id="network-{{$network->id}}" name="network" value="{{$network->knockoff_price}}" onchange="networkChanged(this)" type="radio">
+                        @endforeach
+                        </div>
+                        
                     </div>
                     <div class="product-selected product-memory-container">
-                        <p>Product Memory:</p>
-                        <input class="form-control" disabled value="{{$product->memory }}">
+                        <p>Select Memory:</p>
+
+                        <div class="d-flex">
+                        @foreach($productInformation as $info)
+                            <div><label class="memory-container mr-3" id="{{$info->memory}}" for="info-{{$info->id}}">{{$info->memory}}</label></div>
+                        @endforeach
+                        </div>
+
+                        <div class="d-flex">
+                        @foreach($productInformation as $info)
+                            <input id="info-{{$info->id}}" name="info" value='{ "price1": {{$info->customer_grade_price_1}}, "price2": {{$info->customer_grade_price_2}}, "price3": {{$info->customer_grade_price_3}}, "price4": {{$info->customer_grade_price_4}}, "price5": {{$info->customer_grade_price_5}}}' type="radio" onchange="memoryChanged(this)">
+                        @endforeach
+                        </div>
                     </div>
-                    <div class="product-selected">
-                        <p>Product Colour:</p>
-                        <input class="form-control" disabled value="{{$product->color }}">
-                    </div>
+
                     <div class="product-selected product-grade-container">
-                        <p>Product Grade:</p>
-                        <select class="form-control" id="grade-select" onchange="gradeChanged(this)">
-                            <option value="{{$product->customer_grade_price_1 }}" selected>Excellent working</option>
-                            <option value="{{$product->customer_grade_price_2 }}">Good working</option>
-                            <option value="{{$product->customer_grade_price_3 }}">Poor working</option>
-                            <option value="{{$product->customer_grade_price_4 }}">Damaged working</option>
-                            <option value="{{$product->customer_grade_price_5 }}">Faulty</option>
-                        </select> 
+                        <p>Select Grade:</p>
+
+                        <div class="">
+                            <div class="d-flex">
+                                <label class="elem-grade-container mr-3" for="grade-1">Excellent Working</label>
+                                <label class="elem-grade-container mr-3" for="grade-2">Good Working</label>
+                                <label class="elem-grade-container mr-3" for="grade-3">Poor Working</label>
+                                <label class="elem-grade-container mr-3" for="grade-4">Damaged Working</label>
+                                <label class="elem-grade-container mr-3" for="grade-5">Faulty</label>
+                            </div>
+                        </div>
                     
+                        <div class="d-flex">
+                            <input id="grade-1" name="grade" type="radio" value="1" onchange="gradeChanged(this)">
+                            <input id="grade-2" name="grade" type="radio" value="2" onchange="gradeChanged(this)">
+                            <input id="grade-3" name="grade" type="radio" value="3" onchange="gradeChanged(this)">
+                            <input id="grade-4" name="grade" type="radio" value="4" onchange="gradeChanged(this)">
+                            <input id="grade-5" name="grade" type="radio" value="5" onchange="gradeChanged(this)">
+                        </div>
                     </div>
                     <div class="product-selected product-price-container">
-                        <p>Product price:</p>
-                        <p id="product-price">£{{$product->customer_grade_price_1 }}</p>
+                        <p id="product-price">
+
+                        </p>
                     </div>
+
+
                     @if(Auth::user())
                     <div class="add-to-container">
                         <form action="/sell/shop/item/addtocart" method="POST">
                             <div class="add-to-cart-container">
                                 @csrf
                                 <input type="hidden" name="productid" value="{{$product->id}}">
-                                <input type="hidden" name="grade" id="grade" value="{{$product->customer_grade_price_1 }}"></input>
-                                <input type="hidden" name="color" id="color" value="{{$colors[0]->color_value}}"></input>
-                                <input type="hidden" name="network" id="network" value="{{$networks[0]->network_value}}"></input>
-                                <input type="hidden" name="memory" id="memory" value="{{$memories[0]->memory_value}}"></input>
+                                <input type="hidden" name="grade" id="grade"></input>
+                                <input type="hidden" name="network" id="network"></input>
+                                <input type="hidden" name="memory" id="memory"></input>
+                                <input type="hidden" name="price" id="price"></input>
                                 <input type="hidden" name="type" value="tradein"></input>
-                                <button type="submit" class="btn btn-primary btn-orange">Add to cart</button>
+                                <button id="addToCart" type="submit" class="btn btn-primary btn-orange" disabled>Add to cart</button>
                             </div>
                         </form>
 
@@ -77,7 +112,7 @@
                     @else
                     <div class="add-to-container">
                         <div class="add-to-cart-container">
-                            <button type="submit" class="btn btn-primary btn-orange" onclick="showModal()">Add selling cart</button>
+                            <button type="submit" class="btn btn-primary btn-orange" onclick="showModal()">Add to cart</button>
                         </div>
                     </div>
                     @endif
@@ -215,27 +250,6 @@
             if(!document.getElementsByClassName('modal-second-element')[0].classList.contains('modal-second-element-active')){
                 document.getElementsByClassName('modal-second-element')[0].classList.add('modal-second-element-active');
             }
-        }
-
-        function gradeChanged(selectObject){
-            var value = selectObject.value;
-            document.getElementById('product-price').innerHTML = '£' + value;
-            document.getElementById('grade').value = value;
-        }
-
-        function colorChanged(selectObject){
-            var value = selectObject.value;
-            document.getElementById('color').value = value;
-        }
-
-        function memoryChanged(selectObject){
-            var value = selectObject.value;
-            document.getElementById('network').value = value;
-        }
-
-        function networkChanged(selectObject){
-            var value = selectObject.value;
-            document.getElementById('memory').value = value;
         }
 
         function showModal(){

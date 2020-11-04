@@ -15,6 +15,8 @@ use App\Eloquent\Colour;
 use App\Eloquent\Memory;
 use App\Eloquent\Network;
 use App\Eloquent\Brand;
+use App\Eloquent\ProductInformation;
+use App\Eloquent\ProductNetworks;
 use Storage;
 use Session;
 use DNS1D;
@@ -139,14 +141,11 @@ class SellController extends Controller
         
         $product = SellingProduct::where('id', $id)->first();
 
-        #dd($product);
-
-        $colors = Colour::where('brand_id', $product->brand_id)->get();
-        $memories = Memory::where('brand_id', $product->brand_id)->get();
-        $networks = Network::where('brand_id', $product->brand_id)->get();
+        $sellingProductInformation = ProductInformation::where('product_id', $id)->get();
+        $productNetworks = ProductNetworks::where('product_id', $id)->get();
 
         $products = SellingProduct::all();
-        return view('sell.item')->with(['product'=>$product, 'products'=>$products, 'colors'=>$colors, 'memories'=>$memories, 'networks'=>$networks]);
+        return view('sell.item')->with(['product'=>$product, 'products'=>$products, 'productInformation'=>$sellingProductInformation, 'networks'=>$productNetworks]);
 
     }
     
@@ -159,30 +158,8 @@ class SellController extends Controller
         #dd($request->all());
 
         $grade = SellingProduct::where('id', $request->productid)->first();
-        $gradename = "";
 
         #dd($request->all());
-
-        if($grade->customer_grade_price_1 == $request->grade){
-            $grade = $grade->customer_grade_price_1;
-            $gradename = "Excellent working";
-        }
-        else if($grade->customer_grade_price_2 == $request->grade){
-            $grade = $grade->customer_grade_price_2;
-            $gradename = "Good working";
-        }
-        else if($grade->customer_grade_price_3 == $request->grade){
-            $grade = $grade->customer_grade_price_3;
-            $gradename = "Poor working";
-        }
-        else if($grade->customer_grade_price_4 == $request->grade){
-            $grade = $grade->customer_grade_price_4;
-            $gradename = "Damaged working";
-        }
-        else if($grade->customer_grade_price_5 == $request->grade){
-            $grade = $grade->customer_grade_price_5;
-            $gradename = "Faulty";
-        }
 
         #dd($grade);
 
@@ -192,7 +169,7 @@ class SellController extends Controller
 
         $cart = new Cart($oldCart);
         
-        $cart->add($grade, $product, $request->type, $request->network, $request->color, $request->memory, $gradename);
+        $cart->add($request->price, $product, $request->type, $request->network, $request->memory, $request->grade);
 
         $request->session()->put('cart', $cart);
 
@@ -210,7 +187,6 @@ class SellController extends Controller
             $data = array_values($data);
             $data = array_slice($data, 1);
             $data = array_slice($data, 0, -1);
-
 
             $items = array();
 
@@ -241,28 +217,10 @@ class SellController extends Controller
                     $tradein->product_id = json_decode($item[1])->id;
                     $tradein->order_price = $item[2];
                     $tradein->job_state = 1;
-                    #$tradein->color = $item[4];
-                    #$tradein->network = $item[3];
-                    #$tradein->memory = $item[5];
 
                     $name = $tradein->getProductName(json_decode($item[1])->id);
-                    $price = $item[2];
 
-                    if(json_decode($item[1])->customer_grade_price_1 == $item[2]){
-                        $tradein->product_state = "Excellent working";
-                    }
-                    elseif(json_decode($item[1])->customer_grade_price_2 == $item[2]){
-                        $tradein->product_state = "Good working";
-                    }
-                    elseif(json_decode($item[1])->customer_grade_price_3 == $item[2]){
-                        $tradein->product_state = "Poor working";
-                    }
-                    elseif(json_decode($item[1])->customer_grade_price_4 == $item[2]){
-                        $tradein->product_state = "Damaged working";
-                    }
-                    elseif(json_decode($item[1])->customer_grade_price_5 == $item[2]){
-                        $tradein->product_state = "Faulty";
-                    }
+                    $tradein->product_state = $item[3];
 
                     if($labelstatus == "2"){
                         $tradein->job_state = 2;

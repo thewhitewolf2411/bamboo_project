@@ -25,11 +25,11 @@
     </div>
 
     <div class="form-group">
-        <input class="form-control" type="text" id="delivery_address" name="delivery_address" placeholder="Delivery address" required autofocus>
+        <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" placeholder="Delivery address" required autofocus>
     </div>
 
     <div class="form-group">
-        <input class="form-control" type="text" id="birthdate" name="billing_address" placeholder="Billing address" required autofocus>
+        <input class="form-control js-typeahead" type="text" id="billing_address" name="billing_address" placeholder="Billing address" required autofocus>
     </div>
 
     <div class="form-group">
@@ -184,4 +184,8 @@
     });
 
 </script>
+
+<script src="{{asset('/js/Addressian.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css">
 

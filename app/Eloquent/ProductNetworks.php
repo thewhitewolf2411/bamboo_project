@@ -24,6 +24,10 @@ class ProductNetworks extends Model
         'network_id', 'product_id', 'knockoff_price'
     ];
 
+    public function getNetWorkName($id){
+        $network = Network::where('id', $id)->first();
+        return $network->network_name;
+    }
 
     public function getNetWorkImage($id){
         $network = Network::where('id', $id)->first();

@@ -35,6 +35,31 @@
                 </div>
 
                 <div class="portal-table-container">
+
+                    @if(Session::has('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{Session::get('error')}}
+                    </div>
+                    @endif
+
+                    <div class="py-4 d-flex align-items-center">
+                        <form class="d-flex align-items-center" action="/portal/customer-care/trade-pack/" method="get">              
+                            <label for="searchtradeins">Select product type:</label>
+                            <select id="search" name="search" class="form-control mx-3">
+                                <option value="0" @if($search == 0) selected @endif>All</option>
+                                <option value="1" @if($search == 1) selected @endif>Mobile phones</option>
+                                <option value="2" @if($search == 2) selected @endif>Tablets</option>
+                                <option value="3" @if($search == 3) selected @endif>Smartwatches</option>
+                            </select>
+                            <button type="submit" class="btn btn-primary btn-blue">Search</button>
+                        </form>
+                        <form class="d-flex align-items-center mx-5" action="/portal/customer-care/trade-pack/" method="get">              
+                            <label for="searchtradeins">Input trade-in barcode number:</label>
+                            <input type="text" name="search" class="form-control mx-3 my-0">
+                            <button type="submit" class="btn btn-primary btn-blue">Search</button>
+                        </form>
+                    </div>
+
                     <table class="portal-table" id="categories-table">
                         <tr>
                             <td><div class="table-element">Trade-in ID</div></td>
