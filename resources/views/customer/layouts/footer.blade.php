@@ -75,7 +75,7 @@
             <p class="copyright">©Bamboo 2020. All rights reserved</p>
         </div>
         <div class="footer-row-2 return-top-container">
-            <a href="#">RETURN TO TOP <i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+            <a href="#"><p>RETURN TO TOP</p> <i class="fa fa-arrow-up" aria-hidden="true"></i></a>
         </div>
     </div>
 

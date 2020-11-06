@@ -1,4 +1,4 @@
-<div class="header-container">
+<div class="header-container navbar-expand-lg navbar-light">
 
 
     <div class="left-header">
@@ -23,8 +23,11 @@
             <div class="hover-link" id="card-hover-link">
                 <a href="/cart"><i class="fa fa-keyboard-o" aria-hidden="true"></i><p class="showhover">Basket</p></a>
             </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span style="color:#000;" class="navbar-toggler-icon"></span>
+            </button>
         </div>
-        <div class="urls-header">
+        <div class="urls-header navbar-collapse collapse" id="navbarSupportedContent">
 
             <div class="url-header-container" id="start-shopping">
                 <a href="/shop">Start Shopping</a>

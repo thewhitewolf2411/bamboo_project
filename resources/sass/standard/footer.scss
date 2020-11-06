@@ -174,3 +174,52 @@ footer{
     width: 60px;
     height: 60px;
 }
+
+@media screen and (max-width: 600px) and (min-width: 325px){
+
+    .footer{
+        padding: 1rem;
+    }
+
+    .footer-row{
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .footer-row-2{
+        width: 100%;
+    }
+
+    .footer-row-2 span{
+        font-size: 40px;
+    }
+
+    .footer-button-container{
+        width: auto;
+    }
+
+    .footer-social-icons-container{
+        width: 100%;
+    }
+
+    .footer-row-6{
+        width: 40%;
+    }
+
+    .copyright-container{
+        width: 40%;
+    }
+
+    .return-top-container{
+        width: 40%;
+    }
+
+    .return-top-container p{
+        display: none;
+    }
+
+    #footer-row-3{
+        align-items: center;
+    }
+
+}

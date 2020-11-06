@@ -177,3 +177,45 @@ input {
     position: relative;
     left: -35px;
   }
+
+  .terms-container a{
+      color: #000 !important;
+  }
+
+  @media screen and (max-width: 600px) and (min-width: 325px){
+
+    .modal{
+        padding: 1rem !important;
+    }
+
+    .modal-first-element{
+        padding: 1rem;
+        flex-direction: column-reverse;
+    }
+
+    .register-elements-container{
+        width: 100%;
+        padding: 1rem !important;
+        border-right: none;
+    }
+
+    .register-elements-container button{
+        float: right;
+    }
+
+    .login-form-container{
+        width: 100%;
+        padding: 1rem !important;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+    }
+
+    .newsletter-subscription{
+        flex-wrap: wrap;
+    }
+
+    .news-label{
+        width: 100%;
+        margin-bottom: 1rem !important;
+    }
+
+  }

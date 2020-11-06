@@ -1290,10 +1290,13 @@ class PortalController extends Controller
         }
         else{
             $tradein->visible_imei = false;
-            $tradein->marked_as_risk = true;
+            $tradein->marked_for_quarantine = true;
         }
 
         $tradein->save();
+        if($tradein->marked_for_quarantine){
+            return redirect('/portal/testing/result/' . $tradein->id);
+        }
 
         return redirect('/portal/testing/checkimei/' . $tradein->id);
     }
@@ -1321,13 +1324,43 @@ class PortalController extends Controller
         }
 
         $url = 'https://gapi.checkmend.com/duediligence/' . 2  . "/" . $imei_number;
+        #$url = 'https://gapi.checkmend.com/claimscheck/search';
 
-        $options = [
-            "category"=>[9],
-            "more"=>"Y"
-        ];
+        $options_array  = false;
+        $response_config_array  = false;
 
-        $request_body = json_encode($options);
+        $options['category']  = 9;
+        $options['reason_data'] = true;
+        $options['make_model']  = true;
+        $options['cdma_validate'] = true;
+
+        if($options)
+        {
+            if(isset($options['test_mode']))
+            {
+                $options_array['testmode']	=  ($options['test_mode'] ? $options['test_mode'] : 0);
+            }
+            if(isset($options['category']))
+            {
+                $options_array['category'] =  ($options['category']);
+            }
+
+            if(isset($options['reason_data']))
+            {
+                $options_array['responseconfig']['reasondata'] = ($options['reason_data'] ? 'true' : 'false' );
+            }
+            if(isset($options['cdma_validate']))
+            {
+                $options_array['responseconfig']['cdmavalidate'] =  ($options['cdma_validate'] ? 'true' : 'false' );
+            }
+            if(isset($options['make_model']))
+            {
+                $options_array['responseconfig']['makemodel'] =  ($options['make_model'] ? 'true' : 'false' );
+            }
+        }
+
+
+        $request_body = json_encode($options_array);
 
         $result =  $this->send_request($url, $request_body);
 

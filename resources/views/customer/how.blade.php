@@ -6,7 +6,7 @@
     </div>
 
     <div class="how-first-element">
-        <div class="d-flex flex-row justify-content-between">
+        <div class="d-flex flex-wrap flex-row justify-content-between">
 
             <div class="p-5 d-flex flex-column justify-content-between">
                 <div class="center-title-container">
@@ -14,7 +14,7 @@
                 </div>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus.</p>
             </div>
-            <div class="p-5 d-flex flex-column justify-content-between">
+            <div class="p-5 d-flex flex-wrap flex-column justify-content-between">
                 <div class="grading-video-container">
                     <a onclick="showgradingvideo()">
                         <div class="video-image-container">
