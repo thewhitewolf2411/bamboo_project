@@ -382,6 +382,8 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
+        $search = null;
+
         if($request->all() == null || $request->search == 0){
             $tradeins = Tradein::all()->where('job_state', 2)->groupBy('barcode');
 
@@ -483,7 +485,7 @@ class PortalController extends Controller
         $tradeins = Tradein::whereIn('job_state', array(3,4,5,6))->get()->groupBy('barcode');
 
         if($request->all() == null || $request->search == 0){
-            $tradeins = Tradein::all()->where('job_state', 2)->groupBy('barcode');
+            $tradeins = Tradein::all()->whereIn('job_state', array(3,4,5,6))->groupBy('barcode');
 
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -1366,7 +1368,7 @@ class PortalController extends Controller
 
         $result = (json_decode($result['result_json']));
 
-        dd($result);
+        #dd($result);
 
         $tradein->imei_number = $imei_number;
         $tradein->save();
@@ -2739,11 +2741,11 @@ class PortalController extends Controller
 
     public function generateTrayLabel($barcode, $id){
         $html = "";
-        $html .= "<style>body{display:flex; justify-content:center; align-items:center; height:100%; widht:100%;} p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
+        $html .= "<style>body{height:100%; widht:100%;} p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
         $html .= "<body>";
-        $html .=    "<div style='clear:both; position:relative; display:flex; justify-content:center; align-items:center;'>
+        $html .=    "<div style='clear:both; position:relative; margin: 0 auto; width:100%;'>
                         <div style='width:190pt; height:150px;' >
-                            <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $id ."</p></div>
+                            <div id='barcode-container' style='height:200px; border:1px solid black; padding:15px; text-align:center;'><p>". $barcode ."<br>" .  $id ."</p></div>
                         </div>
                     </div>";
         $html .= "</body>";

@@ -64,19 +64,21 @@ function getPrice(){
 
         $('#product-price').text('£' + basePrice);
 
-        if(grade == 5){
+        console.log(grade);
+
+        if(grade == 1){
             $('#grade').val('Excellent Working');
         }
-        if(grade == 4){
+        if(grade == 2){
             $('#grade').val('Good Working');
         }
         if(grade == 3){
             $('#grade').val('Poor Working');
         }
-        if(grade == 2){
+        if(grade == 4){
             $('#grade').val('Damaged Working');
         }
-        if(grade == 1){
+        if(grade == 5){
             $('#grade').val('Faulty');
         }
 

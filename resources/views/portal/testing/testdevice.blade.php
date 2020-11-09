@@ -45,14 +45,20 @@
                             <td><div class="table-element">Trade-in barcode number</div></td>
                             <td><div class="table-element">Date Placed</div></td>
                             <td><div class="table-element">Product</div></td>
+                            <td><div class="table-element">Product Memory</div></td>
+                            <td><div class="table-element">Product Network</div></td>
                             <td><div class="table-element">Product IMEI number</div></td>
+                            <td><div class="table-element">Customer Grade</div></td>
                         </tr>
                         <tr>
                             <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
                             <td><div class="table-element">{{$tradein->barcode}}</div></td>
                             <td><div class="table-element">{{$tradein->created_at}}</div></td>
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                            <td><div class="table-element">{{$tradein->memory}}</div></td>
+                            <td><div class="table-element">{{$tradein->network}}</div></td>
                             <td><div class="table-element">{{$tradein->imei_number}}</div></td>
+                            <td><div class="table-element">{{$tradein->product_state}}</div></td>
                         </tr>
 
                     </table>
@@ -64,6 +70,28 @@
                     <form action="/portal/testing/receive/checkdevicestatus" method="POST" class="d-flex flex-column">
                         @csrf
 
+
+                        <div class="form-group">
+                            <label for="correct_memory">
+                                Is memory size correct?
+                            </label>
+                            <select class="form-control" id="correct_memory" name="correct_memory" onchange="testingElementChanged()" required>
+                                <option disabled selected value> -- select an option -- </option>
+                                <option id="correct_memory_false" value="false">No</option>
+                                <option id="correct_memory_true" value="true">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="correct_network">
+                                Is network correct?
+                            </label>
+                            <select class="form-control" id="correct_network" name="correct_network" onchange="testingElementChanged()" required>
+                                <option disabled selected value> -- select an option -- </option>
+                                <option id="correct_network_false" value="false">No</option>
+                                <option id="correct_network_true" value="true">Yes</option>
+                            </select>
+                        </div>
 
                         <div class="form-group">
                             <label for="fimp_or_google_lock">
@@ -120,18 +148,18 @@
                                 <option disabled selected value> -- select an option -- </option>
                                 <option value="1">Audio Tests</option>
                                 <option value="2">Front Microphone</option>
-                                <option value="1">Headset Test</option>
-                                <option value="2">Loud Speaker Test</option>
-                                <option value="1">Microphone Playback Tests</option>
-                                <option value="2">Buttons Test</option>
-                                <option value="1">Camera test</option>
-                                <option value="2">Sensor Test</option>
-                                <option value="1">Glass Condition</option>
-                                <option value="2">Vibration</option>
-                                <option value="2">Original colour</option>
-                                <option value="2">Battery health</option>
-                                <option value="2">NFC</option>
-                                <option value="">No Power</option>
+                                <option value="3">Headset Test</option>
+                                <option value="4">Loud Speaker Test</option>
+                                <option value="5">Microphone Playback Tests</option>
+                                <option value="5">Buttons Test</option>
+                                <option value="6">Camera test</option>
+                                <option value="7">Sensor Test</option>
+                                <option value="8">Glass Condition</option>
+                                <option value="9">Vibration</option>
+                                <option value="10">Original colour</option>
+                                <option value="11">Battery health</option>
+                                <option value="12">NFC</option>
+                                <option value="13">No Power</option>
                             </select>
 
                         </div>
@@ -152,17 +180,8 @@
                             <label for="cosmetic_condition">
                                 What is the device cosmetic condition?
                             </label>
-                            <select class="form-control" id="cosmetic_condition" name="cosmetic_condition" onchange="gradeElementChanged()" required>
-                                <option disabled selected value> -- select an option -- </option>
-                                <option value="Grade A">Grade A</option>
-                                <option value="Grade B+">Grade B+</option>
-                                <option value="Grade B">Grade B</option>
-                                <option value="Grade C">Grade C</option>
-                                <option value="WSI">WSI</option>
-                                <option value="WSD">WSD</option>
-                                <option value="NW">NW</option>
-                                <option value="PND">PND</option>
-                                <option value="FMIP">FMIP</option>
+                            <select class="form-control" id="cosmetic_condition" name="cosmetic_condition" onchange="gradeElementChanged()" disabled required>
+
                             </select>
                         </div>
 

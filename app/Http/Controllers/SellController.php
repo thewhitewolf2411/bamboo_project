@@ -161,7 +161,7 @@ class SellController extends Controller
 
         #dd($request->all());
 
-        #dd($grade);
+        #dd($request->all(), $grade);
 
         $product = SellingProduct::where('id',$request->productid)->first();
 
@@ -201,6 +201,8 @@ class SellController extends Controller
            
             $items = array_chunk($data, 6);
 
+            #dd($items);
+
             $tradeinexp = null;
 
             $name = "";
@@ -221,6 +223,8 @@ class SellController extends Controller
                     $name = $tradein->getProductName(json_decode($item[1])->id);
 
                     $tradein->product_state = $item[3];
+                    $tradein->network = $item[4];
+                    $tradein->memory = $item[5];
 
                     if($labelstatus == "2"){
                         $tradein->job_state = 2;

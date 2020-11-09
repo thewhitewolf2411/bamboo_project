@@ -24,6 +24,8 @@ class CreateTradeinTable extends Migration
             $table->integer('order_price')->nullable()->default(null);
             //0 received tradein without label
             //1 sent label / job complete
+            $table->string('memory');
+            $table->string('network');
             $table->boolean('sent_themselves')->default(false);
             $table->boolean('received')->default(false);
             $table->boolean('device_missing')->nullable()->default(null);

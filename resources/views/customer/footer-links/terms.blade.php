@@ -26,6 +26,18 @@
         <main>
 
 
+            <div class="app">
+
+                <div class="contact-page contact-title-container">
+                    <div class="center-title-container">
+                        <p></p>
+                    </div>
+                </div>
+            
+
+            </div>
+
+
             @if(session('showLogin') || $errors->all())
                 <script>
                     $(window).on('load',function(){
@@ -95,7 +107,9 @@
                 </div>
             </div>
         </main>
+
         <footer>@include('customer.layouts.footer')</footer>
+
 
         <script>
 

@@ -38,7 +38,7 @@
                         <div class="container form-group d-flex flex-column align-items-center justify-content-between">
                            
                             <input required style="margin: 0; width: 30%; margin-bottom:15px;" class="p-2 form-control" type="text" name="trolley_name" id="trolley_name" placeholder="Trolley Name">
-                            <button type="submit" class="btn btn-primary btn-blue">Create Tray</button>
+                            <button type="submit" class="btn btn-primary btn-blue">Create Trolley</button>
                         </div>
                     </form>
                 </div>

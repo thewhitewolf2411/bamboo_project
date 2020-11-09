@@ -56,6 +56,12 @@
                 @endif
 
                 <div class="portal-table-container">
+                    
+                    <div class="container">
+                        <a href="/portal/trolleys/create"><div class="btn btn-primary btn-blue">
+                            <p style="color: #fff;">Create Trolley</p>
+                        </div></a>
+                    </div>
                     <table class="portal-table" id="categories-table">
                         <tr>
                             <td><div class="table-element">Trolley ID</div></td>
@@ -76,12 +82,6 @@
                         </tr>
                         @endforeach
                     </table>
-                </div>
-
-                <div class="container">
-                    <a href="/portal/trolleys/create"><div class="btn btn-primary btn-blue">
-                        <p style="color: #fff;">Create Trolley</p>
-                    </div></a>
                 </div>
             </div>
         </div>
