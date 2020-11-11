@@ -82,6 +82,13 @@
                             </select>
                         </div>
 
+                        <div class="form-group form-group-hidden" id="corrent-memory-value">
+                            <label for="correct_memory_value">
+                                Enter correct memory:
+                            </label>
+                            <input type="text" class="form-control w-50" name="correct-memory-value">
+                        </div>
+
                         <div class="form-group">
                             <label for="correct_network">
                                 Is network correct?
@@ -91,6 +98,13 @@
                                 <option id="correct_network_false" value="false">No</option>
                                 <option id="correct_network_true" value="true">Yes</option>
                             </select>
+                        </div>
+
+                        <div class="form-group form-group-hidden" id="corrent-network-value">
+                            <label for="correct_network_value">
+                                Enter correct network:
+                            </label>
+                            <input type="text" class="form-control w-50" name="correct-network-value">
                         </div>
 
                         <div class="form-group">
@@ -113,21 +127,6 @@
                                 <option id="pin_lock_false" value="false">No</option>
                                 <option id="pin_lock_true" value="true">Yes</option>
                             </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="fake_missing_parts">
-                                Does device have any fake or missing parts?
-                            </label>
-                            <select class="form-control" id="fake_missing_parts" name="fake_missing_parts" onchange="testingElementChanged()" required>
-                                <option disabled selected value> -- select an option -- </option>
-                                <option id="fake_missing_parts_false" value="false">No</option>
-                                <option id="fake_missing_parts_true" value="true">Yes</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group form-group-hidden w-50" id="fake-missing-part-image">
-                            <input type="file" id="fake_missing_part_image" name="fake_missing_part_image" accept="image/*">
                         </div>
 
                         <div class="form-group">
@@ -160,6 +159,7 @@
                                 <option value="11">Battery health</option>
                                 <option value="12">NFC</option>
                                 <option value="13">No Power</option>
+                                <option value="14">Fake or missing parts</option>
                             </select>
 
                         </div>

@@ -5,7 +5,6 @@ function testingElementChanged(){
     var correctNetwork = $('#correct_network').val();
     var fimpOrGoogleLock = $('#fimp_or_google_lock').val();
     var pinLock = $('#pin_lock').val();
-    var fakeOrMissingParts = $('#fake_missing_parts').val();
     var deviceFullyFunctional = $('#device_fully_functional').val();
     var waterDamage = $('#water_damage').val();
 
@@ -13,8 +12,6 @@ function testingElementChanged(){
     var customerGrade;
 
     var options = {};
-
-    //console.log(correctMemory, correctNetwork, fimpOrGoogleLock, pinLock, fakeOrMissingParts, deviceFullyFunctional, waterDamage, customerGradeName);
 
     //set customer grade
     if(customerGradeName == "Excellent Working"){
@@ -33,13 +30,26 @@ function testingElementChanged(){
         customerGrade = 1;
     }
 
-
     if(correctMemory == "false" || correctNetwork == "false"){
         $('#fimp_or_google_lock').prop('disabled', true);
         $('#pin_lock').prop('disabled', true);
         $('#fake_missing_parts').prop('disabled', true);
         $('#device_fully_functional').prop('disabled', true);
         $('#water_damage').prop('disabled', true);
+
+        if(correctMemory == "false"){
+            $('#corrent-memory-value').removeClass('form-group-hidden');
+        }
+        else{
+            $('#corrent-memory-value').addClass('form-group-hidden');
+        }
+
+        if(correctNetwork == "false"){
+            $('#corrent-network-value').removeClass('form-group-hidden');
+        }
+        else{
+            $('#corrent-network-value').addClass('form-group-hidden');
+        }
     }
     else{
         $('#fimp_or_google_lock').prop('disabled', false);
@@ -77,6 +87,7 @@ function testingElementChanged(){
                 'Catastrophic':'Catastrophic'
             }
             if(deviceFullyFunctional == "false"){
+                $('#device-fully-functional-options').removeClass('form-group-hidden');
                 options = {
                     '':'',
                     'WSI':'WSI',
@@ -87,7 +98,8 @@ function testingElementChanged(){
                 }
             }
             else{
-                if(fakeOrMissingParts == "true" ||  waterDamage == "true"){
+                $('#device-fully-functional-options').addClass('form-group-hidden');
+                if(waterDamage == "true"){
                     options = {
                         '':'',
                         'WSI':'WSI',
@@ -129,7 +141,29 @@ function testingElementChanged(){
     }
 
 
+    bambooGrade = $('#bamboo_grade').val();
+
+    if(bambooGrade == 'Grade A' || customerGrade == 5){
+
+    }
+    if(bambooGrade == 'Grade B+' || customerGrade == 5){
+        
+    }
+    if(bambooGrade == 'Grade C' || customerGrade == 5){
+        
+    }
+    if(bambooGrade == 'Grade A' || customerGrade == 5){
+        
+    }
+    if(bambooGrade == 'Grade A' || customerGrade == 5){
+        
+    }
+    if(bambooGrade == 'Grade A' || customerGrade == 5){
+        
+    }
 
 }
+
+
 
 
