@@ -89,6 +89,8 @@ class SellController extends Controller
         $products = "";
         $numberofproducts = 0;
 
+        $message = "";
+
         switch($parameter){
             case "mobile":
                 if(isset($request->brand)){
@@ -123,7 +125,9 @@ class SellController extends Controller
                 }
             break;
             default:
-            break;
+                $products = SellingProduct::where('product_name', 'LIKE', '%'.$parameter.'%')->take($number)->get();
+                $numberofproducts = count($products);
+                break;
         }
 
         $numberofpages = $numberofproducts/$number;
@@ -150,7 +154,10 @@ class SellController extends Controller
     }
     
     public function searchAvalibleProducts(Request $request){
-        dd($request);
+
+        $searchParameter = $request->search_argument;
+        
+        return redirect('/sell/shop/' . $searchParameter);
     }
 
     public function addSellItemToCart(Request $request){
