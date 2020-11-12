@@ -63,6 +63,9 @@ function testingElementChanged(){
             $('#fake_missing_parts').prop('disabled', true);
             $('#device_fully_functional').prop('disabled', true);
             $('#water_damage').prop('disabled', true);
+
+            $('#customer_grade').val("Faulty");
+
             options = {
                 '':'',
                 'WSI':'WSI',
@@ -80,6 +83,7 @@ function testingElementChanged(){
                 '':'',
                 'Grade A':'Grade A',
                 'Grade B+':'Grade B+',
+                'Grade B':'Grade B',
                 'Grade C':'Grade C',
                 'WSI':'WSI',
                 'WSD':'WSD',
@@ -115,6 +119,7 @@ function testingElementChanged(){
                         '':'',
                         'Grade A':'Grade A',
                         'Grade B+':'Grade B+',
+                        'Grade B':'Grade B',
                         'Grade C':'Grade C',
                         'WSI':'WSI',
                         'WSD':'WSD',
@@ -148,21 +153,31 @@ function cosmeticElementChanged(){
 
     $('#bamboo_grade').val(cosmeticGrade);
 
-    if(cosmeticGrade == "Grade A"){
-        $('#customer_grade').val("Excellent Working");
-    }
-    else if(cosmeticGrade == "Grade B+"){
-        $('#customer_grade').val("Good Working");
-    }
-    else if(cosmeticGrade == "Grade C"){
-        $('#customer_grade').val("Poor Working");
-    }
-    else if(cosmeticGrade == "WSI" || cosmeticGrade == "WSD"){
-        $('#customer_grade').val("Damaged Working");
-    }
-    else{
+    var fimpOrGoogleLock = $('#fimp_or_google_lock').val();
+    var pinLock = $('#pin_lock').val();
+
+    if(fimpOrGoogleLock == "true" || pinLock == "true"){
         $('#customer_grade').val("Faulty");
     }
+    else{
+        if(cosmeticGrade == "Grade A"){
+            $('#customer_grade').val("Excellent Working");
+        }
+        else if(cosmeticGrade == "Grade B+" || cosmeticGrade == "Grade B"){
+            $('#customer_grade').val("Good Working");
+        }
+        else if(cosmeticGrade == "Grade C"){
+            $('#customer_grade').val("Poor Working");
+        }
+        else if(cosmeticGrade == "WSI" || cosmeticGrade == "WSD"){
+            $('#customer_grade').val("Damaged Working");
+        }
+        else{
+            $('#customer_grade').val("Faulty");
+        }
+    }
+
+
 
     console.log(cosmeticGrade);
 }
