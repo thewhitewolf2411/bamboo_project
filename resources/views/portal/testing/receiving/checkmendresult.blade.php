@@ -40,8 +40,6 @@
                 <div class="portal-search-form-container">
 
                     <div class="d-flex flex-column portal-search-form-container">
-                       
-                    @if(Session::has('result'))
                         
                         <form action="/portal/testing/receive/usercheckimei" method="POST" class="d-flex flex-column">
                             @csrf
@@ -58,10 +56,10 @@
                                     </div>
 
                                     <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
-                                        <p class="mr-0 ml-0">Checkmend: {{Session::get('result')->result}}</p><br>
-                                        <p class="mr-0 ml-0">Code: {{Session::get('result')->reasondata->code}}</p><br>
-                                        <p class="mr-0 ml-0">Model: {{Session::get('result')->reasondata->makemodel}}</p><br>
-                                        <p class="mr-0 ml-0">Network: {{Session::get('result')->reasondata->network}}</p><br>
+                                        <p class="mr-0 ml-0">Phonecheck result: {{$imeiResult->remarks}}</p><br>
+                                        <p class="mr-0 ml-0">Blacklisted: {{$imeiResult->blackliststatus}}</p><br>
+                                        <p class="mr-0 ml-0">Graylisted: {{$imeiResult->greyliststatus}}</p><br>
+                                        <p class="mr-0 ml-0">Model: {{$imeiResult->model_name}}</p><br>
                                     </div>
                                 </div>
                                 
@@ -87,8 +85,6 @@
                             </div>
                         
                         </form>
-
-                    @endif
 
                     </div>
 

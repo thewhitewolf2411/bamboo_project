@@ -27,6 +27,7 @@ use App\Eloquent\Colour;
 use App\Eloquent\Network;
 use App\Eloquent\ProductNetworks;
 use App\Eloquent\Memory;
+use App\Eloquent\ImeiResult;
 use App\User;
 use Auth;
 use Schema;
@@ -1070,7 +1071,10 @@ class PortalController extends Controller
         else{
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
-            return view('portal.testing.testdevice')->with(['tradein'=>$tradein, 'portalUser'=>$portalUser]);
+            $networks = Network::all();
+            $productinformation = ProductInformation::where('product_id', $tradein->product_id)->get();
+
+            return view('portal.testing.testdevice')->with(['tradein'=>$tradein, 'portalUser'=>$portalUser, 'networks'=>$networks, 'productinformation'=>$productinformation]);
         }    
 
 
@@ -1325,50 +1329,50 @@ class PortalController extends Controller
             return redirect()->back()->with('error', 'Incorrect IMEI number. Must be 15 characters');
         }
 
-        $url = 'https://gapi.checkmend.com/duediligence/' . 2  . "/" . $imei_number;
-        #$url = 'https://gapi.checkmend.com/claimscheck/search';
+        $url = 'https://clientapiv2.phonecheck.com/cloud/cloudDB/CheckEsn/';
 
-        $options_array  = false;
-        $response_config_array  = false;
 
-        $options['category']  = 9;
-        $options['reason_data'] = true;
-        $options['make_model']  = true;
-        $options['cdma_validate'] = true;
+        $ApiKey = "f06581b6-f4b3-4d40-a65e-6a39acf045fb";
+        $username = "bamboo11";
+        $devicetype = "Android";
+        $carrier = "AT&T";
+        
+        $post = [
+            'ApiKey' => $ApiKey,
+            'Username' => $username,
+            'IMEI' => $imei_number,
+            'Devicetype' => $devicetype,
+            'carrier' => $carrier,
+        ];
 
-        if($options)
-        {
-            if(isset($options['test_mode']))
-            {
-                $options_array['testmode']	=  ($options['test_mode'] ? $options['test_mode'] : 0);
-            }
-            if(isset($options['category']))
-            {
-                $options_array['category'] =  ($options['category']);
-            }
+        $ch = curl_init($url);
 
-            if(isset($options['reason_data']))
-            {
-                $options_array['responseconfig']['reasondata'] = ($options['reason_data'] ? 'true' : 'false' );
-            }
-            if(isset($options['cdma_validate']))
-            {
-                $options_array['responseconfig']['cdmavalidate'] =  ($options['cdma_validate'] ? 'true' : 'false' );
-            }
-            if(isset($options['make_model']))
-            {
-                $options_array['responseconfig']['makemodel'] =  ($options['make_model'] ? 'true' : 'false' );
-            }
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        // execute!
+        $response = curl_exec($ch);
+
+        $result = (json_decode($response));
+        #dd($result);
+
+        ###
+
+        $imeiResult = ImeiResult::where('tradein_id', $request->tradein_id)->first();
+
+        if($imeiResult == null){
+            $imeiResult = new ImeiResult();
         }
 
-
-        $request_body = json_encode($options_array);
-
-        $result =  $this->send_request($url, $request_body);
-
-        $result = (json_decode($result['result_json']));
-
         #dd($result);
+
+        $imeiResult->tradein_id = $request->tradein_id;
+        $imeiResult->API =  $result->API;
+        $imeiResult->remarks =  $result->Remarks;
+        $imeiResult->model_name =  $result->RawResponse->modelname;
+        $imeiResult->blackliststatus =  $result->RawResponse->blackliststatus;
+        $imeiResult->greyliststatus =  $result->RawResponse->greyliststatus;
+
+        $imeiResult->save();
 
         $tradein->imei_number = $imei_number;
         $tradein->save();
@@ -1381,53 +1385,8 @@ class PortalController extends Controller
 
         #$this->showCheckImeiReultPage($tradein->barcode, $result);
 
-        return redirect('/portal/testing/checkimeiresult/' . $tradein->id)->with('result', $result);
+        return redirect('/portal/testing/checkimeiresult/' . $tradein->id);
 
-    }
-
-    private function send_request($url, $request_body, $options = false){
-        $ws = new browser_ckmd();
-
-        // Login Details
-        $username  			  = 545;
-        $signature_hash = sha1("de8beafe711efb004f0d" . $request_body);
-
-        // Create Authorisation header
-        $authorisation_header = base64_encode(545 . ':' . $signature_hash);
-        $content_length = strlen($request_body);
-
-        $ws->connect();
-
-        curl_setopt($ws->connection, CURLOPT_HTTPHEADER,  array('Authorization: Basic ' . $authorisation_header,'Accept: application/json','Content-type: application/json', 'Content-length:' .$content_length) 	);
-        curl_setopt($ws->connection, CURLOPT_URL, $url);
-        curl_setopt($ws->connection, CURLOPT_TIMEOUT, 5);
-        curl_setopt($ws->connection, CURLOPT_POSTFIELDS, $request_body);
-        curl_setopt($ws->connection, CURLOPT_HEADER, false); // Do not return headers
-        curl_setopt($ws->connection, CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ws->connection, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ws->connection, CURLOPT_FOLLOWLOCATION, true);
-
-        set_time_limit(20);
-
-        $result['result_json']  = curl_exec($ws->connection);
-
-        $ws->error_number  = curl_errno($ws->connection);
-        $ws->error_message = curl_error($ws->connection);
-
-        if($ws->error_number)
-        {
-            $result['error_number'] = $ws->error_number;
-        }
-        if($ws->error_message)
-        {
-            $result['error_message'] = $ws->error_message;
-        }
-
-
-        // Has to be last
-        $ws->disconnect();
-
-        return $result;
     }
 
     public function showCheckImeiReultPage($id){
@@ -1435,11 +1394,12 @@ class PortalController extends Controller
         $tradein = Tradein::where('id', $id)->first();
         $user  = User::where('id', $tradein->user_id)->first();
         $product = SellingProduct::where('id', $tradein->product_id)->first();
+        $imeiResult = ImeiResult::where('tradein_id', $id)->first();
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.testing.receiving.checkmendresult')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
+        return view('portal.testing.receiving.checkmendresult')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user, 'imeiResult'=>$imeiResult]);
     }
 
     public function userCheckImei(Request $request){

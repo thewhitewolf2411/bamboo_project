@@ -84,9 +84,13 @@
 
                         <div class="form-group form-group-hidden" id="corrent-memory-value">
                             <label for="correct_memory_value">
-                                Enter correct memory:
+                                Select correct memory:
                             </label>
-                            <input type="text" class="form-control w-50" name="correct-memory-value">
+                            <select class="form-control" id="correct_network_value" name="correct-network-value" onchange="testingElementChanged()" required>
+                                @foreach($productinformation as $productinfo)
+                                <option value="{{$productinfo->memory}}">{{$productinfo->memory}}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -102,9 +106,13 @@
 
                         <div class="form-group form-group-hidden" id="corrent-network-value">
                             <label for="correct_network_value">
-                                Enter correct network:
+                                Select correct network:
                             </label>
-                            <input type="text" class="form-control w-50" name="correct-network-value">
+                            <select class="form-control" id="correct_network_value" name="correct-network-value" onchange="testingElementChanged()" required>
+                                @foreach($networks as $network)
+                                <option value="{{$network->network_name}}">{{$network->network_name}}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -180,7 +188,7 @@
                             <label for="cosmetic_condition">
                                 What is the device cosmetic condition?
                             </label>
-                            <select class="form-control" id="cosmetic_condition" name="cosmetic_condition" onchange="gradeElementChanged()" disabled required>
+                            <select class="form-control" id="cosmetic_condition" name="cosmetic_condition" onchange="cosmeticElementChanged()" disabled required>
 
                             </select>
                         </div>
@@ -216,9 +224,6 @@
     </main>
 
 <script>
-$(document).ready(function() {
-$('.mdb-select').materialSelect();
-});
 
 </script>
 </body>

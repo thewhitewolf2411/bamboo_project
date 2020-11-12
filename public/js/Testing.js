@@ -30,6 +30,19 @@ function testingElementChanged(){
         customerGrade = 1;
     }
 
+    if(correctMemory == "false"){
+        $('#corrent-memory-value').removeClass('form-group-hidden');
+    }
+    else{
+        $('#corrent-memory-value').addClass('form-group-hidden');
+    }
+    if(correctNetwork == "false"){
+        $('#corrent-network-value').removeClass('form-group-hidden');
+    }
+    else{
+        $('#corrent-network-value').addClass('form-group-hidden');
+    }
+
     if(correctMemory == "false" || correctNetwork == "false"){
         $('#fimp_or_google_lock').prop('disabled', true);
         $('#pin_lock').prop('disabled', true);
@@ -37,19 +50,7 @@ function testingElementChanged(){
         $('#device_fully_functional').prop('disabled', true);
         $('#water_damage').prop('disabled', true);
 
-        if(correctMemory == "false"){
-            $('#corrent-memory-value').removeClass('form-group-hidden');
-        }
-        else{
-            $('#corrent-memory-value').addClass('form-group-hidden');
-        }
 
-        if(correctNetwork == "false"){
-            $('#corrent-network-value').removeClass('form-group-hidden');
-        }
-        else{
-            $('#corrent-network-value').addClass('form-group-hidden');
-        }
     }
     else{
         $('#fimp_or_google_lock').prop('disabled', false);
@@ -140,30 +141,31 @@ function testingElementChanged(){
         $('#cosmetic_condition').prop('required', true);
     }
 
-
-    bambooGrade = $('#bamboo_grade').val();
-
-    if(bambooGrade == 'Grade A' || customerGrade == 5){
-
-    }
-    if(bambooGrade == 'Grade B+' || customerGrade == 5){
-        
-    }
-    if(bambooGrade == 'Grade C' || customerGrade == 5){
-        
-    }
-    if(bambooGrade == 'Grade A' || customerGrade == 5){
-        
-    }
-    if(bambooGrade == 'Grade A' || customerGrade == 5){
-        
-    }
-    if(bambooGrade == 'Grade A' || customerGrade == 5){
-        
-    }
-
 }
 
+function cosmeticElementChanged(){
+    cosmeticGrade = $('#cosmetic_condition').val();
+
+    $('#bamboo_grade').val(cosmeticGrade);
+
+    if(cosmeticGrade == "Grade A"){
+        $('#customer_grade').val("Excellent Working");
+    }
+    else if(cosmeticGrade == "Grade B+"){
+        $('#customer_grade').val("Good Working");
+    }
+    else if(cosmeticGrade == "Grade C"){
+        $('#customer_grade').val("Poor Working");
+    }
+    else if(cosmeticGrade == "WSI" || cosmeticGrade == "WSD"){
+        $('#customer_grade').val("Damaged Working");
+    }
+    else{
+        $('#customer_grade').val("Faulty");
+    }
+
+    console.log(cosmeticGrade);
+}
 
 
 
