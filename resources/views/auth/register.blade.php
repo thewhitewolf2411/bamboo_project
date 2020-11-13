@@ -20,11 +20,6 @@
     </div>
 
     <div class="form-group">
-        <label for="birthdate" class="col-form-label">Birth date</label>
-        <input class="form-control" type="date" id="birthdate" name="birthdate" placeholder="Birthdate" required autofocus>
-    </div>
-
-    <div class="form-group">
         <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" placeholder="Delivery address" required autofocus>
     </div>
 

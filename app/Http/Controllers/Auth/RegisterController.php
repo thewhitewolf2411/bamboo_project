@@ -93,7 +93,6 @@ class RegisterController extends Controller
         $user->first_name = $data['first-name'];
         $user->last_name = $data['last-name'];
         $user->email = $data['email'];
-        $user->birthdate = $data['birthdate'];
         $user->password = Crypt::encrypt($data['password']);
 
         $user->delivery_address = $data['delivery_address'];
@@ -124,7 +123,6 @@ class RegisterController extends Controller
                     '$email' => $data['email'],
                     '$name' => $data['first-name'],
                     '$last_name' => $data['last-name'],
-                    '$birthdate' => $data['birthdate'],
                     '$newsletter' => $sub
                 ),
                 'properties' => array(

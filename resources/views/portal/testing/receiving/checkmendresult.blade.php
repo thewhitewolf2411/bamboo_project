@@ -46,7 +46,7 @@
                             <div class="w-100 p-3">
                                 <div class="d-flex w-100">
                                     <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
-                                    <div class="d-flex w-50 border p-3"><p>Checkmend results</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Phonecheck results</p></div>
                                 </div>
                                 <div class="d-flex w-100">
                                     <div class="d-flex flex-column w-50 border p-3 align-items-baseline">

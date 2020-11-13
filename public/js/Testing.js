@@ -44,8 +44,6 @@ function testingElementChanged(){
     }
 
     if(correctMemory == "false" || correctNetwork == "false"){
-        $('#fimp_or_google_lock').prop('disabled', true);
-        $('#pin_lock').prop('disabled', true);
         $('#fake_missing_parts').prop('disabled', true);
         $('#device_fully_functional').prop('disabled', true);
         $('#water_damage').prop('disabled', true);
@@ -60,9 +58,12 @@ function testingElementChanged(){
         $('#water_damage').prop('disabled', false);
 
         if(fimpOrGoogleLock == "true" || pinLock == "true"){
+
             $('#fake_missing_parts').prop('disabled', true);
             $('#device_fully_functional').prop('disabled', true);
             $('#water_damage').prop('disabled', true);
+            $('#correct_memory').prop('disabled', true);
+            $('#correct_network').prop('disabled', true);
 
             $('#customer_grade').val("Faulty");
 
@@ -79,6 +80,8 @@ function testingElementChanged(){
             $('#fake_missing_parts').prop('disabled', false);
             $('#device_fully_functional').prop('disabled', false);
             $('#water_damage').prop('disabled', false);
+            $('#correct_memory').prop('disabled', false);
+            $('#correct_network').prop('disabled', false);
             options = {
                 '':'',
                 'Grade A':'Grade A',

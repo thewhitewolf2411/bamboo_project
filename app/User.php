@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email','password','birthdate','current_phone','preffered_os','sub','delivery_address','billing_address','contact_number','bamboo_credit',
+        'first_name', 'last_name', 'email','password','current_phone','preffered_os','sub','delivery_address','billing_address','contact_number','bamboo_credit',
         'username','worker_email'
     ];
 }

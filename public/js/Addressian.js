@@ -9,7 +9,7 @@ $(function() {
      },
      ajaxSettings: {
       headers: {
-       'x-api-key': 'UkF4dKVYOd2AjFkEfOigY3Nd5UMrzcaR8sXZfRAW'
+       'x-api-key': 'Y8L7N4WBr361XT8gHT5bc2g5ycw1ECPao3EWrs6a'
       }
      },
      getValue: function(element) {
@@ -20,7 +20,7 @@ $(function() {
      list: {
       maxNumberOfElements: 20,
       onClickEvent: function() {
-       alert("The postcode of the item you clicked on was " + $("#tags").getSelectedItemData().postcode);
+       
       }
      }
     };
@@ -38,7 +38,7 @@ $(function() {
      },
      ajaxSettings: {
       headers: {
-       'x-api-key': 'UkF4dKVYOd2AjFkEfOigY3Nd5UMrzcaR8sXZfRAW'
+       'x-api-key': 'Y8L7N4WBr361XT8gHT5bc2g5ycw1ECPao3EWrs6a'
       }
      },
      getValue: function(element) {
@@ -49,7 +49,7 @@ $(function() {
      list: {
       maxNumberOfElements: 20,
       onClickEvent: function() {
-       alert("The postcode of the item you clicked on was " + $("#tags").getSelectedItemData().postcode);
+       
       }
      }
     };
