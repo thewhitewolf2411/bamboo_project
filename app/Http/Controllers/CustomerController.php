@@ -128,6 +128,7 @@ class CustomerController extends Controller
     }
 
     public function addProductToCart(Request $request){
+
         if(Auth::User()){
             $product = BuyingProduct::where('id',$request->productid)->first();
 
@@ -135,7 +136,7 @@ class CustomerController extends Controller
     
             $cart = new Cart($oldCart);
     
-            $cart->add($product->product_buying_price, $product, "tradeout");
+            $cart->add($product->product_buying_price, $product, "tradeout",  $product->product_network, $product->product_memory, $product->product_grade);
     
             $request->session()->put('cart', $cart);
     
@@ -221,6 +222,10 @@ class CustomerController extends Controller
     }
 
     public function showWishlist(){
+
+        if(!Auth::user()){
+            return redirect()->back()->with('showLogin', true);
+        }
 
         $userid = Auth::user()->id;
         $userName = Auth::user()->first_name;
