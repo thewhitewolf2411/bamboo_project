@@ -168,7 +168,18 @@ class CustomerController extends Controller
 
         $products = SellingProduct::all();
 
-        return view('customer.cart')->with('cart', $cartItems)->with('products', $products);
+        $price = 0;
+
+        foreach($cartItems->items as $items){
+            if($items['type'] === "tradeout"){
+                $price += $items['price'];
+            }
+            if($items['type'] === "tradein"){
+                $price -= $items['price'];
+            }
+        }
+
+        return view('customer.cart')->with('cart', $cartItems)->with('products', $products)->with('fullprice', $price);
 
     }
 

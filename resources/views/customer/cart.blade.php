@@ -84,6 +84,11 @@
                                         <h6 class="m-0 mb-3 font-weight-bold">Total Price</h6>
                                         <p class="m-0 font-weight-bold">Total Price: £{{$cartitem['product']->product_buying_price}}</p>
                                     </div>
+                                    <a href="/removefromcart/{{$key}}">
+                                        <div class="btn btn-danger">
+                                            <p class="m-0" style="color: white;">Remove from cart</p>
+                                        </div>
+                                    </a>
                                 </div>
                             @endif
                         @endforeach
@@ -128,6 +133,8 @@
                 <div class="d-flex flex-column w-25 p-3">
                     <div class="center-title-container flex-column">
                         <p style="display: flex; align-items: center;">Order Summary</p>
+
+                        <p style="display: flex; align-items: center;">Price to pay: £{{$fullprice}}</p>
 
                         <select class="form-control my-3" onchange="changelabelstatus(this)">
                             <option value="1" selected>Make an order without printing label</option>
