@@ -19,7 +19,7 @@ class Colour extends Model
      * @var array
      */
     protected $fillable = [
-        'brand_id','color_value'
+        'product_id','color_value'
     ];
 
     public function getBrandName($brandid){

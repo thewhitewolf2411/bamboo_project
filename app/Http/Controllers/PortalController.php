@@ -2002,62 +2002,64 @@ class PortalController extends Controller
 
             $networks = Network::all();
 
-            $k = count($importeddata[1]);
-            $z = 0;
-    
+            $emptyrows = array();
+
+            $k = count($importeddata[0]);
+
             foreach($importeddata as $key=>$row){
-                if(count(array_keys($row, null)) === $k){
-                    $z = $key+1;
-                break;
-                }
-            }
-            
-            #dd($importeddata, $k, $z);
+                if($row[1] !== null){
 
-            for($i = 0; $i<count($importeddata); $i=$i+$z){
-                $sellingProduct = new SellingProduct();
-                if($importeddata[$i][0] != null){
-                    $sellingProduct->id = $importeddata[$i][0];
+                    $sellingProduct = new SellingProduct();
+                    $sellingProduct->product_name = $row[1];
+                    $sellingProduct->product_image = 'default_image';
+                    $sellingProduct->category_id = $row[3];
+                    $sellingProduct->brand_id = $row[4];
+                    $sellingProduct->save();
                 }
-                $sellingProduct->product_name = $importeddata[$i][1];
-                $sellingProduct->product_image = 'default_image';
-                $sellingProduct->category_id = $importeddata[$i][3];
-                $sellingProduct->brand_id = $importeddata[$i][4];
-                $sellingProduct->save();
 
-                for($var = $i; $var<($i+$z-1); $var++){
-                    if($importeddata[$var][5] !== null){
-                        $sellingProductInformation = new ProductInformation();
-                        $sellingProductInformation->product_id = $sellingProduct->id;
-                        $sellingProductInformation->memory = $importeddata[$var][5];
-                        $sellingProductInformation->customer_grade_price_1 = $importeddata[$var][6];
-                        $sellingProductInformation->customer_grade_price_2 = $importeddata[$var][7];
-                        $sellingProductInformation->customer_grade_price_3 = $importeddata[$var][8];
-                        $sellingProductInformation->customer_grade_price_4 = $importeddata[$var][9];
-                        $sellingProductInformation->customer_grade_price_5 = $importeddata[$var][10];
-                        $sellingProductInformation->save();
-                    }   
+                if($importeddata[$key][5] !== null){
+                    $sellingProductInformation = new ProductInformation();
+                    $sellingProductInformation->product_id = $sellingProduct->id;
+                    $sellingProductInformation->memory = $importeddata[$key][5];
+                    $sellingProductInformation->customer_grade_price_1 = $importeddata[$key][6];
+                    $sellingProductInformation->customer_grade_price_2 = $importeddata[$key][7];
+                    $sellingProductInformation->customer_grade_price_3 = $importeddata[$key][8];
+                    $sellingProductInformation->customer_grade_price_4 = $importeddata[$key][9];
+                    $sellingProductInformation->customer_grade_price_5 = $importeddata[$key][10];
+                    $sellingProductInformation->save();
                 }
 
                 foreach($networks as $network){
-                    for($var = $i; $var<($i+$z-1); $var++){
-                        if($importeddata[$var][13] !== null && $network->network_name == $importeddata[$var][13]){
-                            $productNetworks = new ProductNetworks();
-                            $productNetworks->network_id = $network->id;
-                            $productNetworks->product_id = $sellingProduct->id;
-                            $productNetworks->knockoff_price = $importeddata[$var][14];
-                            $productNetworks->save();
-                        }
+                    if($importeddata[$key][13] !== null && $network->network_name == $importeddata[$key][13]){
+                        $productNetworks = new ProductNetworks();
+                        $productNetworks->network_id = $network->id;
+                        $productNetworks->product_id = $sellingProduct->id;
+                        $productNetworks->knockoff_price = $importeddata[$key][14];
+                        $productNetworks->save();
                     }
                 }
 
+                if($importeddata[$key][15] !== null){
+                    $productColours = new Colour();
+                    $productColours->product_id = $sellingProduct->id;
+                    $productColours->color_value = $importeddata[$key][15];
+                    $productColours->save();
+                }
+
+
             }
 
+            
+
+            dd();
+
+
+            #dd($importeddata, $emptyrows);
+     
         }
         else{
             return \redirect()->back()->with('error','Something went wrong, please try again.');
         }
-
         return \redirect()->back()->with('success','You have succesfully imported products.');
     }
 
