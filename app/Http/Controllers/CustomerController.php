@@ -12,6 +12,7 @@ use App\Eloquent\BuyingProduct;
 use App\Eloquent\SellingProduct;
 use App\Eloquent\Tradein;
 use App\Eloquent\Tradeout;
+use App\Eloquent\Wishlist;
 use Auth;
 use Crypt;
 
@@ -170,9 +171,19 @@ class CustomerController extends Controller
 
     }
 
-    public function addProductToWishList($id){
+    public function addProductToWishList(Request $request){
+
+
         $userid = Auth::user()->id;
-        $productid = $id;
+
+        $wishlist = new Wishlist();
+        $wishlist->user_id = $userid;
+        $wishlist->product_id = $request->productid;
+
+        $wishlist->save();
+
+        return redirect()->back();
+
     }
 
     public function showProfile(){
@@ -201,13 +212,46 @@ class CustomerController extends Controller
     }
 
     public function showOrderDetails($order){
+
+        dd($order);
+
         $tradein = Tradein::where('barcode', $order)->get();
 
         return view('customer.orderdetails')->with(['tradein'=>$tradein, 'barcode'=>$order]);
     }
 
     public function showWishlist(){
-        return view('customer.wishlist');
+
+        $userid = Auth::user()->id;
+        $userName = Auth::user()->first_name;
+
+        $userWishlist = Wishlist::where('user_id', $userid)->get();
+
+        $mobilePhones = array();
+        $tablets = array();
+        $smartwatches = array();
+        $rest = array();
+
+        foreach($userWishlist as $wishlistItem){
+            $sellingProduct = BuyingProduct::where('id', $wishlistItem->product_id)->first();
+            if($sellingProduct->category_id === 1){
+                array_push($mobilePhones, $sellingProduct);
+            }
+            if($sellingProduct->category_id === 2){
+                array_push($tablets, $sellingProduct);
+            }
+            if($sellingProduct->category_id === 3){
+                array_push($smartwatches, $sellingProduct);
+            }
+            if($sellingProduct->category_id === 4){
+                array_push($rest, $sellingProduct);
+            }
+        }
+        
+
+        return view('customer.wishlist')->with(['userName'=>$userName, 'mobilePhones'=>$mobilePhones, 'tablets'=>$tablets,
+                                                'smartwatches'=>$smartwatches, 'rest'=>$rest
+        ]);
     }
 
     public function deleteOrder($orderid){

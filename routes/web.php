@@ -38,7 +38,7 @@ Route::get('/corporate', 'PagesController@showCorporatePage');
 //User profile
 Route::get('/userprofile', 'CustomerController@showProfile');
 Route::get('/userprofile/{id}', 'CustomerController@showOrderDetails');
-Route::get('/userprofile/wishlist', 'CustomerController@showWishlist');
+Route::get('/userprofile/show/wishlist', 'CustomerController@showWishlist');
 Route::get('/userprofile/deleteorder/{id}', 'CustomerController@deleteOrder');
 
 Route::get('/products/{category}', 'CustomerController@customerCategoryView')->name('customerproducts');

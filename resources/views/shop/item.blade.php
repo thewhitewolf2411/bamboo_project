@@ -125,6 +125,7 @@
                             </form>
                             <form action="/addtowishlist" method="POST">
                                 <div class="add-to-wishlist-container">
+                                    @csrf
                                     <input type="hidden" name="productid" value="{{$itemData->id}}">
                                     <button type="submit" class="btn btn-primary btn-orange">Add to Wishlist</button>
                                 </div>
