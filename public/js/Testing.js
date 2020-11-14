@@ -30,6 +30,7 @@ function testingElementChanged(){
         customerGrade = 1;
     }
 
+
     if(correctMemory == "false"){
         $('#corrent-memory-value').removeClass('form-group-hidden');
     }
@@ -158,6 +159,7 @@ function cosmeticElementChanged(){
 
     var fimpOrGoogleLock = $('#fimp_or_google_lock').val();
     var pinLock = $('#pin_lock').val();
+    cosmeticNumGrade = 0;
 
     if(fimpOrGoogleLock == "true" || pinLock == "true"){
         $('#customer_grade').val("Faulty");
@@ -165,22 +167,27 @@ function cosmeticElementChanged(){
     else{
         if(cosmeticGrade == "Grade A"){
             $('#customer_grade').val("Excellent Working");
+            cosmeticNumGrade = 5;
         }
         else if(cosmeticGrade == "Grade B+" || cosmeticGrade == "Grade B"){
             $('#customer_grade').val("Good Working");
+            cosmeticNumGrade = 4;
         }
         else if(cosmeticGrade == "Grade C"){
             $('#customer_grade').val("Poor Working");
+            cosmeticNumGrade = 3;
         }
         else if(cosmeticGrade == "WSI" || cosmeticGrade == "WSD"){
             $('#customer_grade').val("Damaged Working");
+            cosmeticNumGrade = 2;
         }
         else{
             $('#customer_grade').val("Faulty");
+            cosmeticNumGrade = 1;
         }
     }
 
-
+    $("#bamboo_customer_grade").val(cosmeticNumGrade);
 
     console.log(cosmeticGrade);
 }

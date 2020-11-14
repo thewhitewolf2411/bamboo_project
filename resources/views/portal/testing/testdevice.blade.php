@@ -103,25 +103,6 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="correct_memory">
-                                Is memory size correct?
-                            </label>
-                            <select class="form-control" id="correct_memory" name="correct_memory" onchange="testingElementChanged()" required>
-                                <option disabled selected value> -- select an option -- </option>
-                                <option id="correct_memory_false" value="false">No</option>
-                                <option id="correct_memory_true" value="true">Yes</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <drop-down
-                                :options="{{$productinformation->toJson()}}"
-                                :selected.sync="selected"
-                                :show-label="false"
-                            ></drop-down>
-                        </div>
-
                         <div class="form-group form-group-hidden w-50" id="device-fully-functional-options">
                             <label id="multiselect" for="device_fully_functional_reasons">Please rectify reason for device not being fully functional?</label>
                             <select multiple="" class="form-control" id="device_fully_functional_reasons" name="device_fully_functional_reasons">
@@ -143,6 +124,17 @@
                                 <option value="14">Fake or missing parts</option>
                             </select>
 
+                        </div>
+
+                        <div class="form-group">
+                            <label for="correct_memory">
+                                Is memory size correct?
+                            </label>
+                            <select class="form-control" id="correct_memory" name="correct_memory" onchange="testingElementChanged()" required>
+                                <option disabled selected value> -- select an option -- </option>
+                                <option id="correct_memory_false" value="false">No</option>
+                                <option id="correct_memory_true" value="true">Yes</option>
+                            </select>
                         </div>
 
                         <div class="form-group form-group-hidden" id="corrent-memory-value">
@@ -202,7 +194,7 @@
                             <label for="cosmetic_condition">
                                 What is the device color?
                             </label>
-                            <select class="form-control" id="cosmetic_condition" name="cosmetic_condition" required>
+                            <select class="form-control" id="cosmetic_condition" name="cosmetic_condition">
 
                             </select>
                         </div>
@@ -217,7 +209,6 @@
                                 <label for="bamboo_grade">Bamboo Grade:</label>
                                 <input type="text" class="form-control" id="bamboo_grade" name="bamboo_grade" style="padding:12px; height:50px; margin-top:6px; margin-bottom:16px; " disabled></input>
                             </div>
-                            <input type="hidden" class="form-control" id="bamboo_grade_val" name="bamboo_grade" style="padding:12px; height:50px; margin-top:6px; margin-bottom:16px; "></input>
                         </div>
 
                         <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
@@ -227,6 +218,8 @@
                                 </div>
                             </a>
                             <input type="hidden" id="tradein_id" name="tradein_id" value="{{$tradein->id}}">
+                            <input type="hidden" id="old_customer_grade" name="old_customer_grade" value="{{$tradein->product_state}}">
+                            <input type="hidden" id="bamboo_customer_grade" name="bamboo_customer_grade" value="">
                             <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Submit testing</button>
                         </div>
                         

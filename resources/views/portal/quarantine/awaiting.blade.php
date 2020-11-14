@@ -51,13 +51,30 @@
                 <div class="portal-table-container">
                     <table class="portal-table" id="categories-table">
                         <tr>
-                            <td><div class="table-element">Tradein ID</div></td>
-                            <td><div class="table-element">Tradein Barcode</div></td>
+                            <td><div class="table-element">Trade-in ID</div></td>
+                            <td><div class="table-element">Trade-in Barcode</div></td>
+                            <td><div class="table-element">Product</div></td>
+                            <td><div class="table-element">Quarantine reasons</div></td>
+                            <td><div class="table-element">Device location</div></td>
+                            <td><div class="table-element">Options</div></td>
                         </tr>
                         @foreach($tradeins as $tradein)
                         <tr>
-                            <td><a href=""><div class="table-element">{{$tradein->id}}</div></a></td>
-                            <td><a href=""><div class="table-element">{{$tradein->barcode}}</div></a></td>
+                            <td><div class="table-element">{{$tradein->id}}</div></td>
+                            <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                            <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                            <td><div class="table-element">
+                                <ul>
+                                    @if($tradein->device_correct == false)<li>Device was not correct</li>@endif
+                                    @if($tradein->checkmend_passed == false)<li>Phonecheck failed</li>@endif
+                                    @if($tradein->grade_changed == true)<li>Device grade was changed</li>@endif
+                                    @if($tradein->older_than_14_days == true)<li>Order was expired after 14 days</li>@endif
+                                </ul>
+                            </div></td>
+                            <td><div class="table-element"><p>Device is in a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a></p></div></td>
+                            <td><div class="table-element">
+                            
+                            </div></td>
                         </tr>
                         @endforeach
                     </table>

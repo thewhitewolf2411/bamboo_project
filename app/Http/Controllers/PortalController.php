@@ -483,10 +483,10 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $tradeins = Tradein::whereIn('job_state', array(3,4,5,6))->get()->groupBy('barcode');
+        $tradeins = Tradein::whereIn('job_state', array(3,4,5,6))->where('marked_for_quarantine', 0)->get()->groupBy('barcode');
 
         if($request->all() == null || $request->search == 0){
-            $tradeins = Tradein::all()->whereIn('job_state', array(3,4,5,6))->groupBy('barcode');
+            $tradeins = Tradein::all()->whereIn('job_state', array(3,4,5,6))->where('marked_for_quarantine', 0)->groupBy('barcode');
 
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -495,7 +495,7 @@ class PortalController extends Controller
         }
         else{
             if($request->search <= 3){
-                $tradeins = Tradein::whereIn('job_state', array(3,4,5,6))->get()->groupBy('barcode');
+                $tradeins = Tradein::whereIn('job_state', array(3,4,5,6))->where('marked_for_quarantine', 0)->get()->groupBy('barcode');
                 $user_id = Auth::user()->id;
                 $portalUser = PortalUsers::where('user_id', $user_id)->first();
     
@@ -511,7 +511,7 @@ class PortalController extends Controller
                 $tradeins = $tradeins->groupBy('barcode');
             }
             else{
-                $tradeins = Tradein::where('barcode', $request->search)->whereIn('job_state', array(3,4,5,6))->get();
+                $tradeins = Tradein::where('barcode', $request->search)->whereIn('job_state', array(3,4,5,6))->where('marked_for_quarantine', 0)->get();
                 if(count($tradeins) < 1){
                     return redirect()->back()->with('error', 'No Order with that barcode. Please try again.');
                 }
@@ -978,10 +978,10 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $tradeinsQ = Tradein::where('quarantine_status', 1)->get();
+        $tradeinsQ = Tradein::where('marked_for_quarantine', true)->where('quarantine_status', null)->get();
         
 
-        return view('portal.quarantine.awaiting')->with(['portalUser'=>$portalUser, 'tradeins'=>$tradeinsQ]);;
+        return view('portal.quarantine.awaiting')->with(['portalUser'=>$portalUser, 'tradeins'=>$tradeinsQ]);
     }
 
     public function showQuarantineReturn(){
@@ -990,7 +990,9 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.quarantine.return')->with('portalUser', $portalUser);
+        $tradeinsQ = Tradein::where('marked_for_quarantine', true)->where('quarantine_status', 1)->get();
+
+        return view('portal.quarantine.return')->with(['portalUser'=>$portalUser, 'tradeins'=>$tradeinsQ]);
     }
 
     public function showQuarantineRetest(){
@@ -1059,7 +1061,7 @@ class PortalController extends Controller
         if($tradein == null){
             return redirect()->back()->with('error', 'There is no such device');
         }
-        if($tradein->job_state != 3){
+        if($tradein->job_state < 3){
             return redirect()->back()->with('error', 'Device has not been received yet, or has been sent to quarantine.');
         }
         elseif($tradein->job_state == 5){
@@ -1461,17 +1463,98 @@ class PortalController extends Controller
 
     public function checkDeviceStatus(Request $request){
 
-        dd($request->all());
-
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         $product = SellingProduct::where('id', $tradein->product_id)->first();
 
+        $customergradeval = "";
+        $bambogradeval = $request->bamboo_customer_grade;
 
+        $old_customer_grade = $request->old_customer_grade;
+        if($old_customer_grade == "Excellent Working"){
+            $customergradeval = 5;
+        }
+        if($old_customer_grade == "Good Working"){
+            $customergradeval = 4;
+        }
+        if($old_customer_grade == "Poor Working"){
+            $customergradeval = 3;
+        }
+        if($old_customer_grade == "Damaged Working"){
+            $customergradeval = 2;
+        }
+        if($old_customer_grade == "Faulty"){
+            $customergradeval = 1;
+        }
+
+        if($bambogradeval >= $customergradeval){
+            $tradein->marked_for_quarantine = false;
+        }
+        else{
+            $tradein->marked_for_quarantine = true;
+        }
+
+        $tradein->save();
+        $tradein->job_state = 5;
+
+        $newBarcode = "";
+
+        if($tradein->marked_for_quarantine == true){
+            $quarantineTrays = Tray::where('tray_name', 'LIKE', '%TQ01%')->where('number_of_devices', "<" ,200)->first();
+            $quarantineName = $quarantineTrays->tray_name;
+
+            $tradein->job_state = 9;
+            $tradein->save();
+            $newBarcode .= "90";
+            $newBarcode .= mt_rand(10000, 99999);
+        }
+        else{
+
+            $newBarcode .= $tradein->job_state;
+            $newBarcode .= mt_rand(10000, 99999);
+            $tradein->barcode = $newBarcode;
+            $tradein->save();
+
+            $quarantineTrays = Tray::where('tray_name', 'LIKE', '%TM01%')->where('number_of_devices', "<" ,200)->first();
+            $quarantineName = $quarantineTrays->tray_name;
+            if($tradein->getBrandId($tradein->product_id) == 1){
+                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%TA01%')->where('number_of_devices', "<" ,200)->first();
+                $quarantineName = $quarantineTrays->tray_name;
+
+            }
+            if($tradein->getBrandId($tradein->product_id) == 2){
+                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%TS01%')->where('number_of_devices', "<" ,200)->first();
+                $quarantineName = $quarantineTrays->tray_name;
+            }
+            if($tradein->getBrandId($tradein->product_id) == 3){
+                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%TH01%')->where('number_of_devices', "<" ,200)->first();
+                $quarantineName = $quarantineTrays->tray_name;
+            }
+        }
+
+        $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;
+        $quarantineTrays->save();
+
+        $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+
+        $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
+        $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+        $oldTray->save();
+
+        $oldTrayContent->delete();
+
+        $traycontent = new TrayContent();
+        $traycontent->tray_id = $quarantineTrays->id;
+        $traycontent->trade_in_id = $tradein->id;
+        $traycontent->save();
+
+        
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 
         $response = $this->generateNewLabel($barcode, SellingProduct::where('id', $tradein->id), $tradein);
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.testing.totray')->with(['tray_name'=>$tray->tray_name, 'portalUser'=>$portalUser, 'testing'=>true, 'tradein'=>$tradein]);
+        return view('portal.testing.totray')->with(['tray_name'=>$quarantineName, 'portalUser'=>$portalUser, 'testing'=>true, 'tradein'=>$tradein]);
         
     }
 

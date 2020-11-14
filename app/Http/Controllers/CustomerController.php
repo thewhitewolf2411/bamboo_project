@@ -170,12 +170,14 @@ class CustomerController extends Controller
 
         $price = 0;
 
-        foreach($cartItems->items as $items){
-            if($items['type'] === "tradeout"){
-                $price += $items['price'];
-            }
-            if($items['type'] === "tradein"){
-                $price -= $items['price'];
+        if($cartItems !== null){
+            foreach($cartItems->items as $items){
+                if($items['type'] === "tradeout"){
+                    $price += $items['price'];
+                }
+                if($items['type'] === "tradein"){
+                    $price -= $items['price'];
+                }
             }
         }
 
