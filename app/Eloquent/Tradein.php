@@ -109,15 +109,26 @@ class Tradein extends Model
     public function getTrayName($id){
         #dd($id);
         $trayid = TrayContent::where('trade_in_id', $id)->first();
-        $trayid = $trayid->tray_id;
-        $trayname = Tray::where('id', $trayid)->first()->tray_name;
+        if($trayid !== null){
+            $trayid = $trayid->tray_id;
+            $trayname = Tray::where('id', $trayid)->first()->tray_name;
+            return $trayname;
+        }
+        else{
+            return "Error";
+        }
 
-        return $trayname;
     }
 
     public function getTrayId($id){
         $trayid = TrayContent::where('trade_in_id', $id)->first();
-        $trayid = $trayid->tray_id;
-        return $trayid;
+        if($trayid !== null){
+            $trayid = $trayid->tray_id;
+            $trayname = Tray::where('id', $trayid)->first()->tray_name;
+            return $trayid;
+        }
+        else{
+            return "Error";
+        }
     }
 }

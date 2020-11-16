@@ -217,8 +217,8 @@ class PortalController extends Controller
         $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
         $html .= "<p>" . $user->first_name . " " . $user->last_name . "</p>";
         $html .= "<p>Bamboo Distribution Limited</p>";
-        $html .= "<p>Unit 11, Io Centre</p>";
-        $html .= "<p>Unit 11, Io Centre</p>";
+        $html .= "<p>". $user->delivery_address ."</p>";
+        $html .= "<p>". $user->billing_address ."</p>";
         $html .= "<p>Waltham Abbey</p>";
         $html .= "<p>Essex</p>";
         $html .= "<p>En9 1as</p>";
@@ -281,8 +281,8 @@ class PortalController extends Controller
         $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
         $html .= "<p>" . $user->first_name . " " . $user->last_name . "</p>";
         $html .= "<p>Bamboo Distribution Limited</p>";
-        $html .= "<p>Unit 11, Io Centre</p>";
-        $html .= "<p>Unit 11, Io Centre</p>";
+        $html .= "<p>". $user->delivery_address ."</p>";
+        $html .= "<p>". $user->billing_address ."</p>";
         $html .= "<p>Waltham Abbey</p>";
         $html .= "<p>Essex</p>";
         $html .= "<p>En9 1as</p>";
@@ -1022,6 +1022,14 @@ class PortalController extends Controller
         return view('portal.quarantine.manually')->with('portalUser', $portalUser);
     }
 
+    public function markDeviceToReturn(Request $request){
+        dd($request);
+    }   
+
+    public function markDeviceToRetest(Request $request){
+        dd($request);
+    }
+
     //testing
 
     public function showTestingPage(){
@@ -1075,8 +1083,9 @@ class PortalController extends Controller
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
             $networks = Network::all();
             $productinformation = ProductInformation::where('product_id', $tradein->product_id)->get();
+            $productColors = Colour::where('product_id', $tradein->product_id)->get();
 
-            return view('portal.testing.testdevice')->with(['tradein'=>$tradein, 'portalUser'=>$portalUser, 'networks'=>$networks, 'productinformation'=>$productinformation]);
+            return view('portal.testing.testdevice')->with(['tradein'=>$tradein, 'portalUser'=>$portalUser, 'networks'=>$networks, 'productinformation'=>$productinformation, 'productColors'=>$productColors]);
         }    
 
 

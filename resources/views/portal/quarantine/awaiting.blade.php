@@ -17,6 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
     <title>Bamboo Recycle::Products Awaiting Seller Response</title>
+    <script src="{{ asset('js/Quarantine.js') }}"></script>
 </head>
 
 <body class="portal-body">
@@ -32,22 +33,6 @@
                     </div>
                 </div>
 
-                @if(Session::has('success'))
-
-                <div class="alert alert-success" role="alert">
-                    {{Session::get('success')}}
-                </div>
-
-                @endif
-
-                @if(Session::has('error'))
-
-                <div class="alert alert-danger" role="alert">
-                    {{Session::get('error')}}
-                </div>
-
-                @endif
-
                 <div class="portal-table-container">
                     <table class="portal-table" id="categories-table">
                         <tr>
@@ -60,7 +45,7 @@
                         </tr>
                         @foreach($tradeins as $tradein)
                         <tr>
-                            <td><div class="table-element">{{$tradein->id}}</div></td>
+                            <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
                             <td><div class="table-element">{{$tradein->barcode}}</div></td>
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                             <td><div class="table-element">
@@ -73,7 +58,29 @@
                             </div></td>
                             <td><div class="table-element"><p>Device is in a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a></p></div></td>
                             <td><div class="table-element">
-                            
+
+                                <a href="javascript:void(0)" onclick = sendToRetest({{$tradein->barcode}}) title="Send device to retesting">
+                                    <i class="fa fa fa-print"></i>
+                                </a>
+
+                                <a href="javascript:void(0)" onclick = sendToReturn({{$tradein->barcode}}) title="Mark device to return to customer">
+                                    <i class="fa fa fa-print"></i>
+                                </a>
+
+                                <form id="send_to_retest_form_{{$tradein->id}}" class="form-hidden" method="post" action="/portal/quarantine/markdevicetoretest">
+                                    @csrf
+
+                                    <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
+                                    <input type="submit" id="send_to_retest_button_{{$tradein->id}}">
+                                </form>
+
+                                <form id="send_to_return_form_{{$tradein->id}}" class="form-hidden" method="post" action="/portal/quarantine/markdevicetoreturn">
+                                    @csrf
+
+                                    <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
+                                    <input type="submit" id="send_to_return_button_{{$tradein->id}}">
+                                </form>
+
                             </div></td>
                         </tr>
                         @endforeach

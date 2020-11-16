@@ -191,11 +191,13 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="cosmetic_condition">
+                            <label for="device_color">
                                 What is the device color?
                             </label>
-                            <select class="form-control" id="cosmetic_condition" name="cosmetic_condition">
-
+                            <select class="form-control" id="device_color" name="device_color">
+                                @foreach($productColors as $color)
+                                    <option value="{{$color->color_value}}">{{$color->color_value}}</option>
+                                @endforeach
                             </select>
                         </div>
 

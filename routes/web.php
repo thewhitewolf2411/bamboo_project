@@ -157,6 +157,9 @@ Route::get('/portal/quarantine/return', 'PortalController@showQuarantineReturn')
 Route::get('/portal/quarantine/retest', 'PortalController@showQuarantineRetest')->middleware('auth');
 Route::get('/portal/quarantine/stock', 'PortalController@showQuarantineStock')->middleware('auth');
 
+Route::post('/portal/quarantine/markdevicetoreturn', 'PortalController@markDeviceToReturn')->middleware('auth');
+Route::post('/portal/quarantine/markdevicetoretest', 'PortalController@markDeviceToRetest')->middleware('auth');
+
 //testing
 Route::get('/portal/testing', 'PortalController@showTestingPage')->middleware('auth');
 Route::get('/portal/testing/receive', 'PortalController@showReceiveTradeIn')->middleware('auth');

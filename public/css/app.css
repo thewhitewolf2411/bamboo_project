@@ -13724,6 +13724,11 @@ input[type=number] {
   margin: 0 !important;
 }
 
+.form-hidden {
+  visibility: hidden;
+  width: 0 !important;
+}
+
 .register-elements-container {
   width: 50%;
 }
