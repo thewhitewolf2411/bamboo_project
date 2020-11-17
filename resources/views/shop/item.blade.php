@@ -112,7 +112,7 @@
                         </div>
                         <div class="product-selected product-price-container">
                             <p>Product price:</p>
-                            <p>{{$itemData->product_buying_price}}£</p>
+                            <p>£{{$itemData->product_buying_price}}</p>
                         </div>
                         @if(Auth::user())
                         <div class="add-to-container">

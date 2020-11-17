@@ -25,8 +25,8 @@ class Tradein extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'barcode','barcode_original','product_id','product_state', 'job_state', 'sent_themselves', 'order_price','memory','network', 'receoved', 'device_missing', 'device_correct', 'device_present_as_described', 'checkmend_passed', 'imei_number', 'change_device',
-        'visible_imei', 'proccessed_before', 'bamboo_grade', 'grade_changed', 'older_than_14_days', 'quarantine_status'
+        'user_id', 'barcode','barcode_original','product_id','product_state', 'job_state', 'sent_themselves', 'order_price','memory','network', 'color','correct_memory','correct_network', 'received', 'device_missing', 'device_correct', 'device_present_as_described', 'checkmend_passed', 'imei_number', 'change_device',
+        'visible_imei', 'proccessed_before', 'bamboo_grade', 'older_than_14_days', 'quarantine_status'
     ];
 
 

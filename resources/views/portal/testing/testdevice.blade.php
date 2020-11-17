@@ -141,7 +141,7 @@
                             <label for="correct_memory_value">
                                 Select correct memory:
                             </label>
-                            <select class="form-control" id="correct_network_value" name="correct-network-value" onchange="testingElementChanged()" required>
+                            <select class="form-control" id="correct_memory_value" name="correct_memory_value" onchange="testingElementChanged()" required>
                                 @foreach($productinformation as $productinfo)
                                 <option value="{{$productinfo->memory}}">{{$productinfo->memory}}</option>
                                 @endforeach
@@ -163,7 +163,7 @@
                             <label for="correct_network_value">
                                 Select correct network:
                             </label>
-                            <select class="form-control" id="correct_network_value" name="correct-network-value" onchange="testingElementChanged()" required>
+                            <select class="form-control" id="correct_network_value" name="correct_network_value" onchange="testingElementChanged()" required>
                                 @foreach($networks as $network)
                                 <option value="{{$network->network_name}}">{{$network->network_name}}</option>
                                 @endforeach

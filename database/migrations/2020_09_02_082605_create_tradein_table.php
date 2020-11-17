@@ -26,6 +26,9 @@ class CreateTradeinTable extends Migration
             //1 sent label / job complete
             $table->string('memory');
             $table->string('network');
+            $table->string('color')->nullable();
+            $table->string('correct_memory')->nullable();
+            $table->string('correct_network')->nullable();
             $table->boolean('sent_themselves')->default(false);
             $table->boolean('received')->default(false);
             $table->boolean('device_missing')->nullable()->default(null);
@@ -39,7 +42,6 @@ class CreateTradeinTable extends Migration
             $table->boolean('visible_imei')->nullable()->default(null);
             $table->boolean('proccessed_before')->nullable()->default(null);
             $table->string('bamboo_grade')->nullable()->default(null);
-            $table->boolean('grade_changed')->default(false);
             $table->boolean('older_than_14_days')->nullable()->default(null);
             $table->integer('quarantine_status')->nullable()->default(null);
             

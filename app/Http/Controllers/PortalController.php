@@ -1472,6 +1472,8 @@ class PortalController extends Controller
 
     public function checkDeviceStatus(Request $request){
 
+        #dd($request);
+
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         $product = SellingProduct::where('id', $tradein->product_id)->first();
 
@@ -1502,6 +1504,31 @@ class PortalController extends Controller
             $tradein->marked_for_quarantine = true;
         }
 
+        if($request->correct_network == "false"){
+            $correctNetworkName = $request->correct_network_value;
+            $correctNetworkData = Network::where('network_name', $correctNetworkName)->first();
+
+            $userNetworkName = $tradein->network;
+            $userNetworkData = Network::where('network_name', $userNetworkName)->first();
+
+            $correctNetworkPrice = ProductNetworks::where('network_id', $correctNetworkData->id)->where('product_id', $tradein->id)->first()->knockoff_price;
+            $userNetworkPrice = ProductNetworks::where('network_id', $userNetworkData->id)->where('product_id', $tradein->id)->first()->knockoff_price;
+
+            if($correctNetworkPrice > $userNetworkPrice){
+                $tradein->marked_for_quarantine = true;
+            }
+
+            $tradein->correct_network = $correctNetworkName;
+        }
+
+        if($request->correct_memory == "false"){
+            $tradein->marked_for_quarantine = true;
+
+            $tradein->correct_memory = $request->correct_memory_value;
+        }
+
+        #$tradein->color = $request->
+
         $tradein->save();
         $tradein->job_state = 5;
 
@@ -1528,7 +1555,6 @@ class PortalController extends Controller
             if($tradein->getBrandId($tradein->product_id) == 1){
                 $quarantineTrays = Tray::where('tray_name', 'LIKE', '%TA01%')->where('number_of_devices', "<" ,200)->first();
                 $quarantineName = $quarantineTrays->tray_name;
-
             }
             if($tradein->getBrandId($tradein->product_id) == 2){
                 $quarantineTrays = Tray::where('tray_name', 'LIKE', '%TS01%')->where('number_of_devices', "<" ,200)->first();
@@ -1929,7 +1955,8 @@ class PortalController extends Controller
         $productInformation = "";
 
         if($export_feed_parameter == 1){
-            $products = BuyingProduct::all();
+            #$products = BuyingProduct::all();
+            DB::table('buying_products')->truncate();
         }
         else if($export_feed_parameter == 2){
             $products = SellingProduct::all();
@@ -2057,13 +2084,6 @@ class PortalController extends Controller
 
 
             }
-
-            
-
-            dd();
-
-
-            #dd($importeddata, $emptyrows);
      
         }
         else{

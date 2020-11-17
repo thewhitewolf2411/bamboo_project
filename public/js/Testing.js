@@ -32,6 +32,7 @@ function testingElementChanged(){
 
 
     if(correctMemory == "false"){
+        console.log("here");
         $('#corrent-memory-value').removeClass('form-group-hidden');
     }
     else{
@@ -44,14 +45,7 @@ function testingElementChanged(){
         $('#corrent-network-value').addClass('form-group-hidden');
     }
 
-    if(correctMemory == "false" || correctNetwork == "false"){
-        $('#fake_missing_parts').prop('disabled', true);
-        $('#device_fully_functional').prop('disabled', true);
-        $('#water_damage').prop('disabled', true);
-
-
-    }
-    else{
+    if(correctMemory != "false"){
         $('#fimp_or_google_lock').prop('disabled', false);
         $('#pin_lock').prop('disabled', false);
         $('#fake_missing_parts').prop('disabled', false);
@@ -134,8 +128,31 @@ function testingElementChanged(){
         }
 
     }
+    else{
+        options = {
+            '':'',
+            'Grade A':'Grade A',
+            'Grade B+':'Grade B+',
+            'Grade B':'Grade B',
+            'Grade C':'Grade C',
+            'WSI':'WSI',
+            'WSD':'WSD',
+            'NWSI':'NWSI',
+            'NWSD':'NWSD',
+            'Catastrophic':'Catastrophic'
+        }
+    }
 
-    if(correctMemory == "false" || correctNetwork == "false"){
+    $('#cosmetic_condition').empty(); // remove old options
+    $.each(options, function(key,value) {
+        $('#cosmetic_condition').append($("<option></option>")
+        .attr("value", value).text(key));
+    });
+
+    $('#cosmetic_condition').prop('disabled', false);
+    $('#cosmetic_condition').prop('required', true);
+
+    /*if(correctMemory == "false" || correctNetwork == "false"){
         $('#cosmetic_condition').prop('disabled', true);
         $('#cosmetic_condition').prop('required', false);
     }
@@ -148,7 +165,7 @@ function testingElementChanged(){
     
         $('#cosmetic_condition').prop('disabled', false);
         $('#cosmetic_condition').prop('required', true);
-    }
+    }*/
 
 }
 
