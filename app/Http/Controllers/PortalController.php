@@ -3029,6 +3029,42 @@ class PortalController extends Controller
         return redirect('/portal/boxes')->with('success', 'Box with name '.$boxname.' was succesfully deleted.');
     }
 
+    public function showAddDeviceToBoxPage($boxname){
+
+        $box = Box::where('box_name', $boxname)->first();
+
+        $box_mark = $this->get_string_between($box->box_name, '(', ')');
+        $brand_id = substr($boxname, -4, 1);
+
+        if($brand_id === "A"){
+            $brand_id = 1;
+        }
+        elseif($brand_id === "S"){
+            $brand_id = 2;
+        }
+        elseif($brand_id === "H"){
+            $brand_id = 3;
+        }
+        else{
+            $brand_id = 4;
+        }
+        
+        $tradein = Tradein::where('bamboo_grade', $box_mark)->where('marked_for_quarantine', false)->get();
+
+        dd($box_mark, $tradein, $brand_id);
+
+        return view('portal.boxes.adddevice');
+    }
+
+    function get_string_between($string, $start, $end){
+        $string = ' ' . $string;
+        $ini = strpos($string, $start);
+        if ($ini == 0) return '';
+        $ini += strlen($start);
+        $len = strpos($string, $end, $ini) - $ini;
+        return substr($string, $ini, $len);
+    }
+
 
     //Auth Level
 

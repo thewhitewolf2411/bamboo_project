@@ -284,3 +284,5 @@ Route::get('/portal/boxes/create', 'PortalController@showAddBoxPage')->middlewar
 Route::get('/portal/boxes/box', 'PortalController@showBoxPage')->middleware('auth');
 Route::post('/portal/boxes/createbox', 'PortalController@addBox')->middleware('auth');
 Route::get('/portal/boxes/delete/{id}', 'PortalController@removeBox')->middleware('auth');
+
+Route::get('/portal/boxes/addtobox/{boxname}', 'PortalController@showAddDeviceToBoxPage')->middleware('auth');

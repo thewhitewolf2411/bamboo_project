@@ -47,7 +47,7 @@
                             <td><a href="/portal/boxes/box?box_id_scan={{$box->box_name}}"><div class="table-element">{{$box->box_name}}</div></a></td>
                             <td><a href="/portal/boxes/box?box_id_scan={{$box->box_name}}"><div class="table-element">{{$box->description}}</div></a></td>
                             <td><a href="/portal/boxes/box?box_id_scan={{$box->box_name}}"><div class="table-element"></div></a></td>
-                            <td><div class="table-element"><a onclick="return confirm('Are you sure? This will remove trolley from system and remove all trays and devices from the system?')" href="/portal/boxes/delete={{$box->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete Trolley</p></div></a></div></td>
+                            <td><div class="table-element"><a onclick="return confirm('Are you sure? This will remove trolley from system and remove all trays and devices from the system?')" href="/portal/boxes/delete={{$box->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete Box</p></div></a></div></td>
                             <td><div class="table-element"><a href="/portal/trolleys/trolley/printlabel/{{$box->box_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print box Label</p></div></a></div></td>
                         </tr>
                     </table>
@@ -58,7 +58,13 @@
                         </div>
                     </div>
 
-                    <table class="portal-table" id="categories-table">
+                    <a href="/portal/boxes/addtobox/{{$box->box_name}}">
+                        <div class="btn btn-primary btn-red">
+                            Add devices to box
+                        </div>
+                    </a>
+
+                    <table class="portal-table" id="categories-table" style="margin-top:30px;">
                         <tr>
                             <td><div class="table-element">Device name</div></td>
                             <td><div class="table-element">Device barcode</div></td>
@@ -72,20 +78,5 @@
     </main>
 
 </body>
-<script>
-
-$(document).ready(function(){
-
-    var elem = $('.portal-links-container > .portal-header-element')[12];
-    
-    console.log(elem.children[0]);
-
-    elem.children[0].style.color = "#fff";
-    elem.children[0].children[0].style.opacity = 1;
-
-});
-
-</script>
-
 
 </html>
