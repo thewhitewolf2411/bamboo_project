@@ -483,10 +483,10 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $tradeins = Tradein::whereIn('job_state', array(3,4,5,6))->where('marked_for_quarantine', 0)->get()->groupBy('barcode');
+        $tradeins = Tradein::all()->groupBy('barcode');
 
         if($request->all() == null || $request->search == 0){
-            $tradeins = Tradein::all()->whereIn('job_state', array(3,4,5,6))->where('marked_for_quarantine', 0)->groupBy('barcode');
+            $tradeins = Tradein::all()->groupBy('barcode');
 
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -495,23 +495,22 @@ class PortalController extends Controller
         }
         else{
             if($request->search <= 3){
-                $tradeins = Tradein::whereIn('job_state', array(3,4,5,6))->where('marked_for_quarantine', 0)->get()->groupBy('barcode');
+                $tradeins = Tradein::all()->groupBy('barcode');
                 $user_id = Auth::user()->id;
                 $portalUser = PortalUsers::where('user_id', $user_id)->first();
     
                 $search = $request->search;
     
                 foreach($tradeins as $tradein){
-                    print_r($tradein->getCategoryId($tradein->product_id) != $request->search);
-                        if($tradein->getCategoryId($tradein->product_id) != $request->search){
-                            $tradeins = $tradeins->except($tradein->id);
+                    if($tradein->getCategoryId($tradein->product_id) != $request->search){
+                        $tradeins = $tradeins->except($tradein->id);
                     }
                 }
     
                 $tradeins = $tradeins->groupBy('barcode');
             }
             else{
-                $tradeins = Tradein::where('barcode', $request->search)->whereIn('job_state', array(3,4,5,6))->where('marked_for_quarantine', 0)->get();
+                $tradeins = Tradein::all()->groupBy('barcode');
                 if(count($tradeins) < 1){
                     return redirect()->back()->with('error', 'No Order with that barcode. Please try again.');
                 }
@@ -524,7 +523,7 @@ class PortalController extends Controller
 
         }
 
-        return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Order Management')->with('search', $search);
+        return view('portal.customer-care.order-management')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Order Management')->with('search', $search);
     }
 
     public function sendDeviceBackToReceive($barcode){
