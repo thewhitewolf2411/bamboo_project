@@ -3036,24 +3036,49 @@ class PortalController extends Controller
         $box_mark = $this->get_string_between($box->box_name, '(', ')');
         $brand_id = substr($boxname, -4, 1);
 
+        $tradeins = "";
+
         if($brand_id === "A"){
             $brand_id = 1;
+            $tradeins = Tradein::where('bamboo_grade', $box_mark)->where('marked_for_quarantine', false)->where('received', true)->get();
+            foreach($tradeins as $key => $tradein){
+                if($tradein->getBrandId($tradein->product_id) != $brand_id){
+                    dd($tradein);
+                }
+            }
         }
         elseif($brand_id === "S"){
             $brand_id = 2;
+            $tradeins = Tradein::where('bamboo_grade', $box_mark)->where('marked_for_quarantine', false)->where('received', true)->get();
+            foreach($tradeins as $key => $tradein){
+                if($tradein->getBrandId($tradein->product_id) != $brand_id){
+                    $tradeins->forget($key);
+                }
+            }
         }
         elseif($brand_id === "H"){
             $brand_id = 3;
+            $tradeins = Tradein::where('bamboo_grade', $box_mark)->where('marked_for_quarantine', false)->where('received', true)->get();
+            foreach($tradeins as $key => $tradein){
+                if($tradein->getBrandId($tradein->product_id) != $brand_id){
+                    $tradeins->forget($key);
+                }
+            }
         }
         else{
             $brand_id = 4;
+            $tradeins = Tradein::where('bamboo_grade', $box_mark)->where('marked_for_quarantine', false)->where('received', true)->get();
+            foreach($tradeins as $key => $tradein){
+                if($tradein->getBrandId($tradein->product_id) <= 3){
+                    $tradeins->forget($key);
+                }
+            }
         }
         
-        $tradein = Tradein::where('bamboo_grade', $box_mark)->where('marked_for_quarantine', false)->get();
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        dd($box_mark, $tradein, $brand_id);
-
-        return view('portal.boxes.adddevice');
+        return view('portal.boxes.adddevice')->with(['avalibleDevices'=>$tradeins, 'portalUser'=>$portalUser]);
     }
 
     function get_string_between($string, $start, $end){
