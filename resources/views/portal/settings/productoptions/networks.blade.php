@@ -36,27 +36,16 @@
                     <table class="portal-table" id="categories-table">
                         <tr>
                             <td>Id</td>
-                            <td>Brand</td>
-                            <td>Value</td>
-                            <td>
-                                <a href="/portal/settings/networks/add">
-                                <i class="fa fa-plus-circle"></i>
-                                </a>
-                            </td>
+                            <td>Name</td>
+                            <td>Image</td>
                         </tr>
 
 
                         @foreach($networks as $network)
                         <tr>
                             <td><div class="table-element">{{$network->id}}</td>
-                            <td><div class="table-element">{{$network->getBrandName($network->brand_id)}}</div></td>
-                            <td><div class="table-element">{{$network->network_value}}</div></td>
-                            <td><div class="table-element">
-                                <a href="/portal/conditions/edit/{{$network->id}}">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                                </div>
-                            </td>
+                            <td><div class="table-element">{{$network->network_name}}</div></td>
+                            <td><div class="table-element"><img src="{{$network->network_image}}"></div></td>
                         </tr>
                         @endforeach
 

@@ -40,16 +40,6 @@
                                     <p>Product Options</p>
                                 </div>
                             </a>
-                            <a href="/portal/settings/conditions" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                <p>Conditions</p>
-                                </div>
-                            </a>
-                            <a href="/portal/settings/testing-questions" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p>Testing Questions</p>
-                                </div>
-                            </a>
                             <a href="/portal/settings/websites" class="col-2 my-2">
                                 <div class="portal-content-element">
                                     <p>Websites</p>
@@ -63,16 +53,6 @@
                             <a href="/portal/settings/payments-options" class="col-2 my-2">
                                 <div class="portal-content-element">
                                     <p>Payments Options</p>
-                                </div>
-                            </a>
-                            <a href="/portal/settings/delivery-options" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p>Delivery Options</p>
-                                </div>
-                            </a>
-                            <a href="/portal/settings/checkout-options" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p>Checkout Options</p>
                                 </div>
                             </a>
                             <a href="/portal/settings/promotional-codes" class="col-2 my-2">

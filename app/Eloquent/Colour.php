@@ -22,9 +22,9 @@ class Colour extends Model
         'product_id','color_value'
     ];
 
-    public function getBrandName($brandid){
+    public function getModelName($modelid){
 
-        $brand = Brand::where('id', $brandid)->first();
-        return $brand->brand_name;
+        $model = SellingProduct::where('id', $modelid)->first();
+        return $model->product_name;
     }
 }

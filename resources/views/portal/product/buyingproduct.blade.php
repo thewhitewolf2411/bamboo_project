@@ -28,7 +28,7 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Avalible Buying Products</p>
+                        <p>Available Sales Products</p>
                     </div>
                 </div>
                 <div class="portal-table-container">
@@ -58,7 +58,7 @@
                             <td><div class="table-element">{{$buyingProduct->getCategory($buyingProduct->category_id)}}</div></td>
                             <td><div class="table-element">{{$buyingProduct->getBrand($buyingProduct->brand_id)}}</div></td>
                             <td><div class="table-element">{{$buyingProduct->product_grade}}</div></td>
-                            <td><div class="table-element">{{$buyingProduct->product_buying_price}} £</div></td>
+                            <td><div class="table-element">£{{$buyingProduct->product_buying_price}} </div></td>
                             <td><div class="table-element">
                                 <a href="/portal/product/editsbuyingproduct/{{$buyingProduct->id}}">
                                     <i class="fa fa-pencil"></i>

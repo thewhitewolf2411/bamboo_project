@@ -603,7 +603,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TA01-6-WDS',
+            'tray_name'=>'TA01-6-WSD',
             'trolley_id'=>6,
             'number_of_devices'=>0,
 
@@ -703,7 +703,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TS01-6-WDS',
+            'tray_name'=>'TS01-6-WSD',
             'trolley_id'=>8,
             'number_of_devices'=>0,
 
@@ -802,7 +802,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TH01-6-WDS',
+            'tray_name'=>'TH01-6-WSD',
             'trolley_id'=>10,
             'number_of_devices'=>0,
 
@@ -900,7 +900,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TM01-6-WDS',
+            'tray_name'=>'TM01-6-WSD',
             'trolley_id'=>12,
             'number_of_devices'=>0,
 

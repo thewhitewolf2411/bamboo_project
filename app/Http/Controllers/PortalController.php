@@ -1529,8 +1529,10 @@ class PortalController extends Controller
 
         #$tradein->color = $request->
 
-        $tradein->save();
+        
         $tradein->job_state = 5;
+        $tradein->bamboo_grade = $request->bamboo_final_grade;
+        $tradein->save();
 
         $newBarcode = "";
 
@@ -1550,18 +1552,101 @@ class PortalController extends Controller
             $tradein->barcode = $newBarcode;
             $tradein->save();
 
-            $quarantineTrays = Tray::where('tray_name', 'LIKE', '%TM01%')->where('number_of_devices', "<" ,200)->first();
-            $quarantineName = $quarantineTrays->tray_name;
+            $quarantineName ="";
+
+            if($customergradeval == 5){
+                $quarantineTrays = Tray::where('tray_name', '%TM01-1-A%')->where('number_of_devices', "<" ,200)->first();
+            }
+            elseif($customergradeval == 4){
+                $quarantineTrays = Tray::where('tray_name', '%TM01-1-B%')->where('number_of_devices', "<" ,200)->first();
+            }
+            elseif($customergradeval == 3){
+                $quarantineTrays = Tray::where('tray_name', '%TM01-1-C%')->where('number_of_devices', "<" ,200)->first();
+            }
+            elseif($customergradeval == 2){
+                if($tradein->bamboo_grade == "WSI"){
+                    $quarantineTrays = Tray::where('tray_name', '%TM01-1-WSI%')->where('number_of_devices', "<" ,200)->first();
+                }
+                if($tradein->bamboo_grade == "WSD"){
+                    $quarantineTrays = Tray::where('tray_name', '%TM01-1-WSD%')->where('number_of_devices', "<" ,200)->first();
+                }
+            }
+            elseif($customergradeval == 1){
+                $quarantineTrays = Tray::whereIn('tray_name', ['%TM01-1-NWSI%','%TM01-1-NWSD%','%TM01-1-CATASTROPHIC%'])->where('number_of_devices', "<" ,200)->first();
+            }
+
             if($tradein->getBrandId($tradein->product_id) == 1){
-                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%TA01%')->where('number_of_devices', "<" ,200)->first();
+                if($customergradeval == 5){
+                    $quarantineTrays = Tray::where('tray_name', 'TA01-1-A')->where('number_of_devices', "<" ,200)->first();
+                }
+                elseif($customergradeval == 4){
+                    $quarantineTrays = Tray::where('tray_name', 'TA01-2-B')->where('number_of_devices', "<" ,200)->first();
+                }
+                elseif($customergradeval == 3){
+                    $quarantineTrays = Tray::where('tray_name', 'TA01-4-C')->where('number_of_devices', "<" ,200)->first();
+                }
+                elseif($customergradeval == 2){
+                    if($tradein->bamboo_grade == "WSI"){
+                        $quarantineTrays = Tray::where('tray_name', 'TA01-5-WSI')->where('number_of_devices', "<" ,200)->first();
+                    }
+                    if($tradein->bamboo_grade == "WSD"){
+                        $quarantineTrays = Tray::where('tray_name', 'TA01-6-WSD')->where('number_of_devices', "<" ,200)->first();
+                    }
+                }
+                elseif($customergradeval == 1){
+                    $quarantineTrays = Tray::whereIn('tray_name', ['TA02-1-NWSI','TA02-2-NWSD','TA02-3-CATASTROPHIC'])->where('number_of_devices', "<" ,200)->first();
+                }
+                
                 $quarantineName = $quarantineTrays->tray_name;
             }
+
             if($tradein->getBrandId($tradein->product_id) == 2){
-                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%TS01%')->where('number_of_devices', "<" ,200)->first();
+                if($customergradeval == 5){
+                    $quarantineTrays = Tray::where('tray_name', 'TS01-1-A')->where('number_of_devices', "<" ,200)->first();
+                }
+                elseif($customergradeval == 4){
+                    $quarantineTrays = Tray::where('tray_name', 'TS01-2-B')->where('number_of_devices', "<" ,200)->first();
+                }
+                elseif($customergradeval == 3){
+                    $quarantineTrays = Tray::where('tray_name', 'TS01-4-C')->where('number_of_devices', "<" ,200)->first();
+                }
+                elseif($customergradeval == 2){
+                    if($tradein->bamboo_grade == "WSI"){
+                        $quarantineTrays = Tray::where('tray_name', 'TS01-5-WSI')->where('number_of_devices', "<" ,200)->first();
+                    }
+                    if($tradein->bamboo_grade == "WSD"){
+                        $quarantineTrays = Tray::where('tray_name', 'TS01-6-WSD')->where('number_of_devices', "<" ,200)->first();
+                    }
+                }
+                elseif($customergradeval == 1){
+                    $quarantineTrays = Tray::whereIn('tray_name', ['TS02-1-NWSI','TS02-2-NWSD','TS02-3-CATASTROPHIC'])->where('number_of_devices', "<" ,200)->first();
+                }
+                
                 $quarantineName = $quarantineTrays->tray_name;
             }
+
             if($tradein->getBrandId($tradein->product_id) == 3){
-                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%TH01%')->where('number_of_devices', "<" ,200)->first();
+                if($customergradeval == 5){
+                    $quarantineTrays = Tray::where('tray_name', 'TH01-1-A')->where('number_of_devices', "<" ,200)->first();
+                }
+                elseif($customergradeval == 4){
+                    $quarantineTrays = Tray::where('tray_name', 'TH01-2-B')->where('number_of_devices', "<" ,200)->first();
+                }
+                elseif($customergradeval == 3){
+                    $quarantineTrays = Tray::where('tray_name', 'TH01-4-C')->where('number_of_devices', "<" ,200)->first();
+                }
+                elseif($customergradeval == 2){
+                    if($tradein->bamboo_grade == "WSI"){
+                        $quarantineTrays = Tray::where('tray_name', 'TH01-5-WSI')->where('number_of_devices', "<" ,200)->first();
+                    }
+                    if($tradein->bamboo_grade == "WSD"){
+                        $quarantineTrays = Tray::where('tray_name', 'TH01-6-WSD')->where('number_of_devices', "<" ,200)->first();
+                    }
+                }
+                elseif($customergradeval == 1){
+                    $quarantineTrays = Tray::whereIn('tray_name', ['TH02-1-NWSI','TH02-2-NWSD','TH02-3-CATASTROPHIC'])->where('number_of_devices', "<" ,200)->first();
+                }
+                
                 $quarantineName = $quarantineTrays->tray_name;
             }
         }
@@ -1654,6 +1739,15 @@ class PortalController extends Controller
                 $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RH01%')->where('number_of_devices', "<" ,200)->first();
                 $quarantineName = $quarantineTrays->tray_name;
             }
+        }
+
+        
+        $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+
+        if($oldTrayContent !== null){
+            $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
+            $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+            $oldTray->save();
         }
 
         $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;
@@ -2325,6 +2419,7 @@ class PortalController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
         $colours = Colour::all();
+        #dd($colours);
         return view('portal.settings.productoptions.colour')->with(['portalUser'=>$portalUser, 'colours'=>$colours]);
 
     }
@@ -2336,6 +2431,7 @@ class PortalController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
         $networks = Network::all();
+        #dd($networks);
 
         return view('portal.settings.productoptions.networks')->with(['portalUser'=>$portalUser, 'networks'=>$networks]);
 
@@ -2504,7 +2600,7 @@ class PortalController extends Controller
 
         $website->website_image = $fileNameToStore;
         $website->save();
-        return redirect('/portal/settings/websites')->with('portalUser', $portalUser);
+        return redirect('/portal/settings/websites');
     }
 
     public function deleteWebsite($id){

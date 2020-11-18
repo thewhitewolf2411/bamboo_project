@@ -36,27 +36,16 @@
                     <table class="portal-table" id="categories-table">
                         <tr>
                             <td>Id</td>
-                            <td>Brand</td>
-                            <td>Value</td>
-                            <td>
-                                <a href="/portal/settings/colours/add">
-                                <i class="fa fa-plus-circle"></i>
-                                </a>
-                            </td>
+                            <td>Model</td>
+                            <td>Color</td>
                         </tr>
 
 
                         @foreach($colours as $color)
                         <tr>
                             <td><div class="table-element">{{$color->id}}</td>
-                            <td><div class="table-element">{{$color->getBrandName($color->brand_id)}}</div></td>
-                            <td><div class="table-element" style="background:{{$color->color_value}}; height:100%"></div></td>
-                            <td><div class="table-element">
-                                <a href="/portal/memories/edit/{{$color->id}}">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                                </div>
-                            </td>
+                            <td><div class="table-element">{{$color->getModelName($color->product_id)}}</div></td>
+                            <td><div class="table-element">{{$color->color_value}}</div></td>
                         </tr>
                         @endforeach
 

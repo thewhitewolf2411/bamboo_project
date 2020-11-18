@@ -67,7 +67,6 @@
                             <td><div class="table-element">Products</div></td>
                             <td><div class="table-element">Customer grade</div></td>
                             <td><div class="table-element">Order Type</div></td>
-                            <td><div class="table-element">Status</div></td>
                             <td>
                                 <div class="table-element"><input type="checkbox" onclick="checkall(this)"></div>
                             </td>
@@ -78,9 +77,8 @@
                             <tr>
                                 <td ><div class="table-element">{{$key}}</div></td>
                                 <td><div class="table-element">{{$order[0]->created_at}}</div></td>
-                                <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} <br> @endforeach</div></td>
+                                <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} {{$tradein->memory}} <br> @endforeach</div></td>
                                 <td><div class="table-element">@foreach($order as $tradein){{$tradein->product_state}} <br> @endforeach</div></td>
-                                <td><div class="table-element">{{$order[0]->getOrderType($order[0]->barcode)}}</div></td>
                                 <td><div class="table-element">{{$order[0]->getOrderType($order[0]->barcode)}}</div></td>
                                 <td><div class="table-element">
                                     <a title="See trade in details" href="/portal/customer-care/trade-in/{{$tradein->barcode}}">

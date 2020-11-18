@@ -222,6 +222,7 @@
                             <input type="hidden" id="tradein_id" name="tradein_id" value="{{$tradein->id}}">
                             <input type="hidden" id="old_customer_grade" name="old_customer_grade" value="{{$tradein->product_state}}">
                             <input type="hidden" id="bamboo_customer_grade" name="bamboo_customer_grade" value="">
+                            <input type="hidden" id="bamboo_final_grade" name="bamboo_final_grade" value="">
                             <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Submit testing</button>
                         </div>
                         

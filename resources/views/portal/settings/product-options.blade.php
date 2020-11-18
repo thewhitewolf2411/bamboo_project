@@ -37,17 +37,17 @@
                         <div class="d-flex flex-wrap w-100">
                             <a href="/portal/settings/product-options/selling-colours" class="col-2 my-2">
                                 <div class="portal-content-element">
-                                    <p>Avalible selling colours</p>
+                                    <p>Available selling colours</p>
                                 </div>
                             </a>
                             <a href="/portal/settings/conditions/selling-networks" class="col-2 my-2">
                                 <div class="portal-content-element">
-                                <p>Avalible selling networks</p>
+                                <p>Available selling networks</p>
                                 </div>
                             </a>
                             <a href="/portal/settings/testing-questions/selling-memory" class="col-2 my-2">
                                 <div class="portal-content-element">
-                                    <p>Avalible selling memory</p>
+                                    <p>Available selling memory</p>
                                 </div>
                             </a>
                         </div>

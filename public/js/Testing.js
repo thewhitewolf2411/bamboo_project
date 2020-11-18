@@ -184,27 +184,38 @@ function cosmeticElementChanged(){
     else{
         if(cosmeticGrade == "Grade A"){
             $('#customer_grade').val("Excellent Working");
+            $('#bamboo_final_grade').val('Excellent Working');
             cosmeticNumGrade = 5;
         }
         else if(cosmeticGrade == "Grade B+" || cosmeticGrade == "Grade B"){
             $('#customer_grade').val("Good Working");
+            $('#bamboo_final_grade').val('Good Working');
             cosmeticNumGrade = 4;
         }
         else if(cosmeticGrade == "Grade C"){
             $('#customer_grade').val("Poor Working");
+            $('#bamboo_final_grade').val('Poor Working');
             cosmeticNumGrade = 3;
         }
         else if(cosmeticGrade == "WSI" || cosmeticGrade == "WSD"){
             $('#customer_grade').val("Damaged Working");
+            if(cosmeticGrade == "WSI"){
+                $('#bamboo_final_grade').val('WSI');
+            }
+            if(cosmeticGrade == "WSD"){
+                $('#bamboo_final_grade').val('WSD');
+            }
             cosmeticNumGrade = 2;
         }
         else{
             $('#customer_grade').val("Faulty");
+            $('#bamboo_final_grade').val('Faulty');
             cosmeticNumGrade = 1;
         }
     }
 
     $("#bamboo_customer_grade").val(cosmeticNumGrade);
+    
 
     console.log(cosmeticGrade);
 }
