@@ -115,11 +115,11 @@
                             </div>
                             <div class="element-three-top">
                                 <div class="profile-element-container p-1">
-                                    <label for="email" class="profile-small">First Name</label>
+                                    <label for="email" class="profile-small">Email Address</label>
                                     <input id="input-email" name="email" type="email" class="form-control" value="{{$userdata->email}}" disabled required></input>
                                 </div>
                                 <div class="profile-element-container p-1">
-                                    <label for="password" class="profile-small">First Name</label>
+                                    <label for="password" class="profile-small">Password</label>
                                     <input id="input-password" name="password" type="password" class="form-control" value="{{$userdata->password}}" disabled required></input>
                                 </div>
                             </div>
@@ -267,11 +267,9 @@
                                     @endif
                                 </div>
                                 <div class="w-25 p-2">
-                                    <a href="/userprofile/{{$tradein->barcode}}">
-                                        <div class="btn btn-primary btn-orange">
-                                            <p class="profile-large" style="color: #fff;">View details</p>
-                                        </div>
-                                    </a>
+                                    <button type="button" class="btn btn-primary btn-orange profile-large" style="color: #fff;" data-toggle="modal" data-target="proba">
+                                        View details
+                                    </button>
                                 </div>
                             </div>
                             @endforeach
@@ -282,6 +280,52 @@
                 </div>
             </div>
         </main>
+
+
+        @foreach($tradeins as $tradein)
+        <div class="modal" tabindex="-1" role="dialog" aria-hidden="true" id="proba">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+
+        @foreach($tradeouts as $tradeout)
+        <div class="modal fade" tabindex="-1" role="dialog" id="{{$tradeout->barcode}}">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+
         <footer>@include('customer.layouts.footer')</footer>
     </body>
 </html>

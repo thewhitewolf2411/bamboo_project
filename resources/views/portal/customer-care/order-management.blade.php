@@ -62,8 +62,8 @@
 
                     <table class="portal-table" id="categories-table">
                         <tr>
-                            <td><div class="table-element">Trade-in ID</div></td>
-                            <td><div class="table-element">Trade-in barcode number</div></td>
+                            <td><div class="table-element">Trade-in Barcode</div></td>
+                            <td><div class="table-element">Trade-in Barcode number</div></td>
                             <td><div class="table-element">Date Placed</div></td>
                             <td><div class="table-element">Device name</div></td>
                             <td><div class="table-element">Order status</div></td>

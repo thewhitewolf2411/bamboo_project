@@ -1122,6 +1122,8 @@ class PortalController extends Controller
 
     public function isDeviceMissing(Request $request){
 
+        #dd($request);
+
         $tradein = Tradein::where('id', $request->tradein_id)->first();
 
         $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $tradein->created_at);
@@ -1164,6 +1166,17 @@ class PortalController extends Controller
         else if($request->missing == "missing"){
             $tradein->device_missing = true;
             $tradein->received = true;
+            $tradein->marked_for_quarantine = true;
+            $tradein->received = true;
+
+            $filenameWithExt = $request->file('missing_image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('missing_image')->getClientOriginalExtension();
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('missing_image')->storeAs('public/missing_images',$fileNameToStore);
+
+            $tradein->missing_image = $path;
+
             $tradein->job_state = 4;
             $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
             $event = new KlaviyoEvent(
@@ -1184,11 +1197,6 @@ class PortalController extends Controller
                 )
             );
             array_push($message, "This device has been found as missing from received order, and has been marked for quarantine. Please confirm this.");
-        }
-
-        if($tradein->device_missing){
-            $tradein->marked_for_quarantine = true;
-            $tradein->received = true;
         }
 
         $tradein->save();
@@ -1438,7 +1446,7 @@ class PortalController extends Controller
                         '$last_name' => $user->last_name,
                         '$birthdate' => $user->birthdate,
                         '$newsletter' => $user->email,
-                        '$products' => $tradein->getProductName($tradein->id),
+                        '$products' => $tradein->getProductName($tradein->product_id),
                         '$price'=> $tradein->order_price
                     ),
                     'properties' => array(

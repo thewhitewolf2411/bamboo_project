@@ -30,7 +30,7 @@
 
                 <div class="contact-page contact-title-container">
                     <div class="center-title-container">
-                        <p></p>
+                        <p>Terms and conditions</p>
                     </div>
                 </div>
             

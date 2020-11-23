@@ -227,9 +227,10 @@ class CustomerController extends Controller
 
     public function showOrderDetails($order){
 
-        dd($order);
+        #dd($order);
 
         $tradein = Tradein::where('barcode', $order)->get();
+        dd($tradein);
 
         return view('customer.orderdetails')->with(['tradein'=>$tradein, 'barcode'=>$order]);
     }

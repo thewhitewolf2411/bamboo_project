@@ -13729,6 +13729,10 @@ input[type=number] {
   width: 0 !important;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .register-elements-container {
   width: 50%;
 }

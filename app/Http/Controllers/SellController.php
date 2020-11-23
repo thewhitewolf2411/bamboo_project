@@ -308,8 +308,8 @@ class SellController extends Controller
         $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
         $html .= "<p>" . $name . "</p>";
         $html .= "<p>Bamboo Distribution Limited</p>";
-        $html .= "<p>Unit 11, Io Centre</p>";
-        $html .= "<p>Unit 11, Io Centre</p>";
+        $html .= "<p>". $request->$user['delivery_address'] ."</p>";
+        $html .= "<p>". $request->$user['billing_address'] ."</p>";
         $html .= "<p>Waltham Abbey</p>";
         $html .= "<p>Essex</p>";
         $html .= "<p>En9 1as</p>";

@@ -41,7 +41,7 @@
 
                     <div class="d-flex flex-column portal-search-form-container">
                        
-                        <form action="/portal/testing/receive/devicemissing" method="POST" class="d-flex flex-column">
+                        <form action="/portal/testing/receive/devicemissing" enctype="multipart/form-data" method="POST" class="d-flex flex-column">
                             @csrf
                             <div class="w-100 p-3">
                                 <div class="d-flex w-100">
@@ -57,7 +57,10 @@
                                     <div class="d-flex w-25 border p-3"><label for="missing-yes">Device is present.</label><input id="missing-yes" type="radio" name="missing" @if($tradein->received) checked @endif value="present" required></div>
                                     <div class="d-flex w-25 border p-3"><label for="missing-yes">Device is not present</label><input id="missing-no" type="radio" name="missing" value="missing"></div>
                                 </div>
-                                
+                                <div class="d-flex w-100 hidden" id="missing-image-div">
+                                    <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Image proof that device is missing</p></div>
+                                    <div class="d-flex w-50 border p-3"><p><input type="file" id="missing_image" name="missing_image" accept="image/x-png,image/gif,image/jpeg"></p></div>
+                                </div>
                             </div>
 
                             <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
@@ -72,6 +75,22 @@
                             </div>
 
                         </form>
+                        <script>
+
+                            $('input[type=radio][name=missing]').on('change', function(){
+
+                                if(this.value == 'missing'){
+                                    $('#missing-image-div').removeClass('hidden');
+                                    $('#missing_image').prop('required', true);
+                                }
+                                else{
+                                    $('#missing-image-div').addClass('hidden');
+                                    $('#missing_image').prop('required', false);
+                                }
+                            });
+                            
+                        </script>
+
 
                     </div>
 
@@ -80,6 +99,7 @@
             </div>
         </div>
     </main>
+
 
 </body>
 </html>
