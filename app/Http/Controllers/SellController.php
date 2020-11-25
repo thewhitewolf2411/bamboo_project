@@ -306,14 +306,8 @@ class SellController extends Controller
         $html = "";
         $html .= "<style>p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
         $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
-        $html .= "<p>" . $name . "</p>";
-        $html .= "<p>Bamboo Distribution Limited</p>";
-        $html .= "<p>". $request->$user['delivery_address'] ."</p>";
-        $html .= "<p>". $request->$user['billing_address'] ."</p>";
-        $html .= "<p>Waltham Abbey</p>";
-        $html .= "<p>Essex</p>";
-        $html .= "<p>En9 1as</p>";
-        $html .= "<p>United Kingdom</p>";
+        $html .= "<p>" . $name . ",</p>";
+        $html .= "<p>". $request->$user['delivery_address'] .",</p>";
         $html .= "<br><br>";
         $html .= "<p>Order#". $barcode . " Date: " . $created_at .  "</p>";
         $html .= "<p>Dear " . $name . ",</p>";

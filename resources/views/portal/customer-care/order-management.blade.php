@@ -80,7 +80,7 @@
                             <td><div class="table-element">{{$order[0]->created_at}}</div></td>
                             <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} <br> @endforeach</div></td>
                             <td><div class="table-element">
-                                @if($tradein->job_state == 1)<p>Printed</p> 
+                                @if($tradein->job_state == 1)<p>Order Made</p> 
                                 @elseif ($tradein->job_state == 2) <p>Trade pack sent/User Printed</p> 
                                 @elseif($tradein->job_state == 3) <p>Device received, in a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a>, waiting testing.</p> 
                                 @elseif($tradein->job_state == 4) <p>Device received but missing/wrong, in a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a></p> 
@@ -91,17 +91,9 @@
                                 <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
                                     <i class="fa fa-search"></i>
                                 </a>
-
-                                @if($tradein->job_state == 2)
-                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint tradepack">
+                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint label">
                                     <i class="fa fa fa-print"></i>
                                 </a>
-                                @endif
-                                @if($tradein->job_state == 3)
-                                <a href="/labeltradeout-{{$tradein->barcode}}.pdf" target="_blank" title="Reprint tradepack">
-                                    <i class="fa fa fa-print"></i>
-                                </a>
-                                @endif
                                 @if($tradein->job_state == 4)
                                 <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
                                     <i class="fa fa-times" style="color:blue !important;" title="Return device to receiving" ></i>

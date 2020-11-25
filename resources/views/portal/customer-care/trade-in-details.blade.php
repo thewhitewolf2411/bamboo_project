@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Customer Care</title>
+    <title>Bamboo Recycle::Trade-in ID #{{$barcode}}</title>
 </head>
 
 <body class="portal-body">
@@ -39,12 +39,14 @@
                         <div class="d-flex w-100">
                             <div class="d-flex w-50">
                                 <div class="d-flex flex-column w-50 justify-content-between">
+                                    <p>Trade-In Barcode:</p>
                                     <p>Trade-In ID:</p>
                                     <p>Payment Address</p>
                                     <p>Website/Store:</p>
                                 </div>
                                 <div class="d-flex flex-column w-50 justify-content-between">
                                     <p>{{$barcode}}</p>
+                                    <p>{{$tradeins[0]->barcode_original}}</p>
                                     <p></p>
                                     <p>Bamboo Recycle (Website)</p>
                                 </div>
