@@ -98,7 +98,7 @@
                     </div>
                     <div class="d-flex flex-column w-100">
                         @foreach($cart->items as $key=>$cartitem)
-                            {{$key}}
+                            {{$key+1}}
                             @if($cartitem['type'] == 'tradein')
                                 <div class="cart-product d-flex justify-content-between">
                                     <div class="cart-product-image w-25">

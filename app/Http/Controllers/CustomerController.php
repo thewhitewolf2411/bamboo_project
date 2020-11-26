@@ -181,6 +181,8 @@ class CustomerController extends Controller
             }
         }
 
+        $price = abs($price);
+
         return view('customer.cart')->with('cart', $cartItems)->with('products', $products)->with('fullprice', $price);
 
     }

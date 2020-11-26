@@ -43,7 +43,7 @@
                     @endif
 
                     <div class="py-4 d-flex align-items-center">
-                        <form class="d-flex align-items-center" action="/portal/customer-care/trade-pack/" method="get">              
+                        <form class="d-flex align-items-center" action="/portal/customer-care/order-managment/" method="get">              
                             <label for="searchtradeins">Select product type:</label>
                             <select id="search" name="search" class="form-control mx-3">
                                 <option value="0" @if($search == 0) selected @endif>All</option>
@@ -53,7 +53,7 @@
                             </select>
                             <button type="submit" class="btn btn-primary btn-blue">Search</button>
                         </form>
-                        <form class="d-flex align-items-center mx-5" action="/portal/customer-care/trade-pack/" method="get">              
+                        <form class="d-flex align-items-center mx-5" action="/portal/customer-care/order-managment/" method="get">              
                             <label for="searchtradeins">Input trade-in barcode number:</label>
                             <input type="text" name="search" class="form-control mx-3 my-0">
                             <button type="submit" class="btn btn-primary btn-blue">Search</button>

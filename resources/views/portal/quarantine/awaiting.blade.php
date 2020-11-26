@@ -50,10 +50,12 @@
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                             <td><div class="table-element">
                                 <ul>
-                                    @if($tradein->device_correct == false)<li>Device was not correct</li>@endif
-                                    @if($tradein->checkmend_passed == false)<li>Phonecheck failed</li>@endif
-                                    @if($tradein->grade_changed == true)<li>Device grade was changed</li>@endif
-                                    @if($tradein->older_than_14_days == true)<li>Order was expired after 14 days</li>@endif
+                                    @if($tradein->device_correct == false)<li>Device was not correct</li>
+                                    @else
+                                        @if($tradein->checkmend_passed == false)<li>Phonecheck failed</li>@endif
+                                        @if($tradein->grade_changed == true)<li>Device grade was changed</li>@endif
+                                        @if($tradein->older_than_14_days == true)<li>Order was expired after 14 days</li>@endif
+                                    @endif
                                 </ul>
                             </div></td>
                             <td><div class="table-element"><p>Device is in a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a></p></div></td>

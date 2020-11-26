@@ -483,7 +483,7 @@ class PortalController extends Controller
         }
         else{
             if($request->search <= 3){
-                $tradeins = Tradein::all()->groupBy('barcode');
+                $tradeins = Tradein::all();
                 $user_id = Auth::user()->id;
                 $portalUser = PortalUsers::where('user_id', $user_id)->first();
     
@@ -498,7 +498,7 @@ class PortalController extends Controller
                 $tradeins = $tradeins->groupBy('barcode');
             }
             else{
-                $tradeins = Tradein::all()->groupBy('barcode');
+                $tradeins = Tradein::where('barcode', $request->search)->get();
                 if(count($tradeins) < 1){
                     return redirect()->back()->with('error', 'No Order with that barcode. Please try again.');
                 }
@@ -511,7 +511,7 @@ class PortalController extends Controller
 
         }
 
-        return view('portal.customer-care.order-management')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Order Management')->with('search', $search);
+        return view('portal.customer-care.order-management')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Order Management')->with('search', $request->search);
     }
 
     public function sendDeviceBackToReceive($barcode){
@@ -1272,7 +1272,10 @@ class PortalController extends Controller
 
         $newBarcode = "90";
         $newBarcode .= mt_rand(10000, 99999);
-        $tradein->barcode = $newBarcode;
+        if($tradein->barcode == $tradein->barcode_original){
+            $tradein->barcode = $newBarcode;
+        }
+        
         $tradein->save();
 
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
@@ -1544,7 +1547,10 @@ class PortalController extends Controller
 
             $newBarcode .= $tradein->job_state;
             $newBarcode .= mt_rand(10000, 99999);
-            $tradein->barcode = $newBarcode;
+            if($tradein->barcode == $tradein->barcode_original){
+                $tradein->barcode = $newBarcode;
+            }
+            
             $tradein->save();
 
             $quarantineName ="";
@@ -1704,7 +1710,10 @@ class PortalController extends Controller
             }
         }
 
-        $tradein->barcode = $newBarcode;
+        if($tradein->barcode == $tradein->barcode_original){
+            $tradein->barcode = $newBarcode;
+        }
+        
         $tradein->save();
 
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
@@ -1966,9 +1975,9 @@ class PortalController extends Controller
         }
         else if($export_feed_parameter == 2){
             $columns = Schema::getColumnListing('selling_products'); 
-            //16
+            #dd($columns);
             $products = SellingProduct::all();
-            $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O'];
+            $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P','R'];
         }
         
         $filename = "/feed_type_".$export_feed_parameter."[" . date("Y-m-d") ."_". date("h-i-s") . "].xlsx";
@@ -1976,17 +1985,85 @@ class PortalController extends Controller
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         #dd($datarows);
-        for($i=0; $i<count($datarows); $i++){
-            $sheet->setCellValue($datarows[$i] . "1", $columns[$i]);
-        }
-
-        foreach($products as $key=>$product){
-            $product = array_values($product->toArray());
-            
+        if($export_feed_parameter == 1){
             for($i=0; $i<count($datarows); $i++){
-                $sheet->setCellValue($datarows[$i] . ($key+2), $product[$i]);
+                #dd($datarows);
+                $sheet->setCellValue($datarows[$i] . "1", $columns[$i]);
+            }
+            foreach($products as $key=>$product){
+                $product = array_values($product->toArray());
+                
+                for($i=0; $i<count($product); $i++){
+                    $sheet->setCellValue($datarows[$i] . ($key+2), $product[$i]);
+                }
             }
         }
+        else{
+            $k = 2;
+            for($i=0; $i<count($columns)-3; $i++){
+                #dd($datarows);
+                $sheet->setCellValue($datarows[$i] . "1", $columns[$i]);
+                $sheet->setCellValue('L1', 'created_at');
+                $sheet->setCellValue('M1', 'updated_at');
+                $sheet->setCellValue('N1', 'product_network');
+                $sheet->setCellValue('O1', 'product_network_price');
+                $sheet->setCellValue('P1', 'product_avalible_colours');
+
+                $sheet->setCellValue('F1', 'product_memory');
+                $sheet->setCellValue('G1', 'customer_grade_price_1');
+                $sheet->setCellValue('H1', 'customer_grade_price_2');
+                $sheet->setCellValue('I1', 'customer_grade_price_3');
+                $sheet->setCellValue('J1', 'customer_grade_price_4');
+                $sheet->setCellValue('K1', 'customer_grade_price_5');
+            }
+            foreach($products as $key=>$product){
+                $product = array_values($product->toArray());
+                $productInformation = ProductInformation::where('product_id', $product[0])->get();
+                $productNetworks = ProductNetworks::where('product_id', $product[0])->get();
+                $productColor = Colour::where('product_id', $product[0])->get();
+                #dd($productColor);
+
+                $sheet->setCellValue('A' . $k, $product[1]);
+                $sheet->setCellValue('B' . $k, $product[2]);
+                $sheet->setCellValue('C' . $k, $product[3]);
+                $sheet->setCellValue('D' . $k, $product[4]);
+                $sheet->setCellValue('E' . $k, $product[5]);
+
+                $i=$k;
+                foreach($productInformation as $productInfo){
+                    $sheet->setCellValue('F'.$i, $productInfo->memory);
+                    $sheet->setCellValue('G'.$i, $productInfo->customer_grade_price_1);
+                    $sheet->setCellValue('H'.$i, $productInfo->customer_grade_price_2);
+                    $sheet->setCellValue('I'.$i, $productInfo->customer_grade_price_3);
+                    $sheet->setCellValue('J'.$i, $productInfo->customer_grade_price_4);
+                    $sheet->setCellValue('K'.$i, $productInfo->customer_grade_price_5);
+                    $i++;
+                }
+
+                $i=$k;
+                foreach($productNetworks as $network){
+                    $sheet->setCellValue('N'.$i, $network->getNetWorkName($network->network_id));
+                    $sheet->setCellValue('O'.$i, $network->knockoff_price);
+                    $i++;
+                }
+
+                $i=$k;
+                foreach($productColor as $color){
+                    $sheet->setCellValue('P'.$i, $color->color_value);
+                    $i++;
+                }
+            
+
+                if(count($productNetworks) >= count($productColor)){
+                    $k += count($productNetworks) + 1;
+                }
+                else{
+                    $k += count($productColor) + 1;
+                }
+            }
+        }
+
+
 
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
