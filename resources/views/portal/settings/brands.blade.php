@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+   <!-- Sortable -->
+   <script src="{{ asset('js/Sort.js') }}"></script>
+
     <title>Bamboo Recycle::Manufacturer</title>
 </head>
 
@@ -33,7 +36,7 @@
                 </div>
                 <div class="portal-table-container">
 
-                    <table class="portal-table" id="brands-table">
+                    <table class="portal-table sortable" id="brands-table">
                         <tr>
                             <td>Id</td>
                             <td>Image</td>
@@ -53,7 +56,7 @@
                                 <td><div class="table-element">{{$brand->id}}</td>
                                 <td ><div class="table-element"><img src="{{asset('/storage/brand_images').'/'.$brand->brand_image}}" height="50px"></div></td>
                                 <td><div class="table-element">{{$brand->brand_name}}</div></td>
-                                <td><div class="table-element">{{$brand->total_produts}}</div></td>
+                                <td><div class="table-element">{{$brand->getNumberOfDevices($brand->id)}}</div></td>
                                 <td><div class="table-element">{{$brand->brand_name}}</div></td>
                                 <td><div class="table-element">
                                     <a href="/portal/brands/edit/{{$brand->id}}">

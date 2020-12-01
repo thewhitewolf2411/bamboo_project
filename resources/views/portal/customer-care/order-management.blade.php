@@ -18,6 +18,9 @@
 
     <script src="/js/PrintTradeIn.js"></script>
 
+    <!-- Sortable -->
+    <script src="{{ asset('js/Sort.js') }}"></script>
+
     <title>Bamboo Recycle::{{$title}}</title>
 </head>
 
@@ -60,9 +63,9 @@
                         </form>
                     </div>
 
-                    <table class="portal-table" id="categories-table">
+                    <table class="portal-table sortable" id="categories-table">
                         <tr>
-                            <td><div class="table-element">Trade-in Barcode</div></td>
+                            <td><div class="table-element">Trade-in ID</div></td>
                             <td><div class="table-element">Trade-in Barcode number</div></td>
                             <td><div class="table-element">Date Placed</div></td>
                             <td><div class="table-element">Device name</div></td>
@@ -82,7 +85,8 @@
                             <td><div class="table-element">
                                 @if($tradein->job_state == 1)<p>Order Made</p> 
                                 @elseif ($tradein->job_state == 2) <p>Trade pack sent/User Printed</p> 
-                                @elseif($tradein->job_state == 3) <p>Device received, in a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a>, waiting testing.</p> 
+                                @elseif($tradein->job_state == 3 && $tradein->marked_for_quarantine == false) <p>Device received, in a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a>, waiting testing.</p> 
+                                @elseif($tradein->job_state == 3 && $tradein->marked_for_quarantine == true) <p>Device received, in quarantine tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a>.</p> 
                                 @elseif($tradein->job_state == 4) <p>Device received but missing/wrong, in a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a></p> 
                                 @elseif($tradein->job_state == 5) <p>Device finished testing. In a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a></p> 
                                 @elseif($tradein->job_state == 6) Device was marked for retesting.</div></td>
@@ -94,7 +98,7 @@
                                 <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint label">
                                     <i class="fa fa fa-print"></i>
                                 </a>
-                                @if($tradein->job_state == 4)
+                                @if($tradein->job_state == 3)
                                 <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
                                     <i class="fa fa-times" style="color:blue !important;" title="Return device to receiving" ></i>
                                 </a>

@@ -16,7 +16,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+    @if(isset($brand))
+    <title>Bamboo Recycle::Edit Brand</title>
+    @else
     <title>Bamboo Recycle::Add Brand</title>
+    @endif
+
+    
 
 </head>
 
@@ -29,10 +35,39 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Add Brand</p>
+                        @if(isset($brand))
+                            <p>Edit Brand {{$brand->brand_name}}</p>
+                        @else
+                            <p>Add Brand</p>
+                        @endif
                     </div>
                 </div>
                 <div class="add-product-container">
+                    @if(isset($brand))
+                    <form action="/portal/brands/editbrabnd" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" name="brand_id" value="{{$brand->id}}">
+                        <div class="product-tab">
+                            <div class="form-group select_brand_button">
+                                <label for="brand_name">Brand name:</label>
+                                <input name="brand_name" type="text" value="{{$brand->brand_name}}" required>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <div class="form-group">
+                                    <label for="brand_image">Brand image:</label>
+                                    <input name="brand_image" type="file" accept="image/x-png,image/gif,image/jpeg" required>
+                                  </div>
+                            </div>
+
+                            <div class="form-group select_brand_button">
+                                <div class="form-group">
+
+                                    <button type="submit" class="btn btn-primary btn-blue">Save brand</button>
+                                  </div>
+                            </div>
+                        </div>
+                    </form>
+                    @else
                     <form action="/portal/brands/addbrabnd" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="product-tab">
@@ -54,8 +89,8 @@
                                   </div>
                             </div>
                         </div>
-
                     </form>
+                    @endif
                 </div>
             </div>
         </div>

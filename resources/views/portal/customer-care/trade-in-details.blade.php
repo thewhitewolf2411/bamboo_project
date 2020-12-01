@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+    <!-- Sortable -->
+    <script src="{{ asset('js/Sort.js') }}"></script>
+
     <title>Bamboo Recycle::Trade-in ID #{{$barcode}}</title>
 </head>
 
@@ -39,8 +42,8 @@
                         <div class="d-flex w-100">
                             <div class="d-flex w-50">
                                 <div class="d-flex flex-column w-50 justify-content-between">
-                                    <p>Trade-In Barcode:</p>
                                     <p>Trade-In ID:</p>
+                                    <p>Trade-In Barcode:</p>
                                     <p>Payment Address</p>
                                     <p>Website/Store:</p>
                                 </div>
@@ -129,7 +132,7 @@
                         <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Trade-In Products</p>
                     </div>
 
-                    <table class="portal-table" id="categories-table">
+                    <table class="portal-table sortable" id="categories-table">
                         <tr>
                             <td><div class="table-element">Trade-In Product ID</div></td>
                             <td><div class="table-element">Name</div></td>

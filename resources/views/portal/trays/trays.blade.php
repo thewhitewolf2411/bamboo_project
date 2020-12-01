@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+   <!-- Sortable -->
+   <script src="{{ asset('js/Sort.js') }}"></script>
+
     <title>Bamboo Recycle::Trays Managment</title>
 </head>
 
@@ -71,7 +74,7 @@
                         </div></a>
                     </div>
 
-                    <table class="portal-table" id="categories-table">
+                    <table class="portal-table sortable" id="categories-table">
                         <tr>
                             <td><div class="table-element">Tray ID</div></td>
                             <td><div class="table-element">Tray name</div></td>

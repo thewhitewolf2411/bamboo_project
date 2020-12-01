@@ -201,9 +201,13 @@ function cosmeticElementChanged(){
             $('#customer_grade').val("Damaged Working");
             if(cosmeticGrade == "WSI"){
                 $('#bamboo_final_grade').val('WSI');
+                $('#customer_grade').val("Faulty");
+                $('#bamboo_final_grade').val('Faulty');
             }
             if(cosmeticGrade == "WSD"){
                 $('#bamboo_final_grade').val('WSD');
+                $('#customer_grade').val("Faulty");
+                $('#bamboo_final_grade').val('Faulty');
             }
             cosmeticNumGrade = 2;
         }

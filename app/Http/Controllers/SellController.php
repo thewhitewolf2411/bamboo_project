@@ -279,9 +279,9 @@ class SellController extends Controller
 
                 return redirect()->back()->with(['success'=>'Your sell has been completed. Please print this tradepack and follow the instrunctions.', 'barcode'=>$barcode, 'tradein'=>$tradein]);
 
-                $user = Auth::user();
+                /*$user = Auth::user();
                 $barcode = DNS1D::getBarcodeHTML($tradeinbarcode, 'C128');
-                $this->generateTradeInHTML($barcode, $user, null, $tradeinexp);
+                $this->generateTradeInHTML($barcode, $user, null, $tradeinexp);*/
             }
             
             return redirect()->back()->with('success', 'Your sell has been completed.');
@@ -299,6 +299,7 @@ class SellController extends Controller
         #dd($request->all());
 
         $name = $request->user['first_name'] . " " . $request->user['last_name'];
+        $address = $request->user['delivery_address'];
         $barcode = $request->tradein['barcode'];
         $created_at = $request->tradein['updated_at'];
         $barcodeimage = DNS1D::getBarcodeHTML($barcode, 'C128');
@@ -307,7 +308,7 @@ class SellController extends Controller
         $html .= "<style>p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
         $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
         $html .= "<p>" . $name . ",</p>";
-        $html .= "<p>". $request->$user['delivery_address'] .",</p>";
+        $html .= "<p>". $address .",</p>";
         $html .= "<br><br>";
         $html .= "<p>Order#". $barcode . " Date: " . $created_at .  "</p>";
         $html .= "<p>Dear " . $name . ",</p>";

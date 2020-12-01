@@ -20,6 +20,9 @@
     
     <script src="{{ asset('js/Testing.js') }}"></script>
 
+   <!-- Sortable -->
+   <script src="{{ asset('js/Sort.js') }}"></script>
+
 
     <title>Bamboo Recycle::Test Device</title>
 </head>
@@ -39,7 +42,7 @@
 
                 <div class="portal-table-container">
 
-                    <table class="portal-table" id="categories-table">
+                    <table class="portal-table sortable" id="categories-table">
                         <tr>
                             <td><div class="table-element">Trade-in ID</div></td>
                             <td><div class="table-element">Trade-in barcode number</div></td>

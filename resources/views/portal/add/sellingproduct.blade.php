@@ -60,18 +60,6 @@
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">
-                                <label for="product_color">Product color:</label>
-                                <input name="product_color" type="text" required>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <label for="product_network">Product network:</label>
-                                <input name="product_network" type="text" required>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <label for="product_memory">Product memory:</label>
-                                <input name="" type="text" required>
-                            </div>
-                            <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_image">Product image:</label>
                                     <input name="product_image" type="file" accept="image/x-png,image/gif,image/jpeg" required>
@@ -94,6 +82,24 @@
                                             <input type="number" name="customer_grade_price_3" id="customer_grade_price_3" placeholder="Enter price for grade 'Poor working'">
                                             <input type="number" name="customer_grade_price_4" id="customer_grade_price_4" placeholder="Enter price for grade 'Damaged working'">
                                             <input type="number" name="customer_grade_price_5" id="customer_grade_price_5" placeholder="Enter price for grade 'Faulty'">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <div class="form-group">
+                                    <label for="product_grade">Product Network deductible price:</label>
+                                    <div class="d-flex">
+                                        <div class="form-group mr-2">
+                                            @foreach($networks as $key=>$network)
+                                            <input type="text" name="network_{{$key}}" value="{{$network->network_name}}" readonly>
+                                            @endforeach
+                                        </div>
+                                        <div class="form-group ml-2">
+                                            @foreach($networks as $key=>$network)
+                                            <input type="hidden" name="network_id_{{$network->id}}" value="{{$network->id}}"></input>
+                                            <input type="number" name="network__knockoff_{{$network->id}}" id="customer_grade_price_1" placeholder="Enter price for grade '{{$network->network_name}}'">
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>

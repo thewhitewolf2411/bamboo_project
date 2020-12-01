@@ -434,6 +434,12 @@ class PortalController extends Controller
 
     public function showSellerDetails($id){
 
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $user = User::where('id', $id)->first();
+
+        return view('portal.customer-care.sellerdetails')->with(['portalUser'=>$portalUser, 'user'=>$user]);
     }
 
     public function disableSellerAccount($id){
@@ -582,11 +588,40 @@ class PortalController extends Controller
         return \redirect('/portal/categories')->with('portalUser', $portalUser);
     }
 
-    public function showAddBrandsView(){
+    public function showAddBrandsView($id = null){
         if(!$this->checkAuthLevel(2)){return redirect('/');}
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        if($id !== null){
+            $brand = Brand::where('id', $id)->first();
+            return view('portal.add.brand')->with(['portalUser'=>$portalUser, 'brand'=>$brand]);
+        }
+
         return view('portal.add.brand')->with('portalUser', $portalUser);
+    }
+
+    public function editBrand(Request $request){
+
+        $brand = Brand::where('id', $request->brand_id)->first();
+
+        $brand->brand_name = $request->brand_name;
+
+        $fileNameToStore = "default_brand_image.jpg";
+
+        if($request->brand_image){
+            $filenameWithExt = $request->file('brand_image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('brand_image')->getClientOriginalExtension();
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('brand_image')->storeAs('public/brand_image',$fileNameToStore);
+        }
+
+        $brand->brand_image = $fileNameToStore;
+        $brand->save();
+
+        return redirect()->back()->with('Success', 'You have succesfully edited manifacturer.');
+
     }
 
     public function ShowEditBrandsView($id){
@@ -693,11 +728,12 @@ class PortalController extends Controller
         $categories = Category::all();
         $brands = Brand::all();
         $conditions = Conditions::all();
+        $networks = Network::all();
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.add.buyingproduct')->with(['categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions,'portalUser'=>$portalUser]);
+        return view('portal.add.buyingproduct')->with(['categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions,'portalUser'=>$portalUser, 'networks'=>$networks]);
     }
 
     public function showAddSellingProductPage(){
@@ -705,11 +741,12 @@ class PortalController extends Controller
         $categories = Category::all();
         $brands = Brand::all();
         $conditions = Conditions::all();
+        $networks = Network::all();
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
         
-        return view('portal.add.sellingproduct')->with(['categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions,'portalUser'=>$portalUser]);
+        return view('portal.add.sellingproduct')->with(['categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions,'portalUser'=>$portalUser, 'networks'=>$networks]);
     }
 
     public function addBuyingProduct(Request $request){
@@ -761,6 +798,8 @@ class PortalController extends Controller
     }
 
     public function addSellingProduct(Request $request){
+
+        dd($request);
         $product = new SellingProduct();
         
         $product->product_name = $request->product_name;
@@ -771,6 +810,7 @@ class PortalController extends Controller
         $product->customer_grade_price_3 = $request->customer_grade_price_3;
         $product->customer_grade_price_4 = $request->customer_grade_price_4;
         $product->customer_grade_price_5 = $request->customer_grade_price_5;
+
         $filenameWithExt = $request->file('product_image')->getClientOriginalName();
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
         $extension = $request->file('product_image')->getClientOriginalExtension();
@@ -780,6 +820,8 @@ class PortalController extends Controller
         $product->product_image = $fileNameToStore;
 
         $product->save();
+
+        
 
         return \redirect('/portal/product/selling-products');
     }
@@ -1265,6 +1307,15 @@ class PortalController extends Controller
         $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;
         $quarantineTrays->save();
 
+        $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+
+        if($oldTrayContent !== null){
+            $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
+            $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+            $oldTray->save();
+            $oldTrayContent->delete();
+        }
+
         $traycontent = new TrayContent();
         $traycontent->tray_id = $quarantineTrays->id;
         $traycontent->trade_in_id = $tradein->id;
@@ -1362,9 +1413,12 @@ class PortalController extends Controller
         $response = curl_exec($ch);
 
         $result = (json_decode($response));
-        #dd($result);
+        if($result->RawResponse->blackliststatus == "Yes"){
+            $tradein->marked_for_quarantine = true;
+            $tradein->checkmend_passed = false;
+            $tradein->save();
+        }
 
-        ###
 
         $imeiResult = ImeiResult::where('tradein_id', $request->tradein_id)->first();
 
@@ -1752,7 +1806,9 @@ class PortalController extends Controller
             $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
             $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
             $oldTray->save();
+            $oldTrayContent->delete();
         }
+
 
         $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;
         $quarantineTrays->save();
@@ -1842,7 +1898,14 @@ class PortalController extends Controller
             }
         }
 
-        #dd($tray);
+        $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+
+        if($oldTrayContent !== null){
+            $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
+            $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+            $oldTray->save();
+            $oldTrayContent->delete();
+        }
 
         $traycontent = new TrayContent();
         $traycontent->tray_id = $tray->id;
@@ -1980,7 +2043,7 @@ class PortalController extends Controller
             $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P','R'];
         }
         
-        $filename = "/feed_type_".$export_feed_parameter."[" . date("Y-m-d") ."_". date("h-i-s") . "].xlsx";
+        $filename = "/feed_type_".$export_feed_parameter." " . date("Y-m-d") ."_". date("h-i-s") . ".xlsx";
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -2130,6 +2193,7 @@ class PortalController extends Controller
             DB::table('selling_products')->truncate();
             DB::table('product_information')->truncate();
             DB::table('product_networks')->truncate();
+            DB::table('colours')->truncate();
         }
 
         $inputFileName = $request->file('imported_csv')->getClientOriginalName();

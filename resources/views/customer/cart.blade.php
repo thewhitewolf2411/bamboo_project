@@ -35,14 +35,16 @@
             @endif
 
             @if(Session::has('barcode'))
+
             <script>
                 $.ajax({
                     url: "/cart/printtradein",
-                    type:"POST",
+                    method:"POST",
                     data:{
+                        _token: "{!! csrf_token() !!}",
                         user:{!! Auth::User() !!},
                         tradein:{!! Session::get('tradein') !!},
-                        _token: "{{ csrf_token() }}"
+                        
                     },
                     success:function(response){
                         console.log(response['code'], response.code);
@@ -65,6 +67,7 @@
                     <div class="d-flex flex-column w-100">
                         @foreach($cart->items as $key=>$cartitem)
                             @if($cartitem['type'] == 'tradeout')
+                            {{$key+1}}
                                 <div class="cart-product d-flex justify-content-between">
                                     <div class="cart-product-image w-25">
                                         <img src="{{$cartitem['product']->product_image}}">
@@ -98,8 +101,8 @@
                     </div>
                     <div class="d-flex flex-column w-100">
                         @foreach($cart->items as $key=>$cartitem)
-                            {{$key+1}}
                             @if($cartitem['type'] == 'tradein')
+                            {{$key+1}}
                                 <div class="cart-product d-flex justify-content-between">
                                     <div class="cart-product-image w-25">
                                         <img src="{{$cartitem['product']->product_image}}">

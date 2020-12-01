@@ -6,11 +6,17 @@
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+        <!-- Addressian -->
+        <script src="{{asset('/js/Addressian.js')}}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css">
+
     </head>
     <body>
         <header>@include('customer.layouts.header')</header>
@@ -94,12 +100,12 @@
                             </div>
                             <div class="element-three-bottom ">
                                 <div class="profile-element-container p-1">
-                                    <label for="delivery-address" class="profile-small">Delivery address</label>
-                                    <input id="delivery-address" name="delivery_address" type="text" class="form-control" value="{{$userdata->delivery_address}}" disabled required></input>
+                                    <label for="delivery_address" class="profile-small">Delivery address</label>
+                                    <input id="delivery_address" name="delivery_address" type="text" class="form-control" value="{{$userdata->delivery_address}}" disabled required></input>
                                 </div>
                                 <div class="profile-element-container p-1">
-                                    <label for="billing-address" class="profile-small">Billing address</label>
-                                    <input id="billing-address" name="billing_address" type="text" class="form-control" value="{{$userdata->billing_address}}" disabled required></input>
+                                    <label for="billing_address" class="profile-small">Billing address</label>
+                                    <input id="billing_address" name="billing_address" type="text" class="form-control" value="{{$userdata->billing_address}}" disabled required></input>
                                 </div>
                                 <div class="profile-element-container p-1">
                                     <label for="contact-number" class="profile-small">Contact number</label>

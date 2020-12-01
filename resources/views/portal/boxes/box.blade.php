@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+    <!-- Sortable -->
+    <script src="{{ asset('js/Sort.js') }}"></script>
+
     <title>Bamboo Recycle::Box</title>
 </head>
 
@@ -33,14 +36,14 @@
                 </div>
 
                 <div class="portal-table-container">
-                    <table class="portal-table" id="categories-table">
+                    <table class="portal-table sortable" id="categories-table">
                         <tr>
-                            <td><div class="table-element">Box ID</div></td>
-                            <td><div class="table-element">Box name</div></td>
-                            <td><div class="table-element">Box Description</div></td>
-                            <td><div class="table-element">No of Devices</div></td>
-                            <td><div class="table-element">Delete Box</div></td>
-                            <td><div class="table-element">Print Box Label</div></td>
+                            <th><div class="table-element">Box ID</div></th>
+                            <th><div class="table-element">Box name</div></th>
+                            <th><div class="table-element">Box Description</div></th>
+                            <th><div class="table-element">No of Devices</div></th>
+                            <th><div class="table-element">Delete Box</div></th>
+                            <th><div class="table-element">Print Box Label</div></th>
                         </tr>
                         <tr>
                             <td><a href="/portal/boxes/box?box_id_scan={{$box->box_name}}"><div class="table-element">{{$box->id}}</div></a></td>
@@ -64,7 +67,7 @@
                         </div>
                     </a>
 
-                    <table class="portal-table" id="categories-table" style="margin-top:30px;">
+                    <table class="portal-table sortable" id="categories-table" style="margin-top:30px;">
                         <tr>
                             <td><div class="table-element">Device name</div></td>
                             <td><div class="table-element">Device barcode</div></td>

@@ -4,6 +4,9 @@ namespace App\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Eloquent\SellingProduct;
+
+
 class Brand extends Model
 {
     /**
@@ -21,4 +24,10 @@ class Brand extends Model
     protected $fillable = [
         'brand_name','brand_image','total_produts'
     ];
+
+    public function getNumberOfDevices($brandid){
+
+        return count(SellingProduct::where('brand_id', $brandid)->get());
+
+    }
 }

@@ -2,8 +2,8 @@
 window.addEventListener('load', function(){
     document.getElementById('input-name').disabled = true;
     document.getElementById('input-lastname').disabled = true;
-    document.getElementById('delivery-address').disabled = true;
-    document.getElementById('billing-address').disabled = true;
+    document.getElementById('delivery_address').disabled = true;
+    document.getElementById('billing_address').disabled = true;
     document.getElementById('contact-number').disabled = true;
 
     document.getElementById('input-email').disabled = true;
@@ -35,8 +35,8 @@ function changename(){
 
     document.getElementById('input-name').disabled = false;
     document.getElementById('input-lastname').disabled = false;
-    document.getElementById('delivery-address').disabled = false;
-    document.getElementById('billing-address').disabled = false;
+    document.getElementById('delivery_address').disabled = false;
+    document.getElementById('billing_address').disabled = false;
     document.getElementById('contact-number').disabled = false;
     document.getElementById('radio-checked-yes').disabled = false;
     document.getElementById('radio-checked-no').disabled = false;

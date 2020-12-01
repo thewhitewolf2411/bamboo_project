@@ -126,7 +126,6 @@ Route::get('/portal/categories/delete/{id}', 'PortalController@deleteCategory')-
 Route::post('/portal/category/addcategory','PortalController@addCategory')->middleware('auth');
 
 Route::get('/portal/brands/add', 'PortalController@showAddBrandsView')->middleware('auth');
-Route::get('/portal/brands/edit/{id}', 'PortalController@ShowEditBrandsView')->middleware('auth');
 Route::get('/portal/brands/delete/{id}', 'PortalController@deleteBrands')->middleware('auth');
 Route::post('/portal/brands/addbrabnd','PortalController@addBrand')->middleware('auth');
 
@@ -250,6 +249,8 @@ Route::get('/portal/settings/delivery-options','PortalController@showSettingsDel
 Route::get('/portal/settings/checkout-options','PortalController@showSettingsCheckoutOptionsPage')->middleware('auth');
 Route::get('/portal/settings/promotional-codes','PortalController@showSettingsPromotionalCodesPage')->middleware('auth');
 Route::get('/portal/settings/brands','PortalController@showSettingsBrandsPage')->middleware('auth');
+Route::get('/portal/brands/edit/{id?}', 'PortalController@showAddBrandsView')->middleware('auth');
+Route::post('portal/brands/editbrabnd', 'PortalController@editBrand')->middleware('auth');
 Route::get('/portal/settings/barcode-id','PortalController@showSettingsBarcodeIdPage')->middleware('auth');
 
 //cms

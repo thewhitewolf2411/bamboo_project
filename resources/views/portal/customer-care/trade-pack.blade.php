@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+    <!-- Sortable -->
+    <script src="{{ asset('js/Sort.js') }}"></script>
+
     <script src="/js/PrintTradeIn.js"></script>
 
     <title>Bamboo Recycle::{{$title}}</title>
@@ -60,7 +63,7 @@
                         </form>
                     </div>
 
-                    <table class="portal-table" id="categories-table">
+                    <table class="portal-table sortable" id="categories-table">
                         <tr>
                             <td><div class="table-element">Trade-in ID</div></td>
                             <td><div class="table-element">Trade-in barcode number</div></td>

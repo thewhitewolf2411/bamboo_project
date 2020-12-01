@@ -4,6 +4,8 @@ namespace App\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Eloquent\SellingProduct;
+
 class Category extends Model
 {
     /**
@@ -21,5 +23,11 @@ class Category extends Model
     protected $fillable = [
         'category_name', 'category_description', 'category_image','total_produts'
     ];
+
+    public function getNumberOfDevices($categoryid){
+
+        return count(SellingProduct::where('category_id', $categoryid)->get());
+
+    }
 
 }

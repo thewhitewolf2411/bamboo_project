@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+   <!-- Sortable -->
+   <script src="{{ asset('js/Sort.js') }}"></script>
+
     <title>Bamboo Recycle::Products Awaiting Seller Response</title>
     <script src="{{ asset('js/Quarantine.js') }}"></script>
 </head>
@@ -34,10 +37,10 @@
                 </div>
 
                 <div class="portal-table-container">
-                    <table class="portal-table" id="categories-table">
+                    <table class="portal-table sortable" id="categories-table">
                         <tr>
                             <td><div class="table-element">Trade-in ID</div></td>
-                            <td><div class="table-element">Trade-in Barcode</div></td>
+                            <td><div class="table-element">Trade-in Barcode number</div></td>
                             <td><div class="table-element">Product</div></td>
                             <td><div class="table-element">Quarantine reasons</div></td>
                             <td><div class="table-element">Device location</div></td>

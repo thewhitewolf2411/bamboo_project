@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+   <!-- Sortable -->
+   <script src="{{ asset('js/Sort.js') }}"></script>
+
     <script src="{{ asset('js/Sellingproduct.js') }}"></script>
 
     <title>Bamboo Recycle::Edit Salvage Product</title>
@@ -85,7 +88,7 @@
                                         {{Session::get('product_option_deleted')}}
                                     </div>
                                     @endif
-                                    <table class="portal-table" id="categories-table">
+                                    <table class="portal-table sortable" id="categories-table">
                                         <tr>
                                             <td><div class="table-element">Memory</div></td>
                                             <td><div class="table-element">Excellent Working</div></td>
@@ -146,7 +149,7 @@
                                             <p>Different Network Base Prices change in £</p>
                                         </div>
                                     </div>
-                                    <table class="portal-table" id="categories-table">
+                                    <table class="portal-table sortable" id="categories-table">
                                         <tr>
                                             @foreach($productnetworks as $network)
                                             <td><div class="table-element"><img style="max-width:50px; width:50px" src="{{$network->getNetWorkImage($network->network_id)}}"></div></td>
