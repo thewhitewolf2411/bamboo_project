@@ -241,6 +241,27 @@ class SellController extends Controller
                     $tradein->save();
                     $tradeinexp = $tradein;
 
+                    $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
+                    $event = new KlaviyoEvent(
+                        array(
+                            'event' => 'Item Sold',
+                            'customer_properties' => array(
+                                '$email' => Auth::user()->email,
+                                '$name' => Auth::user()->first_name,
+                                '$last_name' => Auth::user()->last_name,
+                                '$birthdate' => Auth::user()->birthdate,
+                                '$newsletter' => Auth::user()->email,
+                                '$products' => $name,
+                                '$price'=> $price
+                            ),
+                            'properties' => array(
+                                'Item Sold' => True
+                            )
+                        )
+                    );
+            
+                    $client->publicAPI->track( $event );  
+
                 }
                 else if($item[0] == 'tradeout'){
                     $tradeout = new Tradeout();
@@ -248,29 +269,31 @@ class SellController extends Controller
                     $tradeout->product_id = json_decode($item[1])->id;
                     $tradeout->order_state = 0;
                     $tradeout->save();
+
+                    $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
+                    $event = new KlaviyoEvent(
+                        array(
+                            'event' => 'Item Bought',
+                            'customer_properties' => array(
+                                '$email' => Auth::user()->email,
+                                '$name' => Auth::user()->first_name,
+                                '$last_name' => Auth::user()->last_name,
+                                '$birthdate' => Auth::user()->birthdate,
+                                '$newsletter' => Auth::user()->email,
+                                '$products' => $tradeout->getDeviceName($tradeout->product_id),
+                                '$price'=> $price
+                            ),
+                            'properties' => array(
+                                'Item Bought' => True
+                            )
+                        )
+                    );
+            
+                    $client->publicAPI->track( $event );  
                 }
             }
 
-            $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
-            $event = new KlaviyoEvent(
-                array(
-                    'event' => 'Item Sold',
-                    'customer_properties' => array(
-                        '$email' => Auth::user()->email,
-                        '$name' => Auth::user()->first_name,
-                        '$last_name' => Auth::user()->last_name,
-                        '$birthdate' => Auth::user()->birthdate,
-                        '$newsletter' => Auth::user()->email,
-                        '$products' => $name,
-                        '$price'=> $price
-                    ),
-                    'properties' => array(
-                        'Item Sold' => True
-                    )
-                )
-            );
-    
-            $client->publicAPI->track( $event );  
+
 
             Session::forget('cart');
             Session::forget('type');

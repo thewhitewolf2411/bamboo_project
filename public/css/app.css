@@ -13733,6 +13733,32 @@ input[type=number] {
   display: none !important;
 }
 
+#sorttable_sortfwdind {
+  color: #000 !important;
+}
+
+#sorttable_sortrevind {
+  color: #000 !important;
+}
+
+.sorttable_sorted {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+}
+
+.sorttable_sorted_reverse {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: center;
+}
+
+#mark_as_complete {
+  display: none;
+}
+
 .register-elements-container {
   width: 50%;
 }

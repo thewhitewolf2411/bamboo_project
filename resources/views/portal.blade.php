@@ -133,6 +133,57 @@
                     </div>
                     @endif
 
+                    @if($portalUser->buying)
+                    <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100 w-100 my-3">
+                        <div class="">
+                            <h5>E-commerence</h5>
+                        </div>
+                        <div class="d-flex flex-wrap w-100">
+                            @if($portalUser->ecommerence_orders)
+
+                            <a href="/portal/ecommerence/order-management" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                     <p>Order Management </p>
+                                </div>
+                            </a>
+    
+                            @endif
+
+                            @if($portalUser->ecommerence_users)
+
+                            <a href="/portal/ecommerence/customer-accounts" class="col-2 my-2">
+                                <div class="portal-content-element" >
+                                     <p>Customer accounts </p>
+                                </div>
+                            </a>
+    
+                            @endif
+
+                            @if($portalUser->selling_status)
+
+                            <a href="/portal/ecommerence/order-status" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                     <p>Order Status</p>
+                                </div>
+                            </a>
+    
+                            @endif
+
+                            @if($portalUser->ecommerence_create_order)
+
+                            <a href="/portal/ecommerence/create-order" class="col-2 my-2">
+                                <div class="portal-content-element">
+                                    <p>Create order</p>
+                                </div>
+                            </a>
+
+                            @endif
+
+                        </div>
+
+                    </div>
+                    @endif
+
                     @if($portalUser->customer_care)
                     <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100 w-100 my-3">
                         <div class="">

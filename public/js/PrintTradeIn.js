@@ -74,3 +74,12 @@ function checkall(chkallbtn){
     }
 
 }
+
+function markOrderAsSent(trade_out_id){
+
+    //Set new value for trade_pack_trade_in_id hidden input
+    $('#mark_as_complete_trade_out_id').val(trade_out_id);
+
+    //Trigger printing
+    $('#mark_as_complete_trade_out_trigger').click();
+}

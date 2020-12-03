@@ -4,6 +4,8 @@ namespace App\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Eloquent\BuyingProduct;
+
 class Tradeout extends Model
 {
     /**
@@ -21,4 +23,8 @@ class Tradeout extends Model
     protected $fillable = [
         'user_id', 'product_id', 'order_state',
     ];
+
+    public function getDeviceName($id){
+        return BuyingProduct::where('id', $id)->first()->product_name;
+    }
 }

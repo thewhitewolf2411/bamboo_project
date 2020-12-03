@@ -118,6 +118,13 @@ Route::get('/portal/customer-care/order-managment/{search?}', 'PortalController@
 Route::get('/toreceive/{barcode}', 'PortalController@sendDeviceBackToReceive');
 Route::get('/totest/{barcode}', 'PortalController@sendDeviceBackToTest');
 
+Route::get('/portal/ecommerence/order-management{search?}', 'PortalController@showEcommerenceOrderManagement');
+Route::get('/portal/ecommerence/customer-accounts', 'PortalController@showEcommerenceCustomerAccounts');
+Route::get('/portal/ecommerence/order-status{search?}', 'PortalController@showEcommerenceOrderStatus');
+Route::get('/portal/ecommerence/create-order', 'PortalController@showEcommerenceCreateOrder');
+
+Route::post('/portal/ecommerence/setAsSent', 'PortalController@setTradeoutAsSent');
+
 //categories, brands
 Route::get('/portal/categories', 'PortalController@showCategories')->name('showCategories')->middleware('auth');
 Route::get('/portal/categories/add', 'PortalController@showAddCategoryView')->middleware('auth');

@@ -170,20 +170,22 @@ class CustomerController extends Controller
 
         $price = 0;
 
+        $hasTradeIn = false;
+
         if($cartItems !== null){
             foreach($cartItems->items as $items){
                 if($items['type'] === "tradeout"){
                     $price += $items['price'];
                 }
                 if($items['type'] === "tradein"){
-                    $price -= $items['price'];
+                    $hasTradeIn = true;
                 }
             }
         }
 
         $price = abs($price);
 
-        return view('customer.cart')->with('cart', $cartItems)->with('products', $products)->with('fullprice', $price);
+        return view('customer.cart')->with('cart', $cartItems)->with('products', $products)->with('fullprice', $price)->with('hasTradeIn',$hasTradeIn);
 
     }
 

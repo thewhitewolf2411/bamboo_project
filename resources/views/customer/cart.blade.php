@@ -139,10 +139,12 @@
 
                         <p style="display: flex; align-items: center;">Price to pay: £{{$fullprice}}</p>
 
+                        @if($hasTradeIn)
                         <select class="form-control my-3" onchange="changelabelstatus(this)">
                             <option value="1" selected>Make an order without printing label</option>
                             <option value="2">Print and send trade label yourself</option>
                         </select>
+                        @endif
                     </div>
 
                     <div class="form-container">

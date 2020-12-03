@@ -164,7 +164,6 @@ return [
         Spatie\GoogleTagManager\GoogleTagManagerServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-
         /*
          * Package Service Providers...
          */
