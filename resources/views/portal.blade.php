@@ -171,11 +171,11 @@
 
                             @if($portalUser->ecommerence_create_order)
 
-                            <a href="/portal/ecommerence/create-order" class="col-2 my-2">
+                            <!--<a href="/portal/ecommerence/create-order" class="col-2 my-2">
                                 <div class="portal-content-element">
                                     <p>Create order</p>
                                 </div>
-                            </a>
+                            </a>-->
 
                             @endif
 

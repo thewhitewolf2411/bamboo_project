@@ -24,7 +24,52 @@
     
     <main class="portal-main">
         <div class="app">
+        <div class="portal-app-container">
+                <div class="portal-title-container">
+                    <div class="portal-title">
+                        <p>Edit Category</p>
+                    </div>
+                </div>
+                <div class="add-product-container">
 
+                @if(Session::has('success'))
+                <div class="alert alert-success" role="alert">
+                    {{Session::get('success')}}
+                </div>
+                @endif
+
+                    <form action="/portal/category/editcategory" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        
+                        <input type="hidden" name="category_id" value="{{$category->id}}">
+
+                        <div class="product-tab">
+                            <div class="form-group select_brand_button">
+                                <label for="category_name">Category name:</label>
+                                <input name="category_name" type="text" value="{{$category->category_name}}" required>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <label for="wordbox_description">Category description:</label>
+                                <textarea id="description" class="form-control" name="wordbox_description" required>{{$category->category_description}}</textarea>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <div class="form-group">
+                                    <label for="category_image">Category image:</label>
+                                    <input name="category_image" type="file" accept="image/x-png,image/gif,image/jpeg">
+                                  </div>
+                            </div>
+
+                            <div class="form-group select_brand_button">
+                                <div class="form-group">
+
+                                    <button type="submit" class="btn btn-primary btn-blue">Save changes</button>
+                                  </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
         
         </div>
     </main>

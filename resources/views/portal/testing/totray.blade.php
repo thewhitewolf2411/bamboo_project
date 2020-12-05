@@ -68,7 +68,7 @@
                     </div>
                 </a>
                 @else
-                <a href="/portal/testing/receive">
+                <a href="/portal/testing/receiveorder?scanid={{$tradein->barcode_original}}">
                     <div class="btn btn-primary">
                         <p style="color: #fff;">Back</p>
                     </div>

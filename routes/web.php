@@ -129,6 +129,7 @@ Route::post('/portal/ecommerence/setAsSent', 'PortalController@setTradeoutAsSent
 Route::get('/portal/categories', 'PortalController@showCategories')->name('showCategories')->middleware('auth');
 Route::get('/portal/categories/add', 'PortalController@showAddCategoryView')->middleware('auth');
 Route::get('/portal/categories/edit/{id}', 'PortalController@ShowEditCategoryView')->middleware('auth');
+Route::post('/portal/category/editcategory', 'PortalController@editCategory')->middleware('auth');
 Route::get('/portal/categories/delete/{id}', 'PortalController@deleteCategory')->middleware('auth');
 Route::post('/portal/category/addcategory','PortalController@addCategory')->middleware('auth');
 

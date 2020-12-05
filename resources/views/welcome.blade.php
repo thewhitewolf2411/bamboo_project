@@ -103,12 +103,18 @@
                                                 </span>
                                             @enderror
                                         </div>
+                                        @if(Session::has('error'))
+                                            <div class="alert alert-danger" role="alert">
+                                                <strong>{{ Session::get('error') }}</strong>
+                                            </div>
+                                        @endif
                                         <div class="form-group mb-0" style="display:flex; flex-direction: row; justify-content:space-between; align-items:center;">
-                                            @if (Route::has('password.request'))
+                                            @if(Route::has('password.request'))
                                                 <a class="btn-link" style="color: #000; margin:0;" href="{{ route('password.request') }}">
                                                     {{ __('Forgot Your Password?') }}
                                                 </a>
                                             @endif
+
                                             <button type="submit" class="btn btn-primary">
                                                 {{ __('Login') }}
                                             </button>

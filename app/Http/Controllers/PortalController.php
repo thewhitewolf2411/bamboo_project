@@ -694,10 +694,34 @@ class PortalController extends Controller
 
     public function ShowEditCategoryView($id){
         if(!$this->checkAuthLevel(2)){return redirect('/');}
-        $category = Category::where('id', $id)->get();
+        $category = Category::where('id', $id)->first();
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        return view('portal.categories.editcategory')->with('portalUser', $portalUser);
+        #dd($category);
+        return view('portal.categories.editcategory')->with(['portalUser'=>$portalUser, 'category'=>$category]);
+    }
+
+    public function editCategory(Request $request){
+
+        $category = Category::where('id', $request->category_id)->first();
+
+        $category->category_name=$request->category_name;
+        $category->category_description = $request->wordbox_description;
+
+        $fileNameToStore = "default_image";
+
+        if($request->category_image){
+            $filenameWithExt = $request->file('category_image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('category_image')->getClientOriginalExtension();
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('category_image')->storeAs('public/category_images',$fileNameToStore);
+        }
+        $category->category_image = $fileNameToStore;
+        $category->save();
+
+        return \redirect()->back()->with('success', 'You have succesfully edited category.');
+
     }
 
     public function deleteCategory($id){
@@ -1535,7 +1559,7 @@ class PortalController extends Controller
         $result = (json_decode($response));
         if($result->RawResponse->blackliststatus == "Yes"){
             $tradein->marked_for_quarantine = true;
-            $tradein->checkmend_passed = false;
+            $tradein->chekmend_passed = false;
             $tradein->save();
         }
 
@@ -1545,8 +1569,6 @@ class PortalController extends Controller
         if($imeiResult == null){
             $imeiResult = new ImeiResult();
         }
-
-        #dd($result);
 
         $imeiResult->tradein_id = $request->tradein_id;
         $imeiResult->API =  $result->API;
@@ -1568,21 +1590,8 @@ class PortalController extends Controller
 
         #$this->showCheckImeiReultPage($tradein->barcode, $result);
 
-        return redirect('/portal/testing/checkimeiresult/' . $tradein->id);
+        return redirect('/portal/testing/result/' . $tradein->id);
 
-    }
-
-    public function showCheckImeiReultPage($id){
-        if(!$this->checkAuthLevel(5)){return redirect('/');}
-        $tradein = Tradein::where('id', $id)->first();
-        $user  = User::where('id', $tradein->user_id)->first();
-        $product = SellingProduct::where('id', $tradein->product_id)->first();
-        $imeiResult = ImeiResult::where('tradein_id', $id)->first();
-
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-        return view('portal.testing.receiving.checkmendresult')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user, 'imeiResult'=>$imeiResult]);
     }
 
     public function userCheckImei(Request $request){

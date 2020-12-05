@@ -71,7 +71,7 @@
 
                     <table class="portal-table sortable" id="categories-table">
                         <tr>
-                            <td><div class="table-element">Trade-in ID</div></td>
+                            <td><div class="table-element">Order ID</div></td>
                             <td><div class="table-element">Date Placed</div></td>
                             <td><div class="table-element">Device name</div></td>
                             <td><div class="table-element">Order status</div></td>

@@ -54,7 +54,7 @@
 
                             <tr>
                                 <td><div class="table-element">{{$brand->id}}</td>
-                                <td ><div class="table-element"><img src="{{asset('/storage/brand_images').'/'.$brand->brand_image}}" height="50px"></div></td>
+                                <td ><div class="table-element"><img src="/storage/brand_images/{{$brand->brand_image}}" height="50px"></div></td>
                                 <td><div class="table-element">{{$brand->brand_name}}</div></td>
                                 <td><div class="table-element">{{$brand->getNumberOfDevices($brand->id)}}</div></td>
                                 <td><div class="table-element">{{$brand->brand_name}}</div></td>
