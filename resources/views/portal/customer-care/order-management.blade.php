@@ -85,8 +85,8 @@
                             <td><div class="table-element">
                                 @if($tradein->job_state == 1)<p>Order Made</p> 
                                 @elseif ($tradein->job_state == 2) <p>Trade pack sent/User Printed</p> 
-                                @elseif($tradein->job_state == 3 && $tradein->marked_for_quarantine == false) <p>Device received, in a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a>, waiting testing.</p> 
-                                @elseif($tradein->job_state == 3 && $tradein->marked_for_quarantine == true) <p>Device received, in quarantine tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a>.</p> 
+                                @elseif($tradein->job_state == 3 && $tradein->marked_for_quarantine == false) <p>Device received, in a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a>.</p> 
+                                @elseif($tradein->job_state == 3 && $tradein->marked_for_quarantine == true) <p>Device received, in a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a>.</p> 
                                 @elseif($tradein->job_state == 4) <p>Device received but missing/wrong, in a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a></p> 
                                 @elseif($tradein->job_state == 5) <p>Device finished testing. In a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a></p> 
                                 @elseif($tradein->job_state == 6) Device was marked for retesting.</div></td>

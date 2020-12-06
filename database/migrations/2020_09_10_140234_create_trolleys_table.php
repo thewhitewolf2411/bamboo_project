@@ -17,7 +17,7 @@ class CreateTrolleysTable extends Migration
             $table->id();
             $table->string('trolley_name');
             $table->integer('number_of_trays')->default(0);
-            $table->string('trolley_type');
+            $table->string('trolley_type')->nullable();
             $table->timestamps();
         });
     }

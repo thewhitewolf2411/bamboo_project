@@ -5,6 +5,7 @@ namespace App\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Eloquent\Trolley;
+use App\Eloquent\TrayContent;
 
 class Tray extends Model
 {
@@ -27,5 +28,9 @@ class Tray extends Model
     public function getTrolleyName($trolley_id){
         $trolley = Trolley::where('id', $trolley_id)->first();
         return $trolley->trolley_name;
+    }
+
+    public function getTrayNumberOfDevices($tray_id){
+        return count(TrayContent::where('tray_id', $tray_id)->get());
     }
 }

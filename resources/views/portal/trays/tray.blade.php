@@ -48,7 +48,7 @@
 
                             <td><div class="table-element">{{$tray->id}}</div></td>
                             <td><div class="table-element">{{$tray->tray_name}}</div></td>
-                            <td><div class="table-element">{{$tray->number_of_devices}}</div></td>
+                            <td><div class="table-element">{{$tray->getTrayNumberOfDevices($tray->id)}}</div></td>
                             <td><div class="table-element"><a href="/portal/trays/tray/printlabel/{{$tray->tray_name}}"><div class="btn btn-primary btn-blue"><p style="color:#fff">Print Tray label</p></div></a></div></td>
                             <td><div class="table-element">
 

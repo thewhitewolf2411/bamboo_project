@@ -187,7 +187,9 @@ class PortalController extends Controller
         #die();
 
         $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
-        PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
+        if(PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename)){
+            return redirect()->back()->with(['pdf'=>$filename]);
+        }
 
         $this->downloadBulk($filename);
     }
@@ -204,10 +206,13 @@ class PortalController extends Controller
 
             array_push($productIds, $tradein->product_id);
         }
+
         $products = SellingProduct::whereIn('id', $productIds)->get();
 
         $barcode = DNS1D::getBarcodeHTML($request->hidden_print_trade_pack_trade_in_id, 'C128');
-        $this->generateTradeInHTML($barcode, $user, $products, $tradein);
+        if($this->generateTradeInHTML($barcode, $user, $products, $tradein)){
+            return redirect()->back()->with(['pdf'=>"labeltradeout-" . $tradein->barcode . ".pdf"]);
+        }
     }
 
     public function generateTradeInHTMLBulk($barcode, $user, $product, $tradein){
@@ -257,15 +262,14 @@ class PortalController extends Controller
                     </div></body>";
         #echo $html;
         #die();
+        #return $html;
 
-
+        #$filename = "labeltradeout-" . $tradein->barcode . ".pdf";
+        #PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
 
         return $html;
 
-        $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
-        PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
-
-        $this->downloadBulk($filename);
+        #$this->downloadBulk($filename);
     }
 
     public function generateTradeInHTML($barcode, $user, $product, $tradein){
@@ -319,7 +323,9 @@ class PortalController extends Controller
         $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
         PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
 
-        $this->downloadFile($filename);
+        return true;
+
+        #$this->downloadFile($filename);
     }
 
     public function deleteTradeInFromSystem(Request $request){
@@ -535,6 +541,9 @@ class PortalController extends Controller
         $tradein->bamboo_grade = null;
         $tradein->save();
 
+        $trayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+        $trayContent->delete();
+
         return redirect()->back();
 
     }
@@ -544,6 +553,13 @@ class PortalController extends Controller
 
         $tradein->job_state = 4;
         $tradein->save();
+
+        return redirect()->back();
+    }
+
+    public function cancelOrder($id){
+        $tradein = Tradein::where('id', $id)->first();
+        $tradein->delete();
 
         return redirect()->back();
     }

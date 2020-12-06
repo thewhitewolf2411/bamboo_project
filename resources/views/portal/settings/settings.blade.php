@@ -40,21 +40,6 @@
                                     <p>Product Options</p>
                                 </div>
                             </a>
-                            <a href="/portal/settings/websites" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p>Websites</p>
-                                </div>
-                            </a>
-                            <a href="/portal/settings/stores" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p>Stores</p>
-                                </div>
-                            </a>
-                            <a href="/portal/settings/payments-options" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p>Payments Options</p>
-                                </div>
-                            </a>
                             <a href="/portal/settings/promotional-codes" class="col-2 my-2">
                                 <div class="portal-content-element">
                                     <p>Promotional Codes</p>

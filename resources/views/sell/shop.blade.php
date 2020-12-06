@@ -126,7 +126,7 @@
 
                             <div class="product">
                                 <div class="selling-product-image-container">
-                                    <img src="{{$product->product_image}}">
+                                    <img src="{{asset('/storage/product_images').'/'.$product->product_image}}">
                                 </div>
                                 <div class="product-data-container">
                                     <h5>{{$product->product_name}}</h5>

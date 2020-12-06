@@ -122,11 +122,16 @@
 
 </body>
 
+@if(Session::has('pdf'))
+
+
 <script>
 
- 
+window.open('/' + '{{ Session::get('pdf') }}')
+
+location.reload();
 
 </script>
-
+@endif
 
 </html>

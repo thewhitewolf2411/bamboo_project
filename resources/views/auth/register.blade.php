@@ -28,7 +28,7 @@
     </div>
 
     <div class="form-group">
-        <input class="form-control" type="text" id="contact_number" name="contact_number" placeholder="Contact number" required autofocus>
+        <input class="form-control" type="tel" id="contact_number" name="contact_number" placeholder="Contact number" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required autofocus>
     </div>
 
     <div class="form-group">

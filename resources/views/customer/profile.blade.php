@@ -101,15 +101,15 @@
                             <div class="element-three-bottom ">
                                 <div class="profile-element-container p-1">
                                     <label for="delivery_address" class="profile-small">Delivery address</label>
-                                    <input id="delivery_address" name="delivery_address" type="text" class="form-control" value="{{$userdata->delivery_address}}" disabled required></input>
+                                    <textarea id="delivery_address" name="delivery_address" type="text" class="form-control" value="{{$userdata->delivery_address}}" disabled required>{{$userdata->delivery_address}}</textarea>
                                 </div>
                                 <div class="profile-element-container p-1">
                                     <label for="billing_address" class="profile-small">Billing address</label>
-                                    <input id="billing_address" name="billing_address" type="text" class="form-control" value="{{$userdata->billing_address}}" disabled required></input>
+                                    <textarea id="billing_address" name="billing_address" type="text" class="form-control" value="{{$userdata->billing_address}}" disabled required>{{$userdata->billing_address}}</textarea>
                                 </div>
                                 <div class="profile-element-container p-1">
                                     <label for="contact-number" class="profile-small">Contact number</label>
-                                    <input id="contact-number" name="contact_number" type="text" class="form-control" value="{{$userdata->contact_number}}" disabled required></input>
+                                    <input id="contact-number" name="contact_number" type="tel" class="form-control" value="{{$userdata->contact_number}}" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" disabled required></input>
                                 </div>
                             </div>
 
@@ -127,7 +127,11 @@
                                 <div class="profile-element-container p-1">
                                     <label for="password" class="profile-small">Password</label>
                                     <input id="input-password" name="password" type="password" class="form-control" value="{{$userdata->password}}" disabled required></input>
+                                    <div class="d-flex">
+                                        <input id="showpassword" type="checkbox" onclick="showPassword()" style="display:none; width:auto; margin:0;"><label id="showPasswordLabel" style="display:none; margin-left:1rem" for="showpassword">Show password</label>
+                                    </div>
                                 </div>
+                                
                             </div>
                             <div class="element-three-top-container">
                                 <h3>Newsletter subscription</h3>
@@ -273,7 +277,7 @@
                                     @endif
                                 </div>
                                 <div class="w-25 p-2">
-                                    <button type="button" class="btn btn-primary btn-orange profile-large" style="color: #fff;" data-toggle="modal" data-target="proba">
+                                    <button type="button" class="btn btn-primary btn-orange profile-large" style="color: #fff;" onclick="showModal({{$tradein->id}})">
                                         View details
                                     </button>
                                 </div>
@@ -289,20 +293,19 @@
 
 
         @foreach($tradeins as $tradein)
-        <div class="modal" tabindex="-1" role="dialog" aria-hidden="true" id="proba">
+        <div class="modal" tabindex="-1" role="dialog" aria-hidden="true" id="tradein-{{$tradein->id}}">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title">Order #{{$tradein->barcode}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Modal body text goes here.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
+
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
                 </div>
@@ -315,7 +318,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
+                    <h5 class="modal-title"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -324,7 +327,6 @@
                     <p>Modal body text goes here.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
                 </div>
@@ -332,6 +334,23 @@
         </div>
         @endforeach
 
+
+        <script>
+        
+        function showPassword(){
+            var x = document.getElementById("input-password");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+
+        function showModal(id){
+            $('#tradein-' + id).modal('show');
+        }
+
+        </script>
         <footer>@include('customer.layouts.footer')</footer>
     </body>
 </html>

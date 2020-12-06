@@ -82,7 +82,7 @@
                             <td ><div class="table-element">@foreach($order as $tradein){{$tradein->barcode_original}}<br>@endforeach</div></td>
                             <td><div class="table-element">@foreach($order as $tradein){{$tradein->barcode}} <br> @endforeach</div></td>
                             <td><div class="table-element">{{$order[0]->created_at}}</div></td>
-                            <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} <br> @endforeach</div></td>
+                            <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} {{$tradein->memory}} <br> @endforeach</div></td>
                             
                             <td><div class="table-element">@if($tradein->sent_themselves) Yes @else No @endif</div></td>
                             <td><div class="table-element">
@@ -101,8 +101,8 @@
                                 </a>
                                 @endif
 
-                                <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
-                                    <i class="fa fa-times" style="color:blue !important;" title="Return device to receiving" ></i>
+                                <a onclick="return confirm('Are you sure? This will remove this order from system and you will no longer be able to access it?')" href="/cancel/{{$tradein->id}}">
+                                    <i class="fa fa-times" style="color:red !important;" title="Cancel order" ></i>
                                 </a>
 
                                 @if($tradein->job_state >= 5)

@@ -138,14 +138,21 @@
                             </div>
                     </form>
                     </div>
-                    <div class="shop-devices">
+                    <div class="products d-flex flex-wrap w-75">
                         @foreach($products as $product)
                         <div class="product-container">
                             <a href="/shop/item/{{$product->id}}">
-                                <div class="product-data-container">
-                                    <img src="{{$product->product_image}}">
-                                    <p class="product-name">{{$product->product_name}}</p>
+
+                                <div class="product">
+                                    <div class="selling-product-image-container">
+                                        <img src="{{asset('/storage/product_images').'/'.$product->product_image}}">
+                                    </div>
+                                    <div class="product-data-container">
+                                        <h5>{{$product->product_name}}</h5>
+                                    </div>
+
                                 </div>
+
                             </a>
                             <div class="buttons-container">
                                 <a href="/shop/item/{{$product->id}}" class="btn btn-primary btn-blue view-phone">

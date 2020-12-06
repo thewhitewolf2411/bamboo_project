@@ -88,7 +88,7 @@
                             <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">{{$tray->id}}</div></a></td>
                             <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">{{$tray->tray_name}}</div></a></td>
                             <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">@if($tray->trolley_id == null) <p style="color:red;">Unassigned</p> @else <p style="color:green;"> {{$tray->getTrolleyName($tray->trolley_id)}} </p> @endif</div></a></td>
-                            <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">{{$tray->number_of_devices}}</div></a></td>
+                            <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">{{$tray->getTrayNumberOfDevices($tray->id)}}</div></a></td>
                             <td><div class="table-element"><a onclick="return confirm('Are you sure? This will remove tray from system, and remove all devices from the system and remove its records from corrseponding trolleys?')" href="/portal/trays/delete/{{$tray->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete tray</p></div></a></div></td>
                             <td><div class="table-element"><a href="/portal/trays/tray/printlabel/{{$tray->tray_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print Tray Label</p></div></a></div></td>
                         </tr>

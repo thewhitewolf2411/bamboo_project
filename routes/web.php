@@ -117,6 +117,7 @@ Route::get('/portal/customer-care/order-managment/{search?}', 'PortalController@
 
 Route::get('/toreceive/{barcode}', 'PortalController@sendDeviceBackToReceive');
 Route::get('/totest/{barcode}', 'PortalController@sendDeviceBackToTest');
+Route::get('/cancel/{barcode}', 'PortalController@cancelOrder');
 
 Route::get('/portal/ecommerence/order-management{search?}', 'PortalController@showEcommerenceOrderManagement');
 Route::get('/portal/ecommerence/customer-accounts', 'PortalController@showEcommerenceCustomerAccounts');
