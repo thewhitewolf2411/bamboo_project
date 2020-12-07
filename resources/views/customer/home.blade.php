@@ -281,10 +281,13 @@
                 <div class="center-title-container">
                     <p>Sustainability</p>
                 </div>
-                <p class="about-bamboo-text">Buy from us
-                    The large variety of stock Bamboo Distribution has available means we can offer new refurbished and used, power tested mobile phones and electronic products. Our flexible order quantities allow us to cater to the needs of our customers while competitive pricing guarantees value for money.<br>
-                    Sell to us<br>
-                    At Bamboo Distribution we are always buying any quantity of mobile phones and electronic products in any condition. If getting good value, quick payment and great service is important to you please contact us today! We look forward to hearing from you.</p>
+                <p class="about-bamboo-text">Buy from us <br>
+                Sustainability is at the heart of Bamboo Mobile and everything we do. Like our parent company, Bamboo Distribution, the protection of the environment is central to our ethics and business strategy. 
+                Put simply, the recycling of mobile phones devices helps save the environment, as it curbs mining processes. Through the recycling of phones devices , the minerals required to make mobile phone that are becoming increasingly sparse don’t need to be dug up. Vital minerals can be preserved to ensure no water or air pollution. 
+                As well as reconditioning salvaged phones to an exceptionally high standard for resale, our sustainable business processes involve processing parts, accessories, and boxes. Consequently, Bamboo Mobile is truly committed to reducing the stress on the environment in every element of the buying and selling of mobile phones, phone accessories and the packaging they are supplied in. 
+                Sell to us and you can sleep well at night knowing you are encouraging sustainability and protecting the environment. Buy from us and you can enjoy a shiny new mobile, recycled to an exceptionally high standard that costs a snippet of the price of a new phone – not to mention saving Planet Earth in the process. 
+                Oh, we almost forgot… your stunning new device will come with a 12-month warranty – you can’t say fairer than that! 
+                </p>
                 <div class="grading-show-more-container">
                     <a href="/setpage/about"><div class="grading-show-more-btn">
                         <p>Read More</p>

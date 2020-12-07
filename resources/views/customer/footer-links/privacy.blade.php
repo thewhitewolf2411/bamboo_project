@@ -26,6 +26,69 @@
         <main>
 
 
+
+        <div class="app">
+                <div class="enviroment-title-container">
+                    <div class="center-title-container">
+                        <p>Privacy policy</p>
+                    </div>
+                </div>
+
+                <div class="environment-first-element">
+                    <div class="center-title-container p50-0">
+                        <p>Environment sub-heading</p>
+                    </div>
+                    <div class="text-center border-bottom p50-0">
+                        <p>It’s no secret that the mobile device industry is a major contributor to climate change. Curbing the detrimental effects of the manufacturing and distribution of mobile phones is at the heart of Bamboo Mobile’s ethics and operations. </p>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column p50-150">
+                    <div class="row d-flex justify-content-between">
+                        <div class="about-element-text  p20 w-50">
+                            <p class="left-title-text text-green ">
+                                Doing right by you and the environment 
+                            </p>
+                            <p>
+                            By choosing Boo as your supplier of recycled mobile phones, you’ll be actively helping to save the environment, and paying less for a recycled device that’s virtually as a good as new.  We encourage our mobile device-loving customers to help us recycle and rehome recycle their old tech. By selling your phone tech to Boo, you’ll be contributing to the conservation of natural resources and keeping reusable materials out of landfills. What’s more, you’ll get a great price for your old device tech, paid directly to you on the same day we receive it your phone! 
+                            </p>
+                        </div>
+                        <div class="about-image-container p20 w-50" id="enviroment-first-image">
+                            <div class="about-rounded-image" id="enviroment-first-round-image"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        
+                    </div>
+                    <div class="row">
+                        
+                    </div>
+                    <div class="row">
+                        
+                    </div>
+                </div>
+
+                <div class="home-element sign-up">
+        
+                    <div class="center-title-container">
+                        <p>Sign up to our newsletter!</p>
+                    </div>
+            
+                    <div class="text-center-container">
+                        <p>amazing offers, hints and tips and just awesome-ness</p>
+                    </div>
+            
+                    <form action="/" method="POST">
+                        @csrf
+            
+                        <input class="email-input" type="email" placeholder="Enter email address here">
+                        <input class="email-submit" type="submit" value="Sign me up!">
+            
+                    </form>
+            
+                </div>
+            </div>
+
             @if(session('showLogin') || $errors->all())
                 <script>
                     $(window).on('load',function(){

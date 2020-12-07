@@ -798,14 +798,19 @@ main p, a, span{
 .toggle-element {
     opacity: 0;
     height: 0;
+    padding: 0;
 }
 
 .shopping-toggle {
-    background: rgba(35,170,247,0.05);
+    background: rgba(35,170,247,0.05) !important;
 }
 
 .selling-toggle{
-    background: rgba(252, 196, 76, 0.05);
+    background: rgba(252, 196, 76, 0.05) !important;
+}
+
+.container{
+    background: transparent !important;
 }
 
 .toggle-element-btn{

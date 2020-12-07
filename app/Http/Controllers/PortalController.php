@@ -1338,7 +1338,7 @@ class PortalController extends Controller
                         '$last_name' => $user->last_name,
                         '$birthdate' => $user->birthdate,
                         '$newsletter' => $user->email,
-                        '$products' => $tradein->getProductName($tradein->id),
+                        '$products' => $tradein->getProductName($tradein->product_id),
                         '$price'=> $tradein->order_price,
                     ),
                     'properties' => array(
@@ -1378,7 +1378,7 @@ class PortalController extends Controller
                         '$last_name' => $user->last_name,
                         '$birthdate' => $user->birthdate,
                         '$newsletter' => $user->email,
-                        '$products' => $tradein->getProductName($tradein->id),
+                        '$products' => $tradein->getProductName($tradein->product_id),
                         '$price'=> $tradein->order_price
                     ),
                     'properties' => array(
@@ -1437,7 +1437,7 @@ class PortalController extends Controller
                         '$last_name' => $user->last_name,
                         '$birthdate' => $user->birthdate,
                         '$newsletter' => $user->email,
-                        '$products' => $tradein->getProductName($tradein->id),
+                        '$products' => $tradein->getProductName($tradein->product_id),
                         '$price'=> $tradein->order_price
                     ),
                     'properties' => array(

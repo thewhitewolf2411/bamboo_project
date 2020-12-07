@@ -10,11 +10,13 @@
 
             <div class="p-5 d-flex flex-column justify-content-between">
                 <div class="center-title-container">
-                    <p>Buy and sell easily <br> with just a few clicks</p>
+                    <p>Shop and sell easily <br> with just a few clicks</p>
                 </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus.</p>
+                <p>We pride ourselves in offering a smart simple way to shop and sell mobile devices. With Boo, all it takes is just a few clicks to buy and sell the devices of your choice. In just several a few simple steps you can either trade in or trade up your mobile tech for unbeatable prices, while doing your bit for the environment.   
+Watch our quick video that explains how our meticulous grading system works. We guarantee you’ll be pleasantly surprised at just how thorough and exhaustive our grading system is. 
+</p>
             </div>
-            <div class="p-5 d-flex flex-wrap flex-column justify-content-between">
+            <div class="p-5 d-flex flex-wrap flex-column justify-content-between align-items-center mx-auto">
                 <div class="grading-video-container">
                     <a onclick="showgradingvideo()">
                         <div class="video-image-container">
@@ -46,72 +48,72 @@
         </div>
         <div class="toggle-element shopping-toggle active">
 
-            <div class="shopping-element">
+            <div class="shopping-element container">
                 <div class="shopping-element-image">
                     <img src="{{ asset('/customer_page_images/body/How-Icon-1.svg') }}">
                 </div>
                 <div class="shopping-element-text">
                     <p class="left-title-text">1. Search for a new device</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper,</p>
+                    <p>Take your time and have fun selecting a device that ticks all the boxes, that’s for the right price, and is the quality you’re looking for.</p>
                 </div>
             </div>
-            <div class="shopping-element">
+            <div class="shopping-element container">
                 <div class="shopping-element-image">
                     <img src="{{ asset('/customer_page_images/body/How-Icon-2.svg') }}">
                 </div>
                 <div class="shopping-element-text">
                     <p class="left-title-text">2. Free Next Day Delivery</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper,</p>
+                    <p>Rather than twiddling your thumbs and struggling on with your old device, have your shiny new phone in your hands with our free, next day delivery straight to your door.</p>
                 </div>
             </div>
-            <div class="shopping-element">
+            <div class="shopping-element container">
                 <div class="shopping-element-image">
                     <img src="{{ asset('/customer_page_images/body/How-Icon-3.svg') }}">
                 </div>
                 <div class="shopping-element-text">
                     <p class="left-title-text">3. You have a shiny new phone to play with</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper,</p>
+                    <p>With your sparkly new phone in your lap the same day, you can set about getting to know your device. As all our gadgets come with a 12-month warranty, you’ll have peace of mind that in the unlikely event that your device develops a fault, it is guaranteed for the next 12 months.</p>
                 </div>
             </div>
 
-            <div class="url-footer-container" id="start-shopping">
+            <div class="url-footer-container mb-5" id="start-shopping">
                 <a href="#">Start Shopping</a>
             </div>
 
         </div>
         <div class="toggle-element selling-toggle">
 
-            <div class="shopping-element">
+            <div class="shopping-element container">
                 <div class="shopping-element-text">
                     <p class="left-title-text">1. Search for a new device</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper,</p>
+                    <p>Search for your old device and find out how much it’s worth. If you’re happy with the price, simply register the mobile and provide us with your preferred payment option and with your details. </p>
                 </div>
                 <div class="shopping-element-image">
                     <img src="{{ asset('/customer_page_images/body/How-Icon-4.svg') }}">
                 </div>
             </div>
 
-            <div class="shopping-element">
+            <div class="shopping-element container">
                 <div class="shopping-element-text">
                     <p class="left-title-text">2. Free Next Day Delivery</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper,</p>
+                    <p>Once your sales order is completed, simply request for a free sales pack. Alternatively, you can print your own labels to send us your device</p>
                 </div>
                 <div class="shopping-element-image">
                     <img src="{{ asset('/customer_page_images/body/How-Icon-5.svg') }}">
                 </div>
             </div>
 
-            <div class="shopping-element">
+            <div class="shopping-element container">
                 <div class="shopping-element-text">
                     <p class="left-title-text">3. You have a shiny new phone to play with</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper,</p>
+                    <p>With Boo you won’t be left waiting for your payment. Once we receive your device, our team will check it against your order. If everything is correct, we’ll issue the payment that very same day! It’s that Simple!</p>
                 </div>
                 <div class="shopping-element-image">
                     <img src="{{ asset('/customer_page_images/body/How-Icon-6.svg') }}">
                 </div>
             </div>
 
-            <div class="url-footer-container" id="start-selling">
+            <div class="url-footer-container mb-5" id="start-selling">
                 <a href="#">Start Selling</a>
             </div>
 
@@ -133,7 +135,7 @@
                 <div class="center-title-container">
                     <p>Sustainability</p>
                 </div>
-                <p class="about-bamboo-text">Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent non est id leo viverra porttitor. Vivamus iaculis nisl non hend.</p>
+                <p class="about-bamboo-text">Sustainability is at the heart of Bamboo Mobile and everything we do. Like our parent company, Bamboo Distribution, the protection of the environment is central to our ethics and business strategy. </p>
                 <div class="grading-show-more-container">
                     <a href="#"><div class="grading-show-more-btn">
                         <p>Read More</p>

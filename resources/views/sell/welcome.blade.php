@@ -172,7 +172,7 @@
                         <div class="center-title-container">
                             <p>Sustainability</p>
                         </div>
-                        <p class="about-bamboo-text">Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent non est id leo viverra porttitor. Vivamus iaculis nisl non hend.</p>
+                        <p class="about-bamboo-text">Sustainability is at the heart of Bamboo Mobile and everything we do. Like our parent company, Bamboo Distribution, the protection of the environment is central to our ethics and business strategy. </p>
                         <div class="grading-show-more-container">
                             <a href="#"><div class="grading-show-more-btn">
                                 <p>Read More</p>

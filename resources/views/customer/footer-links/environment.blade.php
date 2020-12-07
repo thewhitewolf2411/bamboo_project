@@ -37,7 +37,7 @@
                         <p>Environment sub-heading</p>
                     </div>
                     <div class="text-center border-bottom p50-0">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus.</p>
+                        <p>It’s no secret that the mobile device industry is a major contributor to climate change. Curbing the detrimental effects of the manufacturing and distribution of mobile phones is at the heart of Bamboo Mobile’s ethics and operations. </p>
                     </div>
                 </div>
 
@@ -45,10 +45,10 @@
                     <div class="row d-flex justify-content-between">
                         <div class="about-element-text  p20 w-50">
                             <p class="left-title-text text-green ">
-                                Environment 1
+                                Doing right by you and the environment 
                             </p>
                             <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper.
+                            By choosing Boo as your supplier of recycled mobile phones, you’ll be actively helping to save the environment, and paying less for a recycled device that’s virtually as a good as new.  We encourage our mobile device-loving customers to help us recycle and rehome recycle their old tech. By selling your phone tech to Boo, you’ll be contributing to the conservation of natural resources and keeping reusable materials out of landfills. What’s more, you’ll get a great price for your old device tech, paid directly to you on the same day we receive it your phone! 
                             </p>
                         </div>
                         <div class="about-image-container p20 w-50" id="enviroment-first-image">

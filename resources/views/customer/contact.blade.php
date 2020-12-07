@@ -9,7 +9,7 @@
 
     <div class="contact-ways-container">
         <div class="center-title-container">
-            <p>Ways to get in touch with us</p>
+            <p>You can contact Boo’s friendly team of mobile recycling experts by a number of ways. </p>
         </div>
 
         <div class="ways-container">
@@ -60,7 +60,7 @@
     <div class="contact-forms-container">
         <div class="contact-form-container" id="message-form-container">
             <span>SEND US A MESSAGE</span>
-            <p>To contact us, please complete the form below and a member of our team will get back to you.</p>
+            <p>Please complete the form below and we’ll get back to you without delay.</p>
 
             <form id="message-form" action="/">
                 @csrf
@@ -103,7 +103,7 @@
 
         <div class="contact-form-container" id="live-form-container">
             <span>LIVE CHAT</span>
-            <p>To chat to a Customer Support advisor, please click on the link below</p>
+            <p>To chat with a Boo customer support advisor, please click on the link below.</p>
             <div class="ways-element">
                 <div class="contact-div" id="contact-live">
                     <div class="center-title-container">
@@ -117,7 +117,7 @@
         <div class="contact-form-container" id="telephone-form-container">
             <div class="telephone-header">
                 <span>TELEPHONE</span>
-                <p>To contact a member of the bamboo team, please use the number opposite</p>
+                <p>Call the number opposite to talk to our friendly and professional team of mobile specialists.</p>
             </div>
 
             <div class="telephone-contact-container">
@@ -152,7 +152,7 @@
 
         <div class="contact-form-container" id="whatsapp-form-container">
             <span>WHATSAPP</span>
-            <p>To contact a member of the bamboo team directly via WhatsApp, click the button below</p>
+            <p>Click the button below to chat to the Bamboo Mobile team directly via WhatsApp.</p>
             <a href="">
                 <div class="ways-element">
                     <div class="contact-div contact-flex-row" id="contact-whatsapp">
