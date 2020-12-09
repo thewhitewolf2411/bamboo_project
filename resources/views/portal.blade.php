@@ -136,7 +136,7 @@
                     @if($portalUser->buying)
                     <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100 w-100 my-3">
                         <div class="">
-                            <h5>E-commerence</h5>
+                            <h5>E-commerce</h5>
                         </div>
                         <div class="d-flex flex-wrap w-100">
                             @if($portalUser->ecommerence_orders)

@@ -171,11 +171,13 @@ class CustomerController extends Controller
         $price = 0;
 
         $hasTradeIn = false;
+        $hasTradeOut = false;
 
         if($cartItems !== null){
             foreach($cartItems->items as $items){
                 if($items['type'] === "tradeout"){
                     $price += $items['price'];
+                    $hasTradeOut = true;
                 }
                 if($items['type'] === "tradein"){
                     $hasTradeIn = true;

@@ -186,8 +186,6 @@ class SellController extends Controller
 
     public function sellItems(Request $request){
 
-        #dd($request->all());
-
         if(Auth::user()){
             $labelstatus = $request->label_status;
             $data = $request->all();
@@ -207,8 +205,14 @@ class SellController extends Controller
             }
            
             $items = array_chunk($data, 6);
+            $paymentD = "";
 
-            #dd($items);
+            if(count(end($items)) === 2){
+                $paymentD = end($items);
+                $items = array_slice($items, 0, -1);
+            }
+
+            dd($items, $paymentD);
 
             $tradeinexp = null;
 
@@ -219,6 +223,7 @@ class SellController extends Controller
 
             foreach($items as $item){     
                 if($item[0] == 'tradein'){
+
                     $tradein = new Tradein();
                     $tradein->barcode = $tradeinbarcode;
                     $tradein->barcode_original = $tradeinbarcode;

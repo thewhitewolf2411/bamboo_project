@@ -15,6 +15,10 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+        <script src="https://try.access.worldpay.com/access-checkout/v1/checkout.js"></script>
+        <script src="{{ asset('/js/Payment.js')}} "></script>
+        <script src="https://cdn.worldpay.com/v1/worldpay.js"></script>
     </head>
     <body>
         <header>@include('customer.layouts.header')</header>
@@ -149,18 +153,18 @@
 
                     <div class="form-container">
 
-                        <form action="/cart/sell" method="POST">
+                        <form @if() onsubmit="return showPaymentDetails()" @else action="/cart/sell" @endif method="POST">
                             @csrf
         
                             @foreach($cart->items as $key=>$cartitem)
-        
-                                <input type="hidden" name="ordertype-{{$key}}" value="{{$cartitem['type']}}">
-                                <input type="hidden" name="orderproduct-{{$key}}" value="{{$cartitem['product']}}">
-                                <input type="hidden" name="productprice-{{$key}}" value="{{$cartitem['price']}}">
-                                <input type="hidden" name="grade-{{$key}}" value="{{$cartitem['grade']}}">
-                                <input type="hidden" name="network-{{$key}}" value="{{$cartitem['network']}}">
-                                <input type="hidden" name="memory-{{$key}}" value="{{$cartitem['memory']}}">
-        
+                                @if($cartitem['type'] == 'tradein')
+                                    <input type="hidden" name="ordertype-{{$key}}" value="{{$cartitem['type']}}">
+                                    <input type="hidden" name="orderproduct-{{$key}}" value="{{$cartitem['product']}}">
+                                    <input type="hidden" name="productprice-{{$key}}" value="{{$cartitem['price']}}">
+                                    <input type="hidden" name="grade-{{$key}}" value="{{$cartitem['grade']}}">
+                                    <input type="hidden" name="network-{{$key}}" value="{{$cartitem['network']}}">
+                                    <input type="hidden" name="memory-{{$key}}" value="{{$cartitem['memory']}}">
+                                @endif
                             @endforeach
         
                             <input type="hidden" id="label_status" name="label_status" value="1">
@@ -272,6 +276,64 @@
                 </div>
             </div>
 		</div>
+
+        
+        <div class="modal fade" tabindex="-1" role="dialog" id="payment-container">
+            <section class="modal-dialog" role="document">
+                <section class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Payment details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <section class="modal-body">
+                        <section class="container">
+                            <section class="card">
+                            <form action="/cart/buy" id="paymentForm" method="post">
+                                <span id="paymentErrors"></span>
+                                @csrf
+                                @foreach($cart->items as $key=>$cartitem)
+                                    @if($cartitem['type'] == 'tradeout')
+                                    <input type="hidden" name="ordertype-{{$key}}" value="{{$cartitem['type']}}">
+                                    <input type="hidden" name="orderproduct-{{$key}}" value="{{$cartitem['product']}}">
+                                    <input type="hidden" name="productprice-{{$key}}" value="{{$cartitem['price']}}">
+                                    <input type="hidden" name="grade-{{$key}}" value="{{$cartitem['grade']}}">
+                                    <input type="hidden" name="network-{{$key}}" value="{{$cartitem['network']}}">
+                                    <input type="hidden" name="memory-{{$key}}" value="{{$cartitem['memory']}}">
+                                    @endif
+                                @endforeach
+
+                            <input type="hidden" id="label_status" name="label_status" value="1">
+                                <div class="form-row">
+                                    <label>Name on Card</label>
+                                    <input data-worldpay="name" name="name" type="text" />
+                                </div>
+                                <div class="form-row">
+                                    <label>Card Number</label>
+                                    <input data-worldpay="number" size="20" type="text" />
+                                </div>
+                                <div class="form-row">
+                                    <label>Expiration (MM/YYYY)</label> 
+                                    <input data-worldpay="exp-month" size="2" type="text" /> 
+                                    <label> / </label>
+                                    <input data-worldpay="exp-year" size="4" type="text" />
+                                </div>
+                                <div class="form-row">
+                                    <label>CVC</label>
+                                    <input data-worldpay="cvc" size="4" type="text" />
+                                </div>
+                                <input type="submit" value="Place Order" />
+                            </form>
+                            </section>
+                        </section>
+                    </section>
+
+                </section>
+            </section>
+        </div>
+        
+
         </main>
 
 

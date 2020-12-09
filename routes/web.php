@@ -66,6 +66,7 @@ Route::get('/sell/shop/item/{parameter}', 'SellController@showSellItem');
 Route::post('/sell/shop/item/addtocart','SellController@addSellItemToCart');
 
 Route::post('/cart/sell', 'SellController@sellItems');
+Route::post('/cart/buy', 'SellController@buyItems');
 
 Route::post('/cart/printtradein', 'SellController@generateTradeInHTML');
 
