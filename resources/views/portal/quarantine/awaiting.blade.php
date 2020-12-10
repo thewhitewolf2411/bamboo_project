@@ -19,7 +19,7 @@
    <!-- Sortable -->
    <script src="{{ asset('js/Sort.js') }}"></script>
 
-    <title>Bamboo Recycle::Products Awaiting Seller Response</title>
+    <title>Bamboo Recycle::Quarantine Management</title>
     <script src="{{ asset('js/Quarantine.js') }}"></script>
 </head>
 
@@ -32,11 +32,17 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Products Awaiting Seller Response</p>
+                        <p>Quarantine Management</p>
                     </div>
                 </div>
 
                 <div class="portal-table-container">
+
+                    @if(Session::has('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{Session::get('error')}}
+                    </div>
+                    @endif
                     <table class="portal-table sortable" id="categories-table">
                         <tr>
                             <td><div class="table-element">Trade-in ID</div></td>
@@ -53,23 +59,25 @@
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                             <td><div class="table-element">
                                 <ul>
-                                    @if($tradein->device_correct == false)<li>Device was not correct</li>
-                                    @else
-                                        @if($tradein->checkmend_passed == false)<li>Phonecheck failed</li>@endif
-                                        @if($tradein->grade_changed == true)<li>Device grade was changed</li>@endif
-                                        @if($tradein->older_than_14_days == true)<li>Order was expired after 14 days</li>@endif
-                                    @endif
+                                    @if($tradein->device_correct !== null && !$tradein->device_correct)<li>Device was not correct</li>@endif
+                                    @if($tradein->checkmend_passed !== null && !$tradein->checkmend_passed)<li>Phonecheck failed</li>@endif
+                                    @if($tradein->older_than_14_days !== null && $tradein->older_than_14_days)<li>Order was expired after 14 days</li>@endif
+                                    @if($tradein->device_missing)<li>Device is missing from order</li>@endif
+                                    @if($tradein->bamboo_grade !== null && $tradein->product_state !== $tradein->bamboo_grade) <li>Device grade was downgraded</li> @endif
+                                    @if($tradein->fimp !== null && $tradein->fimp) <li>Device has FIMP or Google lock</li> @endif
+                                    @if($tradein->pinlocked !== null && $tradein->pinlocked) <li>Device was pin locked</li> @endif
+                                    @if($tradein->device_correct !== null && ($tradein->product_id !== $tradein->device_correct)) <li> Incorrect device received. This device is {{$tradein->getProductName($tradein->device_correct)}} .</li> @endif
                                 </ul>
                             </div></td>
                             <td><div class="table-element"><p>Device is in a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a></p></div></td>
                             <td><div class="table-element">
 
-                                <a href="javascript:void(0)" onclick = sendToRetest({{$tradein->barcode}}) title="Send device to retesting">
-                                    <i class="fa fa fa-print"></i>
+                                <a title="Return device to testing" href="/totesting/{{$tradein->id}}">
+                                    <i class="fa fa-times" style="color:black !important;"></i>
                                 </a>
 
                                 <a href="javascript:void(0)" onclick = sendToReturn({{$tradein->barcode}}) title="Mark device to return to customer">
-                                    <i class="fa fa fa-print"></i>
+                                    <i class="fa fa-times" style="color:red !important;"></i>
                                 </a>
 
                                 <form id="send_to_retest_form_{{$tradein->id}}" class="form-hidden" method="post" action="/portal/quarantine/markdevicetoretest">

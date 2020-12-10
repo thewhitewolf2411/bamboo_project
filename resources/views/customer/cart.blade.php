@@ -62,34 +62,35 @@
 
             @endif
 
-            @if(isset($cart))
+            @if(isset($cart) && count($cart)>0)
 
                 <div class="d-flex flex-column w-75">
+                    @if($hasTradeOut)
                     <div class="center-title-container">
                         <p style="color: #23AAF7;">Buying items</p>
                     </div>
+                    @endif
                     <div class="d-flex flex-column w-100">
-                        @foreach($cart->items as $key=>$cartitem)
-                            @if($cartitem['type'] == 'tradeout')
+                        @foreach($cart as $key=>$cartitem)
+                            @if($cartitem->type === 'tradeout')
                             {{$key+1}}
                                 <div class="cart-product d-flex justify-content-between">
                                     <div class="cart-product-image w-25">
-                                        <img src="{{$cartitem['product']->product_image}}">
+                                        <img src="{{$cartitem->getProductImage($cartitem->id)}}">
                                     </div>
                                     <div class="d-flex flex-column w-25">
-                                        <h6 class="m-0 mb-3 font-weight-bold">{{$cartitem['product']->product_name}}</h6>
-                                        <p class="m-0">Network: {{$cartitem['product']->product_network}}</p>
-                                        <p class="m-0">Memory: {{$cartitem['product']->product_memory}}</p>
-                                        <p class="m-0">Colour: {{$cartitem['product']->product_colour}}</p>
-                                        <p class="m-0">Grade: {{$cartitem['product']->product_grade}}</p>
+                                        <h6 class="m-0 mb-3 font-weight-bold">{{$cartitem->getProductName($cartitem->id)}}</h6>
+                                        <p class="m-0">Network: {{$cartitem->network}}</p>
+                                        <p class="m-0">Memory: {{$cartitem->memory}}</p>
+                                        <p class="m-0">Grade: {{$cartitem->grade}}</p>
                                     </div>
                                     <div class="d-flex flex-column w-25">
                                         <h6 class="m-0 mb-3 font-weight-bold">Item price</h6>
-                                        <p class="m-0">Price: £{{$cartitem['product']->product_buying_price}}</p>
+                                        <p class="m-0">Offered Price: £{{$cartitem->price}}</p>
                                     </div>
                                     <div class="d-flex flex-column w-25">
                                         <h6 class="m-0 mb-3 font-weight-bold">Total Price</h6>
-                                        <p class="m-0 font-weight-bold">Total Price: £{{$cartitem['product']->product_buying_price}}</p>
+                                        <p class="m-0 font-weight-bold">Total Price: £{{$cartitem->price}}</p>
                                     </div>
                                     <a href="/removefromcart/{{$key}}">
                                         <div class="btn btn-danger">
@@ -100,39 +101,40 @@
                             @endif
                         @endforeach
                     </div>
+                    @if($hasTradeIn)
                     <div class="center-title-container">
                         <p style="color: #F28E33;">Selling items</p>
                     </div>
+                    @endif
                     <div class="d-flex flex-column w-100">
-                        @foreach($cart->items as $key=>$cartitem)
-                            @if($cartitem['type'] == 'tradein')
+                        @foreach($cart as $key=>$cartitem)
+                            @if($cartitem->type === 'tradein')
                             {{$key+1}}
                                 <div class="cart-product d-flex justify-content-between">
                                     <div class="cart-product-image w-25">
-                                        <img src="{{$cartitem['product']->product_image}}">
+                                        <img src="{{$cartitem->getProductImage($cartitem->id)}}">
                                     </div>
                                     <div class="d-flex flex-column w-25">
-                                        <h6 class="m-0 mb-3 font-weight-bold">{{$cartitem['product']->product_name}}</h6>
-                                        <p class="m-0">Network: {{$cartitem['network']}}</p>
-                                        <p class="m-0">Memory: {{$cartitem['memory']}}</p>
-                                        <p class="m-0">Grade: {{$cartitem['grade']}}</p>
+                                        <h6 class="m-0 mb-3 font-weight-bold">{{$cartitem->getProductName($cartitem->id)}}</h6>
+                                        <p class="m-0">Network: {{$cartitem->network}}</p>
+                                        <p class="m-0">Memory: {{$cartitem->memory}}</p>
+                                        <p class="m-0">Grade: {{$cartitem->grade}}</p>
                                     </div>
                                     <div class="d-flex flex-column w-25">
                                         <h6 class="m-0 mb-3 font-weight-bold">Item price</h6>
-                                        <p class="m-0">Price: £{{$cartitem['price']}}</p>
+                                        <p class="m-0">Offered Price: £{{$cartitem->price}}</p>
                                     </div>
                                     <div class="d-flex flex-column w-25">
                                         <h6 class="m-0 mb-3 font-weight-bold">Total Price</h6>
-                                        <p class="m-0 font-weight-bold">Total Price: £{{$cartitem['price']}}</p>
+                                        <p class="m-0 font-weight-bold">Total Price: £{{$cartitem->price}}</p>
                                     </div>
-                                    <a href="/removefromcart/{{$key}}">
+                                    <a href="/removefromcart/{{$cartitem->id}}">
                                         <div class="btn btn-danger">
                                             <p class="m-0" style="color: white;">Remove from cart</p>
                                         </div>
                                     </a>
                                 </div>
                             @endif
-
                         @endforeach
                     </div>
                 </div>
@@ -141,8 +143,10 @@
                     <div class="center-title-container flex-column">
                         <p style="display: flex; align-items: center;">Order Summary</p>
 
+                        @if($hasTradeOut)
                         <p style="display: flex; align-items: center;">Price to pay: £{{$fullprice}}</p>
-
+                        @endif
+                        
                         @if($hasTradeIn)
                         <select class="form-control my-3" onchange="changelabelstatus(this)">
                             <option value="1" selected>Make an order without printing label</option>
@@ -153,20 +157,9 @@
 
                     <div class="form-container">
 
-                        <form @if() onsubmit="return showPaymentDetails()" @else action="/cart/sell" @endif method="POST">
+                        <form @if($hasTradeOut) onsubmit="return showPaymentDetails()" @else action="/cart/sell" @endif method="POST">
                             @csrf
-        
-                            @foreach($cart->items as $key=>$cartitem)
-                                @if($cartitem['type'] == 'tradein')
-                                    <input type="hidden" name="ordertype-{{$key}}" value="{{$cartitem['type']}}">
-                                    <input type="hidden" name="orderproduct-{{$key}}" value="{{$cartitem['product']}}">
-                                    <input type="hidden" name="productprice-{{$key}}" value="{{$cartitem['price']}}">
-                                    <input type="hidden" name="grade-{{$key}}" value="{{$cartitem['grade']}}">
-                                    <input type="hidden" name="network-{{$key}}" value="{{$cartitem['network']}}">
-                                    <input type="hidden" name="memory-{{$key}}" value="{{$cartitem['memory']}}">
-                                @endif
-                            @endforeach
-        
+                
                             <input type="hidden" id="label_status" name="label_status" value="1">
 
                             <button type="submit" class="btn btn-primary w-100">Submit Order</button>
@@ -293,18 +286,7 @@
                             <form action="/cart/buy" id="paymentForm" method="post">
                                 <span id="paymentErrors"></span>
                                 @csrf
-                                @foreach($cart->items as $key=>$cartitem)
-                                    @if($cartitem['type'] == 'tradeout')
-                                    <input type="hidden" name="ordertype-{{$key}}" value="{{$cartitem['type']}}">
-                                    <input type="hidden" name="orderproduct-{{$key}}" value="{{$cartitem['product']}}">
-                                    <input type="hidden" name="productprice-{{$key}}" value="{{$cartitem['price']}}">
-                                    <input type="hidden" name="grade-{{$key}}" value="{{$cartitem['grade']}}">
-                                    <input type="hidden" name="network-{{$key}}" value="{{$cartitem['network']}}">
-                                    <input type="hidden" name="memory-{{$key}}" value="{{$cartitem['memory']}}">
-                                    @endif
-                                @endforeach
 
-                            <input type="hidden" id="label_status" name="label_status" value="1">
                                 <div class="form-row">
                                     <label>Name on Card</label>
                                     <input data-worldpay="name" name="name" type="text" />

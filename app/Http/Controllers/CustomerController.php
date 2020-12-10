@@ -130,15 +130,24 @@ class CustomerController extends Controller
     public function addProductToCart(Request $request){
 
         if(Auth::User()){
-            $product = BuyingProduct::where('id',$request->productid)->first();
-
-            $oldCart = Session::has('cart') ? Session::get('cart') : null;
+            $userid = Auth::user()->id;
+            $productid = $request->productid;
+            $grade = $request->grade;
+            $network = $request->network;
+            $memory = $request->memory;
+            $price = $request->price;
+            $type = "tradeout";
     
-            $cart = new Cart($oldCart);
+            $cart = new Cart();
     
-            $cart->add($product->product_buying_price, $product, "tradeout",  $product->product_network, $product->product_memory, $product->product_grade);
-    
-            $request->session()->put('cart', $cart);
+            $cart->user_id = $userid;
+            $cart->price = $price;
+            $cart->product_id = $productid;
+            $cart->type = $type;
+            $cart->network = $network;
+            $cart->memory = $memory;
+            $cart->grade = $grade;
+            $cart->save();
     
             return redirect('/shop/item/'.$request->productid)->with('productaddedtocart', true);
         }
@@ -150,13 +159,9 @@ class CustomerController extends Controller
 
     public function removeFromCart($parameter){
 
-        unset((Session::get('cart')->items)[$parameter]);
+        $cart = Cart::where('id', $parameter)->first();
 
-        $cartItems = Session::get('cart')->items;
-
-        if(count($cartItems) < 1){
-            Session::forget('cart');
-        }
+        $cart->delete();
 
         return redirect('/cart');
 
@@ -164,30 +169,46 @@ class CustomerController extends Controller
 
     public function showCart(){
 
-        $cartItems = Session::has('cart') ? Session::get('cart') : null;
+        if(Auth::user()){
 
-        $products = SellingProduct::all();
+            $olderCartItems = Cart::where('user_id', Auth::user()->id)->where('created_at', '<',\Carbon\Carbon::parse('-24 hours'))->get();
+            foreach($olderCartItems as $oCI){
+                $oCI->delete();
+            }
 
-        $price = 0;
+            $cartItems = Cart::where('user_id', Auth::user()->id)->get();
 
-        $hasTradeIn = false;
-        $hasTradeOut = false;
+            $products = SellingProduct::all();
 
-        if($cartItems !== null){
-            foreach($cartItems->items as $items){
-                if($items['type'] === "tradeout"){
-                    $price += $items['price'];
-                    $hasTradeOut = true;
-                }
-                if($items['type'] === "tradein"){
-                    $hasTradeIn = true;
+            $price = 0;
+
+            $hasTradeIn = false;
+            $hasTradeOut = false;
+
+            if($cartItems !== null){
+                foreach($cartItems as $items){
+                    if($items->type === "tradeout"){
+                        $price += $items->price;
+                        $hasTradeOut = true;
+                    }
+                    if($items->type === "tradein"){
+                        $hasTradeIn = true;
+                    }
                 }
             }
+
+            return view('customer.cart')->with([
+                    'cart'=>$cartItems,
+                    'products'=>$products,
+                    'fullprice'=>$price,
+                    'hasTradeIn'=>$hasTradeIn,
+                    'hasTradeOut'=>$hasTradeOut,
+            ]);
+
         }
-
-        $price = abs($price);
-
-        return view('customer.cart')->with('cart', $cartItems)->with('products', $products)->with('fullprice', $price)->with('hasTradeIn',$hasTradeIn);
+        else{
+            return \redirect()->back()->with('showLogin', true);
+        }
 
     }
 

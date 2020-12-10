@@ -22,6 +22,7 @@ class CreateTestingFaultsTable extends Migration
             $table->boolean('loud_speaker_test')->nullable();
             $table->boolean('microphone_playback_test')->nullable();
             $table->boolean('buttons_test')->nullable();
+            $table->boolean('sensor_test')->nullable();
             $table->boolean('camera_test')->nullable();
             $table->boolean('glass_condition')->nullable();
             $table->boolean('vibration')->nullable();

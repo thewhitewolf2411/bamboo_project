@@ -148,6 +148,58 @@
                         @endforeach
                     </table>
                 </div>
+
+                @if($testingfaults !== null)
+                <div class="portal-table-container">
+                    <div class="portal-title">
+                        <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Testing fault details</p>
+                    </div>
+
+                    <table class="portal-table sortable" id="categories-table">
+                        <tr>
+                            <td><div class="table-element">Trade-In Product ID</div></td>
+                            <td><div class="table-element">Audio test</div></td>
+                            <td><div class="table-element">Front Microphone</div></td>
+                            <td><div class="table-element">Headset test</div></td>
+                            <td><div class="table-element">Loud speaker test</div></td>
+                            <td><div class="table-element">Microphone playback test</div></td>
+                            <td><div class="table-element">Button test</div></td>
+                            <td><div class="table-element">Sensor test</div></td>
+                        </tr>
+
+                        <tr>
+                            <td><div class="table-element">{{$tradeins[0]->barcode}}</div></td>
+                            <td><div class="table-element">@if($testingfaults->audio_test) Failed @endif</div></td>
+                            <td><div class="table-element">@if($testingfaults->front_microphone) Failed @endif</div></td>
+                            <td><div class="table-element">@if($testingfaults->headset_test) Failed @endif</div></td>
+                            <td><div class="table-element">@if($testingfaults->loud_speaker_test) Failed @endif</div></td>
+                            <td><div class="table-element">@if($testingfaults->microphone_playback_test) Failed @endif</div></td>
+                            <td><div class="table-element">@if($testingfaults->buttons_test) Failed @endif</div></td>
+                            <td><div class="table-element">@if($testingfaults->sensor_test) Failed @endif</div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="table-element">Camera test</div></td>
+                            <td><div class="table-element">Glass condition</div></td>
+                            <td><div class="table-element">Vibration</div></td>
+                            <td><div class="table-element">Original colour</div></td>
+                            <td><div class="table-element">Battery health</div></td>
+                            <td><div class="table-element">NFC</div></td>
+                            <td><div class="table-element">No power</div></td>
+                            <td><div class="table-element">Fake or missing parts</div></td>
+                        </tr>
+                        <tr>
+                            <td><div class="table-element">@if($testingfaults->camera_test) Failed @endif</div></td>
+                            <td><div class="table-element">@if($testingfaults->glass_condition) Failed @endif</div></td>
+                            <td><div class="table-element">@if($testingfaults->vibration) Failed @endif</div></td>
+                            <td><div class="table-element">@if($testingfaults->original_colour) Failed @endif</div></td>
+                            <td><div class="table-element">@if($testingfaults->battery_health) Failed @endif</div></td>
+                            <td><div class="table-element">@if($testingfaults->nfc) Failed @endif</div></td>
+                            <td><div class="table-element">@if($testingfaults->no_power) Failed @endif</div></td>
+                            <td><div class="table-element">@if($testingfaults->fake_missing_parts) Failed @endif</div></td>
+                        </tr>
+                    </table>
+                </div>
+                @endif
             </div>
         </div>
     </main>

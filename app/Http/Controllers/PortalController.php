@@ -14,7 +14,6 @@ use App\Eloquent\Feed;
 use App\Eloquent\Conditions;
 use App\Eloquent\Websites;
 use App\Eloquent\Stores;
-use App\Eloquent\TestingQuestions;
 use App\Eloquent\Tradein;
 use App\Eloquent\Tradeout;
 use App\Eloquent\Quarantine;
@@ -28,6 +27,7 @@ use App\Eloquent\Network;
 use App\Eloquent\ProductNetworks;
 use App\Eloquent\Memory;
 use App\Eloquent\ImeiResult;
+use App\Eloquent\TestingFaults;
 use App\User;
 use Auth;
 use Schema;
@@ -130,7 +130,17 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
         $user = User::where('id', $tradein[0]->user_id)->first();
-        return view('portal.customer-care.trade-in-details')->with('tradeins', $tradein)->with('portalUser', $portalUser)->with('user', $user)->with('barcode', $id);
+
+
+        $testingfaults = TestingFaults::where('tradein_id', $tradein[0]->id)->first();
+
+        return view('portal.customer-care.trade-in-details')
+            ->with([    'tradeins'=>$tradein,
+                        'portalUser'=>$portalUser,
+                        'user'=>$user,
+                        'barcode'=>$id,
+                        'testingfaults'=>$testingfaults 
+                ]);
     }
 
     public function showMoreTradeInDetails($id){
@@ -187,9 +197,7 @@ class PortalController extends Controller
         #die();
 
         $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
-        if(PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename)){
-            return redirect()->back()->with(['pdf'=>$filename]);
-        }
+        PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
 
         $this->downloadBulk($filename);
     }
@@ -201,8 +209,11 @@ class PortalController extends Controller
         $productIds = array();
 
         foreach($tradeins as $tradein){
-            $tradein->job_state = 2;
-            $tradein->save();
+            
+            if($tradein->job_state < 2){
+                $tradein->job_state = 2;
+                $tradein->save();
+            }
 
             array_push($productIds, $tradein->product_id);
         }
@@ -210,9 +221,7 @@ class PortalController extends Controller
         $products = SellingProduct::whereIn('id', $productIds)->get();
 
         $barcode = DNS1D::getBarcodeHTML($request->hidden_print_trade_pack_trade_in_id, 'C128');
-        if($this->generateTradeInHTML($barcode, $user, $products, $tradein)){
-            return redirect()->back()->with(['pdf'=>"labeltradeout-" . $tradein->barcode . ".pdf"]);
-        }
+        $this->generateTradeInHTML($barcode, $user, $products, $tradein);
     }
 
     public function generateTradeInHTMLBulk($barcode, $user, $product, $tradein){
@@ -323,9 +332,7 @@ class PortalController extends Controller
         $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
         PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
 
-        return true;
-
-        #$this->downloadFile($filename);
+        $this->downloadFile($filename);
     }
 
     public function deleteTradeInFromSystem(Request $request){
@@ -347,6 +354,20 @@ class PortalController extends Controller
         }
 
         return redirect()->back()->with('success', 'You have succesfully deleted '. $barcode . ' from system.');
+    }
+
+    public function returnToTesting($id){
+        $tradein = Tradein::where('id', $id)->first();
+
+        if($tradein->proccessed_before){
+            return redirect()->back()->with('error', 'This device was already tested second time.');
+        }
+
+        $tradein->job_state = 6;
+        $tradein->save();
+
+        return redirect()->back()->with('success', 'You have succesfully returned '. $tradein->barcode . ' to testing.');
+
     }
 
     public function showTradeOut(){
@@ -1264,7 +1285,7 @@ class PortalController extends Controller
         elseif($tradein->job_state == 5){
             return redirect()->back()->with('error', 'Device was already tested.');
         }
-        elseif($tradein->marked_for_quarantine){
+        elseif($tradein->job_state != 6 && $tradein->marked_for_quarantine){
             return redirect()->back()->with('error', 'Device was marked for quarantine on receiving and cannot be tested. If this device is in your tray, please remove it.');
         }
         else{
@@ -1273,8 +1294,9 @@ class PortalController extends Controller
             $networks = Network::all();
             $productinformation = ProductInformation::where('product_id', $tradein->product_id)->get();
             $productColors = Colour::where('product_id', $tradein->product_id)->get();
+            $sellingProduct = SellingProduct::all();
 
-            return view('portal.testing.testdevice')->with(['tradein'=>$tradein, 'portalUser'=>$portalUser, 'networks'=>$networks, 'productinformation'=>$productinformation, 'productColors'=>$productColors]);
+            return view('portal.testing.testdevice')->with(['tradein'=>$tradein, 'portalUser'=>$portalUser, 'networks'=>$networks, 'productinformation'=>$productinformation, 'productColors'=>$productColors, 'products'=>$sellingProduct]);
         }    
 
 
@@ -1669,10 +1691,95 @@ class PortalController extends Controller
 
     public function checkDeviceStatus(Request $request){
 
-        #dd($request);
+        #dd($request->all());
 
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        if($request->fimp_or_google_lock === "true" || $request->pin_locked === "true"){
+            $tradein->marked_for_quarantine = true;
+
+            if($request->fimp_or_google_lock === "true"){
+                $tradein->fimp = true;
+            }
+            if($request->pin_lock === "true"){
+                $tradein->pinlocked = true;
+            }
+
+            $tradein->save();
+        }
+
+        if($request->device_correct === "false"){
+            $tradein->marked_for_quarantine = true;
+            $tradein->device_correct = $request->select_correct_device;
+            $tradein->save();
+        }
+        else{
+            $tradein->marked_for_quarantine = false;
+            $tradein->device_correct = null;
+            $tradein->save();
+        }
+
+        if($tradein->job_state === 6){
+            $tradein->proccessed_before = true;
+            $tradein->save();
+        }
+
+        if($request->device_fully_functional === "false"){
+            $tradein->marked_for_quarantine = true;
+
+            $testingfaults = new TestingFaults();
+            $testingfaults->tradein_id = $tradein->id;
+
+            if($request->audio_tests === "true"){
+                $testingfaults->audio_test = true;
+            }
+            if($request->front_microphone === "true"){
+                $testingfaults->front_microphone = true;
+            }
+            if($request->headset_test === "true"){
+                $testingfaults->headset_test = true;
+            }
+            if($request->loud_speaker_test === "true"){
+                $testingfaults->loud_speaker_test = true;
+            }
+            if($request->microphone_playback_test === "true"){
+                $testingfaults->microphone_playback_test = true;
+            }
+            if($request->buttons_test === "true"){
+                $testingfaults->buttons_test = true;
+            }
+            if($request->sensor_test === "true"){
+                $testingfaults->sensor_test = true;
+            }
+            if($request->camera_test === "true"){
+                $testingfaults->camera_test = true;
+            }
+            if($request->glass_condition === "true"){
+                $testingfaults->glass_condition = true;
+            }
+            if($request->vibration === "true"){
+                $testingfaults->vibration = true;
+            }
+            if($request->original_colour === "true"){
+                $testingfaults->original_colour = true;
+            }
+            if($request->battery_health === "true"){
+                $testingfaults->battery_health = true;
+            }
+            if($request->nfc === "true"){
+                $testingfaults->nfc = true;
+            }
+            if($request->no_power === "true"){
+                $testingfaults->no_power = true;
+            }
+            if($request->fake_missing_parts === "true"){
+                $testingfaults->fake_missing_parts = true;
+            }
+
+            $testingfaults->save();
+
+        }
 
         $customergradeval = "";
         $bambogradeval = $request->bamboo_customer_grade;
@@ -1694,10 +1801,7 @@ class PortalController extends Controller
             $customergradeval = 1;
         }
 
-        if($bambogradeval >= $customergradeval){
-            $tradein->marked_for_quarantine = false;
-        }
-        else{
+        if($bambogradeval < $customergradeval){
             $tradein->marked_for_quarantine = true;
         }
 
@@ -1882,6 +1986,12 @@ class PortalController extends Controller
 
         $tradein = Tradein::where('id', $request->tradein_id)->first();
 
+        $mti = false;
+
+        if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>1){
+            $mti = true;
+        }
+
         $tradein->job_state = 3;
 
 
@@ -1963,7 +2073,7 @@ class PortalController extends Controller
         $traycontent->trade_in_id = $tradein->id;
         $traycontent->save();
 
-        return view('portal.testing.totray')->with(['tray_name'=>$quarantineName,'response'=>$response,'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein]);
+        return view('portal.testing.totray')->with(['tray_name'=>$quarantineName,'response'=>$response,'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein, 'mti'=>$mti]);
 
     }
 
@@ -2215,7 +2325,7 @@ class PortalController extends Controller
                 $sheet->setCellValue('M1', 'updated_at');
                 $sheet->setCellValue('N1', 'product_network');
                 $sheet->setCellValue('O1', 'product_network_price');
-                $sheet->setCellValue('P1', 'product_avalible_colours');
+                $sheet->setCellValue('P1', 'product_available_colours');
 
                 $sheet->setCellValue('F1', 'product_memory');
                 $sheet->setCellValue('G1', 'customer_grade_price_1');
@@ -2231,11 +2341,10 @@ class PortalController extends Controller
                 $productColor = Colour::where('product_id', $product[0])->get();
                 #dd($productColor);
 
-                $sheet->setCellValue('A' . $k, $product[1]);
-                $sheet->setCellValue('B' . $k, $product[2]);
-                $sheet->setCellValue('C' . $k, $product[3]);
-                $sheet->setCellValue('D' . $k, $product[4]);
-                $sheet->setCellValue('E' . $k, $product[5]);
+                $sheet->setCellValue('B' . $k, $product[1]);
+                $sheet->setCellValue('C' . $k, $product[2]);
+                $sheet->setCellValue('D' . $k, $product[3]);
+                $sheet->setCellValue('E' . $k, $product[4]);
 
                 $i=$k;
                 foreach($productInformation as $productInfo){

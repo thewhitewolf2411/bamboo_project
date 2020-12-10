@@ -21,7 +21,7 @@
                 <a href="/userprofile/show/wishlist"><i class="fa fa-heart-o" aria-hidden="true"></i><p class="showhover">Wishlist</p></a>
             </div>
             <div class="hover-link" id="card-hover-link">
-                <a href="/cart"><i class="fa fa-keyboard-o" aria-hidden="true"></i><p class="showhover">Basket</p></a>
+                <a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i><p class="showhover">Basket</p></a>
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span style="color:#000;" class="navbar-toggler-icon"></span>

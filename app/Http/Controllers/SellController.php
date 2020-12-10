@@ -162,23 +162,25 @@ class SellController extends Controller
 
     public function addSellItemToCart(Request $request){
 
-        #dd($request->all());
+        $userid = Auth::user()->id;
+        $productid = $request->productid;
+        $grade = $request->grade;
+        $network = $request->network;
+        $memory = $request->memory;
+        $price = $request->price;
+        $type = $request->type;
 
-        $grade = SellingProduct::where('id', $request->productid)->first();
+        $cart = new Cart();
 
-        #dd($request->all());
-
-        #dd($request->all(), $grade);
-
-        $product = SellingProduct::where('id',$request->productid)->first();
-
-        $oldCart = Session::has('cart') ? Session::get('cart') : null;
-
-        $cart = new Cart($oldCart);
+        $cart->user_id = $userid;
+        $cart->price = $price;
+        $cart->product_id = $productid;
+        $cart->type = $type;
+        $cart->network = $network;
+        $cart->memory = $memory;
+        $cart->grade = $grade;
+        $cart->save();
         
-        $cart->add($request->price, $product, $request->type, $request->network, $request->memory, $request->grade);
-
-        $request->session()->put('cart', $cart);
 
         return redirect()->back()->with('productaddedtocart', true);
 
@@ -188,31 +190,12 @@ class SellController extends Controller
 
         if(Auth::user()){
             $labelstatus = $request->label_status;
-            $data = $request->all();
-            $data = array_values($data);
-            $data = array_slice($data, 1);
-            $data = array_slice($data, 0, -1);
-
             $items = array();
 
             //8
             $tradeinbarcode = 10000000 + rand(100000, 9000000);
 
-            foreach($data as $dataitem){
-                $item = array();
-                array_push($item, $dataitem);
-                array_push($items, $item);
-            }
-           
-            $items = array_chunk($data, 6);
-            $paymentD = "";
-
-            if(count(end($items)) === 2){
-                $paymentD = end($items);
-                $items = array_slice($items, 0, -1);
-            }
-
-            dd($items, $paymentD);
+            $cart = Cart::where('user_id', Auth::user()->id)->get();
 
             $tradeinexp = null;
 
@@ -221,22 +204,22 @@ class SellController extends Controller
 
             $barcode = "";
 
-            foreach($items as $item){     
-                if($item[0] == 'tradein'){
+            foreach($cart as $item){     
+                if($item->type === 'tradein'){
 
                     $tradein = new Tradein();
                     $tradein->barcode = $tradeinbarcode;
                     $tradein->barcode_original = $tradeinbarcode;
                     $tradein->user_id = Auth::user()->id;
-                    $tradein->product_id = json_decode($item[1])->id;
-                    $tradein->order_price = $item[2];
+                    $tradein->product_id = $item->product_id;
+                    $tradein->order_price = $item->price;
                     $tradein->job_state = 1;
 
-                    $name = $tradein->getProductName(json_decode($item[1])->id);
+                    $name = $item->getProductName($item->id);
 
-                    $tradein->product_state = $item[3];
-                    $tradein->network = $item[4];
-                    $tradein->memory = $item[5];
+                    $tradein->product_state = $item->grade;
+                    $tradein->network = $item->network;
+                    $tradein->memory = $item->memory;
 
                     if($labelstatus == "2"){
                         $tradein->job_state = 2;
@@ -245,6 +228,8 @@ class SellController extends Controller
 
                     $tradein->save();
                     $tradeinexp = $tradein;
+
+                    $item->delete();
 
                     $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
                     $event = new KlaviyoEvent(
@@ -299,17 +284,13 @@ class SellController extends Controller
             }
 
 
-
-            Session::forget('cart');
-            Session::forget('type');
-
             if($labelstatus == "2"){
 
                 return redirect()->back()->with(['success'=>'Your sell has been completed. Please print this tradepack and follow the instrunctions.', 'barcode'=>$barcode, 'tradein'=>$tradein]);
 
-                /*$user = Auth::user();
+                $user = Auth::user();
                 $barcode = DNS1D::getBarcodeHTML($tradeinbarcode, 'C128');
-                $this->generateTradeInHTML($barcode, $user, null, $tradeinexp);*/
+                $this->generateTradeInHTML($barcode, $user, null, $tradeinexp);
             }
             
             return redirect()->back()->with('success', 'Your sell has been completed.');
@@ -319,6 +300,10 @@ class SellController extends Controller
             return redirect('/cart')->with('showLogin', $showLogin);
         }
       
+    }
+
+    public function buyItems(Request $request){
+        dd($request->all());
     }
 
     public function generateTradeInHTML(Request $request){

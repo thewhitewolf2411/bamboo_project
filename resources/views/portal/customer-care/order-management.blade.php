@@ -107,7 +107,7 @@
                                 <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
                                     <i class="fa fa-times" style="color:blue !important;"></i>
                                 </a>
-                                <a title="Return device to testing" href="/totesting/{{$tradein->barcode}}">
+                                <a title="Return device to testing" href="/totesting/{{$tradein->id}}">
                                     <i class="fa fa-times" style="color:black !important;"></i>
                                 </a>
                                 @endif

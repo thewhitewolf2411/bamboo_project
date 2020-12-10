@@ -68,11 +68,19 @@
                     </div>
                 </a>
                 @else
-                <a href="/portal/testing/receiveorder?scanid={{$tradein->barcode_original}}">
-                    <div class="btn btn-primary">
-                        <p style="color: #fff;">Back</p>
-                    </div>
-                </a>
+                    @if($mti)
+                    <a href="/portal/testing/receiveorder?scanid={{$tradein->barcode_original}}">
+                        <div class="btn btn-primary">
+                            <p style="color: #fff;">Back</p>
+                        </div>
+                    </a>
+                    @else
+                    <a href="/portal/testing/receive">
+                        <div class="btn btn-primary">
+                            <p style="color: #fff;">Back</p>
+                        </div>
+                    </a>
+                    @endif
                 @endif
 
             </div>

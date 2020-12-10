@@ -104,6 +104,7 @@ Route::get('/portal/customer-care/trade-out', 'PortalController@showTradeOut')->
 Route::get('/portal/customer-care/trade-out/{id}', 'PortalController@showTradeOutDetails')->name('tradeOutDetails')->middleware('auth');
 Route::post('/portal/customer-care/tradein/deletetradein', 'PortalController@deleteTradeInFromSystem')->middleware('auth');
 Route::get('/deleteorder/{id}', 'PortalController@deleteTradeIn')->middleware('auth');
+Route::get('/totesting/{id}', 'PortalController@returnToTesting')->middleware('auth');
 
 Route::get('/portal/customer-care/destroy-device', 'PortalController@showDestroyDevice')->name('destroyDevice')->middleware('auth');
 Route::get('/portal/customer-care/trade-pack/{search?}', 'PortalController@showTradePack')->name('tradePack')->middleware('auth');

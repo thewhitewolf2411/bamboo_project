@@ -33,7 +33,9 @@ class CreateTradeinTable extends Migration
             $table->boolean('received')->default(false);
             $table->boolean('device_missing')->nullable()->default(null);
             $table->string('missing_image')->nullable();
-            $table->boolean('device_correct')->nullable()->default(null);
+            $table->integer('device_correct')->nullable()->default(null);
+            $table->boolean('fimp')->nullable();
+            $table->boolean('pinlocked')->nullable();
             $table->boolean('device_present_as_described')->nullable()->default(null);
             $table->boolean('chekmend_passed')->nullable()->default(null);
             $table->string('imei_number', 15)->nullable()->default(null);

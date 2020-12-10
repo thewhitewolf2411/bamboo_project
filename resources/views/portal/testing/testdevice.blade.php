@@ -96,6 +96,26 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="device_correct">
+                                Is device correct?
+                            </label>
+                            <select class="form-control" id="device_correct" name="device_correct" onchange="testingElementChanged()" required>
+                                <option disabled selected value> -- select an option -- </option>
+                                <option id="device_correct_false" value="false">No</option>
+                                <option id="device_correct_true" value="true">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group form-group-hidden" id="select_correct_device_container">
+                            <select class="selectpicker" id="select_correct_device" data-show-subtext="true" data-live-search="true" name="select_correct_device">
+                                <option value="" selected disabled style="color:#000 !important"> -- Select correct device -- </option>
+                                @foreach($products as $product)
+                                <option value="{{$product->id}}">{{$product->product_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label for="device_fully_functional">
                                 Is device fully functional?
                             </label>
@@ -109,66 +129,66 @@
                         <div class="form-group form-group-hidden w-100" id="device-fully-functional-options">
                             <label id="multiselect">Please rectify reason for device not being fully functional?</label>
 
-                            <div class="d-flex flex-wrap my-3">
+                            <div class="d-flex flex-wrap my-3" id="device-fully-functional-options-2">
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="audio_tests">Audio tests</label>
-                                <input type="checkbox" name="audio_tests" id="audio_tests" value="true">
+                                <input type="checkbox" class="single-checkbox" name="audio_tests" id="audio_tests" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="front_microphone">Front Microphone</label>
-                                <input type="checkbox" name="front_microphone" id="front_microphone" value="true">
+                                <input type="checkbox" class="single-checkbox" name="front_microphone" id="front_microphone" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="headset_test">Headset Test</label>
-                                <input type="checkbox" name="headset_test" id="headset_test" value="true">
+                                <input type="checkbox" class="single-checkbox" name="headset_test" id="headset_test" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="loud_speaker_test">Loud Speaker Test</label>
-                                <input type="checkbox" name="loud_speaker_test" id="loud_speaker_test" value="true">
+                                <input type="checkbox" class="single-checkbox" name="loud_speaker_test" id="loud_speaker_test" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="microphone_playback_test">Microphone Playback Tests</label>
-                                <input type="checkbox" name="microphone_playback_test" id="microphone_playback_test" value="true">
+                                <input type="checkbox" class="single-checkbox" name="microphone_playback_test" id="microphone_playback_test" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="buttons_test">Buttons Test</label>
-                                <input type="checkbox" name="buttons_test" id="buttons_test" value="true">
+                                <input type="checkbox" class="single-checkbox" name="buttons_test" id="buttons_test" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="camera_test">Camera test</label>
-                                <input type="checkbox" name="camera_test" id="camera_test" value="true">
+                                <input type="checkbox" class="single-checkbox" name="camera_test" id="camera_test" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="sensor_test">Sensor Test</label>
-                                <input type="checkbox" name="sensor_test" id="sensor_test" value="true">
+                                <input type="checkbox" class="single-checkbox" name="sensor_test" #### id="sensor_test" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="glass_condition">Glass Condition</label>
-                                <input type="checkbox" name="glass_condition" id="glass_condition" value="true">
+                                <input type="checkbox" class="single-checkbox" name="glass_condition" id="glass_condition" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="vibration">Vibration</label>
-                                <input type="checkbox" name="vibration" id="vibration" value="true">
+                                <input type="checkbox" class="single-checkbox" name="vibration" id="vibration" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="original_colour">Original colour</label>
-                                <input type="checkbox" name="original_colour" id="original_colour" value="true">
+                                <input type="checkbox" class="single-checkbox" name="original_colour" id="original_colour" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="battery_health">Battery health</label>
-                                <input type="checkbox" name="battery_health" id="battery_health" value="true">
+                                <input type="checkbox" class="single-checkbox" name="battery_health" id="battery_health" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="nfc">NFC</label>
-                                <input type="checkbox" name="nfc" id="nfc" value="true">
+                                <input type="checkbox" class="single-checkbox" name="nfc" id="nfc" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="no_power">No Power</label>
-                                <input type="checkbox" name="no_power" id="no_power" value="true">
+                                <input type="checkbox" class="single-checkbox" name="no_power" id="no_power" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="fake_missing_parts">Fake or missing parts</label>
-                                <input type="checkbox" name="fake_missing_parts" id="fake_missing_parts" value="true">
+                                <input type="checkbox" class="single-checkbox" name="fake_missing_parts" id="fake_missing_parts" value="true">
                                 </div>
                             </div>
 
