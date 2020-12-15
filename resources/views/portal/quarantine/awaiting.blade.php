@@ -76,6 +76,14 @@
                                     <i class="fa fa-times" style="color:black !important;"></i>
                                 </a>
 
+                                <a href="/portal/trays/tray/printlabel/{{$tradein->barcode}}">
+                                    <i class="fa fa-print"></i>
+                                </a>
+
+                                <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
+                                    <i class="fa fa-search"></i>
+                                </a>
+
                                 <a href="javascript:void(0)" onclick = sendToReturn({{$tradein->barcode}}) title="Mark device to return to customer">
                                     <i class="fa fa-times" style="color:red !important;"></i>
                                 </a>

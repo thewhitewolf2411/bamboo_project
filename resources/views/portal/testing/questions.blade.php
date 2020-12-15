@@ -100,7 +100,7 @@
                                                 <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                             </div>
                                             <div class="d-flex w-25 border p-3"><label for="missing-yes">Device is present.</label><input id="missing-yes" type="radio" name="missing" value="present" required></div>
-                                            <div class="d-flex w-25 border p-3"><label for="missing-yes">Device is not present</label><input id="missing-no" type="radio" name="missing" value="missing"></div>
+                                            <div class="d-flex w-25 border p-3"><label for="missing-no">Device is not present</label><input id="missing-no" type="radio" name="missing" value="missing"></div>
                                         </div>
                                         
                                     </div>

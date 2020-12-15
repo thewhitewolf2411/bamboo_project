@@ -125,9 +125,13 @@ function testingElementChanged(){
             }
         }
 
-        }
+    }
 
-
+    if(waterDamage == "true"){
+        $('#customer_grade').val("Faulty");
+        $('#bamboo_final_grade').val('Faulty');
+        cosmeticNumGrade = 1;
+    }
 
 
     if(fimpOrGoogleLock == "true" || pinLock == "true"){
@@ -160,6 +164,11 @@ function cosmeticElementChanged(){
 
     if(fimpOrGoogleLock == "true" || pinLock == "true"){
         $('#customer_grade').val("Faulty");
+    }
+    else if($('#water_damage').val() == "true"){
+        $('#customer_grade').val("Faulty");
+        $('#bamboo_final_grade').val('Faulty');
+        cosmeticNumGrade = 1;
     }
     else{
         if(cosmeticGrade == "Grade A"){

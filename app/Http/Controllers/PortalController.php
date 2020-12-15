@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Eloquent\Category;
 use App\Eloquent\BuyingProduct;
+use App\Eloquent\BuyingProductColours;
+use App\Eloquent\BuyingProductInformation;
+use App\Eloquent\BuyingProductNetworks;
 use App\Eloquent\SellingProduct;
 use App\Eloquent\ProductInformation;
 use App\Eloquent\ProductData;
@@ -131,6 +134,7 @@ class PortalController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
         $user = User::where('id', $tradein[0]->user_id)->first();
 
+        
 
         $testingfaults = TestingFaults::where('tradein_id', $tradein[0]->id)->first();
 
@@ -203,6 +207,8 @@ class PortalController extends Controller
     }
 
     public function PrintTradeInLabel(Request $request){
+
+        #dd($request);
 
         $tradeins = Tradein::where('barcode', $request->hidden_print_trade_pack_trade_in_id)->get();
         $user = User::where('id',$tradeins[0]->user_id)->first();
@@ -1413,8 +1419,15 @@ class PortalController extends Controller
 
         $tradein->save();
 
+        $mti = false;
+
+        if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>1){
+            $mti = true;
+        }
+
+
         if($tradein->marked_for_quarantine){
-            return redirect('/portal/testing/receive/quarantine/' . $tradein->id)->with('message', $message);
+            return redirect('/portal/testing/receive/quarantine/' . $tradein->id)->with(['message'=>$message, 'mti'=>$mti]);
         }
         else{
             return redirect('/portal/testing/checkforimei/' . $tradein->id);
@@ -1443,6 +1456,12 @@ class PortalController extends Controller
         $quarantineTrays = "";
         $quarantineName = "";
 
+
+        $mti = false;
+
+        if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>1){
+            $mti = true;
+        }
 
         if($tradein->marked_for_quarantine == true){
             $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RQ01%')->where('number_of_devices', "<" ,200)->first();
@@ -1517,7 +1536,7 @@ class PortalController extends Controller
 
         $response = $this->generateNewLabel($barcode, $sellingProduct, $tradein);
 
-        return view('portal.testing.totray')->with(['response'=>$response, 'barcode'=>$tradein->barcode, 'tray_name'=>$quarantineName, 'portalUser'=>$portalUser, 'tradein'=>$tradein, 'testing'=>true]);
+        return view('portal.testing.totray')->with(['response'=>$response, 'barcode'=>$tradein->barcode, 'tray_name'=>$quarantineName, 'portalUser'=>$portalUser, 'tradein'=>$tradein, 'mti'=>$mti]);
     }
 
     public function showOlderOrderPage($id){
@@ -1805,6 +1824,7 @@ class PortalController extends Controller
             $tradein->marked_for_quarantine = true;
         }
 
+
         if($request->correct_network == "false"){
             $correctNetworkName = $request->correct_network_value;
             $correctNetworkData = Network::where('network_name', $correctNetworkName)->first();
@@ -1827,9 +1847,6 @@ class PortalController extends Controller
 
             $tradein->correct_memory = $request->correct_memory_value;
         }
-
-        #$tradein->color = $request->
-
         
         $tradein->job_state = 5;
         $tradein->bamboo_grade = $request->bamboo_final_grade;
@@ -1858,16 +1875,16 @@ class PortalController extends Controller
 
             $quarantineName ="";
 
-            if($customergradeval == 5){
+            if($bambogradeval == 5){
                 $quarantineTrays = Tray::where('tray_name', '%TM01-1-A%')->where('number_of_devices', "<" ,200)->first();
             }
-            elseif($customergradeval == 4){
+            elseif($bambogradeval == 4){
                 $quarantineTrays = Tray::where('tray_name', '%TM01-1-B%')->where('number_of_devices', "<" ,200)->first();
             }
-            elseif($customergradeval == 3){
+            elseif($bambogradeval == 3){
                 $quarantineTrays = Tray::where('tray_name', '%TM01-1-C%')->where('number_of_devices', "<" ,200)->first();
             }
-            elseif($customergradeval == 2){
+            elseif($bambogradeval == 2){
                 if($tradein->bamboo_grade == "WSI"){
                     $quarantineTrays = Tray::where('tray_name', '%TM01-1-WSI%')->where('number_of_devices', "<" ,200)->first();
                 }
@@ -1875,21 +1892,21 @@ class PortalController extends Controller
                     $quarantineTrays = Tray::where('tray_name', '%TM01-1-WSD%')->where('number_of_devices', "<" ,200)->first();
                 }
             }
-            elseif($customergradeval == 1){
+            elseif($bambogradeval == 1){
                 $quarantineTrays = Tray::whereIn('tray_name', ['%TM01-1-NWSI%','%TM01-1-NWSD%','%TM01-1-CATASTROPHIC%'])->where('number_of_devices', "<" ,200)->first();
             }
 
             if($tradein->getBrandId($tradein->product_id) == 1){
-                if($customergradeval == 5){
+                if($bambogradeval == 5){
                     $quarantineTrays = Tray::where('tray_name', 'TA01-1-A')->where('number_of_devices', "<" ,200)->first();
                 }
-                elseif($customergradeval == 4){
+                elseif($bambogradeval == 4){
                     $quarantineTrays = Tray::where('tray_name', 'TA01-2-B')->where('number_of_devices', "<" ,200)->first();
                 }
-                elseif($customergradeval == 3){
+                elseif($bambogradeval == 3){
                     $quarantineTrays = Tray::where('tray_name', 'TA01-4-C')->where('number_of_devices', "<" ,200)->first();
                 }
-                elseif($customergradeval == 2){
+                elseif($bambogradeval == 2){
                     if($tradein->bamboo_grade == "WSI"){
                         $quarantineTrays = Tray::where('tray_name', 'TA01-5-WSI')->where('number_of_devices', "<" ,200)->first();
                     }
@@ -1897,7 +1914,7 @@ class PortalController extends Controller
                         $quarantineTrays = Tray::where('tray_name', 'TA01-6-WSD')->where('number_of_devices', "<" ,200)->first();
                     }
                 }
-                elseif($customergradeval == 1){
+                elseif($bambogradeval == 1){
                     $quarantineTrays = Tray::whereIn('tray_name', ['TA02-1-NWSI','TA02-2-NWSD','TA02-3-CATASTROPHIC'])->where('number_of_devices', "<" ,200)->first();
                 }
                 
@@ -1905,16 +1922,16 @@ class PortalController extends Controller
             }
 
             if($tradein->getBrandId($tradein->product_id) == 2){
-                if($customergradeval == 5){
+                if($bambogradeval == 5){
                     $quarantineTrays = Tray::where('tray_name', 'TS01-1-A')->where('number_of_devices', "<" ,200)->first();
                 }
-                elseif($customergradeval == 4){
+                elseif($bambogradeval == 4){
                     $quarantineTrays = Tray::where('tray_name', 'TS01-2-B')->where('number_of_devices', "<" ,200)->first();
                 }
-                elseif($customergradeval == 3){
+                elseif($bambogradeval == 3){
                     $quarantineTrays = Tray::where('tray_name', 'TS01-4-C')->where('number_of_devices', "<" ,200)->first();
                 }
-                elseif($customergradeval == 2){
+                elseif($bambogradeval == 2){
                     if($tradein->bamboo_grade == "WSI"){
                         $quarantineTrays = Tray::where('tray_name', 'TS01-5-WSI')->where('number_of_devices', "<" ,200)->first();
                     }
@@ -1922,7 +1939,7 @@ class PortalController extends Controller
                         $quarantineTrays = Tray::where('tray_name', 'TS01-6-WSD')->where('number_of_devices', "<" ,200)->first();
                     }
                 }
-                elseif($customergradeval == 1){
+                elseif($bambogradeval == 1){
                     $quarantineTrays = Tray::whereIn('tray_name', ['TS02-1-NWSI','TS02-2-NWSD','TS02-3-CATASTROPHIC'])->where('number_of_devices', "<" ,200)->first();
                 }
                 
@@ -1930,16 +1947,16 @@ class PortalController extends Controller
             }
 
             if($tradein->getBrandId($tradein->product_id) == 3){
-                if($customergradeval == 5){
+                if($bambogradeval == 5){
                     $quarantineTrays = Tray::where('tray_name', 'TH01-1-A')->where('number_of_devices', "<" ,200)->first();
                 }
-                elseif($customergradeval == 4){
+                elseif($bambogradeval == 4){
                     $quarantineTrays = Tray::where('tray_name', 'TH01-2-B')->where('number_of_devices', "<" ,200)->first();
                 }
-                elseif($customergradeval == 3){
+                elseif($bambogradeval == 3){
                     $quarantineTrays = Tray::where('tray_name', 'TH01-4-C')->where('number_of_devices', "<" ,200)->first();
                 }
-                elseif($customergradeval == 2){
+                elseif($bambogradeval == 2){
                     if($tradein->bamboo_grade == "WSI"){
                         $quarantineTrays = Tray::where('tray_name', 'TH01-5-WSI')->where('number_of_devices', "<" ,200)->first();
                     }
@@ -1947,7 +1964,7 @@ class PortalController extends Controller
                         $quarantineTrays = Tray::where('tray_name', 'TH01-6-WSD')->where('number_of_devices', "<" ,200)->first();
                     }
                 }
-                elseif($customergradeval == 1){
+                elseif($bambogradeval == 1){
                     $quarantineTrays = Tray::whereIn('tray_name', ['TH02-1-NWSI','TH02-2-NWSD','TH02-3-CATASTROPHIC'])->where('number_of_devices', "<" ,200)->first();
                 }
                 
@@ -2073,25 +2090,24 @@ class PortalController extends Controller
         $traycontent->trade_in_id = $tradein->id;
         $traycontent->save();
 
-        return view('portal.testing.totray')->with(['tray_name'=>$quarantineName,'response'=>$response,'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein, 'mti'=>$mti]);
+        return view('portal.testing.totray')->with(['tray_name'=>$quarantineName,'response'=>$response,'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein,'testing'=>true, 'mti'=>$mti]);
 
     }
 
     public function generateNewLabel($barcode,$product, $tradein){
-        $html = "";
-        $html .= "<style>body{display:flex; justify-content:center; align-items:center; height:100%; widht:100%;} p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
-        $html .= "<body>";
-        $html .=    "<div style='clear:both; position:relative; display:flex; justify-content:center; align-items:center;'>
+
+        $html =    "<div style='clear:both; position:relative; display:flex; justify-content:center; align-items:center;'>
                         <div style='width:190pt; height:150px;' >
                             <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $tradein->barcode ."</p></div>
                         </div>
                     </div>";
-        $html .= "</body>";
+
         #echo $html;
         #die();
+        $customPaper = array(0,0,283.80,141.90);
 
-        $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
-        PDF::loadHTML($html)->setPaper('a6', 'landscape')->setWarnings(false)->save($filename);
+        $filename = "label-" . $tradein->barcode . ".pdf";
+        PDF::loadHTML($html)->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
 
         return response(['code'=>200, 'filename'=>$filename]);
         
@@ -2100,6 +2116,13 @@ class PortalController extends Controller
     public function sendtotray(Request $request){
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         
+        $mti = false;
+
+        if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>1){
+            $mti = true;
+        }
+
+
         $tradein->job_state = 5;
 
         $user = User::where('id', $tradein->user_id)->first();
@@ -2175,7 +2198,7 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.testing.totray')->with(['tray_name'=>$tray->tray_name, 'portalUser'=>$portalUser]);
+        return view('portal.testing.totray')->with(['tray_name'=>$tray->tray_name, 'portalUser'=>$portalUser,'testing'=>true, 'mti'=>$mti]);
     }
     
     //payments
@@ -2438,12 +2461,12 @@ class PortalController extends Controller
         $productInformation = "";
 
         if($export_feed_parameter == 1){
-            #$products = BuyingProduct::all();
             DB::table('buying_products')->truncate();
+            DB::table('buying_products_colours')->truncate();
+            DB::table('buying_product_information')->truncate();
+            DB::table('buying_product_network')->truncate();
         }
         else if($export_feed_parameter == 2){
-            $products = SellingProduct::all();
-            $productInformation = ProductInformation::all();
             DB::table('selling_products')->truncate();
             DB::table('product_information')->truncate();
             DB::table('product_networks')->truncate();
@@ -2474,43 +2497,83 @@ class PortalController extends Controller
         $importeddata = array_values($importeddata);
 
         if($export_feed_parameter == 1){
-            $message="";
-            foreach($importeddata as $key=>$datarow){
-                $product = new BuyingProduct();
 
-                $product->product_name = $datarow[1];
-                $product->product_image = $datarow[2];
-                $product->product_description = $datarow[3];
-                $product->category_id = $datarow[4];
-                $product->brand_id = $datarow[5];
-                $product->product_network = $datarow[6];
-                $product->product_memory = $datarow[7];
-                $product->product_colour = $datarow[8];
-                $product->product_grade = $datarow[9];
-                $product->product_dimensions = $datarow[10];
-                $product->product_processor = $datarow[11];
-                $product->product_weight = $datarow[12];
-                $product->product_screen = $datarow[13];
-                $product->product_system = $datarow[14];
-                $product->product_connectivity = $datarow[15];
-                $product->product_battery = $datarow[16];
-                $product->product_signal = $datarow[17];
-                $product->product_camera = $datarow[18];
-                $product->product_camera_2 = $datarow[19];
-                $product->product_sim = $datarow[20];
-                $product->product_memory_slots = $datarow[21];
-                $product->product_quantity = $datarow[22];
-                $product->product_buying_price = $datarow[23];
-    
-                $product->save();
-    
-                $category = Category::where('id', $datarow[4])->get()[0];
-                $category->total_produts = $category->total_produts+1;
-                $category->save();
-        
-                $brand = Brand::where('id', $datarow[5])->get()[0];
-                $brand->total_produts = $brand->total_produts + 1;
-                $brand->save();
+            $networks = Network::all();
+
+            $emptyrows = array();
+
+            $k = count($importeddata[0]);
+
+            foreach($importeddata as $key=>$row){
+
+                if($row[1] !== null){
+
+                    $product = new BuyingProduct();
+                    $product->product_name = $row[1];
+                    $product->product_image = 'default_image';
+                    $product->category_id = $row[3];
+                    $product->brand_id = $row[4];
+                    $product->product_description = $row[5];
+                    
+                    if($row[15] !== null){
+                        $product->product_dimensions = $row[15];
+                    }
+                    if($row[16] !== null){
+                        $product->product_processor = $row[16];
+                    }
+                    if($row[17] !== null){
+                        $product->product_weight = $row[17];
+                    }
+                    if($row[18] !== null){
+                        $product->product_screen = $row[18];
+                    }
+                    if($row[19] !== null){
+                        $product->product_system = $row[19];
+                    }
+                    if($row[20] !== null){
+                        $product->product_connectivity = $row[20];
+                    }
+                    if($row[21] !== null){
+                        $product->product_battery = $row[21];
+                    }
+                    if($row[22] !== null){
+                        $product->product_signal = $row[22];
+                    }
+                    if($row[23] !== null){
+                        $product->product_camera = $row[23];
+                    }
+                    if($row[24] !== null){
+                        $product->product_camera_2 = $row[24];
+                    }
+                    if($row[25] !== null){
+                        $product->product_sim = $row[25];
+                    }
+                    if($row[26] !== null){
+                        $product->product_memory_slots = $row[26];
+                    }
+
+                    $product->save();
+                }
+
+                if($importeddata[$key][6] !== null){
+                    $buyingProductInformation = new BuyingProductInformation();
+                    $buyingProductInformation->product_id = $product->id;
+                    $buyingProductInformation->memory = $importeddata[$key][6];
+                    $buyingProductInformation->customer_grade_price_1 = $importeddata[$key][7];
+                    $buyingProductInformation->customer_grade_price_2 = $importeddata[$key][8];
+                    $buyingProductInformation->customer_grade_price_3 = $importeddata[$key][9];
+                    $buyingProductInformation->save();
+                }
+
+                foreach($networks as $network){
+                    if($importeddata[$key][12] !== null && $network->network_name == $importeddata[$key][12]){
+                        $productNetworks = new BuyingProductNetworks();
+                        $productNetworks->network_id = $network->id;
+                        $productNetworks->product_id = $product->id;
+                        $productNetworks->knockoff_price = $importeddata[$key][13];
+                        $productNetworks->save();
+                    }
+                }   
 
                 $feed = new Feed();
                 $feed->feed_type = "All buying devices";
@@ -3174,20 +3237,19 @@ class PortalController extends Controller
     }
 
     public function generateTrayLabel($barcode, $id){
-        $html = "";
-        $html .= "<style>body{height:100%; widht:100%;} p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
-        $html .= "<body>";
-        $html .=    "<div style='clear:both; position:relative; margin: 0 auto; width:100%;'>
-                        <div style='width:190pt; height:150px;' >
-                            <div id='barcode-container' style='height:200px; border:1px solid black; padding:15px; text-align:center;'><p>". $barcode ."<br>" .  $id ."</p></div>
-                        </div>
-                    </div>";
-        $html .= "</body>";
+
+        $html = "<style>body > div:nth-child(1) > div:nth-child(2) {
+            margin: auto;
+            }</style>";
+        $html .= "<div style='text-align:center; margin:0 auto;'><p style='margin:auto;'>". $barcode ."<br>" .  $id ."</p></div>";
+
+
         #echo $html;
         #die();
 
-        $filename = "labeltray-" . $id . ".pdf";
-        PDF::loadHTML($html)->setPaper('a6', 'landscape')->setWarnings(false)->save($filename);
+        $filename = "label-" . $id . ".pdf";
+        $customPaper = array(0,0,141.90,283.80);
+        PDF::loadHTML($html)->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
 
         $this->downloadFile($filename);
         
@@ -3294,22 +3356,19 @@ class PortalController extends Controller
     }
 
     public function generateTrolleyLabel($barcode, $id){
-        $html = "";
-        $html .= "<style>p{margin:0; font-size:16pt;} #barcode-container div{margin: auto;}</style>";
-        $html .= "<body style='page-break-inside: avoid; display:flex; justify-content:center; align-items:center; height:auto; widht:auto;'>";
-        $html .=    "<div style='clear:both; position:relative; display:flex; justify-content:center; align-items:center;'>
-                        <div style=' display:flex; align-items:center; justify-content:center;' >
-                            <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0;'>". $barcode ."</div><p>" .  $id ."</p></div>
-                        </div>
-                    </div>";
-        $html .= "</body>";
+        
+        $html = "<style>body > div:nth-child(1) > div:nth-child(2) {
+            margin: auto;
+            }</style>";
+        $html .= "<div style='text-align:center; margin:0 auto;'><p style='margin:auto;'>". $barcode ."<br>" .  $id ."</p></div>";
         #echo $html;
         #die();
 
 
 
         $filename = "labeltrolley-" . $id . ".pdf";
-        PDF::loadHTML($html)->setPaper('a6', 'landscape')->setWarnings(false)->save($filename);
+        $customPaper = array(0,0,141.90,283.80);
+        PDF::loadHTML($html)->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
 
         $this->downloadFile($filename);
         

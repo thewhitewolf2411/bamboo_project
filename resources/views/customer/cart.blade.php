@@ -152,8 +152,9 @@
                             <option value="1" selected>Make an order without printing label</option>
                             <option value="2">Print and send trade label yourself</option>
                         </select>
-                        @endif
+                        @endif   
                     </div>
+                    <p style="text-align: center;">Before submitting your order, be sure to read <br> <a style="color:blue;" href="/terms"> our terms and conditions </a>.</p>
 
                     <div class="form-container">
 

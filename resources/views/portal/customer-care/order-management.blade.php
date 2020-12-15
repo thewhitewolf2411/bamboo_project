@@ -95,8 +95,8 @@
                                 <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
                                     <i class="fa fa-search"></i>
                                 </a>
-                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Print device label">
-                                    <i class="fa fa fa-print"></i>
+                                <a href="/portal/trays/tray/printlabel/{{$tradein->barcode}}">
+                                    <i class="fa fa-print"></i>
                                 </a>
                                 @if($tradein->job_state == 3)
                                 <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
