@@ -67,11 +67,11 @@
 
                         <div class="">
                             <div class="d-flex">
-                                <label class="elem-grade-container mr-3" for="grade-1">Excellent Working</label>
-                                <label class="elem-grade-container mr-3" for="grade-2">Good Working</label>
-                                <label class="elem-grade-container mr-3" for="grade-3">Poor Working</label>
-                                <label class="elem-grade-container mr-3" for="grade-4">Damaged Working</label>
-                                <label class="elem-grade-container mr-3" for="grade-5">Faulty</label>
+                                <label class="elem-grade-container ml-0 mr-3" for="grade-1">Excellent Working</label>
+                                <label class="elem-grade-container ml-0 mr-3" for="grade-2">Good Working</label>
+                                <label class="elem-grade-container ml-0 mr-3" for="grade-3">Poor Working</label>
+                                <label class="elem-grade-container ml-0 mr-3" for="grade-4">Damaged Working</label>
+                                <label class="elem-grade-container ml-0 mr-3" for="grade-5">Faulty</label>
                             </div>
                         </div>
                     

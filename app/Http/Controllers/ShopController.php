@@ -7,8 +7,12 @@ use Auth;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Order;
 use App\Eloquent\BuyingProduct;
+use App\Eloquent\BuyingProductColours;
+use App\Eloquent\BuyingProductInformation;
+use App\Eloquent\BuyingProductNetworks;
 use App\Eloquent\ProductData;
 use App\Eloquent\Brand;
+
 
 class ShopController extends Controller
 {
@@ -91,9 +95,15 @@ class ShopController extends Controller
     }
 
     public function showItem($id){
-        $itemData = BuyingProduct::where('id', $id)->first();
+
+        $product = BuyingProduct::where('id', $id)->first();
+        $sellingProductInformation = BuyingProductInformation::where('product_id', $id)->get();
+        #dd($sellingProductInformation);
+        $productNetworks = BuyingProductNetworks::where('product_id', $id)->get();
+
         $products = BuyingProduct::all();
-        return view('shop.item')->with('products', $products)->with('itemData', $itemData);
+        return view('shop.item')->with(['product'=>$product, 'products'=>$products, 'productInformation'=>$sellingProductInformation, 'networks'=>$productNetworks]);
+
     }
 
     public function showAllItems(Request $request){

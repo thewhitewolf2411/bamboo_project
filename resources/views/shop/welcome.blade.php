@@ -62,7 +62,7 @@
                                 <div class="latest-product-container">
                                     <p>LATEST OFFER</p>
                                     <p class="latest-product-big">{{$latestProduct->product_name}}</p>
-                                    <p>from only £{{$latestProduct->base_price}}</p>
+                                    <p>from only £{{$latestProduct->getProductMinPrice($latestProduct->id)}}</p>
                                     <a href="/shop/item/{{$latestProduct->id}}" class="btn btn-primary btn-white">Shop now</a>
                                 </div>
                                 @endforeach

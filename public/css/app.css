@@ -12155,6 +12155,17 @@ h3, h4, h5 {
   align-items: center;
 }
 
+.left-title-container {
+  display: flex;
+  align-items: center;
+}
+
+.left-title-container p {
+  font-size: 40px !important;
+  font-weight: 600;
+  text-align: left;
+}
+
 .mb-50 {
   margin-bottom: 50px;
 }
@@ -12470,6 +12481,7 @@ h3, h4, h5 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .let-top-container p {
@@ -12911,7 +12923,7 @@ h3, h4, h5 {
 }
 
 .product-image-container img {
-  height: 300px;
+  height: 500px;
 }
 
 .product-title {

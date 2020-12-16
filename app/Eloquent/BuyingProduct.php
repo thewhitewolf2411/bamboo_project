@@ -4,6 +4,8 @@ namespace App\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Eloquent\BuyingProductInformation;
+
 class BuyingProduct extends Model
 {
     /**
@@ -33,4 +35,14 @@ class BuyingProduct extends Model
         $categoryName = Category::where('id', $category_id)->get('category_name');
         return $categoryName[0]->category_name;
     }
+
+    public function getProductMinPrice($id){
+        return BuyingProductInformation::where('product_id', $id)->first()->customer_grade_price_1;
+    }
+
+    public function getProductMaxPrice($id){
+        return BuyingProductInformation::where('product_id', $id)->first()->customer_grade_price_3;
+    }
+
+    
 }

@@ -14,6 +14,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+        <script src="{{asset('js/Price.js')}}"></script>
     </head>
     <body>
         <header>@include('customer.layouts.header')</header>
@@ -89,44 +91,87 @@
                 <div class="single-product-container">
 
                     <div class="product-image-container">
-                        <img src="{{asset('/storage/product_images').'/'.$itemData->product_image}}">
+                        <img src="{{asset('/storage/product_images').'/'.$product->product_image}}">
                     </div>
                     <div class="product-data">
                         <div class="product-selected product-name-container">
-                            <p class="product-title">{{$itemData->product_name}}</p>
+                            <p class="product-title">{{$product->product_name}}</p>
                         </div>
-                        <div class="product-selected product-network-container">
-                            <p>Product Network:</p>
+                        <div class="product-selected product-network-container" id="product-network-container">
+                            <p>Select Network:</p>
+
+                            <div class="d-flex">
+                            @foreach($networks as $network)
+                                <div><label class="network-container mr-3" id="{{$network->getNetWorkName($network->network_id)}}" for="network-{{$network->id}}"><img src="{{$network->getNetWorkImage($network->network_id)}}"></label></div>
+                            @endforeach
+                            </div>
+
+                            <div class="d-flex">
+                            @foreach($networks as $network)
+                                <input id="network-{{$network->id}}" name="network" value="{{$network->knockoff_price}}" onchange="networkChanged(this)" type="radio">
+                            @endforeach
+                            </div>
+                            
                         </div>
                         <div class="product-selected product-memory-container">
-                            <p>Product Memory:</p>
-                            <p>{{$itemData->product_memory}}</p>
+                            <p>Select Memory:</p>
+
+                            <div class="d-flex">
+                            @foreach($productInformation as $info)
+                                <div><label class="memory-container mr-3" id="{{$info->memory}}" for="info-{{$info->id}}">{{$info->memory}}</label></div>
+                            @endforeach
+                            </div>
+
+                            <div class="d-flex">
+                            @foreach($productInformation as $info)
+                                <input id="info-{{$info->id}}" name="info" value='{ "price1": {{$info->customer_grade_price_1}}, "price2": {{$info->customer_grade_price_2}}, "price3": {{$info->customer_grade_price_3}}}' type="radio" onchange="memoryChanged(this)">
+                            @endforeach
+                            </div>
                         </div>
-                        <div class="product-selected">
-                            <p>Product Colour:</p>
-                            <div class="product-color-container" style="background: {{$itemData->product_colour}}"></div>
-                        </div>
+
                         <div class="product-selected product-grade-container">
-                            <p>Product Grade:</p>
-                            <p>{{$itemData->product_grade}}</p>
+                            <p>Select Grade:</p>
+
+                            <div class="">
+                                <div class="d-flex">
+                                    <label class="elem-grade-container ml-0 mr-3" for="grade-1">Grade A</label>
+                                    <label class="elem-grade-container ml-0 mr-3" for="grade-2">Grade B/B+</label>
+                                    <label class="elem-grade-container ml-0 mr-3" for="grade-3">Grade C</label>
+                                </div>
+                            </div>
+                        
+                            <div class="d-flex">
+                                <input id="grade-1" name="grade" type="radio" value="1" onchange="gradeChanged(this)">
+                                <input id="grade-2" name="grade" type="radio" value="2" onchange="gradeChanged(this)">
+                                <input id="grade-3" name="grade" type="radio" value="3" onchange="gradeChanged(this)">
+                            </div>
                         </div>
+
                         <div class="product-selected product-price-container">
-                            <p>Product price:</p>
-                            <p>£{{$itemData->product_buying_price}}</p>
+                            <p id="product-price" style="color:#23AAF7 !important;">
+
+                            </p>
                         </div>
+
+
                         @if(Auth::user())
                         <div class="add-to-container">
                             <form action="/addtocart" method="POST">
                                 <div class="add-to-cart-container">
                                     @csrf
-                                    <input type="hidden" name="productid" value="{{$itemData->id}}">
-                                    <button type="submit" class="btn btn-primary btn-blue">Add to Basket</button>
+                                    <input type="hidden" name="productid" value="{{$product->id}}">
+                                    <input type="hidden" name="grade" id="grade"></input>
+                                    <input type="hidden" name="network" id="network"></input>
+                                    <input type="hidden" name="memory" id="memory"></input>
+                                    <input type="hidden" name="price" id="price"></input>
+                                    <input type="hidden" name="type" value="tradein"></input>
+                                    <button type="submit" class="btn btn-primary btn-blue" id="addToCart" disabled>Add to Basket</button>
                                 </div>
                             </form>
                             <form action="/addtowishlist" method="POST">
                                 <div class="add-to-wishlist-container">
                                     @csrf
-                                    <input type="hidden" name="productid" value="{{$itemData->id}}">
+                                    <input type="hidden" name="productid" value="{{$product->id}}">
                                     <button type="submit" class="btn btn-primary btn-orange">Add to Wishlist</button>
                                 </div>
                             </form>
@@ -187,59 +232,58 @@
                         <p class="left-title-text">DESCRIPTION</p>
                         <div class="product-description-text">
                             <p><strong>And then there was Pro</strong></p>
-                            <p class="description-text">{{$itemData->product_description}}</p>
+                            <p class="description-text">{{$product->product_description}}</p>
                         </div>
                     </div>
-
                     <div class="product-description-right">
                         <p class="left-title-text">SPECIFICATIONS</p>
                         <div class="product-description-data">
                             <div class="product-description-data-text">
                                 <p class="product-description-title">Dimensions</p>
-                                <p>{{$itemData->product_dimensions}} mm</p>
+                                <p>{{$product->product_dimensions}}</p>
                             </div>
                             <div class="product-description-data-text">
                                 <p class="product-description-title">Processor</p>
-                                <p>{{$itemData->product_processor}}</p>
+                                <p>{{$product->product_processor}}</p>
                             </div>
                             <div class="product-description-data-text">
                                 <p class="product-description-title">Weight</p>
-                                <p>{{$itemData->product_weight}}</p>
+                                <p>{{$product->product_weight}}</p>
                             </div>
                             <div class="product-description-data-text">
                                 <p class="product-description-title">Screen size</p>
-                                <p>{{$itemData->product_screen}}</p>
+                                <p>{{$product->product_screen}}</p>
                             </div>
                             <div class="product-description-data-text">
                                 <p class="product-description-title">Operating System</p>
-                                <p>{{$itemData->product_system}}</p>
+                                <p>{{$product->product_system}}</p>
                             </div>
                             <div class="product-description-data-text">
                                 <p class="product-description-title">Connectivity</p>
-                                <p>{{$itemData->product_connectivity}}</p>
+                                <p>{{$product->product_connectivity}}</p>
                             </div>
                             <div class="product-description-data-text">
                                 <p class="product-description-title">Battery</p>
-                                <p>{{$itemData->product_battery}}</p>
+                                <p>{{$product->product_battery}}</p>
                             </div>
                             <div class="product-description-data-text">
                                 <p class="product-description-title"> Signal</p>
-                                <p>{{$itemData->product_signal}}</p>
+                                <p>{{$product->product_signal}}</p>
                             </div>
                             <div class="product-description-data-text">
                                 <p class="product-description-title">Camera</p>
-                                <p>{{$itemData->product_camera}}</p>
-                                @if($itemData->product_camera_2 !== null)
-                                <p>{{$itemData->product_camera_2}}</p>
+                                <p>{{$product->product_camera}}</p>
+                                @if($product->product_camera_2 !== null)
+                                <p>{{$product->product_camera_2}}</p>
                                 @endif
                             </div>
                             <div class="product-description-data-text">
                                 <p class="product-description-title">Sim Size</p>
-                                <p>{{$itemData->product_sim}}</p>
+                                <p>{{$product->product_sim}}</p>
                             </div>
                             <div class="product-description-data-text">
                                 <p class="product-description-title">Memory Card Slots</p>
-                                <p>{{$itemData->product_memory_slots}}</p>
+                                <p>{{$product->product_memory_slots}}</p>
                             </div>
                         </div>
                     </div>

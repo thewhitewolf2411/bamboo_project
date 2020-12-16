@@ -195,7 +195,7 @@ class SellController extends Controller
             //8
             $tradeinbarcode = 10000000 + rand(100000, 9000000);
 
-            $cart = Cart::where('user_id', Auth::user()->id)->get();
+            $cart = Cart::where('user_id', Auth::user()->id)->where('type', 'tradein')->get();
 
             $tradeinexp = null;
 
@@ -253,34 +253,6 @@ class SellController extends Controller
                     $client->publicAPI->track( $event );  
 
                 }
-                else if($item[0] == 'tradeout'){
-                    $tradeout = new Tradeout();
-                    $tradeout->user_id = Auth::user()->id;
-                    $tradeout->product_id = json_decode($item[1])->id;
-                    $tradeout->order_state = 0;
-                    $tradeout->save();
-
-                    $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
-                    $event = new KlaviyoEvent(
-                        array(
-                            'event' => 'Item Bought',
-                            'customer_properties' => array(
-                                '$email' => Auth::user()->email,
-                                '$name' => Auth::user()->first_name,
-                                '$last_name' => Auth::user()->last_name,
-                                '$birthdate' => Auth::user()->birthdate,
-                                '$newsletter' => Auth::user()->email,
-                                '$products' => $tradeout->getDeviceName($tradeout->product_id),
-                                '$price'=> $price
-                            ),
-                            'properties' => array(
-                                'Item Bought' => True
-                            )
-                        )
-                    );
-            
-                    $client->publicAPI->track( $event );  
-                }
             }
 
 
@@ -303,7 +275,42 @@ class SellController extends Controller
     }
 
     public function buyItems(Request $request){
-        dd($request->all());
+
+        $cart = Cart::where('user_id', Auth::user()->id)->where('type', 'tradeout')->get();
+
+        foreach($cart as $item){
+            $tradeout = new Tradeout();
+            $tradeout->user_id = Auth::user()->id;
+            $tradeout->product_id = $item->product_id;
+            $tradeout->order_state = 0;
+            $tradeout->save();
+
+            $item->delete();
+    
+            $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Item Bought',
+                    'customer_properties' => array(
+                        '$email' => Auth::user()->email,
+                        '$name' => Auth::user()->first_name,
+                        '$last_name' => Auth::user()->last_name,
+                        '$birthdate' => Auth::user()->birthdate,
+                        '$newsletter' => Auth::user()->email,
+                        '$products' => $tradeout->getDeviceName($tradeout->product_id),
+                        '$price'=> $request->price
+                    ),
+                    'properties' => array(
+                        'Item Bought' => True
+                    )
+                )
+            );
+    
+            $client->publicAPI->track( $event );  
+        }
+
+        return redirect()->back()->with('success', 'Your shoping has been completed.');
+
     }
 
     public function generateTradeInHTML(Request $request){

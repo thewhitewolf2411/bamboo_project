@@ -23,12 +23,15 @@
     <body>
         <header>@include('customer.layouts.header')</header>
         <main>
-
-            <div class="center-title-container">
-                <p style="display: flex; align-items: center;"><i style="color: #000; opacity: 1;" class="fa fa-keyboard-o" aria-hidden="true"></i>Basket</p>
+            <div class="shop-top-header" style="margin: 0;">
+                <div class="center-title-container">
+                    <div class="let-top-container">
+                        <div class="center-title-container">
+                            <p> Basket </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="d-flex p-5">
 
             @if(Session::has('success'))
 
@@ -37,6 +40,8 @@
             </div>
 
             @endif
+
+            <div class="d-flex p-5">
 
             @if(Session::has('barcode'))
 
@@ -66,15 +71,15 @@
 
                 <div class="d-flex flex-column w-75">
                     @if($hasTradeOut)
-                    <div class="center-title-container">
-                        <p style="color: #23AAF7;">Buying items</p>
+                    <div class="left-title-container">
+                        <img src="{{asset('/shop_images/Icon-Shop.svg')}}">
+                        <p class="mx-3 mt-3">Basket</p>
                     </div>
                     @endif
                     <div class="d-flex flex-column w-100">
                         @foreach($cart as $key=>$cartitem)
                             @if($cartitem->type === 'tradeout')
-                            {{$key+1}}
-                                <div class="cart-product d-flex justify-content-between">
+                                <div class="cart-product row justify-content-between mt-3">
                                     <div class="cart-product-image w-25">
                                         <img src="{{$cartitem->getProductImage($cartitem->id)}}">
                                     </div>
@@ -92,9 +97,18 @@
                                         <h6 class="m-0 mb-3 font-weight-bold">Total Price</h6>
                                         <p class="m-0 font-weight-bold">Total Price: £{{$cartitem->price}}</p>
                                     </div>
-                                    <a href="/removefromcart/{{$key}}">
-                                        <div class="btn btn-danger">
-                                            <p class="m-0" style="color: white;">Remove from cart</p>
+
+                                </div>
+                                <div class="row">
+                                    <div class="w-50"></div>
+                                    <a href="/removefromcart/{{$key}}" class="w-25 m-0">
+                                        <div class="">
+                                            <p class="m-0" style="">REMOVE</p>
+                                        </div>
+                                    </a>
+                                    <a href="" class="w-25 m-0">
+                                        <div class="">
+                                            <p class="m-0" style="">Move to wishlist</p>
                                         </div>
                                     </a>
                                 </div>
@@ -102,15 +116,15 @@
                         @endforeach
                     </div>
                     @if($hasTradeIn)
-                    <div class="center-title-container">
-                        <p style="color: #F28E33;">Selling items</p>
+                    <div class="left-title-container">
+                        <img src="{{asset('/shop_images/Icon-Sell.svg')}}">
+                        <p class="mx-3 mt-3">Basket - Trade in</p>
                     </div>
                     @endif
                     <div class="d-flex flex-column w-100">
                         @foreach($cart as $key=>$cartitem)
                             @if($cartitem->type === 'tradein')
-                            {{$key+1}}
-                                <div class="cart-product d-flex justify-content-between">
+                                <div class="cart-product d-flex justify-content-between mt-3">
                                     <div class="cart-product-image w-25">
                                         <img src="{{$cartitem->getProductImage($cartitem->id)}}">
                                     </div>
@@ -128,9 +142,12 @@
                                         <h6 class="m-0 mb-3 font-weight-bold">Total Price</h6>
                                         <p class="m-0 font-weight-bold">Total Price: £{{$cartitem->price}}</p>
                                     </div>
-                                    <a href="/removefromcart/{{$cartitem->id}}">
-                                        <div class="btn btn-danger">
-                                            <p class="m-0" style="color: white;">Remove from cart</p>
+                                </div>
+                                <div class="row">
+                                    <div class="w-50"></div>
+                                    <a href="/removefromcart/{{$key}}" class="w-25 m-0">
+                                        <div class="">
+                                            <p class="m-0" style="">REMOVE</p>
                                         </div>
                                     </a>
                                 </div>
@@ -141,7 +158,7 @@
 
                 <div class="d-flex flex-column w-25 p-3">
                     <div class="center-title-container flex-column">
-                        <p style="display: flex; align-items: center;">Order Summary</p>
+                        <p style="display: flex; align-items: center;" class="border-bottom">Order Summary</p>
 
                         @if($hasTradeOut)
                         <p style="display: flex; align-items: center;">Price to pay: £{{$fullprice}}</p>
@@ -156,14 +173,12 @@
                     </div>
                     <p style="text-align: center;">Before submitting your order, be sure to read <br> <a style="color:blue;" href="/terms"> our terms and conditions </a>.</p>
 
+                    @if($hasTradeOut)
                     <div class="form-container">
 
-                        <form @if($hasTradeOut) onsubmit="return showPaymentDetails()" @else action="/cart/sell" @endif method="POST">
+                        <form onsubmit="return showPaymentDetails()" action="/cart/sell" method="POST">
                             @csrf
-                
-                            <input type="hidden" id="label_status" name="label_status" value="1">
-
-                            <button type="submit" class="btn btn-primary w-100">Submit Order</button>
+                            <button type="submit" class="btn btn-primary btn-blue w-100">Checkout</button>
         
                         </form>
         
@@ -174,6 +189,31 @@
                         </script>
 
                     </div>
+
+                    @endif
+
+                    @if($hasTradeIn)
+                    <div class="form-container">
+
+                        <form action="/cart/sell" method="POST">
+                            @csrf
+                
+                            <input type="hidden" id="label_status" name="label_status" value="1">
+
+                            <button type="submit" class="btn btn-primary w-100">Sell my device</button>
+        
+                        </form>
+        
+                        <script>
+                            function changelabelstatus(value){
+                                document.getElementById('label_status').value = value.value;
+                            }
+                        </script>
+
+                    </div>
+
+                    @endif
+
                 </div>
 
             </div>
@@ -288,19 +328,20 @@
                                 <span id="paymentErrors"></span>
                                 @csrf
 
+                                <input type="hidden" name="price" value="{{$fullprice}}">
                                 <div class="form-row">
                                     <label>Name on Card</label>
-                                    <input data-worldpay="name" name="name" type="text" />
+                                    <input data-worldpay="name" name="name" type="text" value="{{Auth::user()->first_name}} {{Auth::user()->last_name}}" />
                                 </div>
                                 <div class="form-row">
                                     <label>Card Number</label>
-                                    <input data-worldpay="number" size="20" type="text" />
+                                    <input data-worldpay="number" name="card_number" size="20" type="number" />
                                 </div>
                                 <div class="form-row">
                                     <label>Expiration (MM/YYYY)</label> 
-                                    <input data-worldpay="exp-month" size="2" type="text" /> 
+                                    <input data-worldpay="exp-month" name="exp_month" size="2" type="number" /> 
                                     <label> / </label>
-                                    <input data-worldpay="exp-year" size="4" type="text" />
+                                    <input data-worldpay="exp-year" name="exp_year" size="4" type="number" />
                                 </div>
                                 <div class="form-row">
                                     <label>CVC</label>

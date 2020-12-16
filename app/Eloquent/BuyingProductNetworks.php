@@ -4,6 +4,8 @@ namespace App\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Eloquent\Network;
+
 class BuyingProductNetworks extends Model
 {
     /**
@@ -21,5 +23,15 @@ class BuyingProductNetworks extends Model
     protected $fillable = [
         'network_id', 'product_id', 'knockoff_price'
     ];
+
+    public function getNetWorkImage($id){
+        $network = Network::where('id', $id)->first();
+        return $network->network_image;
+    }
+
+    public function getNetWorkName($id){
+        $network = Network::where('id', $id)->first();
+        return $network->network_name;
+    }
 
 }

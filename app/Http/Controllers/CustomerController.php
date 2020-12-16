@@ -129,6 +129,8 @@ class CustomerController extends Controller
 
     public function addProductToCart(Request $request){
 
+        #dd($request);
+
         if(Auth::User()){
             $userid = Auth::user()->id;
             $productid = $request->productid;
