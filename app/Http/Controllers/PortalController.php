@@ -399,6 +399,26 @@ class PortalController extends Controller
         return view('portal.customer-care.destroy')->with('portalUser', $portalUser);
     }
 
+    private function getOrderNumbersSorted($array){
+        
+        foreach($array as $key=>$item){
+            $k = 0;
+
+            foreach($item as $order){
+                if($order->barcode !== $key){
+                    $k++;
+                }
+            }
+
+            if($k === count($item)){
+                $array->forget($key);
+            }
+
+        }
+
+        return $array;
+    }
+
     public function showTradePack(Request $request){
         if(!$this->checkAuthLevel(1)){return redirect('/');}
         $user_id = Auth::user()->id;
@@ -407,7 +427,9 @@ class PortalController extends Controller
         $search = null;
 
         if($request->all() == null || $request->search == 0){
-            $tradeins = Tradein::all()->where('job_state', 2)->groupBy('barcode');
+            $tradeins = Tradein::all()->whereIn('job_state', [2,3])->groupBy('barcode_original');
+
+            $tradeins = $this->getOrderNumbersSorted($tradeins);
 
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -416,7 +438,9 @@ class PortalController extends Controller
         }
         else{
             if($request->search <= 3){
-                $tradeins = Tradein::where('job_state', 2)->get();
+                $tradeins = Tradein::all()->whereIn('job_state', [2,3])->groupBy('barcode_original');
+                $tradeins = $this->getOrderNumbersSorted($tradeins);
+
                 $user_id = Auth::user()->id;
                 $portalUser = PortalUsers::where('user_id', $user_id)->first();
     
@@ -428,16 +452,14 @@ class PortalController extends Controller
                             $tradeins = $tradeins->except($tradein->id);
                     }
                 }
-    
-                $tradeins = $tradeins->groupBy('barcode');
             }
             else{
-                $tradeins = Tradein::where('barcode', $request->search)->where('job_state', 2)->get();
+                $tradeins = Tradein::where('barcode_original', $request->search)->whereIn('job_state', [2,3])->get();
                 if(count($tradeins) < 1){
                     return redirect()->back()->with('error', 'No Order with that barcode. Please try again.');
                 }
                 else{
-                    $tradeins = $tradeins->groupBy('barcode');
+                    $tradeins = $tradeins->groupBy('barcode_original');
                     $user_id = Auth::user()->id;
                     $portalUser = PortalUsers::where('user_id', $user_id)->first();
                 }
@@ -1831,9 +1853,9 @@ class PortalController extends Controller
 
             $userNetworkName = $tradein->network;
             $userNetworkData = Network::where('network_name', $userNetworkName)->first();
-
-            $correctNetworkPrice = ProductNetworks::where('network_id', $correctNetworkData->id)->where('product_id', $tradein->id)->first()->knockoff_price;
-            $userNetworkPrice = ProductNetworks::where('network_id', $userNetworkData->id)->where('product_id', $tradein->id)->first()->knockoff_price;
+            #dd($correctNetworkPrice = ProductNetworks::where('network_id', $correctNetworkData->id)->where('product_id', $tradein->product_id)->first());
+            $correctNetworkPrice = ProductNetworks::where('network_id', $correctNetworkData->id)->where('product_id', $tradein->product_id)->first()->knockoff_price;
+            $userNetworkPrice = ProductNetworks::where('network_id', $userNetworkData->id)->where('product_id', $tradein->product_id)->first()->knockoff_price;
 
             if($correctNetworkPrice > $userNetworkPrice){
                 $tradein->marked_for_quarantine = true;
@@ -1901,7 +1923,7 @@ class PortalController extends Controller
                     $quarantineTrays = Tray::where('tray_name', 'TA01-1-A')->where('number_of_devices', "<" ,200)->first();
                 }
                 elseif($bambogradeval == 4){
-                    $quarantineTrays = Tray::where('tray_name', 'TA01-2-B')->where('number_of_devices', "<" ,200)->first();
+                    $quarantineTrays = Tray::where('tray_name', 'TA01-2-B+')->where('number_of_devices', "<" ,200)->first();
                 }
                 elseif($bambogradeval == 3){
                     $quarantineTrays = Tray::where('tray_name', 'TA01-4-C')->where('number_of_devices', "<" ,200)->first();
@@ -1917,7 +1939,6 @@ class PortalController extends Controller
                 elseif($bambogradeval == 1){
                     $quarantineTrays = Tray::whereIn('tray_name', ['TA02-1-NWSI','TA02-2-NWSD','TA02-3-CATASTROPHIC'])->where('number_of_devices', "<" ,200)->first();
                 }
-                
                 $quarantineName = $quarantineTrays->tray_name;
             }
 
@@ -2090,21 +2111,20 @@ class PortalController extends Controller
         $traycontent->trade_in_id = $tradein->id;
         $traycontent->save();
 
-        return view('portal.testing.totray')->with(['tray_name'=>$quarantineName,'response'=>$response,'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein,'testing'=>true, 'mti'=>$mti]);
+        return view('portal.testing.totray')->with(['tray_name'=>$quarantineName,'response'=>$response,'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein,'testing'=>false, 'mti'=>$mti]);
 
     }
 
     public function generateNewLabel($barcode,$product, $tradein){
 
-        $html =    "<div style='clear:both; position:relative; display:flex; justify-content:center; align-items:center;'>
-                        <div style='width:190pt; height:150px;' >
-                            <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $tradein->barcode ."</p></div>
-                        </div>
-                    </div>";
+        $html = "<style>body > div:nth-child(1) > div:nth-child(2) {
+            margin: auto;
+            }</style>";
+        $html .= "<div style='text-align:center; margin:0 auto;'><p style='margin:auto;'>". $barcode ."<br>" .  $tradein->barcode ."</p></div>";
 
         #echo $html;
         #die();
-        $customPaper = array(0,0,283.80,141.90);
+        $customPaper = array(0,0,141.90,283.80);
 
         $filename = "label-" . $tradein->barcode . ".pdf";
         PDF::loadHTML($html)->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);

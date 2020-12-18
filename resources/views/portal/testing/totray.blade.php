@@ -38,7 +38,7 @@
                 type:"POST",
                 data:{
                     _token: "{{ csrf_token() }}",
-                    file: "labeltradeout-{{$tradein->barcode}}"
+                    file: "label-{{$tradein->barcode}}"
                 },
                 success:function(response){
                     console.log(response['code'], response.code);

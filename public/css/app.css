@@ -13431,7 +13431,7 @@ h3, h4, h5 {
 }
 
 .elem-grade-container {
-  width: 120px;
+  width: 100px;
   border: 1px solid #000;
   border-radius: 5px;
   padding: 0.375rem;
@@ -13459,6 +13459,22 @@ h3, h4, h5 {
 
 .single-product-container input[type=radio] {
   display: none;
+}
+
+#gradesModal > .modal-dialog {
+  background: #A375BC;
+}
+
+#gradesModal > .modal-dialog > .modal-content {
+  background: #A375BC;
+}
+
+#gradesModal > .modal-dialog > .modal-content > .modal-header {
+  background: #A375BC;
+}
+
+#gradesModal > .modal-dialog > .modal-content > .modal-body {
+  background: #A375BC;
 }
 
 .portal-body {

@@ -137,6 +137,7 @@
                                     <label class="elem-grade-container ml-0 mr-3" for="grade-1">Grade A</label>
                                     <label class="elem-grade-container ml-0 mr-3" for="grade-2">Grade B/B+</label>
                                     <label class="elem-grade-container ml-0 mr-3" for="grade-3">Grade C</label>
+                                    <a role="button" class="my-auto" data-toggle="modal" data-target="#gradesModal"><label class="ml-0 mr-3 my-auto"><img src="{{asset('/customer_page_images/body/Icon-Information.png')}}" class="mx-3">What do these grades mean?</label></a>
                                 </div>
                             </div>
                         
@@ -145,6 +146,22 @@
                                 <input id="grade-2" name="grade" type="radio" value="2" onchange="gradeChanged(this)">
                                 <input id="grade-3" name="grade" type="radio" value="3" onchange="gradeChanged(this)">
                             </div>
+                        </div>
+
+                        <div class="d-flex">
+                    
+                            <div class="d-flex flex-column">
+                                <p>Do you have a smartphone to trade in? You could save up to £320*</p>
+                                <a href="" class="my-auto mx-0"><label class="ml-0 mr-3 my-auto"><img src="{{asset('/customer_page_images/body/Icon-Information.png')}}" class="mr-3">How does this work?</label></a>
+                            </div>
+                        
+                        </div>
+
+
+                        <div class="">
+                        
+                            <a href="" class="border-bottom">Reset filters</a>
+
                         </div>
 
                         <div class="product-selected product-price-container">
@@ -400,6 +417,27 @@
                                 <div class="register-form-container">
                                     @include('auth.register')
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="gradesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><img src="{{ url('/customer_page_images/body/modal-close.svg') }}"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row justify-content-between p-3" style="color: white !important;">
+                                <div class="col-md-2"><h3>Excellent working</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sagittis in leo non pharetra. </p></div>
+                                <div class="col-md-2"><h3>Good working</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sagittis in leo non pharetra. </p></div>
+                                <div class="col-md-2"><h3>Poor working</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sagittis in leo non pharetra. </p></div>
+                                <div class="col-md-2"><h3>Damaged working</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sagittis in leo non pharetra. </p></div>
+                                <div class="col-md-2"><h3>Faulty</h3><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sagittis in leo non pharetra. </p></div>
                             </div>
                         </div>
                     </div>
