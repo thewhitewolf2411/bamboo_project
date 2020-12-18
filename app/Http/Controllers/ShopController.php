@@ -115,8 +115,18 @@ class ShopController extends Controller
         return view('shop.shop')->with("sortData", $sortData)->with('products', $products);
     }
 
+    public function showComparePage(){
+        
+        $products = BuyingProduct::all();
+
+        return view('shop.compare')->with(['products'=>$products]);
+
+    }
+
     //Post metode za shop
     public function choosePhone(Request $request){
         dd($request);
     }
+
+
 }

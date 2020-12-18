@@ -35,7 +35,7 @@
                         <a href="/shop/category/watches"><div class="shop-link">Shop Watches</div></a>
                     </div>
                     <div class="shop-menu-element">
-                        <a href="/shop/category/compare"><div class="shop-link">Compare Models</div></a>
+                        <a href="/shop/compare/"><div class="shop-link">Compare Models</div></a>
                     </div>
                     <div class="shop-menu-element">
                         <a href="/shop/why"><div class="shop-link">Why Shop With Us</div></a>
