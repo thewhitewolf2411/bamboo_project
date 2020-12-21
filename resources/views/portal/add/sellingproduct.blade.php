@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+   <!-- Sortable -->
+   <script src="{{ asset('js/Sort.js') }}"></script>
+
+    <script src="{{ asset('js/Sellingproduct.js') }}"></script>
+
     <title>Bamboo Recycle::Add Salvage Product</title>
 </head>
 
@@ -32,6 +37,11 @@
                     </div>
                 </div>
                 <div class="add-product-container">
+                    @if(Session::has('product_edited'))
+                    <div class="alert alert-success" role="alert">
+                        {{Session::get('product_edited')}}
+                    </div>
+                    @endif
                     <form action="/portal/product/addsellingproduct/add" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="product-tab">
@@ -62,46 +72,104 @@
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_image">Product image:</label>
-                                    <input name="product_image" type="file" accept="image/x-png,image/gif,image/jpeg" required>
-                                  </div>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_grade">Product Grade:</label>
-                                    <div class="d-flex">
-                                        <div class="form-group mr-2">
-                                            <input type="text" name="product_grade_1" value="Excellent working" readonly>
-                                            <input type="text" name="product_grade_2" value="Good working" readonly>
-                                            <input type="text" name="product_grade_3" value="Poor working" readonly>
-                                            <input type="text" name="product_grade_4" value="Damaged working" readonly>
-                                            <input type="text" name="product_grade_5" value="Faulty" readonly>
-                                        </div>
-                                        <div class="form-group ml-2">
-                                            <input type="number" name="customer_grade_price_1" id="customer_grade_price_1" placeholder="Enter price for grade 'Excellent working'">
-                                            <input type="number" name="customer_grade_price_2" id="customer_grade_price_2" placeholder="Enter price for grade 'Good working'">
-                                            <input type="number" name="customer_grade_price_3" id="customer_grade_price_3" placeholder="Enter price for grade 'Poor working'">
-                                            <input type="number" name="customer_grade_price_4" id="customer_grade_price_4" placeholder="Enter price for grade 'Damaged working'">
-                                            <input type="number" name="customer_grade_price_5" id="customer_grade_price_5" placeholder="Enter price for grade 'Faulty'">
-                                        </div>
-                                    </div>
+                                    <input name="product_image" type="file" accept="image/x-png,image/gif,image/jpeg">
                                 </div>
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
-                                    <label for="product_grade">Product Network deductible price:</label>
-                                    <div class="d-flex">
-                                        <div class="form-group mr-2">
-                                            @foreach($networks as $key=>$network)
-                                            <input type="text" name="network_{{$key}}" value="{{$network->network_name}}" readonly>
-                                            @endforeach
-                                        </div>
-                                        <div class="form-group ml-2">
-                                            @foreach($networks as $key=>$network)
-                                            <input type="hidden" name="network_id_{{$network->id}}" value="{{$network->id}}"></input>
-                                            <input type="number" name="network__knockoff_{{$network->id}}" id="customer_grade_price_1" placeholder="Enter price for grade '{{$network->network_name}}'">
-                                            @endforeach
+                                    <div class="portal-title-container">
+                                        <div class="portal-title">
+                                            <p>Different Memory Base Prices expressed in £</p>
                                         </div>
                                     </div>
+                                    @if(Session::has('product_option_deleted'))
+                                    <div class="alert alert-success" role="alert">
+                                        {{Session::get('product_option_deleted')}}
+                                    </div>
+                                    @endif
+                                    <table class="portal-table" id="categories-table">
+                                        <tr>
+                                            <td><div class="table-element">Memory</div></td>
+                                            <td><div class="table-element">Excellent Working</div></td>
+                                            <td><div class="table-element">Good Working</div></td>
+                                            <td><div class="table-element">Damaged working</div></td>
+                                            <td><div class="table-element">Poor working</div></td>
+                                            <td><div class="table-element">Faulty</div></td>
+                                        </tr>
+                                        <tr>
+                                            <th><input class="table-element" type="text" name="memory-1-new"></th>
+                                            <th><input class="table-element" type="number" name="price1-1-new"></th>
+                                            <th><input class="table-element" type="number" name="price1-2-new"></th>
+                                            <th><input class="table-element" type="number" name="price1-3-new"></th>
+                                            <th><input class="table-element" type="number" name="price1-4-new"></th>
+                                            <th><input class="table-element" type="number" name="price1-5-new"></th>
+                                        </tr>
+                                        <tr>
+                                            <th><input class="table-element" type="text" name="memory-2-new"></th>
+                                            <th><input class="table-element" type="number" name="price2-1-new"></th>
+                                            <th><input class="table-element" type="number" name="price2-2-new"></th>
+                                            <th><input class="table-element" type="number" name="price2-3-new"></th>
+                                            <th><input class="table-element" type="number" name="price2-4-new"></th>
+                                            <th><input class="table-element" type="number" name="price2-5-new"></th>
+                                        </tr>
+                                        <tr>
+                                            <th><input class="table-element" type="text" name="memory-3-new"></th>
+                                            <th><input class="table-element" type="number" name="price3-1-new"></th>
+                                            <th><input class="table-element" type="number" name="price3-2-new"></th>
+                                            <th><input class="table-element" type="number" name="price3-3-new"></th>
+                                            <th><input class="table-element" type="number" name="price3-4-new"></th>
+                                            <th><input class="table-element" type="number" name="price3-5-new"></th>
+                                        </tr>
+                                        <tr>
+                                            <th><input class="table-element" type="text" name="memory-4-new"></th>
+                                            <th><input class="table-element" type="number" name="price4-1-new"></th>
+                                            <th><input class="table-element" type="number" name="price4-2-new"></th>
+                                            <th><input class="table-element" type="number" name="price4-3-new"></th>
+                                            <th><input class="table-element" type="number" name="price4-4-new"></th>
+                                            <th><input class="table-element" type="number" name="price4-5-new"></th>
+                                        </tr>
+                                        <tr>
+                                            <th><input class="table-element" type="text" name="memory-5-new"></th>
+                                            <th><input class="table-element" type="number" name="price5-1-new"></th>
+                                            <th><input class="table-element" type="number" name="price5-2-new"></th>
+                                            <th><input class="table-element" type="number" name="price5-3-new"></th>
+                                            <th><input class="table-element" type="number" name="price5-4-new"></th>
+                                            <th><input class="table-element" type="number" name="price5-5-new"></th>
+                                        </tr>
+
+                                    </table>
+
+                                    <div class="portal-title-container">
+                                        <div class="portal-title">
+                                            <p>Different Network Base Prices change in £</p>
+                                        </div>
+                                    </div>
+                                    <table class="portal-table sortable" id="categories-table">
+                                        <tr>
+                                            @foreach($networks as $network)
+                                            <td><div class="table-element"><img style="max-width:50px; width:50px" src="{{$network->network_image}}"></div></td>
+                                            @endforeach
+                                        </tr>
+                                        <tr>
+                                            @foreach($networks as $network)
+                                            <td><div class="table-element"><input class="table-element" type="number" name="network_{{$network->id}}"></div></td>
+                                            @endforeach
+                                        </tr>
+                                    </table>
+                                    <div class="portal-title-container">
+                                        <div class="portal-title">
+                                            <p>Avalible colours for the product</p>
+                                        </div>
+                                    </div>
+                                    <table class="portal-table" id="categories-table">
+                                        <tr>
+                                            <td><div class="table-element"><input class="table-element" type="text" name="color_1"></div></td>
+                                            <td><div class="table-element"><input class="table-element" type="text" name="color_2"></div></td>
+                                            <td><div class="table-element"><input class="table-element" type="text" name="color_3"></div></td>
+                                            <td><div class="table-element"><input class="table-element" type="text" name="color_4"></div></td>
+                                            <td><div class="table-element"><input class="table-element" type="text" name="color_5"></div></td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                             <div class="form-group select_brand_button">

@@ -954,11 +954,14 @@ class PortalController extends Controller
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
         
         return view('portal.add.sellingproduct')->with(['categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions,'portalUser'=>$portalUser, 'networks'=>$networks]);
     }
 
     public function addBuyingProduct(Request $request){
+
+        #dd($request);
 
         $product = new BuyingProduct();
 
@@ -966,10 +969,13 @@ class PortalController extends Controller
         $product->product_description = $request->wordbox_description;
         $product->category_id = $request->category;
         $product->brand_id = $request->brand;
-        $product->product_network = $request->product_network;
-        $product->product_memory = $request->product_memory;
-        $product->product_colour = $request->product_color;
-        $product->product_grade = $request->product_grade;
+        $filenameWithExt = $request->file('product_image')->getClientOriginalName();
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = $request->file('product_image')->getClientOriginalExtension();
+        $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        $path = $request->file('product_image')->storeAs('public/product_images',$fileNameToStore);
+        $product->product_image = $fileNameToStore;
+
         $product->product_dimensions = $request->product_dimensions;
         $product->product_processor = $request->product_processor;
         $product->product_weight = $request->product_weight;
@@ -982,19 +988,30 @@ class PortalController extends Controller
         $product->product_camera_2 = $request->product_secondary_camera;
         $product->product_sim = $request->product_sim;
         $product->product_memory_slots = $request->product_memory_slots;
-        $product->product_quantity = $request->product_quantity;
-        $product->product_buying_price = $request->product_buying_price;
-
-        $filenameWithExt = $request->file('product_image')->getClientOriginalName();
-        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        $extension = $request->file('product_image')->getClientOriginalExtension();
-        $fileNameToStore = $filename.'_'.time().'.'.$extension;
-        $path = $request->file('product_image')->storeAs('public/product_images',$fileNameToStore);
-
-        $product->product_image = $fileNameToStore;
 
         $product->save();
 
+
+        for($i=1; $i<=3; $i++){
+            if(isset($request->{"memory-" . $i . "-new"}) && $request->{"memory-" . $i . "-new"} !== null){
+                $sellingProductInformation = new BuyingProductInformation();
+                $sellingProductInformation->product_id = $product->id;
+                $sellingProductInformation->memory = $request->{"memory-" . $i . "-new"};
+                $sellingProductInformation->customer_grade_price_1 = $request->{"price" . $i . "-1-new"};
+                $sellingProductInformation->customer_grade_price_2 = $request->{"price" . $i . "-2-new"};
+                $sellingProductInformation->customer_grade_price_3 = $request->{"price" . $i . "-3-new"};
+                $sellingProductInformation->save();
+            }
+        }
+
+        for($i=1; $i<=5; $i++){
+            $productNetworks = new BuyingProductNetworks();
+            $productNetworks->network_id = $i;
+            $productNetworks->product_id = $product->id;
+            $productNetworks->knockoff_price = $request->{"network_" . $i};
+            $productNetworks->save();
+        }
+        
         $category = Category::where('id', $request->category)->first();
         $category->total_produts = $category->total_produts+1;
         $category->save();
@@ -1008,17 +1025,13 @@ class PortalController extends Controller
 
     public function addSellingProduct(Request $request){
 
-        dd($request);
+        #dd($request);
+
         $product = new SellingProduct();
-        
+
         $product->product_name = $request->product_name;
         $product->category_id = $request->category;
         $product->brand_id = $request->brand;
-        $product->customer_grade_price_1 = $request->customer_grade_price_1;
-        $product->customer_grade_price_2 = $request->customer_grade_price_2;
-        $product->customer_grade_price_3 = $request->customer_grade_price_3;
-        $product->customer_grade_price_4 = $request->customer_grade_price_4;
-        $product->customer_grade_price_5 = $request->customer_grade_price_5;
 
         $filenameWithExt = $request->file('product_image')->getClientOriginalName();
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -1030,9 +1043,39 @@ class PortalController extends Controller
 
         $product->save();
 
+        for($i=1; $i<=5; $i++){
+            if(isset($request->{"memory-" . $i . "-new"}) && $request->{"memory-" . $i . "-new"} !== null){
+                $sellingProductInformation = new ProductInformation();
+                $sellingProductInformation->product_id = $product->id;
+                $sellingProductInformation->memory = $request->{"memory-" . $i . "-new"};
+                $sellingProductInformation->customer_grade_price_1 = $request->{"price" . $i . "-1-new"};
+                $sellingProductInformation->customer_grade_price_2 = $request->{"price" . $i . "-2-new"};
+                $sellingProductInformation->customer_grade_price_3 = $request->{"price" . $i . "-3-new"};
+                $sellingProductInformation->customer_grade_price_4 = $request->{"price" . $i . "-4-new"};
+                $sellingProductInformation->customer_grade_price_5 = $request->{"price" . $i . "-5-new"};
+                $sellingProductInformation->save();
+            }
+        }
+
+        for($i=1; $i<=5; $i++){
+            $productNetworks = new ProductNetworks();
+            $productNetworks->network_id = $i;
+            $productNetworks->product_id = $product->id;
+            $productNetworks->knockoff_price = $request->{"network_" . $i};
+            $productNetworks->save();
+        }
+
+        for($i=1; $i<=5; $i++){
+            if(isset($request->{"color_" . $i}) && $request->{"color_" . $i} !== null){
+                $productColours = new Colour();
+                $productColours->product_id = $product->id;
+                $productColours->color_value = $request->{"color_" . $i};
+                $productColours->save();
+            }
+        }
         
 
-        return \redirect('/portal/product/selling-products');
+        return \redirect('/portal/product/selling-products')->with('success', 'You have succesfully added product.');
     }
 
     public function removeBuyingProduct($id){
@@ -1078,9 +1121,10 @@ class PortalController extends Controller
 
         $sellingProductInformation = ProductInformation::where('product_id', $id)->get();
         $productNetworks = ProductNetworks::where('product_id', $id)->get();
+        $colors = Colour::where('product_id', $id)->get();
         #dd($productNetworks);
 
-        return view('portal.product.editsellingproduct')->with(['product'=>$product, 'portalUser'=>$portalUser, 'categories'=>$categories, 'brands'=>$brands, 'productinformation'=>$sellingProductInformation, 'productnetworks'=>$productNetworks]);
+        return view('portal.product.editsellingproduct')->with(['product'=>$product, 'portalUser'=>$portalUser, 'categories'=>$categories, 'brands'=>$brands, 'productinformation'=>$sellingProductInformation, 'productnetworks'=>$productNetworks, 'colors'=>$colors]);
     }
 
     public function showSellingProductOption($id){

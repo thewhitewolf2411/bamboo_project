@@ -69,86 +69,134 @@
                                     <input name="product_image" type="file" accept="image/x-png,image/gif,image/jpeg" required>
                                   </div>
                             </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_network">Product Network:</label>
-                                    <input type="text" name="product_network" id="product_network" required>
-                                  </div>
+                            <table class="portal-table" id="categories-table">
+                                <tr>
+                                    <td><div class="table-element">Memory</div></td>
+                                    <td><div class="table-element">Excellent Working</div></td>
+                                    <td><div class="table-element">Good Working</div></td>
+                                    <td><div class="table-element">Damaged working</div></td>
+                                </tr>
+                                <tr>
+                                    <th><input class="table-element" type="text" name="memory-1-new"></th>
+                                    <th><input class="table-element" type="number" name="price1-1-new"></th>
+                                    <th><input class="table-element" type="number" name="price1-2-new"></th>
+                                    <th><input class="table-element" type="number" name="price1-3-new"></th>
+                                </tr>
+                                <tr>
+                                    <th><input class="table-element" type="text" name="memory-2-new"></th>
+                                    <th><input class="table-element" type="number" name="price2-1-new"></th>
+                                    <th><input class="table-element" type="number" name="price2-2-new"></th>
+                                    <th><input class="table-element" type="number" name="price2-3-new"></th>
+                                </tr>
+                                <tr>
+                                    <th><input class="table-element" type="text" name="memory-3-new"></th>
+                                    <th><input class="table-element" type="number" name="price3-1-new"></th>
+                                    <th><input class="table-element" type="number" name="price3-2-new"></th>
+                                    <th><input class="table-element" type="number" name="price3-3-new"></th>
+                                </tr>
+                                <tr>
+                                    <th><input class="table-element" type="text" name="memory-4-new"></th>
+                                    <th><input class="table-element" type="number" name="price4-1-new"></th>
+                                    <th><input class="table-element" type="number" name="price4-2-new"></th>
+                                    <th><input class="table-element" type="number" name="price4-3-new"></th>
+                                </tr>
+                                <tr>
+                                    <th><input class="table-element" type="text" name="memory-5-new"></th>
+                                    <th><input class="table-element" type="number" name="price5-1-new"></th>
+                                    <th><input class="table-element" type="number" name="price5-2-new"></th>
+                                    <th><input class="table-element" type="number" name="price5-3-new"></th>
+                                </tr>
+
+                            </table>
+
+                            <div class="portal-title-container">
+                                <div class="portal-title">
+                                    <p>Different Network Base Prices change in £</p>
+                                </div>
                             </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_memory">Product Memory:</label>
-                                    <input type="text" name="product_memory" id="product_memory" required>
-                                  </div>
+                            <table class="portal-table sortable" id="categories-table">
+                                <tr>
+                                    @foreach($networks as $network)
+                                    <td><div class="table-element"><img style="max-width:50px; width:50px" src="{{$network->network_image}}"></div></td>
+                                    @endforeach
+                                </tr>
+                                <tr>
+                                    @foreach($networks as $network)
+                                    <td><div class="table-element"><input class="table-element" type="number" name="network_{{$network->id}}"></div></td>
+                                    @endforeach
+                                </tr>
+                            </table>
+                            <div class="portal-title-container">
+                                <div class="portal-title">
+                                    <p>Avalible colours for the product</p>
+                                </div>
                             </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_color">Product Color:</label>
-                                    <input type="color" name="product_color" id="product_color" required>
-                                  </div>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_grade">Condition:</label>
-                                    <select class="form-control" id="product_grade" name="product_grade" required>
-                                        @foreach($conditions as $condition)
-                                        <option value="{{$condition->name}}" >{{$condition->name}}</option>
-                                        @endforeach
-                                    </select>
-                                  </div>
+                            <table class="portal-table" id="categories-table">
+                                <tr>
+                                    <td><div class="table-element"><input class="table-element" type="text" name="color_1"></div></td>
+                                    <td><div class="table-element"><input class="table-element" type="text" name="color_2"></div></td>
+                                    <td><div class="table-element"><input class="table-element" type="text" name="color_3"></div></td>
+                                    <td><div class="table-element"><input class="table-element" type="text" name="color_4"></div></td>
+                                    <td><div class="table-element"><input class="table-element" type="text" name="color_5"></div></td>
+                                </tr>
+                            </table>
+                            <div class="portal-title-container">
+                                <div class="portal-title">
+                                    <p>Product information (Not required)</p>
+                                </div>
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_dimensions">Product Dimensions:</label>
-                                    <input type="text" name="product_dimensions" id="product_dimensions" required>
+                                    <input type="text" name="product_dimensions" id="product_dimensions">
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_processor">Product Processor:</label>
-                                    <input type="text" name="product_processor" id="product_processor" required>
+                                    <input type="text" name="product_processor" id="product_processor">
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_weight">Product Weight:</label>
-                                    <input type="text" name="product_weight" id="product_weight" required>
+                                    <input type="text" name="product_weight" id="product_weight">
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_screen">Product Screen:</label>
-                                    <input type="text" name="product_screen" id="product_screen" required>
+                                    <input type="text" name="product_screen" id="product_screen">
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_system">Product System:</label>
-                                    <input type="text" name="product_system" id="product_system" required>
+                                    <input type="text" name="product_system" id="product_system">
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_connectivity">Product Conectivity:</label>
-                                    <input type="text" name="product_connectivity" id="product_connectivity" required>
+                                    <input type="text" name="product_connectivity" id="product_connectivity">
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_battery">Product Battery:</label>
-                                    <input type="text" name="product_battery" id="product_battery" required>
+                                    <input type="text" name="product_battery" id="product_battery">
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_signal">Product Signal:</label>
-                                    <input type="text" name="product_signal" id="product_signal" required>
+                                    <input type="text" name="product_signal" id="product_signal">
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_main_camera">Product main camera:</label>
-                                    <input type="text" name="product_main_camera" id="product_main_camera" required>
+                                    <input type="text" name="product_main_camera" id="product_main_camera">
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">
@@ -160,25 +208,13 @@
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_sim">Product SIM:</label>
-                                    <input type="text" name="product_sim" id="product_sim" required>
+                                    <input type="text" name="product_sim" id="product_sim">
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="product_memory_slots">Product Memory Slot:</label>
-                                    <input type="text" name="product_memory_slots" id="product_memory_slots" required>
-                                  </div>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_quantity">Product Quantity:</label>
-                                    <input type="number" name="product_quantity" id="product_quantity" required>
-                                  </div>
-                            </div>
-                            <div class="form-group select_brand_button">
-                                <div class="form-group">
-                                    <label for="product_price">Product Buying Price:</label>
-                                    <input type="number" name="product_buying_price" id="product_buying_price">
+                                    <input type="text" name="product_memory_slots" id="product_memory_slots">
                                   </div>
                             </div>
                             <div class="form-group select_brand_button">

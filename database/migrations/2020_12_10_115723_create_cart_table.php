@@ -22,6 +22,7 @@ class CreateCartTable extends Migration
             $table->string('network');
             $table->string('memory');
             $table->string('grade');
+            $table->boolean('email_sent')->default(false);
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Eloquent;
 use Illuminate\Database\Eloquent\Model;
 use App\Eloquent\SellingProduct;
 use App\Eloquent\BuyingProduct;
+use App\User;
 
 class Cart extends Model
 {
@@ -17,7 +18,7 @@ class Cart extends Model
 
     protected $fillable = [
         'user_id', 'price', 'product_id','type', 'network',
-        'memory','grade',
+        'memory','grade', 'email_sent'
     ];
 
 
@@ -51,5 +52,20 @@ class Cart extends Model
         }
 
         return $product->product_image;
+    }
+
+    public function getUserEmail($id){
+        $user = User::where('id', $id)->first();
+        return $user->email;
+    }
+
+    public function getUserName($id){
+        $user = User::where('id', $id)->first();
+        return $user->first_name;
+    }
+
+    public function lastName($id){
+        $user = User::where('id', $id)->first();
+        return $user->last_name;
     }
 }

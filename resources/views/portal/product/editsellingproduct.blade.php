@@ -161,6 +161,18 @@
                                             @endforeach
                                         </tr>
                                     </table>
+                                    <div class="portal-title-container">
+                                        <div class="portal-title">
+                                            <p>Avalible product colours</p>
+                                        </div>
+                                    </div>
+                                    <table class="portal-table" id="categories-table">
+                                        <tr>
+                                            @foreach($colors as $color)
+                                            <td><div class="table-element"><input class="table-element" type="text" name="color_{{$color->id}}" value="{{$color->color_value}}"></div></td>
+                                            @endforeach
+                                        </tr>
+                                    </table>
 
                                 </div>
                             </div>

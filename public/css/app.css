@@ -13477,6 +13477,15 @@ h3, h4, h5 {
   background: #A375BC;
 }
 
+#gradesModal ul {
+  padding: 0 !important;
+}
+
+#gradesModal > .modal-dialog {
+  max-width: 1200px !important;
+  width: 1200px !important;
+}
+
 .portal-body {
   font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
 }

@@ -417,3 +417,12 @@
 #gradesModal>.modal-dialog>.modal-content>.modal-body{
     background: #A375BC;
 }
+
+#gradesModal ul{
+    padding: 0 !important;
+}
+
+#gradesModal>.modal-dialog{
+    max-width: 1200px !important;
+    width: 1200px !important;
+}
