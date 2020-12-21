@@ -57,6 +57,7 @@ Route::get('/shop/allitems', 'ShopController@showAllItems');
 
 Route::post('/shop/choosephone', 'ShopController@choosePhone');
 
+Route::post('/getproductdata', 'ShopController@getProductData');
 
 //selling
 Route::get('/sell', 'SellController@showSellView');

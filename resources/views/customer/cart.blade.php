@@ -81,7 +81,7 @@
                             @if($cartitem->type === 'tradeout')
                                 <div class="cart-product row justify-content-between mt-3">
                                     <div class="cart-product-image w-25">
-                                        <img src="{{$cartitem->getProductImage($cartitem->id)}}">
+                                        <img src="{{asset('/storage/product_images').'/' . $cartitem->getProductImage($cartitem->id)}}">
                                     </div>
                                     <div class="d-flex flex-column w-25">
                                         <h6 class="m-0 mb-3 font-weight-bold">{{$cartitem->getProductName($cartitem->id)}}</h6>
@@ -126,7 +126,7 @@
                             @if($cartitem->type === 'tradein')
                                 <div class="cart-product d-flex justify-content-between mt-3">
                                     <div class="cart-product-image w-25">
-                                        <img src="{{$cartitem->getProductImage($cartitem->id)}}">
+                                        <img src="{{asset('/storage/product_images').'/' . $cartitem->getProductImage($cartitem->id)}}" width="80%">
                                     </div>
                                     <div class="d-flex flex-column w-25">
                                         <h6 class="m-0 mb-3 font-weight-bold">{{$cartitem->getProductName($cartitem->id)}}</h6>

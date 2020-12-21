@@ -13,7 +13,11 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+        <meta name="csrf_token" content="{{ csrf_token() }}">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="{{asset('js/Price.js')}}"></script>
+        <script src="{{asset('js/Compare.js')}}"></script>
     </head>
     <body>
         <header>@include('customer.layouts.header')</header>
@@ -95,7 +99,7 @@
                     <div class="col-md-3">
                         <div class="d-flex flex-column" id="compare-device-1">
                             <div class="form-group">
-                                <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" name="current-phone" id="compare-select-1">
+                                <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" name="current-phone" id="compare-select-1" onchange="selectCompareProduct1(this)">
                                     <option value="" selected disabled>Search Device</option>
                                     @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->product_name}}</option>
@@ -103,7 +107,11 @@
                                 </select>
                             </div>
 
-                            <button class="btn btn-primary" href="" disabled>
+                            <div class="w-100 d-flex my-3">
+                                <img class="mx-auto" src="{{ asset('/sell_images/Add device.svg') }}" width="60%">
+                            </div>
+
+                            <button class="btn btn-secondary" href="" disabled>
                                 Add a device
                             </button>
 
@@ -133,7 +141,7 @@
                             </div>
                             <div class="my-4">
                                 <p class="border-bottom">Camera</p>
-                                <p id="device-4-camera"></p>
+                                <p id="device-1-camera"></p>
                             </div>
                             <div class="my-4">
                                 <p class="border-bottom">Processor</p>
@@ -164,7 +172,7 @@
                     <div class="col-md-3">
                         <div class="d-flex flex-column" id="compare-device-2">
                             <div class="form-group">
-                                <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" name="current-phone" id="compare-select-2">
+                                <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" name="current-phone" id="compare-select-2" onchange="selectCompareProduct2(this)">
                                     <option value="" selected disabled>Search Device</option>
                                     @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->product_name}}</option>
@@ -172,7 +180,12 @@
                                 </select>
                             </div>
 
-                            <button class="btn btn-primary" href="" disabled>
+                            <div class="w-100 d-flex my-3">
+                                <img class="mx-auto" src="{{ asset('/sell_images/Add device.svg') }}" width="60%">
+                            </div>
+                            
+
+                            <button class="btn btn-secondary" href="" disabled>
                                 Add a device
                             </button>
 
@@ -233,7 +246,7 @@
                     <div class="col-md-3">
                         <div class="d-flex flex-column" id="compare-device-3">
                             <div class="form-group">
-                                <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" name="current-phone" id="compare-select-3">
+                                <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" name="current-phone" id="compare-select-3" onchange="selectCompareProduct3(this)">
                                     <option value="" selected disabled>Search Device</option>
                                     @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->product_name}}</option>
@@ -241,7 +254,11 @@
                                 </select>
                             </div>
 
-                            <button class="btn btn-primary" href="" disabled>
+                            <div class="w-100 d-flex my-3">
+                                <img class="mx-auto" src="{{ asset('/sell_images/Add device.svg') }}" width="60%">
+                            </div>
+
+                            <button class="btn btn-secondary" href="" disabled>
                                 Add a device
                             </button>
 
@@ -302,7 +319,7 @@
                     <div class="col-md-3">
                         <div class="d-flex flex-column" id="compare-device-4">
                             <div class="form-group">
-                                <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" name="current-phone" id="compare-select-4">
+                                <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" name="current-phone" id="compare-select-4" onchange="selectCompareProduct4(this)">
                                     <option value="" selected disabled>Search Device</option>
                                     @foreach($products as $product)
                                     <option value="{{$product->id}}">{{$product->product_name}}</option>
@@ -310,7 +327,11 @@
                                 </select>
                             </div>
 
-                            <button class="btn btn-primary" href="" disabled>
+                            <div class="w-100 d-flex my-3">
+                                <img class="mx-auto" src="{{ asset('/sell_images/Add device.svg') }}" width="60%">
+                            </div>
+
+                            <button class="btn btn-secondary" href="" disabled>
                                 Add a device
                             </button>
 

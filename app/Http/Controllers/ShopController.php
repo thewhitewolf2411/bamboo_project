@@ -128,5 +128,32 @@ class ShopController extends Controller
         dd($request);
     }
 
+    public function getProductData(Request $request){
+
+        $product = BuyingProduct::where('id', $request->productid)->first();
+
+        $productInformation = BuyingProductInformation::where('product_id', $request->productid)->get();
+
+        $maxPrice = $productInformation->max('customer_grade_price_1');
+        $minPrice = $productInformation->min('customer_grade_price_3');
+
+        return response()->json([
+            "Productimage" => $product->product_image,
+            "Pricerange" => $minPrice . " - " . $maxPrice,
+            "Dimensions" => $product->product_image,
+            "Weight" => $product->product_weight,
+            "OS" => $product->product_system,
+            "Battery" => $product->product_battery,
+            "Camera1" => $product->product_product_camera,
+            "Camera2" => $product->product_product_camera_2,
+            "Processor" => $product->product_processor,
+            "ScreenSize" => $product->product_screen,
+            "Connectivity" => $product->product_connectivity,
+            "Signal" => $product->product_signal,
+            "SimSize" => $product->product_sim,
+            "MemoryCardSlots" => $product->product_memory_slots
+        ]);
+
+    }
 
 }
