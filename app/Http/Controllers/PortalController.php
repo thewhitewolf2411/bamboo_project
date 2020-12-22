@@ -1102,9 +1102,10 @@ class PortalController extends Controller
 
         $categories = Category::all();
         $brands = Brand::all();
-        $conditions = Conditions::all();
+        $networks = BuyingProductNetworks::where('product_id', $id)->get();
+        $productInformation = BuyingProductInformation::where('product_id', $id)->get();
 
-        return view('portal.product.editbuyingproduct')->with(['product'=>$product, 'portalUser'=>$portalUser, 'categories'=>$categories, 'brands'=>$brands, 'conditions'=>$conditions]);
+        return view('portal.product.editbuyingproduct')->with(['product'=>$product, 'portalUser'=>$portalUser, 'categories'=>$categories, 'brands'=>$brands, 'networks'=>$networks, 'productInformation'=>$productInformation]);
     }
 
     public function showEditSellingProductPage($id){
@@ -1202,16 +1203,25 @@ class PortalController extends Controller
 
     public function saveEditedBuyingProduct(Request $request){
 
+        #dd($request);
+
         $product = BuyingProduct::where('id', $request->product_id)->first();
 
         $product->product_name = $request->product_name;
         $product->product_description = $request->wordbox_description;
         $product->category_id = $request->category;
         $product->brand_id = $request->brand;
-        $product->product_network = $request->product_network;
-        $product->product_memory = $request->product_memory;
-        $product->product_colour = $request->product_color;
-        $product->product_grade = $request->product_grade;
+
+        if(($request->file('product_image')) !== null){
+            $filenameWithExt = $request->file('product_image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('product_image')->getClientOriginalExtension();
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('product_image')->storeAs('public/product_images',$fileNameToStore);
+            $product->product_image = $fileNameToStore;
+        }
+
+
         $product->product_dimensions = $request->product_dimensions;
         $product->product_processor = $request->product_processor;
         $product->product_weight = $request->product_weight;
@@ -1224,20 +1234,31 @@ class PortalController extends Controller
         $product->product_camera_2 = $request->product_secondary_camera;
         $product->product_sim = $request->product_sim;
         $product->product_memory_slots = $request->product_memory_slots;
-        $product->product_quantity = $request->product_quantity;
-        $product->product_buying_price = $request->product_buying_price;
-
-        if(($request->has('product_image'))){
-            $filenameWithExt = $request->file('product_image')->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('product_image')->getClientOriginalExtension();
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            $path = $request->file('product_image')->storeAs('public/product_images',$fileNameToStore);
-    
-            $product->product_image = $fileNameToStore;
-        }
 
         $product->save();
+
+
+        $sellingProductInformation = BuyingProductInformation::where('product_id', $request->product_id)->get();
+        foreach($sellingProductInformation as $spi){
+            if(isset($request->{"memory-" . $spi->id . "-new"}) && $request->{"memory-" . $spi->id . "-new"} !== null){
+                $spi->product_id = $product->id;
+                $spi->memory = $request->{"memory-" . $spi->id . "-new"};
+                $spi->customer_grade_price_1 = $request->{"price" . $spi->id . "-1-new"};
+                $spi->customer_grade_price_2 = $request->{"price" . $spi->id . "-2-new"};
+                $spi->customer_grade_price_3 = $request->{"price" . $spi->id . "-3-new"};
+                $spi->save();
+            }
+
+        }
+
+        $networks = BuyingProductNetworks::where('product_id', $request->product_id)->get();
+        foreach($networks as $network){
+            
+            if($request->{"network_".$network->id} != $network->knockoff_price){
+                $network->knockoff_price = $request->{"network_".$network->id};
+                $network->save();
+            }
+        }
 
         return redirect()->back()->with('product_edited', 'Product Was succesfully edited.');
 

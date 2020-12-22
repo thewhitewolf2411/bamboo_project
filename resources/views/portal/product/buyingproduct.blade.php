@@ -43,8 +43,7 @@
                             <td><div class="table-element">Name</div></td>
                             <td><div class="table-element">Category</div></td>
                             <td><div class="table-element">Brand</div></td>
-                            <td><div class="table-element">Grade</div></td>
-                            <td><div class="table-element">Price</div></td>
+                            <td><div class="table-element">Price Range</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/product/addbuyingproduct">
                                 <i class="fa fa-plus-circle"></i>
@@ -60,8 +59,7 @@
                             <td><div class="table-element">{{$buyingProduct->product_name}}</div></td>
                             <td><div class="table-element">{{$buyingProduct->getCategory($buyingProduct->category_id)}}</div></td>
                             <td><div class="table-element">{{$buyingProduct->getBrand($buyingProduct->brand_id)}}</div></td>
-                            <td><div class="table-element">{{$buyingProduct->product_grade}}</div></td>
-                            <td><div class="table-element">£{{$buyingProduct->product_buying_price}} </div></td>
+                            <td><div class="table-element">£{{$buyingProduct->getProductMinPrice($buyingProduct->id)}} - £{{$buyingProduct->getProductMaxPrice($buyingProduct->id)}}</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/product/editsbuyingproduct/{{$buyingProduct->id}}">
                                     <i class="fa fa-pencil"></i>
