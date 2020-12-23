@@ -231,12 +231,13 @@ class PortalController extends Controller
     }
 
     public function generateTradeInHTMLBulk($barcode, $user, $product, $tradein){
+        $delAdress = strtr($user->delivery_address, array(', '=>'<br>'));
         $html = "";
         $html .= "<style>p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;} .page_break{page-break-after: always;}</style>";
         $html .= "<body>";
         $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
         $html .= "<p>" . $user->first_name . " " . $user->last_name . ",</p>";
-        $html .= "<p>". $user->delivery_address .",</p>";
+        $html .= "<p>". $delAdress .",</p>";
         $html .= "<br><br>";
         $html .= "<p>Order#". $tradein->barcode . " Date: " . $tradein->created_at .  "</p>";
         $html .= "<p>Dear " . $user->first_name . " " . $user->last_name . ",</p>";
@@ -289,11 +290,15 @@ class PortalController extends Controller
 
     public function generateTradeInHTML($barcode, $user, $product, $tradein){
 
+        #dd($user->delivery_address);
+
+        $delAdress = strtr($user->delivery_address, array(', '=>'<br>'));
+
         $html = "";
         $html .= "<style>p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
         $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
         $html .= "<p>" . $user->first_name . " " . $user->last_name . "</p>";
-        $html .= "<p>". $user->delivery_address ."</p>";
+        $html .= "<p style='white-space: nowrap;'>". $delAdress ."</p>";
         $html .= "<br><br>";
         $html .= "<p>Order#". $tradein->barcode . " Date: " . $tradein->created_at .  "</p>";
         $html .= "<p>Dear " . $user->first_name . " " . $user->last_name . ",</p>";
@@ -1442,6 +1447,8 @@ class PortalController extends Controller
 
         if($diff_in_days>=14){
             $tradein->marked_for_quarantine = true;
+            $tradein->job_state = 9;
+            $tradein->save();
             array_push($message, "This order has been identified by system as older than 14 days and has been marked for quarantine. Please confirm this.");
             $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
             $event = new KlaviyoEvent(
@@ -1930,9 +1937,16 @@ class PortalController extends Controller
         }
 
         if($request->correct_memory == "false"){
-            $tradein->marked_for_quarantine = true;
 
-            $tradein->correct_memory = $request->correct_memory_value;
+            if($request->correct_memory_value>$tradein->memory){
+                $tradein->correct_memory = $request->correct_memory_value;
+            }
+            else{
+                $tradein->marked_for_quarantine = true;
+
+                $tradein->correct_memory = $request->correct_memory_value;
+            }
+
         }
         
         $tradein->job_state = 5;

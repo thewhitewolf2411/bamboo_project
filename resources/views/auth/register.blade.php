@@ -8,30 +8,37 @@
     @csrf
 
     <div class="form-group">
-        <input type="text" class="form-control" placeholder="First Name" name="first-name" required autofocus>
+        <label for="first-name">First Name</label>
+        <input type="text" class="form-control" placeholder="John" name="first-name" required autofocus>
     </div>
 
     <div class="form-group">
-        <input type="text" class="form-control" placeholder="Last Name" name="last-name" required autofocus>
+        <label for="last-name">Last Name</label>
+        <input type="text" class="form-control" placeholder="Doe" name="last-name" required autofocus>
     </div>
 
     <div class="form-group">
-        <input type="email" class="form-control" placeholder="Email" name="email" required autofocus>
+        <label for="first-name">Email</label>
+        <input type="email" class="form-control" placeholder="john.doe@example.com" name="email" required autofocus>
     </div>
 
     <div class="form-group">
-        <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" placeholder="Delivery address" required autofocus>
+        <label for="delivery_address">Delivery Address</label>
+        <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" placeholder="Example delivery address" required autofocus>
     </div>
 
     <div class="form-group">
-        <input class="form-control js-typeahead" type="text" id="billing_address" name="billing_address" placeholder="Billing address" required autofocus>
+        <label for="billing_address">Billing Address</label>
+        <input class="form-control js-typeahead" type="text" id="billing_address" name="billing_address" placeholder="Example billing address" required autofocus>
     </div>
 
     <div class="form-group">
+        <label for="contact_number">Contact number</label>
         <input class="form-control" type="number" id="contact_number" name="contact_number" placeholder="Contact number" required autofocus>
     </div>
 
     <div class="form-group">
+        <label for="contact_number">Password</label>
         <input type="password" id="psw" class="form-control" placeholder="Select password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required autofocus>
         <div id="message">
             <p>Password must contain the following:</p>
@@ -40,6 +47,10 @@
             <p id="number" class="invalid">A <b>number</b></p>
             <p id="length" class="invalid">Minimum <b>8 characters</b></p>
         </div>
+    </div>
+
+    <div class="d-flex py-3">
+        <input id="showpassword" type="checkbox" onclick="showPassword()" style="width:auto; margin:0;"><label id="showPasswordLabel" style="margin-left:1rem" for="showpassword">Show password</label>
     </div>
 
     <div class="form-group">
@@ -158,6 +169,15 @@
         length.classList.remove("valid");
         length.classList.add("invalid");
     }
+    }
+
+    function showPassword(){
+        var x = document.getElementById("psw");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
     }
 </script>
 

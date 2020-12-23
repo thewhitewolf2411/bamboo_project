@@ -127,9 +127,6 @@
                                 <div class="profile-element-container p-1">
                                     <label for="password" class="profile-small">Password</label>
                                     <input id="input-password" name="password" type="password" class="form-control" value="{{$userdata->password}}" disabled required></input>
-                                    <div class="d-flex">
-                                        <input id="showpassword" type="checkbox" onclick="showPassword()" style="display:none; width:auto; margin:0;"><label id="showPasswordLabel" style="display:none; margin-left:1rem" for="showpassword">Show password</label>
-                                    </div>
                                 </div>
                                 
                             </div>
@@ -337,14 +334,7 @@
 
         <script>
         
-        function showPassword(){
-            var x = document.getElementById("input-password");
-            if (x.type === "password") {
-                x.type = "text";
-            } else {
-                x.type = "password";
-            }
-        }
+
 
         function showModal(id){
             $('#tradein-' + id).modal('show');
