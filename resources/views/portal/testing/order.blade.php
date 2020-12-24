@@ -37,7 +37,7 @@
                     @foreach($tradeins as $tradein)
                         <a href="/portal/testing/receive/{{$tradein->id}}" class="p-3 ml-0 mr-0"><div class="d-flex flex-column shadow bg-white rounded ml-5 mr-5 p-3">
                             <div class="" style="width:200px;">Product name: {{$tradein->getProductName($tradein->product_id)}}</div>
-                            <div class="" style="width:200px;">Customer state: {{$tradein->product_state}}</div>
+                            <div class="" style="width:200px;">Customer grade: {{$tradein->product_state}}</div>
                             <div class="" style="width:200px;">Price: £{{$tradein->order_price}}</div>
                         </div></a>
                     @endforeach

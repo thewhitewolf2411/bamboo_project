@@ -134,4 +134,8 @@ class PagesController extends Controller
         return view('customer.footer-links.corporate')->with('products', $products);
     }
 
+    public function showPaswordResetPage(){
+        
+    }
+
 }

@@ -63,7 +63,7 @@
                                     {{$tablet->product_name}}
                                 @endforeach
                             @else
-                            You haven’t saved any Tablets to your wishlist yet. Start shopping and add your favourite items to your wishlist.
+                            You haven’t saved any Watches to your wishlist yet. Start shopping and add your favourite items to your wishlist.
                             @endif
                             </div>
                         </div>

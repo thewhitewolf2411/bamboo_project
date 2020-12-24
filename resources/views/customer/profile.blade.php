@@ -213,10 +213,10 @@
                             @foreach($tradeouts as $tradeout)
                             <div class="d-flex order-row order-row-border-black">
                                 <div class="w-25 p-2">
-                                    <p class="text-secondary">Order #{{$tradeout->id}}</p>
+                                    <p class="profile-large">Order #{{$tradeout->id}}</p>
                                 </div>
                                 <div class="w-50 p-2">
-                                    <p class="text-secondary">{{$tradeout->created_at->format('d/m/Y')}}</p>
+                                    <p class="profile-large">{{$tradeout->created_at->format('d/m/Y')}}</p>
                                 </div>
                                 <div class="w-25 p-2">
                                     <a href="">
@@ -226,11 +226,9 @@
                                     </a>
                                 </div>
                                 <div class="w-25 p-2">
-                                    <a onclick="">
-                                        <div class="btn btn-primary btn-orange">
-                                            <p class="profile-large" style="color: #fff;">View details</p>
-                                        </div>
-                                    </a>
+                                    <button type="button" class="btn btn-primary btn-orange profile-large" style="color: #fff;" onclick="showModal({{$tradeout->id}})">
+                                        View details
+                                    </button>
                                 </div>
                             </div>
                             @endforeach
@@ -265,7 +263,7 @@
                                     <p class="profile-large">{{$tradein->created_at->format('d/m/Y')}}</p>
                                 </div>
                                 <div class="w-25 p-2">
-                                    @if($tradein->job_state == null )
+                                    @if($tradein->job_state <= 2 )
                                     <a href="/userprofile/deleteorder/{{$tradein->barcode}}">
                                         <div class="btn btn-danger">
                                             <p class="profile-large" style="color: #fff;">Cancel Order</p>

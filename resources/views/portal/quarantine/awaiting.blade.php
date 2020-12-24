@@ -59,13 +59,19 @@
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                             <td><div class="table-element">
                                 <ul>
-                                    @if($tradein->device_correct !== null && !$tradein->device_correct)<li>Device was not correct</li>@endif
+                                    @if($tradein->device_correct !== null && !$tradein->device_correct)<li>Incorrect Model</li>@endif
                                     @if($tradein->checkmend_passed !== null && !$tradein->checkmend_passed)<li>Phonecheck failed</li>@endif
                                     @if($tradein->older_than_14_days !== null && $tradein->older_than_14_days)<li>Order was expired after 14 days</li>@endif
-                                    @if($tradein->device_missing)<li>Device is missing from order</li>@endif
+                                    @if($tradein->device_missing)<li>Missing Device</li>@endif
                                     @if($tradein->bamboo_grade !== null && $tradein->product_state !== $tradein->bamboo_grade) <li>Device grade was downgraded</li> @endif
-                                    @if($tradein->fimp !== null && $tradein->fimp) <li>Device has FIMP or Google lock</li> @endif
-                                    @if($tradein->pinlocked !== null && $tradein->pinlocked) <li>Device was pin locked</li> @endif
+                                    @if($tradein->fimp !== null && $tradein->fimp)
+                                        @if($tradein->getBrandName($tradein->product_id) == "Apple")
+                                            <li>FIMP</li>
+                                        @else
+                                            <li>Google lock</li>
+                                        @endif
+                                     @endif
+                                    @if($tradein->pinlocked !== null && $tradein->pinlocked) <li>Pink Lock</li> @endif
                                     @if($tradein->device_correct !== null && ($tradein->product_id !== $tradein->device_correct)) <li> Incorrect device received. This device is {{$tradein->getProductName($tradein->device_correct)}} .</li> @endif
                                 </ul>
                             </div></td>

@@ -25,6 +25,8 @@ Route::get('/setpage/{parameter}', [
     'uses'=>'CustomerController@setPage'
 ]);
 
+Route::get('/password/reset', 'PagesController@showPaswordResetPage');
+
 //Footer pages
 Route::get('/environment', 'PagesController@showEnvironmentPage');
 Route::get('/charity', 'PagesController@showCharityPage');
