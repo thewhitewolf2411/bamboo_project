@@ -6,7 +6,7 @@
     </div>
 
     <div class="how-first-element">
-        <div class="d-flex flex-wrap flex-row justify-content-between">
+        <div class="d-flex flex-row justify-content-between">
 
             <div class="p-5 d-flex flex-column justify-content-between">
                 <div class="center-title-container">
@@ -35,14 +35,14 @@ Watch our quick video that explains how our meticulous grading system works. We 
         <div class="toggle-elements-btn">
             <div class="toggle-element-btn shopping-toggle active">
                 <a onclick="changeToggleElement('shopping')">
-                    <p style="color: #23AAF7;" class="active" id="toggle-element-btn-shopping">Shopping with us</p>
-                    <img src="">
+                    <p style="color: #23AAF7;" class="active m-0" id="toggle-element-btn-shopping">Shopping with us</p>
+                    <img id="shopping-image" class="ml-3" src="{{ asset('/customer_page_images/body/Group 1087.svg') }}">
                 </a>
             </div>
             <div class="toggle-element-btn selling-toggle">
                 <a onclick="changeToggleElement('selling')">
-                    <p style="color: #FCC44C;" id="toggle-element-btn-selling">Selling with us</p>
-                    <img src="">
+                    <p style="color: #FCC44C;" class="m-0" id="toggle-element-btn-selling">Selling with us</p>
+                    <img id="selling-image" class="ml-3" src="{{ asset('/customer_page_images/body/Group 938.svg') }}">
                 </a>
             </div>
         </div>
@@ -199,15 +199,17 @@ Watch our quick video that explains how our meticulous grading system works. We 
     <script>
 
     function showgradingvideo(){
-        console.log('Play video');
+        $('#howvideomodal').modal('show');
     }
 
     function changeToggleElement(elementclicked){
-        console.log(elementclicked);
 
         if(elementclicked == 'shopping'){
             var shoppingelements = document.getElementsByClassName('shopping-toggle');
             var sellingelements = document.getElementsByClassName('selling-toggle');
+
+            var shoppingImage = document.getElementById('shopping-image');
+            var sellingImage = document.getElementById('selling-image');
 
             for(var i=0; i<shoppingelements.length; i++){
                 if(shoppingelements[i].classList.contains('active')){
@@ -218,6 +220,13 @@ Watch our quick video that explains how our meticulous grading system works. We 
                     shoppingelements[i].classList.add('active');
                     document.getElementById('toggle-element-btn-selling').classList.remove('active');
                     document.getElementById('toggle-element-btn-shopping').classList.add('active');
+
+                    shoppingImage.classList.add('rotate');
+                    shoppingImage.classList.remove('unrotate');
+                    sellingImage.classList.remove('rotate');
+                    sellingImage.classList.add('unrotate');
+
+
                 }
 
             }
@@ -226,6 +235,9 @@ Watch our quick video that explains how our meticulous grading system works. We 
         if(elementclicked == 'selling'){
             var shoppingelements = document.getElementsByClassName('shopping-toggle');
             var sellingelements = document.getElementsByClassName('selling-toggle');
+
+            var shoppingImage = document.getElementById('shopping-image');
+            var sellingImage = document.getElementById('selling-image');
 
             for(var i=0; i<shoppingelements.length; i++){
                 if(sellingelements[i].classList.contains('active')){
@@ -236,6 +248,11 @@ Watch our quick video that explains how our meticulous grading system works. We 
                     shoppingelements[i].classList.remove('active');
                     document.getElementById('toggle-element-btn-selling').classList.add('active');
                     document.getElementById('toggle-element-btn-shopping').classList.remove('active');
+
+                    shoppingImage.classList.remove('rotate');
+                    shoppingImage.classList.add('unrotate');
+                    sellingImage.classList.add('rotate');
+                    sellingImage.classList.remove('unrotate');
                 }
 
             }
@@ -245,3 +262,32 @@ Watch our quick video that explains how our meticulous grading system works. We 
     </script>
 
 </div>
+
+
+<div class="modal fade" id="howvideomodal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">How To With Boo </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <video id="howvideoid" width="100%" controls>
+                    <source src="{{ asset('/video/Bamboo How To With Boo v1.mp4') }}" type="video/mp4">
+                    Your browser does not support HTML video.
+                </video>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#howvideomodal').on('hidden.bs.modal', function () {
+        $('#howvideoid').trigger('pause'); 
+    });
+</script>

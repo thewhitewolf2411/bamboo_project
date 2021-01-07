@@ -94,7 +94,7 @@ Route::post('/addProduct', 'AdminController@addProduct')->middleware('auth');
 
 //Portal get Route
 
-Route::get('/portal', 'PortalController@portal')->name('portal')->middleware('auth');
+Route::get('/portal', 'PortalController@portal')->name('portal');
 
 //customer-care
 Route::get('/portal/customer-care', 'PortalController@showCustomerCare')->name('customerCare')->middleware('auth');
@@ -117,6 +117,7 @@ Route::get('/portal/customer-care/seller', 'PortalController@showSeller')->name(
 Route::get('/portal/customer-care/seller/{id}', 'PortalController@showSellerDetails')->middleware('auth');
 Route::get('/portal/customer-care/seller/disable/{id}', 'PortalController@disableSellerAccount')->middleware('auth');
 Route::get('/portal/customer-care/seller/enable/{id}', 'PortalController@enableSellerAccount')->middleware('auth');
+Route::get('/portal/customer-care/seller/delete/{id}', 'PortalController@deleteUserAccount')->middleware('auth');
 Route::get('/portal/customer-care/createorder', 'PortalController@createOrder')->middleware('auth');
 Route::get('/portal/customer-care/trade-pack/markforreprint/{id}', 'PortalController@markForReprint')->middleware('auth');
 Route::get('/portal/customer-care/order-managment/{search?}', 'PortalController@showOrderManagment')->middleware('auth');

@@ -8,6 +8,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        
+        <title>Bamboo Mobile::Shopping</title>
+
+        <link rel="icon" type="image/png" sizes="96x96" href="/customer_page_images/header/favicon-96x96.png">
+        
         <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
@@ -124,7 +129,7 @@
 
                             <div class="d-flex">
                             @foreach($productInformation as $info)
-                                <input id="info-{{$info->id}}" name="info" value='{ "price1": {{$info->customer_grade_price_1}}, "price2": {{$info->customer_grade_price_2}}, "price3": {{$info->customer_grade_price_3}}}' type="radio" onchange="memoryChanged(this)">
+                                <input id="info-{{$info->id}}" name="info" value='{ "price1": {{$info->excellent_working}}, "price2": {{$info->good_working}}, "price3": {{$info->poor_working}}}' type="radio" onchange="memoryChanged(this)">
                             @endforeach
                             </div>
                         </div>

@@ -37,11 +37,11 @@ class BuyingProduct extends Model
     }
 
     public function getProductMinPrice($id){
-        return BuyingProductInformation::where('product_id', $id)->first()->customer_grade_price_3;
+        return BuyingProductInformation::where('product_id', $id)->first()->poor_working;
     }
 
     public function getProductMaxPrice($id){
-        return BuyingProductInformation::where('product_id', $id)->first()->customer_grade_price_1;
+        return BuyingProductInformation::where('product_id', $id)->first()->excellent_working;
     }
     
 }

@@ -37,7 +37,6 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-
         $decrypted = $request->input('password');
         $user = null;
 
@@ -48,7 +47,7 @@ class LoginController extends Controller
             $user = User::where('username',  $request->input('username'))->first();
         }
 
-        if($user->account_disabled){
+        if($user && $user->account_disabled){
             return \redirect()->back()->with(['error'=>'Your account has been disabled by administrator. Please contact customer support', 'showLogin'=>true]);
         }
 

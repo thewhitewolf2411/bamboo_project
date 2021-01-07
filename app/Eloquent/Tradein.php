@@ -34,6 +34,10 @@ class Tradein extends Model
         return SellingProduct::where('id', $id)->first()->product_name;
     }
 
+    public function getProductImage($id){
+        return SellingProduct::where('id', $id)->first()->product_image;
+    }
+
     public function getBrandName($productId){
 
         $sellingProduct = SellingProduct::where('id', $productId)->first();
@@ -61,19 +65,19 @@ class Tradein extends Model
         $product = SellingProduct::where('id', $id)->first();
         $price = "";
         if($state == "Excellent working"){
-            $price = $product->customer_grade_price_1;
+            $price = $product->excellent_working;
         }
         else if($state == "Good working"){
-            $price = $product->customer_grade_price_2;
+            $price = $product->good_working;
         }
         else if($state == "Poor working"){
-            $price = $product->customer_grade_price_3;
+            $price = $product->poor_working;
         }
         else if($state == "Damaged working"){
-            $price = $product->customer_grade_price_4;
+            $price = $product->damaged_working;
         }
         else if($state == "Faulty"){
-            $price = $product->customer_grade_price_5;
+            $price = $product->faulty;
         }
 
         return $price;

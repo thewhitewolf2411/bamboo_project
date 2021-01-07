@@ -63,8 +63,8 @@
                             <button type="submit" class="btn btn-primary btn-blue">Search</button>
                         </form>
                         <form class="d-flex align-items-center mx-5" action="/portal/customer-care/order-managment/" method="get">              
-                            <label for="searchtradeins">Input trade-in barcode number:</label>
-                            <input type="text" name="search" class="form-control mx-3 my-0">
+                            <label for="searchtradeins">Input Trade-in barcode number / Trade-in ID:</label>
+                            <input type="text" minlength="7" name="search" class="form-control mx-3 my-0">
                             <button type="submit" class="btn btn-primary btn-blue">Search</button>
                         </form>
                     </div>

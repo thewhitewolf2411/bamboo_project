@@ -53,21 +53,20 @@ use Klaviyo\Model\EventModel as KlaviyoEvent;
 class PortalController extends Controller
 {
 
+    protected $user;
+
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            abort_unless(auth()->check() && auth()->user()->type_of_user > 0, 403, "Forbidden.");
+            return $next($request);
+        });
     }
 
     public function portal(){
-        if(Auth::User()->type_of_user == 1 || Auth::User()->type_of_user == 2 || Auth::User()->type_of_user == 3){
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-            $user_id = Auth::user()->id;
-            $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-            return view('portal')->with('portalUser', $portalUser);
-        }
-        else{
-            return redirect('/');
-        }
+        return view('portal')->with('portalUser', $portalUser);
     }
 
     //customer care
@@ -405,7 +404,6 @@ class PortalController extends Controller
     }
 
     private function getOrderNumbersSorted($array){
-        
         foreach($array as $key=>$item){
             $k = 0;
 
@@ -432,9 +430,11 @@ class PortalController extends Controller
         $search = null;
 
         if($request->all() == null || $request->search == 0){
-            $tradeins = Tradein::all()->whereIn('job_state', [2,3])->groupBy('barcode_original');
+            #$tradeins = Tradein::all()->whereIn('job_state', [2,3])->groupBy('barcode_original');
 
-            $tradeins = $this->getOrderNumbersSorted($tradeins);
+            $tradeins = Tradein::where('job_state', 2)->get()->groupBy('barcode_original');
+            #dd($tradeins);
+            #$tradeins = $this->getOrderNumbersSorted($tradeins);
 
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -443,23 +443,24 @@ class PortalController extends Controller
         }
         else{
             if($request->search <= 3){
-                $tradeins = Tradein::all()->whereIn('job_state', [2,3])->groupBy('barcode_original');
-                $tradeins = $this->getOrderNumbersSorted($tradeins);
+                $tradeins = Tradein::where('job_state', 2)->get();
+                #$tradeins = $this->getOrderNumbersSorted($tradeins->all());
 
                 $user_id = Auth::user()->id;
                 $portalUser = PortalUsers::where('user_id', $user_id)->first();
-    
-                $search = $request->search;
-    
-                foreach($tradeins as $tradein){
-                    print_r($tradein->getCategoryId($tradein->product_id) != $request->search);
-                        if($tradein->getCategoryId($tradein->product_id) != $request->search){
-                            $tradeins = $tradeins->except($tradein->id);
-                    }
+
+                foreach($tradeins as $key=>$tradein){
+                    if($tradein->getCategoryId($tradein->product_id) !== intval($request->search)){
+                        $tradeins->forget($key);
+                    }  
                 }
+                #dd($tradeins);
+
+                $tradeins = $tradeins->groupBy('barcode_original');
             }
             else{
-                $tradeins = Tradein::where('barcode_original', $request->search)->whereIn('job_state', [2,3])->get();
+
+                $tradeins = Tradein::where('barcode', $request->search)->orWhere('barcode_original', $request->search)->where('job_state', 2)->get();
                 if(count($tradeins) < 1){
                     return redirect()->back()->with('error', 'No Order with that barcode. Please try again.');
                 }
@@ -516,6 +517,13 @@ class PortalController extends Controller
         $user->save();
 
         return redirect()->back()->with('success', 'Account id '. $user->id . ' has been succesfully enabled.');
+    }
+
+    public function deleteUserAccount($id){
+        $user = User::where('id', $id)->first();
+        $user->delete();
+
+        return redirect()->back()->with('success', 'Account id '. $user->id . ' has been succesfully deleted.');
     }
 
     public function createOrder(){
@@ -1002,9 +1010,9 @@ class PortalController extends Controller
                 $sellingProductInformation = new BuyingProductInformation();
                 $sellingProductInformation->product_id = $product->id;
                 $sellingProductInformation->memory = $request->{"memory-" . $i . "-new"};
-                $sellingProductInformation->customer_grade_price_1 = $request->{"price" . $i . "-1-new"};
-                $sellingProductInformation->customer_grade_price_2 = $request->{"price" . $i . "-2-new"};
-                $sellingProductInformation->customer_grade_price_3 = $request->{"price" . $i . "-3-new"};
+                $sellingProductInformation->excellent_working = $request->{"price" . $i . "-1-new"};
+                $sellingProductInformation->good_working = $request->{"price" . $i . "-2-new"};
+                $sellingProductInformation->poor_working = $request->{"price" . $i . "-3-new"};
                 $sellingProductInformation->save();
             }
         }
@@ -1053,11 +1061,11 @@ class PortalController extends Controller
                 $sellingProductInformation = new ProductInformation();
                 $sellingProductInformation->product_id = $product->id;
                 $sellingProductInformation->memory = $request->{"memory-" . $i . "-new"};
-                $sellingProductInformation->customer_grade_price_1 = $request->{"price" . $i . "-1-new"};
-                $sellingProductInformation->customer_grade_price_2 = $request->{"price" . $i . "-2-new"};
-                $sellingProductInformation->customer_grade_price_3 = $request->{"price" . $i . "-3-new"};
-                $sellingProductInformation->customer_grade_price_4 = $request->{"price" . $i . "-4-new"};
-                $sellingProductInformation->customer_grade_price_5 = $request->{"price" . $i . "-5-new"};
+                $sellingProductInformation->excellent_working = $request->{"price" . $i . "-1-new"};
+                $sellingProductInformation->good_working = $request->{"price" . $i . "-2-new"};
+                $sellingProductInformation->poor_working = $request->{"price" . $i . "-3-new"};
+                $sellingProductInformation->damaged_working = $request->{"price" . $i . "-4-new"};
+                $sellingProductInformation->faulty = $request->{"price" . $i . "-5-new"};
                 $sellingProductInformation->save();
             }
         }
@@ -1170,24 +1178,24 @@ class PortalController extends Controller
                     $info->memory = $request->{"memory_".$info->id};
                     $info->save();
                 }
-                if($request->{"price1_".$info->id} != $info->customer_grade_price_1){
-                    $info->customer_grade_price_1 = $request->{"price1_".$info->id};
+                if($request->{"price1_".$info->id} != $info->excellent_working){
+                    $info->excellent_working = $request->{"price1_".$info->id};
                     $info->save();
                 }
-                if($request->{"price2_".$info->id} != $info->customer_grade_price_2){
-                    $info->customer_grade_price_2 = $request->{"price2_".$info->id};
+                if($request->{"price2_".$info->id} != $info->good_working){
+                    $info->good_working = $request->{"price2_".$info->id};
                     $info->save();
                 }
-                if($request->{"price3_".$info->id} != $info->customer_grade_price_3){
-                    $info->customer_grade_price_3 = $request->{"price3_".$info->id};
+                if($request->{"price3_".$info->id} != $info->poor_working){
+                    $info->poor_working = $request->{"price3_".$info->id};
                     $info->save();
                 }
-                if($request->{"price4_".$info->id} != $info->customer_grade_price_4){
-                    $info->customer_grade_price_4 = $request->{"price4_".$info->id};
+                if($request->{"price4_".$info->id} != $info->damaged_working){
+                    $info->damaged_working = $request->{"price4_".$info->id};
                     $info->save();
                 }
-                if($request->{"price5_".$info->id} != $info->customer_grade_price_5){
-                    $info->customer_grade_price_5 = $request->{"price5_".$info->id};
+                if($request->{"price5_".$info->id} != $info->faulty){
+                    $info->faulty = $request->{"price5_".$info->id};
                     $info->save();
                 }
             }
@@ -1248,9 +1256,9 @@ class PortalController extends Controller
             if(isset($request->{"memory-" . $spi->id . "-new"}) && $request->{"memory-" . $spi->id . "-new"} !== null){
                 $spi->product_id = $product->id;
                 $spi->memory = $request->{"memory-" . $spi->id . "-new"};
-                $spi->customer_grade_price_1 = $request->{"price" . $spi->id . "-1-new"};
-                $spi->customer_grade_price_2 = $request->{"price" . $spi->id . "-2-new"};
-                $spi->customer_grade_price_3 = $request->{"price" . $spi->id . "-3-new"};
+                $spi->excellent_working = $request->{"price" . $spi->id . "-1-new"};
+                $spi->good_working = $request->{"price" . $spi->id . "-2-new"};
+                $spi->poor_working = $request->{"price" . $spi->id . "-3-new"};
                 $spi->save();
             }
 
@@ -2410,7 +2418,7 @@ class PortalController extends Controller
         if($export_feed_parameter == 1){
             $columns = Schema::getColumnListing('buying_products');
             //28 
-            $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+            $datarows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z', 'AA'];
             $products = BuyingProduct::all();
         }
         else if($export_feed_parameter == 2){
@@ -2450,32 +2458,33 @@ class PortalController extends Controller
                 $sheet->setCellValue('P1', 'product_available_colours');
 
                 $sheet->setCellValue('F1', 'product_memory');
-                $sheet->setCellValue('G1', 'customer_grade_price_1');
-                $sheet->setCellValue('H1', 'customer_grade_price_2');
-                $sheet->setCellValue('I1', 'customer_grade_price_3');
-                $sheet->setCellValue('J1', 'customer_grade_price_4');
-                $sheet->setCellValue('K1', 'customer_grade_price_5');
+                $sheet->setCellValue('G1', 'excellent_working');
+                $sheet->setCellValue('H1', 'good_working');
+                $sheet->setCellValue('I1', 'poor_working');
+                $sheet->setCellValue('J1', 'damaged_working');
+                $sheet->setCellValue('K1', 'faulty');
             }
             foreach($products as $key=>$product){
                 $product = array_values($product->toArray());
                 $productInformation = ProductInformation::where('product_id', $product[0])->get();
                 $productNetworks = ProductNetworks::where('product_id', $product[0])->get();
                 $productColor = Colour::where('product_id', $product[0])->get();
-                #dd($productColor);
 
                 $sheet->setCellValue('B' . $k, $product[1]);
                 $sheet->setCellValue('C' . $k, $product[2]);
                 $sheet->setCellValue('D' . $k, $product[3]);
                 $sheet->setCellValue('E' . $k, $product[4]);
+                $sheet->setCellValue('L' . $k, $product[6]);
+                $sheet->setCellValue('M' . $k, $product[7]);
 
                 $i=$k;
                 foreach($productInformation as $productInfo){
                     $sheet->setCellValue('F'.$i, $productInfo->memory);
-                    $sheet->setCellValue('G'.$i, $productInfo->customer_grade_price_1);
-                    $sheet->setCellValue('H'.$i, $productInfo->customer_grade_price_2);
-                    $sheet->setCellValue('I'.$i, $productInfo->customer_grade_price_3);
-                    $sheet->setCellValue('J'.$i, $productInfo->customer_grade_price_4);
-                    $sheet->setCellValue('K'.$i, $productInfo->customer_grade_price_5);
+                    $sheet->setCellValue('G'.$i, $productInfo->excellent_working);
+                    $sheet->setCellValue('H'.$i, $productInfo->good_working);
+                    $sheet->setCellValue('I'.$i, $productInfo->poor_working);
+                    $sheet->setCellValue('J'.$i, $productInfo->damaged_working);
+                    $sheet->setCellValue('K'.$i, $productInfo->faulty);
                     $i++;
                 }
 
@@ -2658,9 +2667,9 @@ class PortalController extends Controller
                     $buyingProductInformation = new BuyingProductInformation();
                     $buyingProductInformation->product_id = $product->id;
                     $buyingProductInformation->memory = $importeddata[$key][6];
-                    $buyingProductInformation->customer_grade_price_1 = $importeddata[$key][7];
-                    $buyingProductInformation->customer_grade_price_2 = $importeddata[$key][8];
-                    $buyingProductInformation->customer_grade_price_3 = $importeddata[$key][9];
+                    $buyingProductInformation->excellent_working = $importeddata[$key][7];
+                    $buyingProductInformation->good_working = $importeddata[$key][8];
+                    $buyingProductInformation->poor_working = $importeddata[$key][9];
                     $buyingProductInformation->save();
                 }
 
@@ -2703,11 +2712,11 @@ class PortalController extends Controller
                     $sellingProductInformation = new ProductInformation();
                     $sellingProductInformation->product_id = $sellingProduct->id;
                     $sellingProductInformation->memory = $importeddata[$key][5];
-                    $sellingProductInformation->customer_grade_price_1 = $importeddata[$key][6];
-                    $sellingProductInformation->customer_grade_price_2 = $importeddata[$key][7];
-                    $sellingProductInformation->customer_grade_price_3 = $importeddata[$key][8];
-                    $sellingProductInformation->customer_grade_price_4 = $importeddata[$key][9];
-                    $sellingProductInformation->customer_grade_price_5 = $importeddata[$key][10];
+                    $sellingProductInformation->excellent_working = $importeddata[$key][6];
+                    $sellingProductInformation->good_working = $importeddata[$key][7];
+                    $sellingProductInformation->poor_working = $importeddata[$key][8];
+                    $sellingProductInformation->damaged_working = $importeddata[$key][9];
+                    $sellingProductInformation->faulty = $importeddata[$key][10];
                     $sellingProductInformation->save();
                 }
 
@@ -3357,6 +3366,7 @@ class PortalController extends Controller
     public function addTrayToTrolley(Request $request){
 
         $tray = Tray::where('id', $request->tray_id)->first();
+        $trolley = "";
 
         if($tray->trolley_id == null){
             $tray->trolley_id = $request->trolley_select;
@@ -3383,7 +3393,7 @@ class PortalController extends Controller
 
 
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'You have assigned this tray to trolley '. $trolley->trolley_name);
     }
 
     public function deleteTray($id){

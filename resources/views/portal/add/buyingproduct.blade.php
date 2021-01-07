@@ -128,7 +128,7 @@
                             </table>
                             <div class="portal-title-container">
                                 <div class="portal-title">
-                                    <p>Avalible colours for the product</p>
+                                    <p>Available colours for the product</p>
                                 </div>
                             </div>
                             <table class="portal-table" id="categories-table">

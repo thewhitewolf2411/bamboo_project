@@ -186,13 +186,12 @@ function cosmeticElementChanged(){
             $('#bamboo_final_grade').val('Poor Working');
             cosmeticNumGrade = 3;
         }
-        else if(cosmeticGrade == "WSI" || cosmeticGrade == "WSD"){
+        else if(cosmeticGrade == "WSI"){
+
+            $('#bamboo_final_grade').val('WSI');
             $('#customer_grade').val("Damaged Working");
-            if(cosmeticGrade == "WSI"){
-                $('#bamboo_final_grade').val('WSI');
-                $('#customer_grade').val("Damaged Working");
-                $('#bamboo_final_grade').val('Damaged Working');
-            }
+            $('#bamboo_final_grade').val('Damaged Working');
+            
             cosmeticNumGrade = 2;
         }
         else{

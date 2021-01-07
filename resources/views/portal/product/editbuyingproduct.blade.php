@@ -82,9 +82,9 @@
                                 <input type="hidden" name="memory-{{$pinfo->id}}" value="{{$pinfo->id}}">
                                 <tr>
                                     <th><input class="table-element" value="{{$pinfo->memory}}" type="text" name="memory-{{$pinfo->id}}-new"></th>
-                                    <th><input class="table-element" value="{{$pinfo->customer_grade_price_1}}" type="number" name="price{{$pinfo->id}}-1-new"></th>
-                                    <th><input class="table-element" value="{{$pinfo->customer_grade_price_2}}" type="number" name="price{{$pinfo->id}}-2-new"></th>
-                                    <th><input class="table-element" value="{{$pinfo->customer_grade_price_3}}" type="number" name="price{{$pinfo->id}}-3-new"></th>
+                                    <th><input class="table-element" value="{{$pinfo->excellent_working}}" type="number" name="price{{$pinfo->id}}-1-new"></th>
+                                    <th><input class="table-element" value="{{$pinfo->good_working}}" type="number" name="price{{$pinfo->id}}-2-new"></th>
+                                    <th><input class="table-element" value="{{$pinfo->poor_working}}" type="number" name="price{{$pinfo->id}}-3-new"></th>
                                 </tr>
                                 @endforeach
 
@@ -109,7 +109,7 @@
                             </table>
                             <div class="portal-title-container">
                                 <div class="portal-title">
-                                    <p>Avalible colours for the product</p>
+                                    <p>Available colours for the product</p>
                                 </div>
                             </div>
                             <table class="portal-table" id="categories-table">

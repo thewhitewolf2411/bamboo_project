@@ -92,8 +92,8 @@
                                             <td><div class="table-element">Memory</div></td>
                                             <td><div class="table-element">Excellent Working</div></td>
                                             <td><div class="table-element">Good Working</div></td>
-                                            <td><div class="table-element">Damaged working</div></td>
                                             <td><div class="table-element">Poor working</div></td>
+                                            <td><div class="table-element">Damaged working</div></td>
                                             <td><div class="table-element">Faulty</div></td>
                                         </tr>
                                         <tr>
@@ -158,7 +158,7 @@
                                     </table>
                                     <div class="portal-title-container">
                                         <div class="portal-title">
-                                            <p>Avalible colours for the product</p>
+                                            <p>Available colours for the product</p>
                                         </div>
                                     </div>
                                     <table class="portal-table" id="categories-table">

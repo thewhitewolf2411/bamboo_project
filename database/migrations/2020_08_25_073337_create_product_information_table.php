@@ -17,11 +17,11 @@ class CreateProductInformationTable extends Migration
             $table->id();
             $table->integer('product_id');
             $table->string('memory');
-            $table->integer('customer_grade_price_1');
-            $table->integer('customer_grade_price_2');
-            $table->integer('customer_grade_price_3');
-            $table->integer('customer_grade_price_4');
-            $table->integer('customer_grade_price_5');
+            $table->integer('excellent_working');
+            $table->integer('good_working');
+            $table->integer('poor_working');
+            $table->integer('damaged_working');
+            $table->integer('faulty');
             $table->timestamps();
         });
     }

@@ -62,32 +62,38 @@
             <span>SEND US A MESSAGE</span>
             <p>Please complete the form below and we’ll get back to you without delay.</p>
 
-            <form id="message-form" action="/">
+            <form id="message-form" method="post" action="/sendMessage">
                 @csrf
 
-                <div class="form-group">
-                    <label for="firstname">First Name*</label>
-                    <input id="firstname" name="firstname" type="text" class="form-control" required>
+                <div class="row w-100">
+                    <div class="form-group col-md-6">
+                        <label for="firstname">First Name*</label>
+                        <input id="firstname" name="firstname" type="text" class="form-control" required>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="lastname">Last Name*</label>
+                        <input id="lastname" name="lastname" type="text" class="form-control" required>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="lastname">Last Name*</label>
-                    <input id="lastname" name="lastname" type="text" class="form-control" required>
+                <div class="row w-100">
+                    <div class="form-group col-md-6">
+                        <label for="emailadress">Email address*</label>
+                        <input id="emailadress" name="emailadress" type="email" class="form-control" required>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="telephone">Telephone</label>
+                        <input id="telephone" name="telephone" type="number" class="form-control">
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="emailadress">Email address*</label>
-                    <input id="emailadress" name="emailadress" type="email" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="telephone">Telephone</label>
-                    <input id="telephone" name="telephone" type="number" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label for="ordernumber">Order number</label>
-                    <input id="ordernumber" name="ordernumber" type="number" class="form-control">
+                <div class="row w-100">
+                    <div class="form-group col-md-6">
+                        <label for="ordernumber">Order number</label>
+                        <input id="ordernumber" name="ordernumber" type="number" class="form-control">
+                    </div>
                 </div>
 
                 <div class="form-group" style="width: 100%; height: 350px;">

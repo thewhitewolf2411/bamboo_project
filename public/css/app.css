@@ -10444,6 +10444,7 @@ main p, a, span {
   font-size: 18px;
   padding: 10px;
   width: 80%;
+  font-family: Sharp Sans No1 Semibold !important;
 }
 
 .devices-container {
@@ -10482,7 +10483,8 @@ main p, a, span {
 }
 
 .device-container .model-title {
-  font-size: 14px;
+  padding-top: 0.725rem;
+  font-size: 20px;
   font-weight: 300;
 }
 
@@ -10795,6 +10797,7 @@ main p, a, span {
   height: auto;
   opacity: 1;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
@@ -10959,18 +10962,41 @@ main p, a, span {
   align-items: center;
 }
 
+#shopping-image.rotate {
+  -webkit-transform: rotate(0deg);
+  -webkit-transition: -webkit-transform 0.3s linear;
+}
+
+#selling-image.rotate {
+  -webkit-transform: rotate(90deg);
+  -webkit-transition: -webkit-transform 0.3s linear;
+}
+
+#shopping-image.unrotate {
+  -webkit-transform: rotate(-90deg);
+  -webkit-transition: -webkit-transform 0.3s linear;
+}
+
+#selling-image.unrotate {
+  -webkit-transform: rotate(0);
+  -webkit-transition: -webkit-transform 0.3s linear;
+}
+
 .toggle-element-btn a {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
+  font-family: Sharp Sans No1 Semibold !important;
 }
 
 .toggle-element-btn p {
   font-size: 14pt;
   font-weight: 600;
   opacity: 0.5;
+  font-family: Sharp Sans No1 Semibold !important;
 }
 
 .how-sustainability {
@@ -11771,11 +11797,11 @@ header {
 }
 
 #start-shopping a:hover {
-  font-size: 15px !important;
+  font-size: 18px !important;
 }
 
 #start-selling a:hover {
-  font-size: 15px !important;
+  font-size: 18px !important;
 }
 
 .navbar-light .navbar-toggler {
@@ -11920,6 +11946,11 @@ footer {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 16pt;
+}
+
+.url-footer-container a {
+  font-size: 16px;
 }
 
 .footer-row-6 {
@@ -12071,18 +12102,28 @@ footer {
     align-items: center;
   }
 }
-a, p, label {
-  margin: 0 auto;
-  font-size: 9pt;
-  font-family: "Sharp Sans No1 Book", Helvetica, sans-serif;
-}
-
 @font-face {
   font-family: Bebas Neue, Helvetica, sans-serif;
   src: url("/fonts/BebasNeue-Regular.ttf");
 }
+@font-face {
+  font-family: "Sharp Sans No1 Book";
+  src: url("/fonts/6a1891db0152c7835cc61d5e95578b29.eot");
+  src: url("/fonts/6a1891db0152c7835cc61d5e95578b29.eot?#iefix") format("embedded-opentype"), url("/fonts/6a1891db0152c7835cc61d5e95578b29.woff2") format("woff2"), url("/fonts/6a1891db0152c7835cc61d5e95578b29.woff") format("woff"), url("/fonts/6a1891db0152c7835cc61d5e95578b29.ttf") format("truetype"), url("/fonts/6a1891db0152c7835cc61d5e95578b29.svg#Sharp Sans No1 Book") format("svg");
+}
+@font-face {
+  font-family: "Sharp Sans No1 Semibold";
+  src: url("/fonts/d746f11d11dd01067a58e13b965e23c7.eot");
+  src: url("/fonts/d746f11d11dd01067a58e13b965e23c7.eot?#iefix") format("embedded-opentype"), url("/fonts/d746f11d11dd01067a58e13b965e23c7.woff2") format("woff2"), url("/fonts/d746f11d11dd01067a58e13b965e23c7.woff") format("woff"), url("/fonts/d746f11d11dd01067a58e13b965e23c7.ttf") format("truetype"), url("/fonts/d746f11d11dd01067a58e13b965e23c7.svg#Sharp Sans No1 Semibold") format("svg");
+}
+@font-face {
+  font-family: "Sharp Sans No1 Bold";
+  src: url("/fonts/154ebfcef3ca74b92a56a5826ee85d74.eot");
+  src: url("/fonts/154ebfcef3ca74b92a56a5826ee85d74.eot?#iefix") format("embedded-opentype"), url("/fonts/154ebfcef3ca74b92a56a5826ee85d74.woff2") format("woff2"), url("/fonts/154ebfcef3ca74b92a56a5826ee85d74.woff") format("woff"), url("/fonts/154ebfcef3ca74b92a56a5826ee85d74.ttf") format("truetype"), url("/fonts/154ebfcef3ca74b92a56a5826ee85d74.svg#Sharp Sans No1 Bold") format("svg");
+}
 .medium-text {
   font-size: 18px;
+  font-family: Sharp Sans No1 Semibold;
 }
 
 a:hover {
@@ -12091,10 +12132,22 @@ a:hover {
 
 body {
   padding-right: 0 !important;
+  font-family: Sharp Sans No1 Book;
+}
+
+a, p, label {
+  margin: 0 auto;
+  font-size: 9pt;
+  font-family: Sharp Sans No1 Book;
 }
 
 h3, h4, h5 {
   font-weight: 600;
+  font-family: Sharp Sans No1 Bold;
+}
+
+.btn {
+  font-family: Sharp Sans No1 Semibold;
 }
 
 .btn-font-white {
@@ -12108,21 +12161,61 @@ h3, h4, h5 {
 .btn-green {
   background: #A3D147 !important;
   border: 1px solid #A3D147 !important;
+  transition: 0.2s linear;
+}
+
+.btn-green:hover {
+  color: #A3D147 !important;
+  background: transparent !important;
+  transition: 0.2s linear;
 }
 
 .btn-purple {
   background: #A375BC !important;
   border: 1px solid #A375BC !important;
+  transition: 0.2s linear;
+}
+
+.btn-purple:hover {
+  color: #A375BC !important;
+  background: transparent !important;
+  transition: 0.2s linear;
 }
 
 .btn-orange {
   background: #F28E33 !important;
   border: 1px solid #F28E33 !important;
+  transition: 0.2s linear;
+}
+
+.btn-orange:hover {
+  color: #F28E33 !important;
+  background: transparent !important;
+  transition: 0.2s linear;
 }
 
 .btn-blue {
   background: #23AAF7 !important;
   border: 1px solid #23AAF7 !important;
+  transition: 0.2s linear;
+}
+
+.btn-blue:hover {
+  color: #23AAF7 !important;
+  background: transparent !important;
+  transition: 0.2s linear;
+}
+
+.btn-jade {
+  background: #59DDC1 !important;
+  border: 1px solid #59DDC1 !important;
+  transition: 0.2s linear;
+}
+
+.btn-jade:hover {
+  color: #59DDC1 !important;
+  background: transparent !important;
+  transition: 0.2s linear;
 }
 
 .btn-white {
@@ -12168,6 +12261,18 @@ h3, h4, h5 {
 
 .mb-50 {
   margin-bottom: 50px;
+}
+
+.black {
+  color: #000;
+}
+
+.modal-footer {
+  justify-content: center !important;
+}
+
+.text-center {
+  align-items: center;
 }
 
 .portal-dashboard {
@@ -13486,12 +13591,8 @@ h3, h4, h5 {
   width: 1200px !important;
 }
 
-.portal-body {
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
-}
-
-.portal-body a, p, span, label {
-  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+.portal-body a, .portal-body p, .portal-body span, .portal-body label, .portal-body h1, .portal-body h2, .portal-body h3, .portal-body h4, .portal-body h5, .portal-body button, .portal-body select, .portal-body option, .portal-body input, .portal-body table, .portal-body th, .portal-body tr, .portal-body .alert {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
 .portal-header-container {

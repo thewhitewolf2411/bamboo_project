@@ -57,8 +57,8 @@
                             <button type="submit" class="btn btn-primary btn-blue">Search</button>
                         </form>
                         <form class="d-flex align-items-center mx-5" action="/portal/customer-care/order-managment/" method="get">              
-                            <label for="searchtradeins">Input trade-in barcode number:</label>
-                            <input type="text" name="search" class="form-control mx-3 my-0">
+                            <label for="searchtradeins">Input Trade-in barcode number / Trade-in ID:</label>
+                            <input type="text" minlength="7" name="search" class="form-control mx-3 my-0">
                             <button type="submit" class="btn btn-primary btn-blue">Search</button>
                         </form>
                     </div>
@@ -103,7 +103,7 @@
                                     <i class="fa fa-times" style="color:blue !important;" title="Return device to receiving" ></i>
                                 </a>
                                 @endif
-                                @if($tradein->job_state >= 5)
+                                @if($tradein->job_state >= 5 && $tradein->job_state !== 6)
                                 <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
                                     <i class="fa fa-times" style="color:blue !important;"></i>
                                 </a>

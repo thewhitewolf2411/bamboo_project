@@ -12,6 +12,11 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
+        
+        <title>Bamboo Mobile::Profile</title>
+
+        <link rel="icon" type="image/png" sizes="96x96" href="/customer_page_images/header/favicon-96x96.png">
+
         <!-- Addressian -->
         <script src="{{asset('/js/Addressian.js')}}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
@@ -216,7 +221,7 @@
                                     <p class="profile-large">Order #{{$tradeout->id}}</p>
                                 </div>
                                 <div class="w-50 p-2">
-                                    <p class="profile-large">{{$tradeout->created_at->format('d/m/Y')}}</p>
+                                    <p class="profile-large">{{$tradeout->created_at->toFormattedDateString()}}</p>
                                 </div>
                                 <div class="w-25 p-2">
                                     <a href="">
@@ -226,7 +231,7 @@
                                     </a>
                                 </div>
                                 <div class="w-25 p-2">
-                                    <button type="button" class="btn btn-primary btn-orange profile-large" style="color: #fff;" onclick="showModal({{$tradeout->id}})">
+                                    <button type="button" class="btn btn-primary btn-blue profile-large" style="color: #fff;" onclick="showTradeOutModal({{$tradeout->id}})">
                                         View details
                                     </button>
                                 </div>
@@ -260,7 +265,7 @@
                                     <p class="profile-large">Order #{{$tradein->barcode}}</p>
                                 </div>
                                 <div class="w-50 p-2">
-                                    <p class="profile-large">{{$tradein->created_at->format('d/m/Y')}}</p>
+                                    <p class="profile-large">{{$tradein->created_at->toFormattedDateString()}}</p>
                                 </div>
                                 <div class="w-25 p-2">
                                     @if($tradein->job_state <= 2 )
@@ -288,20 +293,90 @@
 
 
         @foreach($tradeins as $tradein)
-        <div class="modal" tabindex="-1" role="dialog" aria-hidden="true" id="tradein-{{$tradein->id}}">
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="tradein-{{$tradein->id}}">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Order #{{$tradein->barcode}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
+                    
+                    <a role="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="{{ asset('/customer_page_images/body/modal-close.svg') }}">
+                    </a>
                 </div>
                 <div class="modal-body">
+                    <div class="p-5">
+                        <div class="row pb-5">
+                            <div class="col-md-9">
+                                <div class="d-flex flex-column">
+                                    <div class="w-100">
+                                        <h5 class="modal-title">Order Details</h5>
+                                    </div>
+                                    <div class="row mt-5">
+                                        <div class="col-md-6">
+                                            <p class="black">Order #</p>
+                                            <h5 class="modal-title">Order #{{$tradein->barcode_original}}</h5>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="black">Date</p>
+                                            <h5 class="modal-title">{{$tradein->created_at->toFormattedDateString()}}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="d-flex flex-column">
+                                    <div class="py-2"><a href="" class="btn btn-primary btn-green w-100 d-flex justify-content-between ">Download <img src="{{ asset('/customer_page_images/body/Icon-Arrow-Next-White.svg') }}"> </a></div>
+                                    <div class="py-2"><a href="" class="btn btn-primary btn-purple w-100 d-flex justify-content-between">Print <img src="{{ asset('/customer_page_images/body/Icon-Arrow-Next-White.svg') }}"> </a></div>
+                                    <div class="py-2"><a href="" class="btn btn-primary btn-jade w-100 d-flex justify-content-between">Email <img src="{{ asset('/customer_page_images/body/Icon-Arrow-Next-White.svg') }}"> </a></div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row border-bottom pb-5">
+                        
+                            <div class="col-md-2"><img src="/storage/product_images/{{ $tradein->getProductImage($tradein->product_id) }}" width="100%"></div>
+                            <div class="col-md-4">
+                                <h5 class="modal-title">{{ $tradein->getProductName($tradein->product_id) }}</h5>
+                                <p class="black">Network: {{ $tradein->network }}</p>
+                                <p class="black">Memory: {{ $tradein->memory }}</p>
+                                <p class="black">Grade: {{ $tradein->product_state }}</p>
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-4">
+                                <h5 class="modal-title border-bottom">Order Summary</h5>
+                                <div class="d-flex">
+                                    <h5 class="modal-title mt-5 mr-3">Total:</h5>
+                                    <h5 class="modal-title mt-5 ml-5">£{{$tradein->order_price}}</h5>
+                                </div>
+                            </div>
+                        
+                        </div>
+
+                        <div class="row py-3">
+                        
+                            <div class="col-md-4">
+                                <p class="black mb-3">Delivery address</p>
+                                <h5 class="modal-title">{{Auth::user()->delivery_address}}</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="black mb-3">Date shipped</p>
+                                <h5 class="modal-title">13th July 2020</h5>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="black mb-3">Tracking number</p>
+                                <h5 class="modal-title">JF3904TI3MG9</h5>
+                            </div>
+                        
+                        </div>
+
+                    </div>
                 </div>
                 <div class="modal-footer">
-
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <div class="row w-75">
+                        <div class="col-md-4"><a href="" class="btn btn-primary btn-green w-100 d-flex justify-content-between ">Download <img src="{{ asset('/customer_page_images/body/Icon-Arrow-Next-White.svg') }}"> </a></div>
+                        <div class="col-md-4"><a href="" class="btn btn-primary btn-purple w-100 d-flex justify-content-between">Print <img src="{{ asset('/customer_page_images/body/Icon-Arrow-Next-White.svg') }}"> </a></div>
+                        <div class="col-md-4"><a href="" class="btn btn-primary btn-jade w-100 d-flex justify-content-between">Email <img src="{{ asset('/customer_page_images/body/Icon-Arrow-Next-White.svg') }}"> </a></div>
+                    </div>
                 </div>
                 </div>
             </div>
@@ -309,20 +384,20 @@
         @endforeach
 
         @foreach($tradeouts as $tradeout)
-        <div class="modal fade" tabindex="-1" role="dialog" id="{{$tradeout->barcode}}">
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="tradeout-{{$tradeout->id}}">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title">Order #{{$tradeout->id}}</h5>
+                    <a role="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <img src="{{ asset('/customer_page_images/body/modal-close.svg') }}">
+                    </a>
                 </div>
                 <div class="modal-body">
                     <p>Modal body text goes here.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
                 </div>
                 </div>
             </div>
@@ -336,6 +411,10 @@
 
         function showModal(id){
             $('#tradein-' + id).modal('show');
+        }
+
+        function showTradeOutModal(id){
+            $('#tradeout-' + id).modal('show');
         }
 
         </script>

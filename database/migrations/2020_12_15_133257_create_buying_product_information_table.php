@@ -17,9 +17,9 @@ class CreateBuyingProductInformationTable extends Migration
             $table->id();
             $table->integer('product_id');
             $table->string('memory');
-            $table->string('customer_grade_price_1');
-            $table->string('customer_grade_price_2')->nullable();
-            $table->string('customer_grade_price_3')->nullable();
+            $table->string('excellent_working');
+            $table->string('good_working')->nullable();
+            $table->string('poor_working')->nullable();
             $table->timestamps();
         });
     }

@@ -93,8 +93,8 @@
                                             <td><div class="table-element">Memory</div></td>
                                             <td><div class="table-element">Excellent Working</div></td>
                                             <td><div class="table-element">Good Working</div></td>
-                                            <td><div class="table-element">Damaged working</div></td>
                                             <td><div class="table-element">Poor working</div></td>
+                                            <td><div class="table-element">Damaged working</div></td>
                                             <td><div class="table-element">Faulty</div></td>
                                             <td><div class="table-element">Remove option</div></td>
                                         </tr>
@@ -102,11 +102,11 @@
                                         <tr>
                                             <input type="hidden" name="info{{$info->id}}" value="{{$info->id}}">
                                             <th><input class="table-element" type="text" name="memory_{{$info->id}}" value="{{$info->memory}}"></th>
-                                            <th><input class="table-element" type="number" name="price1_{{$info->id}}" value="{{$info->customer_grade_price_1}}"></th>
-                                            <th><input class="table-element" type="number" name="price2_{{$info->id}}" value="{{$info->customer_grade_price_2}}"></th>
-                                            <th><input class="table-element" type="number" name="price3_{{$info->id}}" value="{{$info->customer_grade_price_3}}"></th>
-                                            <th><input class="table-element" type="number" name="price4_{{$info->id}}" value="{{$info->customer_grade_price_4}}"></th>
-                                            <th><input class="table-element" type="number" name="price5_{{$info->id}}" value="{{$info->customer_grade_price_5}}"></th>
+                                            <th><input class="table-element" type="number" name="price1_{{$info->id}}" value="{{$info->excellent_working}}"></th>
+                                            <th><input class="table-element" type="number" name="price2_{{$info->id}}" value="{{$info->good_working}}"></th>
+                                            <th><input class="table-element" type="number" name="price3_{{$info->id}}" value="{{$info->poor_working}}"></th>
+                                            <th><input class="table-element" type="number" name="price4_{{$info->id}}" value="{{$info->damaged_working}}"></th>
+                                            <th><input class="table-element" type="number" name="price5_{{$info->id}}" value="{{$info->faulty}}"></th>
                                             <th><div class="table-element">
 
                                             <a onclick="return confirm('Are you sure? This will delete this product option from customer view!')" href="/portal/product/removesellingproductoption/{{$info->id}}">

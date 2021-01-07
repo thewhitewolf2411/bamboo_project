@@ -134,8 +134,8 @@ class ShopController extends Controller
 
         $productInformation = BuyingProductInformation::where('product_id', $request->productid)->get();
 
-        $maxPrice = $productInformation->max('customer_grade_price_1');
-        $minPrice = $productInformation->min('customer_grade_price_3');
+        $maxPrice = $productInformation->max('excellent_working');
+        $minPrice = $productInformation->min('poor_working');
 
         return response()->json([
             "Productimage" => $product->product_image,

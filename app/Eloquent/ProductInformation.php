@@ -19,6 +19,6 @@ class ProductInformation extends Model
      * @var array
      */
     protected $fillable = [
-        'product_id','memory','customer_grade_price_1','customer_grade_price_2','customer_grade_price_3','customer_grade_price_4','customer_grade_price_5'
+        'product_id','memory','excellent_working','good_working','poor_working','damaged_working','faulty'
     ];
 }

@@ -307,6 +307,7 @@ main p, a, span{
     font-size: 18px;
     padding: 10px;
     width: 80%;
+    font-family: Sharp Sans No1 Semibold !important;
 }
 
 .devices-container{
@@ -345,7 +346,8 @@ main p, a, span{
 }
 
 .device-container .model-title{
-    font-size: 14px;
+    padding-top: .725rem;
+    font-size: 20px;
     font-weight: 300;
 }
 
@@ -656,6 +658,7 @@ main p, a, span{
     height: auto;
     opacity: 1;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
 }
 
@@ -820,18 +823,41 @@ main p, a, span{
     align-items: center;
 }
 
+#shopping-image.rotate{
+    -webkit-transform: rotate(0deg);
+    -webkit-transition: -webkit-transform .3s linear;
+}
+
+#selling-image.rotate{
+    -webkit-transform: rotate(90deg);
+    -webkit-transition: -webkit-transform .3s linear;
+}
+
+#shopping-image.unrotate{
+    -webkit-transform: rotate(-90deg);
+    -webkit-transition: -webkit-transform .3s linear;
+}
+
+#selling-image.unrotate{
+    -webkit-transform: rotate(0);
+    -webkit-transition: -webkit-transform .3s linear;
+}
+
 .toggle-element-btn a{
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
+    font-family: Sharp Sans No1 Semibold !important;
 }
 
 .toggle-element-btn p{
     font-size: 14pt;
     font-weight: 600;
     opacity: 0.5;
+    font-family: Sharp Sans No1 Semibold !important;
 }
 
 .how-sustainability{
