@@ -44,7 +44,7 @@ use Storage;
 use File;
 use Hash;
 use DB;
-
+use Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Klaviyo\Klaviyo as Klaviyo;
@@ -2568,6 +2568,10 @@ class PortalController extends Controller
         $products = "";
         $productInformation = "";
 
+        # export feed parameters:
+        # 1. - Sales products (SellingProduct model)
+        # 2. - Recycle products (BuyingProduct model)
+
         if($export_feed_parameter == 1){
             DB::table('buying_products')->truncate();
             DB::table('buying_products_colours')->truncate();
@@ -2590,6 +2594,7 @@ class PortalController extends Controller
 
         $worksheetData = $reader->listWorksheetInfo($request->file('imported_csv'));
         $worksheetData = $worksheetData[0];
+
         $sheetName = $worksheetData['worksheetName'];
         $reader->setLoadSheetsOnly($sheetName);
         $spreadsheet = $reader->load($request->file('imported_csv'));
@@ -2599,12 +2604,19 @@ class PortalController extends Controller
 
         #dd($importeddata, $networks);
 
+        $file_header = $importeddata[0];
+
         if($importeddata[0][0]==='id'){
             unset($importeddata[0]);
         }
         $importeddata = array_values($importeddata);
 
         if($export_feed_parameter == 1){
+
+            // check if there are enoguh fields
+            if(count($file_header) < 28){
+                return \redirect()->back()->with('error','Error - check your import file.');
+            }
 
             $networks = Network::all();
 
@@ -2622,6 +2634,7 @@ class PortalController extends Controller
                     $product->category_id = $row[3];
                     $product->brand_id = $row[4];
                     $product->product_description = $row[5];
+
                     
                     if($row[15] !== null){
                         $product->product_dimensions = $row[15];
@@ -2691,53 +2704,164 @@ class PortalController extends Controller
         }
         else if($export_feed_parameter == 2){
 
+            // required fields for importing Recycle products
+            $required_product_fields = ['product_name', 'product_image', 'category_id', 'brand_id'];
+            // if memory, then these required
+            $required_product_info_fields = ['product_memory', 'customer_grade_price_1', 'customer_grade_price_2', 'customer_grade_price_3', 'customer_grade_price_4', 'customer_grade_price_5'];
+
+            // if network id, then these are required
+            $required_product_network_fields = ['product_network', 'product_network_price', 'product_avalible_colours'];
+
+            $missing_header_fields = [];
+
+            // check product required fields
+            foreach($required_product_fields as $f){
+                if(!in_array($f, $file_header)){
+                    array_push($missing_header_fields, $f);
+                }
+            }
+
+            // check product info header fields
+            foreach($required_product_info_fields as $pi){
+                if(!in_array($pi, $file_header)){
+                    array_push($missing_header_fields, $pi);
+                }
+            }
+
+            // check product network header fields
+            foreach($required_product_network_fields as $pnf){
+                if(!in_array($pnf, $file_header)){
+                    array_push($missing_header_fields, $pnf);
+                }
+            }
+
+
+            if(count($missing_header_fields) > 0){
+                return \redirect()->back()->with('error','Error - check your import file. Missing fields: ' . implode(', ', $missing_header_fields));
+            }
+
+
+
             $networks = Network::all();
 
             $emptyrows = array();
 
             $k = count($importeddata[0]);
+            
+            // messages to display after failed/skipped imports
+            $export_log = [];
 
             foreach($importeddata as $key=>$row){
+                
                 if($row[1] !== null){
+                    $valid_product = false;
+                    // validate selling product data
+                    if(isset($row[1]) && isset($row[3]) && isset($row[4])){
+                        $valid_product = true;
+                    }
+                    if($valid_product){
+                        $sellingProduct = new SellingProduct();
+                        $sellingProduct->product_name = $row[1];
+                        $sellingProduct->product_image = 'default_image';
+                        $sellingProduct->category_id = $row[3];
+                        $sellingProduct->brand_id = $row[4];
+                        $sellingProduct->save();   
+                    } else {
+                        $missing = [];
+                        if(!isset($row[1])) { array_push($missing, $file_header[1]); }
+                        if(!isset($row[3])) { array_push($missing, $file_header[3]); }
+                        if(!isset($row[4])) { array_push($missing, $file_header[4]); }
+    
+                        if(count($missing) < 2){
+                            array_push($export_log, "Missing Selling Product " .  $missing[0]);
+                        } else {
+                            array_push($export_log, "Missing Selling Product: " . implode(', ', $missing));
+                        }
+                    }
+                } 
 
-                    $sellingProduct = new SellingProduct();
-                    $sellingProduct->product_name = $row[1];
-                    $sellingProduct->product_image = 'default_image';
-                    $sellingProduct->category_id = $row[3];
-                    $sellingProduct->brand_id = $row[4];
-                    $sellingProduct->save();
+                // check if product info data is valid
+                $valid_product_info = false;
+                if(isset($row[5]) && isset($row[6]) && isset($row[7]) && isset($row[8]) && isset($row[9]) && isset($row[10])){
+                    $valid_product_info = true;
                 }
 
+                // if memory is present, store product information
                 if($importeddata[$key][5] !== null){
-                    $sellingProductInformation = new ProductInformation();
-                    $sellingProductInformation->product_id = $sellingProduct->id;
-                    $sellingProductInformation->memory = $importeddata[$key][5];
-                    $sellingProductInformation->excellent_working = $importeddata[$key][6];
-                    $sellingProductInformation->good_working = $importeddata[$key][7];
-                    $sellingProductInformation->poor_working = $importeddata[$key][8];
-                    $sellingProductInformation->damaged_working = $importeddata[$key][9];
-                    $sellingProductInformation->faulty = $importeddata[$key][10];
-                    $sellingProductInformation->save();
-                }
+                    if($valid_product_info){
+                        $sellingProductInformation = new ProductInformation();
+                        $sellingProductInformation->product_id = $sellingProduct->id;
+                        $sellingProductInformation->memory = $importeddata[$key][5];
+                        $sellingProductInformation->excellent_working = $importeddata[$key][6];
+                        $sellingProductInformation->good_working = $importeddata[$key][7];
+                        $sellingProductInformation->poor_working = $importeddata[$key][8];
+                        $sellingProductInformation->damaged_working = $importeddata[$key][9];
+                        $sellingProductInformation->faulty = $importeddata[$key][10];
+                        $sellingProductInformation->save();
+                    } else {
+                        $missing = [];
+                        if(!isset($row[5])) { array_push($missing, $file_header[5]); }
+                        if(!isset($row[6])) { array_push($missing, $file_header[6]); }
+                        if(!isset($row[7])) { array_push($missing, $file_header[7]); }
+                        if(!isset($row[8])) { array_push($missing, $file_header[8]); }
+                        if(!isset($row[9])) { array_push($missing, $file_header[9]); }
+                        if(!isset($row[10])) { array_push($missing, $file_header[10]); }
 
-                foreach($networks as $network){
-                    if($importeddata[$key][13] !== null && $network->network_name == $importeddata[$key][13]){
-                        $productNetworks = new ProductNetworks();
-                        $productNetworks->network_id = $network->id;
-                        $productNetworks->product_id = $sellingProduct->id;
-                        $productNetworks->knockoff_price = $importeddata[$key][14];
-                        $productNetworks->save();
+    
+                        if(count($missing) < 2){
+                            array_push($export_log, "Missing Selling Product [" . $sellingProduct->product_name . "] info: " .  $missing[0]);
+                        } else {
+                            array_push($export_log, "Missing Selling Product [" . $sellingProduct->product_name . "] info: " . implode(', ', $missing));
+                        }
                     }
                 }
 
+                foreach($networks as $network){
+
+                    // if network is present and valid, add product network
+                    if($importeddata[$key][13] !== null && $network->network_name == $importeddata[$key][13]){
+
+                        // check if product network info is valid
+                        $valid_network_info = false;
+                        if(isset($row[14])){
+                            $valid_network_info = true;
+                        }
+
+                        if($valid_network_info){
+                            $productNetworks = new ProductNetworks();
+                            $productNetworks->network_id = $network->id;
+                            $productNetworks->product_id = $sellingProduct->id;
+                            $productNetworks->knockoff_price = $importeddata[$key][14];
+                            $productNetworks->save();
+                        } else {
+                            array_push($export_log, "Missing Selling Product [" . $sellingProduct->product_name . "] network [" . $network->network_name . "] info: " . $file_header[14]);
+                        }
+
+                        
+                    }
+                }
+
+                // check if product color info is valid
                 if($importeddata[$key][15] !== null){
+
                     $productColours = new Colour();
                     $productColours->product_id = $sellingProduct->id;
                     $productColours->color_value = $importeddata[$key][15];
                     $productColours->save();
+                    
+                    
+                } else {
+                    $missing = [];
+                    array_push($missing, $file_header[15]);
+                    array_push($export_log, "Missing Selling Product [" . $sellingProduct->product_name . "] " .  $missing[0]);
                 }
 
 
+            }
+
+            if(!empty($export_log)){
+                array_push($export_log, 'You have succesfully imported products.');
+                return \redirect()->back()->with('failed-info', $export_log);
             }
      
         }
