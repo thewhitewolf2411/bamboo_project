@@ -2847,13 +2847,8 @@ class PortalController extends Controller
                     $productColours = new Colour();
                     $productColours->product_id = $sellingProduct->id;
                     $productColours->color_value = $importeddata[$key][15];
-                    $productColours->save();
+                    $productColours->save(); 
                     
-                    
-                } else {
-                    $missing = [];
-                    array_push($missing, $file_header[15]);
-                    array_push($export_log, "Missing Selling Product [" . $sellingProduct->product_name . "] " .  $missing[0]);
                 }
 
 
