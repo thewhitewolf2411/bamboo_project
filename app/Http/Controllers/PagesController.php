@@ -136,6 +136,8 @@ class PagesController extends Controller
 
     public function showPaswordResetPage(){
         
+        return view('auth.passwords.reset');
+
     }
 
 }

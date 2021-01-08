@@ -135,4 +135,134 @@ class Tradein extends Model
             return "Error";
         }
     }
+
+    public function getDeviceStatus($id, $job_state){
+
+        switch($job_state){
+            case 1:
+                return ["Awaiting Trade-pack", "Order placed"];
+                break;
+            case 2:
+                return ["Awaiting Receipt", "Trade pack despatched"];
+                break;
+            case 3:
+                $tradein = Tradein::where('id', $id)->first();
+                if($tradein->marked_for_quarantine){
+                    if($tradein->device_correct){
+                        return ["Incorrect Model", "Awaiting Reponse"];
+                    }
+                    if(!($tradein->correct_memory<$tradein->memory)){
+                        return ["Incorrect GB Size", "Awaiting Reponse"];
+                    }
+                    if(($tradein->correct_network !== $tradein->network) && $tradein->correct_network !== null){
+                        return ["Incorrect Network", "Awaiting Response"];
+                    }
+                    if($tradein->fimp){
+                        if($tradein->getCategoryId($tradein->product_id) === 1){
+                            return ["FIMP Lock", "Awaiting Response"];
+                        }
+                        else{
+                            return ["Google Lock", "Awaiting Response"];
+                        }
+                    }
+                    if($tradein->pinlocked){
+                        return ["PIN Lock", "Awaiting Response"];
+                    }
+                    if(!$tradein->chekmend_passed){
+                        return ["BLACKLISTED", "Awaiting Response"];
+                    }
+                }
+                return ["Awaiting Testing", "Trade pack received, awaiting testing"];
+                break;
+            case 4:
+                return ["Lost in transit", "Lost in transit"];
+                break;
+            case 5:
+                return ["1st Test", "Testing complete"];
+                break;
+            case 6:
+                $tradein = Tradein::where('id', $id)->first();
+                if($tradein->marked_for_quarantine){
+                    if($tradein->device_correct){
+                        return ["Incorrect Model", "Awaiting Reponse"];
+                    }
+                    if(!($tradein->correct_memory<$tradein->memory)){
+                        return ["Incorrect GB Size", "Awaiting Reponse"];
+                    }
+                    if(($tradein->correct_network !== $tradein->network) && $tradein->correct_network !== null){
+                        return ["Incorrect Network", "Awaiting Response"];
+                    }
+                    if($tradein->fimp){
+                        if($tradein->getCategoryId($tradein->product_id) === 1){
+                            return ["FIMP Lock", "Awaiting Response"];
+                        }
+                        else{
+                            return ["Google Lock", "Awaiting Response"];
+                        }
+                    }
+                    if($tradein->pinlocked){
+                        return ["PIN Lock", "Awaiting Response"];
+                    }
+                    if(!$tradein->chekmend_passed){
+                        return ["BLACKLISTED", "Awaiting Response"];
+                    }
+                }
+                return ["2nd Test", "Testing complete"];
+                break;
+            case 7:
+                return ["2nd Test complete", "Testing complete"];
+                break;
+            case 8:
+                break;
+            case 9:
+                $tradein = Tradein::where('id', $id)->first();
+                if($tradein->marked_for_quarantine){
+                    if($tradein->device_correct){
+                        return ["Incorrect Model", "Awaiting Reponse"];
+                    }
+                    if(!($tradein->correct_memory<$tradein->memory)){
+                        return ["Incorrect GB Size", "Awaiting Reponse"];
+                    }
+                    if(($tradein->correct_network !== $tradein->network) && $tradein->correct_network !== null){
+                        return ["Incorrect Network", "Awaiting Response"];
+                    }
+                    if($tradein->fimp){
+                        if($tradein->getCategoryId($tradein->product_id) === 1){
+                            return ["FIMP Lock", "Awaiting Response"];
+                        }
+                        else{
+                            return ["Google Lock", "Awaiting Response"];
+                        }
+                    }
+                    if($tradein->pinlocked){
+                        return ["PIN Lock", "Awaiting Response"];
+                    }
+                    if(!$tradein->chekmend_passed){
+                        return ["BLACKLISTED", "Awaiting Response"];
+                    }
+                }
+
+                return ["None", "Awaiting Response"];
+                break;
+            case 10:
+                return ["Awaiting Box Build", "Awaiting Payment"];
+                break;
+            case 11:
+                return ["Awaiting Box Build", "Submitted for Payment"];
+                break;
+            case 12:
+                return ["Awaiting Box Build", "Failed payment"];
+                break;
+            case 13:
+                return ["Awaiting Box Buiild", "Paid"];
+                break;
+            case 14:
+                return ["Ready for Sale", "Paid"];
+                break;
+            case 15:
+                return ["Closed", "Paid"];
+                break;
+        }
+        
+    }
 }

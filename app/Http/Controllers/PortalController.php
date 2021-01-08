@@ -192,8 +192,6 @@ class PortalController extends Controller
             $ti->job_state = 2;
             $ti->save();
 
-            $html .= $this->generateTradeInHTMLBulk($barcode, $user, $product, $tradein);
-
         }
 
         #echo $html;
@@ -206,8 +204,6 @@ class PortalController extends Controller
     }
 
     public function PrintTradeInLabel(Request $request){
-
-        #dd($request);
 
         $tradeins = Tradein::where('barcode', $request->hidden_print_trade_pack_trade_in_id)->get();
         $user = User::where('id',$tradeins[0]->user_id)->first();
@@ -224,126 +220,18 @@ class PortalController extends Controller
         }
 
         $products = SellingProduct::whereIn('id', $productIds)->get();
+        $tradein = Tradein::where('barcode',$request->hidden_print_trade_pack_trade_in_id)->first();
 
         $barcode = DNS1D::getBarcodeHTML($request->hidden_print_trade_pack_trade_in_id, 'C128');
-        $this->generateTradeInHTML($barcode, $user, $products, $tradein);
-    }
-
-    public function generateTradeInHTMLBulk($barcode, $user, $product, $tradein){
-        $delAdress = strtr($user->delivery_address, array(', '=>'<br>'));
-        $html = "";
-        $html .= "<style>p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;} .page_break{page-break-after: always;}</style>";
-        $html .= "<body>";
-        $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
-        $html .= "<p>" . $user->first_name . " " . $user->last_name . ",</p>";
-        $html .= "<p>". $delAdress .",</p>";
-        $html .= "<br><br>";
-        $html .= "<p>Order#". $tradein->barcode . " Date: " . $tradein->created_at .  "</p>";
-        $html .= "<p>Dear " . $user->first_name . " " . $user->last_name . ",</p>";
-        $html .= "<p>Thank you very much for using Bamboo Recycle to recycle your mobile device(s). This package contains your TradePack which you can use to post your recycled device(s) back to Bamboo. Please follow the instructions below on how toreturn your recycled device(s) to Bamboo:</p>";
-        $html .= "  <ol>
-                        <li>Gather your recycled device(s) and remove any sim cards or memory cards from thedevice(s).</li>
-                        <li>Place the device(s) into the Trade Pack that you received from Bamboo with this package. (Please rememberwe only require the handset, unless of course the device you're recycling is brand new and boxed.)</li>
-                        <li>Next, seal the Trade Pack by folding over the sticky flap at the top.</li>
-                        <li>Finally, you must then place the Freepost Label, found on the bottom left of this letter, onto the front of the TradePack then post your Trade Pack back to Bamboo!</li>
-                    </ol> ";
-        $html .= "<p>Once your recycled device(s) are received by Bamboo you will be sent an email confirming this. Your device(s) will thenbe tested to make sure they match the conditions that were set when placing the order. After each device has beensuccessfully tested you will receive a final email confirming payment for the device using the method that you selected.(Please note: Payment will be made on a per device basis.)<br>If you have any problems returning your device(s) please view the FAQs section on our website or contact us directly byemailing customersupport@bamboorecycle.com with your enquiry.</p>";
-        $html .= "<p>Kind Regards,</p>";
-        $html .= "<p>Bamboo Mobile</p>";
-        $html .= "<h3>Freepost return address</h3>";
-        $html .=    "<div class='page_break' style='clear:both; position:relative; display:flex;'>
-                        <div style='width:190pt; height:150px;' >
-                                                <p>FREEPOST 555880PR</p>
-                                                <p>Bamboo Recycle (9100)</p>
-                                                <p>C/O Bamboo Distribution Ltd</p>
-                                                <p>Unit 1, I.O Centre</p>
-                                                <p>Lea Road</p>
-                                                <p>Waltham Abbey</p>
-                                                <p>Hertfordshire</p>
-                                                <p>EN9 1AS</p>
-                                                <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $tradein->barcode ."</p></div>
-                        </div>
-                        <div style='margin-left:200pt; margin-top:-150px; width:190pt; height:150px;'>
-                                                <p>FREEPOST 555880PR</p>
-                                                <p>Bamboo Recycle (9100)</p>
-                                                <p>C/O Bamboo Distribution Ltd</p>
-                                                <p>Unit 1, I.O Centre</p>
-                                                <p>Lea Road</p>
-                                                <p>Waltham Abbey</p>
-                                                <p>Hertfordshire</p>
-                                                <p>EN9 1AS</p>
-                                                <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $tradein->barcode ."</p></div>
-                        </div>
-                    </div></body>";
-        #echo $html;
-        #die();
-        #return $html;
-
-        #$filename = "labeltradeout-" . $tradein->barcode . ".pdf";
-        #PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
-
-        return $html;
-
-        #$this->downloadBulk($filename);
-    }
-
-    public function generateTradeInHTML($barcode, $user, $product, $tradein){
-
-        #dd($user->delivery_address);
-
         $delAdress = strtr($user->delivery_address, array(', '=>'<br>'));
 
-        $html = "";
-        $html .= "<style>p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
-        $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
-        $html .= "<p>" . $user->first_name . " " . $user->last_name . "</p>";
-        $html .= "<p style='white-space: nowrap;'>". $delAdress ."</p>";
-        $html .= "<br><br>";
-        $html .= "<p>Order#". $tradein->barcode . " Date: " . $tradein->created_at .  "</p>";
-        $html .= "<p>Dear " . $user->first_name . " " . $user->last_name . ",</p>";
-        $html .= "<p>Thank you very much for using Bamboo Recycle to recycle your mobile device(s). This package contains your TradePack which you can use to post your recycled device(s) back to Bamboo. Please follow the instructions below on how toreturn your recycled device(s) to Bamboo:</p>";
-        $html .= "  <ol>
-                        <li>Gather your recycled device(s) and remove any sim cards or memory cards from thedevice(s).</li>
-                        <li>Place the device(s) into the Trade Pack that you received from Bamboo with this package. (Please rememberwe only require the handset, unless of course the device you're recycling is brand new and boxed.)</li>
-                        <li>Next, seal the Trade Pack by folding over the sticky flap at the top.</li>
-                        <li>Finally, you must then place the Freepost Label, found on the bottom left of this letter, onto the front of the TradePack then post your Trade Pack back to Bamboo!</li>
-                    </ol> ";
-        $html .= "<p>Once your recycled device(s) are received by Bamboo you will be sent an email confirming this. Your device(s) will thenbe tested to make sure they match the conditions that were set when placing the order. After each device has beensuccessfully tested you will receive a final email confirming payment for the device using the method that you selected.(Please note: Payment will be made on a per device basis.)<br>If you have any problems returning your device(s) please view the FAQs section on our website or contact us directly byemailing customersupport@bamboorecycle.com with your enquiry.</p>";
-        $html .= "<p>Kind Regards,</p>";
-        $html .= "<p>Bamboo Mobile</p>";
-        $html .= "<h3>Freepost return address</h3>";
-        $html .=    "<div style='clear:both; position:relative; display:flex;'>
-                        <div style='width:190pt; height:150px;' >
-                                                <p>FREEPOST 555880PR</p>
-                                                <p>Bamboo Recycle (9100)</p>
-                                                <p>C/O Bamboo Distribution Ltd</p>
-                                                <p>Unit 1, I.O Centre</p>
-                                                <p>Lea Road</p>
-                                                <p>Waltham Abbey</p>
-                                                <p>Hertfordshire</p>
-                                                <p>EN9 1AS</p>
-                                                <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $tradein->barcode ."</p></div>
-                        </div>
-                        <div style='margin-left:200pt; margin-top:-150px; width:190pt; height:150px;'>
-                                                <p>FREEPOST 555880PR</p>
-                                                <p>Bamboo Recycle (9100)</p>
-                                                <p>C/O Bamboo Distribution Ltd</p>
-                                                <p>Unit 1, I.O Centre</p>
-                                                <p>Lea Road</p>
-                                                <p>Waltham Abbey</p>
-                                                <p>Hertfordshire</p>
-                                                <p>EN9 1AS</p>
-                                                <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcode ."</div><p>" .  $tradein->barcode ."</p></div>
-                        </div>
-                    </div>";
-        #echo $html;
-        #die();
+        $pdf = PDF::loadView('portal.labels.tradeinlabel', array('user'=>$user, 'deladdress'=>$delAdress, 'tradein'=>$tradein, 'barcode'=>$barcode))->save('pdf/tradeinlabel-'. $request->hidden_print_trade_pack_trade_in_id .'.pdf');
 
-        $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
-        PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
-
-        $this->downloadFile($filename);
+        return redirect()->back()->with('success', 'pdf/tradeinlabel-'. $request->hidden_print_trade_pack_trade_in_id .'.pdf');
+    
     }
+
+
 
     public function deleteTradeInFromSystem(Request $request){
         $tradein = Tradein::where('barcode', $request->delete_trade_in_id)->get();
@@ -2202,23 +2090,6 @@ class PortalController extends Controller
 
     }
 
-    public function generateNewLabel($barcode,$product, $tradein){
-
-        $html = "<style>body > div:nth-child(1) > div:nth-child(2) {
-            margin: auto;
-            }</style>";
-        $html .= "<div style='text-align:center; margin:0 auto;'><p style='margin:auto;'>". $barcode ."<br>" .  $tradein->barcode ."</p></div>";
-
-        #echo $html;
-        #die();
-        $customPaper = array(0,0,141.90,283.80);
-
-        $filename = "label-" . $tradein->barcode . ".pdf";
-        PDF::loadHTML($html)->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
-
-        return response(['code'=>200, 'filename'=>$filename]);
-        
-    }
 
     public function sendtotray(Request $request){
         $tradein = Tradein::where('id', $request->tradein_id)->first();
@@ -3355,9 +3226,28 @@ class PortalController extends Controller
         #echo $html;
         #die();
 
+        $brandLet = substr($id, 1, 1);
+        $brand = "";
+
+        if($brandLet === "A"){
+            $brand = "Apple";
+        }
+        if($brandLet === "S"){
+            $brand = "Samsung";
+        }
+        if($brandLet === "H"){
+            $brand = "Huaweii";
+        }
+        if($brandLet === "M"){
+            $brand = "Miscellaneous";
+        }
+        if($brandLet === "Q"){
+            $brand = "Quarantine";
+        }
+
         $filename = "label-" . $id . ".pdf";
         $customPaper = array(0,0,141.90,283.80);
-        PDF::loadHTML($html)->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
+        PDF::loadView('portal.labels.tray', array('barcode'=>$barcode, 'id'=>$id, 'brand'=>$brand))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
 
         $this->downloadFile($filename);
         
@@ -3466,18 +3356,10 @@ class PortalController extends Controller
 
     public function generateTrolleyLabel($barcode, $id){
         
-        $html = "<style>body > div:nth-child(1) > div:nth-child(2) {
-            margin: auto;
-            }</style>";
-        $html .= "<div style='text-align:center; margin:0 auto;'><p style='margin:auto;'>". $barcode ."<br>" .  $id ."</p></div>";
-        #echo $html;
-        #die();
-
-
 
         $filename = "labeltrolley-" . $id . ".pdf";
         $customPaper = array(0,0,141.90,283.80);
-        PDF::loadHTML($html)->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
+        PDF::loadView('portal.labels.trolley', array('barcode'=>$barcode, 'id'=>$id))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
 
         $this->downloadFile($filename);
         
@@ -3658,19 +3540,19 @@ class PortalController extends Controller
     }
 
 
+    function generateNewLabel($tradein_barcode, $manifacturer, $model, $imei, $location){
+
+        $pdf = PDF::loadView('portal.labels.devicelabel', 
+        array(
+            'tradein_barcode'=>$tradein_barcode,
+            'manifacturer'=>$manifacturer,
+            'model'=>$model,
+            'imei'=>$imei,
+            'location'=>$location))
+        ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
+    
+    }
+    
+
 }
 
-class browser_ckmd
-{
-    var $connection;
-
-    function connect()
-    {
-        $this->connection = curl_init();
-    }
-
-    function disconnect()
-    {
-        curl_close($this->connection);
-    }
-}

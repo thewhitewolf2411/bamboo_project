@@ -48,7 +48,8 @@
                             <td><div class="table-element">Trade-in ID</div></td>
                             <td><div class="table-element">Trade-in Barcode number</div></td>
                             <td><div class="table-element">Product</div></td>
-                            <td><div class="table-element">Quarantine reasons</div></td>
+                            <td><div class="table-element">Bamboo Status</div></td>
+                            <td><div class="table-element">Customer Status</div></td>
                             <td><div class="table-element">Device location</div></td>
                             <td><div class="table-element">Options</div></td>
                         </tr>
@@ -58,22 +59,10 @@
                             <td><div class="table-element">{{$tradein->barcode}}</div></td>
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                             <td><div class="table-element">
-                                <ul>
-                                    @if($tradein->device_correct !== null && !$tradein->device_correct)<li>Incorrect Model</li>@endif
-                                    @if($tradein->checkmend_passed !== null && !$tradein->checkmend_passed)<li>Phonecheck failed</li>@endif
-                                    @if($tradein->older_than_14_days !== null && $tradein->older_than_14_days)<li>Order was expired after 14 days</li>@endif
-                                    @if($tradein->device_missing)<li>Missing Device</li>@endif
-                                    @if($tradein->bamboo_grade !== null && $tradein->product_state !== $tradein->bamboo_grade) <li>Device grade was downgraded</li> @endif
-                                    @if($tradein->fimp !== null && $tradein->fimp)
-                                        @if($tradein->getBrandName($tradein->product_id) == "Apple")
-                                            <li>FIMP</li>
-                                        @else
-                                            <li>Google lock</li>
-                                        @endif
-                                     @endif
-                                    @if($tradein->pinlocked !== null && $tradein->pinlocked) <li>Pink Lock</li> @endif
-                                    @if($tradein->device_correct !== null && ($tradein->product_id !== $tradein->device_correct)) <li> Incorrect device received. This device is {{$tradein->getProductName($tradein->device_correct)}} .</li> @endif
-                                </ul>
+                                {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0]}}
+                            </div></td>
+                            <td><div class="table-element">
+                                {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[1]}}
                             </div></td>
                             <td><div class="table-element"><p>Device is in a tray <a href="/portal/trays/tray/?tray_id_scan={{$tradein->getTrayid($tradein->id)}}">{{$tradein->getTrayName($tradein->id)}}</a></p></div></td>
                             <td><div class="table-element">
