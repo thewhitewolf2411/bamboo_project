@@ -1425,7 +1425,6 @@ class PortalController extends Controller
     }
 
     public function testItem($id){
-
         if(!$this->checkAuthLevel(5)){return redirect('/');}
         $tradein = Tradein::where('id', $id)->first();
         $user  = User::where('id', $tradein->user_id)->first();
@@ -1528,12 +1527,12 @@ class PortalController extends Controller
         }
 
 
-        if($tradein->marked_for_quarantine){
-            return redirect('/portal/testing/receive/quarantine/' . $tradein->id)->with(['message'=>$message, 'mti'=>$mti]);
-        }
-        else{
+        // if($tradein->marked_for_quarantine){
+        //     return redirect('/portal/testing/receive/quarantine/' . $tradein->id)->with(['message'=>$message, 'mti'=>$mti]);
+        // }
+        // else{
             return redirect('/portal/testing/checkforimei/' . $tradein->id);
-        }
+        //}
 
         
     }
@@ -1663,7 +1662,7 @@ class PortalController extends Controller
         }
 
         $tradein->save();
-        if($tradein->marked_for_quarantine){
+        if($tradein->marked_for_quarantine && $tradein->chekmend_passed){
             return redirect('/portal/testing/result/' . $tradein->id);
         }
 
