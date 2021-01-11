@@ -62,11 +62,23 @@
                     </form>
 
                     @if(Session::has('success'))
+                        <div class="alert alert-success" role="alert">
+                            {{Session::get('success')}}
+                        </div>
+                    @endif
 
-                    <div class="alert alert-success" role="alert">
-                        {{Session::get('success')}}
-                    </div>
+                    @if(Session::has('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{Session::get('error')}}
+                        </div>
+                    @endif
 
+                    @if(Session::has('failed-info'))
+                        <div class="alert alert-warning" role="alert">
+                            @foreach(Session::get('failed-info') as $message)
+                                <p>{!!$message!!}</p>
+                            @endforeach
+                        </div>
                     @endif
 
                 </div>

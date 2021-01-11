@@ -23,7 +23,7 @@ class BuyingProduct extends Model
     protected $fillable = [
         'product_name','product_image','category_id','brand_id','product_description',
         'product_weight','product_screen','product_system','product_connectivity','product_battery','product_signal','product_camera','product_camera_2','product_sim',
-        'product_memory_slots','product_quantity', 'product_buying_price'
+        'product_memory_slots','product_quantity'
     ];
 
     public function getBrand($brand_id){
