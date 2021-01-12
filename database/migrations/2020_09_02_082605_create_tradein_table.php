@@ -47,6 +47,7 @@ class CreateTradeinTable extends Migration
             $table->string('bamboo_grade')->nullable()->default(null);
             $table->boolean('older_than_14_days')->nullable()->default(null);
             $table->integer('quarantine_status')->nullable()->default(null);
+            $table->date('quarantine_date')->nullable()->default(null);
             
             $table->timestamps();
         });

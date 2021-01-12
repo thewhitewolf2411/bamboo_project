@@ -43,7 +43,7 @@
                 success:function(response){
                     console.log(response['code'], response.code);
                         if(response['code'] == 200){
-                            $('#tradein-iframe').attr('src', '/' + response['filename']);
+                            $('#tradein-iframe').attr('src', '/pdf/device' + response['filename']);
                             $('#label-trade-in-modal').modal('show');
                         }
                 },

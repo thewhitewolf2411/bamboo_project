@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <title>Bamboo Recycle::Quarantine</title>
+    <title>Bamboo Recycle::Quarantine Management</title>
 </head>
 
 <body class="portal-body">
@@ -28,7 +28,7 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Quarantine</p>
+                        <p>Quarantine Management</p>
                     </div>
                 </div>
                 <div class="portal-content-container">
@@ -36,30 +36,19 @@
                     <div class="d-flex flex-column align-items-center p-3 border border-dark rounded h-100 w-100 my-3">
                     
                         <div class="d-flex flex-wrap w-100">
-                            <a href="/portal/quarantine/awaiting-response" class="col-2 my-2">
+                            <a href="/portal/quarantine/quarantine-overview" class="col-2 my-2">
                                 <div class="portal-content-element">
-                                    <p>Awaiting Seller Response</p>
+                                    <p>Quarantine Overview</p>
                                 </div>
                             </a>
-                            <a href="/portal/quarantine/return" class="col-2 my-2">
+                            <a href="/portal/quarantine/quarantine-overview" class="col-2 my-2">
                                 <div class="portal-content-element">
-                                    <p>Return To Seller</p>
-                                </div>
-                            </a>
-                            <a href="/portal/quarantine/retest" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p>Products To Retest</p>
-                                </div>
-                            </a>
-                            <a href="/portal/quarantine/stock" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p>Add To Stock</p>
+                                    <p>Quarantine Bins</p>
                                 </div>
                             </a>
                         </div>
                 
-                </div>
-
+                    </div>
 
                 </div>
             </div>

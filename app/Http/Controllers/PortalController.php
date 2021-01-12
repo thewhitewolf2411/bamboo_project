@@ -1165,75 +1165,6 @@ class PortalController extends Controller
 
     }
 
-    //quarantine
-
-    public function showQuarantinePage(){
-        if(!$this->checkAuthLevel(4)){return redirect('/');}
-
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-        return view('portal.quarantine.quarantine')->with('portalUser', $portalUser);
-    }
-
-    public function showAwaitingResponse(){
-        if(!$this->checkAuthLevel(4)){return redirect('/');}
-
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-        $tradeinsQ = Tradein::where('marked_for_quarantine', true)->where('quarantine_status', null)->get();
-        
-
-        return view('portal.quarantine.awaiting')->with(['portalUser'=>$portalUser, 'tradeins'=>$tradeinsQ]);
-    }
-
-    public function showQuarantineReturn(){
-        if(!$this->checkAuthLevel(4)){return redirect('/');}
-
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-        $tradeinsQ = Tradein::where('marked_for_quarantine', true)->where('quarantine_status', 1)->get();
-
-        return view('portal.quarantine.return')->with(['portalUser'=>$portalUser, 'tradeins'=>$tradeinsQ]);
-    }
-
-    public function showQuarantineRetest(){
-        if(!$this->checkAuthLevel(4)){return redirect('/');}
-
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-        return view('portal.quarantine.retest')->with('portalUser', $portalUser);
-    }
-
-    public function showQuarantineStock(){
-        if(!$this->checkAuthLevel(4)){return redirect('/');}
-
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-        return view('portal.quarantine.stock')->with('portalUser', $portalUser);
-    }
-
-    public function showQuarantineManual(){
-        if(!$this->checkAuthLevel(4)){return redirect('/');}
-
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-        return view('portal.quarantine.manually')->with('portalUser', $portalUser);
-    }
-
-    public function markDeviceToReturn(Request $request){
-        dd($request);
-    }   
-
-    public function markDeviceToRetest(Request $request){
-        dd($request);
-    }
-
     //testing
 
     public function showTestingPage(){
@@ -1342,6 +1273,7 @@ class PortalController extends Controller
 
         if($diff_in_days>=14){
             $tradein->marked_for_quarantine = true;
+            $tradein->older_than_14_days = true;
             $tradein->job_state = 9;
             $tradein->save();
             array_push($message, "This order has been identified by system as older than 14 days and has been marked for quarantine. Please confirm this.");
@@ -2015,6 +1947,7 @@ class PortalController extends Controller
         if($tradein->marked_for_quarantine == true){
             $newBarcode .= "90";
             $newBarcode .= mt_rand(10000, 99999);
+            $tradein->quarantine_date = \Carbon\Carbon::now();
         }
         else{
             foreach($brands as $brand){
@@ -2039,7 +1972,7 @@ class PortalController extends Controller
 
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 
-        $response = $this->generateNewLabel($barcode, $sellingProduct, $tradein);
+        
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -2084,6 +2017,8 @@ class PortalController extends Controller
         $traycontent->tray_id = $quarantineTrays->id;
         $traycontent->trade_in_id = $tradein->id;
         $traycontent->save();
+
+        $response = $this->generateNewLabel($barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name);
 
         return view('portal.testing.totray')->with(['tray_name'=>$quarantineName,'response'=>$response,'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein,'testing'=>false, 'mti'=>$mti]);
 
@@ -3658,15 +3593,19 @@ class PortalController extends Controller
     }
 
 
-    function generateNewLabel($tradein_barcode, $manifacturer, $model, $imei, $location){
+    function generateNewLabel($barcode, $tradein_barcode, $manifacturer, $model, $imei, $location){
+
+        $customPaper = array(0,0,141.90,283.80);
 
         $pdf = PDF::loadView('portal.labels.devicelabel', 
         array(
+            'barcode'=>$barcode,
             'tradein_barcode'=>$tradein_barcode,
             'manifacturer'=>$manifacturer,
             'model'=>$model,
             'imei'=>$imei,
             'location'=>$location))
+        ->setPaper($customPaper, 'landscape')
         ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
     
     }

@@ -166,14 +166,8 @@ Route::post('/portal/product/editsellingproduct/edit', 'PortalController@saveEdi
 Route::post('/portal/product/editbuyingproduct/edit', 'PortalController@saveEditedBuyingProduct')->middleware('auth');
 
 //quarantine
-Route::get('/portal/quarantine', 'PortalController@showQuarantinePage')->middleware('auth');
-Route::get('/portal/quarantine/awaiting-response', 'PortalController@showAwaitingResponse')->middleware('auth');
-Route::get('/portal/quarantine/return', 'PortalController@showQuarantineReturn')->middleware('auth');
-Route::get('/portal/quarantine/retest', 'PortalController@showQuarantineRetest')->middleware('auth');
-Route::get('/portal/quarantine/stock', 'PortalController@showQuarantineStock')->middleware('auth');
-
-Route::post('/portal/quarantine/markdevicetoreturn', 'PortalController@markDeviceToReturn')->middleware('auth');
-Route::post('/portal/quarantine/markdevicetoretest', 'PortalController@markDeviceToRetest')->middleware('auth');
+Route::get('/portal/quarantine', 'QuarantineController@showQuarantinePage')->middleware('auth');
+Route::get('/portal/quarantine/quarantine-overview', 'QuarantineController@showQuarantineOverviewPage')->middleware('auth');
 
 //testing
 Route::get('/portal/testing', 'PortalController@showTestingPage')->middleware('auth');
