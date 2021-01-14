@@ -140,11 +140,34 @@
 
 </body>
 
-<script>
+@if(Session::has('success'))
+    <script>
 
- 
+        $(document).ready(function(){
+            console.log("karina");
+            $('#tradein-iframe').attr('src', '/' + "{{Session::get('success')}}");
+            $('#label-trade-in-modal').modal('show');
+        });
 
-</script>
+    </script>
+
+@endif
+
+<div id="label-trade-in-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Trade in label</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <iframe id="tradein-iframe"></iframe>
+        </div>
+        </div>
+    </div>
+</div>
 
 
 </html>
