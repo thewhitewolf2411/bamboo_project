@@ -20,7 +20,7 @@ class Trolley extends Model
      * @var array
      */
     protected $fillable = [
-        'trolley_name','number_of_trays','trolley_type'
+        'trolley_name', 'trolley_type', 'trolley_brand', 'number_of_trays','trolley_type'
     ];
 
     public function getNumberOfDevices($trolley_id){

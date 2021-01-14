@@ -89,9 +89,15 @@
                                 <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
                                     <i class="fa fa-search"></i>
                                 </a>
-                                <a href="/portal/trays/tray/printlabel/{{$tradein->barcode}}">
-                                    <i class="fa fa-print"></i>
+                                @if($tradein->job_state <= 2)
+                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint tradepack">
+                                    <i class="fa fa fa-print"></i>
                                 </a>
+                                @else
+                                <a href="javascript:void(0)" onclick = printDeviceLabel({{$tradein->barcode}}) title="Print device label">
+                                    <i class="fa fa fa-print"></i>
+                                </a>
+                                @endif
                                 @if($tradein->job_state == 3)
                                 <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
                                     <i class="fa fa-times" style="color:blue !important;" title="Return device to receiving" ></i>
@@ -119,11 +125,19 @@
                         <input type="submit" id="print_trade_pack_trade_in_trigger" name="print_trade_pack_trade_in" value="Print Trade Pack Trade-In">
                     </form>
 
+                    <form id="print_device_barcode_form" name="form-print-trade-pack" enctype="multipart/form-data" action="/portal/customer-care/printdevicelabel" method="post">
+                        @csrf
+                        <input type="hidden" id="print_device_id" name="print_device_id">
+                        <input type="submit" id="print_device_barcode" name="print_device_barcode" value="">
+                    </form>
+
                     <form id="set_label_as_sent_form" name="form-print-trade-pack" enctype="multipart/form-data" action="/portal/customer-care/trade-in/setassent" method="post">
                         @csrf
                         <input type="hidden" id="set_trade_in_as_sent" name="set_trade_in_as_sent">
                         <input type="submit" id="set_trade_in_as_sent_trigger" name="set_trade_in_as_sent_trigger" value="Set trade-in label as sent Trade-In">
                     </form>
+
+                    
 
                 </div>
             </div>
@@ -132,11 +146,33 @@
 
 </body>
 
-<script>
+@if(Session::has('success'))
+    <script>
 
- 
+        $(document).ready(function(){
+            $('#tradein-iframe').attr('src', '/' + "{{Session::get('success')}}");
+            $('#label-trade-in-modal').modal('show');
+        });
 
-</script>
+    </script>
+
+@endif
+
+<div id="label-trade-in-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Trade in label</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <iframe id="tradein-iframe"></iframe>
+        </div>
+        </div>
+    </div>
+</div>
 
 
 </html>

@@ -144,7 +144,6 @@
     <script>
 
         $(document).ready(function(){
-            console.log("karina");
             $('#tradein-iframe').attr('src', '/' + "{{Session::get('success')}}");
             $('#label-trade-in-modal').modal('show');
         });

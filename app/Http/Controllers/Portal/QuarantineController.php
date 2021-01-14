@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Portal;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Tradein;
 use Auth;
