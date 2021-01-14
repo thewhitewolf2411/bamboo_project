@@ -1918,7 +1918,7 @@ class PortalController extends Controller
         
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 
-        $response = $this->generateNewLabel($barcode, SellingProduct::where('id', $tradein->id), $tradein);
+        $response = $this->generateNewLabel($barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name);
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
