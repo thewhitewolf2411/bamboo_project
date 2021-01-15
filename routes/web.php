@@ -91,6 +91,8 @@ Route::post('/userprofile/changename', 'Customer\CustomerController@changeName')
 //Portal get Route
 
 Route::get('/portal', 'Portal\PortalController@portal')->name('portal');
+Route::get('/portal/seeddatapage', 'Portal\PortalController@seedDataPage')->name('seedDataPage');
+Route::post('/portal/seeddata', 'Portal\PortalController@seedData')->name('seedData');
 
 //customer-care
 Route::get('/portal/customer-care', 'Portal\CustomerCareController@showCustomerCare')->name('customerCare')->middleware('auth');
@@ -206,7 +208,6 @@ Route::get('/portal/reports', 'Portal\ReportsController@showReportsPage')->middl
 Route::get('/portal/feeds', 'Portal\FeedsController@showFeedsPage')->middleware('auth');
 Route::get('/portal/feeds/export-import', 'Portal\FeedsController@showExportImportPage')->middleware('auth');
 Route::get('/portal/feeds/summary', 'Portal\FeedsController@showFeedsSummaryPage')->middleware('auth');
-Route::get('/portal/feeds/external', 'Portal\FeedsController@showFeedsExternalPage')->middleware('auth');
 
 Route::post('/portal/feeds/export-import/export', 'Portal\FeedsController@feedsExport');
 Route::post('/portal/feeds/export-import/import', 'Portal\FeedsController@feedsImport');

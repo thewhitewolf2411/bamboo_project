@@ -40,6 +40,12 @@
                             <button type="submit" class="btn btn-primary btn-blue">Create Tray</button>
                         </div>
                     </form>
+
+                    @if(Session::has('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{Session::get('error')}}
+                        </div>
+                    @endif
                 </div>
 
             </div>

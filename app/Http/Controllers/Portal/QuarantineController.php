@@ -26,4 +26,8 @@ class QuarantineController extends Controller
         return view('portal.quarantine.quarantine-overview')->with(['portalUser'=>$portalUser, 'tradeins'=>$tradeins]);
     }
 
+    public function showQuarantineBinsPage(){
+        
+    }
+
 }

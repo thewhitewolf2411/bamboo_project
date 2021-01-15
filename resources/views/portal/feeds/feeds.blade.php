@@ -43,11 +43,6 @@
                                     <p><i class="fa fa-bars"></i>Summary</p>
                                 </div>
                             </a>
-                            <a href="/portal/feeds/external" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p><i class="fa fa-bars"></i>External</p>
-                                </div>
-                            </a>
                         </div>
                     </div>
                 </div>

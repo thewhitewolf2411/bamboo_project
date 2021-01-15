@@ -85,6 +85,86 @@ class PortalController extends Controller
         ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
     
     }
+
+    public function seedDataPage(){
+
+        $sellingProducts = SellingProduct::all();
+
+        return view('portal.add.databaseseeder')->with(['sellingProducts'=>$sellingProducts]);
+
+
+    }
+
+    public function seedData(Request $request){
+        #dd($request->{"sellingProductNumber-" . $sellingProduct->id});
+
+        $sellingProducts = SellingProduct::all();
+
+        foreach($sellingProducts as $sellingProduct){
+            if($request->{"sellingProductNumber-" . $sellingProduct->id} !== null){
+                $k = $request->{"sellingProductNumber-" . $sellingProduct->id};
+
+                for($i = 0; $i<=$k; $i++){
+
+                    $tradeinbarcode = 10000000 + rand(100000, 9000000);
+                    $productInformation = ProductInformation::where('product_id', $sellingProduct->id)->get();
+                    $productNetwork = ProductNetworks::where('product_id', $sellingProduct->id)->get();
+                    $networks = Network::all();
+                    $inf = rand(0, count($productInformation)-1);
+                    $net = rand(0, count($productNetwork)-1);
+
+                    $state = rand(0, 4);
+                    $stateString = "";
+                    $statePrice = "";
+                    switch($state){
+                        case 0:
+                            $stateString = "Excellent working";
+                            $statePrice = $productInformation[$inf]->excellent_working-$productNetwork[0]->knockoff_price;
+                            break;
+                        case 1:
+                            $stateString = "Good working";
+                            $statePrice = $productInformation[$inf]->good_working-$productNetwork[1]->knockoff_price;
+                            break;
+                        case 2:
+                            $stateString = "Poor working";
+                            $statePrice = $productInformation[$inf]->poor_working-$productNetwork[2]->knockoff_price;
+                            break;
+                        case 3:
+                            $stateString = "Damaged Working";
+                            $statePrice = $productInformation[$inf]->damaged_working-$productNetwork[3]->knockoff_price;
+                            break;
+                        case 4:
+                            $stateString = "Faulty";
+                            $statePrice = $productInformation[$inf]->faulty-$productNetwork[4]->knockoff_price;
+                            break;
+                        default:
+                            $stateString = "Excellent working";
+                            $statePrice = $productInformation[$inf]->excellent_working-$productNetwork[5]->knockoff_price;
+                            break;
+                    }
+
+                    $tradein = new Tradein();
+                    $tradein->user_id = 2;
+                    $tradein->barcode = $tradeinbarcode;
+                    $tradein->barcode_original = $tradeinbarcode;
+                    $tradein->product_id = $sellingProduct->id;
+                    $tradein->order_price = $statePrice;
+                    $tradein->job_state = 1;
+                    $tradein->product_state = $stateString;
+                    $tradein->network = $productNetwork[$net]->getNetWorkName($productNetwork[$net]->network_id);
+                    #dd($productInformation[$inf]);
+                    $tradein->memory=$productInformation[$inf]->memory;
+
+                    $tradein->save();
+                }
+
+            }
+
+        }
+
+
+        return redirect()->back();
+    }
     
 
 }

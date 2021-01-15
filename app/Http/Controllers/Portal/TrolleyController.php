@@ -43,7 +43,7 @@ class TrolleyController extends Controller
 
         $trolleyid = $request->trolley_id_scan;
 
-        $trolley = Trolley::where('id', $trolleyid)->first();
+        $trolley = Trolley::where('trolley_name', $trolleyid)->first();
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -74,14 +74,19 @@ class TrolleyController extends Controller
 
     public function addTrolley(Request $request){
 
+        if(count(Trolley::where('trolley_name', $request->trolley_name)->get()) >= 1){
+            return redirect()->back()->with('error', $request->trolley_name . " trolley already exists.");
+        }
+
         $trolley = new Trolley();
 
         $trolley->trolley_name = $request->trolley_name;
-        $trolley->trolley_type = $request->trolley_type;
+        $trolley->trolley_type = $request->trolley_name[0];
+        $trolley->trolley_brand = $request->trolley_name[1];
 
         $trolley->save();
 
-        return redirect('/portal/trolleys');
+        return redirect('/portal/trolleys')->with('success', 'Trolley ' . $trolley->trolley_name . ' was succesfully created.');
     }
 
     public function deleteTrolley($id){

@@ -61,6 +61,22 @@ class Tradein extends Model
         return $sellingProduct->brand_id;
     }
 
+    public function getBrandLetter($productId){
+        $sellingProduct = SellingProduct::where('id', $productId)->first();
+        if($sellingProduct->brand_id === 1){
+            return "A";
+        }
+        else if($sellingProduct->brand_id === 2){
+            return "S";
+        }
+        else if($sellingProduct->brand_id === 3){
+            return "H";
+        }
+        else{
+            return "M";
+        }
+    }
+
     public function getProductPrice($id, $state){
         $product = SellingProduct::where('id', $id)->first();
         $price = "";

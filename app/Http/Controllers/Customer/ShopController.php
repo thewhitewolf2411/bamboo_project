@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 use Auth;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Order;

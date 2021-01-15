@@ -16,8 +16,9 @@ class CreateTrolleysTable extends Migration
         Schema::create('trolleys', function (Blueprint $table) {
             $table->id();
             $table->string('trolley_name');
+            $table->string('trolley_type');
+            $table->string('trolley_brand');
             $table->integer('number_of_trays')->default(0);
-            $table->string('trolley_type')->nullable();
             $table->timestamps();
         });
     }

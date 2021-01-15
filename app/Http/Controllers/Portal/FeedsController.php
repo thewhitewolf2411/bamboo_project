@@ -5,6 +5,27 @@ namespace App\Http\Controllers\Portal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use Auth;
+use DNS1D;
+use DNS2D;
+use PDF;
+use File;
+use DB;
+use Schema;
+use App\Eloquent\PortalUsers;
+use App\Eloquent\Category;
+use App\Eloquent\Brand;
+use App\Eloquent\Network;
+use App\Eloquent\SellingProduct;
+use App\Eloquent\ProductInformation;
+use App\Eloquent\ProductNetworks;
+use App\Eloquent\Colour;
+use App\Eloquent\BuyingProduct;
+use App\Eloquent\BuyingProductColours;
+use App\Eloquent\BuyingProductInformation;
+use App\Eloquent\BuyingProductNetworks;
+use App\Eloquent\Feed;
+
 class FeedsController extends Controller
 {
     
@@ -37,15 +58,6 @@ class FeedsController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
         return view('portal.feeds.summary')->with('feeds', $feeds)->with('portalUser', $portalUser);
-    }
-
-    public function showFeedsExternalPage(){
-        //if(!$this->checkAuthLevel(8)){return redirect('/');}
-
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-        return view('portal.feeds.external')->with('portalUser', $portalUser);
     }
 
     public function feedsExport(Request $request){

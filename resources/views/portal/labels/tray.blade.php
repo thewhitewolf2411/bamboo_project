@@ -1,5 +1,10 @@
-<style>body > div:nth-child(1) > div:nth-child(2) {
+<style>
+body > div:nth-child(1) > div:nth-child(2) {
             margin: auto;
-            }</style>
+    }
+@page{
+    margin:3%;
+}
+            </style>
 
-<div style='text-align:center; margin:0 auto;'><p style='margin:auto;'>{!!$barcode!!}<br>{{$brand}} devices<br>{{$id}}</p></div>
+<div style='text-align:center;'><p style='margin:auto;'>{!!$barcode!!}<br><br>{{$brand}} devices<br>{{$id}}</p></div>

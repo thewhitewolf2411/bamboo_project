@@ -39,7 +39,7 @@
                     <form action="/portal/trays/tray/" method="GET">
                         <div class="form-group d-flex align-items-center justify-content-between">
                             <label style="margin: 0;" for="tray_id_scan">Please Scan or Type the Tray Number:</label>
-                            <input style="margin: 0; width: 50%;" class="form-control" type="number" name="tray_id_scan" id="tray_id_scan" autofocus>
+                            <input style="margin: 0; width: 50%;" class="form-control" name="tray_id_scan" id="tray_id_scan" autofocus>
                             <button type="submit" class="btn btn-primary btn-blue">Go</button>
                         </div>
                     </form>
@@ -85,10 +85,10 @@
                         </tr>
                         @foreach($trays as $tray)
                         <tr>
-                            <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">{{$tray->id}}</div></a></td>
-                            <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">{{$tray->tray_name}}</div></a></td>
-                            <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">@if($tray->trolley_id == null) <p style="color:red;">Unassigned</p> @else <p style="color:green;"> {{$tray->getTrolleyName($tray->trolley_id)}} </p> @endif</div></a></td>
-                            <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->id}}"><div class="table-element">{{$tray->getTrayNumberOfDevices($tray->id)}}</div></a></td>
+                            <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->tray_name}}"><div class="table-element">{{$tray->id}}</div></a></td>
+                            <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->tray_name}}"><div class="table-element">{{$tray->tray_name}}</div></a></td>
+                            <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->tray_name}}"><div class="table-element">@if($tray->trolley_id == null) <p style="color:red;">Unassigned</p> @else <p style="color:green;"> {{$tray->getTrolleyName($tray->trolley_id)}} </p> @endif</div></a></td>
+                            <td><a href="/portal/trays/tray/?tray_id_scan={{$tray->tray_name}}"><div class="table-element">{{$tray->getTrayNumberOfDevices($tray->id)}}</div></a></td>
                             <td><div class="table-element"><a onclick="return confirm('Are you sure? This will remove tray from system, and remove all devices from the system and remove its records from corrseponding trolleys?')" href="/portal/trays/delete/{{$tray->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete tray</p></div></a></div></td>
                             <td><div class="table-element"><a href="/portal/trays/tray/printlabel/{{$tray->tray_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print Tray Label</p></div></a></div></td>
                         </tr>

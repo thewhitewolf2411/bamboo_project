@@ -45,22 +45,48 @@ class TraysController extends Controller
         $trays = Tray::where('tray_name', $request->tray_name)->get();
 
         if(count($trays)>=1){
-            return redirect('/portal/trays')->with('error', 'Tray with name '.$request->tray_name.' already exists.');
+            return redirect('/portal/trays/create')->with('error', 'Tray with name '.$request->tray_name.' already exists.');
         }
+        else{
 
-        $tray = new Tray();
+            $trayType = $request->tray_name[0];
+            $trayBrand = $request->tray_name[1];
+            $trayGrade = 0;
+            if(substr_count($request->tray_name, '-') === 1){
+                $trayGrade = 0;
+            }
+            else if(substr_count($request->tray_name, '-') === 2){
+                $parts = explode('-', $request->tray_name);
+                if($parts[2] === 'CATASTROPHIC'){
+                    $trayGrade = 'CAT';
+                }
+                else{
+                    $trayGrade = $parts[2];
+                }
+            }
+            else{
+                return redirect('/portal/trays/create')->with('error', 'Wrong format of tray name.');
+            }
 
-        $tray->tray_name = $request->tray_name;
+            $tray = new Tray();
+            $tray->tray_name = $request->tray_name;
+            $tray->tray_type = $trayType;
+            $tray->tray_brand = $trayBrand;
+            $tray->tray_grade = $trayGrade;
 
-        $tray->save();
+            $tray->save();
+        }
 
         return redirect('/portal/trays')->with('success', 'You have succesfully created a tray '.$request->tray_name.'.');
     }
 
     public function showTrayPage(Request $request){
+
+        #dd($request->all());
+
         $trayid = $request->tray_id_scan;
 
-        $tray = Tray::where('id', $trayid)->first();
+        $tray = Tray::where('tray_name', $trayid)->first();
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
@@ -89,15 +115,6 @@ class TraysController extends Controller
 
     public function generateTrayLabel($barcode, $id){
 
-        $html = "<style>body > div:nth-child(1) > div:nth-child(2) {
-            margin: auto;
-            }</style>";
-        $html .= "<div style='text-align:center; margin:0 auto;'><p style='margin:auto;'>". $barcode ."<br>" .  $id ."</p></div>";
-
-
-        #echo $html;
-        #die();
-
         $brandLet = substr($id, 1, 1);
         $brand = "";
 
@@ -117,7 +134,7 @@ class TraysController extends Controller
             $brand = "Quarantine";
         }
 
-        $filename = "label-" . $id . ".pdf";
+        $filename = "tray-" . $id . ".pdf";
         $customPaper = array(0,0,141.90,283.80);
         PDF::loadView('portal.labels.tray', array('barcode'=>$barcode, 'id'=>$id, 'brand'=>$brand))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
 
