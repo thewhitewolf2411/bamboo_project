@@ -104,7 +104,7 @@ class PortalController extends Controller
             if($request->{"sellingProductNumber-" . $sellingProduct->id} !== null){
                 $k = $request->{"sellingProductNumber-" . $sellingProduct->id};
 
-                for($i = 0; $i<=$k; $i++){
+                for($i = 0; $i<$k; $i++){
 
                     $tradeinbarcode = 10000000 + rand(100000, 9000000);
                     $productInformation = ProductInformation::where('product_id', $sellingProduct->id)->get();

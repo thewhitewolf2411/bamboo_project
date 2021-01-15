@@ -8,7 +8,6 @@ function testingElementChanged(){
     var deviceFullyFunctional = $('#device_fully_functional').val();
     var waterDamage = $('#water_damage').val();
     var correctDevice = $('#device_correct').val();
-
     var customerGradeName = $('#customer_grade').val();
     var customerGrade;
 
@@ -85,11 +84,23 @@ function testingElementChanged(){
 
         }
         else{
-
             $('#select_correct_device_container').addClass('form-group-hidden');
+        }
 
-            if(deviceFullyFunctional == "false"){
-                $('#device-fully-functional-options').removeClass('form-group-hidden');
+        if(deviceFullyFunctional == "false"){
+            $('#device-fully-functional-options').removeClass('form-group-hidden');
+            options = {
+                '':'',
+                'WSI':'WSI',
+                'WSD':'WSD',
+                'NWSI':'NWSI',
+                'NWSD':'NWSD',
+                'Catastrophic':'Catastrophic'
+            }
+        }
+        else{
+            $('#device-fully-functional-options').addClass('form-group-hidden');
+            if(waterDamage == "true"){
                 options = {
                     '':'',
                     'WSI':'WSI',
@@ -100,30 +111,18 @@ function testingElementChanged(){
                 }
             }
             else{
-                $('#device-fully-functional-options').addClass('form-group-hidden');
-                if(waterDamage == "true"){
-                    options = {
-                        '':'',
-                        'WSI':'WSI',
-                        'WSD':'WSD',
-                        'NWSI':'NWSI',
-                        'NWSD':'NWSD',
-                        'Catastrophic':'Catastrophic'
-                    }
-                }
-                else{
-                    options = {
-                        '':'',
-                        'Grade A':'Grade A',
-                        'Grade B+':'Grade B+',
-                        'Grade B':'Grade B',
-                        'Grade C':'Grade C',
-                        'WSI':'WSI',
-                        'WSD':'WSD',
-                    }
+                options = {
+                    '':'',
+                    'Grade A':'Grade A',
+                    'Grade B+':'Grade B+',
+                    'Grade B':'Grade B',
+                    'Grade C':'Grade C',
+                    'WSI':'WSI',
+                    'WSD':'WSD',
                 }
             }
         }
+        
 
     }
 

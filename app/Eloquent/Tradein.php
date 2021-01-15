@@ -194,6 +194,11 @@ class Tradein extends Model
                 return ["Lost in transit", "Lost in transit"];
                 break;
             case 5:
+                $tradein = Tradein::where('id', $id)->first();
+                if($tradein->proccessed_before){
+                    return ["2nd Test", "Testing complete"];
+                    break;
+                }
                 return ["1st Test", "Testing complete"];
                 break;
             case 6:

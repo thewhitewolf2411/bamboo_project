@@ -478,7 +478,9 @@ class TestingController extends Controller
         $product = SellingProduct::where('id', $tradein->product_id)->first();
 
         if($request->fimp_or_google_lock === "true" || $request->pin_locked === "true"){
+
             $tradein->marked_for_quarantine = true;
+            $tradein->quarantine_date = \Carbon\Carbon::now();
 
             if($request->fimp_or_google_lock === "true"){
                 $tradein->fimp = true;
@@ -489,138 +491,134 @@ class TestingController extends Controller
 
             $tradein->save();
         }
-
-        if($request->device_correct === "false"){
-            $tradein->marked_for_quarantine = true;
-            $tradein->device_correct = $request->select_correct_device;
-            $tradein->save();
-        }
         else{
-            $tradein->marked_for_quarantine = false;
-            $tradein->device_correct = null;
-            $tradein->save();
-        }
-
-        if($tradein->job_state === 6){
-            $tradein->proccessed_before = true;
-            $tradein->save();
-        }
-
-        if($request->device_fully_functional === "false"){
-            $tradein->marked_for_quarantine = true;
-
-            $testingfaults = new TestingFaults();
-            $testingfaults->tradein_id = $tradein->id;
-
-            if($request->audio_tests === "true"){
-                $testingfaults->audio_test = true;
-            }
-            if($request->front_microphone === "true"){
-                $testingfaults->front_microphone = true;
-            }
-            if($request->headset_test === "true"){
-                $testingfaults->headset_test = true;
-            }
-            if($request->loud_speaker_test === "true"){
-                $testingfaults->loud_speaker_test = true;
-            }
-            if($request->microphone_playback_test === "true"){
-                $testingfaults->microphone_playback_test = true;
-            }
-            if($request->buttons_test === "true"){
-                $testingfaults->buttons_test = true;
-            }
-            if($request->sensor_test === "true"){
-                $testingfaults->sensor_test = true;
-            }
-            if($request->camera_test === "true"){
-                $testingfaults->camera_test = true;
-            }
-            if($request->glass_condition === "true"){
-                $testingfaults->glass_condition = true;
-            }
-            if($request->vibration === "true"){
-                $testingfaults->vibration = true;
-            }
-            if($request->original_colour === "true"){
-                $testingfaults->original_colour = true;
-            }
-            if($request->battery_health === "true"){
-                $testingfaults->battery_health = true;
-            }
-            if($request->nfc === "true"){
-                $testingfaults->nfc = true;
-            }
-            if($request->no_power === "true"){
-                $testingfaults->no_power = true;
-            }
-            if($request->fake_missing_parts === "true"){
-                $testingfaults->fake_missing_parts = true;
+            if($request->device_correct === "false"){
+                $tradein->marked_for_quarantine = true;
+                $tradein->device_correct = $request->select_correct_device;
+                $tradein->save();
             }
 
-            $testingfaults->save();
+            if($tradein->job_state === 6){
+                $tradein->proccessed_before = true;
+                $tradein->save();
+            }
+    
+            if($request->device_fully_functional === "false"){
+                $tradein->marked_for_quarantine = true;
+    
+                $testingfaults = new TestingFaults();
+                $testingfaults->tradein_id = $tradein->id;
+    
+                if($request->audio_tests === "true"){
+                    $testingfaults->audio_test = true;
+                }
+                if($request->front_microphone === "true"){
+                    $testingfaults->front_microphone = true;
+                }
+                if($request->headset_test === "true"){
+                    $testingfaults->headset_test = true;
+                }
+                if($request->loud_speaker_test === "true"){
+                    $testingfaults->loud_speaker_test = true;
+                }
+                if($request->microphone_playback_test === "true"){
+                    $testingfaults->microphone_playback_test = true;
+                }
+                if($request->buttons_test === "true"){
+                    $testingfaults->buttons_test = true;
+                }
+                if($request->sensor_test === "true"){
+                    $testingfaults->sensor_test = true;
+                }
+                if($request->camera_test === "true"){
+                    $testingfaults->camera_test = true;
+                }
+                if($request->glass_condition === "true"){
+                    $testingfaults->glass_condition = true;
+                }
+                if($request->vibration === "true"){
+                    $testingfaults->vibration = true;
+                }
+                if($request->original_colour === "true"){
+                    $testingfaults->original_colour = true;
+                }
+                if($request->battery_health === "true"){
+                    $testingfaults->battery_health = true;
+                }
+                if($request->nfc === "true"){
+                    $testingfaults->nfc = true;
+                }
+                if($request->no_power === "true"){
+                    $testingfaults->no_power = true;
+                }
+                if($request->fake_missing_parts === "true"){
+                    $testingfaults->fake_missing_parts = true;
+                }
+    
+                $testingfaults->save();
+    
+            }
+    
+            $customergradeval = "";
+            $bambogradeval = $request->bamboo_customer_grade;
+            $old_customer_grade = $request->old_customer_grade;
 
-        }
+            if($old_customer_grade == "Excellent Working"){
+                $customergradeval = 5;
+            }
+            if($old_customer_grade == "Good Working"){
+                $customergradeval = 4;
+            }
+            if($old_customer_grade == "Poor Working"){
+                $customergradeval = 3;
+            }
+            if($old_customer_grade == "Damaged Working"){
+                $customergradeval = 2;
+            }
+            if($old_customer_grade == "Faulty"){
+                $customergradeval = 1;
+            }
+            #dd($bambogradeval < $customergradeval);
 
-        $customergradeval = "";
-        $bambogradeval = $request->bamboo_customer_grade;
-
-        $old_customer_grade = $request->old_customer_grade;
-        if($old_customer_grade == "Excellent Working"){
-            $customergradeval = 5;
-        }
-        if($old_customer_grade == "Good Working"){
-            $customergradeval = 4;
-        }
-        if($old_customer_grade == "Poor Working"){
-            $customergradeval = 3;
-        }
-        if($old_customer_grade == "Damaged Working"){
-            $customergradeval = 2;
-        }
-        if($old_customer_grade == "Faulty"){
-            $customergradeval = 1;
-        }
-
-        if($bambogradeval < $customergradeval){
-            $tradein->marked_for_quarantine = true;
-        }
-
-
-        if($request->correct_network == "false"){
-            $correctNetworkName = $request->correct_network_value;
-            $correctNetworkData = Network::where('network_name', $correctNetworkName)->first();
-
-            $userNetworkName = $tradein->network;
-            $userNetworkData = Network::where('network_name', $userNetworkName)->first();
-            #dd($correctNetworkPrice = ProductNetworks::where('network_id', $correctNetworkData->id)->where('product_id', $tradein->product_id)->first());
-            $correctNetworkPrice = ProductNetworks::where('network_id', $correctNetworkData->id)->where('product_id', $tradein->product_id)->first()->knockoff_price;
-            $userNetworkPrice = ProductNetworks::where('network_id', $userNetworkData->id)->where('product_id', $tradein->product_id)->first()->knockoff_price;
-
-            if($correctNetworkPrice > $userNetworkPrice){
+            if($bambogradeval < $customergradeval){
                 $tradein->marked_for_quarantine = true;
             }
-
-            $tradein->correct_network = $correctNetworkName;
-        }
-
-        if($request->correct_memory == "false"){
-
-            if($request->correct_memory_value>$tradein->memory){
-                $tradein->correct_memory = $request->correct_memory_value;
+            if($request->correct_network == "false"){
+                $correctNetworkName = $request->correct_network_value;
+                $correctNetworkData = Network::where('network_name', $correctNetworkName)->first();
+    
+                $userNetworkName = $tradein->network;
+                $userNetworkData = Network::where('network_name', $userNetworkName)->first();
+                $correctNetworkPrice = ProductNetworks::where('network_id', $correctNetworkData->id)->where('product_id', $tradein->product_id)->first()->knockoff_price;
+                $userNetworkPrice = ProductNetworks::where('network_id', $userNetworkData->id)->where('product_id', $tradein->product_id)->first()->knockoff_price;
+    
+                if($correctNetworkPrice > $userNetworkPrice){
+                    $tradein->marked_for_quarantine = true;
+                }
+    
+                $tradein->correct_network = $correctNetworkName;
             }
-            else{
-                $tradein->marked_for_quarantine = true;
-                $tradein->correct_memory = $request->correct_memory_value;
+    
+            if($request->correct_memory == "false"){
+    
+                if($request->correct_memory_value>$tradein->memory){
+                    $tradein->correct_memory = $request->correct_memory_value;
+                }
+                else{
+                    $tradein->marked_for_quarantine = true;
+                    $tradein->correct_memory = $request->correct_memory_value;
+                }
+    
             }
-
+            
+            $tradein->job_state = 5;
+            $tradein->bamboo_grade = $request->bamboo_final_grade;
+            $tradein->save();
         }
-        
-        $tradein->job_state = 5;
-        $tradein->bamboo_grade = $request->bamboo_final_grade;
-        $tradein->save();
 
         $newBarcode = "";
+
+        #dd($tradein);
 
         if($tradein->marked_for_quarantine == true){
             $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'Q')->where('number_of_devices', "<=" ,100)->first();
@@ -641,8 +639,8 @@ class TestingController extends Controller
             $tradein->save();
 
             $quarantineName ="";
-
             switch($bambogradeval){
+                
                 case 5:
                     $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'A')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<=" ,100)->first();
                     break;
@@ -664,7 +662,6 @@ class TestingController extends Controller
                     else{
                         $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSD')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<=" ,100)->first();
                     }
-                    $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'A')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<=" ,100)->first();
                     break;
                 case 1:
                     if($request->cosmetic_condition === "WSI"){
@@ -703,6 +700,7 @@ class TestingController extends Controller
         $traycontent->trade_in_id = $tradein->id;
         $traycontent->save();
 
+        $quarantineName = $quarantineTrays->tray_name;
         
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 

@@ -65,7 +65,13 @@
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                             <td><div class="table-element">{{$tradein->imei_number}}</div></td>
                             <td><div class="table-element">{{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0]}}</div></td>
-                            <td><div class="table-element">Quarantine reason</div></td>
+                            <td><div class="table-element">
+                                @if($tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0] === "BLACKLISTED")
+                                    Blacklisted
+                                @else
+                                    Not blacklisted
+                                @endif
+                            </div></td>
                             <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
                             <td><div class="table-element">{{$tradein->created_at}}</div></td>
                             <td><div class="table-element">{{$tradein->quarantine_date}}</div></td>

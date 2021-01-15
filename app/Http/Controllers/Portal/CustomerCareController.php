@@ -141,8 +141,7 @@ class CustomerCareController extends Controller
 
         }
 
-        #echo $html;
-        #die();
+        
 
         $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
         PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
