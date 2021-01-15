@@ -5,6 +5,15 @@ namespace App\Http\Controllers\Portal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use Auth;
+use App\Eloquent\Category;
+use App\Eloquent\BuyingProduct;
+use App\Eloquent\SellingProduct;
+use App\Eloquent\PortalUsers;
+use App\Eloquent\Brand;
+use App\Eloquent\Conditions;
+use App\Eloquent\Network;
+
 class ProductController extends Controller
 {
 

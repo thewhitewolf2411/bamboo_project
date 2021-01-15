@@ -45,11 +45,6 @@
                                 <p>Available selling networks</p>
                                 </div>
                             </a>
-                            <a href="/portal/settings/testing-questions/selling-memory" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                    <p>Available selling memory</p>
-                                </div>
-                            </a>
                         </div>
                     </div>
 
@@ -59,20 +54,6 @@
     </main>
 
 </body>
-<script>
-
-$(document).ready(function(){
-
-    var elem = $('.portal-links-container > .portal-header-element')[9];
-    
-    console.log(elem.children[0]);
-
-    elem.children[0].style.color = "#fff";
-    elem.children[0].children[0].style.opacity = 1;
-
-});
-
-</script>
 
 
 </html>

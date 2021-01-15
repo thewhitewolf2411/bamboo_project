@@ -167,6 +167,7 @@ Route::post('/portal/product/editbuyingproduct/edit', 'Portal\ProductController@
 //quarantine
 Route::get('/portal/quarantine', 'Portal\QuarantineController@showQuarantinePage')->middleware('auth');
 Route::get('/portal/quarantine/quarantine-overview', 'Portal\QuarantineController@showQuarantineOverviewPage')->middleware('auth');
+Route::get('/portal/quarantine/quarantine-bins', 'Portal\QuarantineController@showQuarantineBinsPage')->middleware('auth');
 
 //testing
 Route::get('/portal/testing', 'Portal\TestingController@showTestingPage')->middleware('auth');
@@ -226,13 +227,10 @@ Route::get('/portal/settings','Portal\SettingsController@showSettingsPage')->mid
 Route::get('/portal/settings/product-options','Portal\SettingsController@showSettingsProductOptionsPage')->middleware('auth');
 Route::get('/portal/settings/product-options/selling-colours','Portal\SettingsController@showSellingColourPage')->middleware('auth');
 Route::get('/portal/settings/conditions/selling-networks','Portal\SettingsController@showSellingNetworksPage')->middleware('auth');
-Route::get('/portal/settings/testing-questions/selling-memory','Portal\SettingsController@showSellingMemoryPage')->middleware('auth');
 Route::get('/portal/settings/colours/add', 'Portal\SettingsController@addColourPage')->middleware('auth');
 Route::get('/portal/settings/networks/add', 'Portal\SettingsController@addNetworkPage')->middleware('auth');
-Route::get('/portal/settings/memories/add', 'Portal\SettingsController@addMemoryPage')->middleware('auth');
 Route::post('/portal/settings/productoptions/addcolour', 'Portal\SettingsController@addColour')->middleware('auth');
 Route::post('/portal/settings/productoptions/addnetwork', 'Portal\SettingsController@addNetwork')->middleware('auth');
-Route::post('/portal/settings/productoptions/addmemory', 'Portal\SettingsController@addMemory')->middleware('auth');
 
 Route::get('/portal/settings/conditions','Portal\SettingsController@showSettingsConditionsPage')->middleware('auth');
 Route::get('/portal/settings/conditions/add','Portal\SettingsController@showSettingsAddConditionsPage')->middleware('auth');
@@ -252,7 +250,7 @@ Route::post('portal/brands/editbrabnd', 'Portal\SettingsController@editBrand')->
 Route::get('/portal/settings/barcode-id','Portal\SettingsController@showSettingsBarcodeIdPage')->middleware('auth');
 
 //cms
-Route::get('/portal/cms', 'Portal\PortalController@showCmsPage')->middleware('auth');
+Route::get('/portal/cms', 'Portal\CmsController@showCmsPage')->middleware('auth');
 
 //Trays
 Route::get('/portal/trays', 'Portal\TraysController@showTraysPage')->middleware('auth');

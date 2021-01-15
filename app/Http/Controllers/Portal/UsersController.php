@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Portal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use Auth;
+use App\User;
+use App\Eloquent\PortalUsers;
+
 class UsersController extends Controller
 {
     public function showUsersPage(){

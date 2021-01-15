@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Portal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use Auth;
+use App\Eloquent\PortalUsers;
+use App\Eloquent\Colour;
+use App\Eloquent\Network;
+
 class SettingsController extends Controller
 {
     public function showSettingsPage(){
@@ -60,17 +65,6 @@ class SettingsController extends Controller
 
     }
 
-    public function showSellingMemoryPage(){
-        //if(!$this->checkAuthLevel(10)){return redirect('/');}
-
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-        $memories = Memory::all();
-
-        return view('portal.settings.productoptions.memory')->with(['portalUser'=>$portalUser, 'memories'=>$memories]);
-    }
-
     public function addColourPage(){
         //if(!$this->checkAuthLevel(10)){return redirect('/');}
 
@@ -94,17 +88,6 @@ class SettingsController extends Controller
         
     }
 
-    public function addMemoryPage(){
-        //if(!$this->checkAuthLevel(10)){return redirect('/');}
-
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-        $brands = Brand::all();
-
-        return view('portal.add.memory')->with(['portalUser'=>$portalUser, 'brands'=>$brands]);
-    }
-
     public function addColour(Request $request){
         $color = new Colour();
 
@@ -123,16 +106,6 @@ class SettingsController extends Controller
 
         $network->save();
         return redirect()->back()->with('success', 'You have succesfully added the network.');
-    }
-
-    public function addMemory(Request $request){
-        $memory = new Memory();
-
-        $memory->brand_id = $request->brand_id;
-        $memory->memory_value = $request->memory_value;
-
-        $memory->save();
-        return redirect()->back()->with('success', 'You have succesfully added the memory.');
     }
 
     public function showSettingsAddConditionsPage(){
@@ -171,15 +144,6 @@ class SettingsController extends Controller
         return view('portal.settings.testing-questions')->with('categories', $categories)->with('portalUser', $portalUser);
     }
 
-    public function showCategoryQuestionsPage($productId, $id){
-        //if(!$this->checkAuthLevel(10)){return redirect('/');}
-        dd($productid, $id);
-
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        
-        return view('portal.settings.questions')->with('portalUser', $portalUser);
-    }
 
     public function showCategoryAddQuestionPage($id){
         $brandid = $id;

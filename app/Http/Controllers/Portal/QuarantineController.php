@@ -28,6 +28,8 @@ class QuarantineController extends Controller
 
     public function showQuarantineBinsPage(){
         
+        
+
     }
 
 }

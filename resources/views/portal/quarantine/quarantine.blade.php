@@ -41,7 +41,7 @@
                                     <p>Quarantine Overview</p>
                                 </div>
                             </a>
-                            <a href="/portal/quarantine/quarantine-overview" class="col-2 my-2">
+                            <a href="/portal/quarantine/quarantine-bins" class="col-2 my-2">
                                 <div class="portal-content-element">
                                     <p>Quarantine Bins</p>
                                 </div>
