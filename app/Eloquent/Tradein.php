@@ -286,4 +286,38 @@ class Tradein extends Model
         }
         
     }
+
+
+    public function getQuarantineReason($id){
+
+        $tradein = Tradein::where('id', $id)->first();
+
+        switch($tradein->quarantine_status){
+
+            case 1:
+                return "Lost";
+                break;
+            case 2:
+                return "Insurance Claim";
+                break;
+            case 3:
+                return "Blocked / FRP";
+                break;
+            case 4:
+                return "Stolen";
+                break;
+            case 5:
+                return "Knox";
+                break;
+            case 6:
+                return "Asset Watch";
+                break;
+
+            default:
+                return "Not defined yet.";
+            break;
+
+        }
+
+    }
 }
