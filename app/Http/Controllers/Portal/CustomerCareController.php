@@ -26,6 +26,7 @@ class CustomerCareController extends Controller
     }
 
     public function showTradeIn(Request $request){
+
         //if(!$this->checkAuthLevel(1)){return redirect('/');}
 
         $tradeins = null;
@@ -367,6 +368,9 @@ class CustomerCareController extends Controller
         return redirect()->back()->with('success', 'Tradein with id '. $tradein->id . ' has been sent to reprint.');
     }
 
+    /**
+     * Show order managment table.
+     */
     public function showOrderManagment(Request $request){
         //if(!$this->checkAuthLevel(1)){return redirect('/');}
         $user_id = Auth::user()->id;
@@ -413,6 +417,36 @@ class CustomerCareController extends Controller
         }
 
         return view('portal.customer-care.order-management')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Order Management')->with('search', $request->search);
+    }
+
+    /**
+     * Revert tradein state to receiving.
+     */
+    public function revertToReceiving(){
+        if(isset(request()->id)){
+            $tradeIn = Tradein::find(request()->id);
+            if($tradeIn){
+                # trade pack dispached/user printed
+                $tradeIn->job_state = 2;
+                $tradeIn->save();
+                return response(200);
+            }
+        }
+    }
+
+    /**
+     * Revert tradein state to testing.
+     */
+    public function revertToTesting(){
+        if(isset(request()->id)){
+            $tradeIn = Tradein::find(request()->id);
+            if($tradeIn){
+                # received and passed
+                $tradeIn->job_state = 3;
+                $tradeIn->save();
+                return response(200);
+            }
+        }
     }
 
     public function sendDeviceBackToReceive($barcode){

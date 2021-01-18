@@ -12308,6 +12308,13 @@ h3, h4, h5 {
   margin: 5px;
 }
 
+.job-status-container {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
 .shop-top-header {
   margin-bottom: 50px;
 }

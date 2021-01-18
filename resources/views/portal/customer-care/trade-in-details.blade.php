@@ -34,7 +34,7 @@
                         <p>View Trade-in #{{$barcode}}</p>
                     </div>
                 </div>
-                <div class="portal-content-container">
+                {{-- <div class="portal-content-container">
                     <div class="w-100 details">
                         <div class="portal-title">
                             <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Trade-in Summary</p>
@@ -125,29 +125,130 @@
                         </div>
                     </div>
 
-                </div>
+                </div> --}}
 
-                <div class="portal-table-container">
-                    <div class="portal-title">
-                        <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Trade-In Products</p>
+                <div class="table">
+                    <div class="w-100 details">
+                        <div class="portal-title">
+                            <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Trade-in Summary</p>
+                        </div>
                     </div>
-
-                    <table class="portal-table sortable" id="categories-table">
-                        <tr>
-                            <td><div class="table-element">Trade-In Product ID</div></td>
-                            <td><div class="table-element">Name</div></td>
-                            <td><div class="table-element">Customer Status</div></td>
-
-                        </tr>
-                        @foreach($tradeins as $tradein)
-                        <tr>
-                            <td><div class="table-element">{{$tradein->barcode}}</div></td>
-                            <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
-                            <td><div class="table-element">{{$tradein->product_state}}</div></td>
-                        </tr>
-                        @endforeach
-                    </table>
+                    <table class="portal-table">
+                        <tbody>
+                            <tr>
+                                <td>Trade-In ID: {{$barcode}}</td>
+                                <td>Trade-in Placed: {{$tradeins[0]->created_at->format('Y/m/d')}}</td>
+                            </tr>
+                            <tr>
+                                <td>Trade-in Barcode: {{$tradeins[0]->barcode_original}}</td>
+                                <td>Collection Address: </td>
+                            </tr>
+                            <tr>
+                                <th>Billing address: </th>
+                                <td style="border: none;"></td>
+                            </tr>
+                        </tbody>
+                      </table>
                 </div>
+
+                <div class="table">
+                    <div class="w-100 details">
+                        <div class="portal-title">
+                            <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Payment + Delivery details</p>
+                        </div>
+                    </div>
+                    <table class="portal-table">
+                        <tbody>
+                            <tr>
+                                <td>Payment Method: </td>
+                                <td>Total Outstanding Payment Cost: </td>
+                            </tr>
+                            <tr>
+                                <td>Delivery Method: </td>
+                                <td>Tracking Reference: </td>
+                            </tr>
+                        </tbody>
+                      </table>
+                </div>
+
+                <div class="table">
+                    <div class="w-100 details">
+                        <div class="portal-title">
+                            <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Customer Details</p>
+                        </div>
+                    </div>
+                    <table class="portal-table">
+                        <tbody>
+                            <tr>
+                                <td>Name: {{$tradeins[0]->customer()->fullName()}}</td>
+                                <td>Shipping Address: </td>
+                                <td>Postcode:</td>
+                            </tr>
+                            <tr>
+                                <td>Contact No: {{$tradeins[0]->customer()->contact_number}}</td>
+                                <td>Email Address: {{$tradeins[0]->customer()->email}}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                      </table>
+                </div>
+
+                <div class="table">
+                    <div class="w-100 details">
+                        <div class="portal-title">
+                            <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Job Status</p>
+                        </div>
+                    </div>
+                    <div class="job-status-container">
+                        <div class="col w-50">
+                            Customer Status: <br>
+                            Bamboo Status:
+                        </div>
+                        <div class="col w-50">
+
+                            <div class="input-group">
+                                <label>Google Lock/FMIP:</label>
+                                <input type="checkbox" onclick="return false;"/>
+                                <input type="checkbox" onclick="return false;"/>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Pin Locked:</label>
+                                <input type="checkbox" onclick="return false;"/>
+                            </div>
+
+                            <div class="input-group">
+                                <label>Blacklisted:</label>
+                                <input type="checkbox" onclick="return false;"/>
+                            </div>
+
+                            <div class="input-group">
+                                <label>SIM Locked:</label>
+                                <input type="checkbox" onclick="return false;"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="portal-title">
+                    <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Trade-In Products</p>
+                </div>
+
+                <table class="portal-table sortable" id="categories-table">
+                    <tr>
+                        <td><div class="table-element">Trade-In Product ID</div></td>
+                        <td><div class="table-element">Name</div></td>
+                        <td><div class="table-element">Customer Status</div></td>
+                    </tr>
+                    @foreach($tradeins as $tradein)
+                    <tr>
+                        <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                        <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                        <td><div class="table-element">{{$tradein->product_state}}</div></td>
+                    </tr>
+                    @endforeach
+                </table>
 
                 @if($testingfaults !== null)
                 <div class="portal-table-container">

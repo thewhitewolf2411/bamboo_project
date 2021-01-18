@@ -9,6 +9,7 @@ use App\Eloquent\Category;
 use App\Eloquent\Brand;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
+use App\User;
 
 class Tradein extends Model
 {
@@ -32,6 +33,19 @@ class Tradein extends Model
 
     public function getProductName($id){
         return SellingProduct::where('id', $id)->first()->product_name;
+    }
+
+    public function customer(){
+        $user = User::find($this->user_id);
+        return $user;
+    }
+
+    public function postCode(){
+        return "71000";
+    }
+    
+    public function location(){
+        return 'Las Vegas';
     }
 
     public function getProductImage($id){
@@ -152,6 +166,10 @@ class Tradein extends Model
         }
     }
 
+    /**
+     * array[0]. bamboo status
+     * array[1]. customer status
+     */
     public function getDeviceStatus($id, $job_state){
 
         switch($job_state){

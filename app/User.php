@@ -27,4 +27,8 @@ class User extends Authenticatable
         'first_name', 'last_name', 'email','password','current_phone','preffered_os','sub','delivery_address','billing_address','contact_number','bamboo_credit',
         'username','worker_email'
     ];
+
+    public function fullName(){
+        return $this->first_name . " " . $this->last_name;
+    }
 }
