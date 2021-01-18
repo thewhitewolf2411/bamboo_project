@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Portal;
 
+use App\Eloquent\PortalUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentsController extends Controller
 {
