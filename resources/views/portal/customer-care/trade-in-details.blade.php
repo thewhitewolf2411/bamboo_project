@@ -237,11 +237,11 @@
                                 <label class="lock-status-title">Pin Locked:</label>
                                 @if($tradeins[0]->isPinLocked() !== null)
                                     <div class="radio-lock-status">
-                                        <input class="lock-status-checkbox" type="checkbox" onclick="return false;"/>
+                                        <input class="lock-status-checkbox" type="checkbox" @if($tradeins[0]->isPinLocked()) checked @endif onclick="return false;"/>
                                         <label class="radio-lock-status-label">Yes</label>
                                     </div>
                                     <div class="radio-lock-status">
-                                        <input class="lock-status-checkbox" type="checkbox" onclick="return false;"/>
+                                        <input class="lock-status-checkbox" type="checkbox" @if(!$tradeins[0]->isPinLocked()) checked @endif onclick="return false;"/>
                                         <label class="radio-lock-status-label">No</label>
                                     </div>
                                 @else
@@ -307,7 +307,7 @@
                 </div>
 
 
-                <div class="portal-title">
+                {{-- <div class="portal-title">
                     <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Trade-In Products</p>
                 </div>
 
@@ -324,7 +324,46 @@
                         <td><div class="table-element">{{$tradein->product_state}}</div></td>
                     </tr>
                     @endforeach
+                </table> --}}
+
+                <div class="portal-title">
+                    <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Device History</p>
+                </div>
+
+                <table class="portal-table sortable" id="categories-table">
+                    <tr>
+                        <td><div class="table-element">Date Placed</div></td>
+                        <td><div class="table-element">Trade-In ID</div></td>
+                        <td><div class="table-element">Trade-In Barcode</div></td>
+                        <td><div class="table-element">Product</div></td>
+                        <td><div class="table-element">User</div></td>
+                        <td><div class="table-element">Customer Status</div></td>
+                        <td><div class="table-element">Bamboo Status</div></td>
+                        <td><div class="table-element">Customer Grade</div></td>
+                        <td><div class="table-element">Bamboo Grade</div></td>
+                        <td><div class="table-element">Value</div></td>
+                        <td><div class="table-element">Stock Location</div></td>
+                        <td><div class="table-element">Cheque Number</div></td>
+                    </tr>
+                    @foreach($audits as $audit)
+                    <tr>
+                        <td><div class="table-element">{{$audit->created_at->format('d/m/Y H:i')}}</div></td>
+                        <td><div class="table-element">{{$audit->tradein_barcode}}</div></td>
+                        <td><div class="table-element">{{$audit->tradein_barcode_original}}</div></td>
+                        <td><div class="table-element">{{$audit->getProduct()}}</div></td>
+                        <td><div class="table-element">{{$audit->getUser()}}</div></td>
+                        <td><div class="table-element">{{$audit->customer_status}}</div></td>
+                        <td><div class="table-element">{{$audit->bamboo_status}}</div></td>
+                        <td><div class="table-element">{{$audit->customer_grade}}</div></td>
+                        <td><div class="table-element">{{$audit->bamboo_grade}}</div></td>
+                        <td><div class="table-element">{{$audit->value}}</div></td>
+                        <td><div class="table-element">{{$audit->stock_location}}</div></td>
+                        <td><div class="table-element">{{$audit->cheque_number}}</div></td>
+                    </tr>
+                    @endforeach
                 </table>
+
+                <br>
 
                 @if($testingfaults !== null)
                 <div class="portal-table-container">

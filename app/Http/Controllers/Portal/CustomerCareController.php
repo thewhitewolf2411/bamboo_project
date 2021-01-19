@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Portal;
 
+use App\Audits\TradeinAudit;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Eloquent\PortalUsers;
@@ -74,6 +75,9 @@ class CustomerCareController extends Controller
         return view('portal.customer-care.trade-in')->with('tradeins', $tradeins)->with('portalUser', $portalUser)->with('search',$search);
     }
 
+    /**
+     * Show tradein details.
+     */
     public function showTradeInDetails($id){
         //if(!$this->checkAuthLevel(1)){return redirect('/');}
         $tradein = Tradein::where('barcode', $id)->get();
@@ -81,7 +85,49 @@ class CustomerCareController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
         $user = User::where('id', $tradein[0]->user_id)->first();
 
-        
+        $tradein_audits = TradeinAudit::where('tradein_id', $tradein[0]->id)->orderBy('created_at', 'desc')->get();
+
+        // foreach($tradein_audits as $audit){
+
+        //     $barcode = null;
+        //     //$product = null;
+        //     $customer_status = null;
+        //     $bamboo_status = null;
+            
+        //     if($audit['column_name'] === 'barcode'){
+        //         $barcode = $audit['new_value'];
+        //     } else {
+        //         $barcode = $trade_in->barcode;
+        //     }
+        //     if($audit['column_name'] === 'job_state'){
+        //         $job_state = $audit['new_value'];
+        //         $customer_status = $trade_in->getDeviceStatus($trade_in->id, $job_state)[1];
+        //         $bamboo_status = $trade_in->getDeviceStatus($trade_in->id, $job_state)[0];
+        //     } else {
+        //         $customer_status = $trade_in->getCustomerStatus();
+        //         $bamboo_status = $trade_in->getBambooStatus();
+        //     }
+
+
+        //     //$barcode = (isset($audit))
+        //     array_push($audits, [
+        //         'pos' => $position,
+        //         'date_placed' => $audit->created_at->format('d/m/Y H:i'),
+        //         'tradein_id' => $barcode,
+        //         'tradein_barcode' => $trade_in->barcode_original,
+        //         'product' => $trade_in->getProductName($trade_in->product_id),
+        //         'user' => Auth::user()->fullName(),
+        //         'customer_status' => $customer_status,
+        //         'bamboo_status' => $bamboo_status,
+        //         'customer_grade' => 'Gr8 m8',
+        //         'bamboo_grade' => 'Gr8 m8',
+        //         'value' => '3 KM',
+        //         'stock_location' => 'Somewhere',
+        //         'cheque_number' => '12345',
+        //     ]);
+        //     $position++;
+        // }
+
 
         $testingfaults = TestingFaults::where('tradein_id', $tradein[0]->id)->first();
 
@@ -90,7 +136,8 @@ class CustomerCareController extends Controller
                         'portalUser'=>$portalUser,
                         'user'=>$user,
                         'barcode'=>$id,
-                        'testingfaults'=>$testingfaults 
+                        'testingfaults'=>$testingfaults,
+                        'audits' => $tradein_audits
                 ]);
     }
 

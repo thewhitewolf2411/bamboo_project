@@ -315,14 +315,14 @@ class Tradein extends Model
 
     public function isGoogleLocked(){
         if($this->fimp){
-            dd('fimp');
+            return true;
         }
         return $this->fimp;
     }
 
     public function isPinLocked(){
         if($this->pinlocked){
-            dd('pinlocked');
+            return true;
         }
         return $this->pinlocked;
     }
