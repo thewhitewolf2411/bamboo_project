@@ -283,6 +283,8 @@ class Tradein extends Model
             case 15:
                 return ["Closed", "Paid"];
                 break;
+            case 16:
+                return ["Return to customer", "Returning Device"];
         }
         
     }

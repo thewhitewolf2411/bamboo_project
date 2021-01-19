@@ -46,7 +46,7 @@ class QuarantineController extends Controller
  
         $tradeinNumbers = $request->all();
 
-        array_pop($tradeinNumbers);
+        #array_pop($tradeinNumbers);
 
         $tradeins = array();
 
@@ -56,15 +56,92 @@ class QuarantineController extends Controller
 
             $tradein = Tradein::where('id', $id)->first();
 
-            array_push($tradeins, $tradein);
+            if($tradein != null){
+                if($tradein->quarantine_status == null){
+                    array_push($tradeins, array($tradein->barcode, $tradein->getProductName($tradein->product_id), $tradein->imei_number . "\t", 
+                    $tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0],  $tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0], $tradein->getTrayName($tradein->id), $tradein->bamboo_grade));
+                }
+                else{
+                    array_push($tradeins, array($tradein->barcode, $tradein->getProductName($tradein->product_id), $tradein->imei_number . "\t", 
+                    $tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0],  $tradein->getQuarantineReason($tradein->id)[0], $tradein->getTrayName($tradein->id), $tradein->bamboo_grade));
+                }
+            }
+
         }
+
+
+        $filename = 'quarantine-export-' . date('Y-m-d') . '.csv';
+
+        $fp = fopen( \public_path() .  '/quarantinecsv/' . $filename, 'w');
+
+        $headers = array("Trade-In Barcode", "Model", "IMEI", "Bamboo Status", "Blacklisted Reason", "Stock Location", "Bamboo Grade");
+
+
+        \fputcsv($fp, $headers);
 
         foreach($tradeins as $tradein){
-            dd($tradein->getDeviceStatus($tradein->id, $tradein->job_state));
+
+            \fputcsv($fp, $tradein);
+        }
+
+        fclose($fp);
+
+        $this->downloadFile(\public_path() .  '/quarantinecsv/' . $filename, false);
+        
+    }
+
+    public function allocateToTray(Request $request){
+        dd($request->all());
+    }
+
+    public function returnToCustomer(Request $request){
+        $tradeinNumbers = $request->all();
+
+        #array_pop($tradeinNumbers);
+
+        $tradeins = array();
+
+        foreach($tradeinNumbers as $key=>$tiN){
+
+            $id = substr($key, strpos($key, "-") + 1);    
+
+            $tradein = Tradein::where('id', $id)->first();
+            if($tradein != null){
+                array_push($tradeins, $tradein);
+            }
+
+        }
+
+        return redirect()->back()->with(['hasTradeIns'=>true, 'returnToCustomer'=>$tradeins]);
+    }
+
+
+    public function markDevicesToReturnToCustomer(Request $request){
+        $tradeinNumbers = $request->all();
+
+        #array_pop($tradeinNumbers);
+
+        $tradeins = array();
+
+        foreach($tradeinNumbers as $key=>$tiN){
+
+            $id = substr($key, strpos($key, "-") + 1);    
+
+            $tradein = Tradein::where('id', $id)->first();
+
+            if($tradein != null){
+                $tradein->job_state = 16;
+                $tradein->marked_for_quarantine = false;
+                $tradein->quarantine_status = null;
+                $tradein->fimp = null;
+                $tradein->pinlocked = null;
+                $tradein->proccessed_before = true;
+                $tradein->save();
+            }
         }
 
 
-        dd($tradeins);
+        return redirect()->back()->with('success', 'You have succesfully marked devices to be returned to customer');
     }
 
     public function addQuarantineStatus(Request $request){
@@ -151,7 +228,7 @@ class QuarantineController extends Controller
     }
 
 
-    public function downloadFile($file){
+    public function downloadFile($file, $delete = true){
         if (file_exists($file)) {
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
@@ -162,8 +239,10 @@ class QuarantineController extends Controller
             header('Content-Length: ' . filesize($file));
             readfile($file);
             // if file is downloaded delete all created files from the sistem
-            File::delete($file);
-            return \redirect()->back()->with('success','You have succesfully exported products.');
+            if($delete){
+                File::delete($file);
+            }
+
         }
     }
 

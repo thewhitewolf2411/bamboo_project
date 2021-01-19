@@ -173,6 +173,9 @@ Route::get('/portal/quarantine/quarantine-bins/bin/', 'Portal\QuarantineControll
 Route::get('/portal/quarantine-bins/printlabel/{id}', 'Portal\QuarantineController@printBinLabel');
 
 Route::post('/portal/quarantine/export-csv', 'Portal\QuarantineController@exportCsv')->middleware('auth');
+Route::post('/portal/quarantine/allocate-to-tray', 'Portal\QuarantineController@allocateToTray')->middleware('auth');
+Route::post('/portal/quarantine/return-to-customer', 'Portal\QuarantineController@returnToCustomer')->middleware('auth');
+Route::post('/portal/quarantine/mark-devices-return-to-customer', 'Portal\QuarantineController@markDevicesToReturnToCustomer')->middleware('auth');
 Route::post('/portal/quarantine/addQuarantineStatus', 'Portal\QuarantineController@addQuarantineStatus')->middleware('auth');
 Route::post('/portal/quarantine/removeQuarantineStatus', 'Portal\QuarantineController@removeQuarantineStatus')->middleware('auth');
 Route::post('/portal/quarantine/addquarantinebin', 'Portal\QuarantineController@addQuarantineBin')->middleware('auth');

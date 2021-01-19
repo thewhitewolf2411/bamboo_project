@@ -23,7 +23,8 @@ use App\Eloquent\TrayContent;
 use App\Eloquent\Network;
 use App\Eloquent\Colour;
 use App\Eloquent\TestingFaults;
-
+use Klaviyo\Klaviyo as Klaviyo;
+use Klaviyo\Model\EventModel as KlaviyoEvent;
 
 class TestingController extends Controller
 {
