@@ -12315,6 +12315,37 @@ h3, h4, h5 {
   flex-wrap: nowrap;
 }
 
+.job-status {
+  margin-bottom: 25px;
+}
+
+.lock-status-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.lock-status-title {
+  width: 200px;
+  padding: 4px;
+  margin: 0;
+}
+
+.radio-lock-status {
+  display: flex;
+  flex-direction: row;
+  width: 120px;
+}
+
+.radio-lock-status-label {
+  padding: 4px;
+  margin: 0;
+}
+
+.lock-status-checkbox {
+  width: 20px;
+}
+
 .shop-top-header {
   margin-bottom: 50px;
 }

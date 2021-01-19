@@ -81,6 +81,7 @@
                             <td><div class="table-element">Reprint</div></td>
                             <td><div class="table-element">Revert to Receiving</div></td>
                             <td><div class="table-element">Revert to Testing</div></td>
+                            <td><div class="table-element">Send to Despatch</div></td>
 
                         </tr>
 
@@ -131,6 +132,7 @@
                             </td>                        
                             <td class="text-center"><a href="#" title="Revert to receiving" onclick="revertToReceiving({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a></td> 
                             <td class="text-center"><a href="#" title="Revert to testing" onclick="revertToTesting({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a></td>
+                            <td class="text-center"><a href="#" title="Send to Despatch" onclick="sendToDespatch({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a></td>
 
                         </tr>
 
@@ -221,6 +223,22 @@
             success: function(response) {
                 if(response == 200){
                     alert('Trade-in reverted to testing.');
+                    window.location.reload();
+                }
+            }
+        });
+    }
+    function sendToDespatch(id){
+        $.ajax({
+            type: "POST",
+            url: "{{route('sendToDespatch')}}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {id: id},
+            success: function(response) {
+                if(response == 200){
+                    alert('Trade-in sent to despatch.');
                     window.location.reload();
                 }
             }

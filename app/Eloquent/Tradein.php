@@ -304,4 +304,50 @@ class Tradein extends Model
         }
         
     }
+
+    public function getCustomerStatus(){
+        return $this->getDeviceStatus($this->id, $this->job_state)[0];
+    }
+
+    public function getBambooStatus(){
+        return $this->getDeviceStatus($this->id, $this->job_state)[1];
+    }
+
+    public function isGoogleLocked(){
+        if($this->fimp){
+            dd('fimp');
+        }
+        return $this->fimp;
+    }
+
+    public function isPinLocked(){
+        if($this->pinlocked){
+            dd('pinlocked');
+        }
+        return $this->pinlocked;
+    }
+
+    public function isBlacklisted(){
+        // blackliststatus
+        $result = ImeiResult::where('tradein_id', $this->id)->first();
+        if($result){
+            if($result->blackliststatus === "Yes"){
+                return true;
+            }
+            return false;
+        }
+        return null;
+    }
+
+    public function isSIMLocked(){
+        // greyliststatus
+        $result = ImeiResult::where('tradein_id', $this->id)->first();
+        if($result){
+            if($result->greyliststatus === "Yes"){
+                return true;
+            }
+            return false;
+        }
+        return null;
+    }
 }

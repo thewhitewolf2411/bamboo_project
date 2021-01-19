@@ -200,32 +200,108 @@
                         </div>
                     </div>
                     <div class="job-status-container">
-                        <div class="col w-50">
-                            Customer Status: <br>
-                            Bamboo Status:
+                        <div class="col w-25">
+                            <div class="job-status">
+                                Customer Status: {{$tradeins[0]->getCustomerStatus()}}<br>
+                            </div>
+                            <div class="job-status">
+                                Bamboo Status: {{$tradeins[0]->getBambooStatus()}}
+                            </div>
                         </div>
-                        <div class="col w-50">
+                        <div class="col w-75">
 
-                            <div class="input-group">
-                                <label>Google Lock/FMIP:</label>
-                                <input type="checkbox" onclick="return false;"/>
-                                <input type="checkbox" onclick="return false;"/>
+                            <div class="lock-status-row">
+                                <label class="lock-status-title">Google Lock/FMIP:</label>
+                                @if($tradeins[0]->isGoogleLocked() !== null)
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" @if($tradeins[0]->isGoogleLocked()) checked @endif  onclick="return false;"/>
+                                        <label class="radio-lock-status-label">Yes</label>
+                                    </div>
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" @if(!$tradeins[0]->isGoogleLocked()) checked @endif onclick="return false;"/>
+                                        <label class="radio-lock-status-label">No</label>
+                                    </div>
+                                @else
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" onclick="return false;"/>
+                                        <label class="radio-lock-status-label">Yes</label>
+                                    </div>
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" onclick="return false;"/>
+                                        <label class="radio-lock-status-label">No</label>
+                                    </div>
+                                @endif
                             </div>
 
-                            <div class="input-group">
-                                <label>Pin Locked:</label>
-                                <input type="checkbox" onclick="return false;"/>
+                            <div class="lock-status-row">
+                                <label class="lock-status-title">Pin Locked:</label>
+                                @if($tradeins[0]->isPinLocked() !== null)
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" onclick="return false;"/>
+                                        <label class="radio-lock-status-label">Yes</label>
+                                    </div>
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" onclick="return false;"/>
+                                        <label class="radio-lock-status-label">No</label>
+                                    </div>
+                                @else
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" onclick="return false;"/>
+                                        <label class="radio-lock-status-label">Yes</label>
+                                    </div>
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" onclick="return false;"/>
+                                        <label class="radio-lock-status-label">No</label>
+                                    </div>
+                                @endif
                             </div>
 
-                            <div class="input-group">
-                                <label>Blacklisted:</label>
-                                <input type="checkbox" onclick="return false;"/>
+                            <div class="lock-status-row">
+                                <label class="lock-status-title">Blacklisted:</label>
+                                @if($tradeins[0]->isBlacklisted() !== null)
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" @if($tradeins[0]->isBlacklisted()) checked @endif onclick="return false;"/>
+                                        <label class="radio-lock-status-label">Yes</label>
+                                    </div>
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" @if(!$tradeins[0]->isBlacklisted()) checked @endif onclick="return false;"/>
+                                        <label class="radio-lock-status-label">No</label>
+                                    </div>
+                                @else
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" onclick="return false;"/>
+                                        <label class="radio-lock-status-label">Yes</label>
+                                    </div>
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" onclick="return false;"/>
+                                        <label class="radio-lock-status-label">No</label>
+                                    </div>
+                                @endif
                             </div>
 
-                            <div class="input-group">
-                                <label>SIM Locked:</label>
-                                <input type="checkbox" onclick="return false;"/>
+                            <div class="lock-status-row">
+                                <label class="lock-status-title">SIM Locked:</label>
+                                @if($tradeins[0]->isSIMLocked() !== null)
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" @if($tradeins[0]->isSIMLocked()) checked @endif onclick="return false;"/>
+                                        <label class="radio-lock-status-label">Yes</label>
+                                    </div>
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" @if(!$tradeins[0]->isSIMLocked()) checked @endif onclick="return false;"/>
+                                        <label class="radio-lock-status-label">No</label>
+                                    </div>
+                                @else
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" onclick="return false;"/>
+                                        <label class="radio-lock-status-label">Yes</label>
+                                    </div>
+                                    <div class="radio-lock-status">
+                                        <input class="lock-status-checkbox" type="checkbox" onclick="return false;"/>
+                                        <label class="radio-lock-status-label">No</label>
+                                    </div>
+                                @endif
                             </div>
+
                         </div>
                     </div>
                 </div>

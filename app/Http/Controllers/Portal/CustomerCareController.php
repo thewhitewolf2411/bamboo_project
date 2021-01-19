@@ -449,6 +449,21 @@ class CustomerCareController extends Controller
         }
     }
 
+    /**
+     * Send device to despatch.
+     */
+    public function sendToDespatch(){
+        if(isset(request()->id)){
+            $tradeIn = Tradein::find(request()->id);
+            if($tradeIn){
+                # received and passed
+                $tradeIn->job_state = 11;
+                $tradeIn->save();
+                return response(200);
+            }
+        }
+    }
+
     public function sendDeviceBackToReceive($barcode){
         $tradein = Tradein::where('barcode', $barcode)->first();
 
