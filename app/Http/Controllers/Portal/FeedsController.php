@@ -395,8 +395,6 @@ class FeedsController extends Controller
                 return \redirect()->back()->with('error','Error - check your import file. Missing fields: ' . implode(', ', $missing_header_fields));
             }
 
-
-
             $networks = Network::all();
 
             $emptyrows = array();
@@ -407,7 +405,6 @@ class FeedsController extends Controller
             $export_log = [];
 
             foreach($importeddata as $key=>$row){
-                
                 if($row[1] !== null){
                     $valid_product = false;
                     // validate selling product data
@@ -474,11 +471,11 @@ class FeedsController extends Controller
                 foreach($networks as $network){
 
                     // if network is present and valid, add product network
-                    if($importeddata[$key][13] !== null && $network->network_name == $importeddata[$key][13]){
+                    if($importeddata[$key][14] !== null && $network->network_name == $importeddata[$key][14]){
 
                         // check if product network info is valid
                         $valid_network_info = false;
-                        if(isset($row[14])){
+                        if(isset($row[15])){
                             $valid_network_info = true;
                         }
 
@@ -486,10 +483,10 @@ class FeedsController extends Controller
                             $productNetworks = new ProductNetworks();
                             $productNetworks->network_id = $network->id;
                             $productNetworks->product_id = $sellingProduct->id;
-                            $productNetworks->knockoff_price = $importeddata[$key][14];
+                            $productNetworks->knockoff_price = $importeddata[$key][15];
                             $productNetworks->save();
                         } else {
-                            array_push($export_log, "Missing Selling Product [" . $sellingProduct->product_name . "] network [" . $network->network_name . "] info: " . $file_header[14]);
+                            array_push($export_log, "Missing Selling Product [" . $sellingProduct->product_name . "] network [" . $network->network_name . "] info: " . $file_header[15]);
                         }
 
                         
@@ -497,11 +494,11 @@ class FeedsController extends Controller
                 }
 
                 // check if product color info is valid
-                if($importeddata[$key][15] !== null){
+                if($importeddata[$key][16] !== null){
 
                     $productColours = new Colour();
                     $productColours->product_id = $sellingProduct->id;
-                    $productColours->color_value = $importeddata[$key][15];
+                    $productColours->color_value = $importeddata[$key][16];
                     $productColours->save(); 
                     
                 }
