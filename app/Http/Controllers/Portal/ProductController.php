@@ -13,6 +13,9 @@ use App\Eloquent\PortalUsers;
 use App\Eloquent\Brand;
 use App\Eloquent\Conditions;
 use App\Eloquent\Network;
+use App\Eloquent\ProductInformation;
+use App\Eloquent\ProductNetworks;
+use App\Eloquent\Colour;
 
 class ProductController extends Controller
 {

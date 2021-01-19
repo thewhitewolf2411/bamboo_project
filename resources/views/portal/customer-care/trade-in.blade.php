@@ -134,6 +134,33 @@
 
 @endif
 
+@if(Session::has('bulk'))
+    <script>
+
+        $(document).ready(function(){
+            $('#label-trade-in-bulk-modal').modal('show');
+        });
+
+    </script>
+    <div id="label-trade-in-bulk-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Trade in label</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <iframe id="tradein-iframe" src="{{Session::get('bulk')}}"></iframe>
+
+            </div>
+            </div>
+        </div>
+    </div>
+@endif
+
 <div id="label-trade-in-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

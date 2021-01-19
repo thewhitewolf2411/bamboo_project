@@ -121,6 +121,10 @@ class CustomerCareController extends Controller
             array_push($tradeins, $tradein);
         }
 
+        if(count($tradeins)>50){
+            return \redirect()->back()->with('error', 'You can\'t print more than 50 tradeins in one go.');
+        }
+
         foreach($barcodes as $barcode){
             $tiarr = Tradein::where('barcode', $barcode)->get();
             foreach($tiarr as $tradein){
@@ -129,24 +133,40 @@ class CustomerCareController extends Controller
             }
         }
 
+        $labels = array();
+
+        ini_set('max_execution_time', 120);
+
         foreach($tradeins as $tradein){
 
             $user = User::where('id',$tradein->user_id)->first();
             $product = SellingProduct::where('id', $tradein->product_id);
             $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
+            $delAdress = strtr($user->delivery_address, array(', '=>'<br>'));
 
-            $ti = Tradein::where('id', $tradein->id)->first();
-            $ti->job_state = 2;
-            $ti->save();
+            $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
+            $pdf = PDF::loadView('portal.labels.tradeinlabel', 
+                array('user'=>$user, 'deladdress'=>$delAdress, 'tradein'=>$tradein, 'barcode'=>$barcode))
+                ->save('pdf/tradeinlabel-'. $tradein->barcode .'.pdf');
+
+            array_push($labels, 'pdf/tradeinlabel-'. $tradein->barcode .'.pdf');
 
         }
 
-        
+        $pdfMerger = \LynX39\LaraPdfMerger\Facades\PdfMerger::init();
+    
+        foreach($labels as $label){
+            $pdfMerger->addPDF($label, 1);
+        }
 
-        $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
-        PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
+        $pdfMerger->merge();
 
-        $this->downloadBulk($filename);
+        $mergedname = '/pdf/tradeinlabels-' . date('Y-m-d') . '.pdf';
+
+        $pdfMerger->save( public_path() . $mergedname);
+
+
+        return redirect()->back()->with('bulk', $mergedname);
     }
 
     public function PrintTradeInLabel(Request $request){

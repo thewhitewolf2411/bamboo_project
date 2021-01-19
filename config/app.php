@@ -164,6 +164,7 @@ return [
         Spatie\GoogleTagManager\GoogleTagManagerServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        LynX39\LaraPdfMerger\PdfMergerServiceProvider::class,
         /*
          * Package Service Providers...
          */
