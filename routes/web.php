@@ -168,6 +168,18 @@ Route::post('/portal/product/editbuyingproduct/edit', 'Portal\ProductController@
 Route::get('/portal/quarantine', 'Portal\QuarantineController@showQuarantinePage')->middleware('auth');
 Route::get('/portal/quarantine/quarantine-overview', 'Portal\QuarantineController@showQuarantineOverviewPage')->middleware('auth');
 Route::get('/portal/quarantine/quarantine-bins', 'Portal\QuarantineController@showQuarantineBinsPage')->middleware('auth');
+Route::get('/portal/quarantine/quarantine-bins/create', 'Portal\QuarantineController@addNewQuarantineBin')->middleware('auth');
+Route::get('/portal/quarantine/quarantine-bins/bin/', 'Portal\QuarantineController@showBinView');
+Route::get('/portal/quarantine-bins/printlabel/{id}', 'Portal\QuarantineController@printBinLabel');
+
+Route::post('/portal/quarantine/export-csv', 'Portal\QuarantineController@exportCsv')->middleware('auth');
+Route::post('/portal/quarantine/allocate-to-tray', 'Portal\QuarantineController@allocateToTray')->middleware('auth');
+Route::post('/portal/quarantine/return-to-customer', 'Portal\QuarantineController@returnToCustomer')->middleware('auth');
+Route::post('/portal/quarantine/mark-devices-return-to-customer', 'Portal\QuarantineController@markDevicesToReturnToCustomer')->middleware('auth');
+Route::post('/portal/quarantine/addQuarantineStatus', 'Portal\QuarantineController@addQuarantineStatus')->middleware('auth');
+Route::post('/portal/quarantine/removeQuarantineStatus', 'Portal\QuarantineController@removeQuarantineStatus')->middleware('auth');
+Route::post('/portal/quarantine/addquarantinebin', 'Portal\QuarantineController@addQuarantineBin')->middleware('auth');
+Route::get('/portal/quarantine-bins/delete/{id}', 'Portal\QuarantineController@deleteQuarantineBin')->middleware('auth');
 
 //testing
 Route::get('/portal/testing', 'Portal\TestingController@showTestingPage')->middleware('auth');

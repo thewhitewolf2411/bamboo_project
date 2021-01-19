@@ -103,12 +103,17 @@
                                     <i class="fa fa-times" style="color:blue !important;" title="Return device to receiving" ></i>
                                 </a>
                                 @endif
-                                @if($tradein->job_state >= 5 && $tradein->job_state !== 6)
+                                @if($tradein->job_state >= 5 && $tradein->job_state !== 6 && $tradein->job_state !== 16)
                                 <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
                                     <i class="fa fa-times" style="color:blue !important;"></i>
                                 </a>
                                 <a title="Return device to testing" href="/totesting/{{$tradein->id}}">
                                     <i class="fa fa-times" style="color:black !important;"></i>
+                                </a>
+                                @endif
+                                @if($tradein->job_state === 16)
+                                <a title="Dispatch device to customer" href="">
+                                    <i class="fa fa-envelope" style="color:black !important;"></i>
                                 </a>
                                 @endif
                                 

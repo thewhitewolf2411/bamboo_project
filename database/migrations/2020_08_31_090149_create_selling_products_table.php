@@ -20,6 +20,7 @@ class CreateSellingProductsTable extends Migration
             $table->smallInteger('category_id');
             $table->smallInteger('brand_id');
             $table->boolean('checkmend_check')->default(true);
+            $table->boolean('avaliable_for_sell')->default(true);
             $table->timestamps();
         });
     }
