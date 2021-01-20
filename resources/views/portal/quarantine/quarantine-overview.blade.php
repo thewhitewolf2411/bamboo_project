@@ -116,7 +116,7 @@
                                         </div>
                                         
                                     @else
-                                        Not blacklisted
+                                        {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[1]}}
                                     @endif
                                 </div></td>
                                 <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>

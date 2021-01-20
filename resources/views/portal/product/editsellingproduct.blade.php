@@ -55,7 +55,7 @@
                                     <label for="brand">Brand:</label>
                                     <select class="form-control" id="brand" name="brand" required>
                                         @foreach($brands as $brand)
-                                            <option value="{{$brand->id}}" >{{$brand->brand_name}}</option>
+                                            <option value="{{$brand->id}}" @if($brand->id === $product->brand_id) selected @endif) >{{$brand->brand_name}}</option>
                                         @endforeach
                                     </select>
                                   </div>
@@ -65,7 +65,7 @@
                                     <label for="category">Category:</label>
                                     <select class="form-control" id="brand" name="category" required>
                                         @foreach($categories as $category)
-                                            <option value="{{$category->id}}" >{{$category->category_name}}</option>
+                                            <option value="{{$category->id}}" @if($category->id === $product->category_id) selected @endif)>{{$category->category_name}}</option>
                                         @endforeach
                                     </select>
                                   </div>
