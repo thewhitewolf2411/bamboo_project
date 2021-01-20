@@ -31,4 +31,25 @@ class User extends Authenticatable
     public function fullName(){
         return $this->first_name . " " . $this->last_name;
     }
+
+    public function superAdmin(){
+        if($this->type_of_user === 3){
+            return true;
+        }
+        return false;
+    }
+
+    public function canDeleteNotes(){
+        if($this->type_of_user === 3){
+            return "true";
+        }
+        return "false";
+    }
+
+    public function admin(){
+        if($this->type_of_user > 1){
+            return true;
+        }
+        return false;
+    }
 }

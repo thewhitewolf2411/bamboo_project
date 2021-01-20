@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Portal;
 
 use App\Audits\TradeinAudit;
+use App\Audits\TradeinAuditNote;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Eloquent\PortalUsers;
@@ -85,10 +86,16 @@ class CustomerCareController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
         $user = User::where('id', $tradein[0]->user_id)->first();
 
-        $tradein_audits = TradeinAudit::where('tradein_id', $tradein[0]->id)->orderBy('created_at', 'desc')->get();
+        $tradein_audits = TradeinAudit::with('notes')->where('tradein_id', $tradein[0]->id)->orderBy('created_at', 'desc')->get();
+        foreach($tradein_audits as $audit){
+            $audit->notes_count = $audit->notes->count();
+            foreach($audit->notes as $note){
+                $note->date = $note->created_at->format('d.m.Y H:i');
+                $note->user = User::find($note->user_id)->fullName();
+            }
+        }
 
         // foreach($tradein_audits as $audit){
-
         //     $barcode = null;
         //     //$product = null;
         //     $customer_status = null;
@@ -150,6 +157,45 @@ class CustomerCareController extends Controller
         $user = User::where('id', $tradein->user_id)->first();
         return view('portal.customer-care.trade-in-product-details')->with('tradein', $tradein)->with('portalUser', $portalUser)->with('user', $user);
     }
+
+    /**
+     * Store tradein audit note.
+     */
+    public function addAuditNote(Request $request){
+        if(isset($request->id) && isset($request->note)){
+            $audit_note = new TradeinAuditNote([
+                'tradein_audit_id' => $request->id,
+                'user_id' => Auth::user()->id,
+                'note' => $request->note
+                ]);
+            $audit_note->save();
+            return response(200);
+        }
+    }
+
+    /**
+     * Update audit note.
+     */
+    public function updateAuditNote(Request $request){
+        if(isset($request->id) && isset($request->note)){
+            $audit_note = TradeinAuditNote::find($request->id);
+            $audit_note->note = $request->note;
+            $audit_note->save();
+            return response(200);
+        }
+    }
+
+    /**
+     * Delete audit note.
+     */
+    public function deleteAuditNote(Request $request){
+        if(isset($request->id)){
+            $audit_note = TradeinAuditNote::find($request->id);
+            $audit_note->delete();
+            return response(200);
+        }
+    }
+
 
     public function PrintTradeInLabelBulk(Request $request){
 

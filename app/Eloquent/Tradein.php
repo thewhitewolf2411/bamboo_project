@@ -306,11 +306,11 @@ class Tradein extends Model
     }
 
     public function getCustomerStatus(){
-        return $this->getDeviceStatus($this->id, $this->job_state)[0];
+        return $this->getDeviceStatus($this->id, $this->job_state)[1];
     }
 
     public function getBambooStatus(){
-        return $this->getDeviceStatus($this->id, $this->job_state)[1];
+        return $this->getDeviceStatus($this->id, $this->job_state)[0];
     }
 
     public function isGoogleLocked(){

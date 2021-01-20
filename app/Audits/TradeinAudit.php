@@ -4,6 +4,7 @@ namespace App\Audits;
 
 use App\Eloquent\SellingProduct;
 use App\User;
+use App\Audits\TradeinAuditNote;
 use Illuminate\Database\Eloquent\Model;
 
 class TradeinAudit extends Model
@@ -40,6 +41,19 @@ class TradeinAudit extends Model
     }
 
     public function getUser(){
-        return User::find($this->user_id)->fullName();
+        $user = User::find($this->user_id);
+        if($user->type_of_user < 1){
+            return 'Customer';
+        } else {
+            return $user->fullName();
+        }
+    }
+
+    /**
+     * Get the notes for the audits.
+     */
+    public function notes()
+    {
+        return $this->hasMany(TradeinAuditNote::class);
     }
 }

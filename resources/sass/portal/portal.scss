@@ -35,6 +35,19 @@
     margin: 5px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 // audit trail - customer care - tradein summary
 .job-status-container{
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
@@ -72,4 +85,33 @@
 
 .lock-status-checkbox{
     width: 20px;
+}
+
+.add-note-button{
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#audit-note{
+    display: flex;
+    flex-direction: column;
+}
+
+#note-text{
+    min-height: 200px;
+}
+
+.note_item{
+    padding: 4px;
+    border-bottom: 1px solid black;
+    text-align: left;
+    display: flex;
+    margin-bottom: 4px;
+}
+
+.note_item_text{
+    color: black;
+    margin-left: 0;
+    font-size: 1em;
+    padding: 7px;
 }
