@@ -126,6 +126,8 @@
                                     <i class="fa fa-times" style="color:black !important;"></i>
                                 </a>
                                 @endif
+
+                                <!-- remove extra buttons and hide buttons depending on state -->
                                 
                                 </div>
                                 
