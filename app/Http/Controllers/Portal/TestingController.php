@@ -482,16 +482,17 @@ class TestingController extends Controller
             $tradein->marked_for_quarantine = true;
             $tradein->quarantine_date = \Carbon\Carbon::now();
 
-            if($request->fimp_or_google_lock === "true"){
-                $tradein->fimp = true;
-            }
-            if($request->pin_lock === "true"){
-                $tradein->pinlocked = true;
-            }
+            // if($request->fimp_or_google_lock === "true"){
+            //     $tradein->fimp = true;
+            // }
+            // if($request->pin_lock === "true"){
+            //     $tradein->pinlocked = true;
+            // }
 
             $tradein->save();
         }
         else{
+
             if($request->device_correct === "false"){
                 $tradein->marked_for_quarantine = true;
                 $tradein->device_correct = $request->select_correct_device;
@@ -615,6 +616,14 @@ class TestingController extends Controller
             $tradein->bamboo_grade = $request->bamboo_final_grade;
             $tradein->save();
         }
+
+        if($request->fimp_or_google_lock === "true") $tradein->fimp = true;
+        if($request->fimp_or_google_lock === "false") $tradein->fimp = false;
+
+        if($request->pin_lock === "true") $tradein->pinlocked = true;
+        if($request->pin_lock === "false") $tradein->pinlocked = false;
+
+        $tradein->save();
 
         $newBarcode = "";
 

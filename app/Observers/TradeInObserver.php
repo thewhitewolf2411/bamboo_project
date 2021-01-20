@@ -48,21 +48,36 @@ class TradeInObserver
      */
     public function updated(Tradein $tradein)
     {
-        $changes = $tradein->getChanges();
-        foreach($changes as $changed_column => $new_value){
-            if($changed_column !== 'updated_at'){
-                $old_value = $tradein->getOriginal($changed_column);
-                if($old_value !== $new_value){
-                    TradeinAudit::create([
-                        'tradein_id'    => $tradein->id,
-                        'column_name'   => $changed_column,
-                        'old_value'     => (string)$old_value,
-                        'new_value'     => (string)$new_value,
-                        'user_id'       => Auth::user()->id
-                    ]);
-                }
-            }
-        }
+        // $changes = $tradein->getChanges();
+        // foreach($changes as $changed_column => $new_value){
+        //     if($changed_column !== 'updated_at'){
+        //         $old_value = $tradein->getOriginal($changed_column);
+        //         if($old_value !== $new_value){
+        //             TradeinAudit::create([
+        //                 'tradein_id'    => $tradein->id,
+        //                 'column_name'   => $changed_column,
+        //                 'old_value'     => (string)$old_value,
+        //                 'new_value'     => (string)$new_value,
+        //                 'user_id'       => Auth::user()->id
+        //             ]);
+        //         }
+        //     }
+        // }
+
+        TradeinAudit::create([
+            'tradein_id' => $tradein->id,
+            'tradein_barcode' => $tradein->barcode,
+            'tradein_barcode_original' => $tradein->barcode_original,
+            'product_id' => $tradein->product_id,
+            'user_id' => Auth::user()->id,
+            'customer_status' => $tradein->getCustomerStatus(),
+            'bamboo_status' => $tradein->getBambooStatus(),
+            'customer_grade' => $tradein->product_state,
+            'bamboo_grade' => $tradein->bamboo_grade,
+            'value' => $tradein->order_price,
+            'stock_location' => ($tradein->getTrayName($tradein->id) !== 'Error') ? $tradein->getTrayName($tradein->id) : null,
+            'cheque_number' => null
+        ]);
     }
 
     /**
