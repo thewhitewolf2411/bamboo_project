@@ -235,7 +235,6 @@
         }
 
         if(confirm('This will set quarantine reason as ' + val + '. Are you sure?')){
-            console.log("here");
             $.ajax({
                 url: "/portal/quarantine/addQuarantineStatus",
                 type:"POST",

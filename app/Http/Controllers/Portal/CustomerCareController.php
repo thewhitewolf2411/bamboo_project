@@ -31,7 +31,10 @@ class CustomerCareController extends Controller
         $tradeins = null;
         $search = null;
 
+
         if($request->all() == null || $request->search == 0){
+
+
             $tradeins = Tradein::all()->where('job_state', 1)->groupBy('barcode');
 
             $user_id = Auth::user()->id;
@@ -40,7 +43,7 @@ class CustomerCareController extends Controller
             $search = null;
         }
         else{
-            if($request->search <= 3){
+            if(is_numeric($request->search) === true && $request->search <= 3){
                 $tradeins = Tradein::where('job_state', 1)->get();
                 $user_id = Auth::user()->id;
                 $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -57,9 +60,15 @@ class CustomerCareController extends Controller
                 $tradeins = $tradeins->groupBy('barcode');
             }
             else{
+
                 $tradeins = Tradein::where('barcode', $request->search)->get();
+
                 if(count($tradeins) < 1){
-                    return redirect()->back()->with('error', 'No Order with that barcode. Please try again.');
+                    $tradeins = Tradein::where('product_state', 'like', '%' . $request->search . '%');
+
+                }
+                if(count($tradeins) < 1){
+                    return redirect()->back()->with('error', 'No Order with those search parameters. Please try again.');
                 }
                 else{
                     $tradeins = $tradeins->groupBy('barcode');
@@ -143,6 +152,7 @@ class CustomerCareController extends Controller
             $product = SellingProduct::where('id', $tradein->product_id);
             $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
             $delAdress = strtr($user->delivery_address, array(', '=>'<br>'));
+            $delAdress = \explode('<br>', $delAdress);
 
             $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
             $pdf = PDF::loadView('portal.labels.tradeinlabel', 
@@ -190,6 +200,7 @@ class CustomerCareController extends Controller
 
         $barcode = DNS1D::getBarcodeHTML($request->hidden_print_trade_pack_trade_in_id, 'C128');
         $delAdress = strtr($user->delivery_address, array(', '=>'<br>'));
+        $delAdress = \explode('<br>', $delAdress);
 
         $pdf = PDF::loadView('portal.labels.tradeinlabel', array('user'=>$user, 'deladdress'=>$delAdress, 'tradein'=>$tradein, 'barcode'=>$barcode))->save('pdf/tradeinlabel-'. $request->hidden_print_trade_pack_trade_in_id .'.pdf');
 
@@ -306,8 +317,12 @@ class CustomerCareController extends Controller
                 $tradeins = $tradeins->groupBy('barcode_original');
             }
             else{
-
-                $tradeins = Tradein::where('barcode', $request->search)->orWhere('barcode_original', $request->search)->where('job_state', 2)->get();
+                
+                $tradeins = Tradein::where('job_state', 2)
+                                    ->where('barcode', $request->search)
+                                    ->orWhere('barcode_original', $request->search)
+                                    ->get();
+                #dd($tradeins->toSql());
                 if(count($tradeins) < 1){
                     return redirect()->back()->with('error', 'No Order with that barcode. Please try again.');
                 }
@@ -419,7 +434,7 @@ class CustomerCareController extends Controller
                 $tradeins = $tradeins->groupBy('barcode');
             }
             else{
-                $tradeins = Tradein::where('barcode', $request->search)->get();
+                $tradeins = Tradein::where('barcode', $request->search)->orWhere('barcode_original', $request->search)->get();
                 if(count($tradeins) < 1){
                     return redirect()->back()->with('error', 'No Order with that barcode. Please try again.');
                 }

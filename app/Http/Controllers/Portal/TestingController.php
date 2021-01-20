@@ -58,7 +58,6 @@ class TestingController extends Controller
         #dd($request);
         //if(!$this->checkAuthLevel(5)){return redirect('/');}
 
-
         $barcode = $request->scanid;
 
         $tradein = Tradein::where('barcode', $request->scanid)->first();
@@ -67,7 +66,10 @@ class TestingController extends Controller
             return redirect()->back()->with('error', 'There is no such device');
         }
         if($tradein->job_state < 3){
-            return redirect()->back()->with('error', 'Device has not been received yet, or has been sent to quarantine.');
+            if($tradein->marked_for_quarantine){
+                return redirect()->back()->with('error', 'Device was marked for quarantine on receiving and cannot be tested. If this device is in your tray, please remove it.');
+            }
+            return redirect()->back()->with('error', 'Device has not been received yet.');
         }
         elseif($tradein->job_state == 5){
             return redirect()->back()->with('error', 'Device was already tested.');
@@ -87,6 +89,25 @@ class TestingController extends Controller
         }    
 
 
+    }
+
+    public function getDeviceData(Request $request){
+        $device_id = $request->deviceid;
+
+        $networks = Network::all();
+        $sellingProduct = SellingProduct::where('id', $device_id)->first();
+        $productinformation = ProductInformation::where('product_id', $device_id)->get();
+        
+
+        $response = [
+
+            'networks'=>$networks,
+            'sellingProduct'=>$sellingProduct,
+            'productinformation'=>$productinformation,
+
+        ];
+
+        return $response;
     }
 
     public function receive(Request $request){
@@ -491,7 +512,7 @@ class TestingController extends Controller
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         $product = SellingProduct::where('id', $tradein->product_id)->first();
 
-        if($request->fimp_or_google_lock === "true" || $request->pin_locked === "true"){
+        if($request->fimp_or_google_lock === "true" || $request->pin_lock === "true"){
 
             $tradein->marked_for_quarantine = true;
             $tradein->quarantine_date = \Carbon\Carbon::now();
@@ -509,8 +530,10 @@ class TestingController extends Controller
             if($request->device_correct === "false"){
                 $tradein->marked_for_quarantine = true;
                 $tradein->device_correct = $request->select_correct_device;
+                $tradein->quarantine_date = \Carbon\Carbon::now();
                 $tradein->save();
             }
+
 
             if($tradein->job_state === 6){
                 $tradein->proccessed_before = true;
@@ -523,6 +546,7 @@ class TestingController extends Controller
     
             if($request->device_fully_functional === "false" && !($old_customer_grade == "Faulty" || $old_customer_grade == "Catastrophic")){
                 $tradein->marked_for_quarantine = true;
+                $tradein->quarantine_date = \Carbon\Carbon::now();
     
                 $testingfaults = new TestingFaults();
                 $testingfaults->tradein_id = $tradein->id;
@@ -577,8 +601,10 @@ class TestingController extends Controller
     
             }
             else{
-                $tradein->marked_for_quarantine = false;
-                $tradein->save();
+                if($request->device_correct !== "false"){
+                    $tradein->marked_for_quarantine = false;
+                    $tradein->save();
+                }
             }
     
             #dd($old_customer_grade === "Excellent Working", $old_customer_grade, "Excellent Working");
@@ -603,6 +629,7 @@ class TestingController extends Controller
 
             if($bambogradeval < $customergradeval){
                 $tradein->marked_for_quarantine = true;
+                $tradein->quarantine_date = \Carbon\Carbon::now();
             }
             if($request->correct_network == "false"){
                 $correctNetworkName = $request->correct_network_value;
@@ -627,6 +654,7 @@ class TestingController extends Controller
                 }
                 else{
                     $tradein->marked_for_quarantine = true;
+                    $tradein->quarantine_date = \Carbon\Carbon::now();
                     $tradein->correct_memory = $request->correct_memory_value;
                 }
     
