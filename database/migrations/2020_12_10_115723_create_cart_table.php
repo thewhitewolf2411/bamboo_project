@@ -19,7 +19,7 @@ class CreateCartTable extends Migration
             $table->integer('price');
             $table->integer('product_id');
             $table->string('type');
-            $table->string('network');
+            $table->string('network')->nullable(true)->default(null);
             $table->string('memory');
             $table->string('grade');
             $table->boolean('email_sent')->default(false);

@@ -102,12 +102,6 @@ class FeedsController extends Controller
             $k = 2;
             for($i=0; $i<count($columns)-3; $i++){
                 $sheet->setCellValue($datarows[$i] . "1", $columns[$i]);
-                $sheet->setCellValue('L1', 'avaliable_for_sell');
-                $sheet->setCellValue('M1', 'created_at');
-                $sheet->setCellValue('N1', 'updated_at');
-                $sheet->setCellValue('O1', 'product_network');
-                $sheet->setCellValue('P1', 'product_network_price');
-                $sheet->setCellValue('Q1', 'product_available_colours');
 
                 $sheet->setCellValue('F1', 'product_memory');
                 $sheet->setCellValue('G1', 'excellent_working');
@@ -115,6 +109,13 @@ class FeedsController extends Controller
                 $sheet->setCellValue('I1', 'poor_working');
                 $sheet->setCellValue('J1', 'damaged_working');
                 $sheet->setCellValue('K1', 'faulty');
+
+                $sheet->setCellValue('L1', 'avaliable_for_sell');
+                // $sheet->setCellValue('M1', 'created_at');
+                // $sheet->setCellValue('N1', 'updated_at');
+                $sheet->setCellValue('M1', 'product_network');
+                $sheet->setCellValue('N1', 'product_network_price');
+                $sheet->setCellValue('O1', 'product_available_colours');
             }
             foreach($products as $key=>$product){
                 $product = array_values($product->toArray());
@@ -131,6 +132,9 @@ class FeedsController extends Controller
                 $sheet->setCellValue('M' . $k, $product[7]);
                 $sheet->setCellValue('N' . $k, $product[8]);
 
+                $sheet->setCellValue('M' . $k, '');
+                $sheet->setCellValue('N' . $k, '');
+
                 $i=$k;
                 foreach($productInformation as $productInfo){
                     $sheet->setCellValue('F'.$i, $productInfo->memory);
@@ -145,14 +149,14 @@ class FeedsController extends Controller
 
                 $i=$k;
                 foreach($productNetworks as $network){
-                    $sheet->setCellValue('O'.$i, $network->getNetWorkName($network->network_id));
-                    $sheet->setCellValue('P'.$i, $network->knockoff_price);
+                    $sheet->setCellValue('M'.$i, $network->getNetWorkName($network->network_id));
+                    $sheet->setCellValue('N'.$i, $network->knockoff_price);
                     $i++;
                 }
 
                 $i=$k;
                 foreach($productColor as $color){
-                    $sheet->setCellValue('Q'.$i, $color->color_value);
+                    $sheet->setCellValue('O'.$i, $color->color_value);
                     $i++;
                 }
             
@@ -359,6 +363,8 @@ class FeedsController extends Controller
         }
         else if($export_feed_parameter == 2){
 
+            // ignore 12 & 13 (created_at and updated_at) index at
+
             // required fields for importing Recycle products
             $required_product_fields = ['product_name', 'product_image', 'category_id', 'brand_id'];
             // if memory, then these required
@@ -471,11 +477,11 @@ class FeedsController extends Controller
                 foreach($networks as $network){
 
                     // if network is present and valid, add product network
-                    if($importeddata[$key][14] !== null && $network->network_name == $importeddata[$key][14]){
+                    if($importeddata[$key][12] !== null && $network->network_name == $importeddata[$key][12]){
 
                         // check if product network info is valid
                         $valid_network_info = false;
-                        if(isset($row[15])){
+                        if(isset($row[13])){
                             $valid_network_info = true;
                         }
 
@@ -483,7 +489,7 @@ class FeedsController extends Controller
                             $productNetworks = new ProductNetworks();
                             $productNetworks->network_id = $network->id;
                             $productNetworks->product_id = $sellingProduct->id;
-                            $productNetworks->knockoff_price = $importeddata[$key][15];
+                            $productNetworks->knockoff_price = $importeddata[$key][13];
                             $productNetworks->save();
                         } else {
                             array_push($export_log, "Missing Selling Product [" . $sellingProduct->product_name . "] network [" . $network->network_name . "] info: " . $file_header[15]);
@@ -494,11 +500,11 @@ class FeedsController extends Controller
                 }
 
                 // check if product color info is valid
-                if($importeddata[$key][16] !== null){
+                if($importeddata[$key][14] !== null){
 
                     $productColours = new Colour();
                     $productColours->product_id = $sellingProduct->id;
-                    $productColours->color_value = $importeddata[$key][16];
+                    $productColours->color_value = $importeddata[$key][14];
                     $productColours->save(); 
                     
                 }

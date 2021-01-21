@@ -36,22 +36,25 @@
                     <div class="product-selected product-name-container">
                         <p class="product-title">{{$product->product_name}}</p>
                     </div>
-                    <div class="product-selected product-network-container" id="product-network-container">
-                        <p>Select Network:</p>
 
-                        <div class="d-flex">
-                        @foreach($networks as $network)
-                            <div><label class="network-container mr-3" id="{{$network->getNetWorkName($network->network_id)}}" for="network-{{$network->id}}"><img src="{{$network->getNetWorkImage($network->network_id)}}"></label></div>
-                        @endforeach
-                        </div>
+                    @if(!$networks->isEmpty())
+                        <div class="product-selected product-network-container" id="product-network-container">
+                            <p>Select Network:</p>
 
-                        <div class="d-flex">
-                        @foreach($networks as $network)
-                            <input id="network-{{$network->id}}" name="network" value="{{$network->knockoff_price}}" onchange="networkChanged(this)" type="radio">
-                        @endforeach
+                            <div class="d-flex">
+                            @foreach($networks as $network)
+                                <div><label class="network-container mr-3" id="{{$network->getNetWorkName($network->network_id)}}" for="network-{{$network->id}}"><img src="{{$network->getNetWorkImage($network->network_id)}}"></label></div>
+                            @endforeach
+                            </div>
+
+                            <div class="d-flex">
+                            @foreach($networks as $network)
+                                <input id="network-{{$network->id}}" name="network" value="{{$network->knockoff_price}}" onchange="networkChanged(this)" type="radio">
+                            @endforeach
+                            </div>
                         </div>
+                    @endif
                         
-                    </div>
                     <div class="product-selected product-memory-container">
                         <p>Select Memory:</p>
 
@@ -83,11 +86,11 @@
                         </div>
                     
                         <div class="d-flex">
-                            <input id="grade-1" name="grade" type="radio" value="1" onchange="gradeChanged(this)">
-                            <input id="grade-2" name="grade" type="radio" value="2" onchange="gradeChanged(this)">
-                            <input id="grade-3" name="grade" type="radio" value="3" onchange="gradeChanged(this)">
-                            <input id="grade-4" name="grade" type="radio" value="4" onchange="gradeChanged(this)">
-                            <input id="grade-5" name="grade" type="radio" value="5" onchange="gradeChanged(this)">
+                            <input id="grade-1" name="grade" type="radio" value="1" onchange="gradeChanged(this @if($networks->isEmpty()), true @endif) ">
+                            <input id="grade-2" name="grade" type="radio" value="2" onchange="gradeChanged(this @if($networks->isEmpty()), true @endif) ">
+                            <input id="grade-3" name="grade" type="radio" value="3" onchange="gradeChanged(this @if($networks->isEmpty()), true @endif) ">
+                            <input id="grade-4" name="grade" type="radio" value="4" onchange="gradeChanged(this @if($networks->isEmpty()), true @endif) ">
+                            <input id="grade-5" name="grade" type="radio" value="5" onchange="gradeChanged(this @if($networks->isEmpty()), true @endif) ">
                         </div>
                     </div>
 
