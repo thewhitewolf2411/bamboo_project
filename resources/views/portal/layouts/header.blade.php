@@ -27,6 +27,7 @@
             @endif
 
             @if($portalUser->buying)
+            <!--
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     E-commerce
@@ -37,6 +38,7 @@
                     @if($portalUser->selling_status)<a class="dropdown-item" href="/portal/ecommerence/order-status">Order Status</a>@endif
                 </div>
             </div>
+            -->
             @endif
 
             @if($portalUser->customer_care)

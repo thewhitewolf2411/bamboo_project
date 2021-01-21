@@ -23,7 +23,8 @@ use App\Eloquent\TrayContent;
 use App\Eloquent\Network;
 use App\Eloquent\Colour;
 use App\Eloquent\TestingFaults;
-
+use Klaviyo\Klaviyo as Klaviyo;
+use Klaviyo\Model\EventModel as KlaviyoEvent;
 
 class TestingController extends Controller
 {
@@ -196,11 +197,23 @@ class TestingController extends Controller
                 )
             );
             array_push($message, "This device has been found as missing from received order, and has been marked for quarantine. Please confirm this.");
+        
+            $tradein->save();
+
+            $mti = false;
+            if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>1){
+                $mti = true;
+            }
+    
+
+            return redirect('/portal/testing/result/' . $tradein->id);
         }
 
         $tradein->save();
 
         $mti = false;
+
+        
 
         if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>1){
             $mti = true;
@@ -325,7 +338,7 @@ class TestingController extends Controller
         }
 
         $tradein->save();
-        if($tradein->marked_for_quarantine && $tradein->chekmend_passed){
+        if($tradein->visible_imei == false){
             return redirect('/portal/testing/result/' . $tradein->id);
         }
 

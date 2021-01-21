@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuarantineReffsItemsTable extends Migration
+class CreateQuarantineBinsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateQuarantineReffsItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('quarantine_reffs_items', function (Blueprint $table) {
+        Schema::create('quarantine_bins', function (Blueprint $table) {
             $table->id();
-            $table->integer('quarantine_reffs_id');
-            $table->integer('trade_in_id');
+            $table->string('bin_name');
+            $table->string('device_quantity')->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateQuarantineReffsItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quarantine_reffs_items');
+        Schema::dropIfExists('quarantine_bays');
     }
 }
