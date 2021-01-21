@@ -9,6 +9,7 @@ use App\Eloquent\Category;
 use App\Eloquent\Brand;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
+use App\User;
 
 class Tradein extends Model
 {
@@ -32,6 +33,19 @@ class Tradein extends Model
 
     public function getProductName($id){
         return SellingProduct::where('id', $id)->first()->product_name;
+    }
+
+    public function customer(){
+        $user = User::find($this->user_id);
+        return $user;
+    }
+
+    public function postCode(){
+        return null;
+    }
+    
+    public function location(){
+        return  null;
     }
 
     public function getProductImage($id){
@@ -201,6 +215,10 @@ class Tradein extends Model
 
     }
 
+    /**
+     * array[0]. bamboo status
+     * array[1]. customer status
+     */
     public function getDeviceStatus($id, $job_state){
 
         switch($job_state){
@@ -358,6 +376,52 @@ class Tradein extends Model
         
     }
 
+    public function getCustomerStatus(){
+        return $this->getDeviceStatus($this->id, $this->job_state)[1];
+    }
+
+    public function getBambooStatus(){
+        return $this->getDeviceStatus($this->id, $this->job_state)[0];
+    }
+
+    public function isGoogleLocked(){
+        if($this->fimp){
+            return true;
+        }
+        return $this->fimp;
+    }
+
+    public function isPinLocked(){
+        if($this->pinlocked){
+            return true;
+        }
+        return $this->pinlocked;
+    }
+
+    public function isBlacklisted(){
+        // blackliststatus
+        $result = ImeiResult::where('tradein_id', $this->id)->first();
+        if($result){
+            if($result->blackliststatus === "Yes"){
+                return true;
+            }
+            return false;
+        }
+        return null;
+    }
+
+    public function isSIMLocked(){
+        // greyliststatus
+        $result = ImeiResult::where('tradein_id', $this->id)->first();
+        if($result){
+            if($result->greyliststatus === "Yes"){
+                return true;
+            }
+            return false;
+        }
+        return null;
+    }
+    
 
     public function getQuarantineReason($id){
 

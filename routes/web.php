@@ -101,6 +101,12 @@ Route::get('/portal/customer-care/trade-in/{id}', 'Portal\CustomerCareController
 Route::get('/portal/customer-care/trade-in/{id}/details', 'Portal\CustomerCareController@showMoreTradeInDetails')->name('tradeInDetails')->middleware('auth');
 Route::post('/portal/customer-care/trade-in/printlabel', 'Portal\CustomerCareController@PrintTradeInLabel')->name('tradeInLabel')->middleware('auth');
 Route::post('/portal/customer-care/trade-in/printlabelbulk', 'Portal\CustomerCareController@PrintTradeInLabelBulk')->name('tradeInLabel')->middleware('auth');
+// audit notes
+Route::post('/portal/customer-care/trade-in/addauditnote', 'Portal\CustomerCareController@addAuditNote')->name('addAuditNote')->middleware('auth');
+Route::post('/portal/customer-care/trade-in/updateauditnote', 'Portal\CustomerCareController@updateAuditNote')->name('updateAuditNote')->middleware('auth');
+Route::post('/portal/customer-care/trade-in/deleteauditnote', 'Portal\CustomerCareController@deleteAuditNote')->name('deleteAuditNote')->middleware('auth');
+
+
 
 Route::get('/portal/customer-care/trade-out', 'Portal\CustomerCareController@showTradeOut')->name('tradeOut')->middleware('auth');
 Route::get('/portal/customer-care/trade-out/{id}', 'Portal\CustomerCareController@showTradeOutDetails')->name('tradeOutDetails')->middleware('auth');
@@ -120,6 +126,7 @@ Route::get('/portal/customer-care/createorder', 'Portal\CustomerCareController@c
 Route::get('/portal/customer-care/trade-pack/markforreprint/{id}', 'Portal\CustomerCareController@markForReprint')->middleware('auth');
 Route::get('/portal/customer-care/order-managment/{search?}', 'Portal\CustomerCareController@showOrderManagment')->middleware('auth');
 Route::post('/portal/customer-care/printdevicelabel', 'Portal\CustomerCareController@printDeviceLabel')->middleware('auth');
+Route::post('/portal/customer-care/sendtodespatch', 'Portal\CustomerCareController@sendToDespatch')->name('sendToDespatch')->middleware('auth');
 
 Route::get('/toreceive/{barcode}', 'Portal\CustomerCareController@sendDeviceBackToReceive');
 Route::get('/totest/{barcode}', 'Portal\CustomerCareController@sendDeviceBackToTest');

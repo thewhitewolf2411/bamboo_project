@@ -27,4 +27,29 @@ class User extends Authenticatable
         'first_name', 'last_name', 'email','password','current_phone','preffered_os','sub','delivery_address','billing_address','contact_number','bamboo_credit',
         'username','worker_email'
     ];
+
+    public function fullName(){
+        return $this->first_name . " " . $this->last_name;
+    }
+
+    public function superAdmin(){
+        if($this->type_of_user === 3){
+            return true;
+        }
+        return false;
+    }
+
+    public function canDeleteNotes(){
+        if($this->type_of_user === 3){
+            return "true";
+        }
+        return "false";
+    }
+
+    public function admin(){
+        if($this->type_of_user > 1){
+            return true;
+        }
+        return false;
+    }
 }

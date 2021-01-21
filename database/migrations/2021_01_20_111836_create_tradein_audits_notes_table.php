@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStoresTable extends Migration
+class CreateTradeinAuditsNotesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateStoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('stores', function (Blueprint $table) {
+        Schema::create('tradein_audits_notes', function (Blueprint $table) {
             $table->id();
-            $table->string('store_image');
-            $table->string('store_name');
-            $table->string('store_address');
+            $table->integer('tradein_audit_id');
+            $table->integer('user_id');
+            $table->text('note');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateStoresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stores');
+        Schema::dropIfExists('tradein_audits_notes');
     }
 }

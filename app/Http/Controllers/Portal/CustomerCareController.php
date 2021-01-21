@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Portal;
 
+use App\Audits\TradeinAudit;
+use App\Audits\TradeinAuditNote;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Eloquent\PortalUsers;
@@ -26,6 +28,7 @@ class CustomerCareController extends Controller
     }
 
     public function showTradeIn(Request $request){
+
         //if(!$this->checkAuthLevel(1)){return redirect('/');}
 
         $tradeins = null;
@@ -82,6 +85,9 @@ class CustomerCareController extends Controller
         return view('portal.customer-care.trade-in')->with('tradeins', $tradeins)->with('portalUser', $portalUser)->with('search',$search);
     }
 
+    /**
+     * Show tradein details.
+     */
     public function showTradeInDetails($id){
         //if(!$this->checkAuthLevel(1)){return redirect('/');}
         $tradein = Tradein::where('barcode', $id)->get();
@@ -89,7 +95,55 @@ class CustomerCareController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
         $user = User::where('id', $tradein[0]->user_id)->first();
 
-        
+        $tradein_audits = TradeinAudit::with('notes')->where('tradein_id', $tradein[0]->id)->orderBy('created_at', 'desc')->get();
+        foreach($tradein_audits as $audit){
+            $audit->notes_count = $audit->notes->count();
+            foreach($audit->notes as $note){
+                $note->date = $note->created_at->format('d.m.Y H:i');
+                $note->user = User::find($note->user_id)->fullName();
+            }
+        }
+
+        // foreach($tradein_audits as $audit){
+        //     $barcode = null;
+        //     //$product = null;
+        //     $customer_status = null;
+        //     $bamboo_status = null;
+            
+        //     if($audit['column_name'] === 'barcode'){
+        //         $barcode = $audit['new_value'];
+        //     } else {
+        //         $barcode = $trade_in->barcode;
+        //     }
+        //     if($audit['column_name'] === 'job_state'){
+        //         $job_state = $audit['new_value'];
+        //         $customer_status = $trade_in->getDeviceStatus($trade_in->id, $job_state)[1];
+        //         $bamboo_status = $trade_in->getDeviceStatus($trade_in->id, $job_state)[0];
+        //     } else {
+        //         $customer_status = $trade_in->getCustomerStatus();
+        //         $bamboo_status = $trade_in->getBambooStatus();
+        //     }
+
+
+        //     //$barcode = (isset($audit))
+        //     array_push($audits, [
+        //         'pos' => $position,
+        //         'date_placed' => $audit->created_at->format('d/m/Y H:i'),
+        //         'tradein_id' => $barcode,
+        //         'tradein_barcode' => $trade_in->barcode_original,
+        //         'product' => $trade_in->getProductName($trade_in->product_id),
+        //         'user' => Auth::user()->fullName(),
+        //         'customer_status' => $customer_status,
+        //         'bamboo_status' => $bamboo_status,
+        //         'customer_grade' => 'Gr8 m8',
+        //         'bamboo_grade' => 'Gr8 m8',
+        //         'value' => '3 KM',
+        //         'stock_location' => 'Somewhere',
+        //         'cheque_number' => '12345',
+        //     ]);
+        //     $position++;
+        // }
+
 
         $testingfaults = TestingFaults::where('tradein_id', $tradein[0]->id)->first();
 
@@ -98,7 +152,8 @@ class CustomerCareController extends Controller
                         'portalUser'=>$portalUser,
                         'user'=>$user,
                         'barcode'=>$id,
-                        'testingfaults'=>$testingfaults 
+                        'testingfaults'=>$testingfaults,
+                        'audits' => $tradein_audits
                 ]);
     }
 
@@ -111,6 +166,45 @@ class CustomerCareController extends Controller
         $user = User::where('id', $tradein->user_id)->first();
         return view('portal.customer-care.trade-in-product-details')->with('tradein', $tradein)->with('portalUser', $portalUser)->with('user', $user);
     }
+
+    /**
+     * Store tradein audit note.
+     */
+    public function addAuditNote(Request $request){
+        if(isset($request->id) && isset($request->note)){
+            $audit_note = new TradeinAuditNote([
+                'tradein_audit_id' => $request->id,
+                'user_id' => Auth::user()->id,
+                'note' => $request->note
+                ]);
+            $audit_note->save();
+            return response(200);
+        }
+    }
+
+    /**
+     * Update audit note.
+     */
+    public function updateAuditNote(Request $request){
+        if(isset($request->id) && isset($request->note)){
+            $audit_note = TradeinAuditNote::find($request->id);
+            $audit_note->note = $request->note;
+            $audit_note->save();
+            return response(200);
+        }
+    }
+
+    /**
+     * Delete audit note.
+     */
+    public function deleteAuditNote(Request $request){
+        if(isset($request->id)){
+            $audit_note = TradeinAuditNote::find($request->id);
+            $audit_note->delete();
+            return response(200);
+        }
+    }
+
 
     public function PrintTradeInLabelBulk(Request $request){
 
@@ -402,6 +496,9 @@ class CustomerCareController extends Controller
         return redirect()->back()->with('success', 'Tradein with id '. $tradein->id . ' has been sent to reprint.');
     }
 
+    /**
+     * Show order managment table.
+     */
     public function showOrderManagment(Request $request){
         //if(!$this->checkAuthLevel(1)){return redirect('/');}
         $user_id = Auth::user()->id;
@@ -448,6 +545,21 @@ class CustomerCareController extends Controller
         }
 
         return view('portal.customer-care.order-management')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Order Management')->with('search', $request->search);
+    }
+
+    /**
+     * Send device to despatch.
+     */
+    public function sendToDespatch(){
+        if(isset(request()->id)){
+            $tradeIn = Tradein::find(request()->id);
+            if($tradeIn){
+                # received and passed
+                $tradeIn->job_state = 11;
+                $tradeIn->save();
+                return response(200);
+            }
+        }
     }
 
     public function sendDeviceBackToReceive($barcode){

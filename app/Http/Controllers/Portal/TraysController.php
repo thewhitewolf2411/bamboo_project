@@ -13,6 +13,7 @@ use File;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
 use App\Eloquent\PortalUsers;
+use App\Eloquent\Tradein;
 use App\Eloquent\Trolley;
 use App\Eloquent\TrolleyContent;
 

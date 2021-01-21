@@ -527,6 +527,7 @@ class TestingController extends Controller
             $tradein->save();
         }
         else{
+
             if($request->device_correct === "false"){
                 $tradein->marked_for_quarantine = true;
                 $tradein->device_correct = $request->select_correct_device;
@@ -664,6 +665,8 @@ class TestingController extends Controller
             $tradein->bamboo_grade = $request->bamboo_final_grade;
             $tradein->save();
         }
+
+        $tradein->save();
 
         $newBarcode = "";
 

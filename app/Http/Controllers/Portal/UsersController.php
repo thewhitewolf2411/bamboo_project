@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use App\User;
 use App\Eloquent\PortalUsers;
+use Illuminate\Support\Facades\Crypt;
 
 class UsersController extends Controller
 {
@@ -70,7 +71,7 @@ class UsersController extends Controller
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->password = Crypt::encrypt($request->password);
-        $user->birthdate = "01.08.2020";
+        //$user->birthdate = "01.08.2020";
         $user->current_phone = 0;
         $user->preffered_os = 'none';
         $user->sub = 0;
