@@ -484,13 +484,9 @@ class TestingController extends Controller
 
             if($request->fimp_or_google_lock === "true"){
                 $tradein->fimp = true;
-            } else {
-                $tradein->fimp = false;
             }
             if($request->pin_lock === "true"){
                 $tradein->pinlocked = true;
-            } else {
-                $tradein->pinlocked = false;
             }
 
             $tradein->save();

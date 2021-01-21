@@ -103,38 +103,57 @@
                                 </a>
                                 </div>
                             </td>
-                            <td><div class="table-element">
-                                @if($tradein->job_state <= 2)
-                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint tradepack">
-                                    <i class="fa fa fa-print"></i>
-                                </a>
-                                @else
-                                <a href="javascript:void(0)" onclick = printDeviceLabel({{$tradein->barcode}}) title="Print device label">
-                                    <i class="fa fa fa-print"></i>
-                                </a>
+                            <td>
+                                <div class="table-element">
+                                    @if($tradein->job_state <= 2)
+                                    <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint tradepack">
+                                        <i class="fa fa fa-print"></i>
+                                    </a>
+                                    @else
+                                    <a href="javascript:void(0)" onclick = printDeviceLabel({{$tradein->barcode}}) title="Print device label">
+                                        <i class="fa fa fa-print"></i>
+                                    </a>
+                                    @endif
+                                </div>
+                            </td>
+                                
+                            <td class="text-center 1">
+                                @if($tradein->job_state == 3 || $tradein->job_state >= 5 && $tradein->job_state !== 6)
+                                    <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
+                                        {{-- <i class="fa fa-times" style="color:blue !important;" title="Return device to receiving" ></i> --}}
+                                        <img style="width: 15px;" src="{{url('/images/undo.png')}}">
+                                    </a>
                                 @endif
-                                @if($tradein->job_state == 3)
-                                <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
-                                    <i class="fa fa-times" style="color:blue !important;" title="Return device to receiving" ></i>
-                                </a>
-                                @endif
+                            </td>
+                                
+                            <!-- <td class="text-center 2">
                                 @if($tradein->job_state >= 5 && $tradein->job_state !== 6)
                                 <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
-                                    <i class="fa fa-times" style="color:blue !important;"></i>
-                                </a>
-                                <a title="Return device to testing" href="/totesting/{{$tradein->id}}">
-                                    <i class="fa fa-times" style="color:black !important;"></i>
+                                    {{-- <i class="fa fa-times" style="color:blue !important;"></i> --}}
+                                    <img style="width: 15px;" src="{{url('/images/undo.png')}}">
                                 </a>
                                 @endif
+                            </td> -->
+                            
+                            <td class="text-center 3">
+                                @if($tradein->job_state >= 5 && $tradein->job_state !== 6)
+                                <a title="Return device to testing" href="/totesting/{{$tradein->id}}">
+                                    {{-- <i class="fa fa-times" style="color:black !important;"></i> --}}
+                                    <img style="width: 15px;" src="{{url('/images/undo.png')}}">
+                                </a>
+                                @endif
+                            </td>
+                                
 
-                                <!-- remove extra buttons and hide buttons depending on state -->
                                 
-                                </div>
-                                
-                            </td>                        
-                            <td class="text-center"><a href="#" title="Revert to receiving" onclick="revertToReceiving({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a></td> 
-                            <td class="text-center"><a href="#" title="Revert to testing" onclick="revertToTesting({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a></td>
-                            <td class="text-center"><a href="#" title="Send to Despatch" onclick="sendToDespatch({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a></td>
+                                                       
+                            {{-- <td class="text-center"><a href="#" title="Revert to receiving" onclick="revertToReceiving({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a></td> 
+                            <td class="text-center"><a href="#" title="Revert to testing" onclick="revertToTesting({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a></td> --}}
+                            <td class="text-center 4">
+                                @if($tradein->job_state !== 11)
+                                    <a href="#" title="Send to Despatch" onclick="sendToDespatch({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a>
+                                @endif
+                            </td>
 
                         </tr>
 
@@ -198,38 +217,6 @@
 </div>
 
 <script>
-    function revertToReceiving(id){
-        $.ajax({
-            type: "POST",
-            url: "{{route('revertToReceiving')}}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {id: id},
-            success: function(response) {
-                if(response == 200){
-                    alert('Trade-in reverted to receiving.');
-                    window.location.reload();
-                }
-            }
-        });
-    }
-    function revertToTesting(id){
-        $.ajax({
-            type: "POST",
-            url: "{{route('revertToTesting')}}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {id: id},
-            success: function(response) {
-                if(response == 200){
-                    alert('Trade-in reverted to testing.');
-                    window.location.reload();
-                }
-            }
-        });
-    }
     function sendToDespatch(id){
         $.ajax({
             type: "POST",

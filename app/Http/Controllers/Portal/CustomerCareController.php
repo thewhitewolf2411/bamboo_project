@@ -513,36 +513,6 @@ class CustomerCareController extends Controller
     }
 
     /**
-     * Revert tradein state to receiving.
-     */
-    public function revertToReceiving(){
-        if(isset(request()->id)){
-            $tradeIn = Tradein::find(request()->id);
-            if($tradeIn){
-                # trade pack dispached/user printed
-                $tradeIn->job_state = 2;
-                $tradeIn->save();
-                return response(200);
-            }
-        }
-    }
-
-    /**
-     * Revert tradein state to testing.
-     */
-    public function revertToTesting(){
-        if(isset(request()->id)){
-            $tradeIn = Tradein::find(request()->id);
-            if($tradeIn){
-                # received and passed
-                $tradeIn->job_state = 3;
-                $tradeIn->save();
-                return response(200);
-            }
-        }
-    }
-
-    /**
      * Send device to despatch.
      */
     public function sendToDespatch(){

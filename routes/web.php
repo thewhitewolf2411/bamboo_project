@@ -126,11 +126,7 @@ Route::get('/portal/customer-care/createorder', 'Portal\CustomerCareController@c
 Route::get('/portal/customer-care/trade-pack/markforreprint/{id}', 'Portal\CustomerCareController@markForReprint')->middleware('auth');
 Route::get('/portal/customer-care/order-managment/{search?}', 'Portal\CustomerCareController@showOrderManagment')->middleware('auth');
 Route::post('/portal/customer-care/printdevicelabel', 'Portal\CustomerCareController@printDeviceLabel')->middleware('auth');
-
-Route::post('/portal/customer-care/reverttoreceiving', 'Portal\CustomerCareController@revertToReceiving')->name('revertToReceiving')->middleware('auth');
-Route::post('/portal/customer-care/reverttotesting', 'Portal\CustomerCareController@revertToTesting')->name('revertToTesting')->middleware('auth');
 Route::post('/portal/customer-care/sendtodespatch', 'Portal\CustomerCareController@sendToDespatch')->name('sendToDespatch')->middleware('auth');
-
 
 Route::get('/toreceive/{barcode}', 'Portal\CustomerCareController@sendDeviceBackToReceive');
 Route::get('/totest/{barcode}', 'Portal\CustomerCareController@sendDeviceBackToTest');
