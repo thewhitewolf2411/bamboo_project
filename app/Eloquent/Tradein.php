@@ -41,11 +41,11 @@ class Tradein extends Model
     }
 
     public function postCode(){
-        return "71000";
+        return null;
     }
     
     public function location(){
-        return 'Las Vegas';
+        return  null;
     }
 
     public function getProductImage($id){
