@@ -39,10 +39,12 @@ class CreateTradeinTable extends Migration
             $table->boolean('device_present_as_described')->nullable()->default(null);
             $table->boolean('chekmend_passed')->nullable()->default(null);
             $table->string('imei_number', 15)->nullable()->default(null);
+            $table->string('serial_number')->nullable()->default(null);
             $table->boolean('marked_as_risk')->nullable()->default(null);
             $table->boolean('marked_for_quarantine')->nullable()->default(null);
             $table->string('change_device')->nullable()->default(null);
             $table->boolean('visible_imei')->nullable()->default(null);
+            $table->boolean('visible_serial')->nullable()->default(null);
             $table->boolean('proccessed_before')->nullable()->default(null);
             $table->string('bamboo_grade')->nullable()->default(null);
             $table->boolean('older_than_14_days')->nullable()->default(null);

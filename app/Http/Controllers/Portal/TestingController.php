@@ -220,11 +220,35 @@ class TestingController extends Controller
         }
 
 
+        // for products without network, send device to serial check
+        $product_category = SellingProduct::find($tradein->product_id)->category_id;
 
-        return redirect('/portal/testing/checkforimei/' . $tradein->id);
-        
+        if($product_category > 1 && is_null($tradein->network)){
+            return redirect('/portal/testing/checkforserial/' . $tradein->id);
+        } else {
+            return redirect('/portal/testing/checkforimei/' . $tradein->id);
+        }
+
     }
 
+    /**
+     * Display check for device serial number visibility.
+     */
+    public function showCheckForSerialPage($id){
+        //if(!$this->checkAuthLevel(5)){return redirect('/');}
+        $tradein = Tradein::where('id', $id)->first();
+        $user  = User::where('id', $tradein->user_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.testing.receiving.showcheckserial')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
+    }
+
+    /**
+     * Display check for device IMEI number visibility.
+     */
     public function showCheckForImeiPage($id){
         //if(!$this->checkAuthLevel(5)){return redirect('/');}
         $tradein = Tradein::where('id', $id)->first();
@@ -237,6 +261,9 @@ class TestingController extends Controller
         return view('portal.testing.receiving.checkimei')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
     }
 
+    /**
+     * Send recieving device to quarantine.
+     */
     public function sendReceivingDeviceToQuarantine(Request $request){
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         $user_id = Auth::user()->id;
@@ -345,6 +372,31 @@ class TestingController extends Controller
         return redirect('/portal/testing/checkimei/' . $tradein->id);
     }
 
+    /**
+     * Determine if device's serial is visible.
+     */
+    public function deviceSerialVisibility(Request $request){
+        $tradein = Tradein::where('id', $request->tradein_id)->first();
+
+        if($request->visible_serial == "yes"){
+            $tradein->visible_serial = true;
+        }
+        else{
+            $tradein->visible_serial = false;
+            $tradein->marked_for_quarantine = true;
+        }
+
+        $tradein->save();
+        if($tradein->visible_serial == false){
+            return redirect('/portal/testing/result/' . $tradein->id);
+        }
+
+        return redirect('/portal/testing/receive/checkserial/' . $tradein->id);
+    }
+
+    /**
+     * Show page for IMEI verification.
+     */
     public function showCheckImeiPage($id){
         //if(!$this->checkAuthLevel(5)){return redirect('/');}
         $tradein = Tradein::where('id', $id)->first();
@@ -357,11 +409,103 @@ class TestingController extends Controller
         return view('portal.testing.receiving.checkmend')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
     }
 
+    /**
+     * Show page for serial verification.
+     */
+    public function showCheckSerialPage($id){
+        //if(!$this->checkAuthLevel(5)){return redirect('/');}
+        $tradein = Tradein::where('id', $id)->first();
+        $user  = User::where('id', $tradein->user_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.testing.receiving.checkserial')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
+    }
+
+    /**
+     * Verify device's IMEI number.
+     */
     public function checkimei(Request $request){
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         $imei_number = $request->imei_number;
 
         #dd($imei_number);
+
+        if(strlen($imei_number)>15 || strlen($imei_number)<15){
+            return redirect()->back()->with('error', 'Incorrect IMEI number. Must be 15 characters');
+        }
+
+        $url = 'https://clientapiv2.phonecheck.com/cloud/cloudDB/CheckEsn/';
+
+
+        $ApiKey = "f06581b6-f4b3-4d40-a65e-6a39acf045fb";
+        $username = "bamboo11";
+        $devicetype = "Android";
+        $carrier = "AT&T";
+        
+        $post = [
+            'ApiKey' => $ApiKey,
+            'Username' => $username,
+            'IMEI' => $imei_number,
+            'Devicetype' => $devicetype,
+            'carrier' => $carrier,
+        ];
+
+        $ch = curl_init($url);
+
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        // execute!
+        $response = curl_exec($ch);
+
+        $result = (json_decode($response));
+        if($result->RawResponse->blackliststatus == "Yes"){
+            $tradein->marked_for_quarantine = true;
+            $tradein->chekmend_passed = false;
+            $tradein->save();
+        }
+
+
+        $imeiResult = ImeiResult::where('tradein_id', $request->tradein_id)->first();
+
+        if($imeiResult == null){
+            $imeiResult = new ImeiResult();
+        }
+
+        $imeiResult->tradein_id = $request->tradein_id;
+        $imeiResult->API =  $result->API;
+        $imeiResult->remarks =  $result->Remarks;
+        $imeiResult->model_name =  $result->RawResponse->modelname;
+        $imeiResult->blackliststatus =  $result->RawResponse->blackliststatus;
+        $imeiResult->greyliststatus =  $result->RawResponse->greyliststatus;
+
+        $imeiResult->save();
+
+        $tradein->imei_number = $imei_number;
+        $tradein->save();
+
+        $user  = User::where('id', $tradein->user_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        #$this->showCheckImeiReultPage($tradein->barcode, $result);
+
+        return redirect('/portal/testing/result/' . $tradein->id);
+
+    }
+
+    /**
+     * Verify device serial number.
+     */
+    public function checkserial(Request $request){
+        $tradein = Tradein::where('id', $request->tradein_id)->first();
+        $serial_number = $request->serial_number;
+
+        dd('Check device serial number: ', $serial_number);
 
         if(strlen($imei_number)>15 || strlen($imei_number)<15){
             return redirect()->back()->with('error', 'Incorrect IMEI number. Must be 15 characters');
