@@ -48,6 +48,15 @@
                     @if(Session::has('error'))
                     <div class="alert alert-danger" role="alert">
                         {{Session::get('error')}}
+
+                        @if(Session::has('notallocated'))
+                        Barcode numbers of the devices that hasn't been allocated to new trays:
+                        <ul>
+                            @foreach(Session::get('notallocated') as $notAssigned)
+                                <li>{{$notAssigned}}</li>
+                            @endforeach
+                        </ul>
+                        @endif
                     </div>
                     @endif
                     @if(Session::has('success'))
@@ -152,6 +161,9 @@
             <div class="modal-body p-5">
                 <form action="/portal/quarantine/mark-devices-return-to-customer" method="post">
                     <table class="portal-table" id="categories-table">
+                        <div id="statement">
+                        
+                        </div>
                         <label>These devices are marked for return to customer. Please confirm.</label>
                         <tr>
                             <td><div class="table-element">Trade-in Barcode</div></td>
@@ -164,7 +176,14 @@
                             @csrf
                             @foreach(Session::get('returnToCustomer') as $tradein)
                             <input type="hidden" name="tradein-{{$tradein->id}}" value="{{$tradein->id}}">
-                            <tr>
+                            @if($tradein->job_state !== 16)
+                            <script>
+                            
+                                $('#statement').append('<div class="alert alert-warning"> Order number ' + {!! $tradein->barcode !!} + ' has not been requested by customer to be returned. Are you sure? </div>')
+                            
+                            </script>
+                            @endif
+                            <tr @if($tradein->job_state !== 16) style="background: #fff3cd !important" @else style="background: #d4edda !important" @endif >
                                 <td><div class="table-element">{{$tradein->barcode}}</div></td>
                                 <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                                 <td><div class="table-element">{{$tradein->imei_number}}</div></td>
@@ -193,6 +212,76 @@
         });
 
     
+    </script>
+    @endif
+
+    @if(Session::has('hasAllocateToTrays'))
+
+    <div id="allocate-to-tray-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Allocate devices to tray</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body p-5">
+                <form action="/portal/quarantine/reallocate-devices-to-trays" method="post">
+                    <table class="portal-table" id="categories-table">
+                        <div id="statement">
+                        
+                        </div>
+                        <label>These devices are being removed from quarantine to another tray. Please select new destination and confirm.</label>
+                        <tr>
+                            <td><div class="table-element">Trade-in Barcode</div></td>
+                            <td><div class="table-element">Model</div></td>
+                            <td><div class="table-element">IMEI</div></td>
+                            <td><div class="table-element">Bamboo Grade</div></td>
+                            <td><div class="table-element">Stock Location</div></td>
+                            <td><div class="table-element">Allocate to tray</div></td>
+                        </tr>
+                        
+                            @csrf
+                            @foreach(Session::get('allocateToTrays') as $tradein)
+                                <input type="hidden" name="tradein-{{$tradein->id}}" value="{{$tradein->id}}">
+                            @if($tradein->job_state !== 9)
+                            <script>
+                            
+                                $('#statement').append('<div class="alert alert-warning"> Order number ' + {!! $tradein->barcode !!} + ' has not finish testing and require other action. Are you sure you want to allocate it? </div>')
+                            
+                            </script>
+                            @endif
+                            <tr @if($tradein->job_state !== 9) style="background: #fff3cd !important" @else style="background: #d4edda !important" @endif>
+                                <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                                <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                                <td><div class="table-element">{{$tradein->imei_number}}</div></td>
+                                <td><div class="table-element">{{$tradein->bamboo_grade}}</div></td>
+                                <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
+                                <td><div class="table-element"> <select id="newtray-{{$tradein->id}}" name="newtray-{{$tradein->id}}" class="form-control" >@foreach(Session::get('trays') as $tray) <option value="{{$tray->id}}">{{$tray->tray_name}}</option> @endforeach</select> </div></td>
+                            </tr>
+                            @endforeach
+
+                            
+                    </table>
+                    <div class="row">
+                        <div class="col-md-6"><input type="submit" class="btn btn-primary my-3" value="Submit"></div>
+                        <div class="col-md-6"><a role="button" class="w-100 my-3" data-dismiss="modal" aria-label="Cancel"><div class="btn btn-primary w-100 my-3">Cancel</div> </a></div>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        $(document).ready(function(){
+            $('#allocate-to-tray-modal').modal('show');
+        });
+
+
     </script>
     @endif
 

@@ -162,7 +162,7 @@ class Tradein extends Model
             return $trayid;
         }
         else{
-            return "Error";
+            return null;
         }
     }
 
@@ -371,7 +371,17 @@ class Tradein extends Model
                 return ["Closed", "Paid"];
                 break;
             case 16:
-                return ["Return to customer", "Returning Device"];
+                //Customer disagrees with offered price, wants device back
+                return ["Customer requested device back", "Returning Device"];
+                break;
+            case 17:
+                //Device is moved from quarantine
+                return ["Device marked to return to customer", "Returning Device"];
+                break;
+            case 18:
+                //Device is sent to customer in order management
+                return ["Device despatched to customer", "Returning Device"];
+                break;
         }
         
     }
