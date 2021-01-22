@@ -101,11 +101,11 @@ Route::get('/portal/customer-care/trade-in/{id}', 'Portal\CustomerCareController
 Route::get('/portal/customer-care/trade-in/{id}/details', 'Portal\CustomerCareController@showMoreTradeInDetails')->name('tradeInDetails')->middleware('auth');
 Route::post('/portal/customer-care/trade-in/printlabel', 'Portal\CustomerCareController@PrintTradeInLabel')->name('tradeInLabel')->middleware('auth');
 Route::post('/portal/customer-care/trade-in/printlabelbulk', 'Portal\CustomerCareController@PrintTradeInLabelBulk')->name('tradeInLabel')->middleware('auth');
+
 // audit notes
 Route::post('/portal/customer-care/trade-in/addauditnote', 'Portal\CustomerCareController@addAuditNote')->name('addAuditNote')->middleware('auth');
 Route::post('/portal/customer-care/trade-in/updateauditnote', 'Portal\CustomerCareController@updateAuditNote')->name('updateAuditNote')->middleware('auth');
 Route::post('/portal/customer-care/trade-in/deleteauditnote', 'Portal\CustomerCareController@deleteAuditNote')->name('deleteAuditNote')->middleware('auth');
-
 
 
 Route::get('/portal/customer-care/trade-out', 'Portal\CustomerCareController@showTradeOut')->name('tradeOut')->middleware('auth');
@@ -183,10 +183,14 @@ Route::post('/portal/quarantine/export-csv', 'Portal\QuarantineController@export
 Route::post('/portal/quarantine/allocate-to-tray', 'Portal\QuarantineController@allocateToTray')->middleware('auth');
 Route::post('/portal/quarantine/return-to-customer', 'Portal\QuarantineController@returnToCustomer')->middleware('auth');
 Route::post('/portal/quarantine/mark-devices-return-to-customer', 'Portal\QuarantineController@markDevicesToReturnToCustomer')->middleware('auth');
+Route::post('/portal/quarantine/reallocate-devices-to-trays', 'Portal\QuarantineController@allocateConfirmedDevices')->middleware('auth');
 Route::post('/portal/quarantine/addQuarantineStatus', 'Portal\QuarantineController@addQuarantineStatus')->middleware('auth');
 Route::post('/portal/quarantine/removeQuarantineStatus', 'Portal\QuarantineController@removeQuarantineStatus')->middleware('auth');
 Route::post('/portal/quarantine/addquarantinebin', 'Portal\QuarantineController@addQuarantineBin')->middleware('auth');
 Route::get('/portal/quarantine-bins/delete/{id}', 'Portal\QuarantineController@deleteQuarantineBin')->middleware('auth');
+Route::post('/portal/quarantine-bins/{binname}/allocatedevice', 'Portal\QuarantineController@showPopupAddDeviceToBin')->middleware('auth');
+Route::post('/portal/quarantine-bins/bin/checkAddingDevicesToBin', 'Portal\QuarantineController@checkAddingDevicesToBin')->middleware('auth');
+Route::post('/portal/quarantine/add-devices-to-bin-form', 'Portal\QuarantineController@addDevicesToBin')->middleware('auth');
 
 //testing
 Route::get('/portal/testing', 'Portal\TestingController@showTestingPage')->middleware('auth');
@@ -217,6 +221,7 @@ Route::post('/portal/receiving/printnewlabel' , 'Portal\TestingController@downlo
 Route::get('/portal/testing/checkforserial/{id}', 'Portal\TestingController@showCheckForSerialPage')->middleware('auth');
 Route::post('/portal/testing/receive/deviceserialvisibility', 'Portal\TestingController@deviceSerialVisibility')->middleware('auth');
 
+Route::post('/portal/testing/getDeviceData', 'Portal\TestingController@getDeviceData')->middleware('auth');
 //payments
 Route::get('/portal/payments', 'Portal\PaymentsController@showPaymentPage')->middleware('auth');
 Route::get('/portal/payments/awaiting', 'Portal\PaymentsController@showPaymentAwaitingPage')->middleware('auth');

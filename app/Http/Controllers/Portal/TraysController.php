@@ -26,7 +26,7 @@ class TraysController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $trays = Tray::all();
+        $trays = Tray::where('tray_type', '!=', 'B')->get();
 
         return view('portal.trays.trays')->with(['portalUser'=>$portalUser, 'trays'=>$trays]);
     }
@@ -88,6 +88,13 @@ class TraysController extends Controller
         $trayid = $request->tray_id_scan;
 
         $tray = Tray::where('tray_name', $trayid)->first();
+        if($tray === null){
+            return redirect()->back()->with('error', 'Tray doesn\'t exist.');
+        }
+        if($tray->tray_type === 'B'){
+            return redirect()->back()->with('error', 'Tray doesn\'t exist.');
+        }
+
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 

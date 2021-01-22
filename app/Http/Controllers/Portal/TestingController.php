@@ -23,6 +23,7 @@ use App\Eloquent\TrayContent;
 use App\Eloquent\Network;
 use App\Eloquent\Colour;
 use App\Eloquent\TestingFaults;
+use App\Eloquent\ProductNetworks;
 use Klaviyo\Klaviyo as Klaviyo;
 use Klaviyo\Model\EventModel as KlaviyoEvent;
 
@@ -57,7 +58,6 @@ class TestingController extends Controller
         #dd($request);
         //if(!$this->checkAuthLevel(5)){return redirect('/');}
 
-
         $barcode = $request->scanid;
 
         $tradein = Tradein::where('barcode', $request->scanid)->first();
@@ -66,7 +66,10 @@ class TestingController extends Controller
             return redirect()->back()->with('error', 'There is no such device');
         }
         if($tradein->job_state < 3){
-            return redirect()->back()->with('error', 'Device has not been received yet, or has been sent to quarantine.');
+            if($tradein->marked_for_quarantine){
+                return redirect()->back()->with('error', 'Device was marked for quarantine on receiving and cannot be tested. If this device is in your tray, please remove it.');
+            }
+            return redirect()->back()->with('error', 'Device has not been received yet.');
         }
         elseif($tradein->job_state == 5){
             return redirect()->back()->with('error', 'Device was already tested.');
@@ -86,6 +89,25 @@ class TestingController extends Controller
         }    
 
 
+    }
+
+    public function getDeviceData(Request $request){
+        $device_id = $request->deviceid;
+
+        $networks = Network::all();
+        $sellingProduct = SellingProduct::where('id', $device_id)->first();
+        $productinformation = ProductInformation::where('product_id', $device_id)->get();
+        
+
+        $response = [
+
+            'networks'=>$networks,
+            'sellingProduct'=>$sellingProduct,
+            'productinformation'=>$productinformation,
+
+        ];
+
+        return $response;
     }
 
     public function receive(Request $request){
@@ -583,16 +605,23 @@ class TestingController extends Controller
             if($request->device_correct === "false"){
                 $tradein->marked_for_quarantine = true;
                 $tradein->device_correct = $request->select_correct_device;
+                $tradein->quarantine_date = \Carbon\Carbon::now();
                 $tradein->save();
             }
+
 
             if($tradein->job_state === 6){
                 $tradein->proccessed_before = true;
                 $tradein->save();
             }
+
+            $customergradeval = "";
+            $bambogradeval = $request->bamboo_customer_grade;
+            $old_customer_grade = $request->old_customer_grade;
     
-            if($request->device_fully_functional === "false"){
+            if($request->device_fully_functional === "false" && !($old_customer_grade == "Faulty" || $old_customer_grade == "Catastrophic")){
                 $tradein->marked_for_quarantine = true;
+                $tradein->quarantine_date = \Carbon\Carbon::now();
     
                 $testingfaults = new TestingFaults();
                 $testingfaults->tradein_id = $tradein->id;
@@ -646,30 +675,36 @@ class TestingController extends Controller
                 $testingfaults->save();
     
             }
+            else{
+                if($request->device_correct !== "false"){
+                    $tradein->marked_for_quarantine = false;
+                    $tradein->save();
+                }
+            }
     
-            $customergradeval = "";
-            $bambogradeval = $request->bamboo_customer_grade;
-            $old_customer_grade = $request->old_customer_grade;
-
-            if($old_customer_grade == "Excellent Working"){
+            #dd($old_customer_grade === "Excellent Working", $old_customer_grade, "Excellent Working");
+            
+            if($old_customer_grade === "Excellent Working"){
                 $customergradeval = 5;
             }
-            if($old_customer_grade == "Good Working"){
+            if($old_customer_grade === "Good Working"){
                 $customergradeval = 4;
             }
-            if($old_customer_grade == "Poor Working"){
+            if($old_customer_grade === "Poor Working"){
                 $customergradeval = 3;
             }
-            if($old_customer_grade == "Damaged Working"){
+            if($old_customer_grade === "Damaged Working"){
                 $customergradeval = 2;
             }
-            if($old_customer_grade == "Faulty"){
+            if($old_customer_grade === "Faulty" || $old_customer_grade === "Catastrophic"){
                 $customergradeval = 1;
             }
-            #dd($bambogradeval < $customergradeval);
+
+            #dd($bambogradeval, $customergradeval, $old_customer_grade);
 
             if($bambogradeval < $customergradeval){
                 $tradein->marked_for_quarantine = true;
+                $tradein->quarantine_date = \Carbon\Carbon::now();
             }
             if($request->correct_network == "false"){
                 $correctNetworkName = $request->correct_network_value;
@@ -694,6 +729,7 @@ class TestingController extends Controller
                 }
                 else{
                     $tradein->marked_for_quarantine = true;
+                    $tradein->quarantine_date = \Carbon\Carbon::now();
                     $tradein->correct_memory = $request->correct_memory_value;
                 }
     

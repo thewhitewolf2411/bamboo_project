@@ -1283,26 +1283,68 @@ class DatabaseSeeder extends Seeder
 
 
         //bins
-        DB::table('quarantine_bins')->insert([
-            'bin_name'=>'FIMP-1'
+        DB::table('trays')->insert([
+            'tray_name'=>'FIMP-1',
+            'tray_type'=>'B',
+            'tray_brand'=>'Q',
+            'tray_grade'=>'FIMP',
+            'trolley_id'=>null,
+            'number_of_devices'=>0,
+            'max_number_of_devices'=>30,
         ]);
-        DB::table('quarantine_bins')->insert([
-            'bin_name'=>'GOCK-1'
+        DB::table('trays')->insert([
+            'tray_name'=>'GOCK-1',
+            'tray_type'=>'B',
+            'tray_brand'=>'Q',
+            'tray_grade'=>'GOCK',
+            'trolley_id'=>null,
+            'number_of_devices'=>0,
+            'max_number_of_devices'=>30,
         ]);
-        DB::table('quarantine_bins')->insert([
-            'bin_name'=>'WRPH-1'
+        DB::table('trays')->insert([
+            'tray_name'=>'WRPH-1',
+            'tray_type'=>'B',
+            'tray_brand'=>'Q',
+            'tray_grade'=>'WRPH',
+            'trolley_id'=>null,
+            'number_of_devices'=>0,
+            'max_number_of_devices'=>30,
         ]);
-        DB::table('quarantine_bins')->insert([
-            'bin_name'=>'DEMI-1'
+        DB::table('trays')->insert([
+            'tray_name'=>'DEMI-1',
+            'tray_type'=>'B',
+            'tray_brand'=>'Q',
+            'tray_grade'=>'DEMI',
+            'trolley_id'=>null,
+            'number_of_devices'=>0,
+            'max_number_of_devices'=>30,
         ]);
-        DB::table('quarantine_bins')->insert([
-            'bin_name'=>'BLCK-1'
+        DB::table('trays')->insert([
+            'tray_name'=>'BLCK-1',
+            'tray_type'=>'B',
+            'tray_brand'=>'Q',
+            'tray_grade'=>'BLCK',
+            'trolley_id'=>null,
+            'number_of_devices'=>0,
+            'max_number_of_devices'=>30,
         ]);
-        DB::table('quarantine_bins')->insert([
-            'bin_name'=>'PIN-1'
+        DB::table('trays')->insert([
+            'tray_name'=>'PIN-1',
+            'tray_type'=>'B',
+            'tray_brand'=>'Q',
+            'tray_grade'=>'PIN',
+            'trolley_id'=>null,
+            'number_of_devices'=>0,
+            'max_number_of_devices'=>30,
         ]);
-        DB::table('quarantine_bins')->insert([
-            'bin_name'=>'DOWN-1'
+        DB::table('trays')->insert([
+            'tray_name'=>'DOWN-1',
+            'tray_type'=>'B',
+            'tray_brand'=>'Q',
+            'tray_grade'=>'DOWN',
+            'trolley_id'=>null,
+            'number_of_devices'=>0,
+            'max_number_of_devices'=>30,
         ]);
 
         //boxes
