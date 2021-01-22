@@ -219,6 +219,7 @@ Route::post('/portal/testing/receive/sendtotray', 'Portal\TestingController@send
 Route::post('/portal/receiving/printnewlabel' , 'Portal\TestingController@downloadSingleFile')->middleware('auth');
 
 Route::post('/portal/testing/getDeviceData', 'Portal\TestingController@getDeviceData')->middleware('auth');
+
 //payments
 Route::get('/portal/payments', 'Portal\PaymentsController@showPaymentPage')->middleware('auth');
 Route::get('/portal/payments/awaiting', 'Portal\PaymentsController@showPaymentAwaitingPage')->middleware('auth');

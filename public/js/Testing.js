@@ -235,7 +235,7 @@ $(document).on('change', '#select_correct_device', function(){
 
         },
         success:function(response){
-
+            console.log(response);
             $('#correct_memory_value').empty(); // remove old options
             $.each(response.productinformation, function(key,value) {
                 console.log(key, value.memory);
