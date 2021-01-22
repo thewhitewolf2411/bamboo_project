@@ -235,12 +235,16 @@ $(document).on('change', '#select_correct_device', function(){
 
         },
         success:function(response){
-            console.log(response);
             $('#correct_memory_value').empty(); // remove old options
+            $('#correct_network_value').empty(); // remove old options
             $.each(response.productinformation, function(key,value) {
-                console.log(key, value.memory);
+                //console.log(key, value.memory);
                 $('#correct_memory_value').append($("<option></option>")
                 .attr("value", value.memory).text(value.memory));
+            });
+            $.each(response.networks, function(key,value) {
+                $('#correct_network_value').append($("<option></option>")
+                .attr("value", value.network_name).text(value.network_name));
             });
     
 

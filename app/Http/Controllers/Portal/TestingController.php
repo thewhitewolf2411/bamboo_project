@@ -95,7 +95,12 @@ class TestingController extends Controller
     public function getDeviceData(Request $request){
         $device_id = $request->deviceid;
 
-        $networks = Network::all();
+        $product_networks = ProductNetworks::where('product_id', $device_id)->get();
+        $product_networks_ids = [];
+        foreach($product_networks as $product_network){
+            array_push($product_networks_ids, $product_network->network_id);
+        }
+        $networks = Network::whereIn('id', $product_networks_ids)->get();
         $sellingProduct = SellingProduct::where('id', $device_id)->first();
         $productinformation = ProductInformation::where('product_id', $device_id)->get();
         
