@@ -162,8 +162,57 @@ class Tradein extends Model
             return $trayid;
         }
         else{
-            return "Error";
+            return null;
         }
+    }
+
+    public function checkForDowngrade(){
+
+        $customgrade = [
+            1=>"Excellent Working",
+            2=>"Good Working",
+            4=>"Poor Working", 
+            5=>"Damaged Working", 
+            6=>"Faulty"
+        ];
+
+        $bamboograde = [
+            1=>"Excellent Working",
+            2=>"Good Working",
+            4=>"Poor Working", 
+            5=>"Damaged Working", 
+            6=>"Faulty"
+        ];
+        
+        if($this->product_state !== $this->bamboo_grade){
+
+            $i = "";
+            $k = "";
+
+
+            foreach($customgrade as $key=>$cg){
+                if($this->product_state === $cg){
+                    $i = $key;
+                    #dd($i);
+                }
+            }
+
+            foreach($bamboograde as $key=>$bg){
+                if($this->bamboo_grade === $bg){
+                    $k = $key;
+                }
+            }
+
+
+            if($i < $k){
+                return ["Downgraded", "Awaiting Reponse"];
+            }
+
+            return ["0", "0"];
+
+        }
+
+
     }
 
     /**
@@ -181,7 +230,7 @@ class Tradein extends Model
                 break;
             case 3:
                 $tradein = Tradein::where('id', $id)->first();
-                if($tradein->marked_for_quarantine){
+                if((bool)$tradein->marked_for_quarantine){
                     if($tradein->device_correct){
                         return ["Incorrect Model", "Awaiting Reponse"];
                     }
@@ -202,11 +251,19 @@ class Tradein extends Model
                     if($tradein->pinlocked){
                         return ["PIN Lock", "Awaiting Response"];
                     }
-                    if(!$tradein->chekmend_passed){
+                    if($tradein->chekmend_passed !== null && (bool)$tradein->chekmend_passed == false){
                         return ["BLACKLISTED", "Awaiting Response"];
                     }
+                    if($tradein->visible_imei !== null && $tradein->visible_imei == false){
+                        return ["NO IMEI", "Awaiting Response"];
+                    }
+                    if((bool)$tradein->device_missing == true){
+                        return ["Lost in transit", "Lost in transit"];
+                    }
                 }
+
                 return ["Awaiting Testing", "Trade pack received, awaiting testing"];
+
                 break;
             case 4:
                 return ["Lost in transit", "Lost in transit"];
@@ -221,7 +278,7 @@ class Tradein extends Model
                 break;
             case 6:
                 $tradein = Tradein::where('id', $id)->first();
-                if($tradein->marked_for_quarantine){
+                if((bool)$tradein->marked_for_quarantine){
                     if($tradein->device_correct){
                         return ["Incorrect Model", "Awaiting Reponse"];
                     }
@@ -242,8 +299,14 @@ class Tradein extends Model
                     if($tradein->pinlocked){
                         return ["PIN Lock", "Awaiting Response"];
                     }
-                    if(!$tradein->chekmend_passed){
+                    if($tradein->chekmend_passed !== null && (bool)$tradein->chekmend_passed == false){
                         return ["BLACKLISTED", "Awaiting Response"];
+                    }
+                    if($tradein->visible_imei !== null && $tradein->visible_imei == false){
+                        return ["NO IMEI", "Awaiting Response"];
+                    }
+                    if((bool)$tradein->device_missing == true){
+                        return ["Lost in transit", "Lost in transit"];
                     }
                 }
                 return ["2nd Test", "Testing complete"];
@@ -255,7 +318,7 @@ class Tradein extends Model
                 break;
             case 9:
                 $tradein = Tradein::where('id', $id)->first();
-                if($tradein->marked_for_quarantine){
+                if((bool)$tradein->marked_for_quarantine){
                     if($tradein->device_correct){
                         return ["Incorrect Model", "Awaiting Reponse"];
                     }
@@ -276,12 +339,18 @@ class Tradein extends Model
                     if($tradein->pinlocked){
                         return ["PIN Lock", "Awaiting Response"];
                     }
-                    if(!$tradein->chekmend_passed){
+                    if($tradein->chekmend_passed !== null && (bool)$tradein->chekmend_passed == false){
                         return ["BLACKLISTED", "Awaiting Response"];
+                    }
+                    if($tradein->visible_imei !== null && $tradein->visible_imei == false){
+                        return ["NO IMEI", "Awaiting Response"];
+                    }
+                    if((bool)$tradein->device_missing == true){
+                        return ["Lost in transit", "Lost in transit"];
                     }
                 }
 
-                return ["None", "Awaiting Response"];
+                return $this->checkForDowngrade();
                 break;
             case 10:
                 return ["Awaiting Box Build", "Awaiting Payment"];
@@ -302,7 +371,17 @@ class Tradein extends Model
                 return ["Closed", "Paid"];
                 break;
             case 16:
-                return ["Return to customer", "Returning Device"];
+                //Customer disagrees with offered price, wants device back
+                return ["Customer requested device back", "Returning Device"];
+                break;
+            case 17:
+                //Device is moved from quarantine
+                return ["Device marked to return to customer", "Returning Device"];
+                break;
+            case 18:
+                //Device is sent to customer in order management
+                return ["Device despatched to customer", "Returning Device"];
+                break;
         }
         
     }

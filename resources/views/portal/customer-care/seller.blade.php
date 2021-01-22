@@ -91,7 +91,7 @@
                                     <a href="/portal/customer-care/seller/{{$user->id}}" title="See user details">
                                         <i class="fa fa-eye"></i>
                                     </a>
-                                    <a onclick="return confirm('Are you sure? This action will delete user and all records from the database.')" href="/portal/customer-care/seller/delete/{{$user->id}}" title="See user details">
+                                    <a onclick="return confirm('Are you sure? This action will delete user and all records from the database.')" href="/portal/customer-care/seller/delete/{{$user->id}}" title="Delete user">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                     @if(!$user->account_disabled)
