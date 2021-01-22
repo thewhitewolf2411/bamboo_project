@@ -137,7 +137,7 @@ class QuarantineController extends Controller
             $tradein = Tradein::where('id', $tradeinId)->first();
 
 
-            if($tradein->job_number !== 9){
+            if($tradein->job_state != 9){
                 array_push($response, $tradein->barcode);
             }
             else{
@@ -291,9 +291,16 @@ class QuarantineController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
         $quarantineBin = Tray::where('tray_name', $request->bin_id_scan)->first();
-        $quarantineBinContent = TrayContent::where('tray_id', $request->bin_id_scan)->get();
+        $quarantineBinContent = TrayContent::where('tray_id', $quarantineBin->id)->get();
 
-        return view('portal.quarantine.binview')->with(['portalUser'=>$portalUser, 'bin'=>$quarantineBin, 'quarantineBinContent'=>$quarantineBinContent]);
+        $tradeins = array();
+
+        foreach($quarantineBinContent as $tc){
+            $tradein = Tradein::where('id', $tc->trade_in_id)->first();
+            array_push($tradeins, $tradein);
+        }
+
+        return view('portal.quarantine.binview')->with(['portalUser'=>$portalUser, 'bin'=>$quarantineBin, 'quarantineBinContent'=>$tradeins]);
     }
 
     public function showPopupAddDeviceToBin($binname){
@@ -327,9 +334,33 @@ class QuarantineController extends Controller
     }
 
     public function addDevicesToBin(Request $request){
-        dd($request->all());
 
+        $data = $request->all();
 
+        $bin = Tray::where('tray_name', $request->binname)->first();
+
+        array_shift($data);
+        array_pop($data);
+        foreach($data as $tradeinId){
+            $tradein = Tradein::where('id', $tradeinId)->first();
+  
+            $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+            $bin->number_of_devices = $bin->number_of_devices + 1;
+            $bin->save();
+    
+            $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
+            $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+            $oldTray->save();
+    
+            $oldTrayContent->delete();
+    
+            $traycontent = new TrayContent();
+            $traycontent->tray_id = $bin->id;
+            $traycontent->trade_in_id = $tradein->id;
+            $traycontent->save();
+        }
+
+        return redirect()->back()->with('success', 'All devices have been moved to ' . $bin->tray_name);
         
     }
 

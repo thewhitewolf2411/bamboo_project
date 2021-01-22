@@ -149,7 +149,7 @@ class Tradein extends Model
             return $trayname;
         }
         else{
-            return "Error";
+            return "Not received yet.";
         }
 
     }
@@ -208,7 +208,7 @@ class Tradein extends Model
                 return ["Downgraded", "Awaiting Reponse"];
             }
 
-            return ["0", "0"];
+            return ["2nd test.", "Testing"];
 
         }
 
