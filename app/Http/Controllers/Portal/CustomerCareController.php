@@ -600,25 +600,46 @@ class CustomerCareController extends Controller
         $trayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
         $tray = Tray::where('id', $trayContent->tray_id)->first();
 
-        $response = $this->generateNewLabel($barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $tray->tray_name);
+        if($tradein->visible_serial !== null){
+            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->serial_number, $tray->tray_name);
+        } else {
+            $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $tray->tray_name);
+        }
 
         return redirect()->back()->with(['success'=>'pdf/devicelabel-'. $tradein->barcode .'.pdf']);
 
     }
 
-    public function generateNewLabel($barcode, $tradein_barcode, $manifacturer, $model, $imei, $location){
+    /**
+     * Generate device label (PDF)
+     */
+    public function generateNewLabel($has_serial, $barcode, $tradein_barcode, $manifacturer, $model, $imei, $location){
         $customPaper = array(0,0,141.90,283.80);
 
-        $pdf = PDF::loadView('portal.labels.devicelabel', 
-        array(
-            'barcode'=>$barcode,
-            'tradein_barcode'=>$tradein_barcode,
-            'manifacturer'=>$manifacturer,
-            'model'=>$model,
-            'imei'=>$imei,
-            'location'=>$location))
-        ->setPaper($customPaper, 'landscape')
-        ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
+        if($has_serial){
+            $pdf = PDF::loadView('portal.labels.devicelabelserial', 
+            array(
+                'barcode'=>$barcode,
+                'tradein_barcode'=>$tradein_barcode,
+                'manifacturer'=>$manifacturer,
+                'model'=>$model,
+                'serial'=>$imei,
+                'location'=>$location))
+            ->setPaper($customPaper, 'landscape')
+            ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
+        } else {
+            $pdf = PDF::loadView('portal.labels.devicelabel', 
+            array(
+                'barcode'=>$barcode,
+                'tradein_barcode'=>$tradein_barcode,
+                'manifacturer'=>$manifacturer,
+                'model'=>$model,
+                'imei'=>$imei,
+                'location'=>$location))
+            ->setPaper($customPaper, 'landscape')
+            ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
+        }
+        
     }
 
 }

@@ -62,6 +62,7 @@
                                             @if(isset($tradein->chekmend_passed) == true && $tradein->chekmend_passed == false) <li><p>Device IMEI Check failed</p></li> @endif
                                             @if(isset($tradein->visible_imei) == true && $tradein->visible_imei == false) <li><p>Device does not have IMEI number visible.</p></li> @endif
                                             @if(isset($tradein->older_than_14_days) == true && $tradein->older_than_14_days == true) <li><p>Order is older than 14 days.</p></li> @endif
+                                            @if(isset($tradein->visible_serial) == true && $tradein->visible_serial == false) <li><p>Device serial number is not visible.</p></li> @endif
                                             
                                         </ul>
                                     </div>

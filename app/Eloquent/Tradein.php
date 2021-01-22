@@ -308,6 +308,9 @@ class Tradein extends Model
     }
 
     public function serialVisible(){
+        if($this->visible_serial === null){
+            return null;
+        }
         return (bool)$this->visible_serial;
     }
 

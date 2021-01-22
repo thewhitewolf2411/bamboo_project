@@ -57,7 +57,7 @@
                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                     </div>
                                     <div class="d-flex w-25 border p-3"><label for="visible_serial_yes">Yes.</label><input id="visible_serial_yes"  @if($tradein->serialVisible()) checked @endif  type="radio" name="visible_serial" value="yes" required></div>
-                                    <div class="d-flex w-25 border p-3"><label for="visible_serial_no">No.</label><input id="visible_serial_no"  @if(!$tradein->serialVisible()) checked @endif  type="radio" name="visible_serial" value="no"></div>
+                                    <div class="d-flex w-25 border p-3"><label for="visible_serial_no">No.</label><input id="visible_serial_no"  @if($tradein->serialVisible() !== null && !$tradein->serialVisible()) checked @endif  type="radio" name="visible_serial" value="no"></div>
                                 </div>
                                 
                             </div>
