@@ -27,7 +27,7 @@ class Tradein extends Model
      */
     protected $fillable = [
         'user_id', 'barcode','barcode_original','product_id','product_state', 'job_state', 'sent_themselves', 'order_price','memory','network', 'color','correct_memory','correct_network', 'received', 'device_missing', 'missing_image', 'device_correct', 'device_present_as_described', 'checkmend_passed', 'imei_number', 'change_device',
-        'visible_imei', 'proccessed_before', 'bamboo_grade', 'older_than_14_days', 'quarantine_status', 'quarantine_date'
+        'visible_imei', 'proccessed_before', 'bamboo_grade', 'older_than_14_days', 'quarantine_status', 'quarantine_date', 'bamboo_order_price'
     ];
 
 
