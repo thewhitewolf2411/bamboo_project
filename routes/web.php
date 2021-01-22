@@ -189,6 +189,8 @@ Route::post('/portal/quarantine/removeQuarantineStatus', 'Portal\QuarantineContr
 Route::post('/portal/quarantine/addquarantinebin', 'Portal\QuarantineController@addQuarantineBin')->middleware('auth');
 Route::get('/portal/quarantine-bins/delete/{id}', 'Portal\QuarantineController@deleteQuarantineBin')->middleware('auth');
 Route::post('/portal/quarantine-bins/{binname}/allocatedevice', 'Portal\QuarantineController@showPopupAddDeviceToBin')->middleware('auth');
+Route::post('/portal/quarantine-bins/bin/checkAddingDevicesToBin', 'Portal\QuarantineController@checkAddingDevicesToBin')->middleware('auth');
+Route::post('/portal/quarantine/add-devices-to-bin-form', 'Portal\QuarantineController@addDevicesToBin')->middleware('auth');
 
 //testing
 Route::get('/portal/testing', 'Portal\TestingController@showTestingPage')->middleware('auth');

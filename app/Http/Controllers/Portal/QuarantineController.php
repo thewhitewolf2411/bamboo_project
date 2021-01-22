@@ -15,6 +15,7 @@ use DNS1D;
 use DNS2D;
 use PDF;
 use File;
+use App\Services\BinService;
 
 class QuarantineController extends Controller
 {
@@ -39,7 +40,7 @@ class QuarantineController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $quarantineBins = Tray::all();
+        $quarantineBins = Tray::where('tray_type', 'B')->get();
 
         return view('portal.quarantine.quarantine-bins')->with(['portalUser'=>$portalUser, 'quarantineBins'=>$quarantineBins]);
 
@@ -253,10 +254,21 @@ class QuarantineController extends Controller
 
     public function addQuarantineBin(Request $request){
 
+        $trayGrade = explode('-', $request->bin_name);
+        $trayGrade = $trayGrade[0];
+
+        if(Tray::where('tray_name', $request->bin_name)->first() !== null ){
+            return \redirect('/portal/quarantine/quarantine-bins')->with('error', 'Bin ' . $request->bin_name . ' already exists.');
+        }
 
         $quarantineBin = new Tray();
 
-        $quarantineBin->bin_name = $request->bin_name;
+        $quarantineBin->tray_name = $request->bin_name;
+        $quarantineBin->tray_type = "B";
+        $quarantineBin->tray_brand = "Q";
+        $quarantineBin->tray_grade = $trayGrade;
+        $quarantineBin->max_number_of_devices = 30;
+
         $quarantineBin->save();
 
         return redirect('/portal/quarantine/quarantine-bins')->with('success', 'You have succesfully created bin ' . $request->bin_name);
@@ -267,7 +279,7 @@ class QuarantineController extends Controller
     public function deleteQuarantineBin($id){
         $quarantineBin = Tray::where('id', $id)->first();
 
-        $name = $quarantineBin->bin_name;
+        $name = $quarantineBin->tray_name;
 
         $quarantineBin->delete();
 
@@ -278,18 +290,47 @@ class QuarantineController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $quarantineBin = Tray::where('bin_name', $request->bin_id_scan)->first();
-        $quarantineBinContent = TrayContent::where('bin_id', $request->bin_id_scan)->get();
+        $quarantineBin = Tray::where('tray_name', $request->bin_id_scan)->first();
+        $quarantineBinContent = TrayContent::where('tray_id', $request->bin_id_scan)->get();
 
         return view('portal.quarantine.binview')->with(['portalUser'=>$portalUser, 'bin'=>$quarantineBin, 'quarantineBinContent'=>$quarantineBinContent]);
     }
 
     public function showPopupAddDeviceToBin($binname){
 
-        $bin = Tray::where('bin_name', $binname)->first();
+        $bin = Tray::where('tray_name', $binname)->first();
+        
+
+        if($bin->number_of_devices < $bin->max_number_of_devices){
+            return redirect()->back()->with(['adddevices'=>true, 'devices_type'=>$bin->tray_grade]);
+        }
+        else{
+            return redirect()->back()->with(['error'=>'This bin already has 30 devices. You cannot assign more devices to this bin.']);
+        }
+
+    }
+
+    public function checkAddingDevicesToBin(Request $request){
+
+        #dd($request->all());
+
+        $tradein = Tradein::where('barcode', $request->id)->first();
+        if($tradein === null){
+            return response(['deviceadded'=>0, 'error'=>'This order does not exist.']);
+        }
+
+        $bintype = $request->bintype;
+
+        $binservice = new BinService();
+
+        return $binservice->handleDeviceBin($tradein, $bintype);
+    }
+
+    public function addDevicesToBin(Request $request){
+        dd($request->all());
 
 
-
+        
     }
 
     public function printBinLabel($binname){

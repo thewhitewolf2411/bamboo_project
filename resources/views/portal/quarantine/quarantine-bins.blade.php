@@ -87,11 +87,11 @@
                         </tr>
                         @foreach($quarantineBins as $quarantineBin)
                         <tr>
-                            <td><div class="table-element"><a href="/portal/quarantine/quarantine-bins/bin/?bin_id_scan={{$quarantineBin->bin_name}}">{{$quarantineBin->id}}</a></div></td>
-                            <td><div class="table-element"><a href="/portal/quarantine/quarantine-bins/bin/?bin_id_scan={{$quarantineBin->bin_name}}">{{$quarantineBin->bin_name}}</a></div></td>
-                            <td><div class="table-element"><a href="/portal/quarantine/quarantine-bins/bin/?bin_id_scan={{$quarantineBin->bin_name}}">{{$quarantineBin->device_quantity}}</a></div></td>
-                            <td><div class="table-element">@if($quarantineBin->device_quantity == 0) <a onclick="return confirm('Are you sure? This will remove tray from system. This action cannot be reversed.')" href="/portal/quarantine-bins/delete/{{$quarantineBin->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete Bin</p></div> @else @endif</div></td>
-                            <td><div class="table-element"><a href="/portal/quarantine-bins/printlabel/{{$quarantineBin->bin_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print Bin Label</p></div></a></div></td>
+                            <td><div class="table-element"><a href="/portal/quarantine/quarantine-bins/bin/?bin_id_scan={{$quarantineBin->tray_name}}">{{$quarantineBin->id}}</a></div></td>
+                            <td><div class="table-element"><a href="/portal/quarantine/quarantine-bins/bin/?bin_id_scan={{$quarantineBin->tray_name}}">{{$quarantineBin->tray_name}}</a></div></td>
+                            <td><div class="table-element"><a href="/portal/quarantine/quarantine-bins/bin/?bin_id_scan={{$quarantineBin->tray_name}}">{{$quarantineBin->number_of_devices}}</a></div></td>
+                            <td><div class="table-element">@if($quarantineBin->number_of_devices == 0) <a onclick="return confirm('Are you sure? This will remove tray from system. This action cannot be reversed.')" href="/portal/quarantine-bins/delete/{{$quarantineBin->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete Bin</p></div> @else This bin cannot be deleted. @endif</div></td>
+                            <td><div class="table-element"><a href="/portal/quarantine-bins/printlabel/{{$quarantineBin->tray_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print Bin Label</p></div></a></div></td>
                         </tr>
                         @endforeach
                     </table>
@@ -102,6 +102,7 @@
 
         </div>
     </main>
+
 
 </body>
 </html>
