@@ -57,7 +57,7 @@
                         </form>
                         <form class="d-flex align-items-center mx-5" action="/portal/customer-care/trade-in/all/" method="get">              
                             <label for="searchtradeins">Input Trade-in barcode number / Trade-in ID:</label>
-                            <input type="text" minlength="7" name="search" class="form-control mx-3 my-0">
+                            <input type="text" minlength="3" name="search" class="form-control mx-3 my-0">
                             <button type="submit" class="btn btn-primary btn-blue">Search</button>
                         </form>
                     </div>
@@ -126,13 +126,39 @@
     <script>
 
         $(document).ready(function(){
-            console.log("karina");
             $('#tradein-iframe').attr('src', '/' + "{{Session::get('success')}}");
             $('#label-trade-in-modal').modal('show');
         });
 
     </script>
 
+@endif
+
+@if(Session::has('bulk'))
+    <script>
+
+        $(document).ready(function(){
+            $('#label-trade-in-bulk-modal').modal('show');
+        });
+
+    </script>
+    <div id="label-trade-in-bulk-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Trade in label</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <iframe id="tradein-iframe" src="{{Session::get('bulk')}}"></iframe>
+
+            </div>
+            </div>
+        </div>
+    </div>
 @endif
 
 <div id="label-trade-in-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">

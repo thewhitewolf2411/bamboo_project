@@ -9,6 +9,7 @@ use App\Eloquent\Category;
 use App\Eloquent\Brand;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
+use App\User;
 
 class Tradein extends Model
 {
@@ -32,6 +33,19 @@ class Tradein extends Model
 
     public function getProductName($id){
         return SellingProduct::where('id', $id)->first()->product_name;
+    }
+
+    public function customer(){
+        $user = User::find($this->user_id);
+        return $user;
+    }
+
+    public function postCode(){
+        return null;
+    }
+    
+    public function location(){
+        return  null;
     }
 
     public function getProductImage($id){
@@ -148,10 +162,63 @@ class Tradein extends Model
             return $trayid;
         }
         else{
-            return "Error";
+            return null;
         }
     }
 
+    public function checkForDowngrade(){
+
+        $customgrade = [
+            1=>"Excellent Working",
+            2=>"Good Working",
+            4=>"Poor Working", 
+            5=>"Damaged Working", 
+            6=>"Faulty"
+        ];
+
+        $bamboograde = [
+            1=>"Excellent Working",
+            2=>"Good Working",
+            4=>"Poor Working", 
+            5=>"Damaged Working", 
+            6=>"Faulty"
+        ];
+        
+        if($this->product_state !== $this->bamboo_grade){
+
+            $i = "";
+            $k = "";
+
+
+            foreach($customgrade as $key=>$cg){
+                if($this->product_state === $cg){
+                    $i = $key;
+                    #dd($i);
+                }
+            }
+
+            foreach($bamboograde as $key=>$bg){
+                if($this->bamboo_grade === $bg){
+                    $k = $key;
+                }
+            }
+
+
+            if($i < $k){
+                return ["Downgraded", "Awaiting Reponse"];
+            }
+
+            return ["0", "0"];
+
+        }
+
+
+    }
+
+    /**
+     * array[0]. bamboo status
+     * array[1]. customer status
+     */
     public function getDeviceStatus($id, $job_state){
 
         switch($job_state){
@@ -163,7 +230,7 @@ class Tradein extends Model
                 break;
             case 3:
                 $tradein = Tradein::where('id', $id)->first();
-                if($tradein->marked_for_quarantine){
+                if((bool)$tradein->marked_for_quarantine){
                     if($tradein->device_correct){
                         return ["Incorrect Model", "Awaiting Reponse"];
                     }
@@ -184,11 +251,19 @@ class Tradein extends Model
                     if($tradein->pinlocked){
                         return ["PIN Lock", "Awaiting Response"];
                     }
-                    if(!$tradein->chekmend_passed){
+                    if($tradein->chekmend_passed !== null && (bool)$tradein->chekmend_passed == false){
                         return ["BLACKLISTED", "Awaiting Response"];
                     }
+                    if($tradein->visible_imei !== null && $tradein->visible_imei == false){
+                        return ["NO IMEI", "Awaiting Response"];
+                    }
+                    if((bool)$tradein->device_missing == true){
+                        return ["Lost in transit", "Lost in transit"];
+                    }
                 }
+
                 return ["Awaiting Testing", "Trade pack received, awaiting testing"];
+
                 break;
             case 4:
                 return ["Lost in transit", "Lost in transit"];
@@ -203,7 +278,7 @@ class Tradein extends Model
                 break;
             case 6:
                 $tradein = Tradein::where('id', $id)->first();
-                if($tradein->marked_for_quarantine){
+                if((bool)$tradein->marked_for_quarantine){
                     if($tradein->device_correct){
                         return ["Incorrect Model", "Awaiting Reponse"];
                     }
@@ -224,8 +299,14 @@ class Tradein extends Model
                     if($tradein->pinlocked){
                         return ["PIN Lock", "Awaiting Response"];
                     }
-                    if(!$tradein->chekmend_passed){
+                    if($tradein->chekmend_passed !== null && (bool)$tradein->chekmend_passed == false){
                         return ["BLACKLISTED", "Awaiting Response"];
+                    }
+                    if($tradein->visible_imei !== null && $tradein->visible_imei == false){
+                        return ["NO IMEI", "Awaiting Response"];
+                    }
+                    if((bool)$tradein->device_missing == true){
+                        return ["Lost in transit", "Lost in transit"];
                     }
                 }
                 return ["2nd Test", "Testing complete"];
@@ -237,7 +318,7 @@ class Tradein extends Model
                 break;
             case 9:
                 $tradein = Tradein::where('id', $id)->first();
-                if($tradein->marked_for_quarantine){
+                if((bool)$tradein->marked_for_quarantine){
                     if($tradein->device_correct){
                         return ["Incorrect Model", "Awaiting Reponse"];
                     }
@@ -258,12 +339,18 @@ class Tradein extends Model
                     if($tradein->pinlocked){
                         return ["PIN Lock", "Awaiting Response"];
                     }
-                    if(!$tradein->chekmend_passed){
+                    if($tradein->chekmend_passed !== null && (bool)$tradein->chekmend_passed == false){
                         return ["BLACKLISTED", "Awaiting Response"];
+                    }
+                    if($tradein->visible_imei !== null && $tradein->visible_imei == false){
+                        return ["NO IMEI", "Awaiting Response"];
+                    }
+                    if((bool)$tradein->device_missing == true){
+                        return ["Lost in transit", "Lost in transit"];
                     }
                 }
 
-                return ["None", "Awaiting Response"];
+                return $this->checkForDowngrade();
                 break;
             case 10:
                 return ["Awaiting Box Build", "Awaiting Payment"];
@@ -283,7 +370,99 @@ class Tradein extends Model
             case 15:
                 return ["Closed", "Paid"];
                 break;
+            case 16:
+                //Customer disagrees with offered price, wants device back
+                return ["Customer requested device back", "Returning Device"];
+                break;
+            case 17:
+                //Device is moved from quarantine
+                return ["Device marked to return to customer", "Returning Device"];
+                break;
+            case 18:
+                //Device is sent to customer in order management
+                return ["Device despatched to customer", "Returning Device"];
+                break;
         }
         
+    }
+
+    public function getCustomerStatus(){
+        return $this->getDeviceStatus($this->id, $this->job_state)[1];
+    }
+
+    public function getBambooStatus(){
+        return $this->getDeviceStatus($this->id, $this->job_state)[0];
+    }
+
+    public function isGoogleLocked(){
+        if($this->fimp){
+            return true;
+        }
+        return $this->fimp;
+    }
+
+    public function isPinLocked(){
+        if($this->pinlocked){
+            return true;
+        }
+        return $this->pinlocked;
+    }
+
+    public function isBlacklisted(){
+        // blackliststatus
+        $result = ImeiResult::where('tradein_id', $this->id)->first();
+        if($result){
+            if($result->blackliststatus === "Yes"){
+                return true;
+            }
+            return false;
+        }
+        return null;
+    }
+
+    public function isSIMLocked(){
+        // greyliststatus
+        $result = ImeiResult::where('tradein_id', $this->id)->first();
+        if($result){
+            if($result->greyliststatus === "Yes"){
+                return true;
+            }
+            return false;
+        }
+        return null;
+    }
+    
+
+    public function getQuarantineReason($id){
+
+        $tradein = Tradein::where('id', $id)->first();
+
+        switch($tradein->quarantine_status){
+
+            case 1:
+                return "Lost";
+                break;
+            case 2:
+                return "Insurance Claim";
+                break;
+            case 3:
+                return "Blocked / FRP";
+                break;
+            case 4:
+                return "Stolen";
+                break;
+            case 5:
+                return "Knox";
+                break;
+            case 6:
+                return "Asset Watch";
+                break;
+
+            default:
+                return "Not defined yet.";
+            break;
+
+        }
+
     }
 }

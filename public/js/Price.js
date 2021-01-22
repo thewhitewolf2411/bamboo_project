@@ -5,6 +5,8 @@ grade = null;
 networkName = null;
 memoryValue = null;
 
+HAS_NETWORKS = true;
+
 function networkChanged(element){
 
     var label = $("label[for='" + $(element).attr('id') + "']");
@@ -24,7 +26,10 @@ function networkChanged(element){
 
 }
 
-function gradeChanged(element){
+function gradeChanged(element, no_networks = false){
+    if(no_networks){
+        HAS_NETWORKS = false;
+    }
     var label = $("label[for='" + $(element).attr('id') + "']");
 
     var grades = $('.elem-grade-container');
@@ -58,39 +63,77 @@ function memoryChanged(element){
 function getPrice(){
 
     var basePrice = 0;
-    if(basePrices != null && grade != null && network != null){
+    
+    if(!HAS_NETWORKS){
+
+        if(basePrices != null && grade != null){
         
-        basePrice = Object.values(basePrices)[grade-1] - network;
-
-        $('#product-price').text('£' + basePrice);
-
-        console.log(grade);
-
-        if(grade == 1){
-            $('#grade').val('Excellent Working');
+            basePrice = Object.values(basePrices)[grade-1];
+    
+            $('#product-price').text('£' + basePrice);
+    
+            console.log(grade);
+    
+            if(grade == 1){
+                $('#grade').val('Excellent Working');
+            }
+            if(grade == 2){
+                $('#grade').val('Good Working');
+            }
+            if(grade == 3){
+                $('#grade').val('Poor Working');
+            }
+            if(grade == 4){
+                $('#grade').val('Damaged Working');
+            }
+            if(grade == 5){
+                $('#grade').val('Faulty');
+            }
+    
+            $('#memory').val(memoryValue);
+            $('#price').val(basePrice);
+    
+            $("#addToCart").prop('disabled', false);
         }
-        if(grade == 2){
-            $('#grade').val('Good Working');
-        }
-        if(grade == 3){
-            $('#grade').val('Poor Working');
-        }
-        if(grade == 4){
-            $('#grade').val('Damaged Working');
-        }
-        if(grade == 5){
-            $('#grade').val('Faulty');
+        else{
+            $("#addToCart").prop('disabled', true);
         }
 
-        $('#memory').val(memoryValue);
-        $('#network').val(networkName);
-        $('#price').val(basePrice);
-
-
-        $("#addToCart").prop('disabled', false);
-    }
-    else{
-        $("#addToCart").prop('disabled', true);
+    } else {
+        if(basePrices != null && grade != null && network != null){
+        
+            basePrice = Object.values(basePrices)[grade-1] - network;
+    
+            $('#product-price').text('£' + basePrice);
+    
+            console.log(grade);
+    
+            if(grade == 1){
+                $('#grade').val('Excellent Working');
+            }
+            if(grade == 2){
+                $('#grade').val('Good Working');
+            }
+            if(grade == 3){
+                $('#grade').val('Poor Working');
+            }
+            if(grade == 4){
+                $('#grade').val('Damaged Working');
+            }
+            if(grade == 5){
+                $('#grade').val('Faulty');
+            }
+    
+            $('#memory').val(memoryValue);
+            $('#network').val(networkName);
+            $('#price').val(basePrice);
+    
+    
+            $("#addToCart").prop('disabled', false);
+        }
+        else{
+            $("#addToCart").prop('disabled', true);
+        }
     }
         
 }

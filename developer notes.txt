@@ -9,5 +9,6 @@ job_state	description
 8		placed in tray
 9		waiting customer response
 10		paid for
-11		return to customer
-12		destroy device
+11      mark device to return to customer
+12		return to customer
+13		destroy device

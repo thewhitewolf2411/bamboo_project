@@ -12150,6 +12150,31 @@ h3, h4, h5 {
   font-family: Sharp Sans No1 Semibold;
 }
 
+.custombtn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.custombtn:disabled, .custombtn.disabled {
+  opacity: 0.65;
+}
+
 .btn-font-white {
   color: #fff !important;
 }
@@ -12164,7 +12189,7 @@ h3, h4, h5 {
   transition: 0.2s linear;
 }
 
-.btn-green:hover {
+.btn-green:hover:not([disabled]) {
   color: #A3D147 !important;
   background: transparent !important;
   transition: 0.2s linear;
@@ -12306,6 +12331,80 @@ h3, h4, h5 {
   text-align: center;
   align-items: center;
   margin: 5px;
+}
+
+.job-status-container {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.job-status {
+  margin-bottom: 25px;
+}
+
+.lock-status-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.lock-status-title {
+  width: 200px;
+  padding: 4px;
+  margin: 0;
+}
+
+.radio-lock-status {
+  display: flex;
+  flex-direction: row;
+  width: 120px;
+}
+
+.radio-lock-status-label {
+  padding: 4px;
+  margin: 0;
+}
+
+.lock-status-checkbox {
+  width: 20px;
+}
+
+.add-note-button {
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#audit-note {
+  display: flex;
+  flex-direction: column;
+}
+
+.note-bold-title {
+  font-family: Sharp Sans No1 Bold;
+}
+
+#note_text {
+  min-height: 200px;
+  padding: 8px;
+}
+
+.note_item {
+  padding: 4px;
+  border-bottom: 1px solid black;
+  text-align: left;
+  display: flex;
+  margin-bottom: 4px;
+}
+
+.note_item_text {
+  color: black;
+  margin-left: 0;
+  font-size: 1em;
+  padding: 7px;
+  height: 28px;
+  overflow: hidden;
 }
 
 .shop-top-header {

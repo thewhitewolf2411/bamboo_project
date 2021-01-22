@@ -45,8 +45,9 @@ function testingElementChanged(){
     }
 
 
-    if(fimpOrGoogleLock == "true" || pinLock == "true"){
-
+    //if(fimpOrGoogleLock == "true" || pinLock == "true"){
+    if(pinLock == "true"){
+        $('#fimp_or_google_lock').prop('disabled', true);
         $('#fake_missing_parts').prop('disabled', true);
         $('#device_fully_functional').prop('disabled', true);
         $('#water_damage').prop('disabled', true);
@@ -58,6 +59,7 @@ function testingElementChanged(){
         $('#customer_grade').val("Faulty");
     }
     else{
+        $('#fimp_or_google_lock').prop('disabled', false);
         $('#fake_missing_parts').prop('disabled', false);
         $('#device_fully_functional').prop('disabled', false);
         $('#water_damage').prop('disabled', false);
@@ -193,6 +195,14 @@ function cosmeticElementChanged(){
             
             cosmeticNumGrade = 2;
         }
+        else if(cosmeticGrade == "WSD"){
+
+            $('#bamboo_final_grade').val('WSI');
+            $('#customer_grade').val("Damaged Working");
+            $('#bamboo_final_grade').val('Damaged Working');
+            
+            cosmeticNumGrade = 2;
+        }
         else{
             $('#customer_grade').val("Faulty");
             $('#bamboo_final_grade').val('Faulty');
@@ -201,9 +211,7 @@ function cosmeticElementChanged(){
     }
 
     $("#bamboo_customer_grade").val(cosmeticNumGrade);
-    
 
-    console.log(cosmeticGrade);
 }
 
 
@@ -214,4 +222,32 @@ $(document).on('change', 'input[type="checkbox"]', function() {
     if($('.single-checkbox:checked').length > 3){
         this.checked = false;
     }
+});
+
+$(document).on('change', '#select_correct_device', function(){
+
+    var deviceid = this.value;
+
+    $.ajax({
+        url: "/portal/testing/getDeviceData",
+        type:"POST",
+        data:{
+            _token: document.getElementsByName("_token")[0].value,
+            deviceid: deviceid,
+
+        },
+        success:function(response){
+
+            $('#correct_memory_value').empty(); // remove old options
+            $.each(response.productinformation, function(key,value) {
+                console.log(key, value.memory);
+                $('#correct_memory_value').append($("<option></option>")
+                .attr("value", value.memory).text(value.memory));
+            });
+    
+
+        },
+    });
+
+
 });

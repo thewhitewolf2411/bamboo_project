@@ -9,12 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
-        "alvee/worldpay": "@dev",
         "barryvdh/laravel-dompdf": "^0.8.7",
+        "daltcore/lara-pdf-merger": "^2.0",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
-        "jaythegeek/worldpay": "^1.2",
         "klaviyo/php-sdk": "^2.2",
         "laravel/cashier": "^12.4",
         "laravel/framework": "^7.0",

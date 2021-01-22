@@ -25,7 +25,7 @@ class CreateTradeinTable extends Migration
             //0 received tradein without label
             //1 sent label / job complete
             $table->string('memory');
-            $table->string('network');
+            $table->string('network')->nullable(true)->default(null);
             $table->string('color')->nullable();
             $table->string('correct_memory')->nullable();
             $table->string('correct_network')->nullable();

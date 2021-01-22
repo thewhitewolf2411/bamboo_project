@@ -118,15 +118,15 @@ class PortalController extends Controller
                     $statePrice = "";
                     switch($state){
                         case 0:
-                            $stateString = "Excellent working";
+                            $stateString = "Excellent Working";
                             $statePrice = $productInformation[$inf]->excellent_working-$productNetwork[0]->knockoff_price;
                             break;
                         case 1:
-                            $stateString = "Good working";
+                            $stateString = "Good Working";
                             $statePrice = $productInformation[$inf]->good_working-$productNetwork[1]->knockoff_price;
                             break;
                         case 2:
-                            $stateString = "Poor working";
+                            $stateString = "Poor Working";
                             $statePrice = $productInformation[$inf]->poor_working-$productNetwork[2]->knockoff_price;
                             break;
                         case 3:
@@ -138,7 +138,7 @@ class PortalController extends Controller
                             $statePrice = $productInformation[$inf]->faulty-$productNetwork[4]->knockoff_price;
                             break;
                         default:
-                            $stateString = "Excellent working";
+                            $stateString = "Excellent Working";
                             $statePrice = $productInformation[$inf]->excellent_working-$productNetwork[5]->knockoff_price;
                             break;
                     }
