@@ -2,7 +2,7 @@
 <style>p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>
 <img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>
 <p>{{$user->first_name}} {{$user->last_name}}</p>
-<p style='white-space: nowrap;'>{{$deladdress}}</p>
+<p style='white-space: nowrap;'>@foreach($deladdress as $da){{$da}}<br>@endforeach</p>
 <br><br>
 <p>Order#{{$tradein->barcode}} {{$tradein->created_at}}</p>
 <p>Dear {{$user->first_name}} {{$user->last_name}}</p>

@@ -17,7 +17,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
     
     <script src="{{ asset('js/Testing.js') }}"></script>
 
@@ -108,7 +107,7 @@
                         </div>
 
                         <div class="form-group form-group-hidden" id="select_correct_device_container">
-                            <select class="selectpicker" id="select_correct_device" data-show-subtext="true" data-live-search="true" name="select_correct_device">
+                            <select class="form-control" id="select_correct_device" data-show-subtext="true" data-live-search="true" name="select_correct_device">
                                 <option value="" selected disabled style="color:#000 !important"> -- Select correct device -- </option>
                                 @foreach($products as $product)
                                 <option value="{{$product->id}}">{{$product->product_name}}</option>

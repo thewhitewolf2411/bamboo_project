@@ -43,7 +43,7 @@
                             <td><div class="table-element">No of Trays</div></td>
                             <td><div class="table-element">No of Devices</div></td>
                             <td><div class="table-element">Trolley Type</div></td>
-                            <td><div class="table-element">Delete Trolley</div></td>
+                            <td><div class="table-element">Print Trolley Label</div></td>
                         </tr>
                         <tr>
                             <td><div class="table-element">{{$trolley->id}}</div></a></td>
