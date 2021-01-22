@@ -12381,8 +12381,13 @@ h3, h4, h5 {
   flex-direction: column;
 }
 
-#note-text {
+.note-bold-title {
+  font-family: Sharp Sans No1 Bold;
+}
+
+#note_text {
   min-height: 200px;
+  padding: 8px;
 }
 
 .note_item {
@@ -12398,6 +12403,8 @@ h3, h4, h5 {
   margin-left: 0;
   font-size: 1em;
   padding: 7px;
+  height: 28px;
+  overflow: hidden;
 }
 
 .shop-top-header {

@@ -360,7 +360,7 @@
                         <td><div class="table-element">{{$audit->bamboo_status}}</div></td>
                         <td><div class="table-element">{{$audit->customer_grade}}</div></td>
                         <td><div class="table-element">{{$audit->bamboo_grade}}</div></td>
-                        <td><div class="table-element">{{$audit->value}}</div></td>
+                        <td><div class="table-element">{{$audit->value}} £</div></td>
                         <td><div class="table-element">{{$audit->stock_location}}</div></td>
                         <td><div class="table-element">{{$audit->cheque_number}}</div></td>
                         <td @if(Auth::user()->admin()) @if($audit->notes_count > 0) style="background: #f1f15f" @endif @endif>
@@ -448,7 +448,7 @@
                 <div id="add-audit-note" class="btn btn-outline-primary" onclick="showAddNote()">Add note</div>
 
                 <div id="audit-note" class="hidden">
-                    Note:
+                    <div class="note-bold-title">Note:</div>
                     <textarea id="note_text" class="m-2"></textarea>
                     <div id="note_action_buttons">
                         <div id="back_to_list" class="btn btn-dark w-25 ml-auto mr-auto mt-2 hidden" onclick="backToList()">Back</div>
@@ -501,7 +501,7 @@
 
                 var note_text = document.createElement("p");
                 note_text.classList.add('note_item_text');
-                note_text.innerHTML = object.user + ' - ' + object.date;
+                note_text.innerHTML = object.user + ' [' + object.date + "] - <i style='color: black;'>" + object.note + "</i>";
 
                 var open_button = document.createElement("div");
                 open_button.classList.add('btn');
