@@ -45,8 +45,9 @@ function testingElementChanged(){
     }
 
 
-    if(fimpOrGoogleLock == "true" || pinLock == "true"){
-
+    //if(fimpOrGoogleLock == "true" || pinLock == "true"){
+    if(pinLock == "true"){
+        $('#fimp_or_google_lock').prop('disabled', true);
         $('#fake_missing_parts').prop('disabled', true);
         $('#device_fully_functional').prop('disabled', true);
         $('#water_damage').prop('disabled', true);
@@ -58,6 +59,7 @@ function testingElementChanged(){
         $('#customer_grade').val("Faulty");
     }
     else{
+        $('#fimp_or_google_lock').prop('disabled', false);
         $('#fake_missing_parts').prop('disabled', false);
         $('#device_fully_functional').prop('disabled', false);
         $('#water_damage').prop('disabled', false);

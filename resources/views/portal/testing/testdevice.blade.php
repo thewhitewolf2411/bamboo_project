@@ -74,17 +74,6 @@
                         @csrf
 
                         <div class="form-group">
-                            <label for="fimp_or_google_lock">
-                                Does device have FMIP or Google Lock?
-                            </label>
-                            <select class="form-control" id="fimp_or_google_lock" name="fimp_or_google_lock" onchange="testingElementChanged()" required>
-                                <option disabled selected value> -- select an option -- </option>
-                                <option id="fimp_or_google_lock_false" value="false">No</option>
-                                <option id="fimp_or_google_lock_true" value="true">Yes</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
                             <label for="pin_lock">
                                 Does device have PIN lock?
                             </label>
@@ -92,6 +81,17 @@
                                 <option disabled selected value> -- select an option -- </option>
                                 <option id="pin_lock_false" value="false">No</option>
                                 <option id="pin_lock_true" value="true">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fimp_or_google_lock">
+                                Does device have FMIP or Google Lock?
+                            </label>
+                            <select class="form-control" id="fimp_or_google_lock" name="fimp_or_google_lock" onchange="testingElementChanged()" required>
+                                <option disabled selected value> -- select an option -- </option>
+                                <option id="fimp_or_google_lock_false" value="false">No</option>
+                                <option id="fimp_or_google_lock_true" value="true">Yes</option>
                             </select>
                         </div>
 
