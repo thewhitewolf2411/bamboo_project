@@ -230,8 +230,29 @@ class TestingController extends Controller
             $mti = true;
         }
 
-        return redirect('/portal/testing/checkforimei/' . $tradein->id);
-        
+        // for products without network, send device to serial check
+        $product_category = SellingProduct::find($tradein->product_id)->category_id;
+
+        if($product_category > 1 && is_null($tradein->customer_network)){
+            return redirect('/portal/testing/checkforserial/' . $tradein->id);
+        } else {
+            return redirect('/portal/testing/checkforimei/' . $tradein->id);
+        }
+    }
+
+    /**
+     * Display check for device serial number visibility.
+     */
+    public function showCheckForSerialPage($id){
+        //if(!$this->checkAuthLevel(5)){return redirect('/');}
+        $tradein = Tradein::where('id', $id)->first();
+        $user  = User::where('id', $tradein->user_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.testing.receiving.showcheckserial')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
     }
 
     /**
@@ -359,24 +380,11 @@ class TestingController extends Controller
     public function deviceSerialVisibility(Request $request){
         $tradein = Tradein::where('id', $request->tradein_id)->first();
 
-        if($request->visible_serial == "yes"){
-            $tradein->visible_serial = true;
+        if($request->visible_serial == "no"){
+            $tradein->job_state = "6";
         }
-        else{
-            $tradein->visible_serial = false;
-            $tradein->marked_for_quarantine = true;
-        }
-
         $tradein->save();
-        if($tradein->visible_serial == false){
-            return redirect('/portal/testing/result/' . $tradein->id);
-        } else {
-            $tradein->marked_as_risk = false;
-            $tradein->marked_for_quarantine = false;
-            $tradein->device_correct = true;
-            $tradein->save();
-            return redirect('/portal/testing/result/' . $tradein->id);
-        }
+        return redirect('/portal/testing/result/' . $tradein->id);
     }
 
     /**
