@@ -23,7 +23,7 @@ use App\Eloquent\TrayContent;
 use App\Eloquent\Network;
 use App\Eloquent\Colour;
 use App\Eloquent\TestingFaults;
-use app\Helpers\PriceEvaluation;
+use App\Helpers\PriceEvaluation;
 use App\Eloquent\ProductNetworks;
 use Klaviyo\Klaviyo as Klaviyo;
 use Klaviyo\Model\EventModel as KlaviyoEvent;
@@ -519,8 +519,8 @@ class TestingController extends Controller
         $product = SellingProduct::where('id', $tradein->product_id)->first();
 
         // evaluate bamboo price
-        $priceEvaluation = new PriceEvaluation();
-        $priceEvaluation->evaluatePrice($tradein, $request->toArray());
+        //$priceEvaluation = new PriceEvaluation();
+        //$priceEvaluation->evaluatePrice($tradein, $request->toArray());
 
         if($request->fimp_or_google_lock === "true" || $request->pin_lock === "true"){
 
