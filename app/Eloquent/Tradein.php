@@ -26,8 +26,10 @@ class Tradein extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'barcode','barcode_original','product_id','product_state', 'job_state', 'sent_themselves', 'order_price','memory','network', 'color','correct_memory','correct_network', 'received', 'device_missing', 'missing_image', 'device_correct', 'device_present_as_described', 'checkmend_passed', 'imei_number', 'change_device',
-        'visible_imei', 'proccessed_before', 'bamboo_grade', 'older_than_14_days', 'quarantine_status', 'quarantine_date'
+        'user_id', 'barcode','barcode_original','product_id','customer_grade',
+        'bamboo_grade', 'job_state', 'order_price','customer_memory','customer_network',
+        'correct_memory','correct_network', 'missing_image', 'imei_number',
+        'quarantine_reason', 'quarantine_date'
     ];
 
 
@@ -149,7 +151,7 @@ class Tradein extends Model
             return $trayname;
         }
         else{
-            return "Error";
+            return "Not received yet.";
         }
 
     }
@@ -166,303 +168,283 @@ class Tradein extends Model
         }
     }
 
-    public function checkForDowngrade(){
-
-        $customgrade = [
-            1=>"Excellent Working",
-            2=>"Good Working",
-            4=>"Poor Working", 
-            5=>"Damaged Working", 
-            6=>"Faulty"
-        ];
-
-        $bamboograde = [
-            1=>"Excellent Working",
-            2=>"Good Working",
-            4=>"Poor Working", 
-            5=>"Damaged Working", 
-            6=>"Faulty"
-        ];
-        
-        if($this->product_state !== $this->bamboo_grade){
-
-            $i = "";
-            $k = "";
-
-
-            foreach($customgrade as $key=>$cg){
-                if($this->product_state === $cg){
-                    $i = $key;
-                    #dd($i);
-                }
-            }
-
-            foreach($bamboograde as $key=>$bg){
-                if($this->bamboo_grade === $bg){
-                    $k = $key;
-                }
-            }
-
-
-            if($i < $k){
-                return ["Downgraded", "Awaiting Reponse"];
-            }
-
-            return ["0", "0"];
-
-        }
-
-
-    }
-
-    /**
-     * array[0]. bamboo status
-     * array[1]. customer status
-     */
-    public function getDeviceStatus($id, $job_state){
-
-        switch($job_state){
-            case 1:
-                return ["Awaiting Trade-pack", "Order placed"];
-                break;
-            case 2:
-                return ["Awaiting Receipt", "Trade pack despatched"];
-                break;
-            case 3:
-                $tradein = Tradein::where('id', $id)->first();
-                if((bool)$tradein->marked_for_quarantine){
-                    if($tradein->device_correct){
-                        return ["Incorrect Model", "Awaiting Reponse"];
-                    }
-                    if(!($tradein->correct_memory<$tradein->memory)){
-                        return ["Incorrect GB Size", "Awaiting Reponse"];
-                    }
-                    if(($tradein->correct_network !== $tradein->network) && $tradein->correct_network !== null){
-                        return ["Incorrect Network", "Awaiting Response"];
-                    }
-                    if($tradein->fimp){
-                        if($tradein->getCategoryId($tradein->product_id) === 1){
-                            return ["FIMP Lock", "Awaiting Response"];
-                        }
-                        else{
-                            return ["Google Lock", "Awaiting Response"];
-                        }
-                    }
-                    if($tradein->pinlocked){
-                        return ["PIN Lock", "Awaiting Response"];
-                    }
-                    if($tradein->chekmend_passed !== null && (bool)$tradein->chekmend_passed == false){
-                        return ["BLACKLISTED", "Awaiting Response"];
-                    }
-                    if($tradein->visible_imei !== null && $tradein->visible_imei == false){
-                        return ["NO IMEI", "Awaiting Response"];
-                    }
-                    if((bool)$tradein->device_missing == true){
-                        return ["Lost in transit", "Lost in transit"];
-                    }
-                }
-
-                return ["Awaiting Testing", "Trade pack received, awaiting testing"];
-
-                break;
-            case 4:
-                return ["Lost in transit", "Lost in transit"];
-                break;
-            case 5:
-                $tradein = Tradein::where('id', $id)->first();
-                if($tradein->proccessed_before){
-                    return ["2nd Test", "Testing complete"];
-                    break;
-                }
-                return ["1st Test", "Testing complete"];
-                break;
-            case 6:
-                $tradein = Tradein::where('id', $id)->first();
-                if((bool)$tradein->marked_for_quarantine){
-                    if($tradein->device_correct){
-                        return ["Incorrect Model", "Awaiting Reponse"];
-                    }
-                    if(!($tradein->correct_memory<$tradein->memory)){
-                        return ["Incorrect GB Size", "Awaiting Reponse"];
-                    }
-                    if(($tradein->correct_network !== $tradein->network) && $tradein->correct_network !== null){
-                        return ["Incorrect Network", "Awaiting Response"];
-                    }
-                    if($tradein->fimp){
-                        if($tradein->getCategoryId($tradein->product_id) === 1){
-                            return ["FIMP Lock", "Awaiting Response"];
-                        }
-                        else{
-                            return ["Google Lock", "Awaiting Response"];
-                        }
-                    }
-                    if($tradein->pinlocked){
-                        return ["PIN Lock", "Awaiting Response"];
-                    }
-                    if($tradein->chekmend_passed !== null && (bool)$tradein->chekmend_passed == false){
-                        return ["BLACKLISTED", "Awaiting Response"];
-                    }
-                    if($tradein->visible_imei !== null && $tradein->visible_imei == false){
-                        return ["NO IMEI", "Awaiting Response"];
-                    }
-                    if((bool)$tradein->device_missing == true){
-                        return ["Lost in transit", "Lost in transit"];
-                    }
-                }
-                return ["2nd Test", "Testing complete"];
-                break;
-            case 7:
-                return ["2nd Test complete", "Testing complete"];
-                break;
-            case 8:
-                break;
-            case 9:
-                $tradein = Tradein::where('id', $id)->first();
-                if((bool)$tradein->marked_for_quarantine){
-                    if($tradein->device_correct){
-                        return ["Incorrect Model", "Awaiting Reponse"];
-                    }
-                    if(!($tradein->correct_memory<$tradein->memory)){
-                        return ["Incorrect GB Size", "Awaiting Reponse"];
-                    }
-                    if(($tradein->correct_network !== $tradein->network) && $tradein->correct_network !== null){
-                        return ["Incorrect Network", "Awaiting Response"];
-                    }
-                    if($tradein->fimp){
-                        if($tradein->getCategoryId($tradein->product_id) === 1){
-                            return ["FIMP Lock", "Awaiting Response"];
-                        }
-                        else{
-                            return ["Google Lock", "Awaiting Response"];
-                        }
-                    }
-                    if($tradein->pinlocked){
-                        return ["PIN Lock", "Awaiting Response"];
-                    }
-                    if($tradein->chekmend_passed !== null && (bool)$tradein->chekmend_passed == false){
-                        return ["BLACKLISTED", "Awaiting Response"];
-                    }
-                    if($tradein->visible_imei !== null && $tradein->visible_imei == false){
-                        return ["NO IMEI", "Awaiting Response"];
-                    }
-                    if((bool)$tradein->device_missing == true){
-                        return ["Lost in transit", "Lost in transit"];
-                    }
-                }
-
-                return $this->checkForDowngrade();
-                break;
-            case 10:
-                return ["Awaiting Box Build", "Awaiting Payment"];
-                break;
-            case 11:
-                return ["Awaiting Box Build", "Submitted for Payment"];
-                break;
-            case 12:
-                return ["Awaiting Box Build", "Failed payment"];
-                break;
-            case 13:
-                return ["Awaiting Box Buiild", "Paid"];
-                break;
-            case 14:
-                return ["Ready for Sale", "Paid"];
-                break;
-            case 15:
-                return ["Closed", "Paid"];
-                break;
-            case 16:
-                //Customer disagrees with offered price, wants device back
-                return ["Customer requested device back", "Returning Device"];
-                break;
-            case 17:
-                //Device is moved from quarantine
-                return ["Device marked to return to customer", "Returning Device"];
-                break;
-            case 18:
-                //Device is sent to customer in order management
-                return ["Device despatched to customer", "Returning Device"];
-                break;
-        }
-        
-    }
-
-    public function getCustomerStatus(){
-        return $this->getDeviceStatus($this->id, $this->job_state)[1];
-    }
-
-    public function getBambooStatus(){
-        return $this->getDeviceStatus($this->id, $this->job_state)[0];
-    }
-
     public function isGoogleLocked(){
-        if($this->fimp){
+        if($this->job_state === '11b' || $this->job_state === '15b'){
             return true;
         }
-        return $this->fimp;
+        return false;
     }
 
     public function isPinLocked(){
-        if($this->pinlocked){
+        if($this->job_state === '11c' || $this->job_state === '15c'){
             return true;
         }
-        return $this->pinlocked;
+        return false;
     }
 
     public function isBlacklisted(){
-        // blackliststatus
-        $result = ImeiResult::where('tradein_id', $this->id)->first();
-        if($result){
-            if($result->blackliststatus === "Yes"){
-                return true;
-            }
-            return false;
+        if($this->job_state === '7'){
+            return true;
         }
-        return null;
+        return false;
     }
 
     public function isSIMLocked(){
-        // greyliststatus
-        $result = ImeiResult::where('tradein_id', $this->id)->first();
-        if($result){
-            if($result->greyliststatus === "Yes"){
-                return true;
-            }
-            return false;
-        }
         return null;
     }
-    
 
-    public function getQuarantineReason($id){
 
-        $tradein = Tradein::where('id', $id)->first();
+    public function getDeviceStatus(){
 
-        switch($tradein->quarantine_status){
+        // array[0] - bamboo status
+        // array[1] - customer status
+        // left - database flags
+        $states = [
+            /*0*/   [],
+            /*1*/   ['Order Request received','Order Placed'],
+            /*2*/   ['Awaiting Receipt/Customer Sent','Trade Pack Despatched'],
+            /*3*/   ['Awaiting Receipt','Trade Pack Despatched'],
+            /*4*/   ['Lost in transit','Lost in transit'],
+            /*5*/   ['Never Received','Expired'],
+            /*6*/   ['No IMEI','Awaiting Response'],
+            /*7*/   ['Blacklisted','Awaiting Response'],
+            /*8a*/  ['Lost','Awaiting Response'],
+            /*8b*/  ['Insurance Claim','Awaiting Response'],
+            /*8c*/  ['Blocked/FRP','Awaiting Response'],
+            /*8d*/  ['Stolen','Awaiting Response'],
+            /*8e*/  ['Knox','Awaiting Response'],
+            /*8f*/  ['Assetwatch','Awaiting Response'],
+            /*9*/   ['Awaiting Testing','Testing'],
+            /*10*/  ['1st Test','Testing'],
+            /* First Test results */
+            /*11*/  ['Quarantine','Awaiting Response'],
+            /*11a*/  ['Device is FIMP Locked','Awaiting Response'],
+            /*11b*/  ['Device is Google Locked','Awaiting Response'],
+            /*11c*/  ['Device is PIN Locked','Awaiting Response'],
+            /*11d*/  ['Device is incorrect','Awaiting Response'],
+            /*11e*/  ['Device isn\'t fully functional','Awaiting Response'],
+            /*11f*/  ['Incorrect Memory','Awaiting Response'],
+            /*11g*/  ['Incorrect Network','Awaiting Response'],
+            /*11h*/  ['Signs of water damage','Awaiting Response'],
+            /*11i*/  ['Downgraded','Awaiting Response'],
+            /*11j*/  ['Older than 14 days','Awaiting Response'],
+            /*12*/  ['Device has passed testing','Testing'],
+            /*13*/  ['Device was requested for retest','Awaiting Testing'],
+            /*14*/  ['Awaiting 2nd Test','Awaiting Testing'],
+            /* Second Test results */
+            /*15*/  ['2nd Test Quarantine','Awaiting Response'],
+            /*15a*/  ['Device is FIMP Locked','Awaiting Response'],
+            /*15b*/  ['Device is Google Locked','Awaiting Response'],
+            /*15c*/  ['Device is PIN Locked','Awaiting Response'],
+            /*15d*/  ['Device is incorrect','Awaiting Response'],
+            /*15e*/  ['Device isn\'t fully functional','Awaiting Response'],
+            /*15f*/  ['Incorrect Memory','Awaiting Response'],
+            /*15g*/  ['Incorrect Network','Awaiting Response'],
+            /*15h*/  ['Signs of water damage','Awaiting Response'],
+            /*15i*/  ['Downgraded','Awaiting Response'],
+            /*15j*/  ['Older than 14 days','Awaiting Response'],
+            /*16*/  ['Device has passed 2nd testing','Testing'],
+            /*17*/  ['Device marked for destruction',''],
+            /*18*/  ['Device destroyed',''],
+            /*19*/  ['Device requested by customer','Returning Device'],
+            /*20*/  ['Despatched to customer','Returning Device'],
+            /*21*/  ['Awaiting Box build','Awaiting payment'],
+            /*22*/  ['Awaiting Box build','Submitted for payment'],
+            /*23*/  ['Awaiting Box build','Payment Failed'],
+            /*24*/  ['Awaiting Box build','Paid'],
+            /*25*/  ['Ready For Sale','Paid'],
+            /*26*/  ['Closed','Paid'],
 
-            case 1:
-                return "Lost";
-                break;
-            case 2:
-                return "Insurance Claim";
-                break;
-            case 3:
-                return "Blocked / FRP";
-                break;
-            case 4:
-                return "Stolen";
-                break;
-            case 5:
-                return "Knox";
-                break;
-            case 6:
-                return "Asset Watch";
-                break;
+        ];
 
-            default:
-                return "Not defined yet.";
-            break;
-
+        switch($this->job_state){
+            case "1":
+                return $states[1];
+            case "2":
+                return $states[2];
+            case "3":
+                return $states[3];
+            case "4":
+                return $states[4];
+            case "5":
+                return $states[5];
+            case "6":
+                return $states[6];
+            case "7":
+                return $states[7];
+            case "8a":
+                return $states[8];
+            case "8b":
+                return $states[9];
+            case "8c":
+                return $states[10];
+            case "8d":
+                return $states[11];
+            case "8e":
+                return $states[12];
+            case "8f":
+                return $states[13];
+            case "9":
+                return $states[14];
+            case "10":
+                return $states[15];
+            case "11":
+                return $states[16];
+            case "11a":
+                return $states[17];
+            case "11b":
+                return $states[18];
+            case "11c":
+                return $states[19];
+            case "11d":
+                return $states[20];
+            case "11e":
+                return $states[21];
+            case "11f":
+                return $states[22];
+            case "11g":
+                return $states[23];
+            case "11h":
+                return $states[24];
+            case "11i":
+                return $states[25];
+            case "11j":
+                return $states[26];
+            case "12":
+                return $states[27];
+            case "13":
+                return $states[28];
+            case "14":
+                return $states[29];
+            case "15":
+                return $states[30];
+            case "15a":
+                return $states[31];
+            case "15b":
+                return $states[32];
+            case "15c":
+                return $states[33];
+            case "15d":
+                return $states[34];
+            case "15e":
+                return $states[35];
+            case "15f":
+                return $states[36];
+            case "15g":
+                return $states[37];
+            case "15h":
+                return $states[38];
+            case "15i":
+                return $states[39];
+            case "16":
+                return $states[40];
+            case "17":
+                return $states[41];
+            case "18":
+                return $states[42];
+            case "19":
+                return $states[43];
+            case "20":
+                return $states[44];
+            case "21":
+                return $states[45];
+            case "22":
+                return $states[46];
+            case "23":
+                return $states[47];
+            case "24":
+                return $states[48];
+            case "25":
+                return $states[49];
+            case "26":
+                return $states[50];
         }
-
+        
     }
+
+    public function serialVisible(){
+        if($this->visible_serial === null){
+            return null;
+        }
+        return (bool)$this->visible_serial;
+    }
+
+    public function getCustomerStatus(){
+        return $this->getDeviceStatus()[1];
+    }
+
+    public function getBambooStatus(){
+        return $this->getDeviceStatus()[0];
+    }
+
+    public function isInQuarantine(){
+        switch($this->job_state){
+            case "4":
+                return true;
+            case "5":
+                return true;
+            case "6":
+                return true;
+            case "7":
+                return true;
+            case "8a":
+                return true;
+            case "8b":
+                return true;
+            case "8c":
+                return true;
+            case "8d":
+                return true;
+            case "8e":
+                return true;
+            case "8f":
+                return true;
+            case "11":
+                return true;
+            case "11a":
+                return true;
+            case "11b":
+                return true;
+            case "11c":
+                return true;
+            case "11d":
+                return true;
+            case "11e":
+                return true;
+            case "11f":
+                return true;
+            case "11g":
+                return true;
+            case "11h":
+                return true;
+            case "11i":
+                return true;
+            case "11j":
+                return true;
+            case "15":
+                return true;
+            case "15a":
+                return true;
+            case "15b":
+                return true;
+            case "15c":
+                return true;
+            case "15d":
+                return true;
+            case "15e":
+                return true;
+            case "15f":
+                return true;
+            case "15g":
+                return true;
+            case "15h":
+                return true;
+            case "15i":
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    
 }

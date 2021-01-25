@@ -38,7 +38,7 @@ class CustomerCareController extends Controller
         if($request->all() == null || $request->search == 0){
 
 
-            $tradeins = Tradein::all()->where('job_state', 1)->groupBy('barcode');
+            $tradeins = Tradein::all()->where('job_state', "1")->groupBy('barcode');
 
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -47,7 +47,7 @@ class CustomerCareController extends Controller
         }
         else{
             if(is_numeric($request->search) === true && $request->search <= 3){
-                $tradeins = Tradein::where('job_state', 1)->get();
+                $tradeins = Tradein::where('job_state', "1")->get();
                 $user_id = Auth::user()->id;
                 $portalUser = PortalUsers::where('user_id', $user_id)->first();
     
@@ -231,7 +231,7 @@ class CustomerCareController extends Controller
         foreach($barcodes as $barcode){
             $tiarr = Tradein::where('barcode', $barcode)->get();
             foreach($tiarr as $tradein){
-                $tradein->job_state = 2;
+                $tradein->job_state = 3;
                 $tradein->save();
             }
         }
@@ -281,8 +281,8 @@ class CustomerCareController extends Controller
 
         foreach($tradeins as $tradein){
             
-            if($tradein->job_state < 2){
-                $tradein->job_state = 2;
+            if($tradein->job_state < 4){
+                $tradein->job_state = 3;
                 $tradein->save();
             }
 
@@ -388,7 +388,7 @@ class CustomerCareController extends Controller
 
         if($request->all() == null || $request->search == 0){
 
-            $tradeins = Tradein::where('job_state', 2)->get()->groupBy('barcode_original');
+            $tradeins = Tradein::where('job_state', 2)->orWhere('job_state', 3)->get()->groupBy('barcode_original');
 
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -397,7 +397,7 @@ class CustomerCareController extends Controller
         }
         else{
             if($request->search <= 3){
-                $tradeins = Tradein::where('job_state', 2)->get();
+                $tradeins = Tradein::where('job_state', 2)->orWhere('job_state', 3)->get();
 
                 $user_id = Auth::user()->id;
                 $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -412,7 +412,7 @@ class CustomerCareController extends Controller
             }
             else{
                 
-                $tradeins = Tradein::where('job_state', 2)
+                $tradeins = Tradein::where('job_state', 2)->orWhere('job_state', 3)
                                     ->where('barcode', $request->search)
                                     ->orWhere('barcode_original', $request->search)
                                     ->get();
@@ -615,25 +615,46 @@ class CustomerCareController extends Controller
         $trayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
         $tray = Tray::where('id', $trayContent->tray_id)->first();
 
-        $response = $this->generateNewLabel($barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $tray->tray_name);
+        if($tradein->visible_serial !== null){
+            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->serial_number, $tray->tray_name);
+        } else {
+            $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $tray->tray_name);
+        }
 
         return redirect()->back()->with(['success'=>'pdf/devicelabel-'. $tradein->barcode .'.pdf']);
 
     }
 
-    public function generateNewLabel($barcode, $tradein_barcode, $manifacturer, $model, $imei, $location){
+    /**
+     * Generate device label (PDF)
+     */
+    public function generateNewLabel($has_serial, $barcode, $tradein_barcode, $manifacturer, $model, $imei, $location){
         $customPaper = array(0,0,141.90,283.80);
 
-        $pdf = PDF::loadView('portal.labels.devicelabel', 
-        array(
-            'barcode'=>$barcode,
-            'tradein_barcode'=>$tradein_barcode,
-            'manifacturer'=>$manifacturer,
-            'model'=>$model,
-            'imei'=>$imei,
-            'location'=>$location))
-        ->setPaper($customPaper, 'landscape')
-        ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
+        if($has_serial){
+            $pdf = PDF::loadView('portal.labels.devicelabelserial', 
+            array(
+                'barcode'=>$barcode,
+                'tradein_barcode'=>$tradein_barcode,
+                'manifacturer'=>$manifacturer,
+                'model'=>$model,
+                'serial'=>$imei,
+                'location'=>$location))
+            ->setPaper($customPaper, 'landscape')
+            ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
+        } else {
+            $pdf = PDF::loadView('portal.labels.devicelabel', 
+            array(
+                'barcode'=>$barcode,
+                'tradein_barcode'=>$tradein_barcode,
+                'manifacturer'=>$manifacturer,
+                'model'=>$model,
+                'imei'=>$imei,
+                'location'=>$location))
+            ->setPaper($customPaper, 'landscape')
+            ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
+        }
+        
     }
 
 }

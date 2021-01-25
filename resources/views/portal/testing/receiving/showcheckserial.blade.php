@@ -41,13 +41,14 @@
 
                     <div class="d-flex flex-column portal-search-form-container">
                        
-                        <form action="/portal/testing/receive/printnewlabel" method="POST" class="d-flex flex-column">
+                        <form action="/portal/testing/receive/deviceserialvisibility" method="POST" class="d-flex flex-column">
+
                             @csrf
 
                             <div class="w-100 p-3">
                                 <div class="d-flex w-100">
                                     <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
-                                    <div class="d-flex w-50 border p-3"><p>Status</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Is device serial number visible?</p></div>
                                 </div>
                                 <div class="d-flex w-100">
                                     <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
@@ -55,36 +56,23 @@
                                         <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                     </div>
-                                    @if($tradein->marked_for_quarantine)
-                                    <div class="d-flex w-50 border p-3"><p>This device has been marked for quarantine because:</p><br>
-                                        <ul>
-                                            @if($tradein->device_missing == true) <li><p>Device is Missing</p></li> @endif
-                                            @if(isset($tradein->chekmend_passed) == true && $tradein->chekmend_passed == false) <li><p>Device IMEI Check failed</p></li> @endif
-                                            @if(isset($tradein->visible_imei) == true && $tradein->visible_imei == false) <li><p>Device does not have IMEI number visible.</p></li> @endif
-                                            @if(isset($tradein->older_than_14_days) == true && $tradein->older_than_14_days == true) <li><p>Order is older than 14 days.</p></li> @endif
-                                            @if(isset($tradein->visible_serial) == true && $tradein->visible_serial == false) <li><p>Device serial number is not visible.</p></li> @endif
-                                            
-                                        </ul>
-                                    </div>
-                                    @else
-                                    <div class="d-flex w-50 border p-3">
-                                    
-                                        <p>This device has passed receiving part of the testing.</p><br>
-
-                                    </div>
-                                    @endif
+                                    <div class="d-flex w-25 border p-3"><label for="visible_serial_yes">Yes.</label><input id="visible_serial_yes"  @if($tradein->serialVisible()) checked @endif  type="radio" name="visible_serial" value="yes" required></div>
+                                    <div class="d-flex w-25 border p-3"><label for="visible_serial_no">No.</label><input id="visible_serial_no"  @if($tradein->serialVisible() !== null && !$tradein->serialVisible()) checked @endif  type="radio" name="visible_serial" value="no"></div>
                                 </div>
-                                <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
-                                    <a href="/portal/testing/checkforimei/{{$tradein->id}}" style="margin: 0;">
-                                        <div class="btn btn-primary btn-blue">
-                                            <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
-                                        </div>
-                                    </a>
-                                    <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Print new label and allocate device to tray. </button>
-                                </div>
+                                
                             </div>
 
                             <input type="hidden" name="tradein_id" value="{{$tradein->id}}">
+
+                            <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
+                                <a href="/portal/testing/receive/{{$tradein->id}}" style="margin: 0;">
+                                    <div class="btn btn-primary btn-blue">
+                                        <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
+                                    </div>
+                                </a>
+                                <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Confirm</button>
+                            </div>
+
                         </form>
 
                     </div>

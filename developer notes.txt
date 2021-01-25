@@ -1,14 +1,55 @@
-job_state	description
-1		order request received
-2		trade pack dispached/user printed
-3		received and passed
-4		received and missing
-5		tested
-6		marked for retest
-7		retested
-8		placed in tray
-9		waiting customer response
-10		paid for
-11      mark device to return to customer
-12		return to customer
-13		destroy device
+/*  Receiving   */
+1.  Order Request received/Trade pack requested
+2.  Trade pack despached/User printed trade pack
+3.  Trade pack despached
+4.  Pack received/Device missing
+5.  Never Received/Expired
+6.  Device has no IMEI number
+7.  Device blacklisted
+8a. Lost
+8b. Insurance Claim
+8c. Blocked/FRP
+8d. Stolen
+8e. Knox
+8f. Assetwatch
+9.  Awaiting Testing/Testing
+
+/*  Testing     */
+10.  1st Test/Testing
+11.  Marked for quarantine
+11a. Device is FIMP
+11b. Google Locked
+11c. Device is PIN Locked
+11d. Device is incorrect
+11e. Device isn't fully functional
+11f. Wrong Memory 
+11g. Incorrect Network
+11h. Signs of water damage
+11i. Downgraded
+11j. Older than 14 days/Price is less
+12.  Device has passed testing
+13. Device requested for retest
+14. Awaiting 2nd Testing/2nd testing
+15. 2ndTest/Marked for quarantine
+15a. 2ndTest/Device is FIMP/
+15b. 2bdTest/Google Locked
+15c. 2ndTest/Device is PIN Locked
+15d. 2ndTest/Device is incorrect
+15e. 2ndTest/Device isn't fully functional
+15f. 2ndTest/Wrong Memory 
+15g. 2ndTest/Incorrect Network
+15h. 2ndTest/Signs of water damage
+15i. 2ndTest/Downgraded
+16. Device has passed 2nd test
+17. Marked for destroy
+18. Device destroyed
+19. Device requested by customer
+20. Despatched to customer
+
+/*  Completed   */
+21. Batch submited for payment
+22. Batch has been submited to the bank
+23. Payment Failed
+24. Paid
+25. Boxing
+26. Sold / Transfered
