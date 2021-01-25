@@ -33,7 +33,7 @@
 
     <main class="portal-main">
         <div class="app">
-            <div class="portal-app-container">
+            <div class="container-fluid">
                 <div class="portal-title-container">
                     <div class="portal-title">
                         <p>{{$title}}</p>
@@ -95,7 +95,7 @@
                             <td><div class="table-element">{{$tradein->customer()->fullName()}}</div></td>
                             <td><div class="table-element">{{$tradein->postCode()}}</div></td>
                             <td><div class="table-element"> @foreach($order as $tradein) {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0]}} <br> @endforeach </div></td>
-                            <td><div class="table-element">{{$tradein->location()}}</div></td>
+                            <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
                             <td><div class="table-element">@foreach($order as $tradein) {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[1]}} <br> @endforeach</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">

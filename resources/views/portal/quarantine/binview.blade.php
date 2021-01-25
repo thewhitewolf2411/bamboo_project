@@ -131,6 +131,7 @@
                                 <input type="text" class="form-control" id="checkdevice">
                                 <input type="hidden" id="bingrade" value="{{Session::get('devices_type')}}">
                                 <input type="hidden" id="binname" value="{{$bin->tray_name}}">
+                                <input type="hidden" name="binname" value="{{$bin->tray_name}}">
                                 <a role="button" id="checkdevicesubmit"><div class="btn btn-primary">Add device</div></a>
                             </div>
 
@@ -188,7 +189,6 @@
                                 if($('#addeddevicestable #' + response.order.id) == undefined ){
                                     $('#addeddevicestable').append('<tr id="' + response.order.id + '"><td><div class="table-element">' + response.order.barcode + '</div></td><td><div class="table-element">' + response.model + '</div></td><td><div class="table-element">' + response.order.imei_number + '</div></td><td><div class="table-element">' + response.order.bamboo_grade + '</div></td></tr>');
                                     $('#form-inputs').append('<input type="hidden" name="tradein-'+ response.order.id + '" value="'+ response.order.id +'">');
-                                    $('#form-inputs').append('<input type="hidden" name="tray-'+ {!!$bin->id!!} + '" value="'+ {!!$bin->tray_name!!} +'">');
                                 }
                                 else{
                                     $('#statement').html('<div class="alert alert-warning"> This device was already added. </div>');
@@ -198,7 +198,6 @@
                             else{
                                 $('#addeddevicestable').append('<tr id="' + response.order.id + '"><td><div class="table-element">' + response.order.barcode + '</div></td><td><div class="table-element">' + response.model + '</div></td><td><div class="table-element">' + response.order.imei_number + '</div></td><td><div class="table-element">' + response.order.bamboo_grade + '</div></td></tr>');
                                 $('#form-inputs').append('<input type="hidden" name="tradein-'+ response.order.id + '" value="'+ response.order.id +'">');
-                                $('#form-inputs').append('<input type="hidden" name="tray-'+ binname + '" value="' + binname + '">');
                             }
 
                             
