@@ -28,8 +28,62 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Payments Awaiting Assignment</p>
+                        <p class="pt-2 text-center">Awaiting Payments</p>
+
+                        
                     </div>
+                </div>
+
+                <div class="m-auto w-75">
+                    <form class="d-flex align-items-center mx-5 text-center" action="/portal/payments/awaiting" method="GET">              
+                        <label for="searchtradeins">Search by Trade-in barcode / Trade-in ID:</label>
+                        <input type="text" minlength="7" name="search" class="form-control mx-3 my-0">
+                        <button type="submit" class="btn btn-primary btn-blue">Search</button>
+                    </form>
+                </div>
+
+                <div class="portal-table-container">
+                    <h5 class="text-center">Trays</h5>
+                    <table class="portal-table sortable" id="categories-table">
+                        <tr>
+                            <td><div class="table-element">Tray ID</div></td>
+                            <td><div class="table-element">Tray name</div></td>
+                            <td><div class="table-element">Assigned trolley</div></td>
+                            <td><div class="table-element">No of Devices</div></td>
+                            <td><div class="table-element">Print Tray Label</div></td>
+                        </tr>
+                        @foreach($trays as $tray)
+                        <tr>
+                            <td><div class="table-element">{{$tray->id}}</div></a></td>
+                            <td><div class="table-element">{{$tray->tray_name}}</div></a></td>
+                            <td><div class="table-element">@if($tray->trolley_id == null) <p style="color:red;">Unassigned</p> @else <p style="color:green;"> {{$tray->getTrolleyName($tray->trolley_id)}} </p> @endif</div></a></td>
+                            <td><div class="table-element">{{$tray->getTrayNumberOfDevices($tray->id)}}</div></a></td>
+                            <td><div class="table-element"><a href="/portal/trays/tray/printlabel/{{$tray->tray_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print Tray Label</p></div></a></div></td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+
+                <div class="portal-table-container">
+                    <h5 class="text-center">Trolleys</h5>
+                    <table class="portal-table sortable" id="categories-table">
+                        <tr>
+                            <td><div class="table-element">Trolley ID</div></td>
+                            <td><div class="table-element">Trolley</div></td>
+                            <td><div class="table-element">No of Trays</div></td>
+                            <td><div class="table-element">No of Devices</div></td>
+                            <td><div class="table-element">Print Trolley Label</div></td>
+                        </tr>
+                        @foreach($trolleys as $trolley)
+                        <tr>
+                            <td><div class="table-element">{{$trolley->id}}</div></td>
+                            <td><div class="table-element">{{$trolley->trolley_name}}</div></td>
+                            <td><div class="table-element">{{$trolley->number_of_trays}}</div></td>
+                            <td><div class="table-element">{{$trolley->getNumberOfDevices($trolley->id)}}</div></td>
+                            <td><div class="table-element"><a href="/portal/trolleys/trolley/printlabel/{{$trolley->trolley_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print Trolley Label</p></div></a></div></td>
+                        </tr>
+                        @endforeach
+                    </table>
                 </div>
 
             </div>

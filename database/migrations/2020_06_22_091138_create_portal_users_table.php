@@ -45,10 +45,10 @@ class CreatePortalUsersTable extends Migration
             $table->boolean('categories')->default(false);
             $table->boolean('settings')->default(false);
             $table->boolean('payments')->default(false);
-            $table->boolean('payments_awaiting_assignment')->default(false);
-            $table->boolean('pending_payments')->default(false);
-            $table->boolean('completed_payment')->default(false);
-            $table->boolean('payment_report')->default(false);
+            $table->boolean('awaiting_payments')->default(false);
+            $table->boolean('submit_payments')->default(false);
+            $table->boolean('payment_confirmations')->default(false);
+            $table->boolean('failed_payments')->default(false);
             $table->timestamps();
         });
     }

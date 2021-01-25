@@ -44,9 +44,9 @@ class PortalUsers extends Model
             'categories',
             'settings',
         'payments',
-            'payments_awaiting_assignment',
-            'pending_payments',
-            'completed_payment',
-            'payment_report'
+            'awaiting_payments',
+            'submit_payments',
+            'payment_confirmations',
+            'failed_payments'
     ];
 }

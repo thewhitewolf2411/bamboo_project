@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\Portal;
 
 use App\Eloquent\PortalUsers;
+use App\Eloquent\Tradein;
+use App\Eloquent\Tray;
+use App\Eloquent\TrayContent;
+use App\Eloquent\Trolley;
+use App\Eloquent\TrolleyContent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -18,39 +23,112 @@ class PaymentsController extends Controller
         return view('portal.payments.payments')->with('portalUser', $portalUser);
     }
 
-    public function showPaymentAwaitingPage(){
+
+    /**
+     * Show awaiting payments.
+     */
+    public function showAwaitingPayments(){
         //if(!$this->checkAuthLevel(6)){return redirect('/');}
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        
+        $trolleys = null;
+        $trays = null;
+        
+        // search by id / barcode
+        if(isset(request()->search)){
+            dd('search');
+            // get tradein by barcode / tradein id
+            $tradeins = Tradein::where('barcode', request()->search)->orWhere('barcode_original', request()->search)->get();
+            $tradein_ids = $tradeins->pluck('id')->toArray();
 
-        return view('portal.payments.awaiting');
+            $trays = TrayContent::whereIn('trade_in_id', $tradein_ids)->get();
+            //$trolleys = TrolleyContent::whereIn('')
+            dd($trays);
+            $tray_ids = $trays->pluck('tray_id')->toArray();
+            dd($tray_ids);
+
+            $trays = Tray::whereIn('id', $tray_ids)
+            ->where(function($query){
+                $query->where('tray_name', 'like', 'TA%')
+                ->orWhere('tray_name', 'like', 'TS%')
+                ->orWhere('tray_name', 'like', 'TH%')
+                ->orWhere('tray_name', 'like', 'TM%');
+            })->get();
+            dd($trays);
+
+            //$tray_ids = $trays->pluck('id')->toArray();
+            //dd($tray_ids);
+
+            //$tray_content = 
+
+        } else {
+            $trolleys = Trolley::where('trolley_name', 'like', 'TA%')
+                ->orWhere('trolley_name', 'like', 'TS%')
+                ->orWhere('trolley_name', 'like', 'TH%')
+                ->orWhere('trolley_name', 'like', 'TM%')
+                ->get();
+            //$trolley_ids = $trolleys->pluck('id')->toArray();
+
+            $trays = Tray::where('number_of_devices', '>', "0")->where(function($query){
+                    $query->where('tray_name', 'like', 'TA%')
+                    ->orWhere('tray_name', 'like', 'TS%')
+                    ->orWhere('tray_name', 'like', 'TH%')
+                    ->orWhere('tray_name', 'like', 'TM%');
+            })->get();
+
+            //$tray_ids = $trays->pluck('id')->toArray();
+            //dd($trolley_ids, $tray_ids);
+
+            // $trolley_content = TrolleyContent::whereIn('trolley_id', $trolley_ids)->get();
+            // $trays_content = TrayContent::whereIn('tray_id', $tray_ids)->get();
+            // dd($trolley_content, $trays_content);
+        }
+
+        return view('portal.payments.awaiting', [
+            'portalUser' => $portalUser,
+            'trolleys' => $trolleys,
+            'trays' => $trays
+        ]);
     }
 
-    public function showPaymentPendingPage(){
+
+    /**
+     * Show submit for payments page.
+     */
+    public function showSubmitPayments(){
         //if(!$this->checkAuthLevel(6)){return redirect('/');}
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.payments.pending')->with('portalUser', $portalUser);
+        return view('portal.payments.submit')->with('portalUser', $portalUser);
     }
 
-    public function showPaymentCompletedPage(){
+
+    /**
+     * Show payments confirmation page.
+     */
+    public function showConfirmPayments(){
         //if(!$this->checkAuthLevel(6)){return redirect('/');}
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.payments.completed')->with('portalUser', $portalUser);
+        return view('portal.payments.confirm')->with('portalUser', $portalUser);
     }
 
-    public function showPaymentReportsPage(){
+
+    /**
+     * Show failed payments page.
+     */
+    public function showFailedPayments(){
         //if(!$this->checkAuthLevel(6)){return redirect('/');}
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.payments.reports')->with('portalUser', $portalUser);
+        return view('portal.payments.failed')->with('portalUser', $portalUser);
     }
 }

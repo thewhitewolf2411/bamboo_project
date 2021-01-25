@@ -28,7 +28,7 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Pending Payment Jobs</p>
+                        <p>Submit Payments</p>
                     </div>
                 </div>
 

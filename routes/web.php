@@ -221,10 +221,10 @@ Route::post('/portal/receiving/printnewlabel' , 'Portal\TestingController@downlo
 Route::post('/portal/testing/getDeviceData', 'Portal\TestingController@getDeviceData')->middleware('auth');
 //payments
 Route::get('/portal/payments', 'Portal\PaymentsController@showPaymentPage')->middleware('auth');
-Route::get('/portal/payments/awaiting', 'Portal\PaymentsController@showPaymentAwaitingPage')->middleware('auth');
-Route::get('/portal/payments/pending', 'Portal\PaymentsController@showPaymentPendingPage')->middleware('auth');
-Route::get('/portal/payments/completed', 'Portal\PaymentsController@showPaymentCompletedPage')->middleware('auth');
-Route::get('/portal/payments/reports', 'Portal\PaymentsController@showPaymentReportsPage')->middleware('auth');
+Route::get('/portal/payments/awaiting', 'Portal\PaymentsController@showAwaitingPayments')->middleware('auth');
+Route::get('/portal/payments/submit', 'Portal\PaymentsController@showSubmitPayments')->middleware('auth');
+Route::get('/portal/payments/confirm', 'Portal\PaymentsController@showConfirmPayments')->middleware('auth');
+Route::get('/portal/payments/failed', 'Portal\PaymentsController@showFailedPayments')->middleware('auth');
 
 //reports
 Route::get('/portal/reports', 'Portal\ReportsController@showReportsPage')->middleware('auth');

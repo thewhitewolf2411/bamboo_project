@@ -78,10 +78,10 @@
                     Payments
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    @if($portalUser->payments_awaiting_assignment)<a class="dropdown-item" href="/portal/payments/awaiting">Payments Awaiting Assignment</a>@endif
-                    @if($portalUser->pending_payments)<a class="dropdown-item" href="/portal/payments/pending">Pending Payments</a>@endif
-                    @if($portalUser->completed_payment)<a class="dropdown-item" href="/portal/payments/completed">Completed Payments</a>@endif
-                    @if($portalUser->payment_report)<a class="dropdown-item" href="/portal/payments/reports">Payment Reports</a>@endif
+                    @if($portalUser->awaiting_payments)<a class="dropdown-item" href="/portal/payments/awaiting">Awaiting Payments</a>@endif
+                    @if($portalUser->submit_payments)<a class="dropdown-item" href="/portal/payments/submit">Submit Payments</a>@endif
+                    @if($portalUser->payment_confirmations)<a class="dropdown-item" href="/portal/payments/confirm">Payment Confirmations</a>@endif
+                    @if($portalUser->failed_payments)<a class="dropdown-item" href="/portal/payments/failed">Failed Payments</a>@endif
                 </div>
             </div>
             @endif

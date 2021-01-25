@@ -157,17 +157,17 @@ class UsersController extends Controller
         if($request->payments == "on"){
             $portalUser->payments = true;
         }
-        if($request->payments_awaiting_assignment == "on"){
-            $portalUser->payments_awaiting_assignment = true;
+        if($request->awaiting_payments == "on"){
+            $portalUser->awaiting_payments = true;
         }
-        if($request->pending_payments == "on"){
-            $portalUser->pending_payments = true;
+        if($request->submit_payments == "on"){
+            $portalUser->submit_payments = true;
         }
-        if($request->completed_payment == "on"){
-            $portalUser->completed_payment = true;
+        if($request->payment_confirmations == "on"){
+            $portalUser->payment_confirmations = true;
         }
-        if($request->payment_report == "on"){
-            $portalUser->payment_report = true;
+        if($request->failed_payments == "on"){
+            $portalUser->failed_payments = true;
         }
 
 

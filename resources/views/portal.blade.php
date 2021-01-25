@@ -323,41 +323,41 @@
                             <h5>Payments</h5>
                         </div>
                         <div class="d-flex flex-wrap w-100">
-                            @if($portalUser->payments_awaiting_assignment)
+                            @if($portalUser->awaiting_payments)
 
                             <a href="/portal/payments/awaiting" class="col-2 my-2">
                                 <div class="portal-content-element">
-                                    <p>Payments Awaiting Assignment </p>
+                                    <p>Awaiting Payments</p>
                                 </div>
                             </a>
 
                             @endif
 
-                            @if($portalUser->pending_payments)
+                            @if($portalUser->submit_payments)
 
-                            <a href="/portal/payments/pending" class="col-2 my-2">
+                            <a href="/portal/payments/submit" class="col-2 my-2">
                                 <div class="portal-content-element">
-                                    <p>Pending Payments</p>
+                                    <p>Submit Payments</p>
                                 </div>
                             </a>
 
                             @endif
 
-                            @if($portalUser->completed_payment)
+                            @if($portalUser->payment_confirmations)
 
-                            <a href="/portal/payments/completed" class="col-2 my-2">
+                            <a href="/portal/payments/confirm" class="col-2 my-2">
                                 <div class="portal-content-element">
-                                    <p>Completed Payment </p>
+                                    <p>Payment Confirmations</p>
                                 </div>
                             </a>
 
                             @endif
 
-                            @if($portalUser->payment_report)
+                            @if($portalUser->failed_payments)
 
-                            <a href="/portal/payments/reports" class="col-2 my-2">
+                            <a href="/portal/payments/failed" class="col-2 my-2">
                                 <div class="portal-content-element">
-                                    <p>Payment Report </p>
+                                    <p>Failed Payments</p>
                                 </div>
                             </a>
 

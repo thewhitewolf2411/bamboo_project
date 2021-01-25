@@ -164,20 +164,20 @@
                                 <input type="checkbox" class="form-check-input" name="payments" id="payments">
                                 <label class="form-check-label" for="payments">Payments</label>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="payments_awaiting_assignment" id="payments_awaiting_assignment">
-                                    <label class="form-check-label" for="payments_awaiting_assignment">Payments Awaiting Assignment</label>
+                                    <input type="checkbox" class="form-check-input" name="awaiting_payments" id="awaiting_payments">
+                                    <label class="form-check-label" for="awaiting_payments">Awaiting Payments</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="pending_payments" id="pending_payments">
-                                    <label class="form-check-label" for="pending_payments">Pending Payments</label>
+                                    <input type="checkbox" class="form-check-input" name="submit_payments" id="submit_payments">
+                                    <label class="form-check-label" for="submit_payments">Submit Payments</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="completed_payment" id="completed_payment">
-                                    <label class="form-check-label" for="completed_payment">Completed Payment</label>
+                                    <input type="checkbox" class="form-check-input" name="payment_confirmations" id="payment_confirmations">
+                                    <label class="form-check-label" for="payment_confirmations">Payment Confirmations</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="payment_report" id="payment_report">
-                                    <label class="form-check-label" for="payment_report">Payment Report</label>
+                                    <input type="checkbox" class="form-check-input" name="failed_payments" id="failed_payments">
+                                    <label class="form-check-label" for="failed_payments">Failed Payments</label>
                                 </div>
                             </div>
 
