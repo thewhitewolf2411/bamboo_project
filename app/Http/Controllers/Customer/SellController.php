@@ -219,13 +219,12 @@ class SellController extends Controller
 
                     $name = $item->getProductName($item->id);
 
-                    $tradein->product_state = $item->grade;
-                    $tradein->network = $item->network;
-                    $tradein->memory = $item->memory;
+                    $tradein->customer_grade = $item->grade;
+                    $tradein->customer_network = $item->network;
+                    $tradein->customer_memory = $item->memory;
 
                     if($labelstatus == "2"){
                         $tradein->job_state = 2;
-                        $tradein->sent_themselves = true;
                     }
 
                     $tradein->save();

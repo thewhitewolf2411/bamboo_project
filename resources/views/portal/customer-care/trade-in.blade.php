@@ -81,7 +81,7 @@
                                 <td ><div class="table-element">{{$key}}</div></td>
                                 <td><div class="table-element">{{$order[0]->created_at}}</div></td>
                                 <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} {{$tradein->memory}} <br> @endforeach</div></td>
-                                <td><div class="table-element">@foreach($order as $tradein){{$tradein->product_state}} <br> @endforeach</div></td>
+                                <td><div class="table-element">@foreach($order as $tradein){{$tradein->customer_grade}} <br> @endforeach</div></td>
                                 <td><div class="table-element">{{$order[0]->getOrderType($order[0]->barcode)}}</div></td>
                                 <td><div class="table-element">
                                     <a title="See trade in details" href="/portal/customer-care/trade-in/{{$tradein->barcode}}">

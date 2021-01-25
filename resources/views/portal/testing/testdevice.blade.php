@@ -58,10 +58,10 @@
                             <td><div class="table-element">{{$tradein->barcode}}</div></td>
                             <td><div class="table-element">{{$tradein->created_at}}</div></td>
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
-                            <td><div class="table-element">{{$tradein->memory}}</div></td>
-                            <td><div class="table-element">{{$tradein->network}}</div></td>
+                            <td><div class="table-element">{{$tradein->customer_memory}}</div></td>
+                            <td><div class="table-element">{{$tradein->customer_network}}</div></td>
                             <td><div class="table-element">{{$tradein->imei_number}}</div></td>
-                            <td><div class="table-element">{{$tradein->product_state}}</div></td>
+                            <td><div class="table-element">{{$tradein->customer_grade}}</div></td>
                         </tr>
 
                     </table>

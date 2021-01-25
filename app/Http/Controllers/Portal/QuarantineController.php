@@ -30,7 +30,18 @@ class QuarantineController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $tradeins = Tradein::where('marked_for_quarantine', true)->get();
+        $tradeins = Tradein::all();
+
+        $matches = ["4","5","6","7","8a","8b","8c","8d","8e","8f","11","11a","11b","11c","11d","11e","11f","11g","11h","11i","11j","15","15a","15b","15c","15d","15e",
+        "15f","15g","15h","15i"];
+
+
+        $tradeins = $tradeins->filter(function($tradein) use ($matches){
+            if(in_array($tradein->job_state, $matches)){
+                return $tradein;
+            }
+            return null;
+        });
         
         return view('portal.quarantine.quarantine-overview')->with(['portalUser'=>$portalUser, 'tradeins'=>$tradeins]);
     }

@@ -84,7 +84,7 @@
                             <td><div class="table-element">{{$order[0]->created_at}}</div></td>
                             <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} {{$tradein->memory}} <br> @endforeach</div></td>
                             
-                            <td><div class="table-element">@if($tradein->sent_themselves) Yes @else No @endif</div></td>
+                            <td><div class="table-element">@if($tradein->job_state === "2") Yes @else No @endif</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
                                     <i class="fa fa-search"></i>
