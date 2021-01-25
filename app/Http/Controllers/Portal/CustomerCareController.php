@@ -38,7 +38,7 @@ class CustomerCareController extends Controller
         if($request->all() == null || $request->search == 0){
 
 
-            $tradeins = Tradein::all()->where('job_state', 1)->groupBy('barcode');
+            $tradeins = Tradein::all()->where('job_state', "1")->groupBy('barcode');
 
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -47,7 +47,7 @@ class CustomerCareController extends Controller
         }
         else{
             if(is_numeric($request->search) === true && $request->search <= 3){
-                $tradeins = Tradein::where('job_state', 1)->get();
+                $tradeins = Tradein::where('job_state', "1")->get();
                 $user_id = Auth::user()->id;
                 $portalUser = PortalUsers::where('user_id', $user_id)->first();
     
@@ -231,7 +231,7 @@ class CustomerCareController extends Controller
         foreach($barcodes as $barcode){
             $tiarr = Tradein::where('barcode', $barcode)->get();
             foreach($tiarr as $tradein){
-                $tradein->job_state = 2;
+                $tradein->job_state = 3;
                 $tradein->save();
             }
         }
@@ -281,8 +281,8 @@ class CustomerCareController extends Controller
 
         foreach($tradeins as $tradein){
             
-            if($tradein->job_state < 2){
-                $tradein->job_state = 2;
+            if($tradein->job_state < 4){
+                $tradein->job_state = 3;
                 $tradein->save();
             }
 
@@ -388,7 +388,7 @@ class CustomerCareController extends Controller
 
         if($request->all() == null || $request->search == 0){
 
-            $tradeins = Tradein::where('job_state', 2)->get()->groupBy('barcode_original');
+            $tradeins = Tradein::where('job_state', 2)->orWhere('job_state', 3)->get()->groupBy('barcode_original');
 
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -397,7 +397,7 @@ class CustomerCareController extends Controller
         }
         else{
             if($request->search <= 3){
-                $tradeins = Tradein::where('job_state', 2)->get();
+                $tradeins = Tradein::where('job_state', 2)->orWhere('job_state', 3)->get();
 
                 $user_id = Auth::user()->id;
                 $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -412,7 +412,7 @@ class CustomerCareController extends Controller
             }
             else{
                 
-                $tradeins = Tradein::where('job_state', 2)
+                $tradeins = Tradein::where('job_state', 2)->orWhere('job_state', 3)
                                     ->where('barcode', $request->search)
                                     ->orWhere('barcode_original', $request->search)
                                     ->get();
