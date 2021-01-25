@@ -331,6 +331,33 @@
                     </table>
                 </div>
                 @endif
+
+                @if($tradeins[0]->missing_image)
+                    <h5 class="text-center">Missing image:</h5>
+                    <img src="{{$tradeins[0]->getMissingImage()}}" data-toggle="modal" data-target="#imageModal" class="img-thumbnail text-center" alt="missing image" 
+                    style="display: block;position: relative;margin-right: auto;margin-left: auto; max-width: 400px;">
+
+                    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header"> 
+                              {{-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> --}}
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true" style="color: black;">&times;</span>
+                              </button>
+                            </div> 
+                            <div class="modal-body p-5 center-grading-elements" style="position:relative; height: 250px; ">
+                                <img src="{{$tradeins[0]->getMissingImage()}}" style=" display: block; margin-left: auto; margin-right: auto;">
+                            </div>
+                            {{-- <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary">Save changes</button>
+                            </div> --}}
+                          </div>
+                        </div>
+                      </div>
+                @endif
+
             </div>
         </div>
     </main>

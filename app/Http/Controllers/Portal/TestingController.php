@@ -186,7 +186,10 @@ class TestingController extends Controller
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('missing_image')->getClientOriginalExtension();
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            $path = $request->file('missing_image')->storeAs('public/missing_images',$fileNameToStore);
+            //$path = $request->file('missing_image')->storeAs('public/missing_images',$fileNameToStore); AAAAAAAAAAAAA
+            $request->file('missing_image')->storeAs('public/missing_images',$fileNameToStore);
+            $path = $fileNameToStore;
+
 
             $tradein->missing_image = $path;
 
