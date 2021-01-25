@@ -59,7 +59,7 @@ class TradeInObserver
             'user_id' => Auth::user()->id,
             'customer_status' => $tradein->getCustomerStatus(),
             'bamboo_status' => $tradein->getBambooStatus(),
-            'customer_grade' => $tradein->product_state,
+            'customer_grade' => $tradein->customer_grade,
             'bamboo_grade' => $tradein->bamboo_grade,
             'value' => (string)$tradein->order_price,
             'stock_location' => ($tradein->getTrayName($tradein->id) !== 'Error') ? $tradein->getTrayName($tradein->id) : null,

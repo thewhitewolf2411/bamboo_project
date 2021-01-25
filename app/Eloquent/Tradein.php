@@ -168,9 +168,37 @@ class Tradein extends Model
         }
     }
 
+    public function isGoogleLocked(){
+        if($this->job_state === '11b' || $this->job_state === '15b'){
+            return true;
+        }
+        return false;
+    }
+
+    public function isPinLocked(){
+        if($this->job_state === '11c' || $this->job_state === '15c'){
+            return true;
+        }
+        return false;
+    }
+
+    public function isBlacklisted(){
+        if($this->job_state === '7'){
+            return true;
+        }
+        return false;
+    }
+
+    public function isSIMLocked(){
+        return null;
+    }
+
 
     public function getDeviceStatus(){
 
+        // array[0] - bamboo status
+        // array[1] - customer status
+        // left - database flags
         $states = [
             /*0*/   [],
             /*1*/   ['Order Request received','Order Placed'],
