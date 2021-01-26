@@ -70,19 +70,19 @@
                     <table class="portal-table sortable" id="categories-table">
                         <tr>
                             <td><div class="table-element">Trade-in ID</div></td>
-                            <td><div class="table-element">Trade-in Barcode number</div></td>
+                            <td><div class="table-element text-center">Trade-in Barcode number</div></td>
                             <td><div class="table-element">Date Placed</div></td>
                             <td><div class="table-element">Device name</div></td>
-                            <td><div class="table-element">Customer Name</div></td>
-                            <td><div class="table-element">Post Code</div></td>
+                            <td><div class="table-element text-center">Customer Name</div></td>
+                            <td><div class="table-element text-center">Post Code</div></td>
                             <td><div class="table-element">Bamboo status</div></td>
                             <td><div class="table-element">Location</div></td>
                             <td><div class="table-element">Customer status</div></td>
-                            <td><div class="table-element">View detail</div></td>
-                            <td><div class="table-element">Reprint</div></td>
-                            <td><div class="table-element">Revert to Receiving</div></td>
-                            <td><div class="table-element">Revert to Testing</div></td>
-                            <td><div class="table-element">Send to Despatch</div></td>
+                            <td><div class="table-element text-center">View detail</div></td>
+                            <td><div class="table-element text-center">Reprint</div></td>
+                            <td><div class="table-element text-center">Revert to Receiving</div></td>
+                            <td><div class="table-element text-center">Revert to Testing</div></td>
+                            <td><div class="table-element text-center">Send to Despatch</div></td>
 
                         </tr>
 
@@ -90,14 +90,14 @@
 
                         <tr>
                             <td ><div class="table-element">@foreach($order as $tradein){{$tradein->barcode_original}}<br>@endforeach</div></td>
-                            <td><div class="table-element">@foreach($order as $tradein){{$tradein->barcode}} <br> @endforeach</div></td>
-                            <td><div class="table-element">{{$order[0]->created_at}}</div></td>
-                            <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} <br> @endforeach</div></td>
-                            <td><div class="table-element">{{$tradein->customer()->fullName()}}</div></td>
-                            <td><div class="table-element">{{$tradein->postCode()}}</div></td>
-                            <td><div class="table-element"> @foreach($order as $tradein) {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0]}} <br> @endforeach </div></td>
-                            <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
-                            <td><div class="table-element">@foreach($order as $tradein) {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[1]}} <br> @endforeach</div></td>
+                            <td><div class="table-element text-center">@foreach($order as $tradein){{$tradein->barcode}} <br> @endforeach</div></td>
+                            <td><div class="table-element text-center">{{$order[0]->created_at}}</div></td>
+                            <td><div class="table-element text-center">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} <br> @endforeach</div></td>
+                            <td><div class="table-element text-center">{{$tradein->customer()->fullName()}}</div></td>
+                            <td><div class="table-element text-center">{{$tradein->postCode()}}</div></td>
+                            <td><div class="table-element text-center"> @foreach($order as $tradein) {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0]}} <br> @endforeach </div></td>
+                            <td><div class="table-element text-center">{{$tradein->getTrayName($tradein->id)}}</div></td>
+                            <td><div class="table-element text-center">@foreach($order as $tradein) {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[1]}} <br> @endforeach</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
                                     <i class="fa fa-search"></i>
@@ -118,41 +118,42 @@
                                 </div>
                             </td>
                                 
-                            <td class="text-center 1">
-                                @if($tradein->job_state == 3 || $tradein->job_state >= 5 && $tradein->job_state !== 6)
+                            <td class="text-center 1 p-0">
+                                @if($tradein->hasDeviceBeenReceived())
                                     <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
                                         {{-- <i class="fa fa-times" style="color:blue !important;" title="Return device to receiving" ></i> --}}
                                         <img style="width: 15px;" src="{{url('/images/undo.png')}}">
                                     </a>
+                                @else
+                                    <div class="alert alert-warning mb-0">Unable to return this device to receiving</div>
                                 @endif
                             </td>
                                 
-                            <!-- <td class="text-center 2">
-                                @if($tradein->job_state >= 5 && $tradein->job_state !== 6)
-                                <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
-                                    {{-- <i class="fa fa-times" style="color:blue !important;"></i> --}}
-                                    <img style="width: 15px;" src="{{url('/images/undo.png')}}">
-                                </a>
-                                @endif
-                            </td> -->
                             
-                            <td class="text-center 3">
-                                @if($tradein->job_state >= 5 && $tradein->job_state !== 6)
+                            <td class="text-center 3 p-0">
+                                @if($tradein->job_state === '13')
                                 <a title="Return device to testing" href="/totesting/{{$tradein->id}}">
                                     {{-- <i class="fa fa-times" style="color:black !important;"></i> --}}
                                     <img style="width: 15px;" src="{{url('/images/undo.png')}}">
                                 </a>
+                                @elseif($tradein->job_state === '14')
+                                    <div class="alert alert-success mb-0">Device returned to 2nd test</div>
+                                @elseif($tradein->hasDeviceBeenTestedSecondTime())
+                                    <div class="alert alert-warning mb-0">This device was already tested second time</div>
+                                @else
+                                    <div class="alert alert-warning mb-0">Unable to return this device to 2nd testing</div>
                                 @endif
                             </td>
-                                
-
-                                
                                                        
                             {{-- <td class="text-center"><a href="#" title="Revert to receiving" onclick="revertToReceiving({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a></td> 
                             <td class="text-center"><a href="#" title="Revert to testing" onclick="revertToTesting({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a></td> --}}
-                            <td class="text-center 4">
-                                @if($tradein->job_state !== 11)
+                            <td class="text-center 4 p-0">
+                                @if($tradein->job_state === '20')
                                     <a href="#" title="Send to Despatch" onclick="sendToDespatch({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a>
+                                @elseif($tradein->job_state === '21')
+                                    <div class="alert alert-success mb-0" role="alert">Device was dispatched to customer</div>
+                                @else
+                                    <div class="alert alert-warning mb-0">Unable to dispatch this device to customer</div>
                                 @endif
                             </td>
 

@@ -66,7 +66,7 @@ class TestingController extends Controller
         if($tradein == null){
             return redirect()->back()->with('error', 'There is no such device');
         }
-        if($tradein->job_state === "9" || $tradein->job_state === "10" ){
+        if($tradein->job_state === "9" || $tradein->job_state === "10" || $tradein->job_state === "14"){
             if($tradein->job_state === "9"){
                 $tradein->job_state = "10";
                 $tradein->save();

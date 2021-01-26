@@ -26,14 +26,17 @@ class Tradein extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'barcode','barcode_original','product_id','customer_grade',
-        'bamboo_grade', 'job_state', 'order_price','customer_memory','customer_network',
+        'user_id', 'barcode','barcode_original','product_id', 'correct_product_id','customer_grade',
+        'bamboo_grade', 'job_state', 'order_price','bamboo_price','customer_memory','customer_network',
         'correct_memory','correct_network', 'missing_image', 'imei_number',
         'quarantine_reason', 'quarantine_date'
     ];
 
 
     public function getProductName($id){
+        if($this->correct_product_id !== null){
+            return SellingProduct::where('id', $this->correct_product_id)->first()->product_name;
+        }
         return SellingProduct::where('id', $id)->first()->product_name;
     }
 
@@ -197,6 +200,46 @@ class Tradein extends Model
         return url('/storage/missing_images/'.$this->missing_image);
     }
 
+    public function getQuarantineReason(){
+        if($this->job_state === '8a' || $this->job_state === '8b' || $this->job_state === '8c' || $this->job_state === '8d' || $this->job_state === '8e' || $this->job_state === '8f'){
+            return true;
+        }
+        return false;
+    }
+
+    public function hasDeviceBeenReceived(){
+
+        $matches = ["6","7","8a","8b","8c","8d","8e","8f","9"];
+
+        if(in_array($this->job_state, $matches)){
+            return true;
+        }
+        return false;
+
+    }
+
+    public function hasDeviceBeenTestedFirstTime(){
+
+        $matches = ["11", "11a", "11b", "11c", "11d", "11f", "11g", "11h", "11i", "11j", "12"];
+
+        if(in_array($this->job_state, $matches)){
+            return true;
+        }
+        return false;
+
+    }
+
+    
+    public function hasDeviceBeenTestedSecondTime(){
+
+        $matches = ["15", "15a", "15b", "15c", "15d", "15e", "15f", "15g", "15h", "15i"];
+
+        if(in_array($this->job_state, $matches)){
+            return true;
+        }
+        return false;
+
+    }
 
     public function getDeviceStatus(){
 
@@ -251,13 +294,14 @@ class Tradein extends Model
             /*17*/  ['Device marked for destruction',''],
             /*18*/  ['Device destroyed',''],
             /*19*/  ['Device requested by customer','Returning Device'],
-            /*20*/  ['Despatched to customer','Returning Device'],
-            /*21*/  ['Awaiting Box build','Awaiting payment'],
-            /*22*/  ['Awaiting Box build','Submitted for payment'],
-            /*23*/  ['Awaiting Box build','Payment Failed'],
-            /*24*/  ['Awaiting Box build','Paid'],
-            /*25*/  ['Ready For Sale','Paid'],
-            /*26*/  ['Closed','Paid'],
+            /*20*/  ['Device marked to return to customer','Returning Device'],
+            /*21*/  ['Despatched to customer','Returning Device'],
+            /*22*/  ['Awaiting Box build','Awaiting payment'],
+            /*23*/  ['Awaiting Box build','Submitted for payment'],
+            /*24*/  ['Awaiting Box build','Payment Failed'],
+            /*25*/  ['Awaiting Box build','Paid'],
+            /*26*/  ['Ready For Sale','Paid'],
+            /*27*/  ['Closed','Paid'],
 
         ];
 
@@ -340,28 +384,32 @@ class Tradein extends Model
                 return $states[38];
             case "15i":
                 return $states[39];
-            case "16":
+            case "15j":
                 return $states[40];
-            case "17":
+            case "16":
                 return $states[41];
-            case "18":
+            case "17":
                 return $states[42];
-            case "19":
+            case "18":
                 return $states[43];
-            case "20":
+            case "19":
                 return $states[44];
-            case "21":
+            case "20":
                 return $states[45];
-            case "22":
+            case "21":
                 return $states[46];
-            case "23":
+            case "22":
                 return $states[47];
-            case "24":
+            case "23":
                 return $states[48];
-            case "25":
+            case "24":
                 return $states[49];
-            case "26":
+            case "25":
                 return $states[50];
+            case "26":
+                return $states[51];
+            case "27":
+                return $states[52];
         }
         
     }

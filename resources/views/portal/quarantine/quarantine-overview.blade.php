@@ -101,9 +101,9 @@
                                 <td><div class="table-element">{{$tradein->barcode}}</div></td>
                                 <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                                 <td><div class="table-element">{{$tradein->imei_number}}</div></td>
-                                <td><div class="table-element">{{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0]}}</div></td>
+                                <td><div class="table-element">{{$tradein->getBambooStatus()}}</div></td>
                                 <td><div class="table-element">
-                                    @if($tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0] === "BLACKLISTED" && $tradein->quarantine_status == null)
+                                    @if($tradein->job_state === '7')
                                     <select name="quarantinereasons" id="quarantinereasons-{{$tradein->id}}" class="form-control quarantinereasons">
                                         <option value="" disabled default selected>Select quarantine reason</option>
                                         <option value="1">Lost</option>
@@ -113,7 +113,7 @@
                                         <option value="5">Knox</option>
                                         <option value="6">Asset Watch</option>
                                     </select>
-                                    @elseif($tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0] === "BLACKLISTED" && $tradein->quarantine_status != null)
+                                    @elseif($tradein->getQuarantineReason())
 
                                         <div class="row w-100">
                                             <div class="col-md-9 d-flex align-items-center">
@@ -125,7 +125,7 @@
                                         </div>
                                         
                                     @else
-                                        {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[1]}}
+                                        {{$tradein->getBambooStatus()}}
                                     @endif
                                 </div></td>
                                 <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
@@ -176,14 +176,14 @@
                             @csrf
                             @foreach(Session::get('returnToCustomer') as $tradein)
                             <input type="hidden" name="tradein-{{$tradein->id}}" value="{{$tradein->id}}">
-                            @if($tradein->job_state !== 16)
+                            @if($tradein->job_state !== '19')
                             <script>
                             
                                 $('#statement').append('<div class="alert alert-warning"> Order number ' + {!! $tradein->barcode !!} + ' has not been requested by customer to be returned. Are you sure? </div>')
                             
                             </script>
                             @endif
-                            <tr @if($tradein->job_state !== 16) style="background: #fff3cd !important" @else style="background: #d4edda !important" @endif >
+                            <tr @if($tradein->job_state !== '19') style="background: #fff3cd !important" @else style="background: #d4edda !important" @endif >
                                 <td><div class="table-element">{{$tradein->barcode}}</div></td>
                                 <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                                 <td><div class="table-element">{{$tradein->imei_number}}</div></td>
@@ -245,14 +245,20 @@
                             @csrf
                             @foreach(Session::get('allocateToTrays') as $tradein)
                                 <input type="hidden" name="tradein-{{$tradein->id}}" value="{{$tradein->id}}">
-                            @if($tradein->job_state !== 9)
+                            @if(!$tradein->hasDeviceBeenTestedFirstTime() && !$tradein->hasDeviceBeenTestedSecondTime())
                             <script>
                             
                                 $('#statement').append('<div class="alert alert-warning"> Order number ' + {!! $tradein->barcode !!} + ' has not finish testing and require other action. Are you sure you want to allocate it? </div>')
                             
                             </script>
+                            @elseif($tradein->hasDeviceBeenTestedSecondTime())
+                            <script>
+                            
+                                $('#statement').append('<div class="alert alert-warning"> Order number ' + {!! $tradein->barcode !!} + ' was already tested second time and will not be able to return to testing. </div>')
+                            
+                            </script>
                             @endif
-                            <tr @if($tradein->job_state !== 9) style="background: #fff3cd !important" @else style="background: #d4edda !important" @endif>
+                            <tr @if(!$tradein->hasDeviceBeenTestedFirstTime()) style="background: #fff3cd !important" @else style="background: #d4edda !important" @endif>
                                 <td><div class="table-element">{{$tradein->barcode}}</div></td>
                                 <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                                 <td><div class="table-element">{{$tradein->imei_number}}</div></td>
@@ -293,44 +299,44 @@
         var id = this.id;
         var numval = this.value;
 
-        console.log(numval);
+        var name = this.options[this.selectedIndex].text;
 
         id = id.split('-')[1];
 
         switch(this.value){
             case "1":
-                val = "Lost";
+                val = "8a";
             break;
 
             case "2":
-                val = "Insurance Claim";
+                val = "8b";
             break;
 
             case "3":
-                val = "Blocked / FRP";
+                val = "8c";
             break;
 
             case "4":
-                val = "Stolen";
+                val = "8d";
             break;
 
             case "5":
-                val = "Knox";
+                val = "8e";
             break;
 
             case "6":
-                val = "Asset Watch";
+                val = "8f";
             break;
         }
 
-        if(confirm('This will set quarantine reason as ' + val + '. Are you sure?')){
+        if(confirm('This will set quarantine reason as ' + name + '. Are you sure?')){
             $.ajax({
                 url: "/portal/quarantine/addQuarantineStatus",
                 type:"POST",
                 data:{
                     _token: "{{ csrf_token() }}",
                     id: id,
-                    val: numval,
+                    val: val,
 
                 },
                 success:function(response){
