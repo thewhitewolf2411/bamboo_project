@@ -492,25 +492,12 @@ class TestingController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
         if($tradein->isInQuarantine()){
-            $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RQ01%')->where('number_of_devices', "<=" ,100)->first();
+            $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand', 'Q')->where('number_of_devices', "<=" ,100)->first();
             $quarantineName = $quarantineTrays->tray_name;
         }
         else{
-            $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RM01%')->where('number_of_devices', "<=" ,100)->first();
+            $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<=" ,100)->first();
             $quarantineName = $quarantineTrays->tray_name;
-            if($tradein->getBrandId($tradein->product_id) == 1){
-                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RA01%')->where('number_of_devices', "<=" ,100)->first();
-                $quarantineName = $quarantineTrays->tray_name;
-
-            }
-            if($tradein->getBrandId($tradein->product_id) == 2){
-                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RS01%')->where('number_of_devices', "<=" ,100)->first();
-                $quarantineName = $quarantineTrays->tray_name;
-            }
-            if($tradein->getBrandId($tradein->product_id) == 3){
-                $quarantineTrays = Tray::where('tray_name', 'LIKE', '%RH01%')->where('number_of_devices', "<=" ,100)->first();
-                $quarantineName = $quarantineTrays->tray_name;
-            }
         }
 
         
