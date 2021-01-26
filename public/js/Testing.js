@@ -96,9 +96,7 @@ function testingElementChanged(){
 
 
         if(correctDevice == "false"){
-
             $('#select_correct_device_container').removeClass('form-group-hidden');
-
         }
         else{
             $('#select_correct_device_container').addClass('form-group-hidden');

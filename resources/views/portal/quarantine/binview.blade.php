@@ -71,7 +71,7 @@
                                 <td><div class="table-element">{{$bin->tray_name}}</div></td>
                                 <td><div class="table-element">{{$bin->number_of_devices}}</div></td>
                                 <td><div class="table-element">{{$bin->max_number_of_devices}}</div></td>
-                                <td><div class="table-element"><a href="/portal/quarantine-bins/printlabel/{{$bin->bin_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print Bin Label</p></div></a></div></td>
+                                <td><div class="table-element"><a href="/portal/quarantine-bins/printlabel/{{$bin->tray_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print Bin Label</p></div></a></div></td>
                             </tr>
                         </table>
 
