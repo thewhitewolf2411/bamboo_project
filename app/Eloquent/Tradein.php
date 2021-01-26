@@ -193,6 +193,10 @@ class Tradein extends Model
         return null;
     }
 
+    public function getMissingImage(){
+        return url('/storage/missing_images/'.$this->missing_image);
+    }
+
 
     public function getDeviceStatus(){
 
