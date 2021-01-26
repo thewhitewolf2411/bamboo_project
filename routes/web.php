@@ -218,6 +218,9 @@ Route::post('/portal/testing/receive/printnewlabel', 'Portal\TestingController@p
 Route::post('/portal/testing/receive/sendtotray', 'Portal\TestingController@sendtotray')->middleware('auth');
 Route::post('/portal/receiving/printnewlabel' , 'Portal\TestingController@downloadSingleFile')->middleware('auth');
 
+Route::get('/portal/testing/checkforserial/{id}', 'Portal\TestingController@showCheckForSerialPage')->middleware('auth');
+Route::post('/portal/testing/receive/deviceserialvisibility', 'Portal\TestingController@deviceSerialVisibility')->middleware('auth');
+
 Route::post('/portal/testing/getDeviceData', 'Portal\TestingController@getDeviceData')->middleware('auth');
 //payments
 Route::get('/portal/payments', 'Portal\PaymentsController@showPaymentPage')->middleware('auth');

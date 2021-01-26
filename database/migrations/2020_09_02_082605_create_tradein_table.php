@@ -24,7 +24,7 @@ class CreateTradeinTable extends Migration
             $table->string('job_state');
             $table->integer('order_price');
             $table->string('customer_memory');
-            $table->string('customer_network');
+            $table->string('customer_network')->nullable(true)->default(null);
             $table->string('correct_memory')->nullable();
             $table->string('correct_network')->nullable();
             $table->string('missing_image')->nullable();

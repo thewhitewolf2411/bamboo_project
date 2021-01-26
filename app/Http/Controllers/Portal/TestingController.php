@@ -233,10 +233,34 @@ class TestingController extends Controller
             $mti = true;
         }
 
-        return redirect('/portal/testing/checkforimei/' . $tradein->id);
-        
+        // for products without network, send device to serial check
+        $product_category = SellingProduct::find($tradein->product_id)->category_id;
+
+        if($product_category > 1 && is_null($tradein->customer_network)){
+            return redirect('/portal/testing/checkforserial/' . $tradein->id);
+        } else {
+            return redirect('/portal/testing/checkforimei/' . $tradein->id);
+        }
     }
 
+    /**
+     * Display check for device serial number visibility.
+     */
+    public function showCheckForSerialPage($id){
+        //if(!$this->checkAuthLevel(5)){return redirect('/');}
+        $tradein = Tradein::where('id', $id)->first();
+        $user  = User::where('id', $tradein->user_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.testing.receiving.showcheckserial')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
+    }
+
+    /**
+     * Display check for device IMEI number visibility.
+     */
     public function showCheckForImeiPage($id){
         //if(!$this->checkAuthLevel(5)){return redirect('/');}
         $tradein = Tradein::where('id', $id)->first();
@@ -353,6 +377,22 @@ class TestingController extends Controller
         return redirect('/portal/testing/checkimei/' . $tradein->id);
     }
 
+    /**
+     * Determine if device's serial is visible.
+     */
+    public function deviceSerialVisibility(Request $request){
+        $tradein = Tradein::where('id', $request->tradein_id)->first();
+
+        if($request->visible_serial == "no"){
+            $tradein->job_state = "6";
+        }
+        $tradein->save();
+        return redirect('/portal/testing/result/' . $tradein->id);
+    }
+
+    /**
+     * Show page for IMEI verification.
+     */
     public function showCheckImeiPage($id){
         //if(!$this->checkAuthLevel(5)){return redirect('/');}
         $tradein = Tradein::where('id', $id)->first();
@@ -365,6 +405,24 @@ class TestingController extends Controller
         return view('portal.testing.receiving.checkmend')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
     }
 
+    /**
+     * Show page for serial verification.
+     */
+    public function showCheckSerialPage($id){
+        //if(!$this->checkAuthLevel(5)){return redirect('/');}
+        $tradein = Tradein::where('id', $id)->first();
+        $user  = User::where('id', $tradein->user_id)->first();
+        $product = SellingProduct::where('id', $tradein->product_id)->first();
+
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.testing.receiving.checkserial')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
+    }
+
+    /**
+     * Verify device's IMEI number.
+     */
     public function checkimei(Request $request){
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         $imei_number = $request->imei_number;
@@ -802,7 +860,13 @@ class TestingController extends Controller
         $traycontent->trade_in_id = $tradein->id;
         $traycontent->save();
 
-        $response = $this->generateNewLabel($barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name);
+        if($tradein->visible_serial !== null){
+            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name);
+
+        } else {
+            $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name);
+        }
+
 
         return view('portal.testing.totray')->with(['tray_name'=>$quarantineName,'response'=>$response,'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein,'testing'=>false, 'mti'=>$mti]);
 
@@ -898,20 +962,36 @@ class TestingController extends Controller
     }
 
 
-    function generateNewLabel($barcode, $tradein_barcode, $manifacturer, $model, $imei, $location){
+    /**
+     * Generate device label (PDF)
+     */
+    function generateNewLabel($has_serial, $barcode, $tradein_barcode, $manifacturer, $model, $imei, $location){
 
         $customPaper = array(0,0,141.90,283.80);
 
-        $pdf = PDF::loadView('portal.labels.devicelabel', 
-        array(
-            'barcode'=>$barcode,
-            'tradein_barcode'=>$tradein_barcode,
-            'manifacturer'=>$manifacturer,
-            'model'=>$model,
-            'imei'=>$imei,
-            'location'=>$location))
-        ->setPaper($customPaper, 'landscape')
-        ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
+        if($has_serial){
+            $pdf = PDF::loadView('portal.labels.devicelabelserial', 
+            array(
+                'barcode'=>$barcode,
+                'tradein_barcode'=>$tradein_barcode,
+                'manifacturer'=>$manifacturer,
+                'model'=>$model,
+                'serial'=>$imei,
+                'location'=>$location))
+            ->setPaper($customPaper, 'landscape')
+            ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
+        } else {
+            $pdf = PDF::loadView('portal.labels.devicelabel', 
+            array(
+                'barcode'=>$barcode,
+                'tradein_barcode'=>$tradein_barcode,
+                'manifacturer'=>$manifacturer,
+                'model'=>$model,
+                'imei'=>$imei,
+                'location'=>$location))
+            ->setPaper($customPaper, 'landscape')
+            ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
+        }
     
     }
 
