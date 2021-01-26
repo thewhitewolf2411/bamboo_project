@@ -11,13 +11,12 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
     <!-- Sortable -->
     <script src="{{ asset('js/Sort.js') }}"></script>
@@ -331,6 +330,24 @@
                     </table>
                 </div>
                 @endif
+
+                @if($tradeins[0]->missing_image)
+                    <h5 class="text-center">Missing image:</h5>
+                    <img src="{{$tradeins[0]->getMissingImage()}}" id="missing-img" class="img-thumbnail text-center missing-img"
+                    style="display: block;position: relative;margin-right: auto;margin-left: auto; max-width: 500px;">
+
+                    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">              
+                            <div class="modal-body p-0">
+                                <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> -->
+                              <img src="" class="imagepreview" style="width: 100%;" >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                @endif
+
             </div>
         </div>
     </main>
@@ -377,6 +394,14 @@
 </body>
 
 <script>
+
+    $(function() {
+        $('.missing-img').on('click', function() {
+            $('.imagepreview').attr('src', $('#missing-img').attr('src'));
+            $('#imagemodal').modal('show');   
+        });		
+    });
+
     var selected_audit = {};
     var selected_note = {};
     var CAN_DELETE_NOTE = "{{Auth::user()->canDeleteNotes()}}";
