@@ -34,6 +34,9 @@ class Tradein extends Model
 
 
     public function getProductName($id){
+        if($this->correct_product_id !== null){
+            return SellingProduct::where('id', $this->correct_product_id)->first()->product_name;
+        }
         return SellingProduct::where('id', $id)->first()->product_name;
     }
 
