@@ -55,14 +55,14 @@ class TradeInObserver
             'tradein_id' => $tradein->id,
             'tradein_barcode' => $tradein->barcode,
             'tradein_barcode_original' => $tradein->barcode_original,
-            'product_id' => $tradein->product_id,
+            'product_id' => ($tradein->correct_product_id !== null) ? $tradein->correct_product_id : $tradein->product_id,
             'user_id' => Auth::user()->id,
             'customer_status' => $tradein->getCustomerStatus(),
             'bamboo_status' => $tradein->getBambooStatus(),
             'customer_grade' => $tradein->customer_grade,
             'bamboo_grade' => $tradein->bamboo_grade,
-            'value' => (string)$tradein->order_price,
-            'stock_location' => ($tradein->getTrayName($tradein->id) !== 'Error') ? $tradein->getTrayName($tradein->id) : null,
+            'value' => ($tradein->bamboo_price !== null) ? (string)$tradein->bamboo_price : (string)$tradein->order_price,
+            'stock_location' => $tradein->getTrayName($tradein->id),
             'cheque_number' => null
         ]);
 
@@ -100,6 +100,10 @@ class TradeInObserver
                 //echo 'value';
             }
             if($last_audit->stock_location !== $audit->stock_location){
+                $can_store_audit = true;
+                //echo 'tray';
+            }
+            if($last_audit->value !== $audit->value){
                 $can_store_audit = true;
                 //echo 'tray';
             }
