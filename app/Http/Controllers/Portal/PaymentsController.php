@@ -38,17 +38,15 @@ class PaymentsController extends Controller
         
         // search by id / barcode
         if(isset(request()->search)){
-            dd('search');
             // get tradein by barcode / tradein id
             $tradeins = Tradein::where('barcode', request()->search)->orWhere('barcode_original', request()->search)->get();
             $tradein_ids = $tradeins->pluck('id')->toArray();
 
-            $trays = TrayContent::whereIn('trade_in_id', $tradein_ids)->get();
-            //$trolleys = TrolleyContent::whereIn('')
-            dd($trays);
-            $tray_ids = $trays->pluck('tray_id')->toArray();
-            dd($tray_ids);
+            // get tray content containing tradein
+            $trays_content = TrayContent::whereIn('trade_in_id', $tradein_ids)->get();
+            $tray_ids = $trays_content->pluck('tray_id')->toArray();
 
+            // get trays by tray id
             $trays = Tray::whereIn('id', $tray_ids)
             ->where(function($query){
                 $query->where('tray_name', 'like', 'TA%')
@@ -56,21 +54,27 @@ class PaymentsController extends Controller
                 ->orWhere('tray_name', 'like', 'TH%')
                 ->orWhere('tray_name', 'like', 'TM%');
             })->get();
-            dd($trays);
 
-            //$tray_ids = $trays->pluck('id')->toArray();
-            //dd($tray_ids);
+            // get trolleys that hold trays
+            $trolley_ids = $trays->pluck('trolley_id')->toArray();
 
-            //$tray_content = 
+            $trolleys = Trolley::whereIn('id', $trolley_ids)
+            ->where(function($query){
+                $query->where('trolley_name', 'like', 'TA%')
+                ->orWhere('trolley_name', 'like', 'TS%')
+                ->orWhere('trolley_name', 'like', 'TH%')
+                ->orWhere('trolley_name', 'like', 'TM%');
+            })->get();
 
         } else {
+            // get trolleys
             $trolleys = Trolley::where('trolley_name', 'like', 'TA%')
                 ->orWhere('trolley_name', 'like', 'TS%')
                 ->orWhere('trolley_name', 'like', 'TH%')
                 ->orWhere('trolley_name', 'like', 'TM%')
-                ->get();
-            //$trolley_ids = $trolleys->pluck('id')->toArray();
+            ->get();
 
+            // get trays
             $trays = Tray::where('number_of_devices', '>', "0")->where(function($query){
                     $query->where('tray_name', 'like', 'TA%')
                     ->orWhere('tray_name', 'like', 'TS%')
