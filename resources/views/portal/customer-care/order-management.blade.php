@@ -70,19 +70,19 @@
                     <table class="portal-table sortable" id="categories-table">
                         <tr>
                             <td><div class="table-element">Trade-in ID</div></td>
-                            <td><div class="table-element">Trade-in Barcode number</div></td>
+                            <td><div class="table-element text-center">Trade-in Barcode number</div></td>
                             <td><div class="table-element">Date Placed</div></td>
                             <td><div class="table-element">Device name</div></td>
-                            <td><div class="table-element">Customer Name</div></td>
-                            <td><div class="table-element">Post Code</div></td>
+                            <td><div class="table-element text-center">Customer Name</div></td>
+                            <td><div class="table-element text-center">Post Code</div></td>
                             <td><div class="table-element">Bamboo status</div></td>
                             <td><div class="table-element">Location</div></td>
                             <td><div class="table-element">Customer status</div></td>
-                            <td><div class="table-element">View detail</div></td>
-                            <td><div class="table-element">Reprint</div></td>
-                            <td><div class="table-element">Revert to Receiving</div></td>
-                            <td><div class="table-element">Revert to Testing</div></td>
-                            <td><div class="table-element">Send to Despatch</div></td>
+                            <td><div class="table-element text-center">View detail</div></td>
+                            <td><div class="table-element text-center">Reprint</div></td>
+                            <td><div class="table-element text-center">Revert to Receiving</div></td>
+                            <td><div class="table-element text-center">Revert to Testing</div></td>
+                            <td><div class="table-element text-center">Send to Despatch</div></td>
 
                         </tr>
 
@@ -90,14 +90,14 @@
 
                         <tr>
                             <td ><div class="table-element">@foreach($order as $tradein){{$tradein->barcode_original}}<br>@endforeach</div></td>
-                            <td><div class="table-element">@foreach($order as $tradein){{$tradein->barcode}} <br> @endforeach</div></td>
-                            <td><div class="table-element">{{$order[0]->created_at}}</div></td>
-                            <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} <br> @endforeach</div></td>
-                            <td><div class="table-element">{{$tradein->customer()->fullName()}}</div></td>
-                            <td><div class="table-element">{{$tradein->postCode()}}</div></td>
-                            <td><div class="table-element"> @foreach($order as $tradein) {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0]}} <br> @endforeach </div></td>
-                            <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
-                            <td><div class="table-element">@foreach($order as $tradein) {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[1]}} <br> @endforeach</div></td>
+                            <td><div class="table-element text-center">@foreach($order as $tradein){{$tradein->barcode}} <br> @endforeach</div></td>
+                            <td><div class="table-element text-center">{{$order[0]->created_at}}</div></td>
+                            <td><div class="table-element text-center">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} <br> @endforeach</div></td>
+                            <td><div class="table-element text-center">{{$tradein->customer()->fullName()}}</div></td>
+                            <td><div class="table-element text-center">{{$tradein->postCode()}}</div></td>
+                            <td><div class="table-element text-center"> @foreach($order as $tradein) {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0]}} <br> @endforeach </div></td>
+                            <td><div class="table-element text-center">{{$tradein->getTrayName($tradein->id)}}</div></td>
+                            <td><div class="table-element text-center">@foreach($order as $tradein) {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[1]}} <br> @endforeach</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
                                     <i class="fa fa-search"></i>

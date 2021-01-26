@@ -243,32 +243,32 @@
                 <table class="portal-table sortable" id="categories-table">
                     <tr>
                         <td><div class="table-element">Date Placed</div></td>
-                        <td><div class="table-element">Trade-In ID</div></td>
-                        <td><div class="table-element">Trade-In Barcode</div></td>
+                        <td><div class="table-element text-center">Trade-In ID</div></td>
+                        <td><div class="table-element text-center">Trade-In Barcode</div></td>
                         <td><div class="table-element">Product</div></td>
                         <td><div class="table-element">User</div></td>
-                        <td><div class="table-element">Customer Status</div></td>
-                        <td><div class="table-element">Bamboo Status</div></td>
-                        <td><div class="table-element">Customer Grade</div></td>
-                        <td><div class="table-element">Bamboo Grade</div></td>
+                        <td><div class="table-element text-center">Customer Status</div></td>
+                        <td><div class="table-element text-center">Bamboo Status</div></td>
+                        <td><div class="table-element text-center">Customer Grade</div></td>
+                        <td><div class="table-element text-center">Bamboo Grade</div></td>
                         <td><div class="table-element">Value</div></td>
-                        <td><div class="table-element">Stock Location</div></td>
+                        <td><div class="table-element text-center">Stock Location</div></td>
                         <td><div class="table-element">Cheque Number</div></td>
                         <td></td>
                     </tr>
                     @foreach($audits as $audit)
                     <tr>
                         <td><div class="table-element">{{$audit->created_at->format('d/m/Y H:i')}}</div></td>
-                        <td><div class="table-element">{{$audit->tradein_barcode}}</div></td>
-                        <td><div class="table-element">{{$audit->tradein_barcode_original}}</div></td>
-                        <td><div class="table-element">{{$audit->getProduct()}}</div></td>
-                        <td><div class="table-element">{{$audit->getUser()}}</div></td>
-                        <td><div class="table-element">{{$audit->customer_status}}</div></td>
-                        <td><div class="table-element">{{$audit->bamboo_status}}</div></td>
-                        <td><div class="table-element">{{$audit->customer_grade}}</div></td>
-                        <td><div class="table-element">{{$audit->bamboo_grade}}</div></td>
-                        <td><div class="table-element">{{$audit->value}} £</div></td>
-                        <td><div class="table-element">{{$audit->stock_location}}</div></td>
+                        <td><div class="table-element text-center">{{$audit->tradein_barcode}}</div></td>
+                        <td><div class="table-element text-center">{{$audit->tradein_barcode_original}}</div></td>
+                        <td><div class="table-element text-center">{{$audit->getProduct()}}</div></td>
+                        <td><div class="table-element text-center">{{$audit->getUser()}}</div></td>
+                        <td><div class="table-element text-center">{{$audit->customer_status}}</div></td>
+                        <td><div class="table-element text-center">{{$audit->bamboo_status}}</div></td>
+                        <td><div class="table-element text-center">{{$audit->customer_grade}}</div></td>
+                        <td><div class="table-element text-center">{{$audit->bamboo_grade}}</div></td>
+                        <td><div class="table-element text-center">{{$audit->value}} £</div></td>
+                        <td><div class="table-element text-center">{{$audit->stock_location}}</div></td>
                         <td><div class="table-element">{{$audit->cheque_number}}</div></td>
                         <td @if(Auth::user()->admin()) @if($audit->notes_count > 0) style="background: #f1f15f" @endif @endif>
                             <div class="add-note-button" @if(Auth::user()->admin()) data-toggle="modal" data-target="#noteModal" onclick="openNoteModal({{$audit}})" @endif>&nbsp;+&nbsp;</div>
