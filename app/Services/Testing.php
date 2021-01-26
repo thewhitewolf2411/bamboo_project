@@ -13,7 +13,9 @@ class Testing{
 
     public function testDevice(Request $request){
 
+
         $tradein = Tradein::where('id', $request->tradein_id)->first();
+        $tradein->bamboo_grade = $request->bamboo_final_grade;
         $product = SellingProduct::where('id', $tradein->product_id)->first();
 
         if($tradein->job_state === "14" || $tradein->hasDeviceBeenTestedSecondTime()){
