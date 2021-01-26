@@ -45,7 +45,7 @@ class Testing{
             }
             else{
                 $bambogradeval = $request->bamboo_customer_grade;
-                if($request->device_correct === "false" || $request->correct_memory === "false" || $request->correct_network === "false"){
+                // if($request->device_correct === "false" || $request->correct_memory === "false" || $request->correct_network === "false"){
                     
                     if($request->device_correct === "false"){
                         $tradein->correct_product_id = $request->select_correct_device;
@@ -65,7 +65,7 @@ class Testing{
                     else{
                         $tradein->correct_memory = $request->customer_network;
                     }
-                }
+                // }
 
                 $bambooprice = $this->generateDevicePrice($tradein->correct_product_id, $tradein->correct_memory, $tradein->correct_network, $bambogradeval);
                 $tradein->bamboo_price = $bambooprice;
@@ -193,7 +193,7 @@ class Testing{
             }
             else{
                 $bambogradeval = $request->bamboo_customer_grade;
-                if($request->device_correct === "false" || $request->correct_memory === "false" || $request->correct_network === "false"){
+                // if($request->device_correct === "false" || $request->correct_memory === "false" || $request->correct_network === "false"){
                     
                     if($request->device_correct === "false"){
                         $tradein->correct_product_id = $request->select_correct_device;
@@ -205,6 +205,7 @@ class Testing{
                         $tradein->correct_memory = $request->correct_memory_value;
                     }
                     else{
+
                         $tradein->correct_memory = $tradein->customer_memory;
                     }
                     if($request->correct_network === "false"){
@@ -213,7 +214,7 @@ class Testing{
                     else{
                         $tradein->correct_network = $tradein->customer_network;
                     }
-                }
+                // }
 
                 $tradein->save();
 
