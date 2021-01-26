@@ -148,26 +148,43 @@ class QuarantineController extends Controller
             $tradein = Tradein::where('id', $tradeinId)->first();
 
 
-            if($tradein->job_state != 9){
+            if(!$tradein->hasDeviceBeenTestedFirstTime()){
                 array_push($response, $tradein->barcode);
             }
             else{
                 $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+                $newTray = Tray::where('id', $newTrayId)->first();
 
-                if($oldTrayContent !== null){
-                    $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
-                    $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
-                    $oldTray->save();
-                    $oldTrayContent->delete();
+                if($newTray->tray_brand !== $tradein->getBrandLetter($tradein->product_id)){
+                    return redirect()->back()->with('error', 'Order no ' . $tradein->barcode .  ' cannot be placed in this tray.');
                 }
+                else{
+                    $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+                    $newTray = Tray::where('id', $traycontent->tray_id)->first();
+                    if($oldTrayContent !== null){
+                        $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
+                        $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+                        $oldTray->save();
+                        $oldTrayContent->delete();
+                    }
+    
+                    $traycontent = new TrayContent();
+                    $traycontent->tray_id = $newTrayId;
+                    $traycontent->trade_in_id = $tradein->id;
+                    $traycontent->save();
+                    
+                    
+                    //after receiving
+                    if($newTray->tray_type === 'R'){
+                        $tradein->job_state = '13';
+                    }
+                    //after testing
+                    elseif($newTray->tray_type === 'T'){
+                        $tradein->job_state = '12';
+                    }
 
-                $tradein->marked_for_quarantine = false;
-                $tradein->save();
-
-                $traycontent = new TrayContent();
-                $traycontent->tray_id = $newTrayId;
-                $traycontent->trade_in_id = $tradein->id;
-                $traycontent->save();
+                    $tradein->save();
+                }
             }
         }
 
@@ -217,12 +234,7 @@ class QuarantineController extends Controller
             $tradein = Tradein::where('id', $id)->first();
 
             if($tradein != null){
-                $tradein->job_state = 17;
-                $tradein->marked_for_quarantine = false;
-                $tradein->quarantine_status = null;
-                $tradein->fimp = null;
-                $tradein->pinlocked = null;
-                $tradein->proccessed_before = true;
+                $tradein->job_state = '20';
                 $tradein->save();
             }
         }
@@ -235,7 +247,7 @@ class QuarantineController extends Controller
 
         $tradein = Tradein::where('id', $request->id)->first();
 
-        $tradein->quarantine_status = $request->val;
+        $tradein->job_state = $request->val;
 
         $tradein->save();
 
@@ -246,7 +258,7 @@ class QuarantineController extends Controller
 
         $tradein = Tradein::where('id', $request->id)->first();
 
-        $tradein->quarantine_status = null;
+        $tradein->job_state = '7';
 
         $tradein->save();
 

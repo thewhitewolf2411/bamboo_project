@@ -55,15 +55,10 @@
                                         <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                     </div>
-                                    @if($tradein->marked_for_quarantine)
+                                    @if($tradein->isInQuarantine())
                                     <div class="d-flex w-50 border p-3"><p>This device has been marked for quarantine because:</p><br>
                                         <ul>
-                                            @if($tradein->device_missing == true) <li><p>Device is Missing</p></li> @endif
-                                            @if(isset($tradein->chekmend_passed) == true && $tradein->chekmend_passed == false) <li><p>Device IMEI Check failed</p></li> @endif
-                                            @if(isset($tradein->visible_imei) == true && $tradein->visible_imei == false) <li><p>Device does not have IMEI number visible.</p></li> @endif
-                                            @if(isset($tradein->older_than_14_days) == true && $tradein->older_than_14_days == true) <li><p>Order is older than 14 days.</p></li> @endif
-                                            @if(isset($tradein->visible_serial) == true && $tradein->visible_serial == false) <li><p>Device serial number is not visible.</p></li> @endif
-                                            
+                                            <li>{{$tradein->getBambooStatus()}}</li>                                            
                                         </ul>
                                     </div>
                                     @else

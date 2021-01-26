@@ -326,14 +326,14 @@ class CustomerCareController extends Controller
     public function returnToTesting($id){
         $tradein = Tradein::where('id', $id)->first();
 
-        if($tradein->proccessed_before){
+        if($tradein->hasDeviceBeenTestedSecondTime()){
             return redirect()->back()->with('error', 'This device was already tested second time.');
         }
 
-        $tradein->job_state = 6;
+        $tradein->job_state = 14;
         $tradein->save();
 
-        return redirect()->back()->with('success', 'You have succesfully returned '. $tradein->barcode . ' to testing.');
+        return redirect()->back();
 
     }
 
@@ -555,7 +555,7 @@ class CustomerCareController extends Controller
             $tradeIn = Tradein::find(request()->id);
             if($tradeIn){
                 # received and passed
-                $tradeIn->job_state = 11;
+                $tradeIn->job_state = '21';
                 $tradeIn->save();
                 return response(200);
             }
@@ -565,16 +565,7 @@ class CustomerCareController extends Controller
     public function sendDeviceBackToReceive($barcode){
         $tradein = Tradein::where('barcode', $barcode)->first();
 
-        $tradein->job_state = 2;
-        $tradein->received = 0;
-        $tradein->device_missing = null;
-        $tradein->device_correct = null;
-        $tradein->chekmend_passed = null;
-        $tradein->imei_number = null;
-        $tradein->marked_as_risk = null;
-        $tradein->marked_for_quarantine = null;
-        $tradein->visible_imei = null;
-        $tradein->bamboo_grade = null;
+        $tradein->job_state = 3;
         $tradein->save();
 
         $trayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
@@ -587,7 +578,7 @@ class CustomerCareController extends Controller
     public function sendDeviceBackToTest($barcode){
         $tradein = Tradein::where('barcode', $barcode)->first();
 
-        $tradein->job_state = 4;
+        $tradein->job_state = 14;
         $tradein->save();
 
         return redirect()->back();

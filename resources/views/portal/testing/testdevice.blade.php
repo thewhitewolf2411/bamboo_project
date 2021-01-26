@@ -273,7 +273,7 @@
 
                             <div class="form-group w-50">
                                 <label for="customer_grade">Customer Grade:</label>
-                                <input type="text" id="customer_grade" name="customer_grade" value="{{$tradein->product_state}}" disabled>
+                                <input type="text" id="customer_grade" name="customer_grade" value="{{$tradein->customer_grade}}" disabled>
                             </div>
                             <div class="form-group w-50">
                                 <label for="bamboo_grade">Bamboo Grade:</label>

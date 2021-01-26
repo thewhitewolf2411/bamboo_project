@@ -118,41 +118,42 @@
                                 </div>
                             </td>
                                 
-                            <td class="text-center 1">
-                                @if($tradein->job_state == 3 || $tradein->job_state >= 5 && $tradein->job_state !== 6)
+                            <td class="text-center 1 p-0">
+                                @if($tradein->hasDeviceBeenReceived())
                                     <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
                                         {{-- <i class="fa fa-times" style="color:blue !important;" title="Return device to receiving" ></i> --}}
                                         <img style="width: 15px;" src="{{url('/images/undo.png')}}">
                                     </a>
+                                @else
+                                    <div class="alert alert-warning">Unable to return this device to receiving</div>
                                 @endif
                             </td>
                                 
-                            <!-- <td class="text-center 2">
-                                @if($tradein->job_state >= 5 && $tradein->job_state !== 6)
-                                <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
-                                    {{-- <i class="fa fa-times" style="color:blue !important;"></i> --}}
-                                    <img style="width: 15px;" src="{{url('/images/undo.png')}}">
-                                </a>
-                                @endif
-                            </td> -->
                             
-                            <td class="text-center 3">
-                                @if($tradein->job_state >= 5 && $tradein->job_state !== 6)
+                            <td class="text-center 3 p-0">
+                                @if($tradein->job_state === '13')
                                 <a title="Return device to testing" href="/totesting/{{$tradein->id}}">
                                     {{-- <i class="fa fa-times" style="color:black !important;"></i> --}}
                                     <img style="width: 15px;" src="{{url('/images/undo.png')}}">
                                 </a>
+                                @elseif($tradein->job_state === '14')
+                                    <div class="alert alert-success">Device returned to 2nd test</div>
+                                @elseif($tradein->hasDeviceBeenTestedSecondTime())
+                                    <div class="alert alert-warning">This device was already tested second time</div>
+                                @else
+                                    <div class="alert alert-warning">Unable to return this device to 2nd testing</div>
                                 @endif
                             </td>
-                                
-
-                                
                                                        
                             {{-- <td class="text-center"><a href="#" title="Revert to receiving" onclick="revertToReceiving({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a></td> 
                             <td class="text-center"><a href="#" title="Revert to testing" onclick="revertToTesting({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a></td> --}}
-                            <td class="text-center 4">
-                                @if($tradein->job_state !== 11)
+                            <td class="text-center 4 p-0">
+                                @if($tradein->job_state === '20')
                                     <a href="#" title="Send to Despatch" onclick="sendToDespatch({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a>
+                                @elseif($tradein->job_state === '21')
+                                    <div class="alert alert-success" role="alert">Device was dispatched to customer</div>
+                                @else
+                                    <div class="alert alert-warning">Unable to dispatch this device to customer</div>
                                 @endif
                             </td>
 
