@@ -59,26 +59,41 @@ function testingElementChanged(){
         $('#customer_grade').val("Faulty");
     }
     else{
-        $('#fimp_or_google_lock').prop('disabled', false);
-        $('#fake_missing_parts').prop('disabled', false);
-        $('#device_fully_functional').prop('disabled', false);
-        $('#water_damage').prop('disabled', false);
-        $('#correct_memory').prop('disabled', false);
-        $('#correct_network').prop('disabled', false);
-        $('#device_correct').prop('disabled', false);
-        $('#cosmetic_condition').prop('disabled', false);
-        options = {
-            '':'',
-            'Grade A':'Grade A',
-            'Grade B+':'Grade B+',
-            'Grade B':'Grade B',
-            'Grade C':'Grade C',
-            'WSI':'WSI',
-            'WSD':'WSD',
-            'NWSI':'NWSI',
-            'NWSD':'NWSD',
-            'Catastrophic':'Catastrophic'
+        console.log(fimpOrGoogleLock);
+        if(fimpOrGoogleLock == "true"){
+            $('#fake_missing_parts').prop('disabled', true);
+            $('#device_fully_functional').prop('disabled', true);
+            $('#water_damage').prop('disabled', true);
+            $('#correct_memory').prop('disabled', true);
+            $('#correct_network').prop('disabled', true);
+            $('#device_correct').prop('disabled', true);
+            $('#cosmetic_condition').prop('disabled', true);
+    
+            $('#customer_grade').val("Faulty");
         }
+        else{
+            $('#fimp_or_google_lock').prop('disabled', false);
+            $('#fake_missing_parts').prop('disabled', false);
+            $('#device_fully_functional').prop('disabled', false);
+            $('#water_damage').prop('disabled', false);
+            $('#correct_memory').prop('disabled', false);
+            $('#correct_network').prop('disabled', false);
+            $('#device_correct').prop('disabled', false);
+            $('#cosmetic_condition').prop('disabled', false);
+            options = {
+                '':'',
+                'Grade A':'Grade A',
+                'Grade B+':'Grade B+',
+                'Grade B':'Grade B',
+                'Grade C':'Grade C',
+                'WSI':'WSI',
+                'WSD':'WSD',
+                'NWSI':'NWSI',
+                'NWSD':'NWSD',
+                'Catastrophic':'Catastrophic'
+            }
+        }
+
 
         if(correctDevice == "false"){
 
