@@ -40,6 +40,9 @@
                         <input type="text" minlength="7" name="search" class="form-control mx-3 my-0">
                         <button type="submit" class="btn btn-primary btn-blue">Search</button>
                     </form>
+                    <div class="mt-4">
+                        <div class="btn btn-primary btn-blue w-25 m-auto" style="display:block;" onclick="createBatch()">New Batch</div>
+                    </div>
                 </div>
 
                 <div class="portal-table-container">
@@ -103,6 +106,10 @@ $(document).ready(function(){
     elem.children[0].children[0].style.opacity = 1;
 
 });
+
+function createBatch(){
+    alert('create batch');
+}
 
 </script>
 
