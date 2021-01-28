@@ -198,7 +198,7 @@ class DatabaseSeeder extends Seeder
 
         //receiving trolleys
 
-        /*DB::table('trolleys')->insert([
+        DB::table('trolleys')->insert([
 
             'trolley_name'=>'RA01',
             'trolley_type'=>'R',
@@ -1279,7 +1279,7 @@ class DatabaseSeeder extends Seeder
             'trolley_id'=>14,
             'number_of_devices'=>0,
 
-        ]);*/
+        ]);
 
 
         //bins
@@ -1346,7 +1346,7 @@ class DatabaseSeeder extends Seeder
             'number_of_devices'=>0,
             'max_number_of_devices'=>30,
         ]);
-        /*
+        
         //boxes
         //apple
         DB::table('boxes')->insert([
@@ -1614,7 +1614,7 @@ class DatabaseSeeder extends Seeder
             'manifacturer'=>'Miscenalious',
             'box_name'=>'(SW) MI01',
             'description'=>'Smart Watches mixed grades',
-        ]);*/
+        ]);
 
         DB::table('networks')->insert([
             'network_name'=>'o2',
