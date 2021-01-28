@@ -1346,7 +1346,7 @@ class DatabaseSeeder extends Seeder
             'number_of_devices'=>0,
             'max_number_of_devices'=>30,
         ]);
-
+        
         //boxes
         //apple
         DB::table('boxes')->insert([

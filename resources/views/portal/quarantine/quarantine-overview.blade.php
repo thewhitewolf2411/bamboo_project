@@ -117,7 +117,7 @@
 
                                         <div class="row w-100">
                                             <div class="col-md-9 d-flex align-items-center">
-                                            <p>{{$tradein->getQuarantineReason($tradein->id)}}</p>
+                                            <p>{{$tradein->getBambooStatus()}}</p>
                                             </div>
                                             <div class="col-md-3">
                                                 <a onclick="removeQuarantineReason({{$tradein->id}})" class="btn btn-green" title="Remove quarantine reason">x</a>
