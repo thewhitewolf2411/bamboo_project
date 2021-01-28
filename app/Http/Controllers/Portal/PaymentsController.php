@@ -38,10 +38,17 @@ class PaymentsController extends Controller
         
         // search by id / barcode
         if(isset(request()->search)){
-            // get tradein by barcode / tradein id
-            $tradeins = Tradein::where('barcode', request()->search)->orWhere('barcode_original', request()->search)->get();
-            $tradein_ids = $tradeins->pluck('id')->toArray();
 
+            // get tradein by barcode / tradein id
+            $tradeins_ids_collection = Tradein::where('barcode', request()->search)->where('job_state','=','10')->orWhere('job_state', '=', '16')->get();
+            $tradein_ids = $tradeins_ids_collection->pluck('id')->toArray();
+
+            $tradeins = Tradein::where('barcode', request()->search)->orWhere('barcode_original', request()->search)
+                ->where(function($query){
+                    $query->where('job_state','=','10')->orWhere('job_state', '=', '16');
+                })->get();
+
+            
             // get tray content containing tradein
             $trays_content = TrayContent::whereIn('trade_in_id', $tradein_ids)->get();
             $tray_ids = $trays_content->pluck('tray_id')->toArray();
@@ -67,6 +74,7 @@ class PaymentsController extends Controller
             })->get();
 
         } else {
+
             // get trolleys
             $trolleys = Trolley::where('trolley_name', 'like', 'TA%')
                 ->orWhere('trolley_name', 'like', 'TS%')
@@ -82,21 +90,36 @@ class PaymentsController extends Controller
                     ->orWhere('tray_name', 'like', 'TM%');
             })->get();
 
-            //$tray_ids = $trays->pluck('id')->toArray();
-            //dd($trolley_ids, $tray_ids);
-
-            // $trolley_content = TrolleyContent::whereIn('trolley_id', $trolley_ids)->get();
-            // $trays_content = TrayContent::whereIn('tray_id', $tray_ids)->get();
-            // dd($trolley_content, $trays_content);
+            // get devices
+            $tradeins = Tradein::where('job_state','=','10')->orWhere('job_state', '=', '16')->get();
         }
 
         return view('portal.payments.awaiting', [
             'portalUser' => $portalUser,
             'trolleys' => $trolleys,
-            'trays' => $trays
+            'trays' => $trays,
+            'tradeins' => $tradeins
         ]);
     }
 
+    /**
+     * Search for tradeins by barcode (for batch).
+     * 
+     * @param string $barcode
+     */
+    public function searchForTradeins(string $barcode){
+        if($barcode){
+            $tradeins = Tradein::where('barcode', $barcode)->orWhere('barcode_original', $barcode)
+                ->where(function($query){
+                    $query->where('job_state','=','10')->orWhere('job_state', '=', '16');
+                })->get();
+                
+            foreach($tradeins as $tradein){
+                $tradein->model = $tradein->getProductName($tradein->id);
+            }
+            return $tradeins;
+        }
+    }
 
     /**
      * Show submit for payments page.

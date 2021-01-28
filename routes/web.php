@@ -222,12 +222,19 @@ Route::get('/portal/testing/checkforserial/{id}', 'Portal\TestingController@show
 Route::post('/portal/testing/receive/deviceserialvisibility', 'Portal\TestingController@deviceSerialVisibility')->middleware('auth');
 
 Route::post('/portal/testing/getDeviceData', 'Portal\TestingController@getDeviceData')->middleware('auth');
+
 //payments
-Route::get('/portal/payments', 'Portal\PaymentsController@showPaymentPage')->middleware('auth');
-Route::get('/portal/payments/awaiting', 'Portal\PaymentsController@showAwaitingPayments')->middleware('auth');
-Route::get('/portal/payments/submit', 'Portal\PaymentsController@showSubmitPayments')->middleware('auth');
-Route::get('/portal/payments/confirm', 'Portal\PaymentsController@showConfirmPayments')->middleware('auth');
-Route::get('/portal/payments/failed', 'Portal\PaymentsController@showFailedPayments')->middleware('auth');
+Route::group(['prefix' => 'portal/payments'], function () {
+    Route::get('/', 'Portal\PaymentsController@showPaymentPage')->middleware('auth');
+
+    Route::get('/awaiting', 'Portal\PaymentsController@showAwaitingPayments')->middleware('auth');
+    Route::get('/awaiting/search/{barcode}', 'Portal\PaymentsController@searchForTradeins')->middleware('auth');
+
+    Route::get('/submit', 'Portal\PaymentsController@showSubmitPayments')->middleware('auth');
+    Route::get('/confirm', 'Portal\PaymentsController@showConfirmPayments')->middleware('auth');
+    Route::get('/failed', 'Portal\PaymentsController@showFailedPayments')->middleware('auth');
+});
+
 
 //reports
 Route::get('/portal/reports', 'Portal\ReportsController@showReportsPage')->middleware('auth');
