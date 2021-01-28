@@ -37,8 +37,9 @@
                 <div class="m-auto w-75">
                     <form class="d-flex align-items-center mx-5 text-center" action="/portal/payments/awaiting" method="GET">              
                         <label for="searchtradeins">Search by Trade-in barcode / Trade-in ID:</label>
-                        <input type="text" minlength="7" name="search" class="form-control mx-3 my-0">
+                        <input type="text" minlength="7" name="search" class="form-control mx-3 my-0" @if(isset(request()->search)) value="{{request()->search}}" @endif required>
                         <button type="submit" class="btn btn-primary btn-blue">Search</button>
+                        @if(isset(request()->search)) <a class="btn" href="/portal/payments/awaiting">Cancel</a> @endif
                     </form>
                     <div class="mt-4">
                         <div class="btn btn-primary btn-blue w-25 m-auto" style="display:block;" onclick="createBatch()">New Batch</div>
