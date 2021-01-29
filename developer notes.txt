@@ -15,7 +15,7 @@
 9.  Awaiting Testing/Testing
 
 /*  Testing     */
-10.  1st Test/Testing
+10.  Testing complete/Testing
 11.  Marked for quarantine
 11a. Device is FIMP
 11b. Google Locked
