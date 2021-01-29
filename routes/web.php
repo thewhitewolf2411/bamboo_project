@@ -229,8 +229,11 @@ Route::group(['prefix' => 'portal/payments'], function () {
 
     Route::get('/awaiting', 'Portal\PaymentsController@showAwaitingPayments')->middleware('auth');
     Route::get('/awaiting/search/{barcode}', 'Portal\PaymentsController@searchForTradeins')->middleware('auth');
+    Route::post('/awaiting/createbatch', 'Portal\PaymentsController@createBatch')->middleware('auth');
 
     Route::get('/submit', 'Portal\PaymentsController@showSubmitPayments')->middleware('auth');
+    Route::post('/submit/export/csv', 'Portal\PaymentsController@exportCSV')->name('exportBatchesCSV')->middleware('auth');
+
     Route::get('/confirm', 'Portal\PaymentsController@showConfirmPayments')->middleware('auth');
     Route::get('/failed', 'Portal\PaymentsController@showFailedPayments')->middleware('auth');
 });

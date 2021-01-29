@@ -10,7 +10,12 @@ use App\Eloquent\Trolley;
 use App\Eloquent\TrolleyContent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Eloquent\PaymentBatch;
+use App\Eloquent\PaymentBatchDevice;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PaymentsController extends Controller
 {
@@ -109,9 +114,10 @@ class PaymentsController extends Controller
      */
     public function searchForTradeins(string $barcode){
         if($barcode){
-            $tradeins = Tradein::where('barcode', $barcode)->orWhere('barcode_original', $barcode)
-                ->where(function($query){
-                    $query->where('job_state','=','10')->orWhere('job_state', '=', '16');
+            $tradeins = Tradein::where(function ($query) use($barcode){
+                    $query->where('barcode', $barcode)->orWhere('barcode_original', $barcode);
+                })->where(function($query){
+                    $query->where('job_state', '=', "10")->orWhere('job_state', '=', "16");
                 })->get();
                 
             foreach($tradeins as $tradein){
@@ -121,6 +127,50 @@ class PaymentsController extends Controller
         }
     }
 
+
+    /**
+     * Create batch from selected devices.
+     */
+    public function createBatch(Request $request){
+        if(isset($request->ids)){
+
+            $ids = $request->ids;
+            $tradeins = Tradein::whereIn('id', $ids)->get();
+            
+             // create payment batch from tradein
+             $payment_batch = new PaymentBatch([
+                // 'payment_type' - default 01 for now (domestic)
+                'sort_code_number' => 15100031806542,       // bamboo account
+                'arrive_at' => Carbon::now()->addDay(),  //Carbon::now()->addDay()->format('dmY'),
+                'payment_state' => 1
+            ]);
+            $payment_batch->save();
+
+            foreach($tradeins as $tradein){
+
+                if($tradein->job_state !== '21'){
+                   
+                    $tradein->job_state = '21';
+                    $tradein->save();
+
+                    // create payment batch device
+                    $payment_batch_device = new PaymentBatchDevice([
+                        'payment_batch_id' => $payment_batch->id,
+                        'tradein_id' => $tradein->id,
+                        'device_price' => $tradein->bamboo_price,
+                    ]);
+
+                    $payment_batch_device->save();
+                }
+                
+            }
+
+            return response('OK', 200);
+        }
+    }
+
+
+
     /**
      * Show submit for payments page.
      */
@@ -129,8 +179,65 @@ class PaymentsController extends Controller
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        $payment_batches = PaymentBatch::all();
 
-        return view('portal.payments.submit')->with('portalUser', $portalUser);
+        return view('portal.payments.submit', [
+            'portalUser' => $portalUser,
+            'batches' => $payment_batches
+        ]);
+    }
+
+
+    /**
+     * Export payment batches as a CSV file.
+     */
+    public function exportCSV(Request $request){
+        if(isset($request->batches)){
+            $ids = explode(',', request()->batches);
+            dd($ids, 'IN PROGRESS');
+            $batches = PaymentBatch::whereIn('id', $ids)->get();
+
+            $export_data = [];
+            foreach($batches as $batch){
+
+                $tradein = Tradein::find($batch->tradein_id);
+                $tradein->job_state = 22;
+                $tradein->save();
+
+                $batch->payment_state = 2;
+                $batch->save();
+
+                array_push($export_data, 
+                    ",,,".$batch->payment_type.",,,,,,,,,".
+                    $batch->sort_code_number.",,,,".
+                    $batch->amount.",,".
+                    Carbon::parse($batch->arrive_at)->format('dmY').",,,,,,".
+                    $batch->credit_sort_code.",,,,,,".
+                    $batch->credit_account.",,".
+                    $batch->beneficiary_name.",,,,".
+                    $batch->beneficiary_reference.",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
+                );
+            }
+
+            $path = storage_path().'\app\public\exports\batches';
+
+            if(!is_dir($path)){
+                mkdir($path, 0777, true);
+            }
+            
+            $filename = '\SP_batch_export_'.time().'.csv';
+            $file_path = $path.$filename;
+
+            $fp = fopen($file_path, 'w');
+
+            foreach ($export_data as $fields) {
+                fwrite($fp, $fields."\n");
+            }
+            
+            fclose($fp);
+
+            return response()->download($file_path);
+        }
     }
 
 

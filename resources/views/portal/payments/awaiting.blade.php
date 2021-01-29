@@ -21,7 +21,7 @@
     <title>Bamboo Recycle::Payments Awaiting Assignment</title>
 </head>
 
-<body class="portal-body">
+<body class="portal-body" onclick="handle()">
 
     <header>@include('portal.layouts.header')</header>
 
@@ -134,7 +134,9 @@
                                         <td><div class="table-element">Model</div></td>
                                         <td><div class="table-element">IMEI</div></td>
                                         <td><div class="table-element">Bamboo Price</div></td>
-                                        <td><div class="table-element"></div></td>
+                                        <td><div class="table-element">
+                                            <input id="selectAll" type="checkbox" class="form-check-input m-0" onclick="selectAll()"/>
+                                        </div></td>
                                     </tr>
                                 </table>
                             </div>
@@ -142,7 +144,7 @@
                         
                         <div class="modal-footer">
                             <button type="button" onclick="reset()" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button id="create-button" type="button" class="btn btn-primary disabled">Create batch</button>
+                            <button id="create-button" onclick="createBatch()" type="button" class="btn btn-primary disabled">Create batch</button>
                         </div>
                     </div>
                     </div>
@@ -158,6 +160,12 @@
 $(document).ready(function(){
 
     var elem = $('.portal-links-container > .portal-header-element')[5];
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     
     // console.log(elem.children[0]);
 
@@ -167,14 +175,11 @@ $(document).ready(function(){
 });
 
 function search(){
+    clearTable();
     let searchterm = document.getElementById('search_id').value;
     $.ajax({
         type: "GET",
         url: "awaiting/search/"+searchterm,
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        //data: {id: selected_audit.id, note: note},
         success: function(response) {
             if(response.length > 0){
                 loadResults(response);
@@ -183,10 +188,36 @@ function search(){
     });
 }
 
+function createBatch(){
+    let button = document.getElementById('create-button');
+    if(!button.classList.contains('disabled')){
+        let devices = document.querySelectorAll("input[name='selected_devices']:checked");
+        let ids = [];
+        for (let i = 0; i < devices.length; i++) {
+            let item = devices[i];
+            ids.push(item.id);
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "awaiting/createbatch",
+            data: {
+                _token: '{{csrf_token()}}',
+                ids: ids
+            },
+            success: function(data, textStatus, xhr) {
+                if(xhr.status === 200){
+                    alert('Payment batch successfully created.');
+                    window.location.reload(true);
+                }
+
+            }
+        });
+    }
+}
+
 function loadResults(results){
     let container = document.getElementById("search-results-table").childNodes[1];
-
-    clearTable();
 
     for (const [key, item] of Object.entries(results)) {
 
@@ -267,12 +298,47 @@ function reset(){
 }
 
 function clearTable(){
-    let table = document.getElementById("search-results-table").children[0].children;
-    for (let item of table) {
-        if(item.id !== 'hr'){
-            item.parentNode.removeChild(item);
-        }
+    let table = document.getElementById("search-results-table");
+    var rowCount = table.rows.length;
+    for (var i = rowCount - 1; i > 0; i--) {
+        table.deleteRow(i);
     }
+}
+
+function handle(){
+    let modal = document.getElementById('batchModal');
+    
+    setTimeout(function(){ 
+        if(modal.classList.contains('show')){
+            // modal opened
+            //document.getElementById('search_id').autofocus = true;
+        } else {
+            clearTable()
+            document.getElementById('search_id').value = '';
+        }
+    }, 200);
+
+}
+
+function selectAll(){
+    let rowCount = document.getElementById("search-results-table").rows.length;
+    let selectState = document.getElementById("selectAll").checked;
+    if(rowCount > 1){
+        let items = document.getElementsByName('selected_devices');
+
+        // check if select/deselect all
+        let anyChecked = false;
+        items.forEach(element => {
+            if(selectState){
+                element.checked = true;
+            } else {
+                element.checked = false;
+            }
+        });
+
+    }
+
+    checkSubmit();
 }
 
 </script>
