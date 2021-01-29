@@ -222,6 +222,7 @@ Route::get('/portal/testing/checkforserial/{id}', 'Portal\TestingController@show
 Route::post('/portal/testing/receive/deviceserialvisibility', 'Portal\TestingController@deviceSerialVisibility')->middleware('auth');
 
 Route::post('/portal/testing/getDeviceData', 'Portal\TestingController@getDeviceData')->middleware('auth');
+Route::post('/portal/testing/getDeviceNetworkData', 'Portal\TestingController@getDeviceNetworkData')->middleware('auth');
 //payments
 Route::get('/portal/payments', 'Portal\PaymentsController@showPaymentPage')->middleware('auth');
 Route::get('/portal/payments/awaiting', 'Portal\PaymentsController@showAwaitingPayments')->middleware('auth');

@@ -150,10 +150,10 @@ class PortalController extends Controller
                     $tradein->product_id = $sellingProduct->id;
                     $tradein->order_price = $statePrice;
                     $tradein->job_state = 1;
-                    $tradein->product_state = $stateString;
-                    $tradein->network = $productNetwork[$net]->getNetWorkName($productNetwork[$net]->network_id);
+                    $tradein->customer_grade = $stateString;
+                    $tradein->customer_network = $productNetwork[$net]->getNetWorkName($productNetwork[$net]->network_id);
                     #dd($productInformation[$inf]);
-                    $tradein->memory=$productInformation[$inf]->memory;
+                    $tradein->customer_memory=$productInformation[$inf]->memory;
 
                     $tradein->save();
                 }

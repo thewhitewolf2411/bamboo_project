@@ -1,7 +1,7 @@
 /*  Receiving   */
 1.  Order Request received/Trade pack requested
-2.  Trade pack despached/User printed trade pack
-3.  Trade pack despached
+2.  Awaiting Receipt/User printed trade pack
+3.  Awaiting Receipt/Trade pack despatched
 4.  Pack received/Device missing
 5.  Never Received/Expired
 6.  Device has no IMEI number

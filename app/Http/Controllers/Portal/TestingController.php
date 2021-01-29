@@ -96,6 +96,7 @@ class TestingController extends Controller
         $networks = Network::all();
         $sellingProduct = SellingProduct::where('id', $device_id)->first();
         $productinformation = ProductInformation::where('product_id', $device_id)->get();
+        $productnetworks = ProductNetworks::where('product_id', $device_id)->get();
         
 
         $response = [
@@ -103,6 +104,7 @@ class TestingController extends Controller
             'networks'=>$networks,
             'sellingProduct'=>$sellingProduct,
             'productinformation'=>$productinformation,
+            'productnetworks'=>$productnetworks
 
         ];
 
