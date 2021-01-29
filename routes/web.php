@@ -311,3 +311,11 @@ Route::post('/portal/boxes/createbox', 'Portal\BoxController@addBox')->middlewar
 Route::get('/portal/boxes/delete/{id}', 'Portal\BoxController@removeBox')->middleware('auth');
 
 Route::get('/portal/boxes/addtobox/{boxname}', 'Portal\BoxController@showAddDeviceToBoxPage')->middleware('auth');
+
+//Warehouse Management
+Route::group(['prefix'=>'portal/warehouse-management'], function(){
+    Route::get('/', 'Portal\WarehouseManagementController@showWarehouseManagementPage')->middleware('auth');
+    Route::get('/box-management', 'Portal\WarehouseManagementController@showBoxManagementPage')->middleware('auth');
+    Route::get('/bay-overview', 'Portal\WarehouseManagementController@showBayOverviewPage')->middleware('auth');
+    Route::get('/picking-despatch', 'Portal\WarehouseManagementController@showPickingDespatchPage')->middleware('auth');
+});

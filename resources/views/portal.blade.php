@@ -120,7 +120,7 @@
 
                             @if($portalUser->warehouse_management)
 
-                            <a href="" class="col-2 my-2">
+                            <a href="/portal/warehouse-management" class="col-2 my-2">
                                 <div class="portal-content-element">
                                      <p>Warehouse Management </p>
                                 </div>

@@ -4,14 +4,14 @@ namespace App\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Box extends Model
+class BoxContent extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'boxes';
+    protected $table = 'box_content';
 
     /**
      * The attributes that are mass assignable.
@@ -19,8 +19,6 @@ class Box extends Model
      * @var array
      */
     protected $fillable = [
-        'grade','manifacturer','network', 'box_devices', 'max_devices', 'status'
+        'box_id','trade_in_id'
     ];
-
-    
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBoxesTable extends Migration
+class CreateBoxContentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateBoxesTable extends Migration
      */
     public function up()
     {
-        Schema::create('boxes', function (Blueprint $table) {
+        Schema::create('box_content', function (Blueprint $table) {
             $table->id();
-            $table->string('grade');
-            $table->string('manifacturer');
-            $table->string('network');
-            $table->integer('box_devices')->default(0);
-            $table->integer('max_devices');
-            $table->integer('status');
+            $table->integer('box_id');
+            $table->integer('trade_in_id');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateBoxesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('boxes');
+        Schema::dropIfExists('box_content');
     }
 }
