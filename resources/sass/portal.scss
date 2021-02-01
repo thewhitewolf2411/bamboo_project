@@ -459,3 +459,16 @@ input[type=number] {
 #select_correct_device .filter-option-inner-inner{
     color: #000 !important;
 }
+
+#box-table{
+    width: auto !important;
+}
+
+.boxrow{
+    cursor: pointer;
+    transition: 0.2s linear;
+}
+
+.boxrow:hover{
+    scale: 1.02;
+}

@@ -123,17 +123,6 @@ class DatabaseSeeder extends Seeder
             'total_produts'=>0
         ]);
 
-        DB::table('brand')->insert([
-            'brand_name'=>'Google',
-            'brand_image'=>'Image 16_1597675717.png',
-            'total_produts'=>0
-        ]);
-
-        DB::table('brand')->insert([
-            'brand_name'=>'Oneplus',
-            'brand_image'=>'Image 16_1597675717.png',
-            'total_produts'=>0
-        ]);
 
         //Default conditions
         DB::table('conditions')->insert([

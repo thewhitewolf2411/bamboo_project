@@ -303,19 +303,12 @@ Route::get('/portal/trolleys/trolley/printlabel/{id}', 'Portal\TrolleyController
 Route::get('/portal/trolleys/delete/{id}', 'Portal\TrolleyController@deleteTrolley')->middleware('auth');
 
 
-//Boxes
-Route::get('/portal/boxes', 'Portal\BoxController@showBoxesPage')->middleware('auth');
-Route::get('/portal/boxes/create', 'Portal\BoxController@showAddBoxPage')->middleware('auth');
-Route::get('/portal/boxes/box', 'Portal\BoxController@showBoxPage')->middleware('auth');
-Route::post('/portal/boxes/createbox', 'Portal\BoxController@addBox')->middleware('auth');
-Route::get('/portal/boxes/delete/{id}', 'Portal\BoxController@removeBox')->middleware('auth');
-
-Route::get('/portal/boxes/addtobox/{boxname}', 'Portal\BoxController@showAddDeviceToBoxPage')->middleware('auth');
-
 //Warehouse Management
 Route::group(['prefix'=>'portal/warehouse-management'], function(){
-    Route::get('/', 'Portal\WarehouseManagementController@showWarehouseManagementPage')->middleware('auth');
-    Route::get('/box-management', 'Portal\WarehouseManagementController@showBoxManagementPage')->middleware('auth');
-    Route::get('/bay-overview', 'Portal\WarehouseManagementController@showBayOverviewPage')->middleware('auth');
-    Route::get('/picking-despatch', 'Portal\WarehouseManagementController@showPickingDespatchPage')->middleware('auth');
+    Route::get('/', 'Portal\WarehouseManagementController@showWarehouseManagementPage');
+    Route::get('/box-management', 'Portal\WarehouseManagementController@showBoxManagementPage');
+    Route::get('/bay-overview', 'Portal\WarehouseManagementController@showBayOverviewPage');
+    Route::get('/picking-despatch', 'Portal\WarehouseManagementController@showPickingDespatchPage');
+    Route::get('/getdevices', 'Portal\WarehouseManagementController@getBoxDevices');
+    Route::post('/box-management/createbox', 'Portal\WarehouseManagementController@createBox');
 });

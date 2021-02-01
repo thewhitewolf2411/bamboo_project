@@ -14142,6 +14142,19 @@ input[type=number] {
   color: #000 !important;
 }
 
+#box-table {
+  width: auto !important;
+}
+
+.boxrow {
+  cursor: pointer;
+  transition: 0.2s linear;
+}
+
+.boxrow:hover {
+  scale: 1.02;
+}
+
 .register-elements-container {
   width: 50%;
 }

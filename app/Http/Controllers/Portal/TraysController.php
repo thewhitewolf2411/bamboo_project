@@ -26,7 +26,7 @@ class TraysController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $trays = Tray::where('tray_type', '!=', 'B')->get();
+        $trays = Tray::where('tray_type', '!=', 'B')->where('tray_type', '!=', 'Bo')->get();
 
         return view('portal.trays.trays')->with(['portalUser'=>$portalUser, 'trays'=>$trays]);
     }
