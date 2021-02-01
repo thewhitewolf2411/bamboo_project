@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Eloquent\PaymentBatch;
 use App\Eloquent\PaymentBatchDevice;
+use App\Services\BatchService;
+use App\Services\PaymentBatchService;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -137,17 +139,22 @@ class PaymentsController extends Controller
             $ids = $request->ids;
             $tradeins = Tradein::whereIn('id', $ids)->get();
             
-             // create payment batch from tradein
-             $payment_batch = new PaymentBatch([
+            // create payment batch from tradein
+            $payment_batch = new PaymentBatch([
                 // 'payment_type' - default 01 for now (domestic)
                 'sort_code_number' => 15100031806542,       // bamboo account
                 'arrive_at' => Carbon::now()->addDay(),  //Carbon::now()->addDay()->format('dmY'),
-                'payment_state' => 1
+                'payment_state' => 1,
+                'csv_file' => null,
+                'reference' => null
             ]);
             $payment_batch->save();
 
-            foreach($tradeins as $tradein){
+            $payment_batch_devices = collect();
+            $payment_batch_reference = null;
 
+            foreach($tradeins as $tradein){
+                
                 if($tradein->job_state !== '21'){
                    
                     $tradein->job_state = '21';
@@ -160,10 +167,15 @@ class PaymentsController extends Controller
                         'device_price' => $tradein->bamboo_price,
                     ]);
 
+                    $payment_batch_reference = $tradein->barcode_original;
+
                     $payment_batch_device->save();
+                    $payment_batch_devices->push($payment_batch_device);
                 }
-                
             }
+
+            $payment_batch->reference = "INVOICE " . $payment_batch_reference;
+            $payment_batch->save();
 
             return response('OK', 200);
         }
@@ -179,7 +191,7 @@ class PaymentsController extends Controller
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        $payment_batches = PaymentBatch::all();
+        $payment_batches = PaymentBatch::where('payment_state', '<', '2')->get();
 
         return view('portal.payments.submit', [
             'portalUser' => $portalUser,
@@ -193,50 +205,13 @@ class PaymentsController extends Controller
      */
     public function exportCSV(Request $request){
         if(isset($request->batches)){
-            $ids = explode(',', request()->batches);
-            dd($ids, 'IN PROGRESS');
-            $batches = PaymentBatch::whereIn('id', $ids)->get();
 
-            $export_data = [];
-            foreach($batches as $batch){
+            // generate payment batch csv file
+            $batch_ids = explode(',', request()->batches);
+            $batchService = new PaymentBatchService();
+            $file = $batchService->generateCSV($batch_ids);
 
-                $tradein = Tradein::find($batch->tradein_id);
-                $tradein->job_state = 22;
-                $tradein->save();
-
-                $batch->payment_state = 2;
-                $batch->save();
-
-                array_push($export_data, 
-                    ",,,".$batch->payment_type.",,,,,,,,,".
-                    $batch->sort_code_number.",,,,".
-                    $batch->amount.",,".
-                    Carbon::parse($batch->arrive_at)->format('dmY').",,,,,,".
-                    $batch->credit_sort_code.",,,,,,".
-                    $batch->credit_account.",,".
-                    $batch->beneficiary_name.",,,,".
-                    $batch->beneficiary_reference.",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
-                );
-            }
-
-            $path = storage_path().'\app\public\exports\batches';
-
-            if(!is_dir($path)){
-                mkdir($path, 0777, true);
-            }
-            
-            $filename = '\SP_batch_export_'.time().'.csv';
-            $file_path = $path.$filename;
-
-            $fp = fopen($file_path, 'w');
-
-            foreach ($export_data as $fields) {
-                fwrite($fp, $fields."\n");
-            }
-            
-            fclose($fp);
-
-            return response()->download($file_path);
+            return response()->download($file);
         }
     }
 

@@ -16,8 +16,9 @@ class PaymentBatch extends Model
 
     public $states = [
         1 => 'Submitted for payment',
-        2 => 'Successfull payment',
-        3 => 'Failed payment'
+        2 => 'Batch has been submited to the bank',
+        3 => 'Successfull payment',
+        4 => 'Failed payment'
     ];
 
     /**
@@ -28,7 +29,9 @@ class PaymentBatch extends Model
     protected $fillable = [
         'sort_code_number',
         'arrive_at',
-        'payment_state'
+        'payment_state',
+        'csv_file',
+        'reference'
     ];
 
     public function getReference(){

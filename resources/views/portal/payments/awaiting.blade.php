@@ -210,7 +210,6 @@ function createBatch(){
                     alert('Payment batch successfully created.');
                     window.location.reload(true);
                 }
-
             }
         });
     }
