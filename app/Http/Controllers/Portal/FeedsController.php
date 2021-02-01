@@ -289,7 +289,7 @@ class FeedsController extends Controller
 
                     $product = new BuyingProduct();
                     $product->product_name = $row[1];
-                    $product->product_image = 'default_image';
+                    $product->product_image = $row[2];
                     $product->category_id = $row[3];
                     $product->brand_id = $row[4];
                     $product->product_description = $row[5];
@@ -420,7 +420,7 @@ class FeedsController extends Controller
                     if($valid_product){
                         $sellingProduct = new SellingProduct();
                         $sellingProduct->product_name = $row[1];
-                        $sellingProduct->product_image = 'default_image';
+                        $sellingProduct->product_image = $row[2];
                         $sellingProduct->category_id = $row[3];
                         $sellingProduct->brand_id = $row[4];
                         $sellingProduct->save();   

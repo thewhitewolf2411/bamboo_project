@@ -133,7 +133,6 @@ function testingElementChanged(){
                     'Grade B':'Grade B',
                     'Grade C':'Grade C',
                     'WSI':'WSI',
-                    'WSD':'WSD',
                 }
             }
         }
@@ -253,10 +252,42 @@ $(document).on('change', '#select_correct_device', function(){
 
             $('#correct_memory_value').empty(); // remove old options
             $.each(response.productinformation, function(key,value) {
-                console.log(key, value.memory);
                 $('#correct_memory_value').append($("<option></option>")
                 .attr("value", value.memory).text(value.memory));
             });
+
+            if(response.productnetworks.length != 0){
+                $('#correct_network').prop('disabled', false);
+                $('#correct_network').prop('required', true);
+                $('#correct_network_value').empty(); // remove old options
+                $.each(response.productnetworks, function(key,value) {
+                    var networkName;
+                    switch(value.network_id){
+                        case 1:
+                            networkName = 'o2';
+                            break;
+                        case 2:
+                            networkName = 'ee';
+                            break;
+                        case 3:
+                            networkName = 'vodafone';
+                            break;
+                        case 4:
+                            networkName = '3';
+                            break;
+                        case 5:
+                            networkName = 'unlocked';
+                            break;
+                    }
+                    console.log(networkName);
+                    $('#correct_network_value').append($("<option></option>")
+                    .attr("value", networkName).text(networkName));
+                });
+            }
+            else{
+                $('#correct_network').prop('disabled', true);
+                $('#correct_network_value').prop('disabled', true);
+            }
     
 
         },

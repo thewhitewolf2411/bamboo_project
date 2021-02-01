@@ -273,7 +273,7 @@ class Tradein extends Model
             /*11f*/  ['Incorrect Memory','Awaiting Response'],
             /*11g*/  ['Incorrect Network','Awaiting Response'],
             /*11h*/  ['Signs of water damage','Awaiting Response'],
-            /*11i*/  ['Downgraded','Awaiting Response'],
+            /*11i*/  ['Downgrade','Awaiting Response'],
             /*11j*/  ['Older than 14 days','Awaiting Response'],
             /*12*/  ['Device has passed testing','Testing'],
             /*13*/  ['Device was requested for retest','Awaiting Testing'],

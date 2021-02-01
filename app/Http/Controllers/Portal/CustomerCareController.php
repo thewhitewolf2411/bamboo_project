@@ -388,7 +388,7 @@ class CustomerCareController extends Controller
 
         if($request->all() == null || $request->search == 0){
 
-            $tradeins = Tradein::where('job_state', 2)->orWhere('job_state', 3)->get()->groupBy('barcode_original');
+            $tradeins = Tradein::where('job_state', '2')->orWhere('job_state', '3')->get()->groupBy('barcode_original');
 
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -397,7 +397,7 @@ class CustomerCareController extends Controller
         }
         else{
             if($request->search <= 3){
-                $tradeins = Tradein::where('job_state', 2)->orWhere('job_state', 3)->get();
+                $tradeins = Tradein::where('job_state', '2')->orWhere('job_state', '3')->get();
 
                 $user_id = Auth::user()->id;
                 $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -411,14 +411,21 @@ class CustomerCareController extends Controller
                 $tradeins = $tradeins->groupBy('barcode_original');
             }
             else{
-                
-                $tradeins = Tradein::where('job_state', 2)->orWhere('job_state', 3)
-                                    ->where('barcode', $request->search)
-                                    ->orWhere('barcode_original', $request->search)
+
+                $tradeins = Tradein::where('barcode_original', $request->search)->get();
+                                    /*->where('job_state', '2')->orWhere('job_state', '3')
                                     ->get();
+                                    #dd($tradeins);*/
                 #dd($tradeins->toSql());
+
+                foreach($tradeins as $key=>$tradein){
+                    if($tradein->job_state !== '2' || $tradein->job_state !== '3'){
+                        $tradeins->forget($key);
+                    }
+                }
+
                 if(count($tradeins) < 1){
-                    return redirect()->back()->with('error', 'No Order with that barcode. Please try again.');
+                    return redirect('/portal/customer-care/trade-pack')->with('error', 'No Order with that barcode. Please try again.');
                 }
                 else{
                     $tradeins = $tradeins->groupBy('barcode_original');

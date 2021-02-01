@@ -223,6 +223,7 @@ Route::post('/portal/testing/receive/deviceserialvisibility', 'Portal\TestingCon
 
 Route::post('/portal/testing/getDeviceData', 'Portal\TestingController@getDeviceData')->middleware('auth');
 
+// Route::post('/portal/testing/getDeviceNetworkData', 'Portal\TestingController@getDeviceNetworkData')->middleware('auth');
 //payments
 Route::group(['prefix' => 'portal/payments'], function () {
     Route::get('/', 'Portal\PaymentsController@showPaymentPage')->middleware('auth');
