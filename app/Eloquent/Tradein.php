@@ -29,7 +29,7 @@ class Tradein extends Model
         'user_id', 'barcode','barcode_original','product_id', 'correct_product_id','customer_grade',
         'bamboo_grade', 'job_state', 'order_price','bamboo_price','customer_memory','customer_network',
         'correct_memory','correct_network', 'missing_image', 'imei_number',
-        'quarantine_reason', 'quarantine_date'
+        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition'
     ];
 
 
@@ -163,7 +163,6 @@ class Tradein extends Model
         $trayid = TrayContent::where('trade_in_id', $id)->first();
         if($trayid !== null){
             $trayid = $trayid->tray_id;
-            $trayname = Tray::where('id', $trayid)->first()->tray_name;
             return $trayid;
         }
         else{
@@ -241,6 +240,13 @@ class Tradein extends Model
 
     }
 
+    public function deviceLocked(){
+        if($this->correct_network === 'unlocked'){
+            return false;
+        }
+        return true;
+    }
+
     public function getDeviceStatus(){
 
         // array[0] - bamboo status
@@ -291,8 +297,8 @@ class Tradein extends Model
             /*15i*/  ['Downgraded','Awaiting Response'],
             /*15j*/  ['Older than 14 days','Awaiting Response'],
             /*16*/  ['Device has passed 2nd testing','Testing'],
-            /*17*/  ['Device marked for destruction',''],
-            /*18*/  ['Device destroyed',''],
+            /*17*/  ['Device marked for destruction','Order expired'],
+            /*18*/  ['Device destroyed','Order expired'],
             /*19*/  ['Device requested by customer','Returning Device'],
             /*20*/  ['Device marked to return to customer','Returning Device'],
             /*21*/  ['Despatched to customer','Returning Device'],
@@ -497,6 +503,5 @@ class Tradein extends Model
                 return false;
         }
     }
-
     
 }

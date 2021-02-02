@@ -27,7 +27,7 @@
     <header>@include('portal.layouts.header')</header>
 
     <main class="portal-main">
-        <div class="app">
+        <div class="app p-5">
 
             @yield('content')
 

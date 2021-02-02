@@ -2,15 +2,15 @@
 
 @section('content')
 
-<div class="portal-app-container">
+<div class="container-fluid">
     <div class="portal-title-container">
         <div class="portal-title">
             <p>Box Management</p>
         </div>
     </div>
-    <div class="portal-table-container">
+    <div class="portal-table-container p-0">
 
-        <div class="container">
+        <div class="py-3">
             <a role="button" data-toggle="modal" data-target="#createboxmodal"><div class="btn btn-primary btn-blue">
                 <p style="color: #fff;">Create box</p>
             </div></a>
@@ -22,27 +22,83 @@
         </div>
         @endif
 
-        <table class="portal-table sortable" id="box-table">
-            <tr>
-                <td><div class="table-element">Box No.</div></td>
-                <td><div class="table-element">Grade</div></td>
-                <td><div class="table-element">Manifacturer</div></td>
-                <td><div class="table-element">Network</div></td>
-                <td><div class="table-element">Boxed Devices</div></td>
-                <td><div class="table-element">Status</div></td>
-            </tr>
-            @foreach ($boxes as $box)
-            <tr id="{{$box->id}}" class="boxrow">
-                <td><div class="table-element">{{$box->tray_name}}</div></td>
-                <td><div class="table-element">{{$box->tray_grade}}</div></td>
-                <td><div class="table-element">{{$box->tray_brand}}</div></td>
-                <td><div class="table-element">{{$box->tray_network}}</div></td>
-                <td><div class="table-element">{{$box->number_of_devices}}/{{$box->max_number_of_devices}}</div></td>
-                <td><div class="table-element">{{$box->getBoxStatus()}}</div></td>
-            </tr>
-            @endforeach
-        </table>
+        <div class="d-flex">
+            <div class="col-md-7">
+                <table class="portal-table sortable" id="box-table">
+                    <tr>
+                        <td><div class="table-element">Box No.</div></td>
+                        <td><div class="table-element">Grade</div></td>
+                        <td><div class="table-element">Manifacturer</div></td>
+                        <td><div class="table-element">Network</div></td>
+                        <td><div class="table-element">Boxed Devices</div></td>
+                        <td><div class="table-element">Status</div></td>
+                        <td><div class="table-element">Open Box</div></td>
+                        <td><div class="table-element">Suspend Box</div></td>
+                        <td><div class="table-element">Complete Box</div></td>
+                    </tr>
+                    @foreach ($boxes as $box)
+                    <tr class="boxrowhover">
+                        <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_name}}</div></td>
+                        <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_grade}}</div></td>
+                        <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_brand}}</div></td>
+                        <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_network}}</div></td>
+                        <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->number_of_devices}}/{{$box->max_number_of_devices}}</div></td>
+                        <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->getBoxStatus()}}</div></td>
+                        <td class="py-0">@if($box->getBoxStatus()==='Open')<div class="table-element" >Box is open </div> @else<div id="{{$box->tray_name}}" class="table-element openbox"><i class="fa fa-folder-open" aria-hidden="true"></i></div>@endif</div></td>
+                        <td class="py-0">@if($box->getBoxStatus()==='Suspended')<div class="table-element openbox" >Box suspended</div> @else<div id="{{$box->tray_name}}" class="table-element suspendbox"><i class="fa fa-pause" aria-hidden="true"></div>@endif</i></div></td>
+                        <td class="py-0">@if($box->getBoxStatus()==='Complete')<div class="table-element openbox" >Box complete</div> @else<div id="{{$box->tray_name}}" class="table-element closebox"><i class="fa fa-check" aria-hidden="true"></div>@endif</i></div></td>
+                    </tr>
+                    @endforeach
+                </table>
+            </div>
 
+            <div class="col-md-5 boxtablehidden" id="boxtabledevices">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <form action="/portal/warehouse-management/box-management/addtobox" method="POST">
+                        
+                            @csrf
+                            <input type="hidden" name="boxid" value="" id="adddeviceboxid">
+
+                            <div class="form-group">
+                                <label for="adddevicetradeinid">Scan or type Trade-in ID:</label>
+                                <input class="form-control" type="text" name='tradeinid' id="adddevicetradeinid" required>
+                            </div>
+
+                            <input type="submit" class="btn btn-primary" id="adddevicebtn" value="Add device" disabled>
+                        </form>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center justify-content-center" id="alerts">
+
+                    </div>
+
+                </div>
+                <table class="portal-table sortable" id="boxdevices">
+                    <tr>
+                        <td><div class="table-element">Box No.</div></td>
+                        <td><div class="table-element">Barcode</div></td>
+                        <td><div class="table-element">Grade</div></td>
+                        <td><div class="table-element">IMEI</div></td>
+                        <td><div class="table-element">Manifacturer</div></td>
+                        <td><div class="table-element">Model</div></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-md-5 boxtablehidden" id="notopen">
+                <table class="portal-table sortable" id="notopenboxdevices">
+                    <tr>
+                        <td><div class="table-element">Box No.</div></td>
+                        <td><div class="table-element">Barcode</div></td>
+                        <td><div class="table-element">Grade</div></td>
+                        <td><div class="table-element">IMEI</div></td>
+                        <td><div class="table-element">Manifacturer</div></td>
+                        <td><div class="table-element">Model</div></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -100,8 +156,18 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="boxdevices">Please select Box devices:</label>
+                    <select class="form-control" name="boxdevices" id="boxdevices">
+                        <option selected value="" disabled>Please select box devices</option>
+                        <option value="1">Mobile Phones</option>
+                        <option value="2">Tablets</option>
+                        <option value="3">Smart watches</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label for="capacity">Please select capacity of the box:</label>
-                    <input type="number" class="form-control" name="capacity" id="capacity">
+                    <input type="number" class="form-control" name="capacity" id="capacity" required>
                 </div>
 
                 <div class="row">
@@ -130,21 +196,159 @@ $('#reference').on('change', function(){
 
 $('.boxrow').on('click', function(){
 
-    var boxid = $(this).attr('id');
-    console.log(boxid);
+    var boxname = $(this).attr('id');
+    
+    if(!$(this).parent().parent().hasClass('boxrowhoverselected')){
+        $('.boxrowhover').each(function(){
+            $(this).removeClass('boxrowhoverselected');
+        });
 
-    $.ajax({
+        $(this).parent().parent().toggleClass('boxrowhoverselected');
+
+        $('#boxtabledevices').removeClass('boxtablehidden');
+        $('#notopen').addClass('boxtablehidden');
+
+        $.ajax({
             url: "/portal/warehouse-management/getdevices",
             type:"GET",
             data:{
-                boxid:boxid,
+                boxname:boxname,
             },
             success:function(response){
-
+                console.log(response);
+                $('.tabledevices').remove();
+                $('#adddeviceboxid').prop('value', '');
+                $('#adddeviceboxid').prop('value', boxname);
+                $('#adddevicetradeinid').focus();
+                for(var i = 0; i<response.length; i++){
+                    $('#boxdevices').append('<tr class="tabledevices"><td><div class="table-element">' + boxname + '</div></td><td><div class="table-element">' + response[i].barcode + '</div></td><td><div class="table-element">' + response[i].bamboo_grade + '</div></td><td><div class="table-element">' + response[i].imei_number + '</div></td><td><div class="table-element">' + response[i].product_id + '</div></td><td><div class="table-element">' + response[i].model + '</div></td></tr>')
+                }
             },
         });
+    }
+    else{
+        $('.boxrowhover').each(function(){
+            $(this).removeClass('boxrowhoverselected');
+        });
+        $('#boxtabledevices').addClass('boxtablehidden');
+        $('#notopen').addClass('boxtablehidden');
+    }
 
+});
+
+$('.boxrownotopen').on('click', function(){
+    var boxname = $(this).attr('id');
+    
+    if(!$(this).parent().parent().hasClass('boxrowhoverselected')){
+        $('.boxrowhover').each(function(){
+            $(this).removeClass('boxrowhoverselected');
+        });
+
+        $(this).parent().parent().toggleClass('boxrowhoverselected');
+
+        $('#boxtabledevices').addClass('boxtablehidden');
+        $('#notopen').removeClass('boxtablehidden');
+
+        $.ajax({
+            url: "/portal/warehouse-management/getdevices",
+            type:"GET",
+            data:{
+                boxname:boxname,
+            },
+            success:function(response){
+                console.log(response);
+                $('.tabledevices').remove();
+                for(var i = 0; i<response.length; i++){
+                    $('#notopenboxdevices').append('<tr class="tabledevices"><td><div class="table-element">' + boxname + '</div></td><td><div class="table-element">' + response[i].barcode + '</div></td><td><div class="table-element">' + response[i].bamboo_grade + '</div></td><td><div class="table-element">' + response[i].imei_number + '</div></td><td><div class="table-element">' + response[i].product_id + '</div></td><td><div class="table-element">' + response[i].model + '</div></td></tr>')
+                }
+            },
+        });
+    }
+    else{
+        $('.boxrowhover').each(function(){
+            $(this).removeClass('boxrowhoverselected');
+        });
+        $('#boxtabledevices').addClass('boxtablehidden');
+        $('#notopen').addClass('boxtablehidden');
+    }
 })
+
+$('.openbox').on('click', function(){
+    var boxname = $(this).attr('id');
+
+    $.ajax({
+        url: "/portal/warehouse-management/box-management/openbox",
+        type:"POST",
+        data:{
+            _token:"{!! csrf_token() !!}",
+            boxname:boxname,
+        },
+        success:function(response){
+            location.reload();
+        },
+    });
+});
+
+$('.suspendbox').on('click', function(){
+    var boxname = $(this).attr('id');
+
+    $.ajax({
+        url: "/portal/warehouse-management/box-management/suspendbox",
+        type:"POST",
+        data:{
+            _token:"{!! csrf_token() !!}",
+            boxname:boxname,
+        },
+        success:function(response){
+            location.reload();
+        },
+    });
+});
+
+$('.closebox').on('click', function(){
+    var boxname = $(this).attr('id');
+
+    $.ajax({
+        url: "/portal/warehouse-management/box-management/completebox",
+        type:"POST",
+        data:{
+            _token:"{!! csrf_token() !!}",
+            boxname:boxname,
+        },
+        success:function(response){
+            location.reload();
+        },
+    });
+});
+
+$('#adddevicetradeinid').on('input', function(){
+
+    var boxname = $('#adddeviceboxid').attr('value');
+    var tradeinid = $('#adddevicetradeinid').val();
+
+    $.ajax({
+        url: "/portal/warehouse-management/box-management/checkboxstatusfordevice",
+        type:"POST",
+        data:{
+            _token:"{!! csrf_token() !!}",
+            boxname:boxname,
+            tradeinid:tradeinid,
+        },
+        success:function(data, textStatus, xhr){
+            console.log(data);
+            $('.appendedalert').remove();
+            $('#adddevicebtn').prop('disabled', false);
+            $('#alerts').append('<div class="appendedalert alert alert-success" role="alert">' + data + '</div>');
+            
+        },
+        error:function(data, textStatus, xhr){
+            $('.appendedalert').remove();
+            $('#adddevicebtn').prop('disabled', true);
+            $('#alerts').append('<div class="appendedalert alert alert-danger" role="alert">' + data.responseText + '</div>');
+        },
+    });
+
+});
 
 </script>
 
