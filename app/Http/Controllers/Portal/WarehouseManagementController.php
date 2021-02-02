@@ -196,4 +196,8 @@ class WarehouseManagementController extends Controller
 
     }
 
+    public function printBoxLabel(Request $request){
+        dd($request);
+    }
+
 }

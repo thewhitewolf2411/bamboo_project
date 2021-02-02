@@ -44,7 +44,7 @@
                         <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_network}}</div></td>
                         <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->number_of_devices}}/{{$box->max_number_of_devices}}</div></td>
                         <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->getBoxStatus()}}</div></td>
-                        <td class="py-0">@if($box->getBoxStatus()==='Open')<div class="table-element" >Box is open </div> @else<div id="{{$box->tray_name}}" class="table-element openbox"><i class="fa fa-folder-open" aria-hidden="true"></i></div>@endif</div></td>
+                        <td class="py-0">@if($box->getBoxStatus()==='Open')<div class="table-element" >Box open </div> @else<div id="{{$box->tray_name}}" class="table-element openbox"><i class="fa fa-folder-open" aria-hidden="true"></i></div>@endif</div></td>
                         <td class="py-0">@if($box->getBoxStatus()==='Suspended')<div class="table-element openbox" >Box suspended</div> @else<div id="{{$box->tray_name}}" class="table-element suspendbox"><i class="fa fa-pause" aria-hidden="true"></div>@endif</i></div></td>
                         <td class="py-0">@if($box->getBoxStatus()==='Complete')<div class="table-element openbox" >Box complete</div> @else<div id="{{$box->tray_name}}" class="table-element closebox"><i class="fa fa-check" aria-hidden="true"></div>@endif</i></div></td>
                     </tr>
@@ -68,9 +68,19 @@
 
                             <input type="submit" class="btn btn-primary" id="adddevicebtn" value="Add device" disabled>
                         </form>
-                    </div>
-                    <div class="col-md-6 d-flex align-items-center justify-content-center" id="alerts">
 
+                        <div id="alerts"></div>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-between align-items-center">
+                        <div class="col-md-4">
+                            <div id="printboxlabel" class="btn btn-primary btn-blue"><p style="color: #fff">Print box label</p></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div id="printboxmanifest" class="btn btn-primary btn-blue"><p style="color: #fff">Print box manifest</p></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div id="printboxsummary" class="btn btn-primary btn-blue"><p style="color: #fff">Print box summary</p></div>
+                        </div>
                     </div>
 
                 </div>
@@ -347,6 +357,18 @@ $('#adddevicetradeinid').on('input', function(){
             $('#alerts').append('<div class="appendedalert alert alert-danger" role="alert">' + data.responseText + '</div>');
         },
     });
+
+});
+
+$('#printboxlabel').on('click', function(){
+
+});
+
+$('#printboxmanifest').on('click', function(){
+
+});
+
+$('#printboxsummary').on('click', function(){
 
 });
 
