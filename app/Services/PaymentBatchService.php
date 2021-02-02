@@ -64,11 +64,14 @@ class PaymentBatchService {
 
         // create csv file
         $payment_rows = [];
+        $batches = collect();
 
         foreach($payment_batches_ids as $id){
 
             $payment_batch = PaymentBatch::find($id);
             $payment_batch_devices = PaymentBatchDevice::where('payment_batch_id', $payment_batch->id)->get();
+
+            $batches->push($payment_batch);
 
             foreach($payment_batch_devices as $payment_batch_device){
             
@@ -125,8 +128,10 @@ class PaymentBatchService {
         
         fclose($fp);
 
-        $payment_batch->csv_file = $file_path;
-        $payment_batch->save();
+        foreach($batches as $batch){
+            $batch->csv_file = $filename;
+            $batch->save();
+        }
 
         return $file_path;
     }

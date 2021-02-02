@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Eloquent;
+namespace App\Eloquent\Payment;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
 
 class PaymentBatch extends Model
 {
@@ -34,13 +35,6 @@ class PaymentBatch extends Model
         'reference'
     ];
 
-    public function getReference(){
-        if($this->payment_state === 1){
-            $date = Carbon::parse($this->created_at)->format('d-m-Y');
-            return 'SP-'.$date;
-        }
-    }
-
     public function devicesCount(){
         return PaymentBatchDevice::where('payment_batch_id', $this->id)->get()->count();
     }
@@ -55,5 +49,4 @@ class PaymentBatch extends Model
 
         return $tradeins;
     }
-
 }

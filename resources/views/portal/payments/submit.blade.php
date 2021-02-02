@@ -32,7 +32,6 @@
                     </div>
                 </div>
 
-
                 <div class="portal-table-container">
                     <div class="row">
                         <h5 class="text-center ml-auto">Payment batches</h5>
@@ -51,9 +50,9 @@
                                 <input id="selectAll" type="checkbox" class="form-check-input m-0" onclick="selectAll()"/>
                             </div></td>
                         </tr>
-                        @foreach($batches as $batch)
+                        @foreach($payment_batches as $batch)
                             <tr>
-                                <td><div class="table-element">{{$batch->getReference()}}</div></td>
+                                <td><div class="table-element">{{$batch->reference}}</div></td>
                                 <td><div class="table-element">{{$batch->arrive_at}}</div></td>
                                 <td><button type="button" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#batchDevices{{$batch->id}}">
                                     {{$batch->devicesCount()}}
@@ -75,6 +74,63 @@
                                             <div class="modal-body p-4">
                                                 <div class="p-4 row justify-content-center">
                                                     @foreach($batch->getDevices() as $tradein)
+                                                        <div class="card p-2 m-2 shadow-none col-3 border-secondary">
+                                                            <p class="m-0">Customer: </p> {!!$tradein->customer!!}
+                                                            <p class="m-0 mt-1">Device: </p> {!!$tradein->device!!}
+                                                            <p class="m-0 mt-1">Order price: </p> {!!$tradein->order_price !!} £
+                                                        </div>
+                                                    @endforeach      
+                                                </div>                               
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+                        @endforeach
+                    </table>
+
+                </div>
+
+
+                <div class="portal-table-container">
+                    <div class="row">
+                        <h5 class="text-center ml-auto mr-auto mb-4">Submitted batches</h5>
+                    </div>
+                    <table class="portal-table sortable" id="batches-table">
+                        <tr>
+                            <td><div class="table-element">Reference</div></td>
+                            <td><div class="table-element">Arrival Date</div></td>
+                            <td><div class="table-element">Devices</div></td>
+                            <td><div class="table-element"></div></td>
+                        </tr>
+                        @foreach($submitted_batches as $submitted_batch)
+                            <tr>
+                                <td><div class="table-element">{{$submitted_batch->reference}}</div></td>
+                                <td><div class="table-element">{{$submitted_batch->arrive_at}}</div></td>
+                                <td><button type="button" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#submittedBatchDevices{{$submitted_batch->id}}">
+                                    {{$submitted_batch->devicesCount()}}
+                                </button></td>
+                                <td><div class="table-element">
+                                    {{-- <input type="checkbox" onchange="checkExport()" id="{{$submitted_batch->id}}" name="selected_batches" value="{{$submitted_batch->id}}" class="table-element m-0"/> --}}
+                                    <a class="btn btn-green" href="{{ route('getBatchCSV' , ['batchid' =>$submitted_batch->id]) }}" target="_blank">Download</a>
+                                </div></td>
+
+                                 <!-- Modal -->
+                                <div class="modal fade" id="submittedBatchDevices{{$submitted_batch->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Batch devices</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true" style="color: black;">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body p-4">
+                                                <div class="p-4 row justify-content-center">
+                                                    @foreach($submitted_batch->getDevices() as $tradein)
                                                         <div class="card p-2 m-2 shadow-none col-3 border-secondary">
                                                             <p class="m-0">Customer: </p> {!!$tradein->customer!!}
                                                             <p class="m-0 mt-1">Device: </p> {!!$tradein->device!!}
@@ -143,7 +199,6 @@ function checkExport(){
             canSubmit = true;
         }
     });
-    console.log(canSubmit);
     if(canSubmit){
         if(button.classList.contains('disabled')){
             button.classList.remove('disabled');

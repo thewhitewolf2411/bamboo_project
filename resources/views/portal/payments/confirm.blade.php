@@ -10,11 +10,13 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 
     <title>Bamboo Recycle::Completed Payment Jobs</title>
 </head>
@@ -32,6 +34,46 @@
                     </div>
                 </div>
 
+                <div class="portal-table-container">
+                    <div class="row mb-4">
+                        <h5 class="text-center m-auto">Devices submitted for payment</h5>
+                        {{-- <form id="export-batches" class="mb-2 ml-auto mr-4" method="POST" action="{{route('exportBatchesCSV')}}">
+                            @csrf
+                            <input id="batches_ids" type="hidden" name="batches" value=""/>
+                            <button id="export-button" onclick="exportBatches()" class="btn btn-light disabled mb-2 ml-auto mr-0">Export</button>
+                        </form> --}}
+                    </div>
+                    <table class="portal-table sortable" id="batches-table">
+                        <tr>
+                            <td><div class="table-element">Device</div></td>
+                            <td><div class="table-element">Customer</div></td>
+                            <td><div class="table-element">Price</div></td>
+                            <td><div class="table-element">Mark as successful</div></td>
+                            <td><div class="table-element">Mark as failed</div></td>
+
+                        </tr>
+                        @foreach($devices as $batch_device)
+                            <tr>
+                                <td><div class="table-element">{!!$batch_device->model()!!}</div></td>
+                                <td><div class="table-element">{!!$batch_device->customer()!!}</div></td>
+                                <td><div class="table-element">{!!$batch_device->price()!!} £</div></td>
+                                <td><div class="table-element"><i class="fa fa-check" onclick="markAsSuccessful({!!$batch_device->id!!})"></i></div>
+                                <td><div class="table-element"><i class="fa fa-times" onclick="markAsFailed({!!$batch_device->id!!})"></i></div>
+
+
+                                {{-- <td><div class="table-element">{{$batch->arrive_at}}</div></td> --}}
+                                {{-- <td><button type="button" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#batchDevices{{$batch->id}}">
+                                    {{$batch->devicesCount()}}
+                                </button></td> --}}
+                                {{-- <td><div class="table-element">
+                                    <input type="checkbox" onchange="checkExport()" id="{{$batch->id}}" name="selected_batches" value="{{$batch->id}}" class="table-element m-0"/>
+                                </div></td> --}}
+                            </tr>
+                        @endforeach
+                    </table>
+
+                </div>
+
             </div>
         </div>
     </main>
@@ -41,14 +83,48 @@
 
 $(document).ready(function(){
 
-    var elem = $('.portal-links-container > .portal-header-element')[5];
-    
-    console.log(elem.children[0]);
-
-    elem.children[0].style.color = "#fff";
-    elem.children[0].children[0].style.opacity = 1;
-
 });
+
+
+function markAsSuccessful(batchdeviceid){
+    $.ajax({
+        type: "POST",
+        url: "{{ route('markAsSuccess')}}",
+        data: {
+            _token: '{{csrf_token()}}',
+            batchdeviceid: batchdeviceid
+        },
+        success: function(data, textStatus, xhr) {            
+            if(xhr.status === 200){
+                alert('Device payment marked as successful.');
+                window.location.reload(true);
+            }
+        },
+        fail: function(xhr, textStatus, errorThrown){
+            //
+        }
+    });
+}
+
+function markAsFailed(batchdeviceid){
+    $.ajax({
+        type: "POST",
+        url: "{{ route('markAsFailed')}}",
+        data: {
+            _token: '{{csrf_token()}}',
+            batchdeviceid: batchdeviceid
+        },
+        success: function(data, textStatus, xhr) {
+            if(xhr.status === 200){
+                alert('Device payment marked as failed.');
+                window.location.reload(true);
+            }
+        },
+        fail: function(xhr, textStatus, errorThrown){
+            //
+        }
+    });
+}
 
 </script>
 

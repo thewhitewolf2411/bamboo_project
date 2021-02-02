@@ -224,6 +224,7 @@ Route::post('/portal/testing/receive/deviceserialvisibility', 'Portal\TestingCon
 Route::post('/portal/testing/getDeviceData', 'Portal\TestingController@getDeviceData')->middleware('auth');
 
 // Route::post('/portal/testing/getDeviceNetworkData', 'Portal\TestingController@getDeviceNetworkData')->middleware('auth');
+
 //payments
 Route::group(['prefix' => 'portal/payments'], function () {
     Route::get('/', 'Portal\PaymentsController@showPaymentPage')->middleware('auth');
@@ -234,8 +235,12 @@ Route::group(['prefix' => 'portal/payments'], function () {
 
     Route::get('/submit', 'Portal\PaymentsController@showSubmitPayments')->middleware('auth');
     Route::post('/submit/export/csv', 'Portal\PaymentsController@exportCSV')->name('exportBatchesCSV')->middleware('auth');
+    Route::get('/submit/downloadcsv', 'Portal\PaymentsController@downloadCSV')->name('getBatchCSV')->middleware('auth');
 
     Route::get('/confirm', 'Portal\PaymentsController@showConfirmPayments')->middleware('auth');
+    Route::post('/confirm/marksuccess', 'Portal\PaymentsController@markAsSuccessful')->name('markAsSuccess')->middleware('auth');
+    Route::post('/confirm/markfailed', 'Portal\PaymentsController@markAsFailed')->name('markAsFailed')->middleware('auth');
+
     Route::get('/failed', 'Portal\PaymentsController@showFailedPayments')->middleware('auth');
 });
 

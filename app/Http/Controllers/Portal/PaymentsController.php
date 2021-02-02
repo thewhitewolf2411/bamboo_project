@@ -10,8 +10,8 @@ use App\Eloquent\Trolley;
 use App\Eloquent\TrolleyContent;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Eloquent\PaymentBatch;
-use App\Eloquent\PaymentBatchDevice;
+use App\Eloquent\Payment\PaymentBatch;
+use App\Eloquent\Payment\PaymentBatchDevice;
 use App\Services\BatchService;
 use App\Services\PaymentBatchService;
 use App\User;
@@ -191,11 +191,13 @@ class PaymentsController extends Controller
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        $payment_batches = PaymentBatch::where('payment_state', '<', '2')->get();
+        $payment_batches = PaymentBatch::where('payment_state', 1)->get();
+        $submited_batches = PaymentBatch::where('payment_state', 2)->get();
 
         return view('portal.payments.submit', [
-            'portalUser' => $portalUser,
-            'batches' => $payment_batches
+            'portalUser'        => $portalUser,
+            'payment_batches'   => $payment_batches,
+            'submitted_batches' => $submited_batches
         ]);
     }
 
@@ -211,7 +213,18 @@ class PaymentsController extends Controller
             $batchService = new PaymentBatchService();
             $file = $batchService->generateCSV($batch_ids);
 
-            return response()->download($file);
+            return redirect()->back();
+            // return response()->download($file);
+        }
+    }
+
+    /**
+     * Download batch csv.
+     */
+    public function downloadCSV(){
+        if(isset(request()->batchid)){
+            $payment_batch = PaymentBatch::findOrFail(request()->batchid);
+            return response()->download(storage_path().'\app\public\exports\batches' . $payment_batch->csv_file);
         }
     }
 
@@ -224,8 +237,59 @@ class PaymentsController extends Controller
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        $payment_batches = PaymentBatch::where("payment_state", ">", "1")->get();
+        $devices = collect();
+        foreach($payment_batches as $batch){
+            $payment_batch_devices = PaymentBatchDevice::where('payment_batch_id', $batch->id)->get();
+            foreach($payment_batch_devices as $device){
+                $devices->push($device);
+            }
+        }
 
-        return view('portal.payments.confirm')->with('portalUser', $portalUser);
+        return view('portal.payments.confirm', ['portalUser' => $portalUser, 'devices' => $devices]);
+        // return view('portal.payments.confirm')->with('portalUser', $portalUser);
+    }
+
+
+    /**
+     * Mark device payment as successfull.
+     * 
+     * @param Request $request
+     */
+    public function markAsSuccessful(Request $request){
+        if(isset($request->batchdeviceid)){
+            $batchdevice = PaymentBatchDevice::find($request->batchdeviceid);
+            if($batchdevice){
+                $tradein = Tradein::find($batchdevice->tradein_id);
+                // set tradein job state - paid
+                if($tradein){
+                    $tradein->job_state = '24';
+                    $tradein->save();
+                    return response('Success');
+                }
+            }
+            return response("No such device", 404);
+        }
+    }
+
+    /**
+     * Mark device payment as failed.
+     */
+    public function markAsFailed(Request $request){
+        if(isset($request->batchdeviceid)){
+            $batchdevice = PaymentBatchDevice::find($request->batchdeviceid);
+            if($batchdevice){
+                $tradein = Tradein::find($batchdevice->tradein_id);
+                // set tradein job state - failed
+                if($tradein){
+                    $tradein->job_state = '23';
+                    $tradein->save();
+                    // add device into failed payments module
+                    return response('Success');
+                }
+            }
+            return response("No such device", 404);
+        }
     }
 
 
