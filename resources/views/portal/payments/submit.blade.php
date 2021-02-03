@@ -97,7 +97,7 @@
 
                 <div class="portal-table-container">
                     <div class="row">
-                        <h5 class="text-center ml-auto mr-auto mb-4">Submitted batches</h5>
+                        <h5 class="text-center ml-auto mr-auto mb-4">Exported batches</h5>
                     </div>
                     <table class="portal-table sortable" id="batches-table">
                         <tr>

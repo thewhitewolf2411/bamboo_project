@@ -17,7 +17,7 @@ class CreatePaymentBatchDevicesTable extends Migration
             $table->id();
             $table->integer('payment_batch_id');
             $table->integer('tradein_id');
-            $table->integer('payment_state');
+            $table->integer('payment_state')->nullable(true)->default(null);
             $table->timestamps();
         });
     }

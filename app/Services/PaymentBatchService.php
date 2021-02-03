@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Eloquent\PaymentBatch;
-use App\Eloquent\PaymentBatchDevice;
+use App\Eloquent\Payment\PaymentBatch;
+use App\Eloquent\Payment\PaymentBatchDevice;
 use App\Eloquent\Tradein;
 use App\User;
 use Carbon\Carbon;

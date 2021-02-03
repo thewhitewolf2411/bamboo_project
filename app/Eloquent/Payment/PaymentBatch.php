@@ -2,6 +2,7 @@
 
 namespace App\Eloquent\Payment;
 
+use App\Eloquent\Tradein;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;

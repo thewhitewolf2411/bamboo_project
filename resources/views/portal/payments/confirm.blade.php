@@ -35,14 +35,19 @@
                 </div>
 
                 <div class="portal-table-container">
+
                     <div class="row mb-4">
                         <h5 class="text-center m-auto">Devices submitted for payment</h5>
-                        {{-- <form id="export-batches" class="mb-2 ml-auto mr-4" method="POST" action="{{route('exportBatchesCSV')}}">
-                            @csrf
-                            <input id="batches_ids" type="hidden" name="batches" value=""/>
-                            <button id="export-button" onclick="exportBatches()" class="btn btn-light disabled mb-2 ml-auto mr-0">Export</button>
-                        </form> --}}
+
+
+                        <form class="d-flex align-items-center ml-auto mr-auto text-center" action="/portal/payments/confirm" method="GET">              
+                            <label for="searchbatches">Search by Reference/Barcode/ID:</label>
+                            <input type="text" minlength="7" name="search" class="form-control mx-3 my-0" @if(isset(request()->search)) value="{{request()->search}}" @endif required>
+                            <button type="submit" class="btn btn-primary btn-blue">Search</button>
+                            @if(isset(request()->search)) <a class="btn" href="/portal/payments/confirm">Cancel</a> @endif
+                        </form>
                     </div>
+
                     <table class="portal-table sortable" id="batches-table">
                         <tr>
                             <td><div class="table-element">Device</div></td>
@@ -50,25 +55,33 @@
                             <td><div class="table-element">Price</div></td>
                             <td><div class="table-element">Mark as successful</div></td>
                             <td><div class="table-element">Mark as failed</div></td>
-
                         </tr>
                         @foreach($devices as $batch_device)
-                            <tr>
-                                <td><div class="table-element">{!!$batch_device->model()!!}</div></td>
-                                <td><div class="table-element">{!!$batch_device->customer()!!}</div></td>
-                                <td><div class="table-element">{!!$batch_device->price()!!} £</div></td>
-                                <td><div class="table-element"><i class="fa fa-check" onclick="markAsSuccessful({!!$batch_device->id!!})"></i></div>
-                                <td><div class="table-element"><i class="fa fa-times" onclick="markAsFailed({!!$batch_device->id!!})"></i></div>
-
-
-                                {{-- <td><div class="table-element">{{$batch->arrive_at}}</div></td> --}}
-                                {{-- <td><button type="button" class="btn btn-block btn-outline-primary" data-toggle="modal" data-target="#batchDevices{{$batch->id}}">
-                                    {{$batch->devicesCount()}}
-                                </button></td> --}}
-                                {{-- <td><div class="table-element">
-                                    <input type="checkbox" onchange="checkExport()" id="{{$batch->id}}" name="selected_batches" value="{{$batch->id}}" class="table-element m-0"/>
-                                </div></td> --}}
-                            </tr>
+                            @if($batch_device->payment_state === 1)
+                                <tr>
+                                    <td><div class="table-element">{!!$batch_device->model()!!}</div></td>
+                                    <td><div class="table-element">{!!$batch_device->customer()!!}</div></td>
+                                    <td><div class="table-element">{!!$batch_device->price()!!} £</div></td>
+                                    <td><div class="table-element"><i class="fa fa-check" style="color:limegreen !important; cursor: default;"></i> Payment Successful</div>
+                                    <td><div class="table-element"></div>
+                                </tr>
+                            @elseif($batch_device->payment_state === 2)
+                                <tr>
+                                    <td><div class="table-element">{!!$batch_device->model()!!}</div></td>
+                                    <td><div class="table-element">{!!$batch_device->customer()!!}</div></td>
+                                    <td><div class="table-element">{!!$batch_device->price()!!} £</div></td>
+                                    <td><div class="table-element"></div>
+                                    <td><div class="table-element"><i class="fa fa-times" style="color:darkred !important; cursor: default;"></i> Payment Failed</div>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td><div class="table-element">{!!$batch_device->model()!!}</div></td>
+                                    <td><div class="table-element">{!!$batch_device->customer()!!}</div></td>
+                                    <td><div class="table-element">{!!$batch_device->price()!!} £</div></td>
+                                    <td><div class="table-element"><i class="fa fa-check" onclick="markAsSuccessful({!!$batch_device->id!!})"></i></div>
+                                    <td><div class="table-element"><i class="fa fa-times" onclick="markAsFailed({!!$batch_device->id!!})"></i></div>    
+                                </tr>
+                            @endif
                         @endforeach
                     </table>
 

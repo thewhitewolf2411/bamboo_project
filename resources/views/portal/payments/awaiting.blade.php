@@ -21,7 +21,7 @@
     <title>Bamboo Recycle::Payments Awaiting Assignment</title>
 </head>
 
-<body class="portal-body" onclick="handle()">
+<body class="portal-body">
 
     <header>@include('portal.layouts.header')</header>
 
@@ -30,45 +30,47 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p class="pt-2 text-center">Awaiting Payments</p>
+                        <div class="row justify-content-around">
+                            <p class="pt-2 text-center">Awaiting Payments</p>
 
-                        
-                    </div>
-                </div>
-
-                <div class="m-auto w-75">
-                    <form class="d-flex align-items-center mx-5 text-center" action="/portal/payments/awaiting" method="GET">              
-                        <label for="searchtradeins">Search by Trade-in barcode / Trade-in ID:</label>
-                        <input type="text" minlength="7" name="search" class="form-control mx-3 my-0" @if(isset(request()->search)) value="{{request()->search}}" @endif required>
-                        <button type="submit" class="btn btn-primary btn-blue">Search</button>
-                        @if(isset(request()->search)) <a class="btn" href="/portal/payments/awaiting">Cancel</a> @endif
-                    </form>
-                    <div class="mt-4">
-                        <div class="btn btn-primary btn-blue w-25 m-auto" style="display:block;" data-toggle="modal" data-target="#batchModal">New Batch</div>
+                            <form class="d-flex align-items-center mx-5 text-center" action="/portal/payments/awaiting" method="GET">              
+                                <label for="searchtradeins">Search by Trade-in barcode / Trade-in ID:</label>
+                                <input type="text" minlength="7" name="search" class="form-control mx-3 my-0" @if(isset(request()->search)) value="{{request()->search}}" @endif required>
+                                <button type="submit" class="btn btn-primary btn-blue">Search</button>
+                                @if(isset(request()->search)) <a class="btn" href="/portal/payments/awaiting">Cancel</a> @endif
+                            </form>
+                        </div>
                     </div>
                 </div>
 
                 <div class="portal-table-container">
                     <h5 class="text-center">Devices</h5>
-                    <table class="portal-table sortable" id="categories-table">
+                    <table class="portal-table sortable" id="tradeins-table">
                         <tr>
-                            <td><div class="table-element">Trade-in Barcode</div></td>
-                            <td><div class="table-element">Model</div></td>
-                            <td><div class="table-element">IMEI</div></td>
-                            <td><div class="table-element">Bamboo Grade</div></td>
+                            <td><div class="table-element">Trade-in ID</div></td>
+                            <td><div class="table-element">Trade-in barcode number</div></td>
+                            <td><div class="table-element">Order date</div></td>
+                            <td><div class="table-element">Product</div></td>
+                            <td><div class="table-element">Price</div></td>
+                            <td><div class="table-element">Stock location</div></td>
+                            {{-- <td><div class="table-element">
+                                <input id="selectAll" type="checkbox" class="form-check-input m-0" onclick="selectAll()"/>
+                            </div></td> --}}
                         </tr>
                         @foreach($tradeins as $tradein)
-                        <tr>
+                        <tr id="tradein-{{$tradein->id}}">
                             <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                            <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
+                            <td><div class="table-element">{{$tradein->getOrderDate()}}</div></td>
                             <td><div class="table-element">{{$tradein->getProductName($tradein->id)}}</div></td>
-                            <td><div class="table-element">{{$tradein->imei_number}}</div></td>
-                            <td><div class="table-element">{{$tradein->bamboo_grade}}</div></td>
+                            <td><div class="table-element">{{$tradein->bamboo_price}} £</div></td>
+                            <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
                         </tr>
                         @endforeach
                     </table>
                 </div>
 
-                <div class="portal-table-container">
+                {{-- <div class="portal-table-container">
                     <h5 class="text-center">Trays</h5>
                     <table class="portal-table sortable" id="categories-table">
                         <tr>
@@ -106,10 +108,53 @@
                         </tr>
                         @endforeach
                     </table>
+                </div> --}}
+
+                <div class="m-auto w-75">
+                    <div class="mt-4 mb-4 row">
+                        <div class="btn btn-primary btn-blue w-25 mr-0 ml-auto" onclick="showSearch()" style="display:block;">New Batch</div>
+                        <div id="batchref" class="ml-0 mr-auto p-2 border">SP01</div>
+                    </div>
+                    <div class="row justify-content-center mt-2 hidden" id="scan-options">
+                        <div>
+                            <div id="trolly-option" class="btn btn-light" onclick="toggleScanOption('trolley')">TROLLY</div>
+                            <div id="tray-option" class="btn btn-light" onclick="toggleScanOption('tray')">TRAY</div>
+                            <div id="tradein-option" class="btn btn-light" onclick="toggleScanOption('barcode')">TRADEIN-BARCODE</div>
+                        </div>
+                    </div>
+                    <div class="row hidden" id="search-box">
+                        <div class="row ml-auto mr-auto">
+                            <div class="d-flex align-items-center mx-5 text-center p-4">              
+                                <input id="search_id" type="text" minlength="7" class="form-control mx-3 my-0" required>
+                                <div id="searchbtn" class="btn btn-primary btn-blue disabled" onclick="search()">Scan</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="batch-devices-box" class="mt-2 hidden">
+
+                    <div class="portal-table-container pt-1">
+                        <div id="search-results">
+                            <table class="portal-table sortable" id="search-results-table">
+                                <tr id="hr">
+                                    <td><div class="table-element">Trade-in barcode number</div></td>
+                                    <td><div class="table-element">Product</div></td>
+                                    <td><div class="table-element">Stock location</div></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" onclick="reset()" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button id="create-button" onclick="createBatch()" type="button" class="btn btn-primary disabled">Create batch</button>
+                    </div>
+
                 </div>
                 
                 <!-- Batch Modal -->
-                <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel" aria-hidden="true">
+                {{-- <div class="modal fade" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
 
@@ -119,36 +164,11 @@
                                 <span aria-hidden="true" style="color: black;">&times;</span>
                             </button>
                         </div>
-
-                        <div class="modal-body">
-                            <div class="d-flex align-items-center mx-5 text-center p-4">              
-                                <label for="search_id">Search by Trade-in barcode / Trade-in ID:</label>
-                                <input id="search_id" type="text" minlength="7" class="form-control mx-3 my-0" required>
-                                <div class="btn btn-primary btn-blue" onclick="search()">Search</div>
-                            </div>
-
-                            <div id="search-results">
-                                <table class="portal-table sortable" id="search-results-table">
-                                    <tr id="hr">
-                                        <td><div class="table-element">Trade-in Barcode</div></td>
-                                        <td><div class="table-element">Model</div></td>
-                                        <td><div class="table-element">IMEI</div></td>
-                                        <td><div class="table-element">Bamboo Price</div></td>
-                                        <td><div class="table-element">
-                                            <input id="selectAll" type="checkbox" class="form-check-input m-0" onclick="selectAll()"/>
-                                        </div></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
                         
-                        <div class="modal-footer">
-                            <button type="button" onclick="reset()" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button id="create-button" onclick="createBatch()" type="button" class="btn btn-primary disabled">Create batch</button>
-                        </div>
+                        
                     </div>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>
@@ -174,18 +194,91 @@ $(document).ready(function(){
 
 });
 
-function search(){
-    clearTable();
-    let searchterm = document.getElementById('search_id').value;
-    $.ajax({
-        type: "GET",
-        url: "awaiting/search/"+searchterm,
-        success: function(response) {
-            if(response.length > 0){
-                loadResults(response);
-            }
+var scanoption = null;
+var CAN_SCAN = null;
+
+
+function showSearch(){
+    let options = document.getElementById('scan-options');
+    let box = document.getElementById('search-box');
+    if(options.classList.contains('hidden')) options.classList.remove('hidden');
+    if(box.classList.contains('hidden')) box.classList.remove('hidden');
+}
+
+function toggleScanOption(option){
+    let element;
+    let trolleyoption = document.getElementById('trolly-option');
+    let trayoption = document.getElementById('tray-option');
+    let tradeinoption = document.getElementById('tradein-option');
+    let disable_buttons = [];
+    switch (option) {
+        case 'trolley':
+            element = trolleyoption;
+            disable_buttons.push(trayoption);
+            disable_buttons.push(tradeinoption);
+            break;
+        case 'tray':
+            element = trayoption;
+            disable_buttons.push(trolleyoption);
+            disable_buttons.push(tradeinoption);
+            break;
+        case 'barcode':
+            element = tradeinoption;
+            disable_buttons.push(trayoption);
+            disable_buttons.push(trolleyoption);
+            break;
+        default:
+
+            return;
+    }
+
+    disable_buttons.forEach(button => {
+        if(button.classList.contains('btn-blue')){
+            button.classList.add('btn-light');
+            button.classList.remove('btn-blue');
         }
     });
+
+    if(element.classList.contains('btn-light')){
+        element.classList.remove('btn-light');
+        element.classList.add('btn-blue');
+    }
+
+    if(trolleyoption.classList.contains('btn-blue') || trayoption.classList.contains('btn-blue') || tradeinoption.classList.contains('btn-blue')){
+        CAN_SCAN = true;
+    } else {
+        CAN_SCAN = false;
+    }
+
+
+    scanoption = option;
+
+    let searchbutton = document.getElementById('searchbtn');
+    if(!CAN_SCAN){
+        searchbutton.classList.add('disabled');
+    } else {
+        if(searchbutton.classList.contains('disabled')){
+            searchbutton.classList.remove('disabled');
+        }
+    }
+}
+
+function search(){
+    if(CAN_SCAN){
+        clearSearchTable();
+
+        let searchterm = document.getElementById('search_id').value;
+
+        $.ajax({
+            type: "GET",
+            url: "awaiting/batchsearch?term="+searchterm + "&option=" + scanoption,
+            success: function(response) {
+                loadResults(response);
+            }
+        });
+    } else {
+        alert('Please choose one scanning option.');
+    }
 }
 
 function createBatch(){
@@ -217,70 +310,63 @@ function createBatch(){
 
 function loadResults(results){
     let container = document.getElementById("search-results-table").childNodes[1];
+    var alldevices = document.getElementById("tradeins-table").childNodes[1].rows;
 
-    for (const [key, item] of Object.entries(results)) {
+    // fix duplicate devices when scanning (avoid re-adding same devices again)
 
-        let row = document.createElement('tr');
+    if(results.length > 0){
+        for (const [key, item] of Object.entries(results)) {
 
-        let td_barcode = document.createElement('td');
-        let barcode_div = document.createElement('div');
-        barcode_div.classList.add('table-element');
-        barcode_div.innerHTML = item.barcode;
-        td_barcode.appendChild(barcode_div);
+            // check for moving (removing duplicates) from other table
+            for (let index = 0; index < alldevices.length; index++) {
+                let device = alldevices[index];
+                if(device.id === 'tradein-'+item.id){
+                    alldevices[index].parentNode.removeChild(alldevices[index]);
+                }
+            }
 
-        let td_model = document.createElement('td');
-        let model_div = document.createElement('div');
-        model_div.classList.add('table-element');
-        model_div.innerHTML = item.model;
-        td_model.appendChild(model_div);
+            let row = document.createElement('tr');
 
-        let td_imei = document.createElement('td');
-        let imei_div = document.createElement('div');
-        imei_div.classList.add('table-element');
-        imei_div.innerHTML = item.imei_number;
-        td_imei.appendChild(imei_div);
+            let td_barcode = document.createElement('td');
+            let barcode_div = document.createElement('div');
+            barcode_div.classList.add('table-element');
+            barcode_div.innerHTML = item.barcode;
+            td_barcode.appendChild(barcode_div);
 
-        let td_bamboo_price = document.createElement('td');
-        let bamboo_price_div = document.createElement('div');
-        bamboo_price_div.classList.add('table-element');
-        bamboo_price_div.innerHTML = item.bamboo_price + " £";
-        td_bamboo_price.appendChild(bamboo_price_div);
+            let td_product = document.createElement('td');
+            let product_div = document.createElement('div');
+            product_div.classList.add('table-element');
+            product_div.innerHTML = item.product;
+            td_product.appendChild(product_div);
 
-        let td_select = document.createElement('td');
-        let select_div = document.createElement('div');
-        select_div.classList.add('table-element');
+            let td_stock_location = document.createElement('td');
+            let stock_location_div = document.createElement('div');
+            stock_location_div.classList.add('table-element');
+            stock_location_div.innerHTML = item.stock_location;
+            td_stock_location.appendChild(stock_location_div);
 
-        let checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.name = 'selected_devices';
-        checkbox.classList.add('form-check-input');
-        checkbox.classList.add('m-0');
-        checkbox.id = item.id;
-        checkbox.onchange = function(){checkSubmit()};
-        select_div.appendChild(checkbox);
+            row.appendChild(td_barcode);
+            row.appendChild(td_product);
+            row.appendChild(td_stock_location);
 
-        td_select.appendChild(select_div);
-
-        row.appendChild(td_barcode);
-        row.appendChild(td_model);
-        row.appendChild(td_imei);
-        row.appendChild(td_bamboo_price);
-        row.appendChild(td_select);
-
-        container.appendChild(row);
+            container.appendChild(row);
+        }
     }
+
+    
+
+    let results_table = document.getElementById('batch-devices-box');
+    if(results_table.classList.contains('hidden')){
+        results_table.classList.remove('hidden');
+    }
+
+    checkSubmit();
 }
 
 function checkSubmit(){
-    let items = document.getElementsByName('selected_devices');
+    let search_results_length = document.getElementById('search-results-table').rows.length;
     let button = document.getElementById('create-button');
-    var canSubmit = false;
-    items.forEach(element => {
-        if(element.checked){
-            canSubmit = true;
-        }
-    });
-    if(canSubmit){
+    if(search_results_length > 2){
         if(button.classList.contains('disabled')){
             button.classList.remove('disabled');
         }
@@ -289,6 +375,23 @@ function checkSubmit(){
             button.classList.add('disabled');
         }
     }
+    // let items = document.getElementsByName('selected_devices');
+    // let button = document.getElementById('create-button');
+    // var canSubmit = false;
+    // items.forEach(element => {
+    //     if(element.checked){
+    //         canSubmit = true;
+    //     }
+    // });
+    // if(canSubmit){
+    //     if(button.classList.contains('disabled')){
+    //         button.classList.remove('disabled');
+    //     }
+    // } else {
+    //     if(!button.classList.contains('disabled')){
+    //         button.classList.add('disabled');
+    //     }
+    // }
 }
 
 function reset(){
@@ -296,27 +399,12 @@ function reset(){
     document.getElementById('search_id').value = '';
 }
 
-function clearTable(){
+function clearSearchTable(){
     let table = document.getElementById("search-results-table");
     var rowCount = table.rows.length;
     for (var i = rowCount - 1; i > 0; i--) {
         table.deleteRow(i);
     }
-}
-
-function handle(){
-    let modal = document.getElementById('batchModal');
-    
-    setTimeout(function(){ 
-        if(modal.classList.contains('show')){
-            // modal opened
-            //document.getElementById('search_id').autofocus = true;
-        } else {
-            clearTable()
-            document.getElementById('search_id').value = '';
-        }
-    }, 200);
-
 }
 
 function selectAll(){

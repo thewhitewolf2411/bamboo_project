@@ -10,6 +10,7 @@ use App\Eloquent\Brand;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
 use App\User;
+use Carbon\Carbon;
 
 class Tradein extends Model
 {
@@ -38,6 +39,10 @@ class Tradein extends Model
             return SellingProduct::where('id', $this->correct_product_id)->first()->product_name;
         }
         return SellingProduct::where('id', $id)->first()->product_name;
+    }
+
+    public function getOrderDate(){
+        return $this->created_at->format('d.m.Y');
     }
 
     public function customer(){

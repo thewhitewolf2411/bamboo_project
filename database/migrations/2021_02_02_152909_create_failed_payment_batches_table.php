@@ -16,6 +16,7 @@ class CreateFailedPaymentBatchesTable extends Migration
         Schema::create('failed_payment_batches', function (Blueprint $table) {
             $table->id();
             $table->integer('payment_batch_id');
+            $table->integer('type');
             $table->timestamps();
         });
     }

@@ -15,7 +15,8 @@ class PaymentBatchDevice extends Model
     protected $table = 'payment_batch_devices';
 
     public $states = [
-        1 => 'Payment successfull',
+        null => 'Awaiting response',
+        1 => 'Payment successful',
         2 => 'Payment failed'
     ];
 

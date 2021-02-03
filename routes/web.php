@@ -231,6 +231,8 @@ Route::group(['prefix' => 'portal/payments'], function () {
 
     Route::get('/awaiting', 'Portal\PaymentsController@showAwaitingPayments')->middleware('auth');
     Route::get('/awaiting/search/{barcode}', 'Portal\PaymentsController@searchForTradeins')->middleware('auth');
+    Route::get('/awaiting/batchsearch', 'Portal\PaymentsController@searchForDevices')->middleware('auth');
+
     Route::post('/awaiting/createbatch', 'Portal\PaymentsController@createBatch')->middleware('auth');
 
     Route::get('/submit', 'Portal\PaymentsController@showSubmitPayments')->middleware('auth');

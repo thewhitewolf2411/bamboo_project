@@ -42,7 +42,7 @@ class PaymentsController extends Controller
         
         $trolleys = null;
         $trays = null;
-        
+
         // search by id / barcode
         if(isset(request()->search)){
 
@@ -129,6 +129,62 @@ class PaymentsController extends Controller
         }
     }
 
+    /**
+     * Search for trolley/tray devices or devices barcode.
+     */
+    public function searchForDevices(Request $request){
+        if(isset($request->term) && isset($request->option)){
+            $searchterm = $request->term;
+            $searchoption = $request->option;
+
+            //$devices = collect();
+            switch ($searchoption) {
+                case 'trolley':
+                    $trolleys = Trolley::where('trolley_name', 'LIKE', "%{$searchterm}%")->get()->pluck('id')->toArray();
+                    $trolley_content = TrolleyContent::whereIn('tray_id', $trolleys)->get()->pluck('tray_id')->toArray();
+                    $trays = TrayContent::whereIn('tray_id', $trolley_content)->get()->pluck('trade_in_id')->toArray();
+                    $tradeins = Tradein::whereIn('id', $trays)->get();
+                    if($tradeins->count() > 0){
+                        foreach($tradeins as $tradein){
+                            $tradein->product = $tradein->getProductName($tradein->id);
+                            $tradein->stock_location = $tradein->getTrayName($tradein->id);
+                        }
+                    }
+                    return $tradeins;
+                    break;
+
+                case 'tray':
+                    $trays = Tray::where('tray_name', 'LIKE', "%{$searchterm}%")->get()->pluck('id')->toArray();
+                    $tray_content = TrayContent::whereIn('tray_id', $trays)->get()->pluck('trade_in_id')->toArray();
+                    $tradeins = Tradein::whereIn('id', $tray_content)->get();
+                    if($tradeins->count() > 0){
+                        foreach($tradeins as $tradein){
+                            $tradein->product = $tradein->getProductName($tradein->id);
+                            $tradein->stock_location = $tradein->getTrayName($tradein->id);
+                        }
+                    }
+                    return $tradeins;
+                    break;
+
+                case 'barcode':
+                    $tradeins = Tradein::where('barcode', $searchterm)->orWhere('barcode_original', $searchterm)->get();
+                    if($tradeins->count() > 0){
+                        foreach($tradeins as $tradein){
+                            $tradein->product = $tradein->getProductName($tradein->id);
+                            $tradein->stock_location = $tradein->getTrayName($tradein->id);
+                        }
+                    }
+                    return $tradeins;
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
+            //dd($searchterm, $searchoption);
+        }
+    }
+
 
     /**
      * Create batch from selected devices.
@@ -165,6 +221,7 @@ class PaymentsController extends Controller
                         'payment_batch_id' => $payment_batch->id,
                         'tradein_id' => $tradein->id,
                         'device_price' => $tradein->bamboo_price,
+                        'payment_state' => null
                     ]);
 
                     $payment_batch_reference = $tradein->barcode_original;
@@ -237,12 +294,40 @@ class PaymentsController extends Controller
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        $payment_batches = PaymentBatch::where("payment_state", ">", "1")->get();
+
         $devices = collect();
-        foreach($payment_batches as $batch){
-            $payment_batch_devices = PaymentBatchDevice::where('payment_batch_id', $batch->id)->get();
-            foreach($payment_batch_devices as $device){
-                $devices->push($device);
+        if(isset(request()->search)){
+            $searchterm = request()->search;
+
+            // by reference
+            $payment_batches = PaymentBatch::where("payment_state", ">", "1")->where(function ($query) use($searchterm) {
+                $query->where('reference', 'LIKE', "%{$searchterm}%");
+            })->get()->pluck('id')->toArray();
+
+            $devices_by_reference = PaymentBatchDevice::whereIn('payment_batch_id', $payment_batches)->get();
+
+            // by tradein id || tradein barcode
+            $tradeins = Tradein::where(function($query) use($searchterm){
+                $query->where('job_state', '=', '24')->orWhere('job_state', '=', '23');
+                $query->where('barcode', 'LIKE', "%".$searchterm."%")->orWhere('barcode_original', 'LIKE', "%".$searchterm."%");
+            })->get()->pluck('id')->toArray();
+
+            $devices_by_tradein = PaymentBatchDevice::whereIn('tradein_id', $tradeins)->get();
+
+
+            if($devices_by_reference->count() < 1){
+                $devices = $devices_by_tradein;
+            } else {
+                $devices = $devices_by_reference;
+            }
+
+        } else {
+            $payment_batches = PaymentBatch::where("payment_state", ">", "1")->get();
+            foreach($payment_batches as $batch){
+                $payment_batch_devices = PaymentBatchDevice::where('payment_batch_id', $batch->id)->get();
+                foreach($payment_batch_devices as $device){
+                    $devices->push($device);
+                }
             }
         }
 
@@ -265,6 +350,8 @@ class PaymentsController extends Controller
                 if($tradein){
                     $tradein->job_state = '24';
                     $tradein->save();
+                    $batchdevice->payment_state = 1;
+                    $batchdevice->save();
                     return response('Success');
                 }
             }
@@ -284,6 +371,8 @@ class PaymentsController extends Controller
                 if($tradein){
                     $tradein->job_state = '23';
                     $tradein->save();
+                    $batchdevice->payment_state = 2;
+                    $batchdevice->save();
                     // add device into failed payments module
                     return response('Success');
                 }
