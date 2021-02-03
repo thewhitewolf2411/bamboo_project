@@ -307,7 +307,6 @@ Route::get('/portal/trolleys/delete/{id}', 'Portal\TrolleyController@deleteTroll
 Route::group(['prefix'=>'portal/warehouse-management'], function(){
     Route::get('/', 'Portal\WarehouseManagementController@showWarehouseManagementPage');
     Route::get('/box-management', 'Portal\WarehouseManagementController@showBoxManagementPage');
-    Route::get('/bay-overview', 'Portal\WarehouseManagementController@showBayOverviewPage');
     Route::get('/picking-despatch', 'Portal\WarehouseManagementController@showPickingDespatchPage');
     Route::get('/getdevices', 'Portal\WarehouseManagementController@getBoxDevices');
     Route::post('/box-management/createbox', 'Portal\WarehouseManagementController@createBox');
@@ -316,6 +315,15 @@ Route::group(['prefix'=>'portal/warehouse-management'], function(){
     Route::post('/box-management/suspendbox', 'Portal\WarehouseManagementController@suspendBox');
     Route::post('/box-management/completebox', 'Portal\WarehouseManagementController@completeBox');
     Route::post('/box-management/printboxlabel', 'Portal\WarehouseManagementController@printBoxLabel');
+    Route::post('/box-management/printboxmanifest', 'Portal\WarehouseManagementController@printBoxManifest');
+    Route::post('/box-management/printboxsummary', 'Portal\WarehouseManagementController@printBoxSummary');
     Route::post('/box-management/checkboxstatusfordevice', 'Portal\WarehouseManagementController@checkBoxStatusForDevice');
     
+    Route::get('/bay-overview', 'Portal\WarehouseManagementController@showBayOverviewPage');
+    Route::get('/bay-overview/create', 'Portal\WarehouseManagementController@showCreateBayPage');
+    Route::get('/bay-overview/bay', 'Portal\WarehouseManagementController@showBayPage');
+    Route::post('/bay-overview/createbay', 'Portal\WarehouseManagementController@createBay');
+    Route::post('/bay-overview/deletebay', 'Portal\WarehouseManagementController@deleteBay');
+    Route::post('/bay-overview/printbay', 'Portal\WarehouseManagementController@printBay');
+
 });

@@ -44,9 +44,9 @@
                         <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_network}}</div></td>
                         <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->number_of_devices}}/{{$box->max_number_of_devices}}</div></td>
                         <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->getBoxStatus()}}</div></td>
-                        <td class="py-0">@if($box->getBoxStatus()==='Open')<div class="table-element" >Box open </div> @else<div id="{{$box->tray_name}}" class="table-element openbox"><i class="fa fa-folder-open" aria-hidden="true"></i></div>@endif</div></td>
+                        <td class="py-0">@if($box->getBoxStatus()==='Open')<div class="table-element" >Box open </div> @elseif($box->getBoxStatus()==='Complete') <div class="table-element" >Box is closed </div> @else<div id="{{$box->tray_name}}" class="table-element openbox"><i class="fa fa-folder-open" aria-hidden="true"></i></div>@endif</div></td>
                         <td class="py-0">@if($box->getBoxStatus()==='Suspended')<div class="table-element openbox" >Box suspended</div> @else<div id="{{$box->tray_name}}" class="table-element suspendbox"><i class="fa fa-pause" aria-hidden="true"></div>@endif</i></div></td>
-                        <td class="py-0">@if($box->getBoxStatus()==='Complete')<div class="table-element openbox" >Box complete</div> @else<div id="{{$box->tray_name}}" class="table-element closebox"><i class="fa fa-check" aria-hidden="true"></div>@endif</i></div></td>
+                        <td class="py-0">@if($box->getBoxStatus()==='Complete')<div class="table-element openbox" >Box closed</div> @else<div id="{{$box->tray_name}}" class="table-element closebox"><i class="fa fa-check" aria-hidden="true"></div>@endif</i></div></td>
                     </tr>
                     @endforeach
                 </table>
@@ -73,13 +73,13 @@
                     </div>
                     <div class="col-md-6 d-flex justify-content-between align-items-center">
                         <div class="col-md-4">
-                            <div id="printboxlabel" class="btn btn-primary btn-blue"><p style="color: #fff">Print box label</p></div>
+                            <div class="btn btn-primary btn-blue printboxlabel"><p style="color: #fff">Print box label</p></div>
                         </div>
                         <div class="col-md-4">
-                            <div id="printboxmanifest" class="btn btn-primary btn-blue"><p style="color: #fff">Print box manifest</p></div>
+                            <div class="btn btn-primary btn-blue printboxmanifest"><p style="color: #fff">Print box manifest</p></div>
                         </div>
                         <div class="col-md-4">
-                            <div id="printboxsummary" class="btn btn-primary btn-blue"><p style="color: #fff">Print box summary</p></div>
+                            <div class="btn btn-primary btn-blue printboxsummary"><p style="color: #fff">Print box summary</p></div>
                         </div>
                     </div>
 
@@ -97,6 +97,20 @@
             </div>
 
             <div class="col-md-5 boxtablehidden" id="notopen">
+                <div class="row mb-5">
+                    <div class="col-md-12 d-flex justify-content-between align-items-center">
+                        <div class="col-md-4">
+                            <div id="" class="w-100 btn btn-primary btn-blue printboxlabel"><p style="color: #fff">Print box label</p></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div id="" class="w-100 btn btn-primary btn-blue printboxmanifest"><p style="color: #fff">Print box manifest</p></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div id="" class="w-100 btn btn-primary btn-blue printboxsummary"><p style="color: #fff">Print box summary</p></div>
+                        </div>
+                    </div>
+
+                </div>
                 <table class="portal-table sortable" id="notopenboxdevices">
                     <tr>
                         <td><div class="table-element">Box No.</div></td>
@@ -190,8 +204,46 @@
     </div>
 </div>
 
+@if(Session::has('addedtobox'))
+
 <script>
 
+    var boxname = "{{Session::get('addedtobox')}}";
+
+    $('.boxrowhover').each(function(){
+        $(this).removeClass('boxrowhoverselected');
+    });
+
+    $('.boxrow#' + boxname).parent().parent().toggleClass('boxrowhoverselected');
+
+    $('#boxtabledevices').removeClass('boxtablehidden');
+    $('#notopen').addClass('boxtablehidden');
+
+    $.ajax({
+        url: "/portal/warehouse-management/getdevices",
+        type:"GET",
+        data:{
+            boxname:boxname,
+        },
+        success:function(response){
+            $('.tabledevices').remove();
+            $('#adddeviceboxid').prop('value', '');
+            $('#adddeviceboxid').prop('value', boxname);
+            $('#adddevicetradeinid').focus();
+            for(var i = 0; i<response.length; i++){
+                $('#boxdevices').append('<tr class="tabledevices"><td><div class="table-element">' + boxname + '</div></td><td><div class="table-element">' + response[i].barcode + '</div></td><td><div class="table-element">' + response[i].bamboo_grade + '</div></td><td><div class="table-element">' + response[i].imei_number + '</div></td><td><div class="table-element">' + response[i].product_id + '</div></td><td><div class="table-element">' + response[i].model + '</div></td></tr>')
+            }
+        },
+    });
+    
+
+
+</script>
+
+@endif
+
+<script>
+/*
 $('#reference').on('change', function(){
 
     if(this.value == 'a' || this.value == 'b+' || this.value == 'b' || this.value == 'c'){
@@ -361,17 +413,63 @@ $('#adddevicetradeinid').on('input', function(){
 });
 
 $('#printboxlabel').on('click', function(){
+    var boxname = $('#adddeviceboxid').attr('value');
 
+    $.ajax({
+        url: "/portal/warehouse-management/box-management/printboxlabel",
+        type:"POST",
+        data:{
+            _token:"{!! csrf_token() !!}",
+            boxname:boxname,
+        },
+        success:function(data, textStatus, xhr){
+            window.open(data);
+        },
+        error:function(data, textStatus, xhr){
+            alert('Something went wrong. Please try again.');
+        },
+    });
 });
 
 $('#printboxmanifest').on('click', function(){
+    var boxname = $('#adddeviceboxid').attr('value');
 
+    $.ajax({
+        url: "/portal/warehouse-management/box-management/printboxmanifest",
+        type:"POST",
+        data:{
+            _token:"{!! csrf_token() !!}",
+            boxname:boxname,
+        },
+        success:function(data, textStatus, xhr){
+            window.open(data);
+        },
+        error:function(data, textStatus, xhr){
+            alert('Something went wrong. Please try again.');
+        },
+    });
 });
 
 $('#printboxsummary').on('click', function(){
+    var boxname = $('#adddeviceboxid').attr('value');
 
+    $.ajax({
+        url: "/portal/warehouse-management/box-management/printboxsummary",
+        type:"POST",
+        data:{
+            _token:"{!! csrf_token() !!}",
+            boxname:boxname,
+        },
+        success:function(data, textStatus, xhr){
+            window.open(data);
+        },
+        error:function(data, textStatus, xhr){
+            alert('Something went wrong. Please try again.');
+        },
+    });
 });
 
+*/
 </script>
 
 @endsection

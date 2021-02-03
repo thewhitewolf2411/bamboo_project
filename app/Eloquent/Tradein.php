@@ -10,6 +10,8 @@ use App\Eloquent\Brand;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
 use App\User;
+use DNS1D;
+use DNS2D;
 
 class Tradein extends Model
 {
@@ -245,6 +247,10 @@ class Tradein extends Model
             return false;
         }
         return true;
+    }
+
+    public function getIMEIBarcode(){
+        return DNS1D::getBarcodeHTML($this->imei_number, 'C128');
     }
 
     public function getDeviceStatus(){

@@ -80,7 +80,7 @@
                             <td><a href="/portal/trolleys/trolley?trolley_id_scan={{$trolley->trolley_name}}"><div class="table-element">{{$trolley->trolley_name}}</div></a></td>
                             <td><a href="/portal/trolleys/trolley?trolley_id_scan={{$trolley->trolley_name}}"><div class="table-element">{{$trolley->number_of_trays}}</div></a></td>
                             <td><a href="/portal/trolleys/trolley?trolley_id_scan={{$trolley->trolley_name}}"><div class="table-element">{{$trolley->getNumberOfDevices($trolley->id)}}</div></a></td>
-                            <td><div class="table-element"><a onclick="return confirm('Are you sure? This will remove trolley from system and remove all trays and devices from the system?')" href="/portal/trolleys/delete/{{$trolley->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete Trolley</p></div></a></div></td>
+                            <td><div class="table-element">@if($trolley->canBeDeleted())<a onclick="return confirm('Are you sure? This will remove trolley from system and remove all trays and devices from the system?')" href="/portal/trolleys/delete/{{$trolley->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Delete Trolley</p></div></a>@else This trolley cannot be deleted. @endif</div></td>
                             <td><div class="table-element"><a href="/portal/trolleys/trolley/printlabel/{{$trolley->trolley_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print Trolley Label</p></div></a></div></td>
                         </tr>
                         @endforeach
