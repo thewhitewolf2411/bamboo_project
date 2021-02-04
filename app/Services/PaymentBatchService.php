@@ -105,8 +105,8 @@ class PaymentBatchService {
     
                 array_push($payment_rows, $payment_row);
             }
-    
-            $payment_batch->payment_state = 2;
+            
+            $payment_batch->exported = true;
             $payment_batch->save();
 
         }

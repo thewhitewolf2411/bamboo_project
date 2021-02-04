@@ -23,8 +23,8 @@ class CreateTradeinTable extends Migration
             $table->string('customer_grade');
             $table->string('bamboo_grade')->nullable();
             $table->string('job_state');
-            $table->integer('order_price');
-            $table->integer('bamboo_price')->nullable();
+            $table->float('order_price');
+            $table->float('bamboo_price')->nullable();
             $table->string('customer_memory');
             $table->string('customer_network')->nullable(true)->default(null);
             $table->string('correct_memory')->nullable();

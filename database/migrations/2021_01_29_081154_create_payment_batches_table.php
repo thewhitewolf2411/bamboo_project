@@ -18,9 +18,11 @@ class CreatePaymentBatchesTable extends Migration
             $table->string('payment_type')->default('01');
             $table->bigInteger('sort_code_number');
             $table->date('arrive_at');
-            $table->integer('payment_state');
             $table->text('csv_file')->nullable(true)->default(null);
             $table->text('reference')->nullable(true)->default(null);
+            $table->integer('batch_type');
+            $table->boolean('exported')->default(false);
+            $table->boolean('failed')->nullable(true)->default(null);
             $table->timestamps();
         });
     }

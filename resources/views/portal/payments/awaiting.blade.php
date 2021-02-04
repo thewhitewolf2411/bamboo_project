@@ -113,7 +113,7 @@
                 <div class="m-auto w-75">
                     <div class="mt-4 mb-4 row">
                         <div class="btn btn-primary btn-blue w-25 mr-0 ml-auto" onclick="showSearch()" style="display:block;">New Batch</div>
-                        <div id="batchref" class="ml-0 mr-auto p-2 border">SP01</div>
+                        <div id="batchref" class="ml-0 mr-auto p-2 border">{!!$batch_ref!!}</div>
                     </div>
                     <div class="row justify-content-center mt-2 hidden" id="scan-options">
                         <div>
@@ -147,7 +147,7 @@
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" onclick="reset()" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <a href="/portal/payments/awaiting" class="btn btn-secondary">Cancel</a>
                         <button id="create-button" onclick="createBatch()" type="button" class="btn btn-primary disabled">Create batch</button>
                     </div>
 
@@ -203,6 +203,7 @@ function showSearch(){
     let box = document.getElementById('search-box');
     if(options.classList.contains('hidden')) options.classList.remove('hidden');
     if(box.classList.contains('hidden')) box.classList.remove('hidden');
+    clearSearchTable();
 }
 
 function toggleScanOption(option){
@@ -265,7 +266,7 @@ function toggleScanOption(option){
 
 function search(){
     if(CAN_SCAN){
-        clearSearchTable();
+        //clearSearchTable();
 
         let searchterm = document.getElementById('search_id').value;
 
@@ -284,11 +285,14 @@ function search(){
 function createBatch(){
     let button = document.getElementById('create-button');
     if(!button.classList.contains('disabled')){
-        let devices = document.querySelectorAll("input[name='selected_devices']:checked");
+        let devices = document.getElementById("search-results-table").childNodes[1].rows;
         let ids = [];
-        for (let i = 0; i < devices.length; i++) {
-            let item = devices[i];
-            ids.push(item.id);
+
+        for (let index = 0; index < devices.length; index++) {
+            let row = devices[index];        
+            if(row.id !== "hr"){
+                ids.push(row.id);
+            } 
         }
 
         $.ajax({
@@ -312,7 +316,6 @@ function loadResults(results){
     let container = document.getElementById("search-results-table").childNodes[1];
     var alldevices = document.getElementById("tradeins-table").childNodes[1].rows;
 
-    // fix duplicate devices when scanning (avoid re-adding same devices again)
 
     if(results.length > 0){
         for (const [key, item] of Object.entries(results)) {
@@ -325,31 +328,43 @@ function loadResults(results){
                 }
             }
 
-            let row = document.createElement('tr');
+            // avoid re-adding same devices again
+            let alreadyScanned = false;
+            for(let i = 0; i < container.rows.length; i++){
+                let scanned = container.rows[i];
+                if(parseInt(scanned.id) === parseInt(item.id)){
+                    alreadyScanned = true;
+                }
+            }
 
-            let td_barcode = document.createElement('td');
-            let barcode_div = document.createElement('div');
-            barcode_div.classList.add('table-element');
-            barcode_div.innerHTML = item.barcode;
-            td_barcode.appendChild(barcode_div);
+            if(!alreadyScanned){
+                let row = document.createElement('tr');
+                row.id = item.id;
 
-            let td_product = document.createElement('td');
-            let product_div = document.createElement('div');
-            product_div.classList.add('table-element');
-            product_div.innerHTML = item.product;
-            td_product.appendChild(product_div);
+                let td_barcode = document.createElement('td');
+                let barcode_div = document.createElement('div');
+                barcode_div.classList.add('table-element');
+                barcode_div.innerHTML = item.barcode;
+                td_barcode.appendChild(barcode_div);
 
-            let td_stock_location = document.createElement('td');
-            let stock_location_div = document.createElement('div');
-            stock_location_div.classList.add('table-element');
-            stock_location_div.innerHTML = item.stock_location;
-            td_stock_location.appendChild(stock_location_div);
+                let td_product = document.createElement('td');
+                let product_div = document.createElement('div');
+                product_div.classList.add('table-element');
+                product_div.innerHTML = item.product;
+                td_product.appendChild(product_div);
 
-            row.appendChild(td_barcode);
-            row.appendChild(td_product);
-            row.appendChild(td_stock_location);
+                let td_stock_location = document.createElement('td');
+                let stock_location_div = document.createElement('div');
+                stock_location_div.classList.add('table-element');
+                stock_location_div.innerHTML = item.stock_location;
+                td_stock_location.appendChild(stock_location_div);
 
-            container.appendChild(row);
+                row.appendChild(td_barcode);
+                row.appendChild(td_product);
+                row.appendChild(td_stock_location);
+
+                container.appendChild(row);
+            }
         }
     }
 
@@ -375,23 +390,6 @@ function checkSubmit(){
             button.classList.add('disabled');
         }
     }
-    // let items = document.getElementsByName('selected_devices');
-    // let button = document.getElementById('create-button');
-    // var canSubmit = false;
-    // items.forEach(element => {
-    //     if(element.checked){
-    //         canSubmit = true;
-    //     }
-    // });
-    // if(canSubmit){
-    //     if(button.classList.contains('disabled')){
-    //         button.classList.remove('disabled');
-    //     }
-    // } else {
-    //     if(!button.classList.contains('disabled')){
-    //         button.classList.add('disabled');
-    //     }
-    // }
 }
 
 function reset(){

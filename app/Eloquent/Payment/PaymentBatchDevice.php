@@ -28,10 +28,11 @@ class PaymentBatchDevice extends Model
     protected $fillable = [
         'payment_batch_id',
         'tradein_id',
-        'payment_state'
+        'payment_state',
+        'cheque_number'
     ];
 
-    public function model(){
+    public function product(){
         $tradein = Tradein::find($this->tradein_id);
         return $tradein->getProductName($tradein->id);
     }
@@ -44,5 +45,21 @@ class PaymentBatchDevice extends Model
     public function price(){
         $tradein = Tradein::find($this->tradein_id);
         return $tradein->bamboo_price;
+    }
+
+    public function batchReference(){
+        return PaymentBatch::find($this->payment_batch_id)->reference;
+    }
+
+    public function tradeinId(){
+        return Tradein::find($this->tradein_id)->barcode;
+    }
+
+    public function tradeinBarcode(){
+        return Tradein::find($this->tradein_id)->barcode_original;
+    }
+
+    public function orderDate(){
+        return PaymentBatch::find($this->payment_batch_id)->created_at->format('d/m/Y');
     }
 }

@@ -5,12 +5,14 @@
 <head>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/Sort.js') }}"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
@@ -32,6 +34,41 @@
                     </div>
                 </div>
 
+                <div class="portal-table-container">
+
+                    <table class="portal-table sortable" id="failed-batch-devices-table">
+                        <tr>
+                            <td><div class="table-element">Batch Reference</div></td>
+                            <td><div class="table-element">Tradein ID</div></td>
+                            <td><div class="table-element">Tradein Barcode number</div></td>
+                            <td><div class="table-element">Date Placed</div></td>
+                            <td><div class="table-element">Product</div></td>
+                            <td><div class="table-element">Price</div></td>
+                            <td><div class="table-element">Cheque number</div></td>
+                            <td class="sorttable_nosort"><div class="table-element">
+                                <input id="selectAll" type="checkbox" class="form-check-input m-0 w-auto" onclick="selectAll()"/>
+                            </div></td>
+                        </tr>
+                        @foreach($devices as $batch_device)
+                            <tr id="{{$batch_device->id}}">
+                                <td><div class="table-element">{!!$batch_device->batchReference()!!}</div></td>
+                                <td><div class="table-element">{!!$batch_device->tradeinId()!!}</div></td>
+                                <td><div class="table-element">{!!$batch_device->tradeinBarcode()!!}</div></td>
+                                <td><div class="table-element">{!!$batch_device->orderDate()!!}</div></td>
+                                <td><div class="table-element">{!!$batch_device->product()!!}</div></td>
+                                <td><div class="table-element">{!!$batch_device->price()!!} £</div></td>
+                                <td><div class="table-element">{!!$batch_device->cheque_number!!}</div></td>
+                                <td><div class="table-element">
+                                    <input type="checkbox" onchange="checkBatchDevices()" id="{{$batch_device->id}}" name="selected_devices" value="{{$batch_device->id}}" class="table-element m-0 w-auto"/>
+                                </div></td>
+                            </tr>
+                        @endforeach
+                    </table>
+
+                </div>
+
+            </div>
+
             </div>
         </div>
     </main>
@@ -41,14 +78,70 @@
 
 $(document).ready(function(){
 
-    var elem = $('.portal-links-container > .portal-header-element')[5];
+    // var elem = $('.portal-links-container > .portal-header-element')[5];
     
-    console.log(elem.children[0]);
+    // console.log(elem.children[0]);
 
-    elem.children[0].style.color = "#fff";
-    elem.children[0].children[0].style.opacity = 1;
+    // elem.children[0].style.color = "#fff";
+    // elem.children[0].children[0].style.opacity = 1;
 
 });
+
+var ANY_SELECTED = false;
+var ONE_SELECTED = false;
+
+function selectAll(){
+    let rowCount = document.getElementById("failed-batch-devices-table").rows.length;
+    let selectState = document.getElementById("selectAll").checked;
+    if(rowCount > 1){
+        let items = document.getElementsByName('selected_devices');
+
+        // check if select/deselect all
+        let anyChecked = false;
+        items.forEach(element => {
+            if(selectState){
+                element.checked = true;
+            } else {
+                element.checked = false;
+            }
+        });
+    }
+
+    checkBatchDevices();
+}
+
+function checkBatchDevices(){
+    let items = document.getElementsByName('selected_devices');
+    // let successbtn = document.getElementById('mark-success');
+    // let failbtn = document.getElementById('mark-failed');
+    // let exportbtn = document.getElementById('export');
+
+    ANY_SELECTED = false;
+    let total = 0;
+    items.forEach(element => {
+        if(element.checked){
+            ANY_SELECTED = true;
+            total++;
+        }
+    });
+
+    // if(ANY_SELECTED){
+    //     if(successbtn.classList.contains('disabled')){
+    //         successbtn.classList.remove('disabled');
+    //     }
+    //     if(failbtn.classList.contains('disabled')){
+    //         failbtn.classList.remove('disabled');
+    //     }
+    // } else {
+    //     if(!successbtn.classList.contains('disabled')){
+    //         successbtn.classList.add('disabled');
+    //     }
+    //     if(!failbtn.classList.contains('disabled')){
+    //         failbtn.classList.add('disabled');
+    //     }
+    // }
+}
+
 
 </script>
 

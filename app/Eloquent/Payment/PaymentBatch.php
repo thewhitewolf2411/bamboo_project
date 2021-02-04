@@ -23,6 +23,12 @@ class PaymentBatch extends Model
         4 => 'Failed payment'
     ];
 
+    public $batch_type = [
+        1 => 'submitted',
+        2 => 'failed payment',
+        3 => 'failed cheque',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -31,9 +37,11 @@ class PaymentBatch extends Model
     protected $fillable = [
         'sort_code_number',
         'arrive_at',
-        'payment_state',
         'csv_file',
-        'reference'
+        'reference',
+        'batch_type',
+        'exported',
+        'failed'
     ];
 
     public function devicesCount(){
@@ -49,5 +57,16 @@ class PaymentBatch extends Model
         }
 
         return $tradeins;
+    }
+
+    public function cost(){
+        $total = 0;
+        $tradein_ids = PaymentBatchDevice::where('payment_batch_id', $this->id)->get()->pluck('tradein_id');
+        $tradeins = Tradein::whereIn('id', $tradein_ids)->get();
+        foreach($tradeins as $tradein){
+            $total+=$tradein->bamboo_price;
+        }
+
+        return $total . " £";
     }
 }

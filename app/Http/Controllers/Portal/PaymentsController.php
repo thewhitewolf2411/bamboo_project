@@ -101,11 +101,18 @@ class PaymentsController extends Controller
             $tradeins = Tradein::where('job_state','=','10')->orWhere('job_state', '=', '16')->get();
         }
 
+        $num_ref = PaymentBatch::all()->count() + 1;
+        if(strlen($num_ref) < 2){
+            $num_ref = '0'.$num_ref;
+        }
+        $num_ref = "SP-".$num_ref;
+
         return view('portal.payments.awaiting', [
             'portalUser' => $portalUser,
             'trolleys' => $trolleys,
             'trays' => $trays,
-            'tradeins' => $tradeins
+            'tradeins' => $tradeins,
+            'batch_ref' => $num_ref
         ]);
     }
 
@@ -143,7 +150,9 @@ class PaymentsController extends Controller
                     $trolleys = Trolley::where('trolley_name', 'LIKE', "%{$searchterm}%")->get()->pluck('id')->toArray();
                     $trolley_content = TrolleyContent::whereIn('tray_id', $trolleys)->get()->pluck('tray_id')->toArray();
                     $trays = TrayContent::whereIn('tray_id', $trolley_content)->get()->pluck('trade_in_id')->toArray();
-                    $tradeins = Tradein::whereIn('id', $trays)->get();
+                    $tradeins = Tradein::whereIn('id', $trays)->where(function($query){
+                        $query->where('job_state', '=', '10');
+                    })->get();
                     if($tradeins->count() > 0){
                         foreach($tradeins as $tradein){
                             $tradein->product = $tradein->getProductName($tradein->id);
@@ -156,7 +165,9 @@ class PaymentsController extends Controller
                 case 'tray':
                     $trays = Tray::where('tray_name', 'LIKE', "%{$searchterm}%")->get()->pluck('id')->toArray();
                     $tray_content = TrayContent::whereIn('tray_id', $trays)->get()->pluck('trade_in_id')->toArray();
-                    $tradeins = Tradein::whereIn('id', $tray_content)->get();
+                    $tradeins = Tradein::whereIn('id', $tray_content)->where(function($query){
+                        $query->where('job_state', '=', '10');
+                    })->get();
                     if($tradeins->count() > 0){
                         foreach($tradeins as $tradein){
                             $tradein->product = $tradein->getProductName($tradein->id);
@@ -167,7 +178,11 @@ class PaymentsController extends Controller
                     break;
 
                 case 'barcode':
-                    $tradeins = Tradein::where('barcode', $searchterm)->orWhere('barcode_original', $searchterm)->get();
+                    $tradeins = Tradein::where('barcode', $searchterm)->orWhere('barcode_original', $searchterm)
+                        ->where(function($query){
+                            $query->where('job_state', '=', '10');
+                        })->get();
+
                     if($tradeins->count() > 0){
                         foreach($tradeins as $tradein){
                             $tradein->product = $tradein->getProductName($tradein->id);
@@ -192,22 +207,30 @@ class PaymentsController extends Controller
     public function createBatch(Request $request){
         if(isset($request->ids)){
 
+            // auto batch reference
+            $num_ref = PaymentBatch::all()->count() + 1;
+            if(strlen($num_ref) < 2){
+                $num_ref = '0'.$num_ref;
+            }
+            $num_ref = "SP-".$num_ref;
+
             $ids = $request->ids;
             $tradeins = Tradein::whereIn('id', $ids)->get();
             
             // create payment batch from tradein
             $payment_batch = new PaymentBatch([
-                // 'payment_type' - default 01 for now (domestic)
-                'sort_code_number' => 15100031806542,       // bamboo account
-                'arrive_at' => Carbon::now()->addDay(),  //Carbon::now()->addDay()->format('dmY'),
+                // 'payment_type' => 1                         default 01 for now (domestic)
+                'sort_code_number' => 15100031806542,           // bamboo account
+                'arrive_at' => Carbon::now()->addDay(),     //Carbon::now()->addDay()->format('dmY'),
                 'payment_state' => 1,
                 'csv_file' => null,
-                'reference' => null
+                'reference' => null,
+                'batch_type' => 1                           // submitted payment batch type,
             ]);
+
             $payment_batch->save();
 
             $payment_batch_devices = collect();
-            $payment_batch_reference = null;
 
             foreach($tradeins as $tradein){
                 
@@ -221,17 +244,15 @@ class PaymentsController extends Controller
                         'payment_batch_id' => $payment_batch->id,
                         'tradein_id' => $tradein->id,
                         'device_price' => $tradein->bamboo_price,
-                        'payment_state' => null
+                        'batch_state' => null
                     ]);
-
-                    $payment_batch_reference = $tradein->barcode_original;
 
                     $payment_batch_device->save();
                     $payment_batch_devices->push($payment_batch_device);
                 }
             }
 
-            $payment_batch->reference = "INVOICE " . $payment_batch_reference;
+            $payment_batch->reference = $num_ref;
             $payment_batch->save();
 
             return response('OK', 200);
@@ -248,12 +269,10 @@ class PaymentsController extends Controller
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        $payment_batches = PaymentBatch::where('payment_state', 1)->get();
-        $submited_batches = PaymentBatch::where('payment_state', 2)->get();
+        $submited_batches = PaymentBatch::where('batch_type', 1)->where('exported', 0)->get();
 
         return view('portal.payments.submit', [
             'portalUser'        => $portalUser,
-            'payment_batches'   => $payment_batches,
             'submitted_batches' => $submited_batches
         ]);
     }
@@ -266,12 +285,11 @@ class PaymentsController extends Controller
         if(isset($request->batches)){
 
             // generate payment batch csv file
-            $batch_ids = explode(',', request()->batches);
+            $batch_ids = request()->batches;
             $batchService = new PaymentBatchService();
             $file = $batchService->generateCSV($batch_ids);
 
-            return redirect()->back();
-            // return response()->download($file);
+            return response($batch_ids[0], 200);
         }
     }
 
@@ -279,8 +297,13 @@ class PaymentsController extends Controller
      * Download batch csv.
      */
     public function downloadCSV(){
-        if(isset(request()->batchid)){
-            $payment_batch = PaymentBatch::findOrFail(request()->batchid);
+        if(isset(request()->batch_id)){
+            $payment_batch = PaymentBatch::findOrFail(request()->batch_id);
+            return response()->download(storage_path().'\app\public\exports\batches' . $payment_batch->csv_file);
+        }
+        if(isset(request()->batchdevice_id)){
+            $device = PaymentBatchDevice::find(request()->batchdevice_id);
+            $payment_batch = PaymentBatch::findOrFail($device->payment_batch_id);
             return response()->download(storage_path().'\app\public\exports\batches' . $payment_batch->csv_file);
         }
     }
@@ -300,7 +323,7 @@ class PaymentsController extends Controller
             $searchterm = request()->search;
 
             // by reference
-            $payment_batches = PaymentBatch::where("payment_state", ">", "1")->where(function ($query) use($searchterm) {
+            $payment_batches = PaymentBatch::where("exported", true)->where(function ($query) use($searchterm) {
                 $query->where('reference', 'LIKE', "%{$searchterm}%");
             })->get()->pluck('id')->toArray();
 
@@ -308,8 +331,8 @@ class PaymentsController extends Controller
 
             // by tradein id || tradein barcode
             $tradeins = Tradein::where(function($query) use($searchterm){
-                $query->where('job_state', '=', '24')->orWhere('job_state', '=', '23');
                 $query->where('barcode', 'LIKE', "%".$searchterm."%")->orWhere('barcode_original', 'LIKE', "%".$searchterm."%");
+                $query->where('job_state', '=', '24')->orWhere('job_state', '=', '23');
             })->get()->pluck('id')->toArray();
 
             $devices_by_tradein = PaymentBatchDevice::whereIn('tradein_id', $tradeins)->get();
@@ -322,7 +345,7 @@ class PaymentsController extends Controller
             }
 
         } else {
-            $payment_batches = PaymentBatch::where("payment_state", ">", "1")->get();
+            $payment_batches = PaymentBatch::where("exported", true)->where('failed', null)->get();
             foreach($payment_batches as $batch){
                 $payment_batch_devices = PaymentBatchDevice::where('payment_batch_id', $batch->id)->get();
                 foreach($payment_batch_devices as $device){
@@ -342,17 +365,20 @@ class PaymentsController extends Controller
      * @param Request $request
      */
     public function markAsSuccessful(Request $request){
-        if(isset($request->batchdeviceid)){
-            $batchdevice = PaymentBatchDevice::find($request->batchdeviceid);
-            if($batchdevice){
-                $tradein = Tradein::find($batchdevice->tradein_id);
-                // set tradein job state - paid
-                if($tradein){
-                    $tradein->job_state = '24';
-                    $tradein->save();
-                    $batchdevice->payment_state = 1;
-                    $batchdevice->save();
-                    return response('Success');
+        if(isset($request->ids)){
+            $batchdevices = PaymentBatchDevice::whereIn('id', $request->ids)->get();
+            if($batchdevices->count() > 0){
+                foreach($batchdevices as $batchdevice){
+                    $tradein = Tradein::find($batchdevice->tradein_id);
+                    // set tradein job state - paid
+                    // customer status paid
+                    if($tradein){
+                        $tradein->job_state = '24';
+                        $tradein->save();
+                        $batchdevice->payment_state = 1;
+                        $batchdevice->save();
+                        return response('Success');
+                    }
                 }
             }
             return response("No such device", 404);
@@ -363,18 +389,28 @@ class PaymentsController extends Controller
      * Mark device payment as failed.
      */
     public function markAsFailed(Request $request){
-        if(isset($request->batchdeviceid)){
-            $batchdevice = PaymentBatchDevice::find($request->batchdeviceid);
-            if($batchdevice){
-                $tradein = Tradein::find($batchdevice->tradein_id);
-                // set tradein job state - failed
-                if($tradein){
-                    $tradein->job_state = '23';
-                    $tradein->save();
-                    $batchdevice->payment_state = 2;
-                    $batchdevice->save();
-                    // add device into failed payments module
-                    return response('Success');
+        if(isset($request->ids)){
+            $batchdevices = PaymentBatchDevice::whereIn('id', $request->ids)->get();
+
+            if($batchdevices->count() > 0){
+
+                // mark batch as failed
+                $payment_batch = PaymentBatch::find($batchdevices[0]->payment_batch_id);
+                $payment_batch->failed = true;
+                $payment_batch->save();
+
+                foreach($batchdevices as $batchdevice){
+                    $tradein = Tradein::find($batchdevice->tradein_id);
+                    // set tradein job state - failed
+                    if($tradein){
+                        $tradein->job_state = '23';
+                        $tradein->save();
+                        $batchdevice->payment_state = 2;
+                        $batchdevice->save();
+                        // add device into failed payments module
+                        // send payment failed email
+                        return response('Success');
+                    }
                 }
             }
             return response("No such device", 404);
@@ -390,7 +426,16 @@ class PaymentsController extends Controller
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        $batches = PaymentBatch::where('failed', true)->get();
+        $devices = collect();
 
-        return view('portal.payments.failed')->with('portalUser', $portalUser);
+        foreach($batches as $batch){
+            $batch_devices = PaymentBatchDevice::where('payment_batch_id', $batch->id)->get();
+            foreach($batch_devices as $bd){
+                $devices->push($bd);
+            }
+        }
+
+        return view('portal.payments.failed', ['portalUser' => $portalUser, 'devices' => $devices]);
     }
 }
