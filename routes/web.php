@@ -325,5 +325,6 @@ Route::group(['prefix'=>'portal/warehouse-management'], function(){
     Route::post('/bay-overview/createbay', 'Portal\WarehouseManagementController@createBay');
     Route::post('/bay-overview/deletebay', 'Portal\WarehouseManagementController@deleteBay');
     Route::post('/bay-overview/printbay', 'Portal\WarehouseManagementController@printBay');
-
+    Route::post('/bay-overview/bay/checkallocatebox', 'Portal\WarehouseManagementController@checkAllocateBox');
+    Route::post('/bay-overview/bay/allocatebox', 'Portal\WarehouseManagementController@allocateBox');
 });

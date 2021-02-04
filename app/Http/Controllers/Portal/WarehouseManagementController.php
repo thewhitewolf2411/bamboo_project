@@ -102,6 +102,63 @@ class WarehouseManagementController extends Controller
         return response("/pdf/baylabels/bay-" . $bay->trolley_name . ".pdf", 200);
     }
 
+    public function checkAllocateBox(Request $request){
+
+        $box = Tray::where('tray_name', $request->boxname)->first();
+        $bay = Trolley::where('trolley_name', $request->bayname)->first();
+
+        if($box === null){
+            return response('There is no box with this id.', 404);
+        }
+
+        if($box->tray_type !== 'Bo'){
+            return response('This is a tray, and cannot be added.', 404);
+        }
+
+        if($box->status !== 3){
+            return response('This box is not marked as complete.', 404);
+        }
+
+        if($box->trolley_id !== null){
+            if($box->trolley_id === $bay->id){
+                return response('This box is already in this bay.', 404);
+            }
+        }
+
+        return response([$box->tray_name, $box->number_of_devices], 200);
+    }
+
+    public function allocateBox(Request $request){
+
+        $boxesids = $request->all();
+        array_shift($boxesids);
+
+        $boxesids = array_values($boxesids);
+
+        $bayid = array_pop($boxesids);
+
+        $bay = Trolley::where('trolley_name', $bayid)->first();
+
+        foreach($boxesids as $boxid){
+            $box = Tray::where('tray_name', $boxid)->first();
+
+            if($box->trolley_id !== null){
+                $oldBay = Trolley::where('id', $box->trolley_id)->first();
+                $oldBay->number_of_trays = $oldBay->number_of_trays - 1;
+                $oldBay->save();
+            }
+
+            $box->trolley_id = $bay->id;
+            $box->save();
+    
+            $bay->number_of_trays = $bay->number_of_trays + 1;
+            $bay->save();
+        }
+
+
+        return redirect()->back()->with(['success'=>'You have succesfully added boxes to this bay.']);
+    }
+
     public function showPickingDespatchPage(){
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
