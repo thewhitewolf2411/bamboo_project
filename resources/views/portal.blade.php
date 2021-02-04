@@ -98,16 +98,6 @@
     
                             @endif
 
-                            @if($portalUser->box_management)
-
-                            <a href="/portal/boxes" class="col-2 my-2">
-                                <div class="portal-content-element">
-                                     <p>Box Management </p>
-                                </div>
-                            </a>
-    
-                            @endif
-
                             @if($portalUser->quarantine_managment)
 
                             <a href="/portal/quarantine" class="col-2 my-2">

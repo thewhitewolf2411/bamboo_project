@@ -307,7 +307,7 @@ Route::get('/portal/trolleys/delete/{id}', 'Portal\TrolleyController@deleteTroll
 Route::group(['prefix'=>'portal/warehouse-management'], function(){
     Route::get('/', 'Portal\WarehouseManagementController@showWarehouseManagementPage');
     Route::get('/box-management', 'Portal\WarehouseManagementController@showBoxManagementPage');
-    Route::get('/picking-despatch', 'Portal\WarehouseManagementController@showPickingDespatchPage');
+    
     Route::get('/getdevices', 'Portal\WarehouseManagementController@getBoxDevices');
     Route::post('/box-management/createbox', 'Portal\WarehouseManagementController@createBox');
     Route::post('/box-management/addtobox', 'Portal\WarehouseManagementController@addDeviceToBox');
@@ -327,4 +327,6 @@ Route::group(['prefix'=>'portal/warehouse-management'], function(){
     Route::post('/bay-overview/printbay', 'Portal\WarehouseManagementController@printBay');
     Route::post('/bay-overview/bay/checkallocatebox', 'Portal\WarehouseManagementController@checkAllocateBox');
     Route::post('/bay-overview/bay/allocatebox', 'Portal\WarehouseManagementController@allocateBox');
+
+    Route::get('/picking-despatch', 'Portal\WarehouseManagementController@showPickingDespatchPage');
 });

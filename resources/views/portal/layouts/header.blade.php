@@ -19,7 +19,6 @@
                     @if($portalUser->device_testing)<a class="dropdown-item" href="/portal/testing/find">Device Testing</a>@endif
                     @if($portalUser->trolley_management)<a class="dropdown-item" href="/portal/trolleys">Trolley Management</a>@endif
                     @if($portalUser->trays_managment)<a class="dropdown-item" href="/portal/trays">Trays Management</a>@endif
-                    @if($portalUser->box_management)<a class="dropdown-item" href="/portal/boxes">Box Management</a>@endif
                     @if($portalUser->quarantine_managment)<a class="dropdown-item" href="/portal/quarantine">Quarantine Management</a>@endif
                     @if($portalUser->warehouse_management)<a class="dropdown-item" href="/portal/warehouse-management">Warehouse Management</a>@endif
                 </div>

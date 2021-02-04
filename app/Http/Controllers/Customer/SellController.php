@@ -24,8 +24,7 @@ use Session;
 use DNS1D;
 use DNS2D;
 use PDF;
-use Klaviyo\Klaviyo as Klaviyo;
-use Klaviyo\Model\EventModel as KlaviyoEvent;
+use App\Services\KlaviyoEmail;
 
 class SellController extends Controller
 {
@@ -225,33 +224,19 @@ class SellController extends Controller
 
                     if($labelstatus == "2"){
                         $tradein->job_state = 2;
+
+                        $klaviyoEmail = new KlaviyoEmail();
+                        $klaviyoEmail->ItemSoldPrintOwnLabel(Auth::user(), $tradein);
+                    }
+                    else{
+                        $klaviyoEmail = new KlaviyoEmail();
+                        $klaviyoEmail->ItemSoldTradePack(Auth::user(), $tradein);
                     }
 
                     $tradein->save();
                     $tradeinexp = $tradein;
 
                     $item->delete();
-
-                    $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
-                    $event = new KlaviyoEvent(
-                        array(
-                            'event' => 'Item Sold',
-                            'customer_properties' => array(
-                                '$email' => Auth::user()->email,
-                                '$name' => Auth::user()->first_name,
-                                '$last_name' => Auth::user()->last_name,
-                                '$birthdate' => Auth::user()->birthdate,
-                                '$newsletter' => Auth::user()->email,
-                                '$products' => $name,
-                                '$price'=> $price
-                            ),
-                            'properties' => array(
-                                'Item Sold' => True
-                            )
-                        )
-                    );
-            
-                    $client->publicAPI->track( $event );  
 
                 }
             }
@@ -287,27 +272,6 @@ class SellController extends Controller
             $tradeout->save();
 
             $item->delete();
-    
-            $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
-            $event = new KlaviyoEvent(
-                array(
-                    'event' => 'Item Bought',
-                    'customer_properties' => array(
-                        '$email' => Auth::user()->email,
-                        '$name' => Auth::user()->first_name,
-                        '$last_name' => Auth::user()->last_name,
-                        '$birthdate' => Auth::user()->birthdate,
-                        '$newsletter' => Auth::user()->email,
-                        '$products' => $tradeout->getDeviceName($tradeout->product_id),
-                        '$price'=> $request->price
-                    ),
-                    'properties' => array(
-                        'Item Bought' => True
-                    )
-                )
-            );
-    
-            $client->publicAPI->track( $event );  
         }
 
         return redirect()->back()->with('success', 'Your shoping has been completed.');

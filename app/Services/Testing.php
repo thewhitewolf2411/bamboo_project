@@ -8,15 +8,16 @@ use App\Eloquent\TrayContent;
 use App\Eloquent\SellingProduct;
 use App\Eloquent\ProductInformation;
 use App\Eloquent\ProductNetworks;
+use App\User;
 
 class Testing{
 
     public function testDevice(Request $request){
 
-
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         $tradein->bamboo_grade = $request->bamboo_final_grade;
         $product = SellingProduct::where('id', $tradein->product_id)->first();
+        $user = User::where('id', $tradein->user_id)->first();
 
         if($tradein->job_state === "14" || $tradein->hasDeviceBeenTestedSecondTime()){
 
@@ -24,14 +25,22 @@ class Testing{
                 
                 $tradein->job_state = "15c";
                 $tradein->save();
+
+                $klaviyoemail = new KlaviyoEmail();
+                $klaviyoemail->pinLocked($user, $tradein);
             }
             else{
                 if($request->fimp_or_google_lock === "true"){
                     if($tradein->getBrandId($tradein->product_id) === 1){
                         $tradein->job_state = "15a";
+
+                        $klaviyoemail = new KlaviyoEmail();
+                        $klaviyoemail->FIMP($user, $tradein);
                     }
                     else{
                         $tradein->job_state = "15b";
+                        $klaviyoemail = new KlaviyoEmail();
+                        $klaviyoemail->googleLocked($user, $tradein);
                     }
                     $tradein->save();
                 }
@@ -183,14 +192,21 @@ class Testing{
                 
                 $tradein->job_state = "11c";
                 $tradein->save();
+
+                $klaviyomail = new KlaviyoEmail();
+                $klaviyomail->pinLocked($user, $tradein);
             }
             else{
                 if($request->fimp_or_google_lock === "true"){
                     if($tradein->getBrandId($tradein->product_id) === 1){
                         $tradein->job_state = "11a";
+                        $klaviyomail = new KlaviyoEmail();
+                        $klaviyomail->FIMP($user, $tradein);
                     }
                     else{
                         $tradein->job_state = "11b";
+                        $klaviyomail = new KlaviyoEmail();
+                        $klaviyomail->googleLocked($user, $tradein);
                     }
                     $tradein->save();
                 }

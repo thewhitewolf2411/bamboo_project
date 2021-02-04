@@ -36,6 +36,9 @@ class WarehouseManagementController extends Controller
         return view('portal.warehouse.warehouse-management', ['portalUser'=>$portalUser]);
     }
 
+    //Box management functions
+
+
     public function showBoxManagementPage(){
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
@@ -44,128 +47,6 @@ class WarehouseManagementController extends Controller
 
         return view('portal.warehouse.box-management', ['portalUser'=>$portalUser, 'boxes'=>$boxes, 'brands'=>$brands]);
     }
-
-    public function showBayOverviewPage(){
-        $user = Auth::user();
-        $portalUser = PortalUsers::where('user_id', $user->id)->first();
-
-        $bays = Trolley::where('trolley_type', 'Bay')->get();
-
-        return view('portal.warehouse.bay-overview', ['portalUser'=>$portalUser, 'bays'=>$bays]);
-    }
-
-    public function showBayPage(Request $request){
-
-        $bay = Trolley::where('trolley_name', $request->bay_id_scan)->first();
-        $bayBoxes = Tray::where('trolley_id', $bay->id)->get();
-        $user = Auth::user();
-        $portalUser = PortalUsers::where('user_id', $user->id)->first();
-
-        return view('portal.warehouse.bayview', ['portalUser'=>$portalUser, 'bay'=>$bay, 'bayboxes'=>$bayBoxes]);
-        
-    }
-
-    public function showCreateBayPage(){
-        $user = Auth::user();
-        $portalUser = PortalUsers::where('user_id', $user->id)->first();
-
-        return view('portal.warehouse.createbay', ['portalUser'=>$portalUser]);
-    }
-
-    public function createBay(Request $request){
-        #dd($request);
-        $bay = Trolley::create([
-            'trolley_name'=>$request->bay_name,
-            'trolley_type'=>'Bay',
-            'trolley_brand'=>'B',
-            'number_of_trays'=>0
-        ]);
-
-        return redirect('/portal/warehouse-management/bay-overview')->with(['success'=>'You have succesfully created new Bay']);
-    }
-
-    public function deleteBay(Request $request){
-        $bay = Trolley::where('trolley_name', $request->bayname);
-        $bay->delete();
-
-        return response('', 200);
-    }
-
-    public function printBay(Request $request){
-
-        $bay = Trolley::where('trolley_name', $request->bayname)->first();
-
-        $filename = public_path() . "/pdf/baylabels/bay-" . $bay->trolley_name . ".pdf";
-        $customPaper = array(0,0,141.90,283.80);
-        PDF::loadView('portal.labels.baylabel', array('bay'=>$bay))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
-    
-        return response("/pdf/baylabels/bay-" . $bay->trolley_name . ".pdf", 200);
-    }
-
-    public function checkAllocateBox(Request $request){
-
-        $box = Tray::where('tray_name', $request->boxname)->first();
-        $bay = Trolley::where('trolley_name', $request->bayname)->first();
-
-        if($box === null){
-            return response('There is no box with this id.', 404);
-        }
-
-        if($box->tray_type !== 'Bo'){
-            return response('This is a tray, and cannot be added.', 404);
-        }
-
-        if($box->status !== 3){
-            return response('This box is not marked as complete.', 404);
-        }
-
-        if($box->trolley_id !== null){
-            if($box->trolley_id === $bay->id){
-                return response('This box is already in this bay.', 404);
-            }
-        }
-
-        return response([$box->tray_name, $box->number_of_devices], 200);
-    }
-
-    public function allocateBox(Request $request){
-
-        $boxesids = $request->all();
-        array_shift($boxesids);
-
-        $boxesids = array_values($boxesids);
-
-        $bayid = array_pop($boxesids);
-
-        $bay = Trolley::where('trolley_name', $bayid)->first();
-
-        foreach($boxesids as $boxid){
-            $box = Tray::where('tray_name', $boxid)->first();
-
-            if($box->trolley_id !== null){
-                $oldBay = Trolley::where('id', $box->trolley_id)->first();
-                $oldBay->number_of_trays = $oldBay->number_of_trays - 1;
-                $oldBay->save();
-            }
-
-            $box->trolley_id = $bay->id;
-            $box->save();
-    
-            $bay->number_of_trays = $bay->number_of_trays + 1;
-            $bay->save();
-        }
-
-
-        return redirect()->back()->with(['success'=>'You have succesfully added boxes to this bay.']);
-    }
-
-    public function showPickingDespatchPage(){
-        $user = Auth::user();
-        $portalUser = PortalUsers::where('user_id', $user->id)->first();
-
-        return view('portal.warehouse.picking-despatch', ['portalUser'=>$portalUser]);
-    }
-
 
     public function createBox(Request $request){
 
@@ -441,5 +322,132 @@ class WarehouseManagementController extends Controller
     
         return response("/pdf/boxmanifest/boxmanifest-" . $boxname . ".pdf", 200);
     }
+
+
+    //Bay functions
+
+    public function showBayOverviewPage(){
+        $user = Auth::user();
+        $portalUser = PortalUsers::where('user_id', $user->id)->first();
+
+        $bays = Trolley::where('trolley_type', 'Bay')->get();
+
+        return view('portal.warehouse.bay-overview', ['portalUser'=>$portalUser, 'bays'=>$bays]);
+    }
+
+    public function showBayPage(Request $request){
+
+        $bay = Trolley::where('trolley_name', $request->bay_id_scan)->first();
+        $bayBoxes = Tray::where('trolley_id', $bay->id)->get();
+        $user = Auth::user();
+        $portalUser = PortalUsers::where('user_id', $user->id)->first();
+
+        return view('portal.warehouse.bayview', ['portalUser'=>$portalUser, 'bay'=>$bay, 'bayboxes'=>$bayBoxes]);
+        
+    }
+
+    public function showCreateBayPage(){
+        $user = Auth::user();
+        $portalUser = PortalUsers::where('user_id', $user->id)->first();
+
+        return view('portal.warehouse.createbay', ['portalUser'=>$portalUser]);
+    }
+
+    public function createBay(Request $request){
+        #dd($request);
+        $bay = Trolley::create([
+            'trolley_name'=>$request->bay_name,
+            'trolley_type'=>'Bay',
+            'trolley_brand'=>'B',
+            'number_of_trays'=>0
+        ]);
+
+        return redirect('/portal/warehouse-management/bay-overview')->with(['success'=>'You have succesfully created new Bay']);
+    }
+
+    public function deleteBay(Request $request){
+        $bay = Trolley::where('trolley_name', $request->bayname);
+        $bay->delete();
+
+        return response('', 200);
+    }
+
+    public function printBay(Request $request){
+
+        $bay = Trolley::where('trolley_name', $request->bayname)->first();
+
+        $filename = public_path() . "/pdf/baylabels/bay-" . $bay->trolley_name . ".pdf";
+        $customPaper = array(0,0,141.90,283.80);
+        PDF::loadView('portal.labels.baylabel', array('bay'=>$bay))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
+    
+        return response("/pdf/baylabels/bay-" . $bay->trolley_name . ".pdf", 200);
+    }
+
+    public function checkAllocateBox(Request $request){
+
+        $box = Tray::where('tray_name', $request->boxname)->first();
+        $bay = Trolley::where('trolley_name', $request->bayname)->first();
+
+        if($box === null){
+            return response('There is no box with this id.', 404);
+        }
+
+        if($box->tray_type !== 'Bo'){
+            return response('This is a tray, and cannot be added.', 404);
+        }
+
+        if($box->status !== 3){
+            return response('This box is not marked as complete.', 404);
+        }
+
+        if($box->trolley_id !== null){
+            if($box->trolley_id === $bay->id){
+                return response('This box is already in this bay.', 404);
+            }
+        }
+
+        return response([$box->tray_name, $box->number_of_devices], 200);
+    }
+
+    public function allocateBox(Request $request){
+
+        $boxesids = $request->all();
+        array_shift($boxesids);
+
+        $boxesids = array_values($boxesids);
+
+        $bayid = array_pop($boxesids);
+
+        $bay = Trolley::where('trolley_name', $bayid)->first();
+
+        foreach($boxesids as $boxid){
+            $box = Tray::where('tray_name', $boxid)->first();
+
+            if($box->trolley_id !== null){
+                $oldBay = Trolley::where('id', $box->trolley_id)->first();
+                $oldBay->number_of_trays = $oldBay->number_of_trays - 1;
+                $oldBay->save();
+            }
+
+            $box->trolley_id = $bay->id;
+            $box->save();
+    
+            $bay->number_of_trays = $bay->number_of_trays + 1;
+            $bay->save();
+        }
+
+
+        return redirect()->back()->with(['success'=>'You have succesfully added boxes to this bay.']);
+    }
+
+    //Despatch functions
+
+    public function showPickingDespatchPage(){
+        $user = Auth::user();
+        $portalUser = PortalUsers::where('user_id', $user->id)->first();
+
+        return view('portal.warehouse.picking-despatch', ['portalUser'=>$portalUser]);
+    }
+
 
 }
