@@ -483,7 +483,7 @@ class PaymentsController extends Controller
 
                     $payment_batch = new PaymentBatch([
                         // 'payment_type' => 1                         default 01 for now (domestic)
-                        'sort_code_number' => 15100031806542,           // bamboo account
+                        'sort_code_number' => 12341234123412,           // bamboo account
                         'arrive_at' => Carbon::now()->addDay(),     // Carbon::now()->addDay()->format('dmY'),
                         'payment_state' => 1,
                         'csv_file' => null,
@@ -501,7 +501,7 @@ class PaymentsController extends Controller
 
                     $payment_batch = new PaymentBatch([
                         // 'payment_type' => 1                         default 01 for now (domestic)
-                        'sort_code_number' => 15100031806542,           // bamboo account
+                        'sort_code_number' => 12341234123412,           // bamboo account
                         'arrive_at' => Carbon::now()->addDay(),     // Carbon::now()->addDay()->format('dmY'),
                         'payment_state' => 1,
                         'csv_file' => null,
