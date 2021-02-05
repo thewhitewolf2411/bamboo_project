@@ -182,11 +182,11 @@ function markAsSuccessful(){
                 _token: '{{csrf_token()}}',
                 ids: ids
             },
-            success: function(data, textStatus, xhr) {            
-                // if(xhr.status === 200){
-                //     alert('Device payment(s) marked as successful.');
-                //     window.location.reload(true);
-                // }
+            success: function(data, textStatus, xhr) {       
+                if(xhr.status === 200){
+                    alert('Device payment(s) marked as successful.');
+                    window.location.reload(true);
+                }
             },
             fail: function(xhr, textStatus, errorThrown){
                 //
@@ -214,8 +214,8 @@ function markAsFailed(){
             },
             success: function(data, textStatus, xhr) {
                 if(xhr.status === 200){
-                    // alert('Device payment(s) marked as failed.');
-                    // window.location.reload(true);
+                    alert('Device payment(s) marked as failed.');
+                    window.location.reload(true);
                 }
             },
             fail: function(xhr, textStatus, errorThrown){

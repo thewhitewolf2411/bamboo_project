@@ -34,7 +34,7 @@
                     </div>
                 </div>
 
-                <div class="portal-table-container">
+                <div class="p-2">
 
                     <table class="portal-table sortable" id="failed-batch-devices-table">
                         <tr>
@@ -44,7 +44,9 @@
                             <td><div class="table-element">Date Placed</div></td>
                             <td><div class="table-element">Product</div></td>
                             <td><div class="table-element">Price</div></td>
-                            <td><div class="table-element">Cheque number</div></td>
+                            <td><div class="table-element">Failed date</div></td>
+                            <td><div class="table-element">Bank details updated</div></td>
+                            <td><div class="table-element">Cheque</div></td>
                             <td class="sorttable_nosort"><div class="table-element">
                                 <input id="selectAll" type="checkbox" class="form-check-input m-0 w-auto" onclick="selectAll()"/>
                             </div></td>
@@ -57,6 +59,8 @@
                                 <td><div class="table-element">{!!$batch_device->orderDate()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->product()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->price()!!} £</div></td>
+                                <td><div class="table-element">{!!$batch_device->failedDate()!!}</div></td>
+                                <td><div class="table-element">{!!$batch_device->bankDetailsUpdated()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->cheque_number!!}</div></td>
                                 <td><div class="table-element">
                                     <input type="checkbox" onchange="checkBatchDevices()" id="{{$batch_device->id}}" name="selected_devices" value="{{$batch_device->id}}" class="table-element m-0 w-auto"/>
@@ -64,6 +68,20 @@
                             </tr>
                         @endforeach
                     </table>
+
+                    <div class="m-auto w-75">
+                        <div class="mt-4 mb-4 row">
+                            <div id="fpbatchref" class="btn btn-blue w-25 mr-0 ml-auto disabled" onclick="toggleFpBatch()" style="display:block;">New Batch</div>
+                            <div class="ml-0 mr-auto p-2 border">{!!$fp_ref!!}</div>
+                        </div>
+                        <div class="mt-4 mb-4 row">
+                            <div id="fcbatchref" class="btn btn-blue w-25 mr-0 ml-auto disabled" onclick="toggleFcBatch()" style="display:block;">New Batch</div>
+                            <div class="ml-0 mr-auto p-2 border">{!!$fc_ref!!}</div>
+                        </div>
+                        <div class="mt-4 mb-4 row">
+                            <div id="submitbatch" class="btn btn-blue w-25 mr-auto ml-auto disabled" onclick="submitBatch()" style="display:block;">Submit batch</div>
+                        </div>
+                    </div>
 
                 </div>
 
@@ -88,7 +106,8 @@ $(document).ready(function(){
 });
 
 var ANY_SELECTED = false;
-var ONE_SELECTED = false;
+var CAN_SUBMIT = false;
+var BATCH_TYPE = null;
 
 function selectAll(){
     let rowCount = document.getElementById("failed-batch-devices-table").rows.length;
@@ -112,36 +131,143 @@ function selectAll(){
 
 function checkBatchDevices(){
     let items = document.getElementsByName('selected_devices');
-    // let successbtn = document.getElementById('mark-success');
-    // let failbtn = document.getElementById('mark-failed');
-    // let exportbtn = document.getElementById('export');
+    let newfpbatch = document.getElementById('fpbatchref');
+    let newfcbatch = document.getElementById('fcbatchref');
+    let submit = document.getElementById('submitbatch');
 
     ANY_SELECTED = false;
-    let total = 0;
     items.forEach(element => {
         if(element.checked){
             ANY_SELECTED = true;
-            total++;
         }
     });
 
-    // if(ANY_SELECTED){
-    //     if(successbtn.classList.contains('disabled')){
-    //         successbtn.classList.remove('disabled');
-    //     }
-    //     if(failbtn.classList.contains('disabled')){
-    //         failbtn.classList.remove('disabled');
-    //     }
-    // } else {
-    //     if(!successbtn.classList.contains('disabled')){
-    //         successbtn.classList.add('disabled');
-    //     }
-    //     if(!failbtn.classList.contains('disabled')){
-    //         failbtn.classList.add('disabled');
-    //     }
-    // }
+    if(ANY_SELECTED){
+        if(newfpbatch.classList.contains('disabled')){
+            newfpbatch.classList.remove('disabled');
+        }
+        if(newfcbatch.classList.contains('disabled')){
+            newfcbatch.classList.remove('disabled');
+        }
+    } else {
+        if(!newfpbatch.classList.contains('disabled')){
+            newfpbatch.classList.add('disabled');
+        }
+        if(!newfcbatch.classList.contains('disabled')){
+            newfcbatch.classList.add('disabled');
+        }
+     
+        if(newfcbatch.classList.contains('btn-orange')){
+            newfcbatch.classList.remove('btn-orange');
+            newfcbatch.classList.add('btn-blue');
+        }
+        if(newfpbatch.classList.contains('btn-orange')){
+            newfpbatch.classList.remove('btn-orange');
+            newfpbatch.classList.add('btn-blue');
+        }
+
+        if(!submit.classList.contains('disabled')){
+            submit.classList.add('disabled');
+        }
+
+        BATCH_TYPE = null;
+    }
 }
 
+function toggleFpBatch(){
+    let submit = document.getElementById('submitbatch');
+    let fpbtn = document.getElementById('fpbatchref');
+    let fcbtn = document.getElementById('fcbatchref');
+
+    if(ANY_SELECTED){
+
+        if(fcbtn.classList.contains('btn-orange')){
+            fcbtn.classList.remove('btn-orange');
+            fcbtn.classList.add('btn-blue');
+        }
+
+        if(fpbtn.classList.contains('btn-blue')){
+            fpbtn.classList.remove('btn-blue');
+            fpbtn.classList.add('btn-orange');
+            if(submit.classList.contains('disabled')){
+                submit.classList.remove('disabled');
+            }
+            BATCH_TYPE = 'FP';
+        } else {
+            fpbtn.classList.remove('btn-orange');
+            fpbtn.classList.add('btn-blue');
+            if(!submit.classList.contains('disabled')){
+                submit.classList.add('disabled');
+            }
+            BATCH_TYPE = null;
+        }
+    }
+}
+
+function toggleFcBatch(){
+    let submit = document.getElementById('submitbatch');
+    let fcbtn = document.getElementById('fcbatchref');
+    let fpbtn = document.getElementById('fpbatchref');
+
+    if(ANY_SELECTED){
+
+        if(fpbtn.classList.contains('btn-orange')){
+            fpbtn.classList.remove('btn-orange');
+            fpbtn.classList.add('btn-blue');
+        }
+
+        if(fcbtn.classList.contains('btn-blue')){
+            fcbtn.classList.remove('btn-blue');
+            fcbtn.classList.add('btn-orange');
+            if(submit.classList.contains('disabled')){
+                submit.classList.remove('disabled');
+            }
+            BATCH_TYPE = 'FC';
+
+        } else {
+            fcbtn.classList.remove('btn-orange');
+            fcbtn.classList.add('btn-blue');
+            if(!submit.classList.contains('disabled')){
+                submit.classList.add('disabled');
+            }
+            BATCH_TYPE = null;
+        }
+    }
+}
+
+function submitBatch(){
+    let items = document.getElementsByName('selected_devices');
+    var device_ids = [];
+    for (let index = 0; index < items.length; index++) {
+        if(items[index].checked){
+            device_ids.push(items[index].id);
+        }
+        
+    }
+    if(BATCH_TYPE !== null){
+        CAN_SUBMIT = true;
+    } else {
+        CAN_SUBMIT = false;
+    }
+
+    if(CAN_SUBMIT){
+        $.ajax({
+            type: "POST",
+            url: "failed/createbatch",
+            data: {
+                _token: '{{csrf_token()}}',
+                ids: device_ids,
+                type: BATCH_TYPE
+            },
+            success: function(data, textStatus, xhr) {
+                if(xhr.status === 200){
+                    alert('Batch successfully created.');
+                    window.location.reload(true);
+                }
+            }
+        });
+    }
+}
 
 </script>
 

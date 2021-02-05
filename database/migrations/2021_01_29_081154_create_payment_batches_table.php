@@ -22,7 +22,6 @@ class CreatePaymentBatchesTable extends Migration
             $table->text('reference')->nullable(true)->default(null);
             $table->integer('batch_type');
             $table->boolean('exported')->default(false);
-            $table->boolean('failed')->nullable(true)->default(null);
             $table->timestamps();
         });
     }

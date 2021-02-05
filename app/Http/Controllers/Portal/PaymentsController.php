@@ -101,7 +101,7 @@ class PaymentsController extends Controller
             $tradeins = Tradein::where('job_state','=','10')->orWhere('job_state', '=', '16')->get();
         }
 
-        $num_ref = PaymentBatch::all()->count() + 1;
+        $num_ref = PaymentBatch::where('batch_type', 1)->get()->count() + 1;
         if(strlen($num_ref) < 2){
             $num_ref = '0'.$num_ref;
         }
@@ -269,7 +269,9 @@ class PaymentsController extends Controller
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        $submited_batches = PaymentBatch::where('batch_type', 1)->where('exported', 0)->get();
+        $submited_batches = PaymentBatch::where(function($query){
+            $query->where('batch_type', 1)->orWhere('batch_type', 2);
+        })->where('exported', 0)->get();
 
         return view('portal.payments.submit', [
             'portalUser'        => $portalUser,
@@ -345,9 +347,9 @@ class PaymentsController extends Controller
             }
 
         } else {
-            $payment_batches = PaymentBatch::where("exported", true)->where('failed', null)->get();
+            $payment_batches = PaymentBatch::where("exported", true)->get();
             foreach($payment_batches as $batch){
-                $payment_batch_devices = PaymentBatchDevice::where('payment_batch_id', $batch->id)->get();
+                $payment_batch_devices = PaymentBatchDevice::where('payment_batch_id', $batch->id)->where('payment_state', null)->get();
                 foreach($payment_batch_devices as $device){
                     $devices->push($device);
                 }
@@ -368,6 +370,7 @@ class PaymentsController extends Controller
         if(isset($request->ids)){
             $batchdevices = PaymentBatchDevice::whereIn('id', $request->ids)->get();
             if($batchdevices->count() > 0){
+
                 foreach($batchdevices as $batchdevice){
                     $tradein = Tradein::find($batchdevice->tradein_id);
                     // set tradein job state - paid
@@ -377,9 +380,9 @@ class PaymentsController extends Controller
                         $tradein->save();
                         $batchdevice->payment_state = 1;
                         $batchdevice->save();
-                        return response('Success');
                     }
                 }
+                return response('Success');
             }
             return response("No such device", 404);
         }
@@ -396,22 +399,23 @@ class PaymentsController extends Controller
 
                 // mark batch as failed
                 $payment_batch = PaymentBatch::find($batchdevices[0]->payment_batch_id);
-                $payment_batch->failed = true;
                 $payment_batch->save();
 
                 foreach($batchdevices as $batchdevice){
                     $tradein = Tradein::find($batchdevice->tradein_id);
-                    // set tradein job state - failed
                     if($tradein){
+                        // set tradein job state - failed
                         $tradein->job_state = '23';
                         $tradein->save();
+
                         $batchdevice->payment_state = 2;
+                        $batchdevice->failed_at = Carbon::now();
                         $batchdevice->save();
                         // add device into failed payments module
                         // send payment failed email
-                        return response('Success');
                     }
                 }
+                return response('Success');
             }
             return response("No such device", 404);
         }
@@ -424,18 +428,114 @@ class PaymentsController extends Controller
     public function showFailedPayments(){
         //if(!$this->checkAuthLevel(6)){return redirect('/');}
 
+        $fp_num_ref = PaymentBatch::where('batch_type', 2)->get()->count() + 1;
+        if(strlen($fp_num_ref) < 2){
+            $fp_num_ref = '0'.$fp_num_ref;
+        }
+        $fp_num_ref = "FP-".$fp_num_ref;
+
+        $fc_num_ref = PaymentBatch::where('batch_type', 3)->get()->count() + 1;
+        if(strlen($fc_num_ref) < 2){
+            $fc_num_ref = '0'.$fc_num_ref;
+        }
+        $fc_num_ref = "FC-".$fc_num_ref;
+
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
-        $batches = PaymentBatch::where('failed', true)->get();
-        $devices = collect();
+        $devices =  PaymentBatchDevice::where('payment_state', 2)->get();
 
-        foreach($batches as $batch){
-            $batch_devices = PaymentBatchDevice::where('payment_batch_id', $batch->id)->get();
-            foreach($batch_devices as $bd){
-                $devices->push($bd);
+        return view('portal.payments.failed', [
+            'portalUser' => $portalUser, 
+            'devices' => $devices,
+            'fp_ref' => $fp_num_ref,
+            'fc_ref' => $fc_num_ref
+        ]);
+    }
+
+
+    /**
+     * Create failed batch.
+     */
+    public function createFailedBatch(Request $request){
+        if(isset($request->ids) && isset($request->type)){
+            $ids = $request->ids;
+            $type = $request->type;
+            
+            $payment_batch = null;
+            $payment_batch_devices = PaymentBatchDevice::whereIn('id', $ids)->get();
+
+            $fp_ref = PaymentBatch::where('batch_type', 2)->get()->count() + 1;
+            if(strlen($fp_ref) < 2){
+                $fp_ref = '0'.$fp_ref;
             }
-        }
+            $fp_ref = "FP-".$fp_ref;
 
-        return view('portal.payments.failed', ['portalUser' => $portalUser, 'devices' => $devices]);
+            $fc_ref = PaymentBatch::where('batch_type', 3)->get()->count() + 1;
+            if(strlen($fc_ref) < 2){
+                $fc_ref = '0'.$fc_ref;
+            }
+            $fc_ref = "FC-".$fc_ref;
+            
+            switch ($type) {
+                case 'FP':  // failed payment batch
+                    // can be created after user updates his bank account details (TODO create event for bank account details update)
+                    dd('481');
+
+                    $payment_batch = new PaymentBatch([
+                        // 'payment_type' => 1                         default 01 for now (domestic)
+                        'sort_code_number' => 15100031806542,           // bamboo account
+                        'arrive_at' => Carbon::now()->addDay(),     // Carbon::now()->addDay()->format('dmY'),
+                        'payment_state' => 1,
+                        'csv_file' => null,
+                        'reference' => null,
+                        'batch_type' => 2,                          // submitted payment batch type,
+                        'reference' => $fp_ref
+                    ]);
+        
+                    $payment_batch->save();
+                    break;
+
+                case 'FC': // failed cheque batch
+                    // will be created after 3rd payment unsuccessful email
+                    dd('499');
+
+                    $payment_batch = new PaymentBatch([
+                        // 'payment_type' => 1                         default 01 for now (domestic)
+                        'sort_code_number' => 15100031806542,           // bamboo account
+                        'arrive_at' => Carbon::now()->addDay(),     // Carbon::now()->addDay()->format('dmY'),
+                        'payment_state' => 1,
+                        'csv_file' => null,
+                        'reference' => null,
+                        'batch_type' => 3,                          // submitted payment batch type,
+                        'reference' => $fc_ref
+                    ]);
+        
+                    $payment_batch->save();
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
+
+            // change devices batch id
+            $tradein_ids = [];
+            foreach($payment_batch_devices as $device){
+                $device->payment_batch_id = $payment_batch->id;
+                $device->payment_state = null;
+                $device->save();
+                array_push($tradein_ids, $device->tradein_id);
+            }
+
+            // update tradein state
+            $tradeins = Tradein::whereIn('id', $tradein_ids)->get();
+            foreach($tradeins as $tradein){     
+                $tradein->job_state = '21';
+                $tradein->save();
+            }
+
+            return response('Success', 200);
+        
+        }
     }
 }

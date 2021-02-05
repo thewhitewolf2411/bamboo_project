@@ -112,7 +112,7 @@ class PaymentBatchService {
         }
 
         $path = storage_path().'\app\public\exports\batches';
-        $filename = '\SP_batch_export_'.time().'.csv';
+        $filename = '\batch_export_'.time().'.csv';
 
         if(!is_dir($path)){
             mkdir($path, 0777, true);

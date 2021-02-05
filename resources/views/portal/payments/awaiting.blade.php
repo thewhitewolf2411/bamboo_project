@@ -70,46 +70,6 @@
                     </table>
                 </div>
 
-                {{-- <div class="portal-table-container">
-                    <h5 class="text-center">Trays</h5>
-                    <table class="portal-table sortable" id="categories-table">
-                        <tr>
-                            <td><div class="table-element">Tray ID</div></td>
-                            <td><div class="table-element">Tray name</div></td>
-                            <td><div class="table-element">Assigned trolley</div></td>
-                            <td><div class="table-element">No of Devices</div></td>
-                        </tr>
-                        @foreach($trays as $tray)
-                        <tr>
-                            <td><div class="table-element">{{$tray->id}}</div></td>
-                            <td><div class="table-element">{{$tray->tray_name}}</div></td>
-                            <td><div class="table-element">@if($tray->trolley_id == null) <p style="color:red;">Unassigned</p> @else <p style="color:green;"> {{$tray->getTrolleyName($tray->trolley_id)}} </p> @endif</div></a></td>
-                            <td><div class="table-element">{{$tray->getTrayNumberOfDevices($tray->id)}}</div></a></td>
-                        </tr>
-                        @endforeach
-                    </table>
-                </div>
-
-                <div class="portal-table-container">
-                    <h5 class="text-center">Trolleys</h5>
-                    <table class="portal-table sortable" id="categories-table">
-                        <tr>
-                            <td><div class="table-element">Trolley ID</div></td>
-                            <td><div class="table-element">Trolley</div></td>
-                            <td><div class="table-element">No of Trays</div></td>
-                            <td><div class="table-element">No of Devices</div></td>
-                        </tr>
-                        @foreach($trolleys as $trolley)
-                        <tr>
-                            <td><div class="table-element">{{$trolley->id}}</div></td>
-                            <td><div class="table-element">{{$trolley->trolley_name}}</div></td>
-                            <td><div class="table-element">{{$trolley->number_of_trays}}</div></td>
-                            <td><div class="table-element">{{$trolley->getNumberOfDevices($trolley->id)}}</div></td>
-                        </tr>
-                        @endforeach
-                    </table>
-                </div> --}}
-
                 <div class="m-auto w-75">
                     <div class="mt-4 mb-4 row">
                         <div class="btn btn-primary btn-blue w-25 mr-0 ml-auto" onclick="showSearch()" style="display:block;">New Batch</div>

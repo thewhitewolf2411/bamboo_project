@@ -40,8 +40,7 @@ class PaymentBatch extends Model
         'csv_file',
         'reference',
         'batch_type',
-        'exported',
-        'failed'
+        'exported'
     ];
 
     public function devicesCount(){

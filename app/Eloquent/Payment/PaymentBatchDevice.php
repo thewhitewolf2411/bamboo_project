@@ -3,6 +3,7 @@
 namespace App\Eloquent\Payment;
 
 use App\Eloquent\Tradein;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class PaymentBatchDevice extends Model
@@ -29,7 +30,8 @@ class PaymentBatchDevice extends Model
         'payment_batch_id',
         'tradein_id',
         'payment_state',
-        'cheque_number'
+        'cheque_number',
+        'failed_at'
     ];
 
     public function product(){
@@ -61,5 +63,13 @@ class PaymentBatchDevice extends Model
 
     public function orderDate(){
         return PaymentBatch::find($this->payment_batch_id)->created_at->format('d/m/Y');
+    }
+
+    public function failedDate(){
+        return Carbon::parse($this->failed_at)->format('d.m.Y H:i');
+    }
+
+    public function bankDetailsUpdated(){
+        return null;
     }
 }

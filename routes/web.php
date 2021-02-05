@@ -244,6 +244,8 @@ Route::group(['prefix' => 'portal/payments'], function () {
     Route::post('/confirm/markfailed', 'Portal\PaymentsController@markAsFailed')->name('markAsFailed')->middleware('auth');
 
     Route::get('/failed', 'Portal\PaymentsController@showFailedPayments')->middleware('auth');
+    Route::post('/failed/createbatch', 'Portal\PaymentsController@createFailedBatch')->middleware('auth');
+
 });
 
 

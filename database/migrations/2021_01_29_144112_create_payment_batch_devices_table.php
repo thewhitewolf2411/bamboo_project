@@ -19,6 +19,7 @@ class CreatePaymentBatchDevicesTable extends Migration
             $table->integer('tradein_id');
             $table->integer('payment_state')->nullable(true)->default(null);
             $table->bigInteger('cheque_number')->nullable(true)->default(null);
+            $table->dateTime('failed_at')->nullable(true)->default(null);
             $table->timestamps();
         });
     }
