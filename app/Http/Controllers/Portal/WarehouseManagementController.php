@@ -22,6 +22,9 @@ use DNS2D;
 
 class WarehouseManagementController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
 
     public function __construct()
     {

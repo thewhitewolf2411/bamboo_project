@@ -10,6 +10,10 @@ use App\Eloquent\PortalUsers;
 
 class CmsController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
+    
     public function showCmsPage(){
         //if(!$this->checkAuthLevel(11)){return redirect('/');}
 

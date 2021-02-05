@@ -12,6 +12,10 @@ use App\Eloquent\Network;
 
 class SettingsController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
+    
     public function showSettingsPage(){
         //if(!$this->checkAuthLevel(10)){return redirect('/');}
 

@@ -19,7 +19,10 @@ use App\Eloquent\TrolleyContent;
 
 class TraysController extends Controller
 {
-    
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
+
     public function showTraysPage(){
         //if(!$this->checkAuthLevel(12)){return redirect('/');}
 

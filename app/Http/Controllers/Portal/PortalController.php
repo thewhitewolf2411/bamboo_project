@@ -55,10 +55,7 @@ class PortalController extends Controller
     protected $user;
 
     public function __construct(){
-        $this->middleware(function ($request, $next) {
-            abort_unless(auth()->check() && auth()->user()->type_of_user > 0, 403, "Forbidden.");
-            return $next($request);
-        });
+        $this->middleware('checkAuth');
     }
 
     public function portal(){

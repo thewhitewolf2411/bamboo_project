@@ -21,6 +21,10 @@ use PDF;
 
 class CustomerCareController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
+    
     public function showCustomerCare(){
         //if(!$this->checkAuthLevel(1)){return redirect('/');}
         $user_id = Auth::user()->id;

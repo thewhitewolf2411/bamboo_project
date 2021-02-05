@@ -19,6 +19,9 @@ use App\Eloquent\Colour;
 
 class ProductController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
 
     //categories
     public function showCategories(){

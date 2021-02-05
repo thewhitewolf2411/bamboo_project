@@ -19,6 +19,10 @@ use App\User;
 
 class QuarantineController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
+    
     public function showQuarantinePage(){
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();

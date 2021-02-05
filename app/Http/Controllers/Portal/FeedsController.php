@@ -28,7 +28,9 @@ use App\Eloquent\Feed;
 
 class FeedsController extends Controller
 {
-    
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
 
     public function showFeedsPage(){
         //if(!$this->checkAuthLevel(8)){return redirect('/');}

@@ -30,6 +30,10 @@ use App\Services\Testing;
 
 class TestingController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
+    
     public function showTestingPage(){
         //if(!$this->checkAuthLevel(5)){return redirect('/');}
 
