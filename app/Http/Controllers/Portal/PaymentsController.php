@@ -476,6 +476,7 @@ class PaymentsController extends Controller
             }
             $fc_ref = "FC-".$fc_ref;
             
+            $payment_batch =  null;
             switch ($type) {
                 case 'FP':  // failed payment batch
                     // can be created after user updates his bank account details (TODO create event for bank account details update)
