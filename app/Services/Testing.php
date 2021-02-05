@@ -133,6 +133,9 @@ class Testing{
                             }
                             break;
                     }
+
+                    $klaviyomail = new KlaviyoEmail();
+                    $klaviyomail->devicePassedTest($user, $tradein);
                 }
                 else{
                     if($request->device_correct === "false"){
@@ -302,28 +305,45 @@ class Testing{
                             }
                             break;
                     }
+
+                    $klaviyomail = new KlaviyoEmail();
+                    $klaviyomail->devicePassedTest($user, $tradein);
                 }
                 else{
                     if($request->device_correct === "false"){
                         $tradein->job_state = '11d';
+
+                        $klaviyomail = new KlaviyoEmail();
+                        $klaviyomail->wrongDevice($user, $tradein);
+
                     }
                     elseif($request->correct_memory === "false" || $request->correct_network === "false"){
                         if($request->correct_memory === "false"){
                             $tradein->job_state = '11f';
+                            $klaviyomail = new KlaviyoEmail();
+                            $klaviyomail->downgraded($user, $tradein);
                         }
                         if($request->correct_network === "false"){
                             $tradein->job_state = '11g';
+                            $klaviyomail = new KlaviyoEmail();
+                            $klaviyomail->lockedNetwork($user, $tradein);
                         }
                     }
                     else{
                         if($request->water_damage === 'true'){
                             $tradein->job_state = '11h';
+                            $klaviyomail = new KlaviyoEmail();
+                            $klaviyomail->wrongDevice($user, $tradein);
                         }
                         else if($request->device_fully_functional !== 'true'){
                             $tradein->job_state = '11e';
+                            $klaviyomail = new KlaviyoEmail();
+                            $klaviyomail->downgraded($user, $tradein);
                         }
                         else{
                             $tradein->job_state = '11i';
+                            $klaviyomail = new KlaviyoEmail();
+                            $klaviyomail->downgraded($user, $tradein);
                         }
                     }
                     $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'Q')->where('number_of_devices', "<=" ,100)->first();

@@ -208,6 +208,8 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
+
+    /* Done */
     public function pinLocked($user, Tradein $tradein){
         $event = new KlaviyoEvent(
             array(
@@ -225,6 +227,7 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
+    /* Done */
     public function googleLocked($user, Tradein $tradein){
         $event = new KlaviyoEvent(
             array(
@@ -242,6 +245,7 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
+    /* Email missing */
     public function FIMP($user, Tradein $tradein){
         $event = new KlaviyoEvent(
             array(
@@ -259,6 +263,7 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
+    /* Done */
     public function wrongDevice($user, Tradein $tradein){
         $event = new KlaviyoEvent(
             array(
@@ -267,6 +272,7 @@ class KlaviyoEmail{
                     '$email' => $user->email,
                     '$deviceWrong' => $tradein->getProductName($tradein->product_id),
                     '$deviceRight' => $tradein->getProductName($tradein->correct_product_id),
+                    '$newPrice' => $tradein->bamboo_price,
                 ),
                 'properties' => array(
                     'Wrong Device' => true
@@ -277,6 +283,7 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
+    /* Done */
     public function downgraded($user, Tradein $tradein){
         $event = new KlaviyoEvent(
             array(
@@ -296,6 +303,7 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
+    /* Done */
     public function lockedNetwork($user, Tradein $tradein){
         $event = new KlaviyoEvent(
             array(
@@ -305,6 +313,7 @@ class KlaviyoEmail{
                     '$originalNetwork' => $tradein->customer_network,
                     '$bambooNetwork' => $tradein->correct_network,
                     '$newPrice' => $tradein->bamboo_price,
+                    '$device' => $tradein->getProductName($tradein->product_id),
                 ),
                 'properties' => array(
                     'Locked Network' => true
@@ -315,17 +324,18 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
+    /* Done */
     public function devicePassedTest($user, Tradein $tradein){
         $event = new KlaviyoEvent(
             array(
-                'event' => 'Locked Network',
+                'event' => 'Passed Test',
                 'customer_properties' => array(
                     '$email' => $user->email,
                     '$device' => $tradein->getProductName($tradein->product_id),
                     '$price' => $tradein->bamboo_price,
                 ),
                 'properties' => array(
-                    'Locked Network' => true
+                    'Passed Test' => true
                 )
             )
         );
@@ -333,6 +343,7 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
+    /* Done */
     public function blacklisted($user, Tradein $tradein){
         $event = new KlaviyoEvent(
             array(
@@ -350,6 +361,7 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
+    /* Done */
     public function deviceStolen($user, Tradein $tradein){
         $event = new KlaviyoEvent(
             array(
@@ -367,6 +379,7 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
+    /* Done */
     public function deviceUnderContract($user, Tradein $tradein){
         $event = new KlaviyoEvent(
             array(
@@ -374,6 +387,7 @@ class KlaviyoEmail{
                 'customer_properties' => array(
                     '$email' => $user->email,
                     '$device' => $tradein->getProductName($tradein->product_id),
+                    '$originalNetwork' => $tradein->customer_network,
                 ),
                 'properties' => array(
                     'Device Under Contract' => true

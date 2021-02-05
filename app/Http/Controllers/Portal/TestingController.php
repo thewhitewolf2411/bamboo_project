@@ -359,6 +359,11 @@ class TestingController extends Controller
         if($result->RawResponse->blackliststatus == "Yes"){
             $tradein->job_state = "7";
             $tradein->save();
+
+            $user = User::where('id', $tradein->user_id)->first();
+
+            $klaviyomail = new KlaviyoEmail();
+            $klaviyomail->blacklisted($user, $tradein);
         }
 
 
