@@ -415,13 +415,19 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
-    public function paymentUnsuccesful($user, Tradein $tradein){
+    public function paymentUnsuccesful($user, Tradein $tradein, $message = null){
+        if($message == null){
+            $message = "we have attempted to transfer payment to you, but it hasn't worked. 
+            Please sign into your account and check your payment details are correct, you'll be able to amend them if not. 
+            Once sorted we should be able to transfer the payment.";
+        }
         $event = new KlaviyoEvent(
             array(
                 'event' => 'Payment Unsuccessful',
                 'customer_properties' => array(
                     '$email' => $user->email,
                     '$device' => $tradein->getProductName($tradein->product_id),
+                    '$message' => $message
                 ),
                 'properties' => array(
                     'Payment Unsuccessful' => true

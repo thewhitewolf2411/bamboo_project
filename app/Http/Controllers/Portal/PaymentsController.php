@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Eloquent\Payment\PaymentBatch;
 use App\Eloquent\Payment\PaymentBatchDevice;
 use App\Services\BatchService;
+use App\Services\KlaviyoEmail;
 use App\Services\PaymentBatchService;
 use App\User;
 use Carbon\Carbon;
@@ -233,9 +234,9 @@ class PaymentsController extends Controller
 
             foreach($tradeins as $tradein){
                 
-                if($tradein->job_state !== '21'){
+                if($tradein->job_state !== '22'){
                    
-                    $tradein->job_state = '21';
+                    $tradein->job_state = '22';
                     $tradein->save();
 
                     // create payment batch device
@@ -412,6 +413,10 @@ class PaymentsController extends Controller
                         $batchdevice->save();
                         // add device into failed payments module
                         // send payment failed email
+                        $klaviyo = new KlaviyoEmail();
+
+                        $user = User::find($tradein->user_id);
+                        $klaviyo->paymentUnsuccesful($user, $tradein);
                     }
                 }
                 return response('Success');

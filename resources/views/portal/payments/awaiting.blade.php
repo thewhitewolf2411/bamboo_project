@@ -341,7 +341,7 @@ function loadResults(results){
 function checkSubmit(){
     let search_results_length = document.getElementById('search-results-table').rows.length;
     let button = document.getElementById('create-button');
-    if(search_results_length > 2){
+    if(search_results_length > 1){
         if(button.classList.contains('disabled')){
             button.classList.remove('disabled');
         }
