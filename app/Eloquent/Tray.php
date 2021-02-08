@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Eloquent\Trolley;
 use App\Eloquent\TrayContent;
+use App\Eloquent\Tradein;
 
 class Tray extends Model
 {
@@ -45,6 +46,19 @@ class Tray extends Model
             default:
                 return 'Unsigned';
         }
+    }
+
+    public function getBoxPrice(){
+
+        $price = 0;
+
+        $traycontent = TrayContent::where('tray_id', $this->id)->get();
+        foreach($traycontent as $tc){
+            $tradein = Tradein::where('id', $tc->trade_in_id)->first();
+            $price += $tradein->bamboo_price;
+        }
+
+        return $price;
     }
 
 

@@ -7,7 +7,8 @@
 require('./bootstrap');
 
 require('./scripts/quarantinemanagement');
-require('./scripts/bayoverview')
+require('./scripts/bayoverview');
+require('./scripts/buildingsaleslot');
 
 "use strict";
 

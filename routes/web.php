@@ -330,3 +330,13 @@ Route::group(['prefix'=>'portal/warehouse-management'], function(){
 
     Route::get('/picking-despatch', 'Portal\WarehouseManagementController@showPickingDespatchPage');
 });
+
+Route::group(['prefix'=>'portal/sales-lot'], function(){
+
+    Route::get('/', 'Portal\SalesLotController@showSalesLotPage');
+
+    Route::get('/building-sales-lot', 'Portal\SalesLotController@showBuildingSalesLotPage');
+
+    Route::get('/completed-sales-lots', 'Portal\SalesLotController@showCompletedSalesLotPage');
+
+});

@@ -253,6 +253,19 @@ class Tradein extends Model
         return DNS1D::getBarcodeHTML($this->imei_number, 'C128');
     }
 
+    public function isBoxed(){
+
+        $boxcontent = TrayContent::where('trade_in_id', $this->id)->first();
+        if($boxcontent !== null){
+            $box = Tray::where('id', $boxcontent->tray_id)->first();
+            if($box->tray_type === 'Bo'){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function getDeviceStatus(){
 
         // array[0] - bamboo status

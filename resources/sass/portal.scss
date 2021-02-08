@@ -492,3 +492,11 @@ input[type=number] {
 .sortable:hover{
     cursor: pointer;
 }
+
+.btn-primary-nonactive{
+    opacity: 0.7 !important;
+}
+
+.table-invisible{
+    display: none;
+}
