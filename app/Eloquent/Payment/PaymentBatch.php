@@ -35,7 +35,6 @@ class PaymentBatch extends Model
      * @var array
      */
     protected $fillable = [
-        'sort_code_number',
         'arrive_at',
         'csv_file',
         'reference',

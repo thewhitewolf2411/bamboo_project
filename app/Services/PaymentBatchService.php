@@ -90,7 +90,7 @@ class PaymentBatchService {
                         break;
                 }
     
-                $single_payment['T010'] = $payment_batch->sort_code_number; // debit account identifier (bamboo account)
+                $single_payment['T010'] = 15100031806542;                   // debit account identifier (bamboo account)
                 $single_payment['T014'] = $tradein->bamboo_price;           // device price (bamboo evaluated price)
                 $single_payment['T016'] = Carbon::parse($payment_batch->arrive_at)->format('dmY');  // credit date
                 $single_payment['T022'] = 151000;                           // user bank account identifier -- TODO

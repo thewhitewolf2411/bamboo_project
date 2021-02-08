@@ -220,7 +220,6 @@ class PaymentsController extends Controller
             // create payment batch from tradein
             $payment_batch = new PaymentBatch([
                 // 'payment_type' => 1                         default 01 for now (domestic)
-                'sort_code_number' => 15100031806542,           // bamboo account
                 'arrive_at' => Carbon::now()->addDay(),     //Carbon::now()->addDay()->format('dmY'),
                 'payment_state' => 1,
                 'csv_file' => null,
