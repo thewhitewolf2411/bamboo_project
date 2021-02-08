@@ -47,5 +47,11 @@ class Tray extends Model
         }
     }
 
+    public function canBeDeleted(){
+        if($this->number_of_devices > 0){
+            return false;
+        }
+        return true;
+    }
 
 }

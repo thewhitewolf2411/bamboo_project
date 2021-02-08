@@ -26,11 +26,6 @@ class WarehouseManagementController extends Controller
         $this->middleware('checkAuth');
     }
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function showWarehouseManagementPage(){
 
         $user = Auth::user();
