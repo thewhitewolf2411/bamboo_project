@@ -6,8 +6,12 @@
 
 require('./bootstrap');
 
+require('./scripts/quarantinemanagement');
+require('./scripts/bayoverview')
+
 "use strict";
 
+/*
 window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
@@ -16,3 +20,7 @@ Vue.component('multiselect', require('./components/Multiselect.vue'));
 var vm = new Vue({
   el: '#app'
 });
+
+
+*/
+

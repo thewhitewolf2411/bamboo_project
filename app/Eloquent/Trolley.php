@@ -4,6 +4,8 @@ namespace App\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Eloquent\Tray;
+use DNS1D;
+use DNS2D;
 
 class Trolley extends Model
 {
@@ -33,6 +35,17 @@ class Trolley extends Model
         }
 
         return $numberOfDevices;
+    }
+
+    public function canBeDeleted(){
+        if($this->number_of_trays === 0){
+            return true;
+        }
+        return false;
+    }
+
+    public function getTrolleyBarcode(){
+        return DNS1D::getBarcodeHTML($this->trolley_name, 'C128');
     }
 }
 

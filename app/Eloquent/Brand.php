@@ -30,4 +30,19 @@ class Brand extends Model
         return count(SellingProduct::where('brand_id', $brandid)->get());
 
     }
+
+    public function getBrandFirstName(){
+        if($this->id === 1){
+            return "A";
+        }
+        else if($this->id === 2){
+            return "S";
+        }
+        else if($this->id === 3){
+            return "H";
+        }
+        else{
+            return "M";
+        }
+    }
 }

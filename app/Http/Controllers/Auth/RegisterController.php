@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 use Illuminate\Http\Request;
-
-use Klaviyo\Klaviyo as Klaviyo;
-use Klaviyo\Model\EventModel as KlaviyoEvent;
+use App\Services\KlaviyoEmail;
 
 use Crypt;
 
@@ -115,23 +113,8 @@ class RegisterController extends Controller
 
         $user->save();
 
-        $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Registered',
-                'customer_properties' => array(
-                    '$email' => $data['email'],
-                    '$name' => $data['first-name'],
-                    '$last_name' => $data['last-name'],
-                    '$newsletter' => $sub
-                ),
-                'properties' => array(
-                    'Registered' => True
-                )
-            )
-        );
-
-        $client->publicAPI->track( $event );  
+        $klaviyoEmail = new KlaviyoEmail();
+        $klaviyoEmail->AccountCreated($user);
 
 
         return $user;

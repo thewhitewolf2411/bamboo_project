@@ -19,9 +19,12 @@ class CreateTraysTable extends Migration
             $table->string('tray_type');
             $table->string('tray_brand');
             $table->string('tray_grade');
+            $table->string('tray_network')->nullable();
+            $table->integer('box_devices')->nullable();
             $table->integer('trolley_id')->nullable();
             $table->integer('number_of_devices')->default(0);
             $table->integer('max_number_of_devices')->default(100);
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

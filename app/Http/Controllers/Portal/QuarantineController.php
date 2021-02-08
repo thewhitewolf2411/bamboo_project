@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Tradein;
-use App\Eloquent\QuarantineBin;
-use App\Eloquent\QuarantineBinContent;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
 use Auth;
@@ -16,6 +14,8 @@ use DNS2D;
 use PDF;
 use File;
 use App\Services\BinService;
+use App\Services\KlaviyoEmail;
+use App\User;
 
 class QuarantineController extends Controller
 {
@@ -246,6 +246,32 @@ class QuarantineController extends Controller
     public function addQuarantineStatus(Request $request){
 
         $tradein = Tradein::where('id', $request->id)->first();
+        $user = User::where('id', $tradein->user_id)->first();
+
+        if($request->val === '8a'){
+            $klaviyoemail = new KlaviyoEmail();
+            $klaviyoemail->blacklisted($user, $tradein);
+        }
+        if($request->val === '8b'){
+            $klaviyoemail = new KlaviyoEmail();
+            $klaviyoemail->deviceUnderContract($user, $tradein);
+        }
+        if($request->val === '8c'){
+            $klaviyoemail = new KlaviyoEmail();
+            $klaviyoemail->blacklisted($user, $tradein);
+        }
+        if($request->val === '8d'){
+            $klaviyoemail = new KlaviyoEmail();
+            $klaviyoemail->deviceStolen($user, $tradein);
+        }
+        if($request->val === '8e'){
+            $klaviyoemail = new KlaviyoEmail();
+            $klaviyoemail->blacklisted($user, $tradein);
+        }
+        if($request->val === '8f'){
+            $klaviyoemail = new KlaviyoEmail();
+            $klaviyoemail->deviceUnderContract($user, $tradein);
+        }
 
         $tradein->job_state = $request->val;
 
@@ -416,9 +442,6 @@ class QuarantineController extends Controller
         }else{
 
         }
-
-
-
     }
 
 

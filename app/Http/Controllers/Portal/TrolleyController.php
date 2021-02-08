@@ -24,7 +24,7 @@ class TrolleyController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $trolleys = Trolley::all();
+        $trolleys = Trolley::where('trolley_type', '!=', 'Bay')->get();
 
         return view('portal.trolleys.trolleys')->with(['portalUser'=>$portalUser, 'trolleys'=>$trolleys]);
     }
@@ -34,7 +34,7 @@ class TrolleyController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $trolleys = Trolley::all();
+        $trolleys = Trolley::where('trolley_type', '!=', 'Bay')->get();
 
         return view('portal.add.trolley')->with(['portalUser'=>$portalUser, 'trolleys'=>$trolleys]);
     }

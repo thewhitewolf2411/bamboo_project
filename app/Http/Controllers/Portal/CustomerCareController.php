@@ -12,6 +12,7 @@ use App\Eloquent\TestingFaults;
 use App\Eloquent\SellingProduct;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
+use App\Services\KlaviyoEmail;
 use App\User;
 use Auth;
 use DNS1D;
@@ -233,6 +234,11 @@ class CustomerCareController extends Controller
             foreach($tiarr as $tradein){
                 $tradein->job_state = 3;
                 $tradein->save();
+
+                $user = User::where('id', $tradein->user_id)->first();
+
+                $klaviyoEmail = new KlaviyoEmail();
+                $klaviyoEmail->TradePackSent($user, $tradein);
             }
         }
 
@@ -288,6 +294,9 @@ class CustomerCareController extends Controller
 
             array_push($productIds, $tradein->product_id);
         }
+
+        $klaviyoEmail = new KlaviyoEmail();
+        $klaviyoEmail->TradePackSent($user, $tradein);
 
         $products = SellingProduct::whereIn('id', $productIds)->get();
         $tradein = Tradein::where('barcode',$request->hidden_print_trade_pack_trade_in_id)->first();

@@ -24,9 +24,9 @@ use App\Eloquent\Network;
 use App\Eloquent\Colour;
 use App\Eloquent\TestingFaults;
 use App\Eloquent\ProductNetworks;
+use App\Services\KlaviyoEmail;
 use App\Services\Testing;
-use Klaviyo\Klaviyo as Klaviyo;
-use Klaviyo\Model\EventModel as KlaviyoEvent;
+
 
 class TestingController extends Controller
 {
@@ -159,29 +159,10 @@ class TestingController extends Controller
             $tradein->job_state = "11j";
             $tradein->save();
             array_push($message, "This order has been identified by system as older than 14 days and has been marked for quarantine. Please confirm this.");
-            $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
-            $event = new KlaviyoEvent(
-                array(
-                    'event' => 'Device Older',
-                    'customer_properties' => array(
-                        '$email' => $user->email,
-                        '$name' => $user->first_name,
-                        '$last_name' => $user->last_name,
-                        '$birthdate' => $user->birthdate,
-                        '$newsletter' => $user->email,
-                        '$products' => $tradein->getProductName($tradein->product_id),
-                        '$price'=> $tradein->order_price,
-                    ),
-                    'properties' => array(
-                        'Item Sold' => True
-                    )
-                )
-            );
-        
+       
         }
 
         if($request->missing == "missing"){
-            $tradein->job_state = "4";
 
             $filenameWithExt = $request->file('missing_image')->getClientOriginalName();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -193,29 +174,14 @@ class TestingController extends Controller
 
 
             $tradein->missing_image = $path;
-
             $tradein->job_state = 4;
-            $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
-            $event = new KlaviyoEvent(
-                array(
-                    'event' => 'Device Missing',
-                    'customer_properties' => array(
-                        '$email' => $user->email,
-                        '$name' => $user->first_name,
-                        '$last_name' => $user->last_name,
-                        '$birthdate' => $user->birthdate,
-                        '$newsletter' => $user->email,
-                        '$products' => $tradein->getProductName($tradein->product_id),
-                        '$price'=> $tradein->order_price
-                    ),
-                    'properties' => array(
-                        'Item Sold' => True
-                    )
-                )
-            );
+
             array_push($message, "This device has been found as missing from received order, and has been marked for quarantine. Please confirm this.");
         
             $tradein->save();
+
+            $klaviyoemail = new KlaviyoEmail();
+            $klaviyoemail->missingDevice($user);
 
             $mti = false;
             if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>1){
@@ -289,6 +255,10 @@ class TestingController extends Controller
 
         if($request->visible_imei != "yes"){
             $tradein->job_state = "6";
+            $user = User::where('id', $tradein->user_id)->first();
+
+            $klaviyoemail = new KlaviyoEmail();
+            $klaviyoemail->noImei($user, $tradein);
         }
         $tradein->save();
 
@@ -307,7 +277,14 @@ class TestingController extends Controller
 
         if($request->visible_serial == "no"){
             $tradein->job_state = "6";
+            $user = User::where('id', $tradein->user_id)->first();
+
+            $klaviyoemail = new KlaviyoEmail();
+            $klaviyoemail->noImei($user, $tradein);
         }
+
+
+
         $tradein->save();
         return redirect('/portal/testing/result/' . $tradein->id);
     }
@@ -382,6 +359,11 @@ class TestingController extends Controller
         if($result->RawResponse->blackliststatus == "Yes"){
             $tradein->job_state = "7";
             $tradein->save();
+
+            $user = User::where('id', $tradein->user_id)->first();
+
+            $klaviyomail = new KlaviyoEmail();
+            $klaviyomail->blacklisted($user, $tradein);
         }
 
 
@@ -528,6 +510,9 @@ class TestingController extends Controller
             $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name);
         }
 
+        $klaviyoemail = new KlaviyoEmail();
+        $klaviyoemail->receiptOfDevice(User::where('id', $tradein->user_id)->first(), $tradein);
+
 
         return view('portal.testing.totray')->with(['tray_name'=>$quarantineName,'response'=>$response,'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein,'testing'=>false, 'mti'=>$mti]);
 
@@ -545,29 +530,6 @@ class TestingController extends Controller
 
 
         $tradein->job_state = 5;
-
-        $user = User::where('id', $tradein->user_id)->first();
-
-        $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Item received',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$name' => $user->first_name,
-                    '$last_name' => $user->last_name,
-                    '$birthdate' => $user->birthdate,
-                    '$newsletter' => $user->email,
-                    '$products' => $tradein->getProductName($tradein->id),
-                    '$price'=> $tradein->order_price
-                ),
-                'properties' => array(
-                    'Item Sold' => True
-                )
-            )
-        );
-
-        $client->publicAPI->track( $event );  
 
         $product = SellingProduct::where('id', $tradein->product_id)->first();
         $tray = null;

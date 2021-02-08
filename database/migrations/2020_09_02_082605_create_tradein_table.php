@@ -33,6 +33,8 @@ class CreateTradeinTable extends Migration
             $table->string('imei_number', 15)->nullable()->default(null);
             $table->integer('quarantine_reason')->nullable()->default(null);
             $table->date('quarantine_date')->nullable()->default(null);
+            $table->boolean('offer_accepted')->nullable();
+            $table->string('cosmetic_condition')->nullable();
             
             $table->timestamps();
         });

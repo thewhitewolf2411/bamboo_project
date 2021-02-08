@@ -322,11 +322,30 @@ Route::get('/portal/trolleys/trolley/printlabel/{id}', 'Portal\TrolleyController
 Route::get('/portal/trolleys/delete/{id}', 'Portal\TrolleyController@deleteTrolley')->middleware('auth');
 
 
-//Boxes
-Route::get('/portal/boxes', 'Portal\BoxController@showBoxesPage')->middleware('auth');
-Route::get('/portal/boxes/create', 'Portal\BoxController@showAddBoxPage')->middleware('auth');
-Route::get('/portal/boxes/box', 'Portal\BoxController@showBoxPage')->middleware('auth');
-Route::post('/portal/boxes/createbox', 'Portal\BoxController@addBox')->middleware('auth');
-Route::get('/portal/boxes/delete/{id}', 'Portal\BoxController@removeBox')->middleware('auth');
+//Warehouse Management
+Route::group(['prefix'=>'portal/warehouse-management'], function(){
+    Route::get('/', 'Portal\WarehouseManagementController@showWarehouseManagementPage');
+    Route::get('/box-management', 'Portal\WarehouseManagementController@showBoxManagementPage');
+    
+    Route::get('/getdevices', 'Portal\WarehouseManagementController@getBoxDevices');
+    Route::post('/box-management/createbox', 'Portal\WarehouseManagementController@createBox');
+    Route::post('/box-management/addtobox', 'Portal\WarehouseManagementController@addDeviceToBox');
+    Route::post('/box-management/openbox', 'Portal\WarehouseManagementController@openBox');
+    Route::post('/box-management/suspendbox', 'Portal\WarehouseManagementController@suspendBox');
+    Route::post('/box-management/completebox', 'Portal\WarehouseManagementController@completeBox');
+    Route::post('/box-management/printboxlabel', 'Portal\WarehouseManagementController@printBoxLabel');
+    Route::post('/box-management/printboxmanifest', 'Portal\WarehouseManagementController@printBoxManifest');
+    Route::post('/box-management/printboxsummary', 'Portal\WarehouseManagementController@printBoxSummary');
+    Route::post('/box-management/checkboxstatusfordevice', 'Portal\WarehouseManagementController@checkBoxStatusForDevice');
+    
+    Route::get('/bay-overview', 'Portal\WarehouseManagementController@showBayOverviewPage');
+    Route::get('/bay-overview/create', 'Portal\WarehouseManagementController@showCreateBayPage');
+    Route::get('/bay-overview/bay', 'Portal\WarehouseManagementController@showBayPage');
+    Route::post('/bay-overview/createbay', 'Portal\WarehouseManagementController@createBay');
+    Route::post('/bay-overview/deletebay', 'Portal\WarehouseManagementController@deleteBay');
+    Route::post('/bay-overview/printbay', 'Portal\WarehouseManagementController@printBay');
+    Route::post('/bay-overview/bay/checkallocatebox', 'Portal\WarehouseManagementController@checkAllocateBox');
+    Route::post('/bay-overview/bay/allocatebox', 'Portal\WarehouseManagementController@allocateBox');
 
-Route::get('/portal/boxes/addtobox/{boxname}', 'Portal\BoxController@showAddDeviceToBoxPage')->middleware('auth');
+    Route::get('/picking-despatch', 'Portal\WarehouseManagementController@showPickingDespatchPage');
+});

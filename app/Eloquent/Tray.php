@@ -22,7 +22,7 @@ class Tray extends Model
      * @var array
      */
     protected $fillable = [
-        'tray_name', 'tray_type','tray_brand', 'tray_grade', 'trolley_id','number_of_devices'
+        'tray_name', 'tray_type','tray_brand', 'tray_grade', 'tray_network', 'box_devices', 'trolley_id','number_of_devices','max_number_of_devices'
     ];
 
     public function getTrolleyName($trolley_id){
@@ -33,4 +33,19 @@ class Tray extends Model
     public function getTrayNumberOfDevices($tray_id){
         return count(TrayContent::where('tray_id', $tray_id)->get());
     }
+
+    public function getBoxStatus(){
+        switch($this->status){
+            case 1:
+                return 'Open';
+            case 2:
+                return 'Suspended';
+            case 3:
+                return 'Complete';
+            default:
+                return 'Unsigned';
+        }
+    }
+
+
 }
