@@ -161,6 +161,24 @@ class Tradein extends Model
 
     }
 
+    public function getBayName(){
+        $boxid = TrayContent::where('trade_in_id', $this->id)->first();
+        if($boxid !== null){
+            $boxid = $boxid->tray_id;
+            $box = Tray::where('id', $boxid)->first();
+            if($box->trolley_id === null){
+                return "Box not placed in bay.";
+            }
+            else{
+                return Trolley::where('id', $box->trolley_id)->first()->trolley_name;
+            }
+            
+        }
+        else{
+            return "Not in a box yet.";
+        }
+    }
+
     public function getTrayId($id){
         $trayid = TrayContent::where('trade_in_id', $id)->first();
         if($trayid !== null){
@@ -327,6 +345,7 @@ class Tradein extends Model
             /*25*/  ['Awaiting Box build','Paid'],
             /*26*/  ['Ready For Sale','Paid'],
             /*27*/  ['Closed','Paid'],
+            /*28*/  ['Part of sales lot', 'Paid'],
 
         ];
 
@@ -435,6 +454,8 @@ class Tradein extends Model
                 return $states[51];
             case "27":
                 return $states[52];
+            case "28":
+                return $states[53];
         }
         
     }

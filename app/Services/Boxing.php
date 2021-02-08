@@ -28,7 +28,7 @@ class Boxing{
             return ['Network missmatch. Cannot add this device to this box.', 404];
         }
 
-        if($tradein->job_state !== '21'){
+        if($tradein->job_state !== '22'){
             return ['Tradein with barcode ' . $request->tradeinid .' is not submitted for payment yet.', 404];
         }
 
@@ -69,7 +69,7 @@ class Boxing{
     }
 
     public function getDeviceGrade(Tradein $tradein){
-        if(($tradein->isInQuarantine() && $tradein->offer_accepted === true) || $tradein->job_state === '21'){
+        if(($tradein->isInQuarantine() && $tradein->offer_accepted === true) || $tradein->job_state === '22'){
             return $tradein->cosmetic_condition;
         }
         elseif($tradein->isInQuarantine() && $tradein->offer_accepted !== true){

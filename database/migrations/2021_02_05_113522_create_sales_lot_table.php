@@ -16,6 +16,8 @@ class CreateSalesLotTable extends Migration
         Schema::create('sales_lot', function (Blueprint $table) {
             $table->id();
             $table->integer('sales_lot_status')->default(0);
+            $table->date('date_sold')->nullable();
+            $table->date('payment_date')->nullable();
             $table->timestamps();
         });
     }

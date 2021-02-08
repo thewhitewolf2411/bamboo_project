@@ -37238,6 +37238,8 @@ __webpack_require__(/*! ./scripts/bayoverview */ "./resources/js/scripts/bayover
 
 __webpack_require__(/*! ./scripts/buildingsaleslot */ "./resources/js/scripts/buildingsaleslot.js");
 
+__webpack_require__(/*! ./scripts/completedsaleslot */ "./resources/js/scripts/completedsaleslot.js");
+
 "use strict";
 /*
 window.Vue = require('vue');
@@ -37371,8 +37373,16 @@ $('#checkboxsubmit').on('click', function () {
   !*** ./resources/js/scripts/buildingsaleslot.js ***!
   \**************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
+var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
+    isEmpty = _require.isEmpty;
+
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
 $('#changetoviewtradeins').on('click', function () {
   if (!$('#boxedtradeinstable').hasClass('table-visible')) {
     $('#boxedtradeinstable').addClass('table-visible');
@@ -37396,6 +37406,142 @@ $('#changetoviewboxes').on('click', function () {
     $('#changetoviewtradeins div').addClass('btn-primary-nonactive');
     $('#changetoviewtradeins div').removeClass('btn-primary-active');
   }
+});
+$('#addtolot').on('click', function () {
+  var checkedboxes = $('.box-click:checkbox:checked');
+  var checkedtradeins = $('.tradein-click:checkbox:checked');
+  var checkedboxesid = [];
+  var checkedtradeinsid = [];
+
+  if (checkedtradeins.length + checkedboxes.length >= 1) {
+    $('#removefromlot').css("opacity", 1);
+    $('#buildalot').prop("disabled", false);
+  }
+
+  for (var i = 0; i < checkedtradeins.length; i++) {
+    checkedtradeinsid.push(checkedtradeins[i].id);
+  }
+
+  for (var i = 0; i < checkedboxes.length; i++) {
+    checkedboxesid.push(checkedboxes[i].id);
+  }
+
+  console.log(checkedboxesid);
+
+  for (var i = 0; i < checkedboxesid.length; i++) {
+    $('#box-' + checkedboxesid[i]).find('td:last-child').remove();
+    $('#selected-boxes').append('<tr id="' + checkedboxesid[i] + '">' + $('#box-' + checkedboxesid[i]).html() + '</tr>');
+    $('.' + checkedboxesid[i]).parent().remove();
+    $('#box-' + checkedboxesid[i]).remove();
+  }
+
+  for (var i = 0; i < checkedtradeinsid.length; i++) {
+    $('#tradein-' + checkedtradeinsid[i]).find('td:last-child').remove();
+    $('#selected-tradeins').append('<tr id="' + checkedtradeinsid[i] + '">' + $('#tradein-' + checkedtradeinsid[i]).html() + '</tr>');
+    $('#tradein-' + checkedtradeinsid[i]).remove();
+  }
+});
+$('.clickable').on('click', function () {
+  var k = 0;
+  var chckbox = $('.clickable');
+
+  for (var i = 0; i < chckbox.length; i++) {
+    if (chckbox[i].checked) {
+      k++;
+    }
+  }
+
+  if (k > 0) {
+    $('#addtolot').css("opacity", 1);
+  } else {
+    $('#addtolot').css("opacity", 0.65);
+  }
+});
+$('#removefromlot').on('click', function () {
+  location.reload(true);
+});
+$('#buildalot').on('click', function () {
+  if (confirm("Are you sure that you want to build a lot with selected tradeins/boxes?")) {
+    var checkedtradeins = $('#selected-tradeins tr');
+    var checkedtradeinsid = [];
+
+    for (var i = 0; i < checkedtradeins.length; i++) {
+      if (!isEmpty(checkedtradeins[i].id)) {
+        checkedtradeinsid.push(checkedtradeins[i].id);
+      }
+    }
+
+    var checkedboxes = $('#selected-boxes tr');
+    var checkedboxesid = [];
+
+    for (var i = 0; i < checkedboxes.length; i++) {
+      if (!isEmpty(checkedboxes[i].id)) {
+        checkedboxesid.push(checkedboxes[i].id);
+      }
+    }
+
+    $.ajax({
+      url: "/portal/sales-lot/building-sales-lot/build-lot",
+      type: "POST",
+      data: {
+        checkedtradeinsid: checkedtradeinsid,
+        checkedboxesid: checkedboxesid
+      },
+      success: function success(response) {
+        location.reload(true);
+      }
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/scripts/completedsaleslot.js":
+/*!***************************************************!*\
+  !*** ./resources/js/scripts/completedsaleslot.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+$('.saleslots').on('click', function () {
+  $('.saleslots').each(function () {
+    $(this).removeClass('saleslot-active');
+  });
+  $(this).addClass('saleslot-active');
+  var saleslotid = $(this).prop('id');
+  $('#saleslotidform').val(saleslotid);
+  $.ajax({
+    url: "/portal/sales-lot/completed-sales-lots/get-saleslot-content",
+    type: "GET",
+    data: {
+      saleslotid: saleslotid
+    },
+    success: function success(response) {
+      $('#sales-lot-boxes td').each(function () {
+        $(this).remove();
+      });
+      $('#sales-lot-devices td').each(function () {
+        $(this).remove();
+      });
+
+      for (var i = 0; i < response.boxes.length; i++) {
+        $('#sales-lot-boxes').append('<tr> <td> ' + response.boxes[i].tray_name + '</td><td>' + response.boxes[i].trolley_id + '</td><td>' + response.boxes[i].number_of_devices + '</td> </tr>');
+      }
+
+      for (var i = 0; i < response.devices.length; i++) {
+        $('#sales-lot-devices').append('<tr> <td> ' + response.devices[i].barcode + '</td><td>' + response.devices[i].product_name + '</td><td>' + response.devices[i].imei_number + '</td><td>' + response.devices[i].box_location + '</td><td>' + response.devices[i].bay_location + '</td></tr>');
+      }
+
+      $('#changelotstatedata').empty();
+      $('#changelotstatedata').append('<div class="form-group"><select name="changestate" class="form-control"><option value="" selected default disabled>Change state of Sale lot</option><option value="1">Sales Lot Under Offer</option><option value="2">Sales Lot Sold</option><option value="4">Sales Lot Sold - Payment Received</option><option value="5">Sales Lot Despached</option> </select></div><div><input type="submit" class="btn btn-primary btn-blue" value="Change state"></div>');
+    }
+  });
+  $('#salelot-action').modal('show');
 });
 
 /***/ }),
