@@ -33,61 +33,134 @@ class CustomerCareController extends Controller
     }
 
     public function showTradeIn(Request $request){
-
         //if(!$this->checkAuthLevel(1)){return redirect('/');}
 
-        $tradeins = null;
         $search = null;
+        $searchtype = null;
+        $portalUser = PortalUsers::where('user_id', Auth::user()->id)->first();
+        $tradeins = collect();
 
+        if(isset($request->search)){
+            $searchterm = $request->search;
 
-        if($request->all() == null || $request->search == 0){
+            // search by tradein barcode
+            if(is_numeric($searchterm)){
+                $tradeins = Tradein::where('job_state', "1")->where(function ($query) use ($searchterm){
+                    $query->where('barcode', '=', $searchterm)->orWhere('barcode_original', '=', $searchterm);
+                })->get()->groupBy('barcode');
+            } else {
 
+                // search by product
+                $products = SellingProduct::where('product_name', 'LIKE', "%{$searchterm}%")->get()->pluck('id');
+                if(!$products->isEmpty()){
+                    $tradeins = Tradein::whereIn('product_id', $products)->get()->groupBy('barcode');
+                }
 
-            $tradeins = Tradein::all()->where('job_state', "1")->groupBy('barcode');
+                // search by customer grade
+                $by_grade = Tradein::where('job_state', "1")->where(function ($query) use ($searchterm){
+                    $query->where('customer_grade', '=', $searchterm);
+                })->get()->groupBy('barcode');
 
-            $user_id = Auth::user()->id;
-            $portalUser = PortalUsers::where('user_id', $user_id)->first();
+                if(!$by_grade->isEmpty()){
+                    $tradeins = $by_grade;
+                }
 
-            $search = null;
-        }
-        else{
-            if(is_numeric($request->search) === true && $request->search <= 3){
-                $tradeins = Tradein::where('job_state', "1")->get();
-                $user_id = Auth::user()->id;
-                $portalUser = PortalUsers::where('user_id', $user_id)->first();
-    
-                $search = $request->search;
-    
-                foreach($tradeins as $tradein){
-                    print_r($tradein->getCategoryId($tradein->product_id) != $request->search);
-                        if($tradein->getCategoryId($tradein->product_id) != $request->search){
-                            $tradeins = $tradeins->except($tradein->id);
+                // search by order type
+                $raw_tradeins = Tradein::where('job_state', "1")->get()->groupBy('barcode');
+                $filtered = collect();
+                foreach($raw_tradeins as $tradein_barcode => $tradein_group){
+                    
+                    $group = collect();
+                    if($tradein_group->first()->getOrderType($tradein_group->first()->barcode_original) == $searchterm){
+                        $filtered[$tradein_barcode] = $tradein_group;
                     }
+                    
                 }
-    
-                $tradeins = $tradeins->groupBy('barcode');
-            }
-            else{
+                if($filtered->count() > 0){
+                    $tradeins = $filtered;
+                }
 
-                $tradeins = Tradein::where('barcode', $request->search)->get();
-
-                if(count($tradeins) < 1){
-                    $tradeins = Tradein::where('product_state', 'like', '%' . $request->search . '%');
-
-                }
-                if(count($tradeins) < 1){
-                    return redirect()->back()->with('error', 'No Order with those search parameters. Please try again.');
-                }
-                else{
-                    $tradeins = $tradeins->groupBy('barcode');
-                    $user_id = Auth::user()->id;
-                    $portalUser = PortalUsers::where('user_id', $user_id)->first();
-                }
             }
 
+        } else {
+            if(isset($request->searchtype)){
+
+                $searchtype = $request->searchtype;
+                // $raw_tradeins = Tradein::where('job_state', "1")->get()->groupBy('barcode');
+                $raw_tradeins = Tradein::where('job_state', "1")->get()->groupBy('barcode');
+
+                $tradeins = collect();
+                if($searchtype != 0){
+                    foreach($raw_tradeins as $tradein_barcode => $tradein_group){
+                    
+                        $group = collect();
+                        foreach($tradein_group as $trade_in_barcode => $tradein){
+
+                            if($tradein->getCategoryId($tradein->product_id) === intval($searchtype)){
+                                $group->push($tradein);
+                            }
+                        }
+                        $tradeins[$tradein_barcode] = $group;
+                    }
+                } else {
+                    $tradeins = $raw_tradeins;
+                }
+                
+            } else {
+                $tradeins = Tradein::all()->where('job_state', "1")->groupBy('barcode');
+            }
         }
+
+        // if($request->all() == null || $request->search == 0){
+
+
+        //     $tradeins = Tradein::all()->where('job_state', "1")->groupBy('barcode');
+
+        //     $user_id = Auth::user()->id;
+        //     $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        //     $search = null;
+        // }
+        // else{
+        //     if(is_numeric($request->search) === true && $request->search <= 3){
+        //         $tradeins = Tradein::where('job_state', "1")->get();
+        //         $user_id = Auth::user()->id;
+        //         $portalUser = PortalUsers::where('user_id', $user_id)->first();
+    
+        //         $search = $request->search;
+    
+        //         foreach($tradeins as $tradein){
+        //             print_r($tradein->getCategoryId($tradein->product_id) != $request->search);
+        //                 if($tradein->getCategoryId($tradein->product_id) != $request->search){
+        //                     $tradeins = $tradeins->except($tradein->id);
+        //             }
+        //         }
+    
+        //         $tradeins = $tradeins->groupBy('barcode');
+        //     }
+        //     else{
+
+        //         $tradeins = Tradein::where('barcode', $request->search)->get();
+
+        //         if(count($tradeins) < 1){
+        //             $tradeins = Tradein::where('product_state', 'like', '%' . $request->search . '%');
+
+        //         }
+        //         if(count($tradeins) < 1){
+        //             return redirect()->back()->with('error', 'No Order with those search parameters. Please try again.');
+        //         }
+        //         else{
+        //             $tradeins = $tradeins->groupBy('barcode');
+        //             $user_id = Auth::user()->id;
+        //             $portalUser = PortalUsers::where('user_id', $user_id)->first();
+        //         }
+        //     }
+
+        // }
+
+
         
-        return view('portal.customer-care.trade-in')->with('tradeins', $tradeins)->with('portalUser', $portalUser)->with('search',$search);
+        return view('portal.customer-care.trade-in', ['tradeins' => $tradeins, 'portalUser' => $portalUser, 'search' => $search]);
     }
 
     /**
