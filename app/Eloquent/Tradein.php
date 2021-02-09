@@ -346,6 +346,7 @@ class Tradein extends Model
             /*26*/  ['Ready For Sale','Paid'],
             /*27*/  ['Closed','Paid'],
             /*28*/  ['Part of sales lot', 'Paid'],
+            /*29*/  ['Picked for sales lot', 'Paid'],
 
         ];
 
@@ -456,6 +457,8 @@ class Tradein extends Model
                 return $states[52];
             case "28":
                 return $states[53];
+            case "29":
+                return $states[54];
         }
         
     }

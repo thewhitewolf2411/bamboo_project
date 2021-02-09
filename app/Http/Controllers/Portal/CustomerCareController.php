@@ -623,9 +623,9 @@ class CustomerCareController extends Controller
         $tray = Tray::where('id', $trayContent->tray_id)->first();
 
         if($tradein->visible_serial !== null){
-            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->serial_number, $tray->tray_name);
+            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->serial_number, $tray->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
         } else {
-            $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $tray->tray_name);
+            $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $tray->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
         }
 
         return redirect()->back()->with(['success'=>'pdf/devicelabel-'. $tradein->barcode .'.pdf']);
@@ -635,7 +635,7 @@ class CustomerCareController extends Controller
     /**
      * Generate device label (PDF)
      */
-    public function generateNewLabel($has_serial, $barcode, $tradein_barcode, $manifacturer, $model, $imei, $location){
+    public function generateNewLabel($has_serial, $barcode, $tradein_barcode, $manifacturer, $model, $imei, $location, $cosmetic_condition, $network){
         $customPaper = array(0,0,141.90,283.80);
 
         if($has_serial){
@@ -646,7 +646,9 @@ class CustomerCareController extends Controller
                 'manifacturer'=>$manifacturer,
                 'model'=>$model,
                 'serial'=>$imei,
-                'location'=>$location))
+                'location'=>$location,
+                'grade'=>$cosmetic_condition,
+                'network'=>$network))
             ->setPaper($customPaper, 'landscape')
             ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
         } else {
@@ -657,7 +659,9 @@ class CustomerCareController extends Controller
                 'manifacturer'=>$manifacturer,
                 'model'=>$model,
                 'imei'=>$imei,
-                'location'=>$location))
+                'location'=>$location,
+                'grade'=>$cosmetic_condition,
+                'network'=>$network))
             ->setPaper($customPaper, 'landscape')
             ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
         }

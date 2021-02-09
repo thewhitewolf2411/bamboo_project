@@ -137,7 +137,7 @@ class SalesLotController extends Controller
         }
 
         if($salesLotStatus + 1 === intval($request->changestate)){
-            $salesLot->sales_lot_status = $salesLot->sales_lot_status++;
+            $salesLot->sales_lot_status = $salesLot->sales_lot_status + 1;
             $salesLot->save();
             return redirect()->back()->with('success', 'You have succesfully changed state of Lot no.' . $salesLot->id . ' to "' . $salesLot->getStatus($salesLot->sales_lot_status) . '"');
         }

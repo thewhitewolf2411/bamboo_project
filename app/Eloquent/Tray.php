@@ -43,6 +43,10 @@ class Tray extends Model
                 return 'Suspended';
             case 3:
                 return 'Complete';
+            case 4:
+                return 'Box in sale lot';
+            case 5:
+                return 'Box picked';
             default:
                 return 'Unsigned';
         }

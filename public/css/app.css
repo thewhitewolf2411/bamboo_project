@@ -14183,6 +14183,23 @@ input[type=number] {
   display: none;
 }
 
+.buildsaleslot-active {
+  opacity: 1;
+  height: 100%;
+}
+
+.buildsaleslot-hidden {
+  display: none;
+}
+
+.box-picked {
+  background-color: #d4edda !important;
+}
+
+.device-picked {
+  background-color: #d4edda !important;
+}
+
 .register-elements-container {
   width: 50%;
 }

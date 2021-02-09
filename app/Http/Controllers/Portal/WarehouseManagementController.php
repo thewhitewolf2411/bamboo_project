@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Eloquent\Box;
 use App\Eloquent\BoxContent;
 use App\Eloquent\Brand;
+use App\Eloquent\SalesLot;
 use App\Eloquent\Tray;
 use App\Eloquent\Trolley;
 use App\Eloquent\TrayContent;
 use App\Eloquent\Tradein;
+use App\Eloquent\SalesLotContent;
 
 use App\Services\Boxing;
 use PDF;
@@ -446,8 +448,147 @@ class WarehouseManagementController extends Controller
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
 
-        return view('portal.warehouse.picking-despatch', ['portalUser'=>$portalUser]);
+        $salesLots = SalesLot::where('sales_lot_status', 2)->get();
+
+        return view('portal.warehouse.picking-despatch', ['portalUser'=>$portalUser, 'salesLots'=>$salesLots]);
     }
 
+    public function showPickLotPage($id){
+        $user = Auth::user();
+        $portalUser = PortalUsers::where('user_id', $user->id)->first();
+
+        $saleLot = SalesLot::where('id', $id)->first();
+
+        $salesLotContentBoxes = SalesLotContent::where('sales_lot_id', $id)->where('device_id', null)->get();
+        $salesLotContentDevices = SalesLotContent::where('sales_lot_id', $id)->where('box_id', null)->get();
+
+        $boxes = array();
+        $devices = array();
+
+        foreach($salesLotContentBoxes as $sLCB){
+            $box = Tray::where('id', $sLCB->box_id)->first();
+
+            if($box->trolley_id == null){
+                $box->trolley_id = 'Box not placed in a bay.';
+            }
+            else{
+                $box->trolley_id = $box->getTrolleyName();
+            }
+            array_push($boxes, $box);
+        }
+
+        foreach($salesLotContentDevices as $sLCD){
+            $device = Tradein::where('id', $sLCD->device_id)->first();
+            $device->product_name = $device->getProductName($device->product_id);
+            $device->box_location = $device->getTrayName($device->id);
+            $device->bay_location = $device->getBayName();
+            array_push($devices, $device);
+        }
+
+        return view('portal.warehouse.picking-sales-lot', ['portalUser'=>$portalUser, 'saleLot'=>$saleLot, 'boxes'=>$boxes, 'devices'=>$devices]);
+    }
+
+    public function printPickNote(Request $request){
+        $salesLotContentBoxes = SalesLotContent::where('sales_lot_id', $request->saleslotid)->where('device_id', null)->get();
+        $salesLotContentDevices = SalesLotContent::where('sales_lot_id', $request->saleslotid)->where('box_id', null)->get();
+
+        $boxes = array();
+        $devices = array();
+
+        foreach($salesLotContentBoxes as $sLCB){
+            $box = Tray::where('id', $sLCB->box_id)->first();
+
+            if($box->trolley_id == null){
+                $box->trolley_id = 'Box not placed in a bay.';
+            }
+            else{
+                $box->trolley_id = $box->getTrolleyName();
+            }
+            array_push($boxes, $box);
+        }
+
+        foreach($salesLotContentDevices as $sLCD){
+            $device = Tradein::where('id', $sLCD->device_id)->first();
+            $device->product_name = $device->getProductName($device->product_id);
+            $device->box_location = $device->getTrayName($device->id);
+            $device->bay_location = $device->getBayName();
+            array_push($devices, $device);
+        }
+
+        $filename = public_path() . "/pdf/picklot/lot_no-" . $request->saleslotid . ".pdf";
+        PDF::loadView('portal.labels.picknote', array('boxes'=>$boxes, 'devices'=>$devices))->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
+    
+        return response("/pdf/picklot/lot_no-" . $request->saleslotid . ".pdf", 200);
+    }
+
+    public function checkBoxStatusOfLot(Request $request){
+        #dd($request->all());
+
+        $box = Tray::where('tray_name', $request->boxname)->where('tray_type', 'Bo')->first();
+        if($box === null){
+            return response('This box doesn\'t exist', 404);
+        }
+        if($box->status === 5){
+            return response('This box is already picked.', 404);
+        }
+
+        $boxid = $box->id;
+
+        if(SalesLotContent::where('box_id', $boxid)->where('sales_lot_id', $request->saleslotid)->first() === null){
+            return response('This box is not part of this sales lot.', 404);
+        }
+
+        return response('This box can be picked.', 200);
+    }
+
+    public function checkDeviceStatusOfLot(Request $request){
+        $tradein = Tradein::where('barcode', $request->devicebarcode)->first();
+        if($tradein === null){
+            return response('This order doesn\'t exist', 404);
+        }
+        if($tradein->job_state === '29'){
+            return response('Device already picked.', 404);
+        }
+
+        $tradeinid = $tradein->id;
+
+        if(SalesLotContent::where('device_id', $tradeinid)->where('sales_lot_id', $request->saleslotid)->first() === null){
+            return response('This device is not part of this sales lot.', 404);
+        }
+
+        return response('This device can be picked.', 200);
+    }
+
+    public function pickBox(Request $request){
+        $box = Tray::where('tray_name', $request->buildssaleslot_scanboxinput)->first();
+        $box->status = 5;
+        $box->save();
+
+        return redirect()->back();
+    }
+
+    public function pickDevice(Request $request){
+        $tradein = Tradein::where('barcode', $request->buildssaleslot_scandeviceinput)->first();
+        $tradein->job_state = '29';
+        $tradein->save();
+
+        return redirect()->back();
+    }
+
+    public function cancelPickingLot(){
+
+    }
+
+    public function suspendPickingLot(){
+
+    }
+
+    public function completePickingLot(){
+
+    }
+
+    public function despatchLot(){
+        
+    }
 
 }

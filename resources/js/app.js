@@ -10,6 +10,7 @@ require('./scripts/quarantinemanagement');
 require('./scripts/bayoverview');
 require('./scripts/buildingsaleslot');
 require('./scripts/completedsaleslot');
+require('./scripts/saleslotpicking');
 
 "use strict";
 
