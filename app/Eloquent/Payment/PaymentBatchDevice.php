@@ -30,7 +30,6 @@ class PaymentBatchDevice extends Model
         'payment_batch_id',
         'tradein_id',
         'payment_state',
-        'cheque_number',
         'failed_at'
     ];
 
@@ -71,5 +70,29 @@ class PaymentBatchDevice extends Model
 
     public function bankDetailsUpdated(){
         return null;
+    }
+
+    public function canCreateFCBatch(){
+        $failed_emails = BatchDeviceEmail::where('batch_device_id', $this->id)->where('type', 2)->get();
+        if($failed_emails->count() < 3){
+            return false;
+        }
+        return true;
+    }
+
+    public function canAddCheque(){
+        $batch_type = PaymentBatch::find($this->payment_batch_id)->batch_type;
+        if($batch_type === 3){
+            return true;
+        }
+        return false;
+    }
+
+    public function hasCheque(){
+        $tradein = Tradein::find($this->tradein_id);
+        if($tradein->cheque_number !== null){
+            return true;
+        }
+        return false;
     }
 }

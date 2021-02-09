@@ -52,7 +52,7 @@
                             </div></td>
                         </tr>
                         @foreach($devices as $batch_device)
-                            <tr id="{{$batch_device->id}}">
+                            <tr id="batch-{{$batch_device->id}}" @if(!$batch_device->can_create_fc) class="nofc" @endif>
                                 <td><div class="table-element">{!!$batch_device->batchReference()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->tradeinId()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->tradeinBarcode()!!}</div></td>
@@ -61,13 +61,17 @@
                                 <td><div class="table-element">{!!$batch_device->price()!!} £</div></td>
                                 <td><div class="table-element">{!!$batch_device->failedDate()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->bankDetailsUpdated()!!}</div></td>
-                                <td><div class="table-element">{!!$batch_device->cheque_number!!}</div></td>
+                                <td><div class="table-element">@if($batch_device->hasCheque()) Yes @endif</div></td>
                                 <td><div class="table-element">
                                     <input type="checkbox" onchange="checkBatchDevices()" id="{{$batch_device->id}}" name="selected_devices" value="{{$batch_device->id}}" class="table-element m-0 w-auto"/>
                                 </div></td>
                             </tr>
                         @endforeach
                     </table>
+
+                    <div id="alert_message" class="alert alert-danger w-50 m-4 ml-auto mr-auto text-center hidden" role="alert">
+                        This is a danger alert—check it out!
+                    </div>
 
                     <div class="m-auto w-75">
                         <div class="mt-4 mb-4 row">
@@ -210,6 +214,32 @@ function toggleFcBatch(){
     let fpbtn = document.getElementById('fpbatchref');
 
     if(ANY_SELECTED){
+
+        let items = document.getElementsByName('selected_devices');
+        var device_ids = [];
+        for (let index = 0; index < items.length; index++) {
+
+            let element = document.getElementById('batch-'+items[index].id);
+
+            if(element.classList.contains('nofc')){
+
+                var alertmsg =  document.getElementById('alert_message');
+                let barcode = element.childNodes[3].childNodes[0].innerHTML;
+
+                alertmsg.innerHTML = "Can't create FC batch. Highlighted device ( Barcode: " + barcode + " ) hasn't received 3rd email yet.";
+                if(alertmsg.classList.contains('hidden')){
+                    alertmsg.classList.remove('hidden');
+                }
+                element.style = 'border: 2px solid #ff6f60';
+
+                if(!fcbtn.classList.contains('disabled')){
+                    fcbtn.classList.add('disabled');
+                }
+                BATCH_TYPE = null;
+
+                return;
+            }
+        }
 
         if(fpbtn.classList.contains('btn-orange')){
             fpbtn.classList.remove('btn-orange');

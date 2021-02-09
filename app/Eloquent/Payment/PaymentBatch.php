@@ -23,7 +23,7 @@ class PaymentBatch extends Model
         4 => 'Failed payment'
     ];
 
-    public $batch_type = [
+    public $batch_types = [
         1 => 'submitted',
         2 => 'failed payment',
         3 => 'failed cheque',

@@ -108,7 +108,7 @@
 
                     <div class="modal-footer">
                         <a href="/portal/payments/awaiting" class="btn btn-secondary">Cancel</a>
-                        <button id="create-button" onclick="createBatch()" type="button" class="btn btn-primary disabled">Create batch</button>
+                        <button id="create-button" onclick="createBatch()" type="button" class="btn btn-secondary disabled">Create batch</button>
                     </div>
 
                 </div>
@@ -273,8 +273,9 @@ function createBatch(){
 }
 
 function loadResults(results){
-    let container = document.getElementById("search-results-table").childNodes[1];
+    var container = document.getElementById("search-results-table").childNodes[1];
     var alldevices = document.getElementById("tradeins-table").childNodes[1].rows;
+    var alldevicestable = document.getElementById("tradeins-table").childNodes[1];
 
 
     if(results.length > 0){
@@ -326,6 +327,13 @@ function loadResults(results){
                 container.appendChild(row);
             }
         }
+    } else {
+        // clear when no results
+        for(let j = 0; j < container.rows.length; j++){
+            if(container.rows[j].id !== 'hr'){
+                container.rows[j].parentNode.removeChild(container.rows[j]);
+            }
+        }
     }
 
     
@@ -343,10 +351,18 @@ function checkSubmit(){
     let button = document.getElementById('create-button');
     if(search_results_length > 1){
         if(button.classList.contains('disabled')){
+            if(!button.classList.contains('btn-blue')){
+                button.classList.remove('btn-secondary');
+                button.classList.add('btn-blue');
+            }
             button.classList.remove('disabled');
         }
     } else {
         if(!button.classList.contains('disabled')){
+            if(button.classList.contains('btn-blue')){
+                button.classList.remove('btn-blue');
+                button.classList.add('btn-secondary');
+            }
             button.classList.add('disabled');
         }
     }

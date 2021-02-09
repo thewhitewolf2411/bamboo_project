@@ -63,7 +63,7 @@ class TradeInObserver
             'bamboo_grade' => $tradein->bamboo_grade,
             'value' => ($tradein->bamboo_price !== null) ? (string)$tradein->bamboo_price : (string)$tradein->order_price,
             'stock_location' => $tradein->getTrayName($tradein->id),
-            'cheque_number' => null
+            'cheque_number' => $tradein->cheque_number
         ]);
 
         $can_store_audit = false;
@@ -104,6 +104,10 @@ class TradeInObserver
                 //echo 'tray';
             }
             if($last_audit->value !== $audit->value){
+                $can_store_audit = true;
+                //echo 'tray';
+            }
+            if($last_audit->cheque_number !== $audit->cheque_number){
                 $can_store_audit = true;
                 //echo 'tray';
             }

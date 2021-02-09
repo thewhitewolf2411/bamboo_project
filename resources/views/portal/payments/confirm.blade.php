@@ -63,20 +63,26 @@
                             </div></td>
                         </tr>
                         @foreach($devices as $batch_device)
-                            <tr id="{{$batch_device->id}}">
+                            <tr id="batch-{{$batch_device->id}}">
                                 <td><div class="table-element">{!!$batch_device->batchReference()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->tradeinId()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->tradeinBarcode()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->orderDate()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->product()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->price()!!} £</div></td>
-                                <td><div class="table-element">{!!$batch_device->cheque_number!!}</div></td>
+                                @if($batch_device->canAddCheque())
+                                    <td><input type="number" id="batch-{{$batch_device->id}}-cheque" onkeydown="resetBorder()" class="input-group-text mt-0"/></td>
+                                @else
+                                    <td><div class="table-element">{!!$batch_device->cheque_number!!}</div></td>
+                                @endif
                                 <td><div class="table-element">
                                     <input type="checkbox" onchange="checkBatchDevices()" id="{{$batch_device->id}}" name="selected_devices" value="{{$batch_device->id}}" class="table-element m-0 w-auto"/>
                                 </div></td>
                             </tr>
                         @endforeach
                     </table>
+
+                    <div id="alert_message" class="alert alert-danger w-50 m-4 ml-auto mr-auto text-center hidden" role="alert"></div>
 
                 </div>
 
@@ -99,6 +105,10 @@ $(document).ready(function(){
 
 var ANY_SELECTED = false;
 var ONE_SELECTED = false;
+
+function resetBorder(){
+    this.event.target.style = 'border: 1px solid #ced4da';
+}
 
 function selectAll(){
     let rowCount = document.getElementById("batch-devices-table").rows.length;
@@ -170,17 +180,50 @@ function markAsSuccessful(){
         let items = document.getElementsByName('selected_devices');
         let total = 0;
         let ids = [];
+        let cheque_numbers = {};
+        let to_highlight = [];
+
+        var cansubmit = true;
         items.forEach(element => {
+
+            let cheque_input = document.getElementById('batch-'+element.id+'-cheque');
+            if(cheque_input){
+                if(!cheque_input.value){
+                    cansubmit = false;
+                    to_highlight.push('batch-'+element.id+'-cheque');
+                } else {
+                    cheque_numbers[element.id] = cheque_input.value;
+                }
+            }
+
             if(element.checked){
                 ids.push(element.id);
             }
         });
+
+        if(!cansubmit){
+            // show alert
+            let alertmsg = document.getElementById('alert_message');
+            alertmsg.innerHTML = "Please type in cheque numbers in order to mark devices as paid.";
+            if(alertmsg.classList.contains('hidden')){
+                alertmsg.classList.remove('hidden');
+            }
+
+            // highlight inputs
+            for (let h = 0; h < to_highlight.length; h++) {
+                document.getElementById(to_highlight[h]).style = 'border: 1px solid #ff6f60';
+            }
+
+            return;
+        } 
+
         $.ajax({
             type: "POST",
             url: "{{ route('markAsSuccess')}}",
             data: {
                 _token: '{{csrf_token()}}',
-                ids: ids
+                ids: ids,
+                cheque_numbers: cheque_numbers
             },
             success: function(data, textStatus, xhr) {       
                 if(xhr.status === 200){

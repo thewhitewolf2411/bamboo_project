@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Eloquent\Payment\PaymentBatch;
 use App\Eloquent\Payment\PaymentBatchDevice;
+use App\Eloquent\Payment\BatchDeviceEmail;
 use App\Services\BatchService;
 use App\Services\KlaviyoEmail;
 use App\Services\PaymentBatchService;
@@ -347,7 +348,10 @@ class PaymentsController extends Controller
             }
 
         } else {
-            $payment_batches = PaymentBatch::where("exported", true)->get();
+            $payment_batches = PaymentBatch::where(function($query){
+                $query->where("exported", true)->orWhere('batch_type', 3);
+            })->get();
+
             foreach($payment_batches as $batch){
                 $payment_batch_devices = PaymentBatchDevice::where('payment_batch_id', $batch->id)->where('payment_state', null)->get();
                 foreach($payment_batch_devices as $device){
@@ -368,6 +372,10 @@ class PaymentsController extends Controller
      */
     public function markAsSuccessful(Request $request){
         if(isset($request->ids)){
+            
+            $cheque_numbers = null;
+            if(isset($request->cheque_numbers)) $cheque_numbers = $request->cheque_numbers;
+
             $batchdevices = PaymentBatchDevice::whereIn('id', $request->ids)->get();
             if($batchdevices->count() > 0){
 
@@ -376,10 +384,34 @@ class PaymentsController extends Controller
                     // set tradein job state - paid
                     // customer status paid
                     if($tradein){
+
+                        // if cheque number set, update it
+                        $has_cheque_number = false;
+                        if(isset($cheque_numbers[$batchdevice->id])){
+                            $has_cheque_number = true;
+                        }
+                        // set tradein state
                         $tradein->job_state = '24';
+                        if($has_cheque_number){
+                            $tradein->cheque_number = $cheque_numbers[$batchdevice->id];
+                        }
                         $tradein->save();
+
+                        // set batch device state
                         $batchdevice->payment_state = 1;
                         $batchdevice->save();
+
+                        // send payment successful email
+                        $klaviyo = new KlaviyoEmail();
+
+                        $user = User::find($tradein->user_id);
+                        $klaviyo->paymentSuccesful($user, $tradein);
+
+                        BatchDeviceEmail::create([
+                            'type' => 1,
+                            'order' => 1,
+                            'batch_device_id' => $batchdevice->id
+                        ]);
                     }
                 }
                 return response('Success');
@@ -417,6 +449,12 @@ class PaymentsController extends Controller
 
                         $user = User::find($tradein->user_id);
                         $klaviyo->paymentUnsuccesful($user, $tradein);
+
+                        BatchDeviceEmail::create([
+                            'type' => 2,
+                            'order' => 1,
+                            'batch_device_id' => $batchdevice->id
+                        ]);
                     }
                 }
                 return response('Success');
@@ -447,6 +485,9 @@ class PaymentsController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
         $devices =  PaymentBatchDevice::where('payment_state', 2)->get();
+        foreach($devices as $device){
+            $device->can_create_fc = $device->canCreateFCBatch();
+        }
 
         return view('portal.payments.failed', [
             'portalUser' => $portalUser, 
@@ -501,9 +542,7 @@ class PaymentsController extends Controller
                     break;
 
                 case 'FC': // failed cheque batch
-                    // will be created after 3rd payment unsuccessful email
-                    dd('499');
-
+                    // will be created only after 3rd payment unsuccessful email
                     $payment_batch = new PaymentBatch([
                         // 'payment_type' => 1                         default 01 for now (domestic)
                         'sort_code_number' => 12341234123412,           // bamboo account
