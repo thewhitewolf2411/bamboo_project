@@ -105,7 +105,6 @@ $('.openbox').on('click', function(){
         url: "/portal/warehouse-management/box-management/openbox",
         type:"POST",
         data:{
-            _token:"{!! csrf_token() !!}",
             boxname:boxname,
         },
         success:function(response){
@@ -121,7 +120,6 @@ $('.suspendbox').on('click', function(){
         url: "/portal/warehouse-management/box-management/suspendbox",
         type:"POST",
         data:{
-            _token:"{!! csrf_token() !!}",
             boxname:boxname,
         },
         success:function(response){

@@ -327,4 +327,31 @@ Route::group(['prefix'=>'portal/warehouse-management'], function(){
     Route::post('/bay-overview/bay/allocatebox', 'Portal\WarehouseManagementController@allocateBox');
 
     Route::get('/picking-despatch', 'Portal\WarehouseManagementController@showPickingDespatchPage');
+    Route::get('/picking-despatch/pick-lot/{id}', 'Portal\WarehouseManagementController@showPickLotPage');
+    Route::post('/picking-despatch/print-pick-note','Portal\WarehouseManagementController@printPickNote');
+    Route::post('/picking-despatch/pick-lot/checkboxstatus', 'Portal\WarehouseManagementController@checkBoxStatusOfLot');
+    Route::post('/picking-despatch/pick-lot/checkdevicestatus', 'Portal\WarehouseManagementController@checkDeviceStatusOfLot');
+
+    Route::post('/picking-despatch/pick-lot/pickbox', 'Portal\WarehouseManagementController@pickBox');
+    Route::post('/picking-despatch/pick-lot/pickdevice', 'Portal\WarehouseManagementController@pickDevice');
+
+    Route::post('/picking-despatch/pick-lot/cancel-picking', 'Portal\WarehouseManagementController@cancelPickingLot');
+    Route::post('/picking-despatch/pick-lot/suspend-picking', 'Portal\WarehouseManagementController@suspendPickingLot');
+    Route::post('/picking-despatch/pick-lot/complete-picking', 'Portal\WarehouseManagementController@completePickingLot');
+    Route::post('/picking-despatch/pick-lot/despatch-picking', 'Portal\WarehouseManagementController@despatchPickingLot');
+
+});
+
+Route::group(['prefix'=>'portal/sales-lot'], function(){
+
+    Route::get('/', 'Portal\SalesLotController@showSalesLotPage');
+
+    Route::get('/building-sales-lot', 'Portal\SalesLotController@showBuildingSalesLotPage');
+    Route::post('/building-sales-lot/build-lot', 'Portal\SalesLotController@buildSalesLot');
+
+    Route::get('/completed-sales-lots', 'Portal\SalesLotController@showCompletedSalesLotPage');
+    Route::get('/completed-sales-lots/get-saleslot-content', 'Portal\SalesLotController@getSalesLotContent');
+    Route::post('/completed-sales-lots/change-state', 'Portal\SalesLotController@changeSalesLotState');
+
+
 });

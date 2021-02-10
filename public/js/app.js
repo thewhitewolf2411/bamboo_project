@@ -37236,6 +37236,12 @@ __webpack_require__(/*! ./scripts/quarantinemanagement */ "./resources/js/script
 
 __webpack_require__(/*! ./scripts/bayoverview */ "./resources/js/scripts/bayoverview.js");
 
+__webpack_require__(/*! ./scripts/buildingsaleslot */ "./resources/js/scripts/buildingsaleslot.js");
+
+__webpack_require__(/*! ./scripts/completedsaleslot */ "./resources/js/scripts/completedsaleslot.js");
+
+__webpack_require__(/*! ./scripts/saleslotpicking */ "./resources/js/scripts/saleslotpicking.js");
+
 "use strict";
 /*
 window.Vue = require('vue');
@@ -37364,6 +37370,192 @@ $('#checkboxsubmit').on('click', function () {
 
 /***/ }),
 
+/***/ "./resources/js/scripts/buildingsaleslot.js":
+/*!**************************************************!*\
+  !*** ./resources/js/scripts/buildingsaleslot.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
+    isEmpty = _require.isEmpty;
+
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+$('#changetoviewtradeins').on('click', function () {
+  if (!$('#boxedtradeinstable').hasClass('table-visible')) {
+    $('#boxedtradeinstable').addClass('table-visible');
+    $('#closedboxtable').addClass('table-invisible');
+    $('#boxedtradeinstable').removeClass('table-invisible');
+    $('#closedboxtable').removeClass('table-visible');
+    $('#changetoviewtradeins div').removeClass('btn-primary-nonactive');
+    $('#changetoviewtradeins div').addClass('btn-primary-active');
+    $('#changetoviewboxes div').addClass('btn-primary-nonactive');
+    $('#changetoviewboxes div').removeClass('btn-primary-active');
+  }
+});
+$('#changetoviewboxes').on('click', function () {
+  if (!$('#closedboxtable').hasClass('table-visible')) {
+    $('#closedboxtable').addClass('table-visible');
+    $('#boxedtradeinstable').addClass('table-invisible');
+    $('#closedboxtable').removeClass('table-invisible');
+    $('#boxedtradeinstable').removeClass('table-visible');
+    $('#changetoviewboxes div').removeClass('btn-primary-nonactive');
+    $('#changetoviewboxes div').addClass('btn-primary-active');
+    $('#changetoviewtradeins div').addClass('btn-primary-nonactive');
+    $('#changetoviewtradeins div').removeClass('btn-primary-active');
+  }
+});
+$('#addtolot').on('click', function () {
+  var checkedboxes = $('.box-click:checkbox:checked');
+  var checkedtradeins = $('.tradein-click:checkbox:checked');
+  var checkedboxesid = [];
+  var checkedtradeinsid = [];
+
+  if (checkedtradeins.length + checkedboxes.length >= 1) {
+    $('#removefromlot').css("opacity", 1);
+    $('#buildalot').prop("disabled", false);
+  }
+
+  for (var i = 0; i < checkedtradeins.length; i++) {
+    checkedtradeinsid.push(checkedtradeins[i].id);
+  }
+
+  for (var i = 0; i < checkedboxes.length; i++) {
+    checkedboxesid.push(checkedboxes[i].id);
+  }
+
+  console.log(checkedboxesid);
+
+  for (var i = 0; i < checkedboxesid.length; i++) {
+    $('#box-' + checkedboxesid[i]).find('td:last-child').remove();
+    $('#selected-boxes').append('<tr id="' + checkedboxesid[i] + '">' + $('#box-' + checkedboxesid[i]).html() + '</tr>');
+    $('.' + checkedboxesid[i]).parent().remove();
+    $('#box-' + checkedboxesid[i]).remove();
+  }
+
+  for (var i = 0; i < checkedtradeinsid.length; i++) {
+    $('#tradein-' + checkedtradeinsid[i]).find('td:last-child').remove();
+    $('#selected-tradeins').append('<tr id="' + checkedtradeinsid[i] + '">' + $('#tradein-' + checkedtradeinsid[i]).html() + '</tr>');
+    $('#tradein-' + checkedtradeinsid[i]).remove();
+  }
+});
+$('.clickable').on('click', function () {
+  var k = 0;
+  var chckbox = $('.clickable');
+
+  for (var i = 0; i < chckbox.length; i++) {
+    if (chckbox[i].checked) {
+      k++;
+    }
+  }
+
+  if (k > 0) {
+    $('#addtolot').css("opacity", 1);
+  } else {
+    $('#addtolot').css("opacity", 0.65);
+  }
+});
+$('#removefromlot').on('click', function () {
+  location.reload(true);
+});
+$('#buildalot').on('click', function () {
+  if (confirm("Are you sure that you want to build a lot with selected tradeins/boxes?")) {
+    var checkedtradeins = $('#selected-tradeins tr');
+    var checkedtradeinsid = [];
+
+    for (var i = 0; i < checkedtradeins.length; i++) {
+      if (!isEmpty(checkedtradeins[i].id)) {
+        checkedtradeinsid.push(checkedtradeins[i].id);
+      }
+    }
+
+    var checkedboxes = $('#selected-boxes tr');
+    var checkedboxesid = [];
+
+    for (var i = 0; i < checkedboxes.length; i++) {
+      if (!isEmpty(checkedboxes[i].id)) {
+        checkedboxesid.push(checkedboxes[i].id);
+      }
+    }
+
+    $.ajax({
+      url: "/portal/sales-lot/building-sales-lot/build-lot",
+      type: "POST",
+      data: {
+        checkedtradeinsid: checkedtradeinsid,
+        checkedboxesid: checkedboxesid
+      },
+      success: function success(response) {
+        location.reload(true);
+      }
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/scripts/completedsaleslot.js":
+/*!***************************************************!*\
+  !*** ./resources/js/scripts/completedsaleslot.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+$('.saleslots').on('click', function () {
+  $('.saleslots').each(function () {
+    $(this).removeClass('saleslot-active');
+  });
+  $(this).addClass('saleslot-active');
+  var saleslotid = $(this).prop('id');
+  $('#saleslotidform').val(saleslotid);
+  $.ajax({
+    url: "/portal/sales-lot/completed-sales-lots/get-saleslot-content",
+    type: "GET",
+    data: {
+      saleslotid: saleslotid
+    },
+    success: function success(response) {
+      $('#sales-lot-boxes td').each(function () {
+        $(this).remove();
+      });
+      $('#sales-lot-devices td').each(function () {
+        $(this).remove();
+      });
+
+      for (var i = 0; i < response.boxes.length; i++) {
+        $('#sales-lot-boxes').append('<tr> <td> ' + response.boxes[i].tray_name + '</td><td>' + response.boxes[i].trolley_id + '</td><td>' + response.boxes[i].number_of_devices + '</td> </tr>');
+      }
+
+      for (var i = 0; i < response.devices.length; i++) {
+        $('#sales-lot-devices').append('<tr> <td> ' + response.devices[i].barcode + '</td><td>' + response.devices[i].product_name + '</td><td>' + response.devices[i].imei_number + '</td><td>' + response.devices[i].box_location + '</td><td>' + response.devices[i].bay_location + '</td></tr>');
+      }
+
+      $('#changelotstatedata').empty();
+      $('#changelotstatedata').append('<div class="form-group"><select id="changestate" name="changestate" class="form-control"><option value="" selected default disabled>Change state of Sale lot</option><option value="1">Sales Lot Under Offer</option><option value="2">Sales Lot Sold</option><option value="4">Sales Lot Sold - Payment Received</option> </select></div><div id="changestatesubmit"><input type="submit" class="btn btn-primary btn-blue" value="Change state"></div>');
+    }
+  });
+  $('#salelot-action').modal('show');
+});
+$(document).on('change', '#changestate', function () {
+  if ($('#changestate').val() === '2') {
+    $('#changestatesubmit').remove();
+    $('#changelotstatedata').append('<div id="customer-name-input" class="form-group"><input type="text" name="customername" placeholder="Enter customer name"></div><div id="changestatesubmit"><input type="submit" class="btn btn-primary btn-blue" value="Change state"></div>');
+  } else {
+    $('#customer-name-input').remove();
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/scripts/quarantinemanagement.js":
 /*!******************************************************!*\
   !*** ./resources/js/scripts/quarantinemanagement.js ***!
@@ -37460,7 +37652,6 @@ $('.openbox').on('click', function () {
     url: "/portal/warehouse-management/box-management/openbox",
     type: "POST",
     data: {
-      _token: "{!! csrf_token() !!}",
       boxname: boxname
     },
     success: function success(response) {
@@ -37474,7 +37665,6 @@ $('.suspendbox').on('click', function () {
     url: "/portal/warehouse-management/box-management/suspendbox",
     type: "POST",
     data: {
-      _token: "{!! csrf_token() !!}",
       boxname: boxname
     },
     success: function success(response) {
@@ -37577,6 +37767,159 @@ $('.printboxsummary').on('click', function () {
     },
     error: function error(data, textStatus, xhr) {
       alert('Something went wrong. Please try again.');
+    }
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/scripts/saleslotpicking.js":
+/*!*************************************************!*\
+  !*** ./resources/js/scripts/saleslotpicking.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+$(document).ready(function () {
+  $('#pick-sales-lot-boxes').show();
+  $('#pick-sales-lot-devices').hide();
+  $('#showscanboxdiv').find('div').removeClass('btn-blue');
+  $('#showscanboxdiv').find('div').addClass('btn-warning');
+  $('#showscandevicediv').find('div').removeClass('btn-warning');
+  $('#showscandevicediv').find('div').addClass('btn-blue');
+  var boxesCount = $('#pick-sales-lot-boxes tr').length - 1;
+  var devicesCount = $('#pick-sales-lot-devices tr').length - 1;
+  var pickedBoxesCount = $('#pick-sales-lot-boxes tr.box-picked').length;
+  var pickedDevicesCount = $('#pick-sales-lot-devices tr.device-picked').length;
+  var remainingBoxesCount = boxesCount - pickedBoxesCount;
+  var remainingDevicesCount = devicesCount - pickedDevicesCount;
+  $('#remaining').text(remainingBoxesCount + ' boxes and ' + remainingDevicesCount + ' devices.');
+  $('#picked').text(pickedBoxesCount + ' boxes and ' + pickedDevicesCount + ' devices.');
+
+  if (remainingDevicesCount + remainingBoxesCount === 0) {
+    $('#cancelpickingsaleslot').prop('disabled', true);
+    $('#completepickingsaleslot').prop('disabled', false);
+    $('#suspendpickingsaleslot').prop('disabled', true);
+  } else {
+    $('#cancelpickingsaleslot').prop('disabled', false);
+    $('#completepickingsaleslot').prop('disabled', true);
+    $('#suspendpickingsaleslot').prop('disabled', false);
+  }
+});
+$('.saleslotpicking').on('click', function () {
+  var saleslotid = this.id;
+
+  if ($('#saleslotstatus' + saleslotid).attr('data-value') === '2' || $('#saleslotstatus' + saleslotid).attr('data-value') === '4') {
+    $('#startpicklot').prop('href', '/portal/warehouse-management/picking-despatch/pick-lot/' + saleslotid);
+  }
+
+  $('#printpicknote').attr('data-value', saleslotid);
+  $.ajax({
+    url: "/portal/sales-lot/completed-sales-lots/get-saleslot-content",
+    type: "GET",
+    data: {
+      saleslotid: saleslotid
+    },
+    success: function success(response) {
+      $('#sales-lot-boxes td').each(function () {
+        $(this).remove();
+      });
+      $('#sales-lot-devices td').each(function () {
+        $(this).remove();
+      });
+
+      for (var i = 0; i < response.boxes.length; i++) {
+        $('#sales-lot-boxes').append('<tr> <td> ' + response.boxes[i].tray_name + '</td><td>' + response.boxes[i].trolley_id + '</td><td>' + response.boxes[i].number_of_devices + '</td> </tr>');
+      }
+
+      for (var i = 0; i < response.devices.length; i++) {
+        $('#sales-lot-devices').append('<tr> <td> ' + response.devices[i].barcode + '</td><td>' + response.devices[i].product_name + '</td><td>' + response.devices[i].imei_number + '</td><td>' + response.devices[i].box_location + '</td><td>' + response.devices[i].bay_location + '</td></tr>');
+      }
+    }
+  });
+  $('#salelot-picking').modal('show');
+});
+$('#printpicknote').on('click', function () {
+  var saleslotid = $(this).attr('data-value');
+  $.ajax({
+    url: "/portal/warehouse-management/picking-despatch/print-pick-note",
+    type: "POST",
+    data: {
+      saleslotid: saleslotid
+    },
+    success: function success(response) {
+      window.open(response, "_blank");
+    }
+  });
+});
+$('#showscanboxdiv').on('click', function () {
+  $('#buildsaleslot-scanboxdiv').removeClass('buildsaleslot-hidden');
+  $('#buildsaleslot-scanboxdiv').addClass('buildsaleslot-active');
+  $('#buildsaleslot-scandevicediv').removeClass('buildsaleslot-active');
+  $('#buildsaleslot-scandevicediv').addClass('buildsaleslot-hidden');
+  $('#pick-sales-lot-boxes').show();
+  $('#pick-sales-lot-devices').hide();
+  $('#buildssaleslot-scanboxinput').show();
+  $('#buildssaleslot-scandeviceinput').hide();
+  $('#buildssaleslot-scanboxinput').focus();
+  $(this).find('div').removeClass('btn-blue');
+  $(this).find('div').addClass('btn-warning');
+  $('#showscandevicediv').find('div').removeClass('btn-warning');
+  $('#showscandevicediv').find('div').addClass('btn-blue');
+});
+$('#showscandevicediv').on('click', function () {
+  $('#buildsaleslot-scandevicediv').removeClass('buildsaleslot-hidden');
+  $('#buildsaleslot-scandevicediv').addClass('buildsaleslot-active');
+  $('#buildsaleslot-scanboxdiv').removeClass('buildsaleslot-active');
+  $('#buildsaleslot-scanboxdiv').addClass('buildsaleslot-hidden');
+  $('#pick-sales-lot-boxes').hide();
+  $('#pick-sales-lot-devices').show();
+  $('#buildssaleslot-scanboxinput').hide();
+  $('#buildssaleslot-scandeviceinput').show();
+  $('#buildssaleslot-scandeviceinput').focus();
+  $(this).find('div').removeClass('btn-blue');
+  $(this).find('div').addClass('btn-warning');
+  $('#showscanboxdiv').find('div').removeClass('btn-warning');
+  $('#showscanboxdiv').find('div').addClass('btn-blue');
+});
+$('#buildssaleslot-scanboxinput').on('input', function () {
+  var boxname = $(this).val();
+  var saleslotid = $('#buildsaleslot-salelot').val();
+  $.ajax({
+    url: "/portal/warehouse-management/picking-despatch/pick-lot/checkboxstatus",
+    type: "POST",
+    data: {
+      boxname: boxname,
+      saleslotid: saleslotid
+    },
+    success: function success(data, textStatus, xhr) {
+      $('#buildssaleslot-scanboxsubmit').prop('disabled', false);
+    },
+    error: function error(data, textStatus, xhr) {
+      $('#buildssaleslot-scanboxsubmit').prop('disabled', true);
+    }
+  });
+});
+$('#buildssaleslot-scandeviceinput').on('input', function () {
+  var devicebarcode = $(this).val();
+  var saleslotid = $('#buildsaleslot-salelot').val();
+  $.ajax({
+    url: "/portal/warehouse-management/picking-despatch/pick-lot/checkdevicestatus",
+    type: "POST",
+    data: {
+      devicebarcode: devicebarcode,
+      saleslotid: saleslotid
+    },
+    success: function success(data, textStatus, xhr) {
+      $('#buildssaleslot-scandevicesubmit').prop('disabled', false);
+    },
+    error: function error(data, textStatus, xhr) {
+      $('#buildssaleslot-scandevicesubmit').prop('disabled', true);
     }
   });
 });

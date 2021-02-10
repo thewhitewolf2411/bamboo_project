@@ -15,6 +15,7 @@ body > div:nth-child(1) > div:nth-child(2) {
 <style>
 @page {
 margin:5%;
+font-size: 8pt;
 
 }
 
@@ -23,19 +24,20 @@ margin:5%;
 
 <div>
 
-    <div style="display:inline-block; padding:5%;">
+    <div style="padding:5%;">
 
-        <div style="width: 20%;">
-            <div style="scale(0.8); -webkit-transform: rotate(90deg); -moz-transform: rotate(90deg); -o-transform: rotate(90deg); -ms-transform: rotate(90deg); transform: rotate(90deg);">
-            {!!$barcode!!}
-            </div>
+        <div>
+            <p>{!!$barcode!!}</p>
         </div>
 
-        <div style="width: 80%; float:right;">
+        <div style="position: relative; width: 80%;">
 
-        <p style='margin:auto;'> Barcode number: {!! $tradein_barcode !!}<br>
-        Manifacturer: {{$manifacturer}} Model: {{$model}}<br>
-        IMEI: {{$imei}}<br>Location: {{$location}}</p>
+            <p> Barcode number: {!! $tradein_barcode !!}<br>
+            Manifacturer: {{$manifacturer}} <br>
+            Model: {{$model}}<br>
+            IMEI: {{$imei}}<br>
+            Grade: {{$grade}}<br>
+            Location: {{$location}}</p>
 
         </div>
 

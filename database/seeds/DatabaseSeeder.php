@@ -84,7 +84,8 @@ class DatabaseSeeder extends Seeder
             'awaiting_payments'=>true,
             'submit_payments'=>true,
             'payment_confirmations'=>true,
-            'failed_payments'=>true
+            'failed_payments'=>true,
+            'sales_lot'=>true,
         ]);
 
         DB::table('product_category')->insert([

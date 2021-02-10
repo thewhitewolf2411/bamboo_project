@@ -24,12 +24,16 @@ class Boxing{
             return ['Box is at it\'s capacity. Please create new box.', 404];
         }
 
-        if(!($box->tray_network === 'unlocked' && $tradein->deviceLocked() === false) || !($box->tray_network !== 'unlocked' && $tradein->deviceLocked() === true)){
+        if(($box->tray_network === 'unlocked' && $tradein->deviceLocked() === false) || !($box->tray_network !== 'unlocked' && $tradein->deviceLocked())){
             return ['Network missmatch. Cannot add this device to this box.', 404];
         }
 
-        if($tradein->job_state !== '21'){
+        if(!($tradein->deviceInPaymentProcess())){
             return ['Tradein with barcode ' . $request->tradeinid .' is not submitted for payment yet.', 404];
+        }
+
+        if($tradein->isBoxed()){
+            return ['Device is already boxed to other box. You can move it to this box.', 200];
         }
 
         if($box->tray_brand === $tradein->getBrandLetter($tradein->product_id) && $box->box_devices === $tradein->getCategoryId($tradein->product_id)){
@@ -69,7 +73,7 @@ class Boxing{
     }
 
     public function getDeviceGrade(Tradein $tradein){
-        if(($tradein->isInQuarantine() && $tradein->offer_accepted === true) || $tradein->job_state === '21'){
+        if(($tradein->isInQuarantine() && $tradein->offer_accepted === true) || $tradein->deviceInPaymentProcess()){
             return $tradein->cosmetic_condition;
         }
         elseif($tradein->isInQuarantine() && $tradein->offer_accepted !== true){
