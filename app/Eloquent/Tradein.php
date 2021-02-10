@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Eloquent\SellingProduct;
 use App\Eloquent\Category;
 use App\Eloquent\Brand;
+use App\Eloquent\Payment\UserBankDetails;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
 use App\User;
@@ -513,6 +514,15 @@ class Tradein extends Model
             default:
                 return false;
         }
+    }
+
+    public function canProccessPayment(){
+        $user = User::find($this->user_id);
+        $bank_details = UserBankDetails::where('user_id', $user->id)->get();
+        if($bank_details->count() > 0){
+            return true;
+        }
+        return false;
     }
     
 }

@@ -243,17 +243,49 @@ function markAsFailed(){
         let items = document.getElementsByName('selected_devices');
         let total = 0;
         let ids = [];
+        let cheque_numbers = {};
+        let to_highlight = [];
+
+        var cansubmit = true;
         items.forEach(element => {
+
+            let cheque_input = document.getElementById('batch-'+element.id+'-cheque');
+            if(cheque_input){
+                if(!cheque_input.value){
+                    cansubmit = false;
+                    to_highlight.push('batch-'+element.id+'-cheque');
+                } else {
+                    cheque_numbers[element.id] = cheque_input.value;
+                }
+            }
+
             if(element.checked){
                 ids.push(element.id);
             }
         });
+
+        if(!cansubmit){
+            // show alert
+            let alertmsg = document.getElementById('alert_message');
+            alertmsg.innerHTML = "Please type in cheque numbers in order to mark devices as failed.";
+            if(alertmsg.classList.contains('hidden')){
+                alertmsg.classList.remove('hidden');
+            }
+
+            // highlight inputs
+            for (let h = 0; h < to_highlight.length; h++) {
+                document.getElementById(to_highlight[h]).style = 'border: 1px solid #ff6f60';
+            }
+
+            return;
+        } 
         $.ajax({
             type: "POST",
             url: "{{ route('markAsFailed')}}",
             data: {
                 _token: '{{csrf_token()}}',
-                ids: ids
+                ids: ids,
+                cheque_numbers: cheque_numbers
             },
             success: function(data, textStatus, xhr) {
                 if(xhr.status === 200){
@@ -268,9 +300,16 @@ function markAsFailed(){
     }
 }
 
-function exportBatch(batchdeviceid){
+function exportBatch(){
     if(ONE_SELECTED){
-        window.open("/portal/payments/submit/downloadcsv?batchdevice_id="+batchdeviceid, "_blank");
+        let items = document.getElementsByName('selected_devices');
+        let id;
+        items.forEach(element => {
+            if(element.checked){
+                id = element.id;
+            }
+        });
+        window.open("/portal/payments/submit/downloadcsv?batchdevice_id="+id, "_blank");
     }
 }
 

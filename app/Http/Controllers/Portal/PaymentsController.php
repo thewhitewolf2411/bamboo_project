@@ -425,6 +425,10 @@ class PaymentsController extends Controller
      */
     public function markAsFailed(Request $request){
         if(isset($request->ids)){
+
+            $cheque_numbers = null;
+            if(isset($request->cheque_numbers)) $cheque_numbers = $request->cheque_numbers;
+
             $batchdevices = PaymentBatchDevice::whereIn('id', $request->ids)->get();
 
             if($batchdevices->count() > 0){
@@ -436,6 +440,16 @@ class PaymentsController extends Controller
                 foreach($batchdevices as $batchdevice){
                     $tradein = Tradein::find($batchdevice->tradein_id);
                     if($tradein){
+
+                        // if cheque number set, update it
+                        $has_cheque_number = false;
+                        if(isset($cheque_numbers[$batchdevice->id])){
+                            $has_cheque_number = true;
+                        }
+                        if($has_cheque_number){
+                            $tradein->cheque_number = $cheque_numbers[$batchdevice->id];
+                        }
+
                         // set tradein job state - failed
                         $tradein->job_state = '23';
                         $tradein->save();
@@ -487,6 +501,7 @@ class PaymentsController extends Controller
         $devices =  PaymentBatchDevice::where('payment_state', 2)->get();
         foreach($devices as $device){
             $device->can_create_fc = $device->canCreateFCBatch();
+            $device->can_create_fp = $device->canCreateFPBatch();
         }
 
         return view('portal.payments.failed', [
@@ -525,8 +540,7 @@ class PaymentsController extends Controller
             switch ($type) {
                 case 'FP':  // failed payment batch
                     // can be created after user updates his bank account details (TODO create event for bank account details update)
-                    dd('481');
-
+                    
                     $payment_batch = new PaymentBatch([
                         // 'payment_type' => 1                         default 01 for now (domestic)
                         'sort_code_number' => 12341234123412,           // bamboo account

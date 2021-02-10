@@ -2,9 +2,12 @@
 
 namespace App;
 
+use App\Eloquent\Payment\UserBankDetails;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Crypt;
 
 class User extends Authenticatable
 {
@@ -51,5 +54,42 @@ class User extends Authenticatable
             return true;
         }
         return false;
+    }
+
+    public function hasPaymentDetails(){
+        $bank_details = UserBankDetails::where('user_id', $this->id)->get();
+        if($bank_details->isEmpty()){
+            return false;
+        }
+        return true;
+    }
+
+    public function accountName(){
+        $bank_details = UserBankDetails::where('user_id', $this->id)->first();
+        try {
+            return Crypt::decrypt($bank_details->account_name);
+        } catch (DecryptException $e) {
+            dd($e);
+        }
+    }
+
+    public function accountNumber(){
+        $bank_details = UserBankDetails::where('user_id', $this->id)->first();
+        try {
+            $decrypted = Crypt::decrypt($bank_details->card_number);
+            return '****' . substr($decrypted, 4);
+        } catch (DecryptException $e) {
+            dd($e);
+        }
+    }
+
+    public function sortCode(){
+        $bank_details = UserBankDetails::where('user_id', $this->id)->first();
+        try {
+            $decrypted = Crypt::decrypt($bank_details->sort_code);
+            return '***' . substr($decrypted, 3);
+        } catch (DecryptException $e) {
+            dd($e);
+        }
     }
 }

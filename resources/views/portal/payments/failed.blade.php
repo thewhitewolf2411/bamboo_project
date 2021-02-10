@@ -52,7 +52,8 @@
                             </div></td>
                         </tr>
                         @foreach($devices as $batch_device)
-                            <tr id="batch-{{$batch_device->id}}" @if(!$batch_device->can_create_fc) class="nofc" @endif>
+
+                            <tr id="batch-{{$batch_device->id}}" class="@if(!$batch_device->can_create_fc)nofc @if(!$batch_device->canCreateFPBatch())nofp @endif @endif">
                                 <td><div class="table-element">{!!$batch_device->batchReference()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->tradeinId()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->tradeinBarcode()!!}</div></td>
@@ -184,6 +185,32 @@ function toggleFpBatch(){
     let fcbtn = document.getElementById('fcbatchref');
 
     if(ANY_SELECTED){
+
+        let items = document.getElementsByName('selected_devices');
+        var device_ids = [];
+        for (let index = 0; index < items.length; index++) {
+
+            let element = document.getElementById('batch-'+items[index].id);
+
+            if(element.classList.contains('nofp')){
+
+                var alertmsg =  document.getElementById('alert_message');
+                let barcode = element.childNodes[3].childNodes[0].innerHTML;
+
+                alertmsg.innerHTML = "Can't create FP batch. User possesing highlighted device ( Barcode: " + barcode + " ) hasn't updated his bank account details yet.";
+                if(alertmsg.classList.contains('hidden')){
+                    alertmsg.classList.remove('hidden');
+                }
+                element.style = 'border: 2px solid #ff6f60';
+
+                if(!fcbtn.classList.contains('disabled')){
+                    fcbtn.classList.add('disabled');
+                }
+                BATCH_TYPE = null;
+
+                return;
+            }
+        }
 
         if(fcbtn.classList.contains('btn-orange')){
             fcbtn.classList.remove('btn-orange');

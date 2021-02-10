@@ -69,7 +69,10 @@ class PaymentBatchDevice extends Model
     }
 
     public function bankDetailsUpdated(){
-        return null;
+        if($this->bank_details_updated){
+            return Carbon::parse($this->bank_details_updated_at)->format('d.m.Y H:i');
+        }
+        return false;
     }
 
     public function canCreateFCBatch(){
@@ -78,6 +81,13 @@ class PaymentBatchDevice extends Model
             return false;
         }
         return true;
+    }
+
+    public function canCreateFPBatch(){
+        if($this->bank_details_updated){
+            return true;
+        }
+        return false;
     }
 
     public function canAddCheque(){
@@ -91,6 +101,14 @@ class PaymentBatchDevice extends Model
     public function hasCheque(){
         $tradein = Tradein::find($this->tradein_id);
         if($tradein->cheque_number !== null){
+            return true;
+        }
+        return false;
+    }
+
+    public function paymentFailed(){
+        $batch = PaymentBatch::find($this->payment_batch_id)->first();
+        if($batch->payment_state === 2){
             return true;
         }
         return false;

@@ -4,10 +4,13 @@ namespace App\Services;
 
 use App\Eloquent\Payment\PaymentBatch;
 use App\Eloquent\Payment\PaymentBatchDevice;
+use App\Eloquent\Payment\UserBankDetails;
 use App\Eloquent\Tradein;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Crypt;
 
 class PaymentBatchService {
 
@@ -89,13 +92,39 @@ class PaymentBatchService {
                         # code...
                         break;
                 }
-    
-                $single_payment['T010'] = 15100031806542;                   // debit account identifier (bamboo account)
+
+                $billing_info = UserBankDetails::where('user_id', $user->id)->first();
+                $account_identifier = null;
+                $account_number = null;
+                $beneficiary_name = null;
+                if(!$billing_info){
+                    $account_identifier = "000000";
+                    $account_number = "00000000";
+                    $beneficiary_name = $user->fullName();
+                } else {
+                    try {
+                        $beneficiary_name = Crypt::decrypt($billing_info->account_name);
+                    } catch (DecryptException $e) {
+                        $beneficiary_name = $user->fullName();
+                    }
+                    try {
+                        $account_identifier = Crypt::decrypt($billing_info->sort_code);
+                    } catch (DecryptException $e) {
+                        $account_identifier = "000000";
+                    }
+                    try {
+                        $account_number = Crypt::decrypt($billing_info->card_number);
+                    } catch (DecryptException $e) {
+                        $account_number = "00000000";
+                    }
+                }
+                    
+                $single_payment['T010'] = env('BAMBOO_ACCOUNT_NUMBER');     // debit account identifier (bamboo account)
                 $single_payment['T014'] = $tradein->bamboo_price;           // device price (bamboo evaluated price)
                 $single_payment['T016'] = Carbon::parse($payment_batch->arrive_at)->format('dmY');  // credit date
-                $single_payment['T022'] = 151000;                           // user bank account identifier -- TODO
-                $single_payment['T028'] = 44298801;                         // user bank account number     -- TODO
-                $single_payment['T028'] = $user->fullName();                // beneficiary name and address line
+                $single_payment['T022'] = $account_identifier;              // user bank account identifier -- TODO
+                $single_payment['T028'] = $account_number;                  // user bank account number     -- TODO
+                $single_payment['T030'] = $beneficiary_name . " " . $user->billing_address; // beneficiary name and address line
                 $single_payment['T034'] = "INVOICE " . $tradein->barcode;   // beneficiary reference
     
                 $payment_row = '';

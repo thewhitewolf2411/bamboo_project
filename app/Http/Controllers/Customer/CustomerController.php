@@ -11,11 +11,14 @@ use App\User;
 use App\Eloquent\Cart;
 use App\Eloquent\Order;
 use App\Eloquent\BuyingProduct;
+use App\Eloquent\Payment\PaymentBatchDevice;
+use App\Eloquent\Payment\UserBankDetails;
 use App\Eloquent\SellingProduct;
 use App\Eloquent\Tradein;
 use App\Eloquent\Tradeout;
 use App\Eloquent\Wishlist;
 use Auth;
+use Carbon\Carbon;
 use Crypt;
 
 
@@ -245,8 +248,7 @@ class CustomerController extends Controller
 
             $userdata->password = Crypt::decrypt($userdata->password);
 
-            return view('customer.profile')
-                ->with(['userdata'=>$userdata, 'tradeins'=>$tradeins, 'tradeouts'=>$tradeouts]);
+            return view('customer.profile', ['userdata'=>$userdata, 'tradeins'=>$tradeins, 'tradeouts'=>$tradeouts]);
 #                ->with('userorders', $userorders);
 
         }
@@ -388,5 +390,85 @@ class CustomerController extends Controller
         else{
             return redirect()->back()->with('error', 'Nothing was changed. Please try again.');
         }
+    }
+
+
+    /**
+     * Change bank account details.
+     */
+    public function changeAccountDetails(Request $request){
+        $bank_details = UserBankDetails::where('user_id', Auth::user()->id)->get();
+
+        $data = $request->except('token');
+        $validation_fails = [];
+        if(strlen($data['account_name']) < 5){
+            array_push($validation_fails, 'Please enter valid account name.');
+        }
+        if(!is_numeric($data['account_number'])){
+            array_push($validation_fails, 'Account number must be numeric.');
+
+            if(strlen($data['account_number']) !== 8){
+                array_push($validation_fails, 'Account number must be 8 digits.');
+            }
+        }
+
+        if(!is_numeric($data['sort_code_1']) || !is_numeric($data['sort_code_2']) || !is_numeric($data['sort_code_3'])){
+            array_push($validation_fails, 'Sort code must be a number.');
+        } else {
+            if((strlen($data['sort_code_1']) !== 2) || (strlen($data['sort_code_2']) !== 2) || (strlen($data['sort_code_3']) !== 2)){
+                array_push($validation_fails, 'Sort code must be 6 digits, 2 per field.');
+            }
+        }
+        
+        if(empty($validation_fails)){
+            if($bank_details->isEmpty()){
+
+                // create new
+                UserBankDetails::create([
+                    'user_id' => Auth::user()->id,
+                    'account_name' => Crypt::encrypt($request->account_name),
+                    'card_number' => Crypt::encrypt($request->account_number),
+                    'sort_code' => Crypt::encrypt($request->sort_code_1 . $request->sort_code_2 . $request->sort_code_3)
+                ]);
+                
+                return redirect()->back()->with('account_success', 'Payment details added successfully.');
+
+            } else {
+                $userbankdetails = UserBankDetails::where('user_id', Auth::user()->id)->first();
+                if($userbankdetails){
+
+                    // update user bank details
+                    $userbankdetails->update([
+                        'user_id' => Auth::user()->id,
+                        'account_name' => Crypt::encrypt($request->account_name),
+                        'card_number' => Crypt::encrypt($request->account_number),
+                        'sort_code' => Crypt::encrypt($request->sort_code_1 . $request->sort_code_2 . $request->sort_code_3)
+                    ]);
+
+                    // change payment batch devices state for ability to create FP batch
+                    $tradein_ids = Tradein::where('user_id', Auth::user()->id)->get()->pluck('id')->toArray();
+                    if($tradein_ids){
+                        $payment_batch_devices = PaymentBatchDevice::whereIn('tradein_id', $tradein_ids)->where('payment_state', 2)->get();
+                        if($payment_batch_devices->count() > 0){
+                            // update bank_details_updated and bank_details_updated_order columns, so that FP batch can be created
+
+                            foreach($payment_batch_devices as $payment_batch_device){
+                                // check type (ignore FC batch types)
+                                $payment_batch_device->bank_details_updated = true;
+                                $payment_batch_device->bank_details_update_order = 1;
+                                $payment_batch_device->bank_details_updated_at = Carbon::now();
+                                $payment_batch_device->save();            
+                            }
+                        }
+                    }
+                    
+                    return redirect()->back()->with('account_success', 'Payment details updated successfully.');
+                }
+                // update (maybe)
+            }
+        } else {
+            return redirect()->back()->with('account_fails', $validation_fails);
+        }
+        
     }
 }

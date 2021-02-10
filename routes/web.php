@@ -87,6 +87,7 @@ Route::post('/removefromwislist', 'Customer\CustomerController@removeFromWishLis
 
 //user change profile details
 Route::post('/userprofile/changename', 'Customer\CustomerController@changeName');
+Route::post('/userprofile/accountdetails', 'Customer\CustomerController@changeAccountDetails')->middleware('auth');
 
 //Portal get Route
 
