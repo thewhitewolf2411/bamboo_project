@@ -19,7 +19,7 @@ class Testing{
         $product = SellingProduct::where('id', $tradein->product_id)->first();
         $user = User::where('id', $tradein->user_id)->first();
 
-        if($tradein->job_state === "14" || $tradein->hasDeviceBeenTestedSecondTime()){
+        if($tradein->job_state === "14"){
 
             if($request->pin_lock === "true"){
                 
@@ -53,30 +53,35 @@ class Testing{
             if($tradein->isInQuarantine()){
                 $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'Q')->where('number_of_devices', "<=" ,100)->first();
                 $quarantineName = $quarantineTrays->tray_name;
+                $tradein->quarantine_date = \Carbon\Carbon::now();
+                $tradein->save();
             }
             else{
                 $bambogradeval = $request->bamboo_customer_grade;
-                // if($request->device_correct === "false" || $request->correct_memory === "false" || $request->correct_network === "false"){
                     
                     if($request->device_correct === "false"){
                         $tradein->correct_product_id = $request->select_correct_device;
                     }
                     else{
-                        $tradein->correct_product_id = $request->product_id;
+                        $tradein->correct_product_id = $tradein->product_id;
                     }
                     if($request->correct_memory === "false"){
                         $tradein->correct_memory = $request->correct_memory_value;
                     }
                     else{
-                        $tradein->correct_memory = $request->customer_memory;
+                        $tradein->correct_memory = $tradein->customer_memory;
                     }
                     if($request->correct_network === "false"){
                         $tradein->correct_network = $request->correct_network_value;
                     }
                     else{
-                        $tradein->correct_memory = $request->customer_network;
+                        $tradein->correct_network = $tradein->customer_network;
                     }
-                // }
+
+                    $tradein->save();
+
+
+
 
                 $bambooprice = $this->generateDevicePrice($tradein->correct_product_id, $tradein->correct_memory, $tradein->correct_network, $bambogradeval);
                 $tradein->bamboo_price = $bambooprice;
@@ -222,6 +227,8 @@ class Testing{
             if($tradein->isInQuarantine()){
                 $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'Q')->where('number_of_devices', "<=" ,100)->first();
                 $quarantineName = $quarantineTrays->tray_name;
+                $tradein->quarantine_date = \Carbon\Carbon::now();
+                $tradein->save();
             }
             else{
                 $bambogradeval = $request->bamboo_customer_grade;

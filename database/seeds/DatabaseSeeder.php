@@ -679,7 +679,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TA01-2-B+',
+            'tray_name'=>'TA01-2-B-Plus',
             'tray_type'=>'T',
             'tray_brand'=>'A',
             'tray_grade'=>'B+',
@@ -815,7 +815,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TS01-2-B+',
+            'tray_name'=>'TS01-2-B-Plus',
             'tray_type'=>'T',
             'tray_brand'=>'S',
             'tray_grade'=>'B+',
@@ -950,7 +950,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TH01-2-B+',
+            'tray_name'=>'TH01-2-B-Plus',
             'tray_type'=>'T',
             'tray_brand'=>'H',
             'tray_grade'=>'B+',
@@ -1084,7 +1084,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TM01-2-B+',
+            'tray_name'=>'TM01-2-B-Plus',
             'tray_type'=>'T',
             'tray_brand'=>'M',
             'tray_grade'=>'B+',

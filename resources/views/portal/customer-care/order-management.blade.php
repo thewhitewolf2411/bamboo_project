@@ -106,7 +106,7 @@
                             </td>
                             <td>
                                 <div class="table-element">
-                                    @if($tradein->job_state <= 2)
+                                    @if(!$tradein->hasDeviceBeenReceived())
                                     <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint tradepack">
                                         <i class="fa fa fa-print"></i>
                                     </a>
@@ -131,17 +131,13 @@
                                 
                             
                             <td class="text-center 3 p-0">
-                                @if($tradein->job_state === '13')
+                                @if($tradein->hasBeenTested())
                                 <a title="Return device to testing" href="/totesting/{{$tradein->id}}">
                                     {{-- <i class="fa fa-times" style="color:black !important;"></i> --}}
                                     <img style="width: 15px;" src="{{url('/images/undo.png')}}">
                                 </a>
-                                @elseif($tradein->job_state === '14')
-                                    <div class="alert alert-success mb-0">Device returned to 2nd test</div>
-                                @elseif($tradein->hasDeviceBeenTestedSecondTime())
-                                    <div class="alert alert-warning mb-0">This device was already tested second time</div>
                                 @else
-                                    <div class="alert alert-warning mb-0">Unable to return this device to 2nd testing</div>
+                                    <div class="alert alert-warning mb-0">Hasen't been tested yet.</div>
                                 @endif
                             </td>
                                                        

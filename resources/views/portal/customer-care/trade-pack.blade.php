@@ -48,7 +48,7 @@
                     <div class="py-4 d-flex align-items-center">
                         <form class="d-flex align-items-center" action="/portal/customer-care/trade-pack/" method="get">              
                             <label for="searchtradeins">Select product type:</label>
-                            <select id="search" name="search" class="form-control mx-3">
+                            <select id="search" name="searchtype" class="form-control mx-3">
                                 <option value="0" @if($search == 0) selected @endif>All</option>
                                 <option value="1" @if($search == 1) selected @endif>Mobile phones</option>
                                 <option value="2" @if($search == 2) selected @endif>Tablets</option>
@@ -77,46 +77,47 @@
                         </tr>
 
                         @foreach($tradeins as $key=>$order)
-
-                        <tr>
-                            <td ><div class="table-element">@foreach($order as $tradein){{$tradein->barcode_original}}<br>@endforeach</div></td>
-                            <td><div class="table-element">@foreach($order as $tradein){{$tradein->barcode}} <br> @endforeach</div></td>
-                            <td><div class="table-element">{{$order[0]->created_at}}</div></td>
-                            <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} {{$tradein->memory}} <br> @endforeach</div></td>
-                            
-                            <td><div class="table-element">@if($tradein->job_state === "2") Yes @else No @endif</div></td>
-                            <td><div class="table-element">
-                                <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
-                                    <i class="fa fa-search"></i>
-                                </a>
-
-                                @if($tradein->job_state == 2)
-                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint tradepack">
-                                    <i class="fa fa fa-print"></i>
-                                </a>
-                                @endif
-                                @if($tradein->job_state == 3)
-                                <a href="/labeltradeout-{{$tradein->barcode}}.pdf" target="_blank" title="Reprint tradepack">
-                                    <i class="fa fa fa-print"></i>
-                                </a>
-                                @endif
-
-                                <a onclick="return confirm('Are you sure? This will remove this order from system and you will no longer be able to access it?')" href="/cancel/{{$tradein->id}}">
-                                    <i class="fa fa-times" style="color:red !important;" title="Cancel order" ></i>
-                                </a>
-
-                                @if($tradein->job_state >= 5)
-                                <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
-                                    <i class="fa fa-times" style="color:blue !important;"></i>
-                                </a>
-                                <a title="Return device to testing" href="/totesting/{{$tradein->barcode}}">
-                                    <i class="fa fa-times" style="color:black !important;"></i>
-                                </a>
-                                @endif
+                        @if($order->count() > 0)
+                            <tr>
+                                <td ><div class="table-element">@foreach($order as $tradein){{$tradein->barcode_original}}<br>@endforeach</div></td>
+                                <td><div class="table-element">@foreach($order as $tradein){{$tradein->barcode}} <br> @endforeach</div></td>
+                                <td><div class="table-element">{{$order[0]->created_at}}</div></td>
+                                <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} {{$tradein->memory}} <br> @endforeach</div></td>
                                 
-                                </div>
-                            </td>
-                        </tr>
+                                <td><div class="table-element">@if($tradein->job_state === "2") Yes @else No @endif</div></td>
+                                <td><div class="table-element">
+                                    <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
+                                        <i class="fa fa-search"></i>
+                                    </a>
+
+                                    @if($tradein->job_state == 2)
+                                    <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint tradepack">
+                                        <i class="fa fa fa-print"></i>
+                                    </a>
+                                    @endif
+                                    @if($tradein->job_state == 3)
+                                    <a href="/labeltradeout-{{$tradein->barcode}}.pdf" target="_blank" title="Reprint tradepack">
+                                        <i class="fa fa fa-print"></i>
+                                    </a>
+                                    @endif
+
+                                    <a onclick="return confirm('Are you sure? This will remove this order from system and you will no longer be able to access it?')" href="/cancel/{{$tradein->id}}">
+                                        <i class="fa fa-times" style="color:red !important;" title="Cancel order" ></i>
+                                    </a>
+
+                                    @if($tradein->job_state >= 5)
+                                    <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
+                                        <i class="fa fa-times" style="color:blue !important;"></i>
+                                    </a>
+                                    <a title="Return device to testing" href="/totesting/{{$tradein->barcode}}">
+                                        <i class="fa fa-times" style="color:black !important;"></i>
+                                    </a>
+                                    @endif
+                                    
+                                    </div>
+                                </td>
+                            </tr>
+                        @endif
 
                         @endforeach
                     </table>

@@ -160,9 +160,38 @@ class TestingController extends Controller
         $message = array();
 
         if($diff_in_days>=14){
-            $tradein->job_state = "11j";
-            $tradein->save();
-            array_push($message, "This order has been identified by system as older than 14 days and has been marked for quarantine. Please confirm this.");
+
+            $bamboogradeval = 0;
+
+            switch($tradein->customer_grade){
+                case 'Excellent Working':
+                    $bamboogradeval = 5;
+                    break;
+                case 'Good Working':
+                    $bamboogradeval = 4;
+                    break;
+                case 'Poor Working':
+                    $bamboogradeval = 3;
+                    break;
+                case 'Damaged Working':
+                    $bamboogradeval = 2;
+                    break;
+                case 'Faulty':
+                    $bamboogradeval = 1;
+                    break;
+                default:
+                $bamboogradeval = 5;
+                    break;
+            }
+
+            $checkPrice = new Testing();
+            $deviceCurrentPrice = $checkPrice->generateDevicePrice($tradein->product_id, $tradein->customer_memory, $tradein->customer_network, $bamboogradeval);
+
+            if($deviceCurrentPrice < $tradein->order_price){
+                $tradein->job_state = "11j";
+                $tradein->save();
+                array_push($message, "This order has been identified by system as older than 14 days and has been marked for quarantine. Please confirm this.");
+            }
        
         }
 
@@ -480,11 +509,15 @@ class TestingController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
         if($tradein->isInQuarantine()){
-            $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand', 'Q')->where('number_of_devices', "<=" ,100)->first();
+            #$quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand', 'Q')->where('number_of_devices', "<=" ,100)->first();
+            $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand', 'Q')->where('number_of_devices', "<=" ,100)->get()->sortBy('tray_name');
+            $quarantineTrays = $quarantineTrays[0];
             $quarantineName = $quarantineTrays->tray_name;
         }
         else{
-            $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<=" ,100)->first();
+            #$quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<=" ,100)->first();
+            $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<=" ,100)->get()->sortBy('tray_name');
+            $quarantineTrays = $quarantineTrays[0];
             $quarantineName = $quarantineTrays->tray_name;
         }
 

@@ -228,36 +228,22 @@ class Tradein extends Model
 
     public function hasDeviceBeenReceived(){
 
-        $matches = ["6","7","8a","8b","8c","8d","8e","8f","9"];
+        $matches = ["1","2","3","4","5"];
 
         if(in_array($this->job_state, $matches)){
-            return true;
+            return false;
         }
-        return false;
+        return true;
 
     }
 
-    public function hasDeviceBeenTestedFirstTime(){
-
-        $matches = ["11", "11a", "11b", "11c", "11d", "11f", "11g", "11h", "11i", "11j", "12"];
-
-        if(in_array($this->job_state, $matches)){
-            return true;
-        }
-        return false;
-
-    }
-
-    
-    public function hasDeviceBeenTestedSecondTime(){
-
-        $matches = ["15", "15a", "15b", "15c", "15d", "15e", "15f", "15g", "15h", "15i"];
+    public function hasBeenTested(){
+        $matches = ["10","11","11a","11b","11c", "11d", "11e", "11f", "11g", "11h", "11i", "11j", "12"];
 
         if(in_array($this->job_state, $matches)){
             return true;
         }
         return false;
-
     }
 
     public function deviceInPaymentProcess(){

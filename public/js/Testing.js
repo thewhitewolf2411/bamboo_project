@@ -54,12 +54,24 @@ function testingElementChanged(){
         $('#correct_memory').prop('disabled', true);
         $('#correct_network').prop('disabled', true);
         $('#device_correct').prop('disabled', true);
-        $('#cosmetic_condition').prop('disabled', true);
+        $('#cosmetic_condition').prop('disabled', false);
+
+        options = {
+            '':'',
+            'Grade A':'Grade A',
+            'Grade B+':'Grade B+',
+            'Grade B':'Grade B',
+            'Grade C':'Grade C',
+            'WSI':'WSI',
+            'WSD':'WSD',
+            'NWSI':'NWSI',
+            'NWSD':'NWSD',
+            'Catastrophic':'Catastrophic'
+        }
 
         $('#customer_grade').val("Faulty");
     }
     else{
-        console.log(fimpOrGoogleLock);
         if(fimpOrGoogleLock == "true"){
             $('#fake_missing_parts').prop('disabled', true);
             $('#device_fully_functional').prop('disabled', true);
@@ -67,8 +79,21 @@ function testingElementChanged(){
             $('#correct_memory').prop('disabled', true);
             $('#correct_network').prop('disabled', true);
             $('#device_correct').prop('disabled', true);
-            $('#cosmetic_condition').prop('disabled', true);
+            $('#cosmetic_condition').prop('disabled', false);
     
+            options = {
+                '':'',
+                'Grade A':'Grade A',
+                'Grade B+':'Grade B+',
+                'Grade B':'Grade B',
+                'Grade C':'Grade C',
+                'WSI':'WSI',
+                'WSD':'WSD',
+                'NWSI':'NWSI',
+                'NWSD':'NWSD',
+                'Catastrophic':'Catastrophic'
+            }
+
             $('#customer_grade').val("Faulty");
         }
         else{
@@ -132,7 +157,7 @@ function testingElementChanged(){
                     'Grade B+':'Grade B+',
                     'Grade B':'Grade B',
                     'Grade C':'Grade C',
-                    'WSI':'WSI',
+                    'WSD':'WSD',
                 }
             }
         }
@@ -146,10 +171,17 @@ function testingElementChanged(){
         cosmeticNumGrade = 1;
     }
 
+    $('#cosmetic_condition').empty(); // remove old options
+    $.each(options, function(key,value) {
+        $('#cosmetic_condition').append($("<option></option>")
+        .attr("value", value).text(key));
+    });
 
-    if(fimpOrGoogleLock == "true" || pinLock == "true"){
+    /*if(fimpOrGoogleLock == "true" || pinLock == "true"){
 
-        $('#cosmetic_condition').prop('disabled', true);
+        //$('#cosmetic_condition').prop('disabled', true);
+        $('#cosmetic_condition').prop('disabled', false);
+        $('#cosmetic_condition').prop('required', true);
 
     }
     else{
@@ -162,7 +194,7 @@ function testingElementChanged(){
         $('#cosmetic_condition').prop('disabled', false);
         $('#cosmetic_condition').prop('required', true);
     }
-
+*/
 
 }
 

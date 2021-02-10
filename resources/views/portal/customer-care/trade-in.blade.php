@@ -44,6 +44,7 @@
                     </div>
                     @endif
 
+
                     <div class="py-4 d-flex align-items-center">
                         <form class="d-flex align-items-center" action="/portal/customer-care/trade-in/all/" method="get">              
                             <label for="searchtradeins">Select product type:</label>
