@@ -82,8 +82,8 @@
                     <th><div class="table-element">Trade in id</div></th>
                     <th><div class="table-element">Model</div></th>
                     <th><div class="table-element">IMEI</div></th>
-                    <th><div class="table-element">Bay Location</div></th>
                     <th><div class="table-element">Box Name</div></th>
+                    <th><div class="table-element">Bay Location</div></th>
                 </tr>
             </table>
 

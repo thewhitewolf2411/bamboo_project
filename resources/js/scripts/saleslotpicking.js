@@ -43,7 +43,9 @@ $('.saleslotpicking').on('click', function(){
 
     var saleslotid = this.id;
 
-    $('#startpicklot').prop('href', '/portal/warehouse-management/picking-despatch/pick-lot/' + saleslotid);
+    if($('#saleslotstatus' + saleslotid).attr('data-value') === '2' || $('#saleslotstatus' + saleslotid).attr('data-value') === '4'){
+        $('#startpicklot').prop('href', '/portal/warehouse-management/picking-despatch/pick-lot/' + saleslotid);
+    }
 
     $('#printpicknote').attr('data-value', saleslotid);
 

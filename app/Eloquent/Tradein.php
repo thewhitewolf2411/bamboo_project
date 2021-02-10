@@ -260,6 +260,16 @@ class Tradein extends Model
 
     }
 
+    public function deviceInPaymentProcess(){
+        $matches = ["22", "23", "25"];
+
+        if(in_array($this->job_state, $matches)){
+            return true;
+        }
+        return false;
+    }
+
+
     public function deviceLocked(){
         if($this->correct_network === 'unlocked'){
             return false;

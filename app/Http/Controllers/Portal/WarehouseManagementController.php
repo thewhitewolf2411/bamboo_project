@@ -16,7 +16,7 @@ use App\Eloquent\Trolley;
 use App\Eloquent\TrayContent;
 use App\Eloquent\Tradein;
 use App\Eloquent\SalesLotContent;
-
+use App\Eloquent\SoldTradeIns;
 use App\Services\Boxing;
 use PDF;
 use DNS1D;
@@ -448,7 +448,7 @@ class WarehouseManagementController extends Controller
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
 
-        $salesLots = SalesLot::where('sales_lot_status', 2)->get();
+        $salesLots = SalesLot::get();
 
         return view('portal.warehouse.picking-despatch', ['portalUser'=>$portalUser, 'salesLots'=>$salesLots]);
     }
@@ -472,7 +472,7 @@ class WarehouseManagementController extends Controller
                 $box->trolley_id = 'Box not placed in a bay.';
             }
             else{
-                $box->trolley_id = $box->getTrolleyName();
+                $box->trolley_id = $box->getTrolleyName($box->trolley_id);
             }
             array_push($boxes, $box);
         }
@@ -502,7 +502,7 @@ class WarehouseManagementController extends Controller
                 $box->trolley_id = 'Box not placed in a bay.';
             }
             else{
-                $box->trolley_id = $box->getTrolleyName();
+                $box->trolley_id = $box->getTrolleyName($box->trolley_id);
             }
             array_push($boxes, $box);
         }
@@ -575,20 +575,111 @@ class WarehouseManagementController extends Controller
         return redirect()->back();
     }
 
-    public function cancelPickingLot(){
+    public function cancelPickingLot(Request $request){
 
+        $salesLotContentBoxes = SalesLotContent::where('sales_lot_id', $request->buildsaleslot_salelot)->where('device_id', null)->get();
+        $salesLotContentDevices = SalesLotContent::where('sales_lot_id', $request->buildsaleslot_salelot)->where('box_id', null)->get();
+
+        foreach($salesLotContentBoxes as $sLCB){
+            $box = Tray::where('id', $sLCB->box_id)->first();
+            if($box->status === 5){
+                $box->status = 2;
+            }
+            $box->save();
+        }
+
+        foreach($salesLotContentDevices as $sLCD){
+            $device = Tradein::where('id', $sLCD->device_id)->first();
+            if($device->job_state === '29'){
+                $device->job_state = '28';
+            }
+
+            $device->save();
+        }
+
+        return redirect()->back()->with(['success'=>'Picking succesfully canceled']);
     }
 
-    public function suspendPickingLot(){
-
-    }
-
-    public function completePickingLot(){
-
-    }
-
-    public function despatchLot(){
+    public function suspendPickingLot(Request $request){
+        $salesLot = SalesLot::where('id', $request->buildsaleslot_salelot)->first();
+        if($salesLot->sales_lot_status === 6){
+            $salesLot->sales_lot_status = 2;
+            $salesLot->save();
+            return redirect()->back()->with(['success'=>'Picking succesfully unsuspended']);
+        }
+        else{
+            $salesLot->sales_lot_status = 6;
+            $salesLot->save();
+            return redirect()->back()->with(['success'=>'Picking succesfully suspended']);
+        }
+    
         
+    }
+
+    public function completePickingLot(Request $request){
+
+        $salesLot = SalesLot::where('id', $request->buildsaleslot_salelot)->first();
+
+        if($salesLot->sales_lot_status === 4){
+            return redirect()->back()->with(['error'=>'This sales lot was already completed.']);
+        }
+
+        $salesLot->sales_lot_status = 3;
+        $salesLot->save();
+
+        return redirect('/portal/warehouse-management/picking-despatch')->with(['success'=>'Picking succesfully completed']);
+    }
+
+    public function despatchPickingLot(Request $request){
+        $salesLot = SalesLot::where('id', $request->buildsaleslot_salelot)->first();
+
+        $salesLot->sales_lot_status = 5;
+        $salesLot->save();
+
+        $salesLotContentBoxes = SalesLotContent::where('sales_lot_id', $request->buildsaleslot_salelot)->where('device_id', null)->get();
+        $salesLotContentDevices = SalesLotContent::where('sales_lot_id', $request->buildsaleslot_salelot)->where('box_id', null)->get();
+
+        foreach($salesLotContentBoxes as $sLCB){
+            $box = Tray::where('id', $sLCB->box_id)->first();
+            $boxContent = TrayContent::where('tray_id', $box->id)->get();
+
+            foreach($boxContent as $bC){
+                $tradein = Tradein::where('id', $bC->trade_in_id)->first();
+                
+                SoldTradeIns::create([
+                    'device_barcode'=>$tradein->barcode,
+                    'user_id'=>$tradein->user_id,
+                    'product_id'=>$tradein->product_id,
+                    'sales_lot_id'=>$salesLot->id,
+                    'bamboo_price'=>$tradein->bamboo_price,
+                    'bamboo_grade'=>$tradein->bamboo_grade,
+                    'cosmetic_condition'=>$tradein->cosmetic_condition,
+                    'sold_to'=>$salesLot->sold_to
+                ]);
+
+                $tradein->delete();
+            }
+            $box->delete();
+        }
+
+        foreach($salesLotContentDevices as $sLCD){
+            $device = Tradein::where('id', $sLCD->device_id)->first();
+
+            SoldTradeIns::create([
+                'device_barcode'=>$tradein->barcode,
+                'user_id'=>$tradein->user_id,
+                'product_id'=>$tradein->product_id,
+                'sales_lot_id'=>$salesLot->id,
+                'bamboo_price'=>$tradein->bamboo_price,
+                'bamboo_grade'=>$tradein->bamboo_grade,
+                'cosmetic_condition'=>$tradein->cosmetic_condition,
+                'sold_to'=>$salesLot->sold_to
+            ]);
+
+            $device->delete();
+        }
+
+        return redirect('/portal/warehouse-management/picking-despatch')->with(['success'=>'Sales lot despatched']);
     }
 
 }

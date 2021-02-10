@@ -108,7 +108,7 @@ class SalesLotController extends Controller
                 $box->trolley_id = 'Box not placed in a bay.';
             }
             else{
-                $box->trolley_id = $box->getTrolleyName();
+                $box->trolley_id = $box->getTrolleyName($box->trolley_id);
             }
             array_push($boxes, $box);
         }
@@ -138,7 +138,21 @@ class SalesLotController extends Controller
 
         if($salesLotStatus + 1 === intval($request->changestate)){
             $salesLot->sales_lot_status = $salesLot->sales_lot_status + 1;
+            
+            if(isset($request->customername)){
+                $salesLot->sold_to = $request->customername;
+            }
+
+            if($request->changestate === '2'){
+                $salesLot->date_sold = \Carbon\Carbon::now();
+            }
+
+            if($request->changestate === '4'){
+                $salesLot->payment_date = \Carbon\Carbon::now();
+            }
+
             $salesLot->save();
+
             return redirect()->back()->with('success', 'You have succesfully changed state of Lot no.' . $salesLot->id . ' to "' . $salesLot->getStatus($salesLot->sales_lot_status) . '"');
         }
         else{

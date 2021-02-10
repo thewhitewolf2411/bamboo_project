@@ -10,22 +10,35 @@
     </div>
     <div class="">
 
+        @if(Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            {{Session::get('success')}}
+        </div>
+        @endif
+
+        @if(Session::has('error'))
+        <div class="alert alert-danger" role="alert">
+            {{Session::get('error')}}
+        </div>
+        @endif
+
         <div class="row">
 
             <div class="col-md-4">
 
                 <div class="row mb-3">
-                    <div class="col-md-6"><p>Lot no.</p></div>
+                    <div class="col-md-6"><p>Lot no.:</p></div>
                     <div class="col-md-6"><p>{{$saleLot->id}}</p></div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-md-6"><p>Customer</p></div>
-                    <div class="col-md-6"><p>{{$saleLot->id}}</p></div>
+                    <div class="col-md-6"><p>Customer:</p></div>
+                    <div class="col-md-6"><p>{{$saleLot->sold_to}}</p></div>
                 </div>
 
 
                 <div class="border border-primary rounded p-3">
                     <input type="hidden" id="buildsaleslot-salelot" value="{{$saleLot->id}}">
+                    @if($saleLot->sales_lot_status === 2)
                     <div class="row">
                         <div class="col-md-6">
                             <a role="button" id="showscanboxdiv">
@@ -38,8 +51,9 @@
                             </a>
                         </div>
                     </div>
-
+                    
                     <div id="buildsaleslot-scanboxdiv" class="buildsaleslot-active">
+                        
                         <form action="/portal/warehouse-management/picking-despatch/pick-lot/pickbox" method="POST">
                             @csrf
                             <input type="hidden" name="buildsaleslot_salelot" value="{{$saleLot->id}}">
@@ -77,6 +91,7 @@
                             </div>
                         </form>
                     </div>
+                    @endif
 
                     <div class="">
                         <div class="d-flex justify-content-between">
@@ -95,40 +110,40 @@
                 <div class="row my-5">
                     
                     <div class="col-md-3 px-1">
-                        <form action="" method="POST">
+                        <form action="/portal/warehouse-management/picking-despatch/pick-lot/cancel-picking" method="POST">
                         
                             @csrf
-
+                            <input type="hidden" name="buildsaleslot_salelot" value="{{$saleLot->id}}">
                             <input type="submit" id="cancelpickingsaleslot" class="btn btn-primary btn-blue mx-auto w-100" value="Cancel" disabled>
 
-                        <form>
+                        </form>
                     </div>
                     <div class="col-md-3 px-1">
-                        <form action="" method="POST">
+                        <form action="/portal/warehouse-management/picking-despatch/pick-lot/suspend-picking" method="POST">
                         
                             @csrf
+                            <input type="hidden" name="buildsaleslot_salelot" value="{{$saleLot->id}}">
+                            <input type="submit" id="suspendpickingsaleslot" class="btn btn-primary btn-blue mx-auto w-100" @if($saleLot->sales_lot_status !== 6) value="Suspend" @else value="Continue" @endif disabled>
 
-                            <input type="submit" id="suspendpickingsaleslot" class="btn btn-primary btn-blue mx-auto w-100" value="Suspend" disabled>
-
-                        <form>
+                        </form>
                     </div>
                     <div class="col-md-3 px-1">
-                        <form action="" method="POST">
+                        <form action="/portal/warehouse-management/picking-despatch/pick-lot/complete-picking" method="POST">
                         
                             @csrf
-
+                            <input type="hidden" name="buildsaleslot_salelot" value="{{$saleLot->id}}">
                             <input type="submit" id="completepickingsaleslot" class="btn btn-primary btn-blue mx-auto w-100" value="Complete" disabled>
 
-                        <form>
+                        </form>
                     </div>
                     <div class="col-md-3 px-1">
-                        <form action="" method="POST">
+                        <form action="/portal/warehouse-management/picking-despatch/pick-lot/despatch-picking" method="POST">
                         
                             @csrf
+                            <input type="hidden" name="buildsaleslot_salelot" value="{{$saleLot->id}}">
+                            <input type="submit" id="despatchpickingsaleslot" class="btn btn-primary btn-blue mx-auto w-100" value="Despatch" @if($saleLot->sales_lot_status !== 4) disabled @endif>
 
-                            <input type="submit" id="despatchpickingsaleslot" class="btn btn-primary btn-blue mx-auto w-100" value="Despatch" disabled>
-
-                        <form>
+                        </form>
                     </div>
 
                 </div>

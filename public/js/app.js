@@ -37540,10 +37540,18 @@ $('.saleslots').on('click', function () {
       }
 
       $('#changelotstatedata').empty();
-      $('#changelotstatedata').append('<div class="form-group"><select name="changestate" class="form-control"><option value="" selected default disabled>Change state of Sale lot</option><option value="1">Sales Lot Under Offer</option><option value="2">Sales Lot Sold</option><option value="4">Sales Lot Sold - Payment Received</option><option value="5">Sales Lot Despached</option> </select></div><div><input type="submit" class="btn btn-primary btn-blue" value="Change state"></div>');
+      $('#changelotstatedata').append('<div class="form-group"><select id="changestate" name="changestate" class="form-control"><option value="" selected default disabled>Change state of Sale lot</option><option value="1">Sales Lot Under Offer</option><option value="2">Sales Lot Sold</option><option value="4">Sales Lot Sold - Payment Received</option> </select></div><div id="changestatesubmit"><input type="submit" class="btn btn-primary btn-blue" value="Change state"></div>');
     }
   });
   $('#salelot-action').modal('show');
+});
+$(document).on('change', '#changestate', function () {
+  if ($('#changestate').val() === '2') {
+    $('#changestatesubmit').remove();
+    $('#changelotstatedata').append('<div id="customer-name-input" class="form-group"><input type="text" name="customername" placeholder="Enter customer name"></div><div id="changestatesubmit"><input type="submit" class="btn btn-primary btn-blue" value="Change state"></div>');
+  } else {
+    $('#customer-name-input').remove();
+  }
 });
 
 /***/ }),
@@ -37805,7 +37813,11 @@ $(document).ready(function () {
 });
 $('.saleslotpicking').on('click', function () {
   var saleslotid = this.id;
-  $('#startpicklot').prop('href', '/portal/warehouse-management/picking-despatch/pick-lot/' + saleslotid);
+
+  if ($('#saleslotstatus' + saleslotid).attr('data-value') === '2' || $('#saleslotstatus' + saleslotid).attr('data-value') === '4') {
+    $('#startpicklot').prop('href', '/portal/warehouse-management/picking-despatch/pick-lot/' + saleslotid);
+  }
+
   $('#printpicknote').attr('data-value', saleslotid);
   $.ajax({
     url: "/portal/sales-lot/completed-sales-lots/get-saleslot-content",

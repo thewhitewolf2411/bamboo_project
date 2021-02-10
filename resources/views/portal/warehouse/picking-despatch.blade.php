@@ -10,6 +10,12 @@
     </div>
     <div class="portal-table-container">
 
+        @if(Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            {{Session::get('success')}}
+        </div>
+        @endif
+
         <table class="portal-table sortable" id="categories-table">
             <tr>
                 <td><div class="table-element">Lot Ref No.</div></td>
@@ -23,10 +29,10 @@
             <tr class="saleslotpicking" id="{{$salesLot->id}}">
                 <td><div class="table-element">{{$salesLot->id}}</div></td>
                 <td><div class="table-element">{{$salesLot->created_at}}</div></td>
-                <td><div class="table-element">{{$salesLot->id}}</div></td>
-                <td><div class="table-element">{{$salesLot->getStatus($salesLot->sales_lot_status)}}</div></td>
+                <td><div class="table-element">{{$salesLot->sold_to}}</div></td>
+                <td><div class="table-element" id="saleslotstatus{{$salesLot->id}}" data-value="{{$salesLot->sales_lot_status}}">{{$salesLot->getStatus($salesLot->sales_lot_status)}}</div></td>
                 <td><div class="table-element">{{$salesLot->getSalesLotQuantity()}}</div></td>
-                <td><div class="table-element">{{$salesLot->id}}</div></td>
+                <td><div class="table-element"></div></td>
             </tr>
             @endforeach
         </table>
