@@ -75,6 +75,10 @@ class TestingController extends Controller
                 $tradein->job_state = "10";
                 $tradein->save();
             }
+            if($tradein->job_state === "14"){
+                $tradein->job_state = "16";
+                $tradein->save();
+            }
 
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
@@ -509,15 +513,15 @@ class TestingController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
         if($tradein->isInQuarantine()){
-            #$quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand', 'Q')->where('number_of_devices', "<=" ,100)->first();
-            $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand', 'Q')->where('number_of_devices', "<=" ,100)->get()->sortBy('tray_name');
-            $quarantineTrays = $quarantineTrays[0];
+            #$quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand', 'Q')->where('number_of_devices', "<" ,100)->first();
+            $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand', 'Q')->where('number_of_devices', "<" ,100)->get()->sortBy('tray_name');
+            $quarantineTrays = $quarantineTrays->first();
             $quarantineName = $quarantineTrays->tray_name;
         }
         else{
-            #$quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<=" ,100)->first();
-            $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<=" ,100)->get()->sortBy('tray_name');
-            $quarantineTrays = $quarantineTrays[0];
+            #$quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+            $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->get()->sortBy('tray_name');
+            $quarantineTrays = $quarantineTrays->first();
             $quarantineName = $quarantineTrays->tray_name;
         }
 

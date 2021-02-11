@@ -41,6 +41,7 @@ class Tradein extends Model
         if($this->correct_product_id !== null){
             return SellingProduct::where('id', $this->correct_product_id)->first()->product_name;
         }
+        //dd(SellingProduct::where('id', $id)->first(), $this);
         return SellingProduct::where('id', $id)->first()->product_name;
     }
 
@@ -306,8 +307,8 @@ class Tradein extends Model
             /*8d*/  ['Stolen','Awaiting Response'],
             /*8e*/  ['Knox','Awaiting Response'],
             /*8f*/  ['Assetwatch','Awaiting Response'],
-            /*9*/   ['Awaiting Testing','Testing'],
-            /*10*/  ['1st Test','Testing'],
+            /*9*/   ['Awaiting Testing','Awaiting Testing'],
+            /*10*/  ['Device has passed testing','Testing'],
             /* First Test results */
             /*11*/  ['Quarantine','Awaiting Response'],
             /*11a*/  ['Device is FIMP Locked','Awaiting Response'],

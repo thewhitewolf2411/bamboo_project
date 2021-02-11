@@ -405,7 +405,7 @@ class CustomerCareController extends Controller
 
             // search by tradein barcode
             if(is_numeric($searchterm)){
-                $tradeins = Tradein::where('job_state', "3")->where(function ($query) use ($searchterm){
+                $tradeins = Tradein::whereIn('job_state', [2,3])->where(function ($query) use ($searchterm){
                     $query->where('barcode', '=', $searchterm)->orWhere('barcode_original', '=', $searchterm);
                 })->get()->groupBy('barcode');
             } else {
@@ -413,11 +413,11 @@ class CustomerCareController extends Controller
                 // search by product
                 $products = SellingProduct::where('product_name', 'LIKE', "%{$searchterm}%")->get()->pluck('id');
                 if(!$products->isEmpty()){
-                    $tradeins = Tradein::whereIn('product_id', $products)->get()->groupBy('barcode');
+                    $tradeins = Tradein::whereIn('product_id', $products)->whereIn('job_state', [2,3])->get()->groupBy('barcode');
                 }
 
                 // search by customer grade
-                $by_grade = Tradein::where('job_state', "3")->where(function ($query) use ($searchterm){
+                $by_grade = Tradein::whereIn('job_state', [2,3])->where(function ($query) use ($searchterm){
                     $query->where('customer_grade', '=', $searchterm);
                 })->get()->groupBy('barcode');
 
@@ -426,7 +426,7 @@ class CustomerCareController extends Controller
                 }
 
                 // search by order type
-                $raw_tradeins = Tradein::where('job_state', "3")->get()->groupBy('barcode');
+                $raw_tradeins = Tradein::whereIn('job_state', [2,3])->get()->groupBy('barcode');
                 $filtered = collect();
                 foreach($raw_tradeins as $tradein_barcode => $tradein_group){
                     
@@ -447,7 +447,7 @@ class CustomerCareController extends Controller
 
                 $searchtype = $request->searchtype;
                 // $raw_tradeins = Tradein::where('job_state', "1")->get()->groupBy('barcode');
-                $raw_tradeins = Tradein::where('job_state', "3")->get()->groupBy('barcode');
+                $raw_tradeins = Tradein::whereIn('job_state', [2,3])->get()->groupBy('barcode');
 
                 $tradeins = collect();
                 if($searchtype != 0){
@@ -467,7 +467,7 @@ class CustomerCareController extends Controller
                 }
                 
             } else {
-                $tradeins = Tradein::all()->where('job_state', "3")->groupBy('barcode');
+                $tradeins = Tradein::all()->whereIn('job_state', [2,3])->groupBy('barcode');
             }
         }
 
