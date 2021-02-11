@@ -226,24 +226,24 @@ Route::get('/portal/testing/result/{id}','Portal\TestingController@showReceiving
 
 //payments
 Route::group(['prefix' => 'portal/payments'], function () {
-    Route::get('/', 'Portal\PaymentsController@showPaymentPage')->middleware('auth');
+    Route::get('/', 'Portal\PaymentsController@showPaymentPage');
 
-    Route::get('/awaiting', 'Portal\PaymentsController@showAwaitingPayments')->middleware('auth');
-    Route::get('/awaiting/search/{barcode}', 'Portal\PaymentsController@searchForTradeins')->middleware('auth');
-    Route::get('/awaiting/batchsearch', 'Portal\PaymentsController@searchForDevices')->middleware('auth');
+    Route::get('/awaiting', 'Portal\PaymentsController@showAwaitingPayments');
+    Route::get('/awaiting/search/{barcode}', 'Portal\PaymentsController@searchForTradeins');
+    Route::get('/awaiting/batchsearch', 'Portal\PaymentsController@searchForDevices');
 
-    Route::post('/awaiting/createbatch', 'Portal\PaymentsController@createBatch')->middleware('auth');
+    Route::post('/awaiting/createbatch', 'Portal\PaymentsController@createBatch');
 
-    Route::get('/submit', 'Portal\PaymentsController@showSubmitPayments')->middleware('auth');
-    Route::post('/submit/export/csv', 'Portal\PaymentsController@exportCSV')->name('exportBatchesCSV')->middleware('auth');
-    Route::get('/submit/downloadcsv', 'Portal\PaymentsController@downloadCSV')->name('getBatchCSV')->middleware('auth');
+    Route::get('/submit', 'Portal\PaymentsController@showSubmitPayments');
+    Route::post('/submit/export/csv', 'Portal\PaymentsController@exportCSV')->name('exportBatchesCSV');
+    Route::get('/submit/downloadcsv', 'Portal\PaymentsController@downloadCSV')->name('getBatchCSV');
 
-    Route::get('/confirm', 'Portal\PaymentsController@showConfirmPayments')->middleware('auth');
-    Route::post('/confirm/marksuccess', 'Portal\PaymentsController@markAsSuccessful')->name('markAsSuccess')->middleware('auth');
-    Route::post('/confirm/markfailed', 'Portal\PaymentsController@markAsFailed')->name('markAsFailed')->middleware('auth');
+    Route::get('/confirm', 'Portal\PaymentsController@showConfirmPayments');
+    Route::post('/confirm/marksuccess', 'Portal\PaymentsController@markAsSuccessful')->name('markAsSuccess');
+    Route::post('/confirm/markfailed', 'Portal\PaymentsController@markAsFailed')->name('markAsFailed');
 
-    Route::get('/failed', 'Portal\PaymentsController@showFailedPayments')->middleware('auth');
-    Route::post('/failed/createbatch', 'Portal\PaymentsController@createFailedBatch')->middleware('auth');
+    Route::get('/failed', 'Portal\PaymentsController@showFailedPayments');
+    Route::post('/failed/createbatch', 'Portal\PaymentsController@createFailedBatch');
 
 });
 
