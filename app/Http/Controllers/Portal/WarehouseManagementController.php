@@ -219,6 +219,11 @@ class WarehouseManagementController extends Controller
             $brand = "Quarantine";
         }
 
+        $path = public_path().'/pdf/boxlabels/';
+        if(!is_dir($path)){
+            mkdir($path, 0777, true);
+        }
+
         $filename = public_path() . "/pdf/boxlabels/box-" . $id . ".pdf";
         $customPaper = array(0,0,141.90,283.80);
         PDF::loadView('portal.labels.boxlabel', array('barcode'=>$barcode, 'id'=>$id, 'brand'=>$brand))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
@@ -279,6 +284,10 @@ class WarehouseManagementController extends Controller
             }
         }
 
+        $path = public_path().'/pdf/boxsummary/';
+        if(!is_dir($path)){
+            mkdir($path, 0777, true);
+        }
 
         $filename = public_path() . "/pdf/boxsummary/boxsummary-" . $boxname . ".pdf";
         PDF::loadView('portal.labels.boxsummary', array('boxname'=>$boxname, 'brand'=>$brand, 'tradeins'=>$tradeins, 'box'=>$box))->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
@@ -315,6 +324,11 @@ class WarehouseManagementController extends Controller
         }
         if($brandLet === "Q"){
             $brand = "Quarantine";
+        }
+
+        $path = public_path().'/pdf/boxmanifest/';
+        if(!is_dir($path)){
+            mkdir($path, 0777, true);
         }
 
         $filename = public_path() . "/pdf/boxmanifest/boxmanifest-" . $boxname . ".pdf";

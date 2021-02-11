@@ -4,7 +4,7 @@ namespace App\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Cms extends Model
 {
     /**
      * The table associated with the model.
