@@ -527,6 +527,11 @@ class WarehouseManagementController extends Controller
             array_push($devices, $device);
         }
 
+        $path = storage_path().'public_path() . "/pdf/picklot';
+        if(!is_dir($path)){
+            mkdir($path, 0777, true);
+        }
+
         $filename = public_path() . "/pdf/picklot/lot_no-" . $request->saleslotid . ".pdf";
         PDF::loadView('portal.labels.picknote', array('boxes'=>$boxes, 'devices'=>$devices))->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
     
