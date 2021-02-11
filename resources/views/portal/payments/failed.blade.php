@@ -203,8 +203,8 @@ function toggleFpBatch(){
                 }
                 element.style = 'border: 2px solid #ff6f60';
 
-                if(!fcbtn.classList.contains('disabled')){
-                    fcbtn.classList.add('disabled');
+                if(!fpbtn.classList.contains('disabled')){
+                    fpbtn.classList.add('disabled');
                 }
                 BATCH_TYPE = null;
 
