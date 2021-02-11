@@ -44,10 +44,11 @@
                     </div>
                     @endif
 
+
                     <div class="py-4 d-flex align-items-center">
                         <form class="d-flex align-items-center" action="/portal/customer-care/trade-in/all/" method="get">              
                             <label for="searchtradeins">Select product type:</label>
-                            <select id="search" name="search" class="form-control mx-3">
+                            <select id="searchtype" name="searchtype" class="form-control mx-3">
                                 <option value="0" @if($search == 0) selected @endif>All</option>
                                 <option value="1" @if($search == 1) selected @endif>Mobile phones</option>
                                 <option value="2" @if($search == 2) selected @endif>Tablets</option>
@@ -77,28 +78,31 @@
                         <form id="print_trade_pack_bulk_form" name="print_trade_pack_bulk_form" class="my-5" enctype="multipart/form-data" action="/portal/customer-care/trade-in/printlabelbulk" method="post">
                         @csrf
                             @foreach($tradeins as $key=>$order)
-                            <tr>
-                                <td ><div class="table-element">{{$key}}</div></td>
-                                <td><div class="table-element">{{$order[0]->created_at}}</div></td>
-                                <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} {{$tradein->memory}} <br> @endforeach</div></td>
-                                <td><div class="table-element">@foreach($order as $tradein){{$tradein->customer_grade}} <br> @endforeach</div></td>
-                                <td><div class="table-element">{{$order[0]->getOrderType($order[0]->barcode)}}</div></td>
-                                <td><div class="table-element">
-                                    <a title="See trade in details" href="/portal/customer-care/trade-in/{{$tradein->barcode}}">
-                                        <i class="fa fa-search"></i>
-                                    </a>
-                                    <a href="javascript:void(0)" title="Print trade-in label" onclick = printTradePackTradeIn({{$tradein->barcode}})>
-                                        <i class="fa fa-print"></i>
-                                    </a>
-                                    <a onclick = deleteTradeInDetailsFromSystem({{$tradein->barcode}})>
-                                        <i title="Delete trade in from system" class="fa fa-times" style="color:red !important;"></i>
-                                    </a>
-                                    <input class="printcheckbox" type="checkbox" name="{{$key}}" value="{{$key}}" onclick="enablebtn()">
-                                    </div>
-                                </td>
-                            </tr>
 
-                        @endforeach
+                                @if($order->count() > 0)
+                                    <tr>
+                                        <td ><div class="table-element">{{$key}}</div></td>
+                                        <td><div class="table-element">{{$order[0]->created_at}}</div></td>
+                                        <td><div class="table-element">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} {{$tradein->memory}} <br> @endforeach</div></td>
+                                        <td><div class="table-element">@foreach($order as $tradein){{$tradein->customer_grade}} <br> @endforeach</div></td>
+                                        <td><div class="table-element">{{$order[0]->getOrderType($order[0]->barcode)}}</div></td>
+                                        <td><div class="table-element">
+                                            <a title="See trade in details" href="/portal/customer-care/trade-in/{{$tradein->barcode}}">
+                                                <i class="fa fa-search"></i>
+                                            </a>
+                                            <a href="javascript:void(0)" title="Print trade-in label" onclick = printTradePackTradeIn({{$tradein->barcode}})>
+                                                <i class="fa fa-print"></i>
+                                            </a>
+                                            <a onclick = deleteTradeInDetailsFromSystem({{$tradein->barcode}})>
+                                                <i title="Delete trade in from system" class="fa fa-times" style="color:red !important;"></i>
+                                            </a>
+                                            <input class="printcheckbox" type="checkbox" name="{{$key}}" value="{{$key}}" onclick="enablebtn()">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endif
+
+                            @endforeach
                         <button type="submit" id="print_trade_pack_bulk_form_trigger" class="btn btn-primary mb-5" disabled>Print Trade Pack Trade-In Bulk</button>
                         </form>
                     </table>

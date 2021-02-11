@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSalesLotTable extends Migration
+class CreateSoldBoxesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateSalesLotTable extends Migration
      */
     public function up()
     {
-        Schema::create('sales_lot', function (Blueprint $table) {
+        Schema::create('sold_boxes', function (Blueprint $table) {
             $table->id();
-            $table->integer('sales_lot_status')->default(0);
-            $table->string('sold_to')->nullable();
-            $table->date('date_sold')->nullable();
-            $table->date('payment_date')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ class CreateSalesLotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sales_lot');
+        Schema::dropIfExists('sold_boxes');
     }
 }

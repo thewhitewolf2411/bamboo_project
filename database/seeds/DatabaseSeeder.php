@@ -84,7 +84,8 @@ class DatabaseSeeder extends Seeder
             'awaiting_payments'=>true,
             'submit_payments'=>true,
             'payment_confirmations'=>true,
-            'failed_payments'=>true
+            'failed_payments'=>true,
+            'sales_lot'=>true,
         ]);
 
         DB::table('product_category')->insert([
@@ -678,7 +679,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TA01-2-B+',
+            'tray_name'=>'TA01-2-B-Plus',
             'tray_type'=>'T',
             'tray_brand'=>'A',
             'tray_grade'=>'B+',
@@ -814,7 +815,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TS01-2-B+',
+            'tray_name'=>'TS01-2-B-Plus',
             'tray_type'=>'T',
             'tray_brand'=>'S',
             'tray_grade'=>'B+',
@@ -949,7 +950,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TH01-2-B+',
+            'tray_name'=>'TH01-2-B-Plus',
             'tray_type'=>'T',
             'tray_brand'=>'H',
             'tray_grade'=>'B+',
@@ -1083,7 +1084,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TM01-2-B+',
+            'tray_name'=>'TM01-2-B-Plus',
             'tray_type'=>'T',
             'tray_brand'=>'M',
             'tray_grade'=>'B+',

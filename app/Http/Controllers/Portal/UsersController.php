@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Crypt;
 
 class UsersController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
+    
     public function showUsersPage(){
         //if(!$this->checkAuthLevel(9)){return redirect('/');}
 

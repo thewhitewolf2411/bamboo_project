@@ -23,6 +23,10 @@ use Illuminate\Support\Facades\Storage;
 
 class PaymentsController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
+    
     public function showPaymentPage(){
         //if(!$this->checkAuthLevel(6)){return redirect('/');}
 

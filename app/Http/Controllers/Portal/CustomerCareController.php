@@ -21,6 +21,10 @@ use PDF;
 
 class CustomerCareController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
+    
     public function showCustomerCare(){
         //if(!$this->checkAuthLevel(1)){return redirect('/');}
         $user_id = Auth::user()->id;
@@ -29,61 +33,85 @@ class CustomerCareController extends Controller
     }
 
     public function showTradeIn(Request $request){
-
         //if(!$this->checkAuthLevel(1)){return redirect('/');}
 
-        $tradeins = null;
-        $search = null;
+        $search = 0;
+        $searchtype = null;
+        $portalUser = PortalUsers::where('user_id', Auth::user()->id)->first();
+        $tradeins = collect();
 
+        if(isset($request->search)){
+            $searchterm = $request->search;
 
-        if($request->all() == null || $request->search == 0){
+            // search by tradein barcode
+            if(is_numeric($searchterm)){
+                $tradeins = Tradein::where('job_state', "1")->where(function ($query) use ($searchterm){
+                    $query->where('barcode', '=', $searchterm)->orWhere('barcode_original', '=', $searchterm);
+                })->get()->groupBy('barcode');
+            } else {
 
+                // search by product
+                $products = SellingProduct::where('product_name', 'LIKE', "%{$searchterm}%")->get()->pluck('id');
+                if(!$products->isEmpty()){
+                    $tradeins = Tradein::whereIn('product_id', $products)->get()->groupBy('barcode');
+                }
 
-            $tradeins = Tradein::all()->where('job_state', "1")->groupBy('barcode');
+                // search by customer grade
+                $by_grade = Tradein::where('job_state', "1")->where(function ($query) use ($searchterm){
+                    $query->where('customer_grade', '=', $searchterm);
+                })->get()->groupBy('barcode');
 
-            $user_id = Auth::user()->id;
-            $portalUser = PortalUsers::where('user_id', $user_id)->first();
+                if(!$by_grade->isEmpty()){
+                    $tradeins = $by_grade;
+                }
 
-            $search = null;
-        }
-        else{
-            if(is_numeric($request->search) === true && $request->search <= 3){
-                $tradeins = Tradein::where('job_state', "1")->get();
-                $user_id = Auth::user()->id;
-                $portalUser = PortalUsers::where('user_id', $user_id)->first();
-    
-                $search = $request->search;
-    
-                foreach($tradeins as $tradein){
-                    print_r($tradein->getCategoryId($tradein->product_id) != $request->search);
-                        if($tradein->getCategoryId($tradein->product_id) != $request->search){
-                            $tradeins = $tradeins->except($tradein->id);
+                // search by order type
+                $raw_tradeins = Tradein::where('job_state', "1")->get()->groupBy('barcode');
+                $filtered = collect();
+                foreach($raw_tradeins as $tradein_barcode => $tradein_group){
+                    
+                    $group = collect();
+                    if($tradein_group->first()->getOrderType($tradein_group->first()->barcode_original) == $searchterm){
+                        $filtered[$tradein_barcode] = $tradein_group;
                     }
+                    
                 }
-    
-                $tradeins = $tradeins->groupBy('barcode');
-            }
-            else{
+                if($filtered->count() > 0){
+                    $tradeins = $filtered;
+                }
 
-                $tradeins = Tradein::where('barcode', $request->search)->get();
-
-                if(count($tradeins) < 1){
-                    $tradeins = Tradein::where('product_state', 'like', '%' . $request->search . '%');
-
-                }
-                if(count($tradeins) < 1){
-                    return redirect()->back()->with('error', 'No Order with those search parameters. Please try again.');
-                }
-                else{
-                    $tradeins = $tradeins->groupBy('barcode');
-                    $user_id = Auth::user()->id;
-                    $portalUser = PortalUsers::where('user_id', $user_id)->first();
-                }
             }
 
+        } else {
+            if(isset($request->searchtype)){
+
+                $searchtype = $request->searchtype;
+                // $raw_tradeins = Tradein::where('job_state', "1")->get()->groupBy('barcode');
+                $raw_tradeins = Tradein::where('job_state', "1")->get()->groupBy('barcode');
+
+                $tradeins = collect();
+                if($searchtype != 0){
+                    foreach($raw_tradeins as $tradein_barcode => $tradein_group){
+                    
+                        $group = collect();
+                        foreach($tradein_group as $trade_in_barcode => $tradein){
+
+                            if($tradein->getCategoryId($tradein->product_id) === intval($searchtype)){
+                                $group->push($tradein);
+                            }
+                        }
+                        $tradeins[$tradein_barcode] = $group;
+                    }
+                } else {
+                    $tradeins = $raw_tradeins;
+                }
+                
+            } else {
+                $tradeins = Tradein::all()->where('job_state', "1")->groupBy('barcode');
+            }
         }
         
-        return view('portal.customer-care.trade-in')->with('tradeins', $tradeins)->with('portalUser', $portalUser)->with('search',$search);
+        return view('portal.customer-care.trade-in', ['tradeins' => $tradeins, 'portalUser' => $portalUser, 'search' => $searchtype]);
     }
 
     /**
@@ -335,10 +363,6 @@ class CustomerCareController extends Controller
     public function returnToTesting($id){
         $tradein = Tradein::where('id', $id)->first();
 
-        if($tradein->hasDeviceBeenTestedSecondTime()){
-            return redirect()->back()->with('error', 'This device was already tested second time.');
-        }
-
         $tradein->job_state = 14;
         $tradein->save();
 
@@ -369,83 +393,85 @@ class CustomerCareController extends Controller
         return view('portal.customer-care.destroy')->with('portalUser', $portalUser);
     }
 
-    private function getOrderNumbersSorted($array){
-        foreach($array as $key=>$item){
-            $k = 0;
-
-            foreach($item as $order){
-                if($order->barcode !== $key){
-                    $k++;
-                }
-            }
-
-            if($k === count($item)){
-                $array->forget($key);
-            }
-
-        }
-
-        return $array;
-    }
 
     public function showTradePack(Request $request){
-        //if(!$this->checkAuthLevel(1)){return redirect('/');}
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
         $search = null;
+        $searchtype = null;
+        $portalUser = PortalUsers::where('user_id', Auth::user()->id)->first();
+        $tradeins = collect();
 
-        if($request->all() == null || $request->search == 0){
+        if(isset($request->search)){
+            $searchterm = $request->search;
 
-            $tradeins = Tradein::where('job_state', '2')->orWhere('job_state', '3')->get()->groupBy('barcode_original');
+            // search by tradein barcode
+            if(is_numeric($searchterm)){
+                $tradeins = Tradein::where('job_state', "3")->where(function ($query) use ($searchterm){
+                    $query->where('barcode', '=', $searchterm)->orWhere('barcode_original', '=', $searchterm);
+                })->get()->groupBy('barcode');
+            } else {
 
-            $user_id = Auth::user()->id;
-            $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-            $search = null;
-        }
-        else{
-            if($request->search <= 3){
-                $tradeins = Tradein::where('job_state', '2')->orWhere('job_state', '3')->get();
-
-                $user_id = Auth::user()->id;
-                $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-                foreach($tradeins as $key=>$tradein){
-                    if($tradein->getCategoryId($tradein->product_id) !== intval($request->search)){
-                        $tradeins->forget($key);
-                    }  
+                // search by product
+                $products = SellingProduct::where('product_name', 'LIKE', "%{$searchterm}%")->get()->pluck('id');
+                if(!$products->isEmpty()){
+                    $tradeins = Tradein::whereIn('product_id', $products)->get()->groupBy('barcode');
                 }
 
-                $tradeins = $tradeins->groupBy('barcode_original');
-            }
-            else{
+                // search by customer grade
+                $by_grade = Tradein::where('job_state', "3")->where(function ($query) use ($searchterm){
+                    $query->where('customer_grade', '=', $searchterm);
+                })->get()->groupBy('barcode');
 
-                $tradeins = Tradein::where('barcode_original', $request->search)->get();
-                                    /*->where('job_state', '2')->orWhere('job_state', '3')
-                                    ->get();
-                                    #dd($tradeins);*/
-                #dd($tradeins->toSql());
+                if(!$by_grade->isEmpty()){
+                    $tradeins = $by_grade;
+                }
 
-                foreach($tradeins as $key=>$tradein){
-                    if($tradein->job_state !== '2' || $tradein->job_state !== '3'){
-                        $tradeins->forget($key);
+                // search by order type
+                $raw_tradeins = Tradein::where('job_state', "3")->get()->groupBy('barcode');
+                $filtered = collect();
+                foreach($raw_tradeins as $tradein_barcode => $tradein_group){
+                    
+                    $group = collect();
+                    if($tradein_group->first()->getOrderType($tradein_group->first()->barcode_original) == $searchterm){
+                        $filtered[$tradein_barcode] = $tradein_group;
                     }
+                    
+                }
+                if($filtered->count() > 0){
+                    $tradeins = $filtered;
                 }
 
-                if(count($tradeins) < 1){
-                    return redirect('/portal/customer-care/trade-pack')->with('error', 'No Order with that barcode. Please try again.');
-                }
-                else{
-                    $tradeins = $tradeins->groupBy('barcode_original');
-                    $user_id = Auth::user()->id;
-                    $portalUser = PortalUsers::where('user_id', $user_id)->first();
-                }
             }
 
+        } else {
+            if(isset($request->searchtype)){
+
+                $searchtype = $request->searchtype;
+                // $raw_tradeins = Tradein::where('job_state', "1")->get()->groupBy('barcode');
+                $raw_tradeins = Tradein::where('job_state', "3")->get()->groupBy('barcode');
+
+                $tradeins = collect();
+                if($searchtype != 0){
+                    foreach($raw_tradeins as $tradein_barcode => $tradein_group){
+                    
+                        $group = collect();
+                        foreach($tradein_group as $trade_in_barcode => $tradein){
+
+                            if($tradein->getCategoryId($tradein->product_id) === intval($searchtype)){
+                                $group->push($tradein);
+                            }
+                        }
+                        $tradeins[$tradein_barcode] = $group;
+                    }
+                } else {
+                    $tradeins = $raw_tradeins;
+                }
+                
+            } else {
+                $tradeins = Tradein::all()->where('job_state', "3")->groupBy('barcode');
+            }
         }
 
-        return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Awaiting receipt')->with('search', $search);
+        return view('portal.customer-care.trade-pack')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Awaiting receipt')->with('search', $searchtype);
     }
 
     public function setTradePackAsSent(Request $request){
@@ -620,12 +646,14 @@ class CustomerCareController extends Controller
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 
         $trayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
-        $tray = Tray::where('id', $trayContent->tray_id)->first();
-
+        if($trayContent !== null){
+            $tray = Tray::where('id', $trayContent->tray_id)->first();
+        }
+        
         if($tradein->visible_serial !== null){
-            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->serial_number, $tray->tray_name);
+            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->serial_number, $tray->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
         } else {
-            $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $tray->tray_name);
+            $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $tray->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
         }
 
         return redirect()->back()->with(['success'=>'pdf/devicelabel-'. $tradein->barcode .'.pdf']);
@@ -635,7 +663,7 @@ class CustomerCareController extends Controller
     /**
      * Generate device label (PDF)
      */
-    public function generateNewLabel($has_serial, $barcode, $tradein_barcode, $manifacturer, $model, $imei, $location){
+    public function generateNewLabel($has_serial, $barcode, $tradein_barcode, $manifacturer, $model, $imei, $location, $cosmetic_condition, $network){
         $customPaper = array(0,0,141.90,283.80);
 
         if($has_serial){
@@ -646,7 +674,9 @@ class CustomerCareController extends Controller
                 'manifacturer'=>$manifacturer,
                 'model'=>$model,
                 'serial'=>$imei,
-                'location'=>$location))
+                'location'=>$location,
+                'grade'=>$cosmetic_condition,
+                'network'=>$network))
             ->setPaper($customPaper, 'landscape')
             ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
         } else {
@@ -657,7 +687,9 @@ class CustomerCareController extends Controller
                 'manifacturer'=>$manifacturer,
                 'model'=>$model,
                 'imei'=>$imei,
-                'location'=>$location))
+                'location'=>$location,
+                'grade'=>$cosmetic_condition,
+                'network'=>$network))
             ->setPaper($customPaper, 'landscape')
             ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
         }

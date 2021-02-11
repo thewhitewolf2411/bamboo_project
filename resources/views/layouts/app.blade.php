@@ -44,6 +44,15 @@
         </script>
         @endif
 
+        @if(Session::has('nouser'))
+        <script>
+            $('#loginModal').modal('show');
+            if(!document.getElementsByClassName('modal-second-element')[0].classList.contains('modal-second-element-active')){
+                document.getElementsByClassName('modal-second-element')[0].classList.add('modal-second-element-active');
+            }
+        </script>
+        @endif
+
         <script>
 
             function showRegistrationForm(){

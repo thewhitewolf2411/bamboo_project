@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Eloquent\Trolley;
 use App\Eloquent\TrayContent;
+use App\Eloquent\Tradein;
 
 class Tray extends Model
 {
@@ -42,9 +43,33 @@ class Tray extends Model
                 return 'Suspended';
             case 3:
                 return 'Complete';
+            case 4:
+                return 'Box in sale lot';
+            case 5:
+                return 'Box picked';
             default:
                 return 'Unsigned';
         }
+    }
+
+    public function canBeDeleted(){
+        if($this->number_of_devices > 0){
+            return false;
+        }
+        return true;
+    }
+    
+    public function getBoxPrice(){
+
+        $price = 0;
+
+        $traycontent = TrayContent::where('tray_id', $this->id)->get();
+        foreach($traycontent as $tc){
+            $tradein = Tradein::where('id', $tc->trade_in_id)->first();
+            $price += $tradein->bamboo_price;
+        }
+
+        return $price;
     }
 
 

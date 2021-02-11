@@ -10,6 +10,10 @@ use App\Eloquent\PortalUsers;
 
 class ReportsController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
+    
     public function showReportsPage(){
         //if(!$this->checkAuthLevel(7)){return redirect('/');}
 

@@ -19,6 +19,9 @@ use App\Eloquent\Colour;
 
 class ProductController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
 
     //categories
     public function showCategories(){
@@ -474,14 +477,15 @@ class ProductController extends Controller
                 }
             }
         }
+        if(count($networks) !== 0){
+            $network = $networks[0];
 
-        $network = $networks[0];
-
-        foreach($networks as $network){
-            
-            if($request->{"network_".$network->id} != $network->knockoff_price){
-                $network->knockoff_price = $request->{"network_".$network->id};
-                $network->save();
+            foreach($networks as $network){
+                
+                if($request->{"network_".$network->id} != $network->knockoff_price){
+                    $network->knockoff_price = $request->{"network_".$network->id};
+                    $network->save();
+                }
             }
         }
 

@@ -21,6 +21,7 @@
                     @if($portalUser->trays_managment)<a class="dropdown-item" href="/portal/trays">Trays Management</a>@endif
                     @if($portalUser->quarantine_managment)<a class="dropdown-item" href="/portal/quarantine">Quarantine Management</a>@endif
                     @if($portalUser->warehouse_management)<a class="dropdown-item" href="/portal/warehouse-management">Warehouse Management</a>@endif
+                    @if($portalUser->sales_lot)<a class="dropdown-item" href="/portal/sales-lot">Sales lot</a>@endif
                 </div>
             </div>
             @endif

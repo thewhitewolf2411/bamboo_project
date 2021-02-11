@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 
 class EcommerenceController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
     
     public function showEcommerenceOrderManagement(Request $request){
         //if(!$this->checkAuthLevel(1)){return redirect('/');}

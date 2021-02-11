@@ -30,6 +30,10 @@ use App\Services\Testing;
 
 class TestingController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
+    
     public function showTestingPage(){
         //if(!$this->checkAuthLevel(5)){return redirect('/');}
 
@@ -156,9 +160,38 @@ class TestingController extends Controller
         $message = array();
 
         if($diff_in_days>=14){
-            $tradein->job_state = "11j";
-            $tradein->save();
-            array_push($message, "This order has been identified by system as older than 14 days and has been marked for quarantine. Please confirm this.");
+
+            $bamboogradeval = 0;
+
+            switch($tradein->customer_grade){
+                case 'Excellent Working':
+                    $bamboogradeval = 5;
+                    break;
+                case 'Good Working':
+                    $bamboogradeval = 4;
+                    break;
+                case 'Poor Working':
+                    $bamboogradeval = 3;
+                    break;
+                case 'Damaged Working':
+                    $bamboogradeval = 2;
+                    break;
+                case 'Faulty':
+                    $bamboogradeval = 1;
+                    break;
+                default:
+                $bamboogradeval = 5;
+                    break;
+            }
+
+            $checkPrice = new Testing();
+            $deviceCurrentPrice = $checkPrice->generateDevicePrice($tradein->product_id, $tradein->customer_memory, $tradein->customer_network, $bamboogradeval);
+
+            if($deviceCurrentPrice < $tradein->order_price){
+                $tradein->job_state = "11j";
+                $tradein->save();
+                array_push($message, "This order has been identified by system as older than 14 days and has been marked for quarantine. Please confirm this.");
+            }
        
         }
 
@@ -420,7 +453,7 @@ class TestingController extends Controller
         
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 
-        $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name);
+        $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
@@ -476,11 +509,15 @@ class TestingController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
         if($tradein->isInQuarantine()){
-            $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand', 'Q')->where('number_of_devices', "<=" ,100)->first();
+            #$quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand', 'Q')->where('number_of_devices', "<=" ,100)->first();
+            $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand', 'Q')->where('number_of_devices', "<=" ,100)->get()->sortBy('tray_name');
+            $quarantineTrays = $quarantineTrays[0];
             $quarantineName = $quarantineTrays->tray_name;
         }
         else{
-            $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<=" ,100)->first();
+            #$quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<=" ,100)->first();
+            $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<=" ,100)->get()->sortBy('tray_name');
+            $quarantineTrays = $quarantineTrays[0];
             $quarantineName = $quarantineTrays->tray_name;
         }
 
@@ -504,10 +541,10 @@ class TestingController extends Controller
         $traycontent->save();
 
         if($tradein->visible_serial !== null){
-            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name);
+            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
 
         } else {
-            $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name);
+            $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
         }
 
         $klaviyoemail = new KlaviyoEmail();
@@ -589,8 +626,7 @@ class TestingController extends Controller
     /**
      * Generate device label (PDF)
      */
-    function generateNewLabel($has_serial, $barcode, $tradein_barcode, $manifacturer, $model, $imei, $location){
-
+    public function generateNewLabel($has_serial, $barcode, $tradein_barcode, $manifacturer, $model, $imei, $location, $cosmetic_condition, $network){
         $customPaper = array(0,0,141.90,283.80);
 
         if($has_serial){
@@ -601,7 +637,9 @@ class TestingController extends Controller
                 'manifacturer'=>$manifacturer,
                 'model'=>$model,
                 'serial'=>$imei,
-                'location'=>$location))
+                'location'=>$location,
+                'grade'=>$cosmetic_condition,
+                'network'=>$network))
             ->setPaper($customPaper, 'landscape')
             ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
         } else {
@@ -612,11 +650,13 @@ class TestingController extends Controller
                 'manifacturer'=>$manifacturer,
                 'model'=>$model,
                 'imei'=>$imei,
-                'location'=>$location))
+                'location'=>$location,
+                'grade'=>$cosmetic_condition,
+                'network'=>$network))
             ->setPaper($customPaper, 'landscape')
             ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
         }
-    
+        
     }
 
     public function downloadSingleFile(Request $request){

@@ -18,6 +18,10 @@ use App\Eloquent\TrolleyContent;
 
 class TrolleyController extends Controller
 {
+    public function __construct(){
+        $this->middleware('checkAuth');
+    }
+    
     public function showTrolleysPage(){
         //if(!$this->checkAuthLevel(13)){return redirect('/');}
 

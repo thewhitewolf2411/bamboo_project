@@ -492,3 +492,28 @@ input[type=number] {
 .sortable:hover{
     cursor: pointer;
 }
+
+.btn-primary-nonactive{
+    opacity: 0.7 !important;
+}
+
+.table-invisible{
+    display: none;
+}
+
+.buildsaleslot-active{
+    opacity: 1;
+    height: 100%;
+}
+
+.buildsaleslot-hidden{
+    display: none;
+}
+
+.box-picked{
+    background-color: #d4edda !important;
+}
+
+.device-picked{
+    background-color: #d4edda !important;
+}

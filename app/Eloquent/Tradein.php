@@ -167,6 +167,24 @@ class Tradein extends Model
 
     }
 
+    public function getBayName(){
+        $boxid = TrayContent::where('trade_in_id', $this->id)->first();
+        if($boxid !== null){
+            $boxid = $boxid->tray_id;
+            $box = Tray::where('id', $boxid)->first();
+            if($box->trolley_id === null){
+                return "Box not placed in bay.";
+            }
+            else{
+                return Trolley::where('id', $box->trolley_id)->first()->trolley_name;
+            }
+            
+        }
+        else{
+            return "Not in a box yet.";
+        }
+    }
+
     public function getTrayId($id){
         $trayid = TrayContent::where('trade_in_id', $id)->first();
         if($trayid !== null){
@@ -216,37 +234,33 @@ class Tradein extends Model
 
     public function hasDeviceBeenReceived(){
 
-        $matches = ["6","7","8a","8b","8c","8d","8e","8f","9"];
+        $matches = ["1","2","3","4","5"];
+
+        if(in_array($this->job_state, $matches)){
+            return false;
+        }
+        return true;
+
+    }
+
+    public function hasBeenTested(){
+        $matches = ["10","11","11a","11b","11c", "11d", "11e", "11f", "11g", "11h", "11i", "11j", "12"];
 
         if(in_array($this->job_state, $matches)){
             return true;
         }
         return false;
-
     }
 
-    public function hasDeviceBeenTestedFirstTime(){
-
-        $matches = ["11", "11a", "11b", "11c", "11d", "11f", "11g", "11h", "11i", "11j", "12"];
+    public function deviceInPaymentProcess(){
+        $matches = ["22", "23", "25"];
 
         if(in_array($this->job_state, $matches)){
             return true;
         }
         return false;
-
     }
 
-    
-    public function hasDeviceBeenTestedSecondTime(){
-
-        $matches = ["15", "15a", "15b", "15c", "15d", "15e", "15f", "15g", "15h", "15i"];
-
-        if(in_array($this->job_state, $matches)){
-            return true;
-        }
-        return false;
-
-    }
 
     public function deviceLocked(){
         if($this->correct_network === 'unlocked'){
@@ -257,6 +271,19 @@ class Tradein extends Model
 
     public function getIMEIBarcode(){
         return DNS1D::getBarcodeHTML($this->imei_number, 'C128');
+    }
+
+    public function isBoxed(){
+
+        $boxcontent = TrayContent::where('trade_in_id', $this->id)->first();
+        if($boxcontent !== null){
+            $box = Tray::where('id', $boxcontent->tray_id)->first();
+            if($box->tray_type === 'Bo'){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function getDeviceStatus(){
@@ -320,6 +347,8 @@ class Tradein extends Model
             /*25*/  ['Awaiting Box build','Paid'],
             /*26*/  ['Ready For Sale','Paid'],
             /*27*/  ['Closed','Paid'],
+            /*28*/  ['Part of sales lot', 'Paid'],
+            /*29*/  ['Picked for sales lot', 'Paid'],
 
         ];
 
@@ -428,6 +457,10 @@ class Tradein extends Model
                 return $states[51];
             case "27":
                 return $states[52];
+            case "28":
+                return $states[53];
+            case "29":
+                return $states[54];
         }
         
     }
