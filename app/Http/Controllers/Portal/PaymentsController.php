@@ -391,7 +391,7 @@ class PaymentsController extends Controller
                             $has_cheque_number = true;
                         }
                         // set tradein state
-                        $tradein->job_state = '24';
+                        $tradein->job_state = '25';
                         if($has_cheque_number){
                             $tradein->cheque_number = $cheque_numbers[$batchdevice->id];
                         }
@@ -451,7 +451,7 @@ class PaymentsController extends Controller
                         }
 
                         // set tradein job state - failed
-                        $tradein->job_state = '23';
+                        $tradein->job_state = '24';
                         $tradein->save();
 
                         $batchdevice->payment_state = 2;
@@ -588,7 +588,7 @@ class PaymentsController extends Controller
             // update tradein state
             $tradeins = Tradein::whereIn('id', $tradein_ids)->get();
             foreach($tradeins as $tradein){     
-                $tradein->job_state = '22';
+                $tradein->job_state = '23';
                 $tradein->save();
             }
 
