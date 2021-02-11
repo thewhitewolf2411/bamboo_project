@@ -415,9 +415,21 @@ class FeedsController extends Controller
             foreach($importeddata as $key=>$row){
                 if($row[1] !== null){
                     $valid_product = false;
+                    $missing = [];
+
+                    // dd($row);
                     // validate selling product data
                     if(isset($row[1]) && isset($row[3]) && isset($row[4])){
                         $valid_product = true;
+                    }
+                    // validate ids (must be numberic) for category and brand id
+                    if($valid_product){
+                        if(!is_numeric($row[3]) || !is_numeric($row[4])){
+                            $valid_product = false;
+                            array_push($missing, $file_header[3]);
+                            array_push($missing, $file_header[4]);
+                            array_push($export_log, "Invalid category_id/brand_id for product: " . $row[1]);
+                        }
                     }
                     if($valid_product){
                         $sellingProduct = new SellingProduct();
@@ -427,13 +439,12 @@ class FeedsController extends Controller
                         $sellingProduct->brand_id = $row[4];
                         $sellingProduct->save();   
                     } else {
-                        $missing = [];
                         if(!isset($row[1])) { array_push($missing, $file_header[1]); }
                         if(!isset($row[3])) { array_push($missing, $file_header[3]); }
                         if(!isset($row[4])) { array_push($missing, $file_header[4]); }
     
                         if(count($missing) < 2){
-                            array_push($export_log, "Missing Selling Product " .  $missing[0]);
+                            array_push($export_log, "Missing Selling Product " . $row[1] ." " .  $missing[0]);
                         } else {
                             array_push($export_log, "Missing Selling Product: " . implode(', ', $missing));
                         }
