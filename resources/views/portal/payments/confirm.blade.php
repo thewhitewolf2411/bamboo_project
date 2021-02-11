@@ -69,7 +69,7 @@
                                 <td><div class="table-element">{!!$batch_device->tradeinBarcode()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->orderDate()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->product()!!}</div></td>
-                                <td><div class="table-element">{!!$batch_device->price()!!} £</div></td>
+                                <td><div class="table-element">£ {!!$batch_device->price()!!}</div></td>
                                 @if($batch_device->canAddCheque())
                                     <td><input type="number" id="batch-{{$batch_device->id}}-cheque" onkeydown="resetBorder()" class="input-group-text mt-0"/></td>
                                 @else

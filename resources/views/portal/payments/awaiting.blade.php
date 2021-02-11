@@ -64,7 +64,7 @@
                                     <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
                                     <td><div class="table-element">{{$tradein->getOrderDate()}}</div></td>
                                     <td><div class="table-element">{{$tradein->getProductName($tradein->id)}}</div></td>
-                                    <td><div class="table-element">{{$tradein->bamboo_price}} £</div></td>
+                                    <td><div class="table-element">£ {{$tradein->bamboo_price}}</div></td>
                                     <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
                                 </tr>
                             @endif

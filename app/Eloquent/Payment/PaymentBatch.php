@@ -65,6 +65,6 @@ class PaymentBatch extends Model
             $total+=$tradein->bamboo_price;
         }
 
-        return $total . " £";
+        return "£ " . $total ;
     }
 }

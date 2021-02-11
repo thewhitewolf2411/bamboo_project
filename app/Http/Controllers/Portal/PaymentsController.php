@@ -235,9 +235,9 @@ class PaymentsController extends Controller
 
             foreach($tradeins as $tradein){
                 
-                if($tradein->job_state !== '22'){
+                if($tradein->job_state !== '23'){
                    
-                    $tradein->job_state = '22';
+                    $tradein->job_state = '23';
                     $tradein->save();
 
                     // create payment batch device
@@ -588,7 +588,7 @@ class PaymentsController extends Controller
             // update tradein state
             $tradeins = Tradein::whereIn('id', $tradein_ids)->get();
             foreach($tradeins as $tradein){     
-                $tradein->job_state = '21';
+                $tradein->job_state = '22';
                 $tradein->save();
             }
 

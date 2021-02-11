@@ -59,7 +59,7 @@
                                 <td><div class="table-element">{!!$batch_device->tradeinBarcode()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->orderDate()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->product()!!}</div></td>
-                                <td><div class="table-element">{!!$batch_device->price()!!} £</div></td>
+                                <td><div class="table-element">£ {!!$batch_device->price()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->failedDate()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->bankDetailsUpdated()!!}</div></td>
                                 <td><div class="table-element">@if($batch_device->hasCheque()) Yes @endif</div></td>
