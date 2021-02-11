@@ -24,7 +24,10 @@ class Boxing{
             return ['Box is at it\'s capacity. Please create new box.', 404];
         }
 
-        if(($box->tray_network === 'unlocked' && $tradein->deviceLocked() === false) || !($box->tray_network !== 'unlocked' && $tradein->deviceLocked())){
+        //if(($box->tray_network === 'unlocked' && $tradein->deviceLocked() === false) || !($box->tray_network !== 'unlocked' && $tradein->deviceLocked())){
+        if(($box->tray_network === 'Unlocked' && $tradein->deviceLocked() === false) || ($box->tray_network !== 'Unlocked' && $tradein->deviceLocked() === true)){
+            // AAAAAAAAAAAAAAAAAAAA
+        } else {
             return ['Network missmatch. Cannot add this device to this box.', 404];
         }
 
