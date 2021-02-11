@@ -527,7 +527,7 @@ class WarehouseManagementController extends Controller
             array_push($devices, $device);
         }
 
-        $path = storage_path().'public_path() . "/pdf/picklot';
+        $path = public_path()."/pdf/picklot";
         if(!is_dir($path)){
             mkdir($path, 0777, true);
         }
