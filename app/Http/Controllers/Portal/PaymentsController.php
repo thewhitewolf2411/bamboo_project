@@ -306,12 +306,12 @@ class PaymentsController extends Controller
     public function downloadCSV(){
         if(isset(request()->batch_id)){
             $payment_batch = PaymentBatch::findOrFail(request()->batch_id);
-            return response()->download(storage_path().'\app\public\exports\batches\\' . $payment_batch->csv_file);
+            return response()->download(storage_path().'/app/public/exports/batches/' . $payment_batch->csv_file);
         }
         if(isset(request()->batchdevice_id)){
             $device = PaymentBatchDevice::find(request()->batchdevice_id);
             $payment_batch = PaymentBatch::findOrFail($device->payment_batch_id);
-            return response()->download(storage_path().'\app\public\exports\batches\\' . $payment_batch->csv_file);
+            return response()->download(storage_path().'/app/public/exports/batches/' . $payment_batch->csv_file);
         }
     }
 
