@@ -42,7 +42,8 @@ class Tradein extends Model
             return SellingProduct::where('id', $this->correct_product_id)->first()->product_name;
         }
         //dd(SellingProduct::where('id', $id)->first(), $this);
-        return SellingProduct::where('id', $id)->first()->product_name;
+       // return SellingProduct::where('id', $id)->first()->product_name;
+       return SellingProduct::where('id', $this->product_id)->first()->product_name;
     }
 
     public function getOrderDate(){
@@ -68,7 +69,8 @@ class Tradein extends Model
 
     public function getBrandName($productId){
 
-        $sellingProduct = SellingProduct::where('id', $productId)->first();
+        // $sellingProduct = SellingProduct::where('id', $productId)->first();
+        $sellingProduct = SellingProduct::where('id', $this->product_id)->first();
         $brand = Brand::where('id', $sellingProduct->brand_id)->first();
         return $brand->brand_name;
     }

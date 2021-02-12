@@ -78,7 +78,7 @@ class Testing{
             if($request->pin_lock === "true"){
                 
                 $tradein->job_state = "15c";
-                $tradein->save();
+                //$tradein->save();
 
                 $klaviyoemail = new KlaviyoEmail();
                 $klaviyoemail->pinLocked($user, $tradein);
@@ -96,7 +96,7 @@ class Testing{
                         $klaviyoemail = new KlaviyoEmail();
                         $klaviyoemail->googleLocked($user, $tradein);
                     }
-                    $tradein->save();
+                    //$tradein->save();
                 }
             }
 
@@ -108,7 +108,7 @@ class Testing{
                 $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'Q')->where('number_of_devices', "<" ,100)->first();
                 $quarantineName = $quarantineTrays->tray_name;
                 $tradein->quarantine_date = \Carbon\Carbon::now();
-                $tradein->save();
+                // $tradein->save();
             }
             else{
                 $bambogradeval = $request->bamboo_customer_grade;
@@ -132,7 +132,7 @@ class Testing{
                         $tradein->correct_network = $tradein->customer_network;
                     }
 
-                    $tradein->save();
+                    // $tradein->save();
 
                 $bambooprice = $this->generateDevicePrice($tradein->correct_product_id, $tradein->correct_memory, $tradein->correct_network, $bambogradeval);
                 $tradein->bamboo_price = $bambooprice;
@@ -222,7 +222,7 @@ class Testing{
             }
 
             $tradein->bamboo_price = $bambooprice;
-            $tradein->save();
+            // $tradein->save();
     
             $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;
             $quarantineTrays->save();
@@ -250,7 +250,7 @@ class Testing{
             if($request->pin_lock === "true"){
                 
                 $tradein->job_state = "11c";
-                $tradein->save();
+                // $tradein->save();
 
                 $klaviyomail = new KlaviyoEmail();
                 $klaviyomail->pinLocked($user, $tradein);
@@ -267,7 +267,7 @@ class Testing{
                         $klaviyomail = new KlaviyoEmail();
                         $klaviyomail->googleLocked($user, $tradein);
                     }
-                    $tradein->save();
+                    // $tradein->save();
                 }
             }
 
@@ -279,7 +279,7 @@ class Testing{
                 $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'Q')->where('number_of_devices', "<" ,100)->first();
                 $quarantineName = $quarantineTrays->tray_name;
                 $tradein->quarantine_date = \Carbon\Carbon::now();
-                $tradein->save();
+                // $tradein->save();
             }
             else{
                 $bambogradeval = $request->bamboo_customer_grade;
@@ -306,7 +306,7 @@ class Testing{
                     }
                 // }
 
-                $tradein->save();
+                // $tradein->save();
 
                 $bambooprice = $this->generateDevicePrice($tradein->correct_product_id, $tradein->correct_memory, $tradein->correct_network, $bambogradeval);
                 $tradein->bamboo_price = $bambooprice;
