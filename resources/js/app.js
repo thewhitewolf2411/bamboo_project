@@ -11,6 +11,7 @@ require('./scripts/bayoverview');
 require('./scripts/buildingsaleslot');
 require('./scripts/completedsaleslot');
 require('./scripts/saleslotpicking');
+require('./scripts/PrintTradeIn');
 
 "use strict";
 
