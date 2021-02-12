@@ -42,7 +42,8 @@ class Tradein extends Model
             return SellingProduct::where('id', $this->correct_product_id)->first()->product_name;
         }
         //dd(SellingProduct::where('id', $id)->first(), $this);
-        return SellingProduct::where('id', $id)->first()->product_name;
+       // return SellingProduct::where('id', $id)->first()->product_name;
+       return SellingProduct::where('id', $this->product_id)->first()->product_name;
     }
 
     public function getOrderDate(){
@@ -68,7 +69,8 @@ class Tradein extends Model
 
     public function getBrandName($productId){
 
-        $sellingProduct = SellingProduct::where('id', $productId)->first();
+        // $sellingProduct = SellingProduct::where('id', $productId)->first();
+        $sellingProduct = SellingProduct::where('id', $this->product_id)->first();
         $brand = Brand::where('id', $sellingProduct->brand_id)->first();
         return $brand->brand_name;
     }
@@ -294,7 +296,7 @@ class Tradein extends Model
         // left - database flags
         $states = [
             /*0*/   [],
-            /*1*/   ['Order Request received','Order Placed'],
+            /*1*/   ['Awaiting trade pack','Order Placed'],     // old - ['Order Request received','Order Placed']
             /*2*/   ['Awaiting Receipt/Customer Sent','Trade Pack Despatched'],
             /*3*/   ['Awaiting Receipt','Trade Pack Despatched'],
             /*4*/   ['Lost in transit','Lost in transit'],
@@ -307,7 +309,7 @@ class Tradein extends Model
             /*8d*/  ['Stolen','Awaiting Response'],
             /*8e*/  ['Knox','Awaiting Response'],
             /*8f*/  ['Assetwatch','Awaiting Response'],
-            /*9*/   ['Awaiting Testing','Awaiting Testing'],
+            /*9*/   ['Awaiting Testing','Trade Pack Received'],    // old - ['Awaiting Testing','Awaiting Testing']
             /*10*/  ['Device has passed testing','Testing'],
             /* First Test results */
             /*11*/  ['Quarantine','Awaiting Response'],

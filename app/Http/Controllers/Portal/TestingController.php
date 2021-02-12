@@ -505,7 +505,7 @@ class TestingController extends Controller
             $tradein->barcode = $newBarcode;
         }
         
-        $tradein->save();
+        // $tradein->save();
 
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 
@@ -554,6 +554,7 @@ class TestingController extends Controller
         $klaviyoemail = new KlaviyoEmail();
         $klaviyoemail->receiptOfDevice(User::where('id', $tradein->user_id)->first(), $tradein);
 
+        $tradein->save();
 
         return view('portal.testing.totray')->with(['tray_name'=>$quarantineName,'response'=>$response,'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein,'testing'=>false, 'mti'=>$mti]);
 

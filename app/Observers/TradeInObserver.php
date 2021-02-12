@@ -27,7 +27,7 @@ class TradeInObserver
             'customer_grade' => null,
             'bamboo_grade' => null,
             'value' => $tradein->order_price,
-            'stock_location' => null,
+            'stock_location' => $tradein->getTrayName($tradein->id),
             'cheque_number' => null
         ]);
         // TradeinAudit::create([
