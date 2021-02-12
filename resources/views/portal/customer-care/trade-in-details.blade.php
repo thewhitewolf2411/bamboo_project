@@ -422,7 +422,7 @@
                             <td><div class="table-element text-center">{{$audit->bamboo_status}}</div></td>
                             <td><div class="table-element text-center">{{$audit->customer_grade}}</div></td>
                             <td><div class="table-element text-center">{{$audit->bamboo_grade}}</div></td>
-                            <td><div class="table-element text-center">{{$audit->value}} £</div></td>
+                            <td><div class="table-element text-center">£ {{$audit->value}}</div></td>
                             <td><div class="table-element text-center">{{$audit->stock_location}}</div></td>
                             <td><div class="table-element">{{$audit->cheque_number}}</div></td>
                             <td @if(Auth::user()->admin()) @if($audit->notes_count > 0) style="background: #f1f15f" @endif @endif>
