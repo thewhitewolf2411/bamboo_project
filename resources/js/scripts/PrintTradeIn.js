@@ -1,11 +1,13 @@
-function printTradePackTradeIn(trade_pack_job_trade_in_id){
-
+$('.print-one-tradein').on('click', function(){
     //Set new value for trade_pack_trade_in_id hidden input
-    $('#print_trade_pack_trade_in_id').val(trade_pack_job_trade_in_id);
+
+    var barcode = $(this).attr('data-barcode');
+
+    $('#print_trade_pack_trade_in_id').val(barcode);
 
     //Trigger printing
     $('#print_trade_pack_trade_in_trigger').click();
-}
+})
 
 function printTradePackTradeInBulk(){
     //Trigger printing
@@ -45,43 +47,57 @@ function deleteTradeInDetailsFromSystem(id){
     $('#delete_trade_in_button').click();
 }
 
-function enablebtn(){
-    var k=0;
-    var chckbox = $('.printcheckbox');
+$('#tradein-checkallbtn').on('click', function(){
 
-    for(var i=0; i<chckbox.length; i++){
-        if(chckbox[i].checked){
-            k++;
-        }
-    }
+    $('.printcheckbox').prop('checked', false);
 
-    if(k>0){
-        $('#print_trade_pack_bulk_form_trigger').prop("disabled", false);
-    }
+    $('.printcheckbox').slice(0, 25).prop('checked', this.checked);
 
-    else{
-        $('#print_trade_pack_bulk_form_trigger').prop("disabled", true);
-    }
-}
+});
 
-function checkall(chkallbtn){
+$('.printcheckbox').on('click', function(){
 
-    var chckbox = $('.printcheckbox');
- 
-    if(chkallbtn.checked){
-        for(var i=0; i<chckbox.length; i++){
-            chckbox[i].checked = true;
-            $('#print_trade_pack_bulk_form_trigger').prop("disabled", false);
-        }
+    var numberOfChecked = $('.printcheckbox:checked').length;
+    console.log(numberOfChecked);
+
+    if($(this).is('checked')){
+        $(this).prop('checked', false);        
     }
     else{
-        for(var i=0; i<chckbox.length; i++){
-            chckbox[i].checked = false;
-            $('#print_trade_pack_bulk_form_trigger').prop("disabled", true);
+        if(numberOfChecked >= 25){
+            $(this).prop('checked', false);
         }
     }
 
-}
+});
+
+$('#print_trade_pack_bulk_form_trigger').on('click', function(){
+
+    var selected = [];
+    $('.printcheckbox:checked').each(function() {
+        selected.push($(this).attr('name'));
+    });
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: "/portal/customer-care/trade-in/printlabelbulk",
+        type:"POST",
+        data:{
+            selected:selected,
+        },
+        success:function(response){
+            console.log(response);
+            window.open(response, '_blank');
+            location.reload();
+        }
+    });
+
+});
 
 function markOrderAsSent(trade_out_id){
 

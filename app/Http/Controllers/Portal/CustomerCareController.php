@@ -237,16 +237,14 @@ class CustomerCareController extends Controller
 
     public function PrintTradeInLabelBulk(Request $request){
 
-        dd($request);
+        //dd($request['selected']);
 
         $html = "";
         $barcodes = array();
 
-        foreach($request->all() as $item){
+        foreach($request['selected'] as $item){
             array_push($barcodes, $item);
         }
-
-        $barcodes = array_slice($barcodes, 1);
 
         $tradeins = array();
 
@@ -255,8 +253,8 @@ class CustomerCareController extends Controller
             array_push($tradeins, $tradein);
         }
 
-        if(count($tradeins)>50){
-            return \redirect()->back()->with('error', 'You can\'t print more than 50 tradeins in one go.');
+        if(count($tradeins)>25){
+            return \redirect()->back()->with('error', 'You can\'t print more than 25 tradeins in one go.');
         }
 
         foreach($barcodes as $barcode){
@@ -306,6 +304,7 @@ class CustomerCareController extends Controller
         $pdfMerger->save( public_path() . $mergedname);
 
 
+        return response($mergedname, 200);
         return redirect()->back()->with('bulk', $mergedname);
     }
 
