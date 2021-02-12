@@ -243,24 +243,141 @@
                                         </table>
                                     </div> --}}
 
-                                    <td>
-                                        <div class="table-element">
-                                            <div class="mr-auto"><strong>Functional Fail:</strong></div>
-                                            <div class="ml-auto"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="table-element">
-                                            <div class="mr-auto"><strong>Functional Fail:</strong></div> 
-                                            <div class="ml-auto"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="table-element">
-                                            <div class="mr-auto"><strong>Functional Fail:</strong></div> 
-                                            <div class="ml-auto"></div>
-                                        </div>
-                                    </td>
+                                    @if($testingfaults->audio_test !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">Audio test</div>
+                                            </div>
+                                        </td>
+                                    @endif
+                                    
+                                    @if($testingfaults->front_microphone !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">Front microphone</div>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                    @if($testingfaults->headset_test !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">Headset test</div>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                    @if($testingfaults->loud_speaker_test !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">Loud speaker test</div>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                    @if($testingfaults->microphone_playback_test !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">Microphone playback test</div>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                    @if($testingfaults->buttons_test !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">Buttons test</div>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                    @if($testingfaults->sensor_test !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">Sensor test</div>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                    @if($testingfaults->camera_test !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">Camera test</div>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                    @if($testingfaults->glass_condition !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">Glass condition</div>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                    @if($testingfaults->vibration !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">Vibration</div>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                    @if($testingfaults->original_colour !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">Original colour</div>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                    @if($testingfaults->battery_health !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">Battery health</div>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                    @if($testingfaults->nfc !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">NFC</div>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                    @if($testingfaults->no_power !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">No power</div>
+                                            </div>
+                                        </td>
+                                    @endif
+
+                                    @if($testingfaults->fake_missing_parts !== null)
+                                        <td>
+                                            <div class="table-element">
+                                                <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                                <div class="ml-auto">Fake missing parts</div>
+                                            </div>
+                                        </td>
+                                    @endif
+
                                 @endif
 
                             </tbody>
