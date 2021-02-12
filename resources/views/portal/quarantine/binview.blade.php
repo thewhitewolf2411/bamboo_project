@@ -127,7 +127,7 @@
 
                             @csrf
                             <div class="form-group" id="form-inputs">
-                                <label for="checkdevice">Scan or type Tradein id:</label>
+                                <label for="checkdevice">Scan or type Trade-in Barcode number:</label>
                                 <input type="text" class="form-control" id="checkdevice">
                                 <input type="hidden" id="bingrade" value="{{Session::get('devices_type')}}">
                                 <input type="hidden" id="binname" value="{{$bin->tray_name}}">

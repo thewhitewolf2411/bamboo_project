@@ -240,10 +240,7 @@ class FeedsController extends Controller
             DB::table('buying_product_network')->truncate();
         }
         else if($export_feed_parameter == 2){
-            DB::table('selling_products')->truncate();
-            DB::table('product_information')->truncate();
-            DB::table('product_networks')->truncate();
-            DB::table('colours')->truncate();
+
         }
 
         $inputFileName = $request->file('imported_csv')->getClientOriginalName();
@@ -368,7 +365,7 @@ class FeedsController extends Controller
             // ignore 12 & 13 (created_at and updated_at) index at
 
             // required fields for importing Recycle products
-            $required_product_fields = ['product_name', 'product_image', 'category_id', 'brand_id'];
+            $required_product_fields = ['id', 'product_name', 'product_image', 'category_id', 'brand_id'];
             // if memory, then these required
             $required_product_info_fields = ['product_memory', 'excellent_working', 'good_working', 'poor_working', 'damaged_working', 'faulty'];
 
@@ -401,6 +398,12 @@ class FeedsController extends Controller
 
             if(count($missing_header_fields) > 0){
                 return \redirect()->back()->with('error','Error - check your import file. Missing fields: ' . implode(', ', $missing_header_fields));
+            }
+            else{
+                DB::table('selling_products')->truncate();
+                DB::table('product_information')->truncate();
+                DB::table('product_networks')->truncate();
+                DB::table('colours')->truncate();
             }
 
             $networks = Network::all();

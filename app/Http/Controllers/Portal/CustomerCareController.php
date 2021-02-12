@@ -71,7 +71,7 @@ class CustomerCareController extends Controller
                 foreach($raw_tradeins as $tradein_barcode => $tradein_group){
                     
                     $group = collect();
-                    if($tradein_group->first()->getOrderType($tradein_group->first()->barcode_original) == $searchterm){
+                    if(strtolower($tradein_group->first()->getOrderType($tradein_group->first()->barcode_original)) == strtolower($searchterm)){
                         $filtered[$tradein_barcode] = $tradein_group;
                     }
                     
@@ -236,6 +236,8 @@ class CustomerCareController extends Controller
 
 
     public function PrintTradeInLabelBulk(Request $request){
+
+        dd($request);
 
         $html = "";
         $barcodes = array();
@@ -431,7 +433,7 @@ class CustomerCareController extends Controller
                 foreach($raw_tradeins as $tradein_barcode => $tradein_group){
                     
                     $group = collect();
-                    if($tradein_group->first()->getOrderType($tradein_group->first()->barcode_original) == $searchterm){
+                    if(strtolower($tradein_group->first()->getOrderType($tradein_group->first()->barcode_original)) == strtolower($searchterm)){
                         $filtered[$tradein_barcode] = $tradein_group;
                     }
                     
