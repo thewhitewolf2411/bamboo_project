@@ -180,13 +180,15 @@
 
                     },
                     success:function(response){
+
+                        console.log($('#addeddevicestable #' + response.order.id));
                         if(response.deviceadded == 0){
                             $('#statement').html('<div class="alert alert-warning">' + response.error + '</div>');
                         }
                         else if(response.deviceadded == 1){
 
                             if($('#addeddevicestable tr').length > 1){
-                                if($('#addeddevicestable #' + response.order.id) == undefined ){
+                                if($('#addeddevicestable #' + response.order.id).length == 0 ){
                                     $('#addeddevicestable').append('<tr id="' + response.order.id + '"><td><div class="table-element">' + response.order.barcode + '</div></td><td><div class="table-element">' + response.model + '</div></td><td><div class="table-element">' + response.order.imei_number + '</div></td><td><div class="table-element">' + response.order.bamboo_grade + '</div></td></tr>');
                                     $('#form-inputs').append('<input type="hidden" name="tradein-'+ response.order.id + '" value="'+ response.order.id +'">');
                                 }

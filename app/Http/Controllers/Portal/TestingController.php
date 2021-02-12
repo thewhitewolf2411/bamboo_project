@@ -457,7 +457,7 @@ class TestingController extends Controller
         
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 
-        $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
+        $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->correct_product_id), $tradein->getProductName($tradein->correct_product_id), $tradein->imei_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
