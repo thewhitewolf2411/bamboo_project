@@ -37,6 +37,7 @@
                     </div>
                 </div>
 
+                <!-- TRADE-IN SUMMARY -->
                 <div class="table">
                     <div class="w-100 details">
                         <div class="portal-title">
@@ -61,6 +62,10 @@
                       </table>
                 </div>
 
+
+
+
+                <!-- PAYMENT + DELIVERY DETAILS -->
                 <div class="table">
                     <div class="w-100 details">
                         <div class="portal-title">
@@ -81,6 +86,10 @@
                       </table>
                 </div>
 
+
+
+
+                <!-- CUSTOMER DETAILS -->
                 <div class="table">
                     <div class="w-100 details">
                         <div class="portal-title">
@@ -103,6 +112,148 @@
                       </table>
                 </div>
 
+
+
+
+                <!-- ORDER DETAILS -->
+                <div class="table">
+
+                    <div class="portal-title">
+                        <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Order Details</p>
+                    </div>
+
+                    <table class="portal-table sortable" id="categories-table">
+                        <tr>
+                            <td><div class="table-element">Trade-In ID</div></td>
+                            <td><div class="table-element">Device Name</div></td>
+                            <td><div class="table-element">Customer Status</div></td>
+                        </tr>
+                        @foreach($tradeins as $tradein)
+                        <tr>
+                            <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                            <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                            <td><div class="table-element">{{$tradein->getCustomerStatus()}}</div></td>
+                        </tr>
+                        @endforeach
+                    </table>
+
+                </div>
+
+
+
+
+                <!-- DEVICE DETAILS -->
+                <div class="table">
+                    <div class="portal-title">
+                        <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Device Details</p>
+                    </div>
+
+                    @foreach($tradeins as $tradein)
+                        <table class="portal-table">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="table-element">
+                                            <div class="mr-auto"><strong>Make/Model:</strong></div> 
+                                            <div class="ml-auto">{{$tradein->getProductName($tradein->product_id)}}</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-element">
+                                            <div class="mr-auto"><strong>GB:</strong></div> 
+                                            <div class="ml-auto">@if(isset($tradein->correct_memory)) {!!$tradein->correct_memory!!} @else {!!$tradein->customer_memory!!} @endif</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-element">
+                                            <div class="mr-auto"><strong>Colour:</strong></div>
+                                            <div class="ml-auto">Red</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="table-element">
+                                            <div class="mr-auto"><strong>Customer Grade:</strong></div>
+                                            <div class="ml-auto">{{$tradein->customer_grade}}</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-element">
+                                            <div class="mr-auto"><strong>Bamboo Grade:</strong></div> 
+                                            <div class="ml-auto">@if(isset($tradein->bamboo_grade)) {!!$tradein->bamboo_grade!!} @else Device not tested. @endif</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-element">
+                                            <div class="mr-auto"><strong>Offer Value:</strong></div> 
+                                            <div class="ml-auto">£ {{$tradein->order_price}}</div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                @if($testingfaults !== null)
+                                    <div class="portal-table-container">
+                                        <div class="portal-title">
+                                            <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Testing fault details</p>
+                                        </div>
+
+                                        <table class="portal-table sortable" id="categories-table">
+                                            <tr>
+                                                <td><div class="table-element">Trade-In Product ID</div></td>
+                                                <td><div class="table-element">Audio test</div></td>
+                                                <td><div class="table-element">Front Microphone</div></td>
+                                                <td><div class="table-element">Headset test</div></td>
+                                                <td><div class="table-element">Loud speaker test</div></td>
+                                                <td><div class="table-element">Microphone playback test</div></td>
+                                                <td><div class="table-element">Button test</div></td>
+                                                <td><div class="table-element">Sensor test</div></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><div class="table-element">{{$tradeins[0]->barcode}}</div></td>
+                                                <td><div class="table-element">@if($testingfaults->audio_test) Failed @endif</div></td>
+                                                <td><div class="table-element">@if($testingfaults->front_microphone) Failed @endif</div></td>
+                                                <td><div class="table-element">@if($testingfaults->headset_test) Failed @endif</div></td>
+                                                <td><div class="table-element">@if($testingfaults->loud_speaker_test) Failed @endif</div></td>
+                                                <td><div class="table-element">@if($testingfaults->microphone_playback_test) Failed @endif</div></td>
+                                                <td><div class="table-element">@if($testingfaults->buttons_test) Failed @endif</div></td>
+                                                <td><div class="table-element">@if($testingfaults->sensor_test) Failed @endif</div></td>
+                                            </tr>
+                                            <tr>
+                                                <td><div class="table-element">Camera test</div></td>
+                                                <td><div class="table-element">Glass condition</div></td>
+                                                <td><div class="table-element">Vibration</div></td>
+                                                <td><div class="table-element">Original colour</div></td>
+                                                <td><div class="table-element">Battery health</div></td>
+                                                <td><div class="table-element">NFC</div></td>
+                                                <td><div class="table-element">No power</div></td>
+                                                <td><div class="table-element">Fake or missing parts</div></td>
+                                            </tr>
+                                            <tr>
+                                                <td><div class="table-element">@if($testingfaults->camera_test) Failed @endif</div></td>
+                                                <td><div class="table-element">@if($testingfaults->glass_condition) Failed @endif</div></td>
+                                                <td><div class="table-element">@if($testingfaults->vibration) Failed @endif</div></td>
+                                                <td><div class="table-element">@if($testingfaults->original_colour) Failed @endif</div></td>
+                                                <td><div class="table-element">@if($testingfaults->battery_health) Failed @endif</div></td>
+                                                <td><div class="table-element">@if($testingfaults->nfc) Failed @endif</div></td>
+                                                <td><div class="table-element">@if($testingfaults->no_power) Failed @endif</div></td>
+                                                <td><div class="table-element">@if($testingfaults->fake_missing_parts) Failed @endif</div></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                @endif
+
+                            </tbody>
+                        </table>
+                        <br>
+                    @endforeach
+                </div>
+
+
+
+
+                <!-- JOB STATUS -->
                 <div class="table">
                     <div class="w-100 details">
                         <div class="portal-title">
@@ -217,120 +368,56 @@
                 </div>
 
 
-                {{-- <div class="portal-title">
-                    <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Trade-In Products</p>
-                </div>
 
-                <table class="portal-table sortable" id="categories-table">
-                    <tr>
-                        <td><div class="table-element">Trade-In Product ID</div></td>
-                        <td><div class="table-element">Name</div></td>
-                        <td><div class="table-element">Customer Status</div></td>
-                    </tr>
-                    @foreach($tradeins as $tradein)
-                    <tr>
-                        <td><div class="table-element">{{$tradein->barcode}}</div></td>
-                        <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
-                        <td><div class="table-element">{{$tradein->product_state}}</div></td>
-                    </tr>
-                    @endforeach
-                </table> --}}
 
-                <div class="portal-title">
-                    <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Device History</p>
-                </div>
-
-                <table class="portal-table sortable" id="categories-table">
-                    <tr>
-                        <td><div class="table-element">Date Placed</div></td>
-                        <td><div class="table-element text-center">Trade-In ID</div></td>
-                        <td><div class="table-element text-center">Trade-In Barcode</div></td>
-                        <td><div class="table-element">Product</div></td>
-                        <td><div class="table-element">User</div></td>
-                        <td><div class="table-element text-center">Customer Status</div></td>
-                        <td><div class="table-element text-center">Bamboo Status</div></td>
-                        <td><div class="table-element text-center">Customer Grade</div></td>
-                        <td><div class="table-element text-center">Bamboo Grade</div></td>
-                        <td><div class="table-element">Value</div></td>
-                        <td><div class="table-element text-center">Stock Location</div></td>
-                        <td><div class="table-element">Cheque Number</div></td>
-                        <td></td>
-                    </tr>
-                    @foreach($audits as $audit)
-                    <tr>
-                        <td><div class="table-element">{{$audit->created_at->format('d/m/Y H:i')}}</div></td>
-                        <td><div class="table-element text-center">{{$audit->tradein_barcode}}</div></td>
-                        <td><div class="table-element text-center">{{$audit->tradein_barcode_original}}</div></td>
-                        <td><div class="table-element text-center">{{$audit->getProduct()}}</div></td>
-                        <td><div class="table-element text-center">{{$audit->getUser()}}</div></td>
-                        <td><div class="table-element text-center">{{$audit->customer_status}}</div></td>
-                        <td><div class="table-element text-center">{{$audit->bamboo_status}}</div></td>
-                        <td><div class="table-element text-center">{{$audit->customer_grade}}</div></td>
-                        <td><div class="table-element text-center">{{$audit->bamboo_grade}}</div></td>
-                        <td><div class="table-element text-center">{{$audit->value}} £</div></td>
-                        <td><div class="table-element text-center">{{$audit->stock_location}}</div></td>
-                        <td><div class="table-element">{{$audit->cheque_number}}</div></td>
-                        <td @if(Auth::user()->admin()) @if($audit->notes_count > 0) style="background: #f1f15f" @endif @endif>
-                            <div class="add-note-button" @if(Auth::user()->admin()) data-toggle="modal" data-target="#noteModal" onclick="openNoteModal({{$audit}})" @endif>&nbsp;+&nbsp;</div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </table>
-
-                <br>
-
-                @if($testingfaults !== null)
-                <div class="portal-table-container">
+                <!-- DEVICE HISTORY -->
+                <div class="table">
                     <div class="portal-title">
-                        <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Testing fault details</p>
+                        <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Device History</p>
                     </div>
 
                     <table class="portal-table sortable" id="categories-table">
                         <tr>
-                            <td><div class="table-element">Trade-In Product ID</div></td>
-                            <td><div class="table-element">Audio test</div></td>
-                            <td><div class="table-element">Front Microphone</div></td>
-                            <td><div class="table-element">Headset test</div></td>
-                            <td><div class="table-element">Loud speaker test</div></td>
-                            <td><div class="table-element">Microphone playback test</div></td>
-                            <td><div class="table-element">Button test</div></td>
-                            <td><div class="table-element">Sensor test</div></td>
+                            <td><div class="table-element">Date Placed</div></td>
+                            <td><div class="table-element text-center">Trade-In ID</div></td>
+                            <td><div class="table-element text-center">Trade-In Barcode</div></td>
+                            <td><div class="table-element">Product</div></td>
+                            <td><div class="table-element">User</div></td>
+                            <td><div class="table-element text-center">Customer Status</div></td>
+                            <td><div class="table-element text-center">Bamboo Status</div></td>
+                            <td><div class="table-element text-center">Customer Grade</div></td>
+                            <td><div class="table-element text-center">Bamboo Grade</div></td>
+                            <td><div class="table-element">Value</div></td>
+                            <td><div class="table-element text-center">Stock Location</div></td>
+                            <td><div class="table-element">Cheque Number</div></td>
+                            <td></td>
                         </tr>
-
+                        @foreach($audits as $audit)
                         <tr>
-                            <td><div class="table-element">{{$tradeins[0]->barcode}}</div></td>
-                            <td><div class="table-element">@if($testingfaults->audio_test) Failed @endif</div></td>
-                            <td><div class="table-element">@if($testingfaults->front_microphone) Failed @endif</div></td>
-                            <td><div class="table-element">@if($testingfaults->headset_test) Failed @endif</div></td>
-                            <td><div class="table-element">@if($testingfaults->loud_speaker_test) Failed @endif</div></td>
-                            <td><div class="table-element">@if($testingfaults->microphone_playback_test) Failed @endif</div></td>
-                            <td><div class="table-element">@if($testingfaults->buttons_test) Failed @endif</div></td>
-                            <td><div class="table-element">@if($testingfaults->sensor_test) Failed @endif</div></td>
+                            <td><div class="table-element">{{$audit->created_at->format('d/m/Y H:i')}}</div></td>
+                            <td><div class="table-element text-center">{{$audit->tradein_barcode}}</div></td>
+                            <td><div class="table-element text-center">{{$audit->tradein_barcode_original}}</div></td>
+                            <td><div class="table-element text-center">{{$audit->getProduct()}}</div></td>
+                            <td><div class="table-element text-center">{{$audit->getUser()}}</div></td>
+                            <td><div class="table-element text-center">{{$audit->customer_status}}</div></td>
+                            <td><div class="table-element text-center">{{$audit->bamboo_status}}</div></td>
+                            <td><div class="table-element text-center">{{$audit->customer_grade}}</div></td>
+                            <td><div class="table-element text-center">{{$audit->bamboo_grade}}</div></td>
+                            <td><div class="table-element text-center">{{$audit->value}} £</div></td>
+                            <td><div class="table-element text-center">{{$audit->stock_location}}</div></td>
+                            <td><div class="table-element">{{$audit->cheque_number}}</div></td>
+                            <td @if(Auth::user()->admin()) @if($audit->notes_count > 0) style="background: #f1f15f" @endif @endif>
+                                <div class="add-note-button" @if(Auth::user()->admin()) data-toggle="modal" data-target="#noteModal" onclick="openNoteModal({{$audit}})" @endif>&nbsp;+&nbsp;</div>
+                            </td>
                         </tr>
-                        <tr>
-                            <td><div class="table-element">Camera test</div></td>
-                            <td><div class="table-element">Glass condition</div></td>
-                            <td><div class="table-element">Vibration</div></td>
-                            <td><div class="table-element">Original colour</div></td>
-                            <td><div class="table-element">Battery health</div></td>
-                            <td><div class="table-element">NFC</div></td>
-                            <td><div class="table-element">No power</div></td>
-                            <td><div class="table-element">Fake or missing parts</div></td>
-                        </tr>
-                        <tr>
-                            <td><div class="table-element">@if($testingfaults->camera_test) Failed @endif</div></td>
-                            <td><div class="table-element">@if($testingfaults->glass_condition) Failed @endif</div></td>
-                            <td><div class="table-element">@if($testingfaults->vibration) Failed @endif</div></td>
-                            <td><div class="table-element">@if($testingfaults->original_colour) Failed @endif</div></td>
-                            <td><div class="table-element">@if($testingfaults->battery_health) Failed @endif</div></td>
-                            <td><div class="table-element">@if($testingfaults->nfc) Failed @endif</div></td>
-                            <td><div class="table-element">@if($testingfaults->no_power) Failed @endif</div></td>
-                            <td><div class="table-element">@if($testingfaults->fake_missing_parts) Failed @endif</div></td>
-                        </tr>
+                        @endforeach
                     </table>
                 </div>
-                @endif
 
+
+
+
+                <!-- missing image -->
                 @if($tradeins[0]->missing_image)
                     <h5 class="text-center">Missing image:</h5>
                     <img src="{{$tradeins[0]->getMissingImage()}}" id="missing-img" class="img-thumbnail text-center missing-img"

@@ -120,6 +120,9 @@ class CustomerCareController extends Controller
     public function showTradeInDetails($id){
         //if(!$this->checkAuthLevel(1)){return redirect('/');}
         $tradein = Tradein::where('barcode', $id)->get();
+        if($tradein->isEmpty()){
+            abort(404);
+        }
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
         $user = User::where('id', $tradein[0]->user_id)->first();
