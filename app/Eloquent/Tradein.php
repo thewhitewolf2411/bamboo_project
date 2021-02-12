@@ -294,7 +294,7 @@ class Tradein extends Model
         // left - database flags
         $states = [
             /*0*/   [],
-            /*1*/   ['Order Request received','Order Placed'],
+            /*1*/   ['Awaiting trade pack','Order Placed'], // old - ['Order Request received','Order Placed']
             /*2*/   ['Awaiting Receipt/Customer Sent','Trade Pack Despatched'],
             /*3*/   ['Awaiting Receipt','Trade Pack Despatched'],
             /*4*/   ['Lost in transit','Lost in transit'],
