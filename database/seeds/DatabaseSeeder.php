@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         //users
         DB::table('users')->insert([
 
-            'first_name'=>'admin',
+            'first_name'=>'bamboo',
             'last_name'=>'admin',
             'email'=>'admin@gmail.com',
             'password'=>Crypt::encrypt('Lambda12'),
@@ -26,8 +26,8 @@ class DatabaseSeeder extends Seeder
             'preffered_os'=>'Android',
             'sub'=>false,
             'username'=>'bambooadmin',
-            'delivery_address'=>'Sarajevo',
-            'billing_address'=>'Sarajevo',
+            'delivery_address'=>'The Parsonage, 1 Halmer Gate, Spalding, PE11 2DR',
+            'billing_address'=>'32 Hammonds Drive, Peterborough, PE1 5AA',
             'contact_number'=>'061172442',
             'type_of_user'=>3,
             'account_disabled'=>false,
@@ -43,8 +43,8 @@ class DatabaseSeeder extends Seeder
             'preffered_os'=>'iOS',
             'sub'=>false,
             'username'=>'eyeager',
-            'delivery_address'=>'Sarajevo',
-            'billing_address'=>'Sarajevo',
+            'delivery_address'=>'The Works, 414 Union Street, Aberdeen, AB10 1TQ',
+            'billing_address'=>'Widapa Ltd, 25 Second Drove, Peterborough, PE1 5XA',
             'contact_number'=>'061172442',
             'type_of_user'=>0,
             'account_disabled'=>false,

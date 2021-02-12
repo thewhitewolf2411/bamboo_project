@@ -37,6 +37,7 @@
                     </div>
                 </div>
 
+
                 <!-- TRADE-IN SUMMARY -->
                 <div class="table">
                     <div class="w-100 details">
@@ -52,17 +53,15 @@
                             </tr>
                             <tr>
                                 <td>Trade-in Barcode: {{$barcode}}</td>
-                                <td>Collection Address: </td>
+                                <td>Collection Address: {!!$user->collectionAddress()!!}</td>
                             </tr>
                             <tr>
-                                <th>Billing address: </th>
+                                <td>Billing address: {!!$user->billingAddress()!!}</td>
                                 <td style="border: none;"></td>
                             </tr>
                         </tbody>
                       </table>
                 </div>
-
-
 
 
                 <!-- PAYMENT + DELIVERY DETAILS -->
@@ -100,8 +99,8 @@
                         <tbody>
                             <tr>
                                 <td>Name: {{$tradeins[0]->customer()->fullName()}}</td>
-                                <td>Shipping Address: </td>
-                                <td>Postcode:</td>
+                                <td>Shipping Address: {!!$user->shippingAddress()!!}</td>
+                                <td>Postcode: {!!$user->postCode()!!}</td>
                             </tr>
                             <tr>
                                 <td>Contact No: {{$tradeins[0]->customer()->contact_number}}</td>

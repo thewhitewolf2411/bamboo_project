@@ -95,4 +95,27 @@ class User extends Authenticatable
             dd($e);
         }
     }
+
+    public function billingAddress(){
+        return $this->billing_address;
+    }
+
+    public function shippingAddress(){
+        $formatted = explode(",", $this->delivery_address);
+        if(isset($formatted[count($formatted) - 1])){
+            unset($formatted[count($formatted) - 1]);
+        }
+        return implode(", ", $formatted);
+    }
+
+    public function collectionAddress(){
+        return "<br>" . $this->billing_address . "<br>" . $this->delivery_address;
+    }
+
+    public function postCode(){
+        $postcode = explode(",", $this->delivery_address);
+        if(isset($postcode[count($postcode) - 1])){
+            return $postcode[count($postcode) - 1];
+        }
+    }
 }
