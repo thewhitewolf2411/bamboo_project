@@ -47,11 +47,11 @@
                     <table class="portal-table">
                         <tbody>
                             <tr>
-                                <td>Trade-In ID: {{$barcode}}</td>
+                                <td>Trade-In ID: {{$tradeins[0]->barcode_original}} </td>
                                 <td>Trade-in Placed: {{$tradeins[0]->created_at->format('Y/m/d')}}</td>
                             </tr>
                             <tr>
-                                <td>Trade-in Barcode: {{$tradeins[0]->barcode_original}}</td>
+                                <td>Trade-in Barcode: {{$barcode}}</td>
                                 <td>Collection Address: </td>
                             </tr>
                             <tr>
