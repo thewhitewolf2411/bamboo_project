@@ -38,7 +38,7 @@ class Trolley extends Model
     }
 
     public function canBeDeleted(){
-        if($this->number_of_trays === 0){
+        if($this->getNumberOfDevices($this->id) === 0){
             return true;
         }
         return false;
