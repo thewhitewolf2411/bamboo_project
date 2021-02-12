@@ -179,14 +179,14 @@ class CustomerCareController extends Controller
 
         $testingfaults = TestingFaults::where('tradein_id', $tradein[0]->id)->first();
 
-        return view('portal.customer-care.trade-in-details')
-            ->with([    'tradeins'=>$tradein,
-                        'portalUser'=>$portalUser,
-                        'user'=>$user,
-                        'barcode'=>$id,
-                        'testingfaults'=>$testingfaults,
-                        'audits' => $tradein_audits
-                ]);
+        return view('portal.customer-care.trade-in-details', [
+            'tradeins'=>$tradein,
+            'portalUser'=>$portalUser,
+            'user'=>$user,
+            'barcode'=>$id,
+            'testingfaults'=>$testingfaults,
+            'audits' => $tradein_audits
+        ]);
     }
 
     public function showMoreTradeInDetails($id){

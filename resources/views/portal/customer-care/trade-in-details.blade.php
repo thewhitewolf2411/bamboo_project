@@ -193,7 +193,7 @@
                                 </tr>
 
                                 @if($testingfaults !== null)
-                                    <div class="portal-table-container">
+                                    {{-- <div class="portal-table-container">
                                         <div class="portal-title">
                                             <p class="text-secondary" style="font-size: 14pt; font-weight: 300; border-bottom: 1px solid #000;">Testing fault details</p>
                                         </div>
@@ -241,7 +241,26 @@
                                                 <td><div class="table-element">@if($testingfaults->fake_missing_parts) Failed @endif</div></td>
                                             </tr>
                                         </table>
-                                    </div>
+                                    </div> --}}
+
+                                    <td>
+                                        <div class="table-element">
+                                            <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                            <div class="ml-auto"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-element">
+                                            <div class="mr-auto"><strong>Functional Fail:</strong></div> 
+                                            <div class="ml-auto"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="table-element">
+                                            <div class="mr-auto"><strong>Functional Fail:</strong></div> 
+                                            <div class="ml-auto"></div>
+                                        </div>
+                                    </td>
                                 @endif
 
                             </tbody>
