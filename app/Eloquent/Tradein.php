@@ -294,7 +294,7 @@ class Tradein extends Model
         // left - database flags
         $states = [
             /*0*/   [],
-            /*1*/   ['Awaiting trade pack','Order Placed'], // old - ['Order Request received','Order Placed']
+            /*1*/   ['Awaiting trade pack','Order Placed'],     // old - ['Order Request received','Order Placed']
             /*2*/   ['Awaiting Receipt/Customer Sent','Trade Pack Despatched'],
             /*3*/   ['Awaiting Receipt','Trade Pack Despatched'],
             /*4*/   ['Lost in transit','Lost in transit'],
@@ -307,7 +307,7 @@ class Tradein extends Model
             /*8d*/  ['Stolen','Awaiting Response'],
             /*8e*/  ['Knox','Awaiting Response'],
             /*8f*/  ['Assetwatch','Awaiting Response'],
-            /*9*/   ['Awaiting Testing','Awaiting Testing'],
+            /*9*/   ['Awaiting Testing','Trade Pack Received'],    // old - ['Awaiting Testing','Awaiting Testing']
             /*10*/  ['Device has passed testing','Testing'],
             /* First Test results */
             /*11*/  ['Quarantine','Awaiting Response'],
