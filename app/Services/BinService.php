@@ -7,6 +7,10 @@ class BinService{
 
     public function handleDeviceBin(Tradein $tradein, $bintype){
 
+
+        return response(['deviceadded'=>1, 'order'=>$tradein, 'model'=>$tradein->getProductName($tradein->product_id)]);
+
+        /*
         switch($bintype){
 
             case "FIMP":
@@ -81,6 +85,8 @@ class BinService{
                 break;
 
         }
+
+        */
 
     }
 

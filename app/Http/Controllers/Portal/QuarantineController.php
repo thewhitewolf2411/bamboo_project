@@ -55,7 +55,7 @@ class QuarantineController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $quarantineBins = Tray::where('tray_type', 'B')->get();
+        $quarantineBins = Tray::where('tray_type', 'B')->get()->sortBy('tray_name');
 
         return view('portal.quarantine.quarantine-bins')->with(['portalUser'=>$portalUser, 'quarantineBins'=>$quarantineBins]);
 

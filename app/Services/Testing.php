@@ -8,6 +8,7 @@ use App\Eloquent\TrayContent;
 use App\Eloquent\SellingProduct;
 use App\Eloquent\ProductInformation;
 use App\Eloquent\ProductNetworks;
+use App\Eloquent\TestingFaults;
 use App\User;
 
 class Testing{
@@ -18,6 +19,59 @@ class Testing{
         $tradein->bamboo_grade = $request->bamboo_final_grade;
         $product = SellingProduct::where('id', $tradein->product_id)->first();
         $user = User::where('id', $tradein->user_id)->first();
+
+        if($request->device_fully_functional === 'false'){
+            
+            $testingFaults = new TestingFaults();
+            $testingFaults->tradein_id = $request->tradein_id;
+            if(isset($request->audio_tests) && $request->audio_tests === 'true'){
+                $testingFaults->audio_test = true;
+            }
+            if(isset($request->front_microphone) && $request->front_microphone === 'true'){
+                $testingFaults->front_microphone = true;
+            }
+            if(isset($request->headset_test) && $request->headset_test === 'true'){
+                $testingFaults->headset_test = true;
+            }
+            if(isset($request->loud_speaker_test) && $request->loud_speaker_test === 'true'){
+                $testingFaults->loud_speaker_test = true;
+            }
+            if(isset($request->microphone_playback_test) && $request->microphone_playback_test === 'true'){
+                $testingFaults->microphone_playback_test = true;
+            }
+            if(isset($request->buttons_test) && $request->buttons_test === 'true'){
+                $testingFaults->buttons_test = true;
+            }
+            if(isset($request->camera_test) && $request->camera_test === 'true'){
+                $testingFaults->camera_test = true;
+            }
+            if(isset($request->sensor_test) && $request->sensor_test === 'true'){
+                $testingFaults->sensor_test = true;
+            }
+            if(isset($request->glass_condition) && $request->glass_condition === 'true'){
+                $testingFaults->glass_condition = true;
+            }
+            if(isset($request->vibration) && $request->vibration === 'true'){
+                $testingFaults->vibration = true;
+            }
+            if(isset($request->original_colour) && $request->original_colour === 'true'){
+                $testingFaults->original_colour = true;
+            }
+            if(isset($request->battery_health) && $request->battery_health === 'true'){
+                $testingFaults->battery_health = true;
+            }
+            if(isset($request->nfc) && $request->nfc === 'true'){
+                $testingFaults->nfc = true;
+            }
+            if(isset($request->no_power) && $request->no_power === 'true'){
+                $testingFaults->no_power = true;
+            }
+            if(isset($request->fake_missing_parts) && $request->fake_missing_parts === 'true'){
+                $testingFaults->fake_missing_parts = true;
+            }
+
+            $testingFaults->save();
+        }
 
         if($tradein->job_state === "14"){
 
@@ -80,60 +134,57 @@ class Testing{
 
                     $tradein->save();
 
-
-
-
                 $bambooprice = $this->generateDevicePrice($tradein->correct_product_id, $tradein->correct_memory, $tradein->correct_network, $bambogradeval);
                 $tradein->bamboo_price = $bambooprice;
                 if($bambooprice >= $tradein->order_price){
                     switch($bambogradeval){
                         case 5:
-                            $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'A')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                            $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'A')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                             $tradein->cosmetic_condition = 'A';
                             break;
                         case 4:
                             if($request->cosmetic_condition === "Grade B+"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'B+')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'B+')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'B+';
                             }
                             else{
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'B')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'B')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'B';
                             }
                             break;
                         case 3:
-                            $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'C')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                            $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'C')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                             $tradein->cosmetic_condition = 'C';
                             break;
                         case 2:
                             if($request->cosmetic_condition === "WSI"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSI')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSI')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'WSI';
                             }
                             else{
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSD')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSD')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'WSD';
                             }
                             break;
                         case 1:
                             if($request->cosmetic_condition === "WSI"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSI')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSI')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'WSI';
                             }
                             if($request->cosmetic_condition === "WSD"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSD')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSD')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'WSD';
                             }
                             if($request->cosmetic_condition === "NWSI"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'NWSI')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'NWSI')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'NWSI';
                             }
                             if($request->cosmetic_condition === "NWSD"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'NWSD')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'NWSD')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'NWSD';
                             }
                             if($request->cosmetic_condition === "Catastrophic"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'CAT')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'CAT')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'CAT';
                             }
                             break;
@@ -262,52 +313,52 @@ class Testing{
                 if($bambooprice >= $tradein->order_price){
                     switch($bambogradeval){
                         case 5:
-                            $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'A')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                            $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'A')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                             $tradein->cosmetic_condition = 'A';
                             break;
                         case 4:
                             if($request->cosmetic_condition === "Grade B+"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'B+')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'B+')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'B+';
                             }
                             else{
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'B')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'B')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'B';
                             }
                             break;
                         case 3:
-                            $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'C')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                            $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'C')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                             $tradein->cosmetic_condition = 'C';
                             break;
                         case 2:
                             if($request->cosmetic_condition === "WSI"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSI')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSI')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'WSI';
                             }
                             else{
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSD')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSD')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'WSD';
                             }
                             break;
                         case 1:
                             if($request->cosmetic_condition === "WSI"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSI')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSI')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'WSI';
                             }
                             if($request->cosmetic_condition === "WSD"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSD')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSD')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'WSD';
                             }
                             if($request->cosmetic_condition === "NWSI"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'NWSI')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'NWSI')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'NWSI';
                             }
                             if($request->cosmetic_condition === "NWSD"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'NWSD')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'NWSD')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'NWSD';
                             }
                             if($request->cosmetic_condition === "Catastrophic"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'CAT')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'CAT')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'CAT';
                             }
                             break;
@@ -386,6 +437,7 @@ class Testing{
 
     public function generateDevicePrice($deviceID, $deviceMemory, $deviceNetwork, $deviceCondition){
 
+        #dd($deviceID, $deviceMemory, $deviceNetwork, $deviceCondition);
         #dd($deviceNetwork);
 
         $price = 0;
