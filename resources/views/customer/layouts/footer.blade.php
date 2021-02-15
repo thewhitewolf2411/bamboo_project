@@ -5,9 +5,9 @@
         <div class="footer-row-2">
             <span>Get Started</span>
             <div class="footer-button-container">
-                <div class="url-footer-container" id="start-shopping">
+                {{-- <div class="url-footer-container" id="start-shopping">
                     <a href="/shop">Start Shopping</a>
-                </div>
+                </div> --}}
                 <div class="url-footer-container" id="start-selling">
                     <a href="/sell">Start Selling</a>
                 </div>
@@ -36,12 +36,12 @@
         </div>
         <div class="footer-row-6">
             <span>HOW IT WORKS</span>
-            <a href="/setpage/how">Shopping</a>
+            {{-- <a href="/setpage/how">Shopping</a> --}}
             <a href="/setpage/how">Selling</a>
         </div>
         <div class="footer-row-6">
             <span>SERVICE & SUPPORT</span>
-            <a href="/setpage/support">Buying a device</a>
+            {{-- <a href="/setpage/support">Buying a device</a> --}}
             <a href="/setpage/support">Selling a device</a>
             <a href="/setpage/support">Tech</a>
             <a href="/setpage/support">Delivery</a>

@@ -29,9 +29,9 @@
         </div>
         <div class="urls-header navbar-collapse collapse" id="navbarSupportedContent">
 
-            <div class="url-header-container" id="start-shopping">
+            {{-- <div class="url-header-container" id="start-shopping">
                 <a href="/shop">Start Shopping</a>
-            </div>
+            </div> --}}
             <div class="url-header-container" id="start-selling">
                 <a href="/sell">Start Selling</a>
             </div>

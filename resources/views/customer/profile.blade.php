@@ -56,9 +56,9 @@
                                     <p>Woohoo! You have done your part in saving the world by trading in your old devices. You can use you bamboo credits against any order within our shop.</p>
                                 </div>
                                 <div class="profile-element-two-btns">
-                                    <div class="url-footer-container" id="start-shopping">
+                                    {{-- <div class="url-footer-container" id="start-shopping">
                                         <a href="/shop">Start Shopping</a>
-                                    </div>
+                                    </div> --}}
                                     <div class="url-footer-container" id="start-selling">
                                         <a href="/sell">Start Selling</a>
                                     </div>

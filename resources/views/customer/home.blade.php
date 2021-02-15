@@ -6,11 +6,11 @@
                 <p>Pay less for your next mobile with bamboo</p>
             </div>
             <div class="start-buttons-container">
-                <div class="url-footer-container" id="start-shopping">
+                {{-- <div class="url-footer-container" id="start-shopping">
                     <a href="#">Start Shopping</a>
-                </div>
+                </div> --}}
                 <div class="url-footer-container" id="start-selling">
-                    <a href="#">Start Selling</a>
+                    <a href="/sell">Start Selling</a>
                 </div>
             </div>
         </div>
@@ -27,15 +27,15 @@
         </div>
 
         <div class="how-buttons-container">
-            <div class="how-button-container active" id="shopping-btn" onclick="changeHowState('shopping')">
+            {{-- <div class="how-button-container active" id="shopping-btn" onclick="changeHowState('shopping')">
                 <p>Shopping</p>
-            </div>
-            <div class="how-button-container" id="selling-btn" onclick="changeHowState('selling')">
+            </div> --}}
+            <div class="how-button-container active" id="selling-btn" onclick="changeHowState('selling')">
                 <p>Selling</p>
             </div>
         </div>
 
-        <div class="shopping-content-container active">
+        {{-- <div class="shopping-content-container">
 
             <div class="how-first-text-container">
                 <div class="how-text-element">
@@ -81,9 +81,9 @@
                 </div>
             </div>
 
-        </div>
+        </div> --}}
 
-        <div class="selling-content-container">
+        <div class="selling-content-container active">
             <div class="how-second-text-container">
                 <div class="how-text-element">
                     <div class="how-text-title-container">

@@ -26,11 +26,11 @@
 
     <div class="supprt-titles-container">
         <div class="row-height-140 support-top-row pc-15-50">
-            <a href="">
+            {{-- <a href="">
                 <div class="btn btn-primary btn-blue btn-font-white">
                     <p>Buying a device</p>
                 </div>
-            </a>
+            </a> --}}
             <a href="">
                 <div class="btn btn-primary btn-orange btn-font-white">
                     <p>Selling a device</p>
