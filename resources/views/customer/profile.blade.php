@@ -28,12 +28,230 @@
         <main>
             <div class="app">
                 <div class="how-page how-title-container">
-                    <div class="center-title-container">
-                        <p>My Account</p>
+                    <div class="top-text">
+                        <p class="top-text-shadow">My Bamboo</p>
                     </div>
                 </div>
 
-                <div class="profile-container">
+                <div class="user-sections-container">
+                    <div class="sections-row">
+                        <div class="sections-menu">
+                            <div class="change-page menu-item link-active" id="menu-overview">Account overview</div>
+                            <div class="change-page menu-item" id="menu-notifications">Notifications</div>
+                            <div class="change-page menu-item" id="menu-personal">Personal Information</div>
+                            <div class="change-page menu-item" id="menu-account">Account Information</div>
+                            <div class="change-page menu-item" id="menu-sales">My Sales</div>
+                            <div class="change-page menu-item" id="menu-communications">Communications</div>
+                            <div class="menu-item"><img class="mr-3" src="{{asset('/images/logout-black.svg')}}">Log Out</div>
+                        </div>
+                        <div class="section-items">
+                            <div id="section-overview" class="page-sections">
+                                <div class="section-item-preview">
+                                    <p class="section-item-title">Notifications</p>
+                                    <div class="change-page right-link-box" id="box-notifications">
+                                        <p class="right-link-text">See all Notifications</p>
+                                        <div class="right-link" id="right-notifications">
+                                            <img class="right-link-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section-item-preview">
+                                    <p class="section-item-title">Personal Information</p>
+                                    <div class="change-page action-button-right purple" id="right-personal">
+                                    <p class="action-button-right-text">Edit details</p>
+                                        <img class="pen-icon" src="{{asset('/images/pen.png')}}">
+                                    </div>
+                                </div>
+                                <div class="section-item-preview">
+                                    <p class="section-item-title">Account Information</p>
+                                    <div class="change-page action-button-right purple" id="right-account">
+                                        <p class="action-button-right-text">Edit details</p>
+                                        <img class="pen-icon" src="{{asset('/images/pen.png')}}">
+                                    </div>
+                                </div>
+                                <div class="section-item-preview">
+                                    <p class="section-item-title">My Sales</p>
+                                    <div class="change-page action-button-right orange" id="right-sales">
+                                        <p class="action-button-right-text">View all Sales</p>
+                                        <img class="right-link-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                    </div>
+                                </div>
+                                <div class="section-item-preview">
+                                    <p class="section-item-title">Communications</p>
+                                    <div class="change-page action-button-right purple" id="right-communications">
+                                        <p class="action-button-right-text">Edit details</p>
+                                        <img class="pen-icon" src="{{asset('/images/pen.png')}}">
+                                    </div>
+                                </div>
+                                <div class="section-item-preview">
+                                    <p class="section-item-title">Log out</p>
+                                    <a class="action-button-right green" href="#">
+                                        <img class="right-link-img" src="{{asset('/images/logout.svg')}}">
+                                        <p class="action-button-right-text ml-3">Logout</p>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div id="section-notifications" class="page-sections hidden">
+                                <div class="section-item-content">
+                                    <div class="section-header">
+                                        <p class="section-item-title">Notifications</p>
+                                    </div>
+                                    <div class="line-bottom"></div>
+                                    <div class="notifications-list">
+                                        @foreach($notifications as $notification)
+                                            <div class="notification-card @if($notification['state'] === 'alert') red-border @endif">
+                                                {{$notification['text']}}
+                                            </div>
+                                            <div class="notification-card-border"></div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="section-personal" class="page-sections hidden">
+
+                                <div class="section-item-content">
+                                    <div class="section-header">
+                                        <p class="section-item-title">Personal Information</p>
+                                        <div class="action-button-right purple">
+                                            <p class="action-button-right-text">Edit details</p>
+                                            <img class="pen-icon" src="{{asset('/images/pen.png')}}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <form id="change-name" action="/userprofile/changename"  method="POST">
+                                    @csrf
+                                    <div class="profile-element profile-element-three">
+                                        <div class="profile-element-three-left">
+                                            <div class="element-three-top-container">
+                                                <h3>PERSONAL INFORMATION</h3>
+                                            </div>
+                                            @if(Session::has('success'))
+                                                <div class="alert alert-success my-5" role="alert">
+                                                    @foreach(Session::get('success') as $message)
+                                                        <li>{{$message}}</li>
+                                                    @endforeach
+                                                </div>
+                                            @endif
+                
+                                            @if(Session::has('error'))
+                                            <div class="alert alert-danger my-5" role="alert">
+                                                {{Session::get('error')}}
+                                            </div>
+                                            @endif
+                                            <input type="hidden" name="user" value="{{Auth::user()->id}}">
+                                            <div class="element-three-top">
+                                                <div class="profile-element-container p-1">
+                                                    <label for="name" class="profile-small">First Name</label>
+                                                    <input id="input-name" name="name" type="text" class="form-control" value="{{$userdata->first_name}}" disabled required></input>
+                                                </div>
+                                                <div class="profile-element-container p-1">
+                                                    <label for="lastname" class="profile-small">Last Name</label>
+                                                    <input id="input-lastname" name="lastname" type="text" class="form-control" value="{{$userdata->last_name}}" disabled required></input>
+                                                </div>
+                                            </div>
+                                            <div class="element-three-bottom ">
+                                                <div class="profile-element-container p-1">
+                                                    <label for="delivery_address" class="profile-small">Delivery address</label>
+                                                    <textarea id="delivery_address" name="delivery_address" type="text" class="form-control" value="{{$userdata->delivery_address}}" disabled required>{{$userdata->delivery_address}}</textarea>
+                                                </div>
+                                                <div class="profile-element-container p-1">
+                                                    <label for="billing_address" class="profile-small">Billing address</label>
+                                                    <textarea id="billing_address" name="billing_address" type="text" class="form-control" value="{{$userdata->billing_address}}" disabled required>{{$userdata->billing_address}}</textarea>
+                                                </div>
+                                                <div class="profile-element-container p-1">
+                                                    <label for="contact-number" class="profile-small">Contact number</label>
+                                                    <input id="contact-number" name="contact_number" type="number" class="form-control" value="{{$userdata->contact_number}}" disabled required></input>
+                                                </div>
+                                            </div>
+                
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div id="section-account" class="page-sections hidden">
+                                <div class="element-three-top-container">
+                                    <h3>ACCOUNT INFORMATION</h3>
+                                    <button type="button" class="btn btn-primary" style="background: #A375BC;" onclick="changename()">Edit</button>
+                                </div>
+                                <div class="element-three-top">
+                                    <div class="profile-element-container p-1">
+                                        <label for="email" class="profile-small">Email Address</label>
+                                        <input id="input-email" name="email" type="email" class="form-control" value="{{$userdata->email}}" disabled required></input>
+                                    </div>
+                                    <div class="profile-element-container p-1">
+                                        <label for="password" class="profile-small">Password</label>
+                                        <input id="input-password" name="password" type="password" class="form-control" value="{{$userdata->password}}" disabled required></input>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            <div id="section-sales" class="page-sections hidden">
+                                Sales
+                            </div>
+
+                            <div id="section-communications" class="page-sections hidden">
+                                <div class="element-three-top-container">
+                                    <h3>Newsletter subscription</h3>
+                                </div>
+                                <div class="element-three-bottom">
+    
+                                    <div class="newsletter-subscription">
+                                        
+                                        <label class="news-label">
+                                            <input id="radio-checked-yes" type="radio" name="sub" value="true" disabled @if($userdata->sub == 1) checked="checked" @endif>
+                                
+                                            <div class="news-label-content">
+                                                <p><b>Yes,</b> I would love to hear about the latest amazing offers, hints & tips</p>
+                                                <div class="news-label-selected-container">
+                                                    <img id="select-image-yes" src="{{asset('/customer_page_images/body/Icon-Tick-Selected-clear.svg')}}" width="48px" height="48px">
+                                                    <p id="select-text-yes">Select</p>
+                                                </div>
+                                            </div>
+                                
+                                        </label>
+                                
+                                        <label class="news-label">
+                                            <input id="radio-checked-no" type="radio" name="sub" value="false" disabled @if($userdata->sub == 0) checked="checked" @endif>
+                                
+                                            <div class="news-label-content">
+                                                <p><b>No,</b>  I do not want to hear about the latest amazing offers, hints & tips</p>
+                                                <div class="news-label-selected-container">
+                                                    <img id="select-image-no" src="{{asset('/customer_page_images/body/Icon-Tick-Selected-clear.svg')}}" width="48px" height="48px">
+                                                    <p id="select-text-no">Select</p>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <button id="update-sub-submit" type="submit" class="btn btn-primary btn-hidden mt-3" style="background: #A375BC;" disabled>Update</button>
+    
+                                    <script>
+                                            $('input[type=radio][name=sub]').change(function() {
+                                                if (this.value == 'true') {
+                                                    $('#select-image-yes').attr('src', '/customer_page_images/body/Icon-Tick-Selected.svg');
+                                                    $('#select-text-yes').text('Selected');
+                                                    $('#select-image-no').attr('src', '/customer_page_images/body/Icon-Tick-Selected-clear.svg');
+                                                    $('#select-text-no').text('Select');
+                                                }
+                                                else if (this.value == 'false') {
+                                                    $('#select-image-yes').attr('src', '/customer_page_images/body/Icon-Tick-Selected-clear.svg');
+                                                    $('#select-text-yes').text('Select');
+                                                    $('#select-image-no').attr('src', '/customer_page_images/body/Icon-Tick-Selected.svg');
+                                                    $('#select-text-no').text('Selected');
+                                                }
+                                            });
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- <div class="profile-container">
 
                     <div class="profile-element profile-element-one">
                         <div class="name-container">
@@ -56,9 +274,9 @@
                                     <p>Woohoo! You have done your part in saving the world by trading in your old devices. You can use you bamboo credits against any order within our shop.</p>
                                 </div>
                                 <div class="profile-element-two-btns">
-                                    {{-- <div class="url-footer-container" id="start-shopping">
+                                    <!-- <div class="url-footer-container" id="start-shopping">
                                         <a href="/shop">Start Shopping</a>
-                                    </div> --}}
+                                    </div> -->
                                     <div class="url-footer-container" id="start-selling">
                                         <a href="/sell">Start Selling</a>
                                     </div>
@@ -72,123 +290,6 @@
                             <p style="margin: 0;">Cleared balance</p>
                         </div>
                     </div>
-                    <form id="change-name" action="/userprofile/changename"  method="POST">
-                    @csrf
-                    <div class="profile-element profile-element-three">
-                        <div class="profile-element-three-left">
-                            <div class="element-three-top-container">
-                                <h3>PERSONAL INFORMATION</h3>
-                            </div>
-                            @if(Session::has('success'))
-                                <div class="alert alert-success my-5" role="alert">
-                                    @foreach(Session::get('success') as $message)
-                                        <li>{{$message}}</li>
-                                    @endforeach
-                                </div>
-                            @endif
-
-                            @if(Session::has('error'))
-                            <div class="alert alert-danger my-5" role="alert">
-                                {{Session::get('error')}}
-                            </div>
-                            @endif
-                            <input type="hidden" name="user" value="{{Auth::user()->id}}">
-                            <div class="element-three-top">
-                                <div class="profile-element-container p-1">
-                                    <label for="name" class="profile-small">First Name</label>
-                                    <input id="input-name" name="name" type="text" class="form-control" value="{{$userdata->first_name}}" disabled required></input>
-                                </div>
-                                <div class="profile-element-container p-1">
-                                    <label for="lastname" class="profile-small">Last Name</label>
-                                    <input id="input-lastname" name="lastname" type="text" class="form-control" value="{{$userdata->last_name}}" disabled required></input>
-                                </div>
-                            </div>
-                            <div class="element-three-bottom ">
-                                <div class="profile-element-container p-1">
-                                    <label for="delivery_address" class="profile-small">Delivery address</label>
-                                    <textarea id="delivery_address" name="delivery_address" type="text" class="form-control" value="{{$userdata->delivery_address}}" disabled required>{{$userdata->delivery_address}}</textarea>
-                                </div>
-                                <div class="profile-element-container p-1">
-                                    <label for="billing_address" class="profile-small">Billing address</label>
-                                    <textarea id="billing_address" name="billing_address" type="text" class="form-control" value="{{$userdata->billing_address}}" disabled required>{{$userdata->billing_address}}</textarea>
-                                </div>
-                                <div class="profile-element-container p-1">
-                                    <label for="contact-number" class="profile-small">Contact number</label>
-                                    <input id="contact-number" name="contact_number" type="number" class="form-control" value="{{$userdata->contact_number}}" disabled required></input>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="profile-element-three-right">
-                            <div class="element-three-top-container">
-                                <h3>ACCOUNT INFORMATION</h3>
-                                <button type="button" class="btn btn-primary" style="background: #A375BC;" onclick="changename()">Edit</button>
-                            </div>
-                            <div class="element-three-top">
-                                <div class="profile-element-container p-1">
-                                    <label for="email" class="profile-small">Email Address</label>
-                                    <input id="input-email" name="email" type="email" class="form-control" value="{{$userdata->email}}" disabled required></input>
-                                </div>
-                                <div class="profile-element-container p-1">
-                                    <label for="password" class="profile-small">Password</label>
-                                    <input id="input-password" name="password" type="password" class="form-control" value="{{$userdata->password}}" disabled required></input>
-                                </div>
-                                
-                            </div>
-                            <div class="element-three-top-container">
-                                <h3>Newsletter subscription</h3>
-                            </div>
-                            <div class="element-three-bottom">
-
-                                <div class="newsletter-subscription">
-                                    
-                                    <label class="news-label">
-                                        <input id="radio-checked-yes" type="radio" name="sub" value="true" disabled @if($userdata->sub == 1) checked="checked" @endif>
-                            
-                                        <div class="news-label-content">
-                                            <p><b>Yes,</b> I would love to hear about the latest amazing offers, hints & tips</p>
-                                            <div class="news-label-selected-container">
-                                                <img id="select-image-yes" src="{{asset('/customer_page_images/body/Icon-Tick-Selected-clear.svg')}}" width="48px" height="48px">
-                                                <p id="select-text-yes">Select</p>
-                                            </div>
-                                        </div>
-                            
-                                    </label>
-                            
-                                    <label class="news-label">
-                                        <input id="radio-checked-no" type="radio" name="sub" value="false" disabled @if($userdata->sub == 0) checked="checked" @endif>
-                            
-                                        <div class="news-label-content">
-                                            <p><b>No,</b>  I do not want to hear about the latest amazing offers, hints & tips</p>
-                                            <div class="news-label-selected-container">
-                                                <img id="select-image-no" src="{{asset('/customer_page_images/body/Icon-Tick-Selected-clear.svg')}}" width="48px" height="48px">
-                                                <p id="select-text-no">Select</p>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
-                                <button id="update-sub-submit" type="submit" class="btn btn-primary btn-hidden mt-3" style="background: #A375BC;" disabled>Update</button>
-
-                                <script>
-                                        $('input[type=radio][name=sub]').change(function() {
-                                            if (this.value == 'true') {
-                                                $('#select-image-yes').attr('src', '/customer_page_images/body/Icon-Tick-Selected.svg');
-                                                $('#select-text-yes').text('Selected');
-                                                $('#select-image-no').attr('src', '/customer_page_images/body/Icon-Tick-Selected-clear.svg');
-                                                $('#select-text-no').text('Select');
-                                            }
-                                            else if (this.value == 'false') {
-                                                $('#select-image-yes').attr('src', '/customer_page_images/body/Icon-Tick-Selected-clear.svg');
-                                                $('#select-text-yes').text('Select');
-                                                $('#select-image-no').attr('src', '/customer_page_images/body/Icon-Tick-Selected.svg');
-                                                $('#select-text-no').text('Selected');
-                                            }
-                                        });
-                                </script>
-                            </div>
-                        </div>
-                    </div>
-                    </form>
 
                     <div class="profile-element profile-element-four">
                     
@@ -393,7 +494,7 @@
                     </div>
 
 
-                </div>
+                </div> --}}
 
 
             </div>
@@ -515,17 +616,65 @@
 
         <script>
         
+            function showModal(id){
+                $('#tradein-' + id).modal('show');
+            }
 
-
-        function showModal(id){
-            $('#tradein-' + id).modal('show');
-        }
-
-        function showTradeOutModal(id){
-            $('#tradeout-' + id).modal('show');
-        }
+            function showTradeOutModal(id){
+                $('#tradeout-' + id).modal('show');
+            }
 
         </script>
+        
         <footer>@include('customer.layouts.footer')</footer>
     </body>
 </html>
+
+<script>
+    let buttons = document.getElementsByClassName('change-page');
+    for (let index = 0; index < buttons.length; index++) {
+        let button = buttons[index];
+        button.onclick = function() {changeSection(button.id)};
+    }
+
+
+
+    function changeSection(id){
+        let splitted = id.split('-');
+        let selectedpage = splitted[1];
+
+        let menuitems = document.getElementsByClassName('menu-item');
+        let sections = document.getElementsByClassName('page-sections');
+
+        for (let i = 0; i < menuitems.length; i++) {
+            let menuitem = menuitems[i];
+
+            if(menuitem.id === 'menu-'+selectedpage){
+                if(!menuitem.classList.contains('link-active')){
+                    menuitem.classList.add('link-active');
+                }
+            } else {
+                if(menuitem.classList.contains('link-active')){
+                    menuitem.classList.remove('link-active');
+                }
+            }
+            
+        }
+
+        for (let j = 0; j < sections.length; j++) {
+            let section = sections[j];
+
+            if(section.id === 'section-'+selectedpage){
+                if(section.classList.contains('hidden')){
+                    section.classList.remove('hidden');
+                }
+            } else {
+                if(!section.classList.contains('hidden')){
+                    section.classList.add('hidden');
+                }
+            }
+            
+        }
+
+    }
+</script>
