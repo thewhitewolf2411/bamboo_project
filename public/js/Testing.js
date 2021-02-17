@@ -58,15 +58,8 @@ function testingElementChanged(){
 
         options = {
             '':'',
-            'Grade A':'Grade A',
-            'Grade B+':'Grade B+',
-            'Grade B':'Grade B',
-            'Grade C':'Grade C',
             'WSI':'WSI',
             'WSD':'WSD',
-            'NWSI':'NWSI',
-            'NWSD':'NWSD',
-            'Catastrophic':'Catastrophic'
         }
 
         $('#customer_grade').val("Faulty");
@@ -83,15 +76,8 @@ function testingElementChanged(){
     
             options = {
                 '':'',
-                'Grade A':'Grade A',
-                'Grade B+':'Grade B+',
-                'Grade B':'Grade B',
-                'Grade C':'Grade C',
                 'WSI':'WSI',
                 'WSD':'WSD',
-                'NWSI':'NWSI',
-                'NWSD':'NWSD',
-                'Catastrophic':'Catastrophic'
             }
 
             $('#customer_grade').val("Faulty");
@@ -117,37 +103,16 @@ function testingElementChanged(){
                 'NWSD':'NWSD',
                 'Catastrophic':'Catastrophic'
             }
-        }
 
-
-        if(correctDevice == "false"){
-            $('#select_correct_device_container').removeClass('form-group-hidden');
-        }
-        else{
-            $('#select_correct_device_container').addClass('form-group-hidden');
-        }
-
-        if(deviceFullyFunctional == "false"){
-            $('#device-fully-functional-options').removeClass('form-group-hidden');
-            options = {
-                '':'',
-                'WSI':'WSI',
-                'WSD':'WSD',
-                'NWSI':'NWSI',
-                'NWSD':'NWSD',
-                'Catastrophic':'Catastrophic'
+            if(correctDevice == "false"){
+                $('#select_correct_device_container').removeClass('form-group-hidden');
             }
-        }
-        else{
-            $('#device-fully-functional-options').addClass('form-group-hidden');
-            if(waterDamage == "true" && customerGrade == 2){
-                options = {
-                    '':'',
-                    'WSI':'WSI',
-                    'WSD':'WSD',
-                }
+            else{
+                $('#select_correct_device_container').addClass('form-group-hidden');
             }
-            else if(waterDamage == "true" && customerGrade != 2){
+    
+            if(deviceFullyFunctional == "false"){
+                $('#device-fully-functional-options').removeClass('form-group-hidden');
                 options = {
                     '':'',
                     'WSI':'WSI',
@@ -158,16 +123,39 @@ function testingElementChanged(){
                 }
             }
             else{
-                options = {
-                    '':'',
-                    'Grade A':'Grade A',
-                    'Grade B+':'Grade B+',
-                    'Grade B':'Grade B',
-                    'Grade C':'Grade C',
-                    'WSD':'WSD',
+                $('#device-fully-functional-options').addClass('form-group-hidden');
+                if(waterDamage == "true" && customerGrade == 2){
+                    options = {
+                        '':'',
+                        'WSI':'WSI',
+                        'WSD':'WSD',
+                    }
+                }
+                else if(waterDamage == "true" && customerGrade != 2){
+                    options = {
+                        '':'',
+                        'WSI':'WSI',
+                        'WSD':'WSD',
+                        'NWSI':'NWSI',
+                        'NWSD':'NWSD',
+                        'Catastrophic':'Catastrophic'
+                    }
+                }
+                else{
+                    options = {
+                        '':'',
+                        'Grade A':'Grade A',
+                        'Grade B+':'Grade B+',
+                        'Grade B':'Grade B',
+                        'Grade C':'Grade C',
+                        'WSD':'WSD',
+                    }
                 }
             }
         }
+
+
+
         
 
     }

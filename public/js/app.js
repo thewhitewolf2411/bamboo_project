@@ -37751,42 +37751,72 @@ $('.boxrownotopen').on('click', function () {
 });
 $('.openbox').on('click', function () {
   var boxname = $(this).attr('id');
-  $.ajax({
-    url: "/portal/warehouse-management/box-management/openbox",
-    type: "POST",
-    data: {
-      boxname: boxname
-    },
-    success: function success(response) {
-      location.reload();
-    }
-  });
+  var c = confirm("Are you sure you want to open box " + boxname + "?");
+
+  if (c) {
+    $.ajax({
+      url: "/portal/warehouse-management/box-management/openbox",
+      type: "POST",
+      data: {
+        boxname: boxname
+      },
+      success: function success(response) {
+        location.reload();
+      }
+    });
+  }
 });
 $('.suspendbox').on('click', function () {
   var boxname = $(this).attr('id');
-  $.ajax({
-    url: "/portal/warehouse-management/box-management/suspendbox",
-    type: "POST",
-    data: {
-      boxname: boxname
-    },
-    success: function success(response) {
-      location.reload();
-    }
-  });
+  var c = confirm("Are you sure you want to suspend box " + boxname + "?");
+
+  if (c) {
+    $.ajax({
+      url: "/portal/warehouse-management/box-management/suspendbox",
+      type: "POST",
+      data: {
+        boxname: boxname
+      },
+      success: function success(response) {
+        location.reload();
+      }
+    });
+  }
 });
 $('.closebox').on('click', function () {
   var boxname = $(this).attr('id');
-  $.ajax({
-    url: "/portal/warehouse-management/box-management/completebox",
-    type: "POST",
-    data: {
-      boxname: boxname
-    },
-    success: function success(response) {
-      location.reload();
-    }
-  });
+  var c = confirm("Are you sure you want to close the box " + boxname + "?");
+
+  if (c) {
+    $.ajax({
+      url: "/portal/warehouse-management/box-management/completebox",
+      type: "POST",
+      data: {
+        boxname: boxname
+      },
+      success: function success(response) {
+        location.reload();
+      }
+    });
+  }
+});
+$(document).ready(function () {
+  if (document.getElementsByClassName('completebox').length > 0) {
+    $('.completebox').hide();
+    $('#showboxed').css('opacity', 0.65);
+  }
+});
+$('#showinprogress').on('click', function () {
+  $('.completebox').hide();
+  $('.uncompletebox').show();
+  $('#showboxed').css('opacity', 0.65);
+  $('#showinprogress').css('opacity', 1);
+});
+$('#showboxed').on('click', function () {
+  $('.completebox').show();
+  $('.uncompletebox').hide();
+  $('#showboxed').css('opacity', 1);
+  $('#showinprogress').css('opacity', 0.65);
 });
 $('#adddevicetradeinid').on('input', function () {
   var boxname = $('#adddeviceboxid').attr('value');
@@ -38047,8 +38077,8 @@ $('#buildssaleslot-scandeviceinput').on('input', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Haris Muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Haris Muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

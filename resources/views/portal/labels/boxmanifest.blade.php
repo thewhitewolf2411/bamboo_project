@@ -29,7 +29,8 @@
         <table>
             <tr>
                 <th>Box number</th>
-                <th>Manifacturer</th>
+                <th>Trade-in Barcode number</th>
+                <th>Manufacturer</th>
                 <th>Model</th>
                 <th>Grade</th>
                 <th>IMEI</th>
@@ -37,6 +38,7 @@
             @foreach ($tradeins as $tradein)
             <tr>
                 <td>{{$boxname}}</td>
+                <td>{{$tradein->barcode}}</td>
                 <td>{{$brand}}</td>
                 <td>{{$tradein->getProductName($tradein->product_id)}}</td>
                 <td>{{$tradein->cosmetic_condition}}</td>

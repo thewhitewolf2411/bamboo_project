@@ -51,9 +51,15 @@ class WarehouseManagementController extends Controller
     public function createBox(Request $request){
 
         #dd($request->all());
+        $manifacturer = "";
 
-        $brand = Brand::where('id', $request->manifacturer)->first();
-        $manifacturer = $brand->getBrandFirstName();
+        if($request->manifacturer === "M"){
+            $manifacturer = "Miscellaneous";
+        }
+        else{
+            $brand = Brand::where('id', $request->manifacturer)->first();
+            $manifacturer = $brand->getBrandFirstName();
+        }
 
         $boxnumber = count(Tray::where('tray_type', 'Bo')->get());
 
@@ -76,13 +82,13 @@ class WarehouseManagementController extends Controller
             $locked = 'Locked';
         }
 
-        $trayname = strtoupper($manifacturer . $request->reference . $request->network . $boxnumber);
+        $trayname = strtoupper(substr($manifacturer,0,1) . $request->reference . $request->network . $boxnumber);
 
         $newBox = Tray::create([
 
             'tray_name'=>$trayname,
             'tray_type'=>'Bo',
-            'tray_brand'=>strtoupper($manifacturer),
+            'tray_brand'=>$manifacturer,
             'tray_grade'=>strtoupper($request->reference),
             'tray_network'=>$locked,
             'max_number_of_devices'=>$request->capacity,
@@ -118,6 +124,10 @@ class WarehouseManagementController extends Controller
 
         $box = Tray::where('tray_name', $request->boxid)->first();
         $box->number_of_devices = $box->number_of_devices + 1;
+
+        if($box->number_of_devices === $max_number_of_devices){
+            $box->status = 3;
+        }
 
         $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
     
@@ -239,7 +249,7 @@ class WarehouseManagementController extends Controller
         $boxContent = TrayContent::where('tray_id', $box->id)->get();
         $tradeins = array();
 
-        $brandLet = substr($boxname, 1, 1);
+        $brandLet = substr($boxname, 0, 1);
         $brand = "";
 
         if($brandLet === "A"){
@@ -307,7 +317,8 @@ class WarehouseManagementController extends Controller
             array_push($tradeins, $tradein);
         }
 
-        $brandLet = substr($boxname, 1, 1);
+        $brandLet = substr($boxname, 0, 1);
+        #dd($brandLet);
         $brand = "";
 
         if($brandLet === "A"){
@@ -352,6 +363,9 @@ class WarehouseManagementController extends Controller
     public function showBayPage(Request $request){
 
         $bay = Trolley::where('trolley_name', $request->bay_id_scan)->first();
+        if($bay === null){
+            return redirect()->back()->with(['searcherror'=>'No such bay']);
+        }
         $bayBoxes = Tray::where('trolley_id', $bay->id)->get();
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();

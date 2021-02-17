@@ -26,7 +26,7 @@
     
         <h2>Box summary</h2>
         <h3>Box no: {{$boxname}}</h3>
-        <h3>Total Number of Devices: {{$boxname}}</h3>
+        <h3>Total Number of Devices: {{$box->number_of_devices}}</h3>
 
         <table>
             <tr>

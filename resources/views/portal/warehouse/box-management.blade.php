@@ -11,9 +11,21 @@
     <div class="portal-table-container p-0">
 
         <div class="py-3">
-            <a role="button" data-toggle="modal" data-target="#createboxmodal"><div class="btn btn-primary btn-blue">
-                <p style="color: #fff;">Create box</p>
-            </div></a>
+            <a role="button" data-toggle="modal" data-target="#createboxmodal">
+                <div class="btn btn-primary btn-blue">
+                    <p style="color: #fff;">Create box</p>
+                </div>
+            </a>
+            <a>
+                <div class="btn btn-primary btn-blue" id="showinprogress">
+                    <p style="color: #fff;">In progress</p>
+                </div>
+            </a>
+            <a>
+                <div class="btn btn-primary btn-blue" id="showboxed">
+                    <p style="color: #fff;">Boxed</p>
+                </div>
+            </a>
         </div>
 
         @if(Session::has('success'))
@@ -24,11 +36,11 @@
 
         <div class="d-flex">
             <div class="col-md-7">
-                <table class="portal-table sortable" id="box-table">
+                <table class="portal-table uncompletebox sortable" id="box-table">
                     <tr>
                         <td><div class="table-element">Box No.</div></td>
                         <td><div class="table-element">Grade</div></td>
-                        <td><div class="table-element">Manifacturer</div></td>
+                        <td><div class="table-element">Manufacturer</div></td>
                         <td><div class="table-element">Network</div></td>
                         <td><div class="table-element">Boxed Devices</div></td>
                         <td><div class="table-element">Status</div></td>
@@ -37,17 +49,43 @@
                         <td><div class="table-element">Complete Box</div></td>
                     </tr>
                     @foreach ($boxes as $box)
-                    <tr class="boxrowhover">
-                        <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_name}}</div></td>
-                        <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_grade}}</div></td>
-                        <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_brand}}</div></td>
-                        <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_network}}</div></td>
-                        <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->number_of_devices}}/{{$box->max_number_of_devices}}</div></td>
-                        <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->getBoxStatus()}}</div></td>
-                        <td class="py-0">@if($box->getBoxStatus()==='Open')<div class="table-element" >Box open </div> @elseif($box->getBoxStatus()==='Complete') <div class="table-element" >Box is closed </div> @else<div id="{{$box->tray_name}}" class="table-element openbox"><i class="fa fa-folder-open" aria-hidden="true"></i></div>@endif</div></td>
-                        <td class="py-0">@if($box->getBoxStatus()==='Suspended')<div class="table-element openbox" >Box suspended</div> @elseif($box->getBoxStatus()==='Complete') <div class="table-element" >Box is closed </div  @else<div id="{{$box->tray_name}}" class="table-element suspendbox"><i class="fa fa-pause" aria-hidden="true"></div>@endif</i></div></td>
-                        <td class="py-0">@if($box->getBoxStatus()==='Complete')<div class="table-element openbox" >Box closed</div> @else<div id="{{$box->tray_name}}" class="table-element closebox"><i class="fa fa-check" aria-hidden="true"></div>@endif</i></div></td>
+                        @if($box->getBoxStatus()!=='Complete')
+                        <tr class="boxrowhover">
+                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_name}}</div></td>
+                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_grade}}</div></td>
+                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_brand}}</div></td>
+                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_network}}</div></td>
+                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->number_of_devices}}/{{$box->max_number_of_devices}}</div></td>
+                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->getBoxStatus()}}</div></td>
+                            <td class="py-0">@if($box->getBoxStatus()==='Open')<div class="table-element" >Box open </div> @elseif($box->getBoxStatus()==='Complete') <div class="table-element" >Box is closed </div> @else<div id="{{$box->tray_name}}" class="table-element openbox"><i class="fa fa-folder-open" aria-hidden="true" title="Open box"></i></div>@endif</div></td>
+                            <td class="py-0">@if($box->getBoxStatus()==='Suspended')<div class="table-element openbox" >Box suspended</div> @elseif($box->getBoxStatus()==='Complete') <div class="table-element" >Box is closed </div  @else<div id="{{$box->tray_name}}" class="table-element suspendbox"><i class="fa fa-pause" aria-hidden="true" title="Suspend box"></div>@endif</i></div></td>
+                            <td class="py-0">@if($box->getBoxStatus()==='Complete')<div class="table-element openbox" >Box closed</div> @else<div id="{{$box->tray_name}}" class="table-element closebox"><i class="fa fa-check" aria-hidden="true" title="Close box"></div>@endif</i></div></td>
+                        </tr>
+                        @endif
+                    @endforeach
+                </table>
+                <table class="portal-table completebox sortable" id="box-table">
+                    <tr>
+                        <td><div class="table-element">Box No.</div></td>
+                        <td><div class="table-element">Grade</div></td>
+                        <td><div class="table-element">Manufacturer</div></td>
+                        <td><div class="table-element">Network</div></td>
+                        <td><div class="table-element">Boxed Devices</div></td>
+                        <td><div class="table-element">Status</div></td>
+                        <td><div class="table-element">Open Box</div></td>
                     </tr>
+                    @foreach ($boxes as $box)
+                        @if($box->getBoxStatus() === 'Complete')
+                        <tr class="boxrowhover">
+                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_name}}</div></td>
+                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_grade}}</div></td>
+                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_brand}}</div></td>
+                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->tray_network}}</div></td>
+                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->number_of_devices}}/{{$box->max_number_of_devices}}</div></td>
+                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->tray_name}}">{{$box->getBoxStatus()}}</div></td>
+                            <td class="py-0"><div id="{{$box->tray_name}}" class="table-element openbox"><i class="fa fa-folder-open" aria-hidden="true"></i></div></div></td>
+                        </tr>
+                        @endif
                     @endforeach
                 </table>
             </div>
@@ -90,7 +128,7 @@
                         <td><div class="table-element">Barcode</div></td>
                         <td><div class="table-element">Grade</div></td>
                         <td><div class="table-element">IMEI</div></td>
-                        <td><div class="table-element">Manifacturer</div></td>
+                        <td><div class="table-element">Manufacturer</div></td>
                         <td><div class="table-element">Model</div></td>
                     </tr>
                 </table>
@@ -117,7 +155,7 @@
                         <td><div class="table-element">Barcode</div></td>
                         <td><div class="table-element">Grade</div></td>
                         <td><div class="table-element">IMEI</div></td>
-                        <td><div class="table-element">Manifacturer</div></td>
+                        <td><div class="table-element">Manufacturer</div></td>
                         <td><div class="table-element">Model</div></td>
                     </tr>
                 </table>
@@ -140,12 +178,13 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="manifacturer">Please select manifacturer</label>
+                    <label for="manifacturer">Please select manufacturer</label>
                     <select class="form-control" name="manifacturer" id="manifacturer" required>
-                        <option selected value="" disabled>Please select manifacturer</option>
+                        <option selected value="" disabled>Please select manufacturer</option>
                         @foreach ($brands as $brand)
                             <option value="{{$brand->id}}">{{$brand->brand_name}}</option>
                         @endforeach
+                        <option value="M">Miscellaneous</option>
                     </select>
                 </div>
                 
@@ -162,7 +201,7 @@
                         <option value="nwsi">NWSI</option>
                         <option value="nwsd">NWSD</option>
                         <option value="cat">CAT</option>
-                        <option value="fimp">FIMP</option>
+                        <option value="fimp">FMIP</option>
                         <option value="gock">GOCK</option>
                         <option value="sick">SICK</option>
                         <option value="tab">TAB</option>
@@ -191,7 +230,7 @@
 
                 <div class="form-group">
                     <label for="capacity">Please select capacity of the box:</label>
-                    <input type="number" class="form-control" name="capacity" id="capacity" required>
+                    <input type="number" max="100" class="form-control" name="capacity" id="capacity" required>
                 </div>
 
                 <div class="row">
