@@ -1,16 +1,22 @@
 $('.baydelete').on('click', function(){
+
     var bayname = $(this).attr('id');
 
-    $.ajax({
-        url: "/portal/warehouse-management/bay-overview/deletebay",
-        type:"POST",
-        data:{
-            bayname:bayname,
-        },
-        success:function(response){
-            location.reload();
-        },
-    });
+    var c = confirm("Do you want to delete bay " + bayname + "?");
+
+    if(c){
+        $.ajax({
+            url: "/portal/warehouse-management/bay-overview/deletebay",
+            type:"POST",
+            data:{
+                bayname:bayname,
+            },
+            success:function(response){
+                location.reload();
+            },
+        });
+    }
+
 });
 
 $('.bayprint').on('click', function(){

@@ -37320,18 +37320,18 @@ $('.print-one-tradein').on('click', function () {
   $('#print_trade_pack_trade_in_trigger').click();
 });
 
-function printTradePackTradeInBulk() {
+window.printTradePackTradeInBulk = function () {
   //Trigger printing
   $('#number_of_bulk_prints').val();
   $('#print_trade_pack_bulk_form_trigger').click();
-}
+};
 
-function printDeviceLabel(print_device_id) {
+window.printDeviceLabel = function (print_device_id) {
   //Set new value for trade_pack_trade_in_id hidden input
   $('#print_device_id').val(print_device_id); //Trigger printing
 
   $('#print_device_barcode').click();
-}
+};
 
 function setNumberOfTradePacks(number_of_trade_packs_to_print) {
   $('#number_of_bulk_prints').val(number_of_trade_packs_to_print);
@@ -37355,7 +37355,7 @@ function deleteTradeInDetailsFromSystem(id) {
 
 $('#tradein-checkallbtn').on('click', function () {
   $('.printcheckbox').prop('checked', false);
-  $('.printcheckbox').slice(0, 25).prop('checked', this.checked);
+  $('.printcheckbox').slice(0, 50).prop('checked', this.checked);
 });
 $('.printcheckbox').on('click', function () {
   var numberOfChecked = $('.printcheckbox:checked').length;
@@ -37364,7 +37364,7 @@ $('.printcheckbox').on('click', function () {
   if ($(this).is('checked')) {
     $(this).prop('checked', false);
   } else {
-    if (numberOfChecked >= 25) {
+    if (numberOfChecked >= 50) {
       $(this).prop('checked', false);
     }
   }
@@ -37411,16 +37411,20 @@ function markOrderAsSent(trade_out_id) {
 
 $('.baydelete').on('click', function () {
   var bayname = $(this).attr('id');
-  $.ajax({
-    url: "/portal/warehouse-management/bay-overview/deletebay",
-    type: "POST",
-    data: {
-      bayname: bayname
-    },
-    success: function success(response) {
-      location.reload();
-    }
-  });
+  var c = confirm("Do you want to delete bay " + bayname + "?");
+
+  if (c) {
+    $.ajax({
+      url: "/portal/warehouse-management/bay-overview/deletebay",
+      type: "POST",
+      data: {
+        bayname: bayname
+      },
+      success: function success(response) {
+        location.reload();
+      }
+    });
+  }
 });
 $('.bayprint').on('click', function () {
   var bayname = $(this).attr('id');
@@ -38043,8 +38047,8 @@ $('#buildssaleslot-scandeviceinput').on('input', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Haris Muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Haris Muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

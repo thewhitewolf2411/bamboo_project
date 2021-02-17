@@ -71,15 +71,6 @@ class TestingController extends Controller
             return redirect()->back()->with('error', 'There is no such device');
         }
         if($tradein->job_state === "9" || $tradein->job_state === "10" || $tradein->job_state === "14"){
-            if($tradein->job_state === "9"){
-                $tradein->job_state = "10";
-                $tradein->save();
-            }
-            if($tradein->job_state === "14"){
-                $tradein->job_state = "16";
-                $tradein->save();
-            }
-
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
             $networks = Network::all();
@@ -288,14 +279,21 @@ class TestingController extends Controller
     }
 
     public function deviceImeiVisibility(Request $request){
+        #dd("here");
         $tradein = Tradein::where('id', $request->tradein_id)->first();
 
         if($request->visible_imei != "yes"){
-            $tradein->job_state = "6";
-            $user = User::where('id', $tradein->user_id)->first();
+            if($tradein->customer_grade !== 'Faulty'){
+                $tradein->job_state = "6";
 
-            $klaviyoemail = new KlaviyoEmail();
-            $klaviyoemail->noImei($user, $tradein);
+                $user = User::where('id', $tradein->user_id)->first();
+
+                $klaviyoemail = new KlaviyoEmail();
+                $klaviyoemail->noImei($user, $tradein);
+            }
+            else{
+                $tradein->job_state = "9";
+            }
         }
         $tradein->save();
 
@@ -468,7 +466,6 @@ class TestingController extends Controller
     public function printNewLabel(Request $request){
 
         $tradein = Tradein::where('id', $request->tradein_id)->first();
-
         $mti = false;
 
         if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>1){
@@ -487,17 +484,13 @@ class TestingController extends Controller
         }
         else{
             $tradein->job_state = 9;
-            foreach($brands as $brand){
-                if($sellingProduct->brand_id == $brand->id){
-                    if($brand->id < 10){
-                        $newBarcode .= $tradein->job_state . "0" . $brand->id;
-                        $newBarcode .= mt_rand(1000, 9999);
-                    }
-                    else{
-                        $newBarcode .= $tradein->job_state . $brand->id;
-                        mt_rand(1000, 9999);
-                    }
-                }
+            if($sellingProduct->brand_id < 10){
+                $newBarcode .= $tradein->job_state . "0" . $sellingProduct->brand_id;
+                $newBarcode .= mt_rand(10000, 99999);
+            }
+            else{
+                $newBarcode .= $tradein->job_state . $sellingProduct->brand_id;
+                mt_rand(1000, 9999);
             }
         }
 
@@ -506,7 +499,6 @@ class TestingController extends Controller
         }
         
         // $tradein->save();
-
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 
         $user_id = Auth::user()->id;

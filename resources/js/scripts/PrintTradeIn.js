@@ -9,7 +9,7 @@ $('.print-one-tradein').on('click', function(){
     $('#print_trade_pack_trade_in_trigger').click();
 })
 
-function printTradePackTradeInBulk(){
+window.printTradePackTradeInBulk = function(){
     //Trigger printing
 
     $('#number_of_bulk_prints').val();
@@ -17,7 +17,7 @@ function printTradePackTradeInBulk(){
     $('#print_trade_pack_bulk_form_trigger').click();
 }
 
-function printDeviceLabel(print_device_id){
+window.printDeviceLabel = function(print_device_id){
     //Set new value for trade_pack_trade_in_id hidden input
     $('#print_device_id').val(print_device_id);
 
@@ -51,7 +51,7 @@ $('#tradein-checkallbtn').on('click', function(){
 
     $('.printcheckbox').prop('checked', false);
 
-    $('.printcheckbox').slice(0, 25).prop('checked', this.checked);
+    $('.printcheckbox').slice(0, 50).prop('checked', this.checked);
 
 });
 
@@ -64,7 +64,7 @@ $('.printcheckbox').on('click', function(){
         $(this).prop('checked', false);        
     }
     else{
-        if(numberOfChecked >= 25){
+        if(numberOfChecked >= 50){
             $(this).prop('checked', false);
         }
     }

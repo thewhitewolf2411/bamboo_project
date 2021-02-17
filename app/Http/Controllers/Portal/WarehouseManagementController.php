@@ -369,21 +369,27 @@ class WarehouseManagementController extends Controller
 
     public function createBay(Request $request){
         #dd($request);
-        $bay = Trolley::create([
-            'trolley_name'=>$request->bay_name,
-            'trolley_type'=>'Bay',
-            'trolley_brand'=>'B',
-            'number_of_trays'=>0
-        ]);
+        $bays = Trolley::where('trolley_name', $request->bay_name)->get();
 
-        return redirect('/portal/warehouse-management/bay-overview')->with(['success'=>'You have succesfully created new Bay']);
+        if(count($bays)<1){
+            $bay = Trolley::create([
+                'trolley_name'=>$request->bay_name,
+                'trolley_type'=>'Bay',
+                'trolley_brand'=>'B',
+                'number_of_trays'=>0
+            ]);
+
+            return redirect('/portal/warehouse-management/bay-overview')->with(['success'=>'You have succesfully created new Bay']);
+        }
+
+        return redirect('/portal/warehouse-management/bay-overview')->with(['error'=>'Bay with name ' . $request->bay_name . ' already exists.']);
     }
 
     public function deleteBay(Request $request){
-        $bay = Trolley::where('trolley_name', $request->bayname);
+        $bay = Trolley::where('trolley_name', $request->bayname)->first();
         $bay->delete();
 
-        return response('', 200);
+        return redirect('/portal/warehouse-management/bay-overview')->with(['success'=>'Bay ' . $request->bayname . ' succesfully deleted.']);
     }
 
     public function printBay(Request $request){

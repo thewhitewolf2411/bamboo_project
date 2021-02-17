@@ -190,6 +190,13 @@ class Testing{
                             break;
                     }
 
+                    if($tradein->job_state === "9"){
+                        $tradein->job_state = "10";
+                    }
+                    if($tradein->job_state === "14"){
+                        $tradein->job_state = "16";
+                    }
+
                     $klaviyomail = new KlaviyoEmail();
                     $klaviyomail->devicePassedTest($user, $tradein);
                 }
@@ -362,6 +369,13 @@ class Testing{
                                 $tradein->cosmetic_condition = 'CAT';
                             }
                             break;
+                    }
+
+                    if($tradein->job_state === "9"){
+                        $tradein->job_state = "10";
+                    }
+                    if($tradein->job_state === "14"){
+                        $tradein->job_state = "16";
                     }
 
                     $klaviyomail = new KlaviyoEmail();

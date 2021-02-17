@@ -140,7 +140,14 @@ function testingElementChanged(){
         }
         else{
             $('#device-fully-functional-options').addClass('form-group-hidden');
-            if(waterDamage == "true"){
+            if(waterDamage == "true" && customerGrade == 2){
+                options = {
+                    '':'',
+                    'WSI':'WSI',
+                    'WSD':'WSD',
+                }
+            }
+            else if(waterDamage == "true" && customerGrade != 2){
                 options = {
                     '':'',
                     'WSI':'WSI',

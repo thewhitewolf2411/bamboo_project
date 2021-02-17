@@ -9,6 +9,7 @@ use Auth;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Colour;
 use App\Eloquent\Network;
+use App\Eloquent\Brand;
 
 class SettingsController extends Controller
 {
