@@ -79,6 +79,7 @@ class Testing{
                 
                 $tradein->job_state = "15c";
                 //$tradein->save();
+                $tradein->cosmetic_condition = 'PIN';
 
                 $klaviyoemail = new KlaviyoEmail();
                 $klaviyoemail->pinLocked($user, $tradein);
@@ -87,12 +88,14 @@ class Testing{
                 if($request->fimp_or_google_lock === "true"){
                     if($tradein->getBrandId($tradein->product_id) === 1){
                         $tradein->job_state = "15a";
+                        $tradein->cosmetic_condition = 'FMIP';
 
                         $klaviyoemail = new KlaviyoEmail();
                         $klaviyoemail->FIMP($user, $tradein);
                     }
                     else{
                         $tradein->job_state = "15b";
+                        $tradein->cosmetic_condition = 'GOCK';
                         $klaviyoemail = new KlaviyoEmail();
                         $klaviyoemail->googleLocked($user, $tradein);
                     }
@@ -214,6 +217,7 @@ class Testing{
                     }
                     else{
                         if($request->water_damage === 'true'){
+                            $tradein->cosmetic_condition = 'DOWN';
                             $tradein->job_state = '15h';
                         }
                         else if($request->device_fully_functional !== 'true'){
@@ -258,6 +262,7 @@ class Testing{
                 
                 $tradein->job_state = "11c";
                 // $tradein->save();
+                $tradein->cosmetic_condition = 'PIN';
 
                 $klaviyomail = new KlaviyoEmail();
                 $klaviyomail->pinLocked($user, $tradein);
@@ -266,6 +271,7 @@ class Testing{
                 if($request->fimp_or_google_lock === "true"){
                     if($tradein->getBrandId($tradein->product_id) === 1){
                         $tradein->job_state = "11a";
+                        $tradein->cosmetic_condition = 'FMIP';
                         $klaviyomail = new KlaviyoEmail();
                         $klaviyomail->FIMP($user, $tradein);
                     }
@@ -273,6 +279,7 @@ class Testing{
                         $tradein->job_state = "11b";
                         $klaviyomail = new KlaviyoEmail();
                         $klaviyomail->googleLocked($user, $tradein);
+                        $tradein->cosmetic_condition = 'GOCK';
                     }
                     // $tradein->save();
                 }
@@ -404,6 +411,7 @@ class Testing{
                     else{
                         if($request->water_damage === 'true'){
                             $tradein->job_state = '11h';
+                            $tradein->cosmetic_condition = 'DOWN';
                             $klaviyomail = new KlaviyoEmail();
                             $klaviyomail->wrongDevice($user, $tradein);
                         }
@@ -424,6 +432,7 @@ class Testing{
             }
 
             $tradein->bamboo_price = $bambooprice;
+            $tradein->cosmetic_condition = $request->cosmetic_condition;
             $tradein->save();
     
             $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;

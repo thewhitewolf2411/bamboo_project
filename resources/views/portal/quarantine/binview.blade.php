@@ -181,7 +181,6 @@
                     },
                     success:function(response){
 
-                        console.log($('#addeddevicestable #' + response.order.id));
                         if(response.deviceadded == 0){
                             $('#statement').html('<div class="alert alert-warning">' + response.error + '</div>');
                         }

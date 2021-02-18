@@ -148,48 +148,43 @@ class QuarantineController extends Controller
 
             $tradeinId = $tradeinNumbers[$i];
             $newTrayId = $tradeinNumbers[$i+1];
-
+            #dd($newTrayId);
             $tradein = Tradein::where('id', $tradeinId)->first();
 
+            $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+            $newTray = Tray::where('id', $newTrayId)->first();
 
-            if(!$tradein->hasDeviceBeenTestedFirstTime()){
-                array_push($response, $tradein->barcode);
+            if($newTray->tray_brand !== $tradein->getBrandLetter($tradein->product_id)){
+                return redirect()->back()->with('error', 'Order no ' . $tradein->barcode .  ' cannot be placed in this tray.');
             }
             else{
                 $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
                 $newTray = Tray::where('id', $newTrayId)->first();
-
-                if($newTray->tray_brand !== $tradein->getBrandLetter($tradein->product_id)){
-                    return redirect()->back()->with('error', 'Order no ' . $tradein->barcode .  ' cannot be placed in this tray.');
+                if($oldTrayContent !== null){
+                    $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
+                    $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+                    $oldTray->save();
+                    $oldTrayContent->delete();
                 }
-                else{
-                    $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
-                    $newTray = Tray::where('id', $traycontent->tray_id)->first();
-                    if($oldTrayContent !== null){
-                        $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
-                        $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
-                        $oldTray->save();
-                        $oldTrayContent->delete();
-                    }
-    
-                    $traycontent = new TrayContent();
-                    $traycontent->tray_id = $newTrayId;
-                    $traycontent->trade_in_id = $tradein->id;
-                    $traycontent->save();
-                    
-                    
-                    //after receiving
-                    if($newTray->tray_type === 'R'){
-                        $tradein->job_state = '13';
-                    }
-                    //after testing
-                    elseif($newTray->tray_type === 'T'){
-                        $tradein->job_state = '12';
-                    }
 
-                    $tradein->save();
+                $traycontent = new TrayContent();
+                $traycontent->tray_id = $newTrayId;
+                $traycontent->trade_in_id = $tradein->id;
+                $traycontent->save();
+                
+                
+                //after receiving
+                if($newTray->tray_type === 'R'){
+                    $tradein->job_state = '13';
                 }
+                //after testing
+                elseif($newTray->tray_type === 'T'){
+                    $tradein->job_state = '12';
+                }
+
+                $tradein->save();
             }
+            
         }
 
         
@@ -255,26 +250,38 @@ class QuarantineController extends Controller
         if($request->val === '8a'){
             $klaviyoemail = new KlaviyoEmail();
             $klaviyoemail->blacklisted($user, $tradein);
+
+            $tradein->quarantine_reason = "Lost";
         }
         if($request->val === '8b'){
             $klaviyoemail = new KlaviyoEmail();
             $klaviyoemail->deviceUnderContract($user, $tradein);
+
+            $tradein->quarantine_reason = "Insurance claim";
         }
         if($request->val === '8c'){
             $klaviyoemail = new KlaviyoEmail();
             $klaviyoemail->blacklisted($user, $tradein);
+
+            $tradein->quarantine_reason = "Blocked/FRP";
         }
         if($request->val === '8d'){
             $klaviyoemail = new KlaviyoEmail();
             $klaviyoemail->deviceStolen($user, $tradein);
+
+            $tradein->quarantine_reason = "Stolen";
         }
         if($request->val === '8e'){
             $klaviyoemail = new KlaviyoEmail();
             $klaviyoemail->blacklisted($user, $tradein);
+
+            $tradein->quarantine_reason = "Knox";
         }
         if($request->val === '8f'){
             $klaviyoemail = new KlaviyoEmail();
             $klaviyoemail->deviceUnderContract($user, $tradein);
+
+            $tradein->quarantine_reason = "Assetwatch";
         }
 
         $tradein->job_state = $request->val;
@@ -344,6 +351,9 @@ class QuarantineController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
         $quarantineBin = Tray::where('tray_name', $request->bin_id_scan)->first();
+        if($quarantineBin === null){
+            return redirect()->back()->with(['error'=>$request->bin_id_scan . ' does not exist.']);
+        }
         $quarantineBinContent = TrayContent::where('tray_id', $quarantineBin->id)->get();
 
         $tradeins = array();
@@ -383,7 +393,7 @@ class QuarantineController extends Controller
 
         $binservice = new BinService();
 
-        return $binservice->handleDeviceBin($tradein, $bintype);
+        return $binservice->handleDeviceBin($tradein, $bintype, $request->binname);
     }
 
     public function addDevicesToBin(Request $request){

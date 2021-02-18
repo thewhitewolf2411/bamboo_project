@@ -544,6 +544,11 @@ class Tradein extends Model
     }
 
     public function getBambooStatus(){
+        $matches = ["8a", "8b", "8c", "8d", "8e", "8f"];
+
+        if(in_array($this->job_state, $matches)){
+            return "Blacklisted";
+        }
         return $this->getDeviceStatus()[0];
     }
 
