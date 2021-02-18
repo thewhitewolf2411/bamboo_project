@@ -43,6 +43,9 @@ Route::get('/userprofile/{id}', 'Customer\CustomerController@showOrderDetails');
 Route::get('/userprofile/show/wishlist', 'Customer\CustomerController@showWishlist');
 Route::get('/userprofile/deleteorder/{id}', 'Customer\CustomerController@deleteOrder');
 
+Route::post('/userprofile/verify', 'Customer\CustomerController@verify')->middleware('auth');
+
+
 Route::get('/products/{category}', 'Customer\CustomerController@customerCategoryView')->name('customerproducts');
 Route::get('/product/{product}', 'Customer\CustomerController@showProduct')->name('showproduct');
 Route::get('/cart', 'Customer\CustomerController@showCart')->name('showcart');

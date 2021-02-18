@@ -20,7 +20,7 @@ use App\Eloquent\Wishlist;
 use Auth;
 use Carbon\Carbon;
 use Crypt;
-
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -269,6 +269,16 @@ class CustomerController extends Controller
             return redirect('/');
         }
 
+    }
+
+    public function verify(Request $request){
+        if(isset($request->email) && isset($request->pass)){
+            if($request->email === Auth::user()->email && $request->pass === Crypt::decrypt(Auth::user()->password)){
+                return response(200);
+            }
+            return response(500);
+        }
+        return response(404);
     }
 
     public function showOrderDetails($order){

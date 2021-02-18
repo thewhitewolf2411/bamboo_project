@@ -3,6 +3,7 @@
     <head>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <script src="{{ asset('js/Customer.js') }}"></script>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <!-- jQuery -->
@@ -162,32 +163,68 @@
                                     <!-- validation modal-->
                                     <div class="modal fade" id="validationModal" tabindex="-1" role="dialog" aria-labelledby="validationModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
-                                          <div class="modal-content padded">
-                                            <div class="validation-modal-header">
-                                                <img class="close-modal-img ml-auto" src="{{asset('/customer_page_images/body/modal-close.svg')}}" data-dismiss="modal" aria-label="Close">
-                                                <h5 class="validationModal-title" id="validationModalLabel">Re-Enter your password to make changes</h5>
-                                            </div>
-                                            <div class="line-bottom"></div>
-                                            <div class="modal-body">
-                                                <div class="verification-row">
-                                                    <div class="col p-0 mr-3">
-                                                        <label for="email" class="verify-label">Email address</label>
-                                                        <input type="email" class="verification-input"/>
-                                                    </div>
+                                            <div class="modal-content padded">
+                                                <div class="validation-modal-header">
+                                                    <img class="close-modal-img ml-auto" src="{{asset('/customer_page_images/body/modal-close.svg')}}" data-dismiss="modal" aria-label="Close">
+                                                    <h5 class="validationModal-title" id="validationModalLabel">Re-Enter your password to make changes</h5>
+                                                </div>
+                                                <div class="line-bottom"></div>
+                                                <div class="modal-body">
+                                                    <div class="verification-row">
+                                                        <div class="col p-0 mr-3">
+                                                            <label for="email" class="verify-label">Email address</label>
+                                                            <input type="email" name="email" id="verify_email" required class="verification-input"/>
+                                                        </div>
 
-                                                    <div class="col p-0">
-                                                        <label for="email" class="verify-label">Enter Password*</label>
-                                                        <input type="password" class="verification-input"/>
-                                                        <a href="#" class="forgotpass-link">Forgot password?</a>
+                                                        <div class="col p-0">
+                                                            <label for="email" class="verify-label">Enter Password*</label>
+                                                            <input type="password" name="password" id="verify_pass" required class="verification-input"/>
+                                                            <a href="#" class="forgotpass-link">Forgot password?</a>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="alert alert-danger hidden" role="alert" id="verification-error">
+                                                    Bad credentials.
+                                                </div>
+                                                <div class="modal-footer border-0 p-0 padded">
+                                                <button type="button" class="btn btn-primary ml-auto w-25" onclick="verify()">Verify</button>
+                                                </div>
                                             </div>
-                                            <div class="modal-footer border-0 p-0 padded">
-                                              <button type="button" class="btn btn-primary ml-auto w-25">Verify</button>
-                                            </div>
-                                          </div>
                                         </div>
-                                      </div>
+                                    </div>
+
+                                    <!-- personal info modal -->
+                                    <div class="modal fade" id="personalInfoModal" tabindex="-1" role="dialog" aria-labelledby="personalInfoModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content padded">
+                                                <div class="validation-modal-header">
+                                                    <img class="close-modal-img ml-auto" src="{{asset('/customer_page_images/body/modal-close.svg')}}" data-dismiss="modal" aria-label="Close">
+                                                    <h5 class="validationModal-title" id="personalInfoModalLabel">Personal information</h5>
+                                                </div>
+                                                <div class="line-bottom"></div>
+                                                <div class="modal-body">
+                                                    <div class="verification-row">
+                                                        <div class="col p-0 mr-3">
+                                                            <label for="email" class="verify-label">Email address</label>
+                                                            <input type="email" name="email" id="verify_email" required class="verification-input"/>
+                                                        </div>
+
+                                                        <div class="col p-0">
+                                                            <label for="email" class="verify-label">Enter Password*</label>
+                                                            <input type="password" name="password" id="verify_pass" required class="verification-input"/>
+                                                            <a href="#" class="forgotpass-link">Forgot password?</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{-- <div class="alert alert-danger hidden" role="alert" id="verification-error">
+                                                    Bad credentials.
+                                                </div> --}}
+                                                <div class="modal-footer border-0 p-0 padded">
+                                                <button type="button" class="btn btn-primary ml-auto w-25" onclick="verify()">Verify</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     @if(Session::has('success'))
                                         <div class="alert alert-success my-5" role="alert">
@@ -697,6 +734,12 @@
 </html>
 
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     let buttons = document.getElementsByClassName('change-page');
     for (let index = 0; index < buttons.length; index++) {
         let button = buttons[index];
@@ -742,5 +785,38 @@
             
         }
 
+    }
+
+
+    function verify(){
+        let email = document.getElementById('verify_email').value;
+        let pass = document.getElementById('verify_pass').value;
+        console.log(email);
+        console.log(pass);
+
+        $.ajax({
+            type: "POST",
+            url: 'userprofile/verify',
+            data: {
+                email: email,
+                pass: pass
+            },
+            success: function(data){
+                if(data === "200"){
+                    $('#validationModal').modal('hide');
+                    $('#personalInfoModal').modal('show');
+                } else {
+                    let error_alert = document.getElementById('verification-error');
+                    if(error_alert.classList.contains('hidden')){
+                        error_alert.classList.remove('hidden');
+                    }
+                    setTimeout(function(){
+                        if(!error_alert.classList.contains('hidden')){
+                            error_alert.classList.add('hidden');
+                        }
+                    }, 3000);
+                }
+            },
+        });
     }
 </script>
