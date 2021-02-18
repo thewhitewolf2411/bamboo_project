@@ -11775,6 +11775,88 @@ main p, a, span {
   background: #a9a9a9;
 }
 
+.personal-info-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.personal-info-item {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  width: 200px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.info-item-label {
+  font-size: 14px;
+  margin: 0;
+}
+
+.info-item-val {
+  font-family: Sharp Sans No1 Bold;
+  font-size: 18px;
+  margin: 0;
+}
+
+.modal-content.padded {
+  padding-left: 3rem !important;
+  padding-right: 3rem !important;
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+}
+
+.validation-modal-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.validationModal-title {
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.close-modal-img {
+  cursor: pointer;
+  width: 40px;
+}
+
+.verification-row {
+  display: flex;
+  flex-direction: row;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.verify-label {
+  font-size: 14px;
+}
+
+.verification-input {
+  display: flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  margin-bottom: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  text-align: left;
+  white-space: nowrap;
+  background-color: white;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  font-family: Sharp Sans No1 Bold;
+}
+
+.forgotpass-link {
+  margin: 0;
+  margin-left: auto;
+  font-family: Sharp Sans No1 Bold;
+}
+
 header {
   position: fixed;
   top: 0;

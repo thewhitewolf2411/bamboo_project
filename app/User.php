@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Eloquent\Payment\UserBankDetails;
+use App\Eloquent\SellingProduct;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -117,5 +118,21 @@ class User extends Authenticatable
         if(isset($postcode[count($postcode) - 1])){
             return $postcode[count($postcode) - 1];
         }
+    }
+
+    public function getCurrentPhone(){
+        $phone = SellingProduct::find($this->current_phone);
+        if($phone){
+            return $phone->product_name;
+        }
+        return null;
+    }
+
+    public function profileDeliveryAddress(){
+        return str_replace(',', '<br>', $this->delivery_address);
+    }
+
+    public function profileBillingAddress(){
+        return str_replace(',', '<br>', $this->billing_address);
     }
 }

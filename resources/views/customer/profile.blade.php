@@ -114,62 +114,128 @@
                                 <div class="section-item-content">
                                     <div class="section-header">
                                         <p class="section-item-title">Personal Information</p>
-                                        <div class="action-button-right purple">
+                                        <div class="action-button-right purple" data-toggle="modal" data-target="#validationModal">
                                             <p class="action-button-right-text">Edit details</p>
                                             <img class="pen-icon" src="{{asset('/images/pen.png')}}">
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="line-bottom"></div>
 
-                                <form id="change-name" action="/userprofile/changename"  method="POST">
-                                    @csrf
-                                    <div class="profile-element profile-element-three">
-                                        <div class="profile-element-three-left">
-                                            <div class="element-three-top-container">
-                                                <h3>PERSONAL INFORMATION</h3>
-                                            </div>
-                                            @if(Session::has('success'))
-                                                <div class="alert alert-success my-5" role="alert">
-                                                    @foreach(Session::get('success') as $message)
-                                                        <li>{{$message}}</li>
-                                                    @endforeach
-                                                </div>
-                                            @endif
-                
-                                            @if(Session::has('error'))
-                                            <div class="alert alert-danger my-5" role="alert">
-                                                {{Session::get('error')}}
-                                            </div>
-                                            @endif
-                                            <input type="hidden" name="user" value="{{Auth::user()->id}}">
-                                            <div class="element-three-top">
-                                                <div class="profile-element-container p-1">
-                                                    <label for="name" class="profile-small">First Name</label>
-                                                    <input id="input-name" name="name" type="text" class="form-control" value="{{$userdata->first_name}}" disabled required></input>
-                                                </div>
-                                                <div class="profile-element-container p-1">
-                                                    <label for="lastname" class="profile-small">Last Name</label>
-                                                    <input id="input-lastname" name="lastname" type="text" class="form-control" value="{{$userdata->last_name}}" disabled required></input>
-                                                </div>
-                                            </div>
-                                            <div class="element-three-bottom ">
-                                                <div class="profile-element-container p-1">
-                                                    <label for="delivery_address" class="profile-small">Delivery address</label>
-                                                    <textarea id="delivery_address" name="delivery_address" type="text" class="form-control" value="{{$userdata->delivery_address}}" disabled required>{{$userdata->delivery_address}}</textarea>
-                                                </div>
-                                                <div class="profile-element-container p-1">
-                                                    <label for="billing_address" class="profile-small">Billing address</label>
-                                                    <textarea id="billing_address" name="billing_address" type="text" class="form-control" value="{{$userdata->billing_address}}" disabled required>{{$userdata->billing_address}}</textarea>
-                                                </div>
-                                                <div class="profile-element-container p-1">
-                                                    <label for="contact-number" class="profile-small">Contact number</label>
-                                                    <input id="contact-number" name="contact_number" type="number" class="form-control" value="{{$userdata->contact_number}}" disabled required></input>
-                                                </div>
-                                            </div>
-                
+                                    <div class="personal-info-row">
+                                        <div class="personal-info-item">
+                                            <p class="info-item-label">First Name</p>
+                                            <p class="info-item-val">{!!Auth::user()->first_name!!}</p>
+                                        </div>
+                                        <div class="personal-info-item">
+                                            <p class="info-item-label">Last Name</p>
+                                            <p class="info-item-val">{!!Auth::user()->last_name!!}</p>
+                                        </div>
+                                        <div class="personal-info-item">
+                                            <p class="info-item-label">Date of Birth</p>
+                                            <p class="info-item-val">19/02/87</p>
+                                        </div>
+                                        <div class="personal-info-item">
+                                            <p class="info-item-label">Contact Number</p>
+                                            <p class="info-item-val">{!!Auth::user()->contact_number!!}</p>
                                         </div>
                                     </div>
-                                </form>
+
+                                    <div class="personal-info-row">
+                                        <div class="personal-info-item">
+                                            <p class="info-item-label">Delivery Address</p>
+                                            <p class="info-item-val">{!!Auth::user()->profileDeliveryAddress()!!}</p>
+                                        </div>
+                                        <div class="personal-info-item">
+                                            <p class="info-item-label">BIlling Address</p>
+                                            <p class="info-item-val">{!!Auth::user()->profileBillingAddress()!!}</p>
+                                        </div>
+                                        <div class="personal-info-item">
+                                            <p class="info-item-label">Current Phone</p>
+                                            <p class="info-item-val">{!!Auth::user()->getCurrentPhone()!!}</p>
+                                        </div>
+                                        <div class="personal-info-item">
+                                            <p class="info-item-label">Preffered OS</p>
+                                            <p class="info-item-val">{!!Auth::user()->preffered_os!!}</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- validation modal-->
+                                    <div class="modal fade" id="validationModal" tabindex="-1" role="dialog" aria-labelledby="validationModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content padded">
+                                            <div class="validation-modal-header">
+                                                <img class="close-modal-img ml-auto" src="{{asset('/customer_page_images/body/modal-close.svg')}}" data-dismiss="modal" aria-label="Close">
+                                                <h5 class="validationModal-title" id="validationModalLabel">Re-Enter your password to make changes</h5>
+                                            </div>
+                                            <div class="line-bottom"></div>
+                                            <div class="modal-body">
+                                                <div class="verification-row">
+                                                    <div class="col p-0 mr-3">
+                                                        <label for="email" class="verify-label">Email address</label>
+                                                        <input type="email" class="verification-input"/>
+                                                    </div>
+
+                                                    <div class="col p-0">
+                                                        <label for="email" class="verify-label">Enter Password*</label>
+                                                        <input type="password" class="verification-input"/>
+                                                        <a href="#" class="forgotpass-link">Forgot password?</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer border-0 p-0 padded">
+                                              <button type="button" class="btn btn-primary ml-auto w-25">Verify</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+
+                                    @if(Session::has('success'))
+                                        <div class="alert alert-success my-5" role="alert">
+                                            @foreach(Session::get('success') as $message)
+                                                <li>{{$message}}</li>
+                                            @endforeach
+                                        </div>
+                                    @endif
+        
+                                    @if(Session::has('error'))
+                                        <div class="alert alert-danger my-5" role="alert">
+                                            {{Session::get('error')}}
+                                        </div>
+                                    @endif
+
+
+
+                                    {{-- <input type="hidden" name="user" value="{{Auth::user()->id}}">
+                                    <div class="element-three-top">
+                                        <div class="profile-element-container p-1">
+                                            <label for="name" class="profile-small">First Name</label>
+                                            <input id="input-name" name="name" type="text" class="form-control" value="{{$userdata->first_name}}" disabled required></input>
+                                        </div>
+                                        <div class="profile-element-container p-1">
+                                            <label for="lastname" class="profile-small">Last Name</label>
+                                            <input id="input-lastname" name="lastname" type="text" class="form-control" value="{{$userdata->last_name}}" disabled required></input>
+                                        </div>
+                                    </div>
+                                    <div class="element-three-bottom ">
+                                        <div class="profile-element-container p-1">
+                                            <label for="delivery_address" class="profile-small">Delivery address</label>
+                                            <textarea id="delivery_address" name="delivery_address" type="text" class="form-control" value="{{$userdata->delivery_address}}" disabled required>{{$userdata->delivery_address}}</textarea>
+                                        </div>
+                                        <div class="profile-element-container p-1">
+                                            <label for="billing_address" class="profile-small">Billing address</label>
+                                            <textarea id="billing_address" name="billing_address" type="text" class="form-control" value="{{$userdata->billing_address}}" disabled required>{{$userdata->billing_address}}</textarea>
+                                        </div>
+                                        <div class="profile-element-container p-1">
+                                            <label for="contact-number" class="profile-small">Contact number</label>
+                                            <input id="contact-number" name="contact_number" type="number" class="form-control" value="{{$userdata->contact_number}}" disabled required></input>
+                                        </div>
+                                    </div> --}}
+                
+                                </div>
+
+                                {{-- <form id="change-name" action="/userprofile/changename"  method="POST">
+                                    @csrf
+                                </form> --}}
                             </div>
 
                             <div id="section-account" class="page-sections hidden">
