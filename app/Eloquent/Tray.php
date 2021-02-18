@@ -23,7 +23,7 @@ class Tray extends Model
      * @var array
      */
     protected $fillable = [
-        'tray_name', 'tray_type','tray_brand', 'tray_grade', 'tray_network', 'box_devices', 'trolley_id','number_of_devices','max_number_of_devices'
+        'tray_name', 'tray_type','tray_brand', 'tray_grade', 'tray_network', 'box_devices', 'trolley_id','number_of_devices','max_number_of_devices','status'
     ];
 
     public function getTrolleyName($trolley_id){

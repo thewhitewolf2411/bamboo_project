@@ -61,28 +61,23 @@ class WarehouseManagementController extends Controller
             $manifacturer = $brand->getBrandFirstName();
         }
 
-        $boxnumber = count(Tray::where('tray_type', 'Bo')->get());
+        $boxnumber = count(Tray::where('tray_type', 'Bo')->where('tray_grade', strtoupper($request->reference))->get())+1;
 
         if($boxnumber<10){
-            $boxnumber = '0000000' . $boxnumber;
+            $boxnumber = '0' . $boxnumber;
         }elseif($boxnumber>=10 && $boxnumber<100){
-            $boxnumber = '000000' . $boxnumber;
-        }elseif($boxnumber>=100 && $boxnumber<1000){
-            $boxnumber = '00000' . $boxnumber;
-        }elseif($boxnumber>=1000 && $boxnumber<10000){
-            $boxnumber = '0000' . $boxnumber;
-        }elseif($boxnumber>=10000 && $boxnumber<100000){
-            $boxnumber = '000' . $boxnumber;
-        }elseif($boxnumber>=100000 && $boxnumber<1000000){
-            $boxnumber = '00' . $boxnumber;
+            $boxnumber = $boxnumber;
         }
+
 
         $locked = 'Unlocked';
         if($request->network === 'l'){
             $locked = 'Locked';
         }
 
-        $trayname = strtoupper(substr($manifacturer,0,1) . $request->reference . $request->network . $boxnumber);
+        //$trayname = strtoupper(substr($manifacturer,0,1) . $request->reference . $request->network . $boxnumber);
+
+        $trayname = strtoupper("(" . $request->reference . ")" . substr($manifacturer, 0, 2) . $boxnumber);
 
         $newBox = Tray::create([
 
@@ -93,16 +88,17 @@ class WarehouseManagementController extends Controller
             'tray_network'=>$locked,
             'max_number_of_devices'=>$request->capacity,
             'box_devices'=>$request->boxdevices,
+            'status'=>1
 
         ]);
 
-        return redirect()->back()->with('success', 'Box ' . $trayname . ' was successfully created' );
+        return redirect()->back()->with(['boxname'=>$newBox->id, 'boxcreated'=>true]);
 
     }
 
     public function getBoxDevices(Request $request){
 
-        $tray = Tray::where('tray_name', $request->boxname)->first();
+        $tray = Tray::where('id', $request->boxname)->first();
 
         $boxContent = TrayContent::where('tray_id', $tray->id)->get();
 
@@ -122,10 +118,10 @@ class WarehouseManagementController extends Controller
 
         $tradein = Tradein::where('barcode', $request->tradeinid)->first();
 
-        $box = Tray::where('tray_name', $request->boxid)->first();
+        $box = Tray::where('id', $request->boxid)->first();
         $box->number_of_devices = $box->number_of_devices + 1;
 
-        if($box->number_of_devices === $max_number_of_devices){
+        if($box->number_of_devices === $box->max_number_of_devices){
             $box->status = 3;
         }
 
@@ -149,7 +145,7 @@ class WarehouseManagementController extends Controller
     public function openBox(Request $request){
 
         $boxname = $request->boxname;
-        $tray = Tray::where('tray_name', $boxname)->first();
+        $tray = Tray::where('id', $boxname)->first();
         $tray->status = 1;
         $tray->save();
 
@@ -159,7 +155,7 @@ class WarehouseManagementController extends Controller
     public function suspendBox(Request $request){
         
         $boxname = $request->boxname;
-        $tray = Tray::where('tray_name', $boxname)->first();
+        $tray = Tray::where('id', $boxname)->first();
         $tray->status = 2;
         $tray->save();
 
@@ -169,7 +165,7 @@ class WarehouseManagementController extends Controller
     public function completeBox(Request $request){
         
         $boxname = $request->boxname;
-        $tray = Tray::where('tray_name', $boxname)->first();
+        $tray = Tray::where('id', $boxname)->first();
         $tray->status = 3;
         $tray->save();
 
@@ -180,7 +176,7 @@ class WarehouseManagementController extends Controller
         #dd($request->all());
 
         $tradein = Tradein::where('barcode', $request->tradeinid)->first();
-        $box = Tray::where('tray_name', $request->boxname)->first();
+        $box = Tray::where('id', $request->boxname)->first();
 
         if($request->tradeinid === null){
             return response('Device barcode cannot be empty.', 404);

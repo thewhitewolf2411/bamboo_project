@@ -11,6 +11,8 @@ class Boxing{
 
     public function checkBoxStatusForDevice(Tradein $tradein, Tray $box, Request $request){
 
+        #dd($tradein, $box, $request);
+
         if($request->tradeinid === ''){
             return ['Please input device barcode.', 404];
         }
@@ -39,40 +41,37 @@ class Boxing{
             return ['Device is already boxed to other box. You can move it to this box.', 200];
         }
 
-        if($box->tray_brand === $tradein->getBrandLetter($tradein->product_id) && $box->box_devices === $tradein->getCategoryId($tradein->product_id)){
-            if($box->tray_grade === $this->getDeviceGrade($tradein)){
-                return ['Device can be added to this box.', 200];
-            }
-            elseif($this->getDeviceGrade($tradein) === false){
-                return ['Offer for this device has not been accepted by customer yet.', 404];
-                
-            }
-            else{
-                return ['This device grade is not matching box grade.', 404];
-            }
+        if($this->getDeviceGrade($tradein) === false){
+            return ['Offer for this device has not been accepted by customer yet.', 404];
+            
         }
-        else{
-            if($box->tray_brand !== $tradein->getBrandLetter($tradein->product_id)){
-                return ['Manifacturer is wrong.', 404];
-            }
-            if($box->box_devices !== $tradein->getCategoryId($tradein->product_id)){
-
-                $message = "";
-                switch($box->box_devices){
-                    case 1:
-                        $message = "Device is not a mobile phone.";
-                        break;
-                    case 2:
-                        $message = "Device is not a tablet.";
-                        break;
-                    case 3:
-                        $message = "Device is not a smartwatch.";
-                        break;
-                }
-
-                return [$message, 404];
-            }
+        #dd($tradein->cosmetic_condition, $box->tray_grade);
+        if($tradein->cosmetic_condition !== $box->tray_grade){
+            return ['This device grade is not matching box grade.', 404];
         }
+
+        if(substr($box->tray_brand, 0, 1) !== $tradein->getBrandLetter($tradein->product_id)){
+            return ['Manifacturer is wrong.', 404];
+        }
+        if($box->box_devices !== $tradein->getCategoryId($tradein->product_id)){
+
+            $message = "";
+            switch($box->box_devices){
+                case 1:
+                    $message = "Device is not a mobile phone.";
+                    break;
+                case 2:
+                    $message = "Device is not a tablet.";
+                    break;
+                case 3:
+                    $message = "Device is not a smartwatch.";
+                    break;
+            }
+
+            return [$message, 404];
+        }
+        return ['Device can be added to this box.', 200];
+        
     }
 
     public function getDeviceGrade(Tradein $tradein){

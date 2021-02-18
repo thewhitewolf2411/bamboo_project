@@ -1274,7 +1274,7 @@ class DatabaseSeeder extends Seeder
 
         //bins
         DB::table('trays')->insert([
-            'tray_name'=>'FIMP-1',
+            'tray_name'=>'FMIP-1',
             'tray_type'=>'B',
             'tray_brand'=>'Q',
             'tray_grade'=>'FIMP',
