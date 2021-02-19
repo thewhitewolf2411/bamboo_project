@@ -320,14 +320,20 @@ class CustomerController extends Controller
     }
 
 
-    public function showOrderDetails($order){
-
-        #dd($order);
-
-        $tradein = Tradein::where('barcode', $order)->get();
-        dd($tradein);
-
-        return view('customer.orderdetails')->with(['tradein'=>$tradein, 'barcode'=>$order]);
+    /**
+     * View sale item details.
+     */
+    public function showOrderDetails($id){
+        $tradein = Tradein::findOrFail($id);
+        $notifications = collect([
+            ['id' => 1, 'text'=>'We can’t access your phone, please provide us with your PIN number', 'state' => 'alert'],
+            ['id'=>2, 'text'=>'We received your device after 14 days. A new offer has been sent', 'state' => 'alert-solved'],
+            ['id'=>3, 'text'=>'Status update: Testing. Great news, we are currently testing your device', 'state' => 'info'],
+            ['id'=>4, 'text'=>'Status update: Trade Pack Received. Woohoo! We have received your pack, it will now be passed onto our testing team', 'state' => 'info'],
+            ['id'=>5, 'text'=>'Status update: Trade Pack Dispaatched. Keep an eye out, your trade pack is on its way to you', 'state' => 'info'],
+            ['id'=>6, 'text'=>'Status update: Order placed. Woohoo! Your order has been placed, a Trade Pack will be sent out to you shortly', 'state' => 'info']
+        ]);
+        return view('customer.orderdetails', ['tradein' => $tradein, 'notifications' => $notifications]);
     }
 
     public function showWishlist(){

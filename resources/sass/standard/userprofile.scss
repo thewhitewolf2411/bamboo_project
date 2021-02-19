@@ -43,7 +43,7 @@
 }
 
 .page-sections{
-    background: white;
+    // background: white;
 }
 
 .section-item-preview{
@@ -63,6 +63,14 @@
     font-family:Sharp Sans No1 Bold;
     text-transform: uppercase;
     margin: 0;
+}
+
+.section-item-title-regular{
+    font-size: 24px;
+    font-family:Sharp Sans No1 Bold;
+    margin: 0;
+    text-align: center;
+    padding: 30px;
 }
 
 .right-link-text{
@@ -133,6 +141,7 @@
     padding-left: 35px;
     padding-right: 35px;
     padding-bottom: 20px;
+    background: white;
 }
 
 .section-header{

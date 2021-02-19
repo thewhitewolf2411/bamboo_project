@@ -2,7 +2,7 @@
 <html>
     <head>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <script src="{{ asset('js/Customer.js') }}"></script>
+        {{-- <script src="{{ asset('js/Customer.js') }}"></script> --}}
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <!-- jQuery -->
@@ -12,8 +12,7 @@
 
         <link rel="icon" type="image/png" sizes="96x96" href="/customer_page_images/header/favicon-96x96.png">
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="crossorigin="anonymous"></script>        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
@@ -23,16 +22,355 @@
         <main>
             <div class="app">
                 <div class="how-page how-title-container">
-                    <div class="center-title-container">
-                        <p>Order #{{$barcode}}</p>
+                    <div class="top-text">
+                        <p class="top-text-shadow">My Bamboo</p>
                     </div>
                 </div>
 
+                <div class="user-sections-container" id="sale-item-container">
+                    <div class="sections-row">
+                        <div class="sections-menu">
+                            <div class="change-sales-page sales-item link-active" id="sales-my"><img class="go-left-img" src="{{asset('/customer_page_images/body/go-left.svg')}}">My Sales</div>
+                            <div class="change-sales-page sales-item" id="sales-status">Sale status</div>
+                            <div class="change-sales-page sales-item" id="sales-notifications">Notifications</div>
+                            <div class="change-sales-page sales-item" id="sales-details">Sale details</div>
+                            <div class="change-sales-page sales-item" id="sales-delivery">Delivery details</div>
+                            <div class="change-sales-page sales-item" id="sales-processing">Processing</div>
+                            <div class="change-sales-page sales-item" id="sales-testing">Testing</div>
+                            <div class="change-sales-page sales-item" id="sales-payment">Payment</div>
+                        </div>
+                        <div class="section-items">
+
+                            <div id="section-sale-status" class="sale-item-sections mb-2">
+                                <div class="section-item-content">
+                                    <div class="section-header">
+                                        <p class="section-item-title">Sale Status</p>
+                                        <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseSaleStatus" aria-expanded="false" aria-controls="collapseSaleStatus">
+                                            <p id="sale-status-collapse-text" class="collapse-title">Expand</p>
+                                            <img id="sale-status-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
+                                        </button>
+                                    </div>
+                                    <div class="line-bottom"></div>
+                                    <div class="collapse" id="collapseSaleStatus">
+                                        <p class="section-item-title-regular">Thanks for your sale! Check out the details below</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="section-sale-notifications" class="sale-item-sections mb-2">
+                                <div class="section-item-content">
+                                    <div class="section-header">
+                                        <p class="section-item-title">Notifications</p>
+                                        <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseNotifications" aria-expanded="false" aria-controls="collapseNotifications">
+                                            <p id="notifications-collapse-text" class="collapse-title">Expand</p>
+                                            <img id="notifications-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
+                                        </button>
+                                    </div>
+                                    <div class="line-bottom"></div>
+                                    <div class="collapse" id="collapseNotifications">
+                                        <div class="notifications-list">
+                                            @foreach($notifications as $notification)
+                                                <div class="notification-card @if($notification['state'] === 'alert') red-border @endif">
+                                                    {{$notification['text']}}
+                                                </div>
+                                                <div class="notification-card-border"></div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="section-sale-details" class="sale-item-sections mb-2">
+                                <div class="section-item-content">
+                                    <div class="section-header">
+                                        <p class="section-item-title">Sale details</p>
+                                        <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseSaleDetails" aria-expanded="false" aria-controls="collapseSaleDetails">
+                                            <p id="sale-detail-text" class="collapse-title">Expand</p>
+                                            <img id="sale-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
+                                        </button>
+                                    </div>
+                                    <div class="line-bottom"></div>
+                                    <div class="collapse" id="collapseSaleDetails">
+                                        <p class="section-item-title-regular">sale details</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="section-delivery-details" class="sale-item-sections mb-2">
+                                <div class="section-item-content">
+                                    <div class="section-header">
+                                        <p class="section-item-title">Delivery details</p>
+                                        <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseDeliveryDetails" aria-expanded="false" aria-controls="collapseDeliveryDetails">
+                                            <p id="delivery-detail-text" class="collapse-title">Expand</p>
+                                            <img id="delivery-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
+                                        </button>
+                                    </div>
+                                    <div class="line-bottom"></div>
+                                    <div class="collapse" id="collapseDeliveryDetails">
+                                        <p class="section-item-title-regular">Delivery details</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="section-processing" class="sale-item-sections mb-2">
+                                <div class="section-item-content">
+                                    <div class="section-header">
+                                        <p class="section-item-title">Processing</p>
+                                        <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseProcessingDetails" aria-expanded="false" aria-controls="collapseProcessingDetails">
+                                            <p id="processing-detail-text" class="collapse-title">Expand</p>
+                                            <img id="processing-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
+                                        </button>
+                                    </div>
+                                    <div class="line-bottom"></div>
+                                    <div class="collapse" id="collapseProcessingDetails">
+                                        <p class="section-item-title-regular">Processing details</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="section-testing" class="sale-item-sections mb-2">
+                                <div class="section-item-content">
+                                    <div class="section-header">
+                                        <p class="section-item-title">Testing</p>
+                                        <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseTesting" aria-expanded="false" aria-controls="collapseTesting">
+                                            <p id="testing-detail-text" class="collapse-title">Expand</p>
+                                            <img id="testing-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
+                                        </button>
+                                    </div>
+                                    <div class="line-bottom"></div>
+                                    <div class="collapse" id="collapseTesting">
+                                        <p class="section-item-title-regular">Testing details</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="section-payment" class="sale-item-sections mb-2">
+                                <div class="section-item-content">
+                                    <div class="section-header">
+                                        <p class="section-item-title">Payment</p>
+                                        <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapsePayment" aria-expanded="false" aria-controls="collapsePayment">
+                                            <p id="payment-detail-text" class="collapse-title">Expand</p>
+                                            <img id="payment-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
+                                        </button>
+                                    </div>
+                                    <div class="line-bottom"></div>
+                                    <div class="collapse" id="collapsePayment">
+                                        <div class="customer-orders customer-buying py-3">
+    
+                                            @if(Auth::user()->hasPaymentDetails())
+                                                <div class="row justify-content-start">
+                                                    <div class="col">
+                                                        <p class="m-0">Name on account</p>
+                                                        <p style="font-size: 20px;">{!!$userdata->accountName()!!}</p>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p class="m-0">Account number</p>
+                                                        <p style="font-size: 20px;">{!!$userdata->accountNumber()!!}</p>
+                                                    </div>
+                                                    <div class="col">
+                                                        <p class="m-0">Sort Code</p>
+                                                        <p style="font-size: 20px;">{!!$userdata->sortCode()!!}</p>
+                                                    </div>
+            
+                                                    <button type="button" class="btn btn-purple" style="color: white;" data-toggle="modal" data-target="#accountDetils">
+                                                        Re-enter details
+                                                    </button>
+                                                </div>
+                                            @else
+                                                <div class="row justify-content-sm-around">
+                                                    <div class="p-1">No payment information added. Please add your payment details.</div>
+            
+                                                    <button type="button" class="btn btn-purple" style="color: white;" data-toggle="modal" data-target="#accountDetils">
+                                                        Enter details
+                                                    </button>
+                                                </div>
+                                            @endif
+            
+                                            @if(Session::has('account_fails'))
+                                                <div class="row justify-content-center">
+                                                    <div class="alert alert-danger my-5" role="alert">
+                                                        @foreach(Session::get('account_fails') as $message)
+                                                            <li>{{$message}}</li>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            @endif
+            
+                                            @if(Session::has('account_success'))
+                                                <div class="row justify-content-center">
+                                                    <div class="alert alert-success my-5" role="alert">
+                                                        {!!Session::get('account_success')!!}
+                                                    </div>
+                                                </div>
+                                            @endif
+                            
+                                        </div>
+            
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="accountDetils" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered " role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">PAYMENT DETAILS</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true" style="color: black;">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form id="accountdetails" method="POST" action="/userprofile/accountdetails">
+                                                        @csrf
+                                                        <div class="modal-body p-4">
+                                                                <div class="col w-50 m-auto">
+                                                                    <label for="account_name" style="font-size: 16px;">Name on Account</label>
+                                                                    <input type="text" name="account_name" class="form-control" required aria-label="Amount (to the nearest dollar)">
+                                                                </div>
+                                                                <div class="col w-50 m-auto">
+                                                                    <label for="account_name" style="font-size: 16px;">Account number</label>
+                                                                    <input type="number" name="account_number" class="form-control" required aria-label="Amount (to the nearest dollar)">
+                                                                </div>
+                                                                <div class="col w-50 m-auto">
+                                                                    <label for="account_name" style="font-size: 16px;">Sort code</label>
+                                                                    <div class="row m-0 justify-content-start">
+                                                                        <input type="number" name="sort_code_1" required class="form-control text-center" style="width: 60px;" aria-label="Amount (to the nearest dollar)">
+                                                                        <p class="m-3">&mdash;</p>
+                                                                        <input type="number" name="sort_code_2" required class="form-control text-center" style="width: 60px;" aria-label="Amount (to the nearest dollar)">
+                                                                        <p class="m-3">&mdash;</p>
+                                                                        <input type="number" name="sort_code_3" required class="form-control text-center" style="width: 60px;" aria-label="Amount (to the nearest dollar)">
+                                                                    </div>
+                                                                </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button type="submit" style="color: white;" class="btn btn-purple">Save changes</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
+                        </div>
+                    </div>
+                </div>
 
             </div>
         </main>
         <footer>@include('customer.layouts.footer')</footer>
     </body>
 </html>
+
+<script>
+    let buttons = document.getElementsByClassName('change-sales-page');
+    for (let index = 0; index < buttons.length; index++) {
+        let button = buttons[index];
+        button.onclick = function() {changeSection(button.id)};
+    }
+
+
+    $('#collapseSaleStatus').on('hide.bs.collapse', function () {
+        document.getElementById("sale-status-collapse-text").innerHTML = "Expand";
+        document.getElementById("sale-status-collapse").src = '/customer_page_images/body/collapse-down.svg';
+    })
+    $('#collapseSaleStatus').on('show.bs.collapse', function () {
+        document.getElementById("sale-status-collapse-text").innerHTML = "Collapse";
+        document.getElementById("sale-status-collapse").src = '/customer_page_images/body/collapse-up.svg';
+    })
+
+    $('#collapseNotifications').on('hide.bs.collapse', function () {
+        document.getElementById("notifications-collapse-text").innerHTML = "Expand";
+        document.getElementById("notifications-collapse").src = '/customer_page_images/body/collapse-down.svg';
+    })
+    $('#collapseNotifications').on('show.bs.collapse', function () {
+        document.getElementById("notifications-collapse-text").innerHTML = "Collapse";
+        document.getElementById("notifications-collapse").src = '/customer_page_images/body/collapse-up.svg';
+    })
+
+    $('#collapseSaleDetails').on('hide.bs.collapse', function () {
+        document.getElementById("sale-detail-text").innerHTML = "Expand";
+        document.getElementById("sale-details-collapse").src = '/customer_page_images/body/collapse-down.svg';
+    })
+    $('#collapseSaleDetails').on('show.bs.collapse', function () {
+        document.getElementById("sale-detail-text").innerHTML = "Collapse";
+        document.getElementById("sale-details-collapse").src = '/customer_page_images/body/collapse-up.svg';
+    })
+
+    $('#collapseDeliveryDetails').on('hide.bs.collapse', function () {
+        document.getElementById("delivery-detail-text").innerHTML = "Expand";
+        document.getElementById("delivery-details-collapse").src = '/customer_page_images/body/collapse-down.svg';
+    })
+    $('#collapseDeliveryDetails').on('show.bs.collapse', function () {
+        document.getElementById("delivery-detail-text").innerHTML = "Collapse";
+        document.getElementById("delivery-details-collapse").src = '/customer_page_images/body/collapse-up.svg';
+    })
+
+    $('#collapseProcessingDetails').on('hide.bs.collapse', function () {
+        document.getElementById("processing-detail-text").innerHTML = "Expand";
+        document.getElementById("processing-details-collapse").src = '/customer_page_images/body/collapse-down.svg';
+    })
+    $('#collapseProcessingDetails').on('show.bs.collapse', function () {
+        document.getElementById("processing-detail-text").innerHTML = "Collapse";
+        document.getElementById("processing-details-collapse").src = '/customer_page_images/body/collapse-up.svg';
+    })
+
+    $('#collapseTesting').on('hide.bs.collapse', function () {
+        document.getElementById("testing-detail-text").innerHTML = "Expand";
+        document.getElementById("testing-details-collapse").src = '/customer_page_images/body/collapse-down.svg';
+    })
+    $('#collapseTesting').on('show.bs.collapse', function () {
+        document.getElementById("testing-detail-text").innerHTML = "Collapse";
+        document.getElementById("testing-details-collapse").src = '/customer_page_images/body/collapse-up.svg';
+    })
+
+    $('#collapsePayment').on('hide.bs.collapse', function () {
+        document.getElementById("payment-detail-text").innerHTML = "Expand";
+        document.getElementById("payment-details-collapse").src = '/customer_page_images/body/collapse-down.svg';
+    })
+    $('#collapsePayment').on('show.bs.collapse', function () {
+        document.getElementById("payment-detail-text").innerHTML = "Collapse";
+        document.getElementById("payment-details-collapse").src = '/customer_page_images/body/collapse-up.svg';
+    })
+
+
+    function changeSection(id){
+        const element = document.getElementById(id);
+        const offset = 0;
+        const bodyRect = document.getElementById('sale-item-container').getBoundingClientRect().top;
+        const elementRect = element.getBoundingClientRect().bottom;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+        });
+
+        switch (id) {
+            case 'sales-status':
+                $('#collapseSaleStatus').collapse('show');
+                break;
+            case 'sales-notifications':
+                $('#collapseNotifications').collapse('show');
+                break;
+            case 'sales-details':
+                $('#collapseSaleDetails').collapse('show');
+                break;
+            case 'sales-delivery':
+                $('#collapseDeliveryDetails').collapse('show');
+                break;
+            case 'sales-processing':
+                $('#collapseProcessingDetails').collapse('show');
+                break;
+            case 'sales-testing':
+                $('#collapseTesting').collapse('show');
+                break;
+            case 'sales-payment':
+                $('#collapsePayment').collapse('show');
+                break;
+            default:
+                break;
+        }
+    }
+    
+</script>
