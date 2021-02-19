@@ -43,7 +43,7 @@
                             <div class="change-page menu-item" id="menu-account">Account Information</div>
                             <div class="change-page menu-item" id="menu-sales">My Sales</div>
                             <div class="change-page menu-item" id="menu-communications">Communications</div>
-                            <div class="menu-item"><img class="mr-3" src="{{asset('/images/logout-black.svg')}}">Log Out</div>
+                            <div class="menu-item" data-toggle="modal" data-target="#logoutModal"><img class="mr-3" src="{{asset('/images/logout-black.svg')}}">Log Out</div>
                         </div>
                         <div class="section-items">
                             <div id="section-overview" class="page-sections">
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="section-item-preview">
                                     <p class="section-item-title">Log out</p>
-                                    <a class="action-button-right green" href="#">
+                                    <a class="action-button-right green" data-toggle="modal" data-target="#logoutModal">
                                         <img class="right-link-img" src="{{asset('/images/logout.svg')}}">
                                         <p class="action-button-right-text ml-3">Logout</p>
                                     </a>
@@ -773,6 +773,27 @@
                     </div>
                 </div>
 
+
+                <!-- logout modal -->
+                <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content padded">
+                            <div class="validation-modal-header">
+                                <img class="close-modal-img ml-auto" src="{{asset('/customer_page_images/body/modal-close.svg')}}" data-dismiss="modal" aria-label="Close">
+                                <h5 class="validationModal-title" id="logoutModalLabel">are you sure?</h5>
+                            </div>
+                            <div class="line-bottom"></div>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                            <div class="modal-footer border-0 p-0 padded mt-4">
+                                <button type="button" class="btn btn-orange w-25 m-auto" data-dismiss="modal" aria-label="Close" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Yes, log me out</button>
+                                <button type="button" class="btn btn-jade w-50 m-auto" data-dismiss="modal" aria-label="Close">No, keep me signed in</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             
         </main>
@@ -974,34 +995,32 @@
         let email = document.getElementById('verify_email').value;
         let pass = document.getElementById('verify_pass').value;
 
-        // temp
-        $('#validationModal').modal('hide');
-        $('#personalInfoModal').modal('show');
-
-        // $.ajax({
-        //     type: "POST",
-        //     url: 'userprofile/verify',
-        //     data: {
-        //         email: email,
-        //         pass: pass
-        //     },
-        //     success: function(data){
-        //         if(data === "200"){
-        //             $('#validationModal').modal('hide');
-        //             $('#personalInfoModal').modal('show');
-        //         } else {
-        //             let error_alert = document.getElementById('verification-error');
-        //             if(error_alert.classList.contains('hidden')){
-        //                 error_alert.classList.remove('hidden');
-        //             }
-        //             setTimeout(function(){
-        //                 if(!error_alert.classList.contains('hidden')){
-        //                     error_alert.classList.add('hidden');
-        //                 }
-        //             }, 3000);
-        //         }
-        //     },
-        // });
+        $.ajax({
+            type: "POST",
+            url: 'userprofile/verify',
+            data: {
+                email: email,
+                pass: pass
+            },
+            success: function(data){
+                if(data === "200"){
+                    $('#validationModal').modal('hide');
+                    $('#personalInfoModal').modal('show');
+                    document.getElementById('verify_email').value = "";
+                    document.getElementById('verify_pass').value = "";
+                } else {
+                    let error_alert = document.getElementById('verification-error');
+                    if(error_alert.classList.contains('hidden')){
+                        error_alert.classList.remove('hidden');
+                    }
+                    setTimeout(function(){
+                        if(!error_alert.classList.contains('hidden')){
+                            error_alert.classList.add('hidden');
+                        }
+                    }, 3000);
+                }
+            },
+        });
     }
 
 
