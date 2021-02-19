@@ -16,7 +16,7 @@ class CreateNonWorkingDaysTable extends Migration
         Schema::create('non_working_days', function (Blueprint $table) {
             $table->id();
             $table->string('day');
-            $table->date('non_working_days');
+            $table->date('non_working_date');
             $table->timestamps();
         });
     }

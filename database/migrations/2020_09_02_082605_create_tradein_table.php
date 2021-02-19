@@ -36,7 +36,7 @@ class CreateTradeinTable extends Migration
             $table->boolean('offer_accepted')->nullable();
             $table->string('cosmetic_condition')->nullable();
             $table->bigInteger('cheque_number')->nullable(true)->default(null);
-            
+            $table->date('expiry_date');
             $table->timestamps();
         });
     }

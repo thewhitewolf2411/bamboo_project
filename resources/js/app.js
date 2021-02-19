@@ -12,6 +12,7 @@ require('./scripts/buildingsaleslot');
 require('./scripts/completedsaleslot');
 require('./scripts/saleslotpicking');
 require('./scripts/PrintTradeIn');
+require('./scripts/dates');
 
 "use strict";
 

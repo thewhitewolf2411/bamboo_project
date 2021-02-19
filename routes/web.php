@@ -297,7 +297,8 @@ Route::get('/portal/settings/costs', 'Portal\SettingsController@showCostsPage');
 Route::post('/portal/settings/costs/update', 'Portal\SettingsController@updateCosts');
 
 Route::get('/portal/settings/non-working-days', 'Portal\SettingsController@showNonWorkingDaysPage');
-Route::post('/portal/settings/costs/add-non-working-days', 'Portal\SettingsController@addNonWorkingDays');
+Route::post('/portal/settings/non-working-days/add-non-working-days', 'Portal\SettingsController@addNonWorkingDays');
+Route::post('/portal/settings/non-working-days/remove-non-working-days', 'Portal\SettingsController@deleteNonWorkingDay');
 
 
 //cms

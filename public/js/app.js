@@ -37244,6 +37244,8 @@ __webpack_require__(/*! ./scripts/saleslotpicking */ "./resources/js/scripts/sal
 
 __webpack_require__(/*! ./scripts/PrintTradeIn */ "./resources/js/scripts/PrintTradeIn.js");
 
+__webpack_require__(/*! ./scripts/dates */ "./resources/js/scripts/dates.js");
+
 "use strict";
 /*
 window.Vue = require('vue');
@@ -37654,6 +37656,38 @@ $(document).on('change', '#changestate', function () {
     $('#changelotstatedata').append('<div id="customer-name-input" class="form-group"><input type="text" name="customername" placeholder="Enter customer name"></div><div id="changestatesubmit"><input type="submit" class="btn btn-primary btn-blue" value="Change state"></div>');
   } else {
     $('#customer-name-input').remove();
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/scripts/dates.js":
+/*!***************************************!*\
+  !*** ./resources/js/scripts/dates.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+$('.deletedate').on('click', function () {
+  var dateid = $(this).prop('id');
+  var c = confirm('Are you sure you want to delete non-working date from system?');
+
+  if (c) {
+    $.ajax({
+      url: "/portal/settings/non-working-days/remove-non-working-days",
+      type: "POST",
+      data: {
+        dateid: dateid
+      },
+      success: function success(response) {
+        location.reload();
+      }
+    });
   }
 });
 

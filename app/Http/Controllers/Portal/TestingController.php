@@ -145,16 +145,15 @@ class TestingController extends Controller
 
         $tradein = Tradein::where('id', $request->tradein_id)->first();
 
-        $from = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', $tradein->created_at);
-        $now = \Carbon\Carbon::createFromFormat('Y-m-d H:s:i', Carbon::now());
+        $expiryDate = Carbon::parse($tradein->expiry_date);
+        $daysToExpiry = Carbon::now()->diffInDays($expiryDate, false);
+        #dd($expiryDate, $daysToExpiry);
 
         $user = User::where('id', $tradein->user_id)->first();
 
-        $diff_in_days = $now->diffInDays($from);
-
         $message = array();
 
-        if($diff_in_days>=14){
+        if($daysToExpiry<0){
 
             $bamboogradeval = 0;
 

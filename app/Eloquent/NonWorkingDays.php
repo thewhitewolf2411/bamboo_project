@@ -18,6 +18,6 @@ class NonWorkingDays extends Model{
      * @var array
      */
     protected $fillable = [
-        'day','non_working_days'
+        'day','non_working_date'
     ];
 }

@@ -25,6 +25,7 @@ use DNS1D;
 use DNS2D;
 use PDF;
 use App\Services\KlaviyoEmail;
+use App\Services\ExpiryDate;
 
 class SellController extends Controller
 {
@@ -208,6 +209,8 @@ class SellController extends Controller
             foreach($cart as $item){     
                 if($item->type === 'tradein'){
 
+                    $expiryDate = new ExpiryDate();
+                    $eD = $expiryDate->getExpiryDate();
                     $tradein = new Tradein();
                     $tradein->barcode = $tradeinbarcode;
                     $tradein->barcode_original = $tradeinbarcode;
@@ -215,6 +218,7 @@ class SellController extends Controller
                     $tradein->product_id = $item->product_id;
                     $tradein->order_price = $item->price;
                     $tradein->job_state = 1;
+                    $tradein->expiry_date = $eD;
 
                     $name = $item->getProductName($item->id);
 

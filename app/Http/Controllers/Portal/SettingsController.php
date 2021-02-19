@@ -237,4 +237,25 @@ class SettingsController extends Controller
 
         return view('portal.settings.dates', ['portalUser'=>$portalUser, 'nonWorkingDates'=>$nonWorkingDates]);
     }
+
+    public function addNonWorkingDays(Request $request){
+        #dd($request);
+
+        $nonWorkingDate = NonWorkingDays::create([
+
+            'day'=>$request->non_working_day_title,
+            'non_working_date'=> \Carbon\Carbon::parse($request->non_working_day),
+        ]);
+
+        return redirect()->back()->with(['success'=>'You have succesfully added new Non-working Date.']);
+    }
+
+    public function deleteNonWorkingDay(Request $request){
+        #dd($request->all());
+
+        $nonWorkingDate = NonWorkingDays::where('id', $request->dateid)->first();
+        $nonWorkingDate->delete();
+
+        return response(['Success'], 200);
+    }
 }

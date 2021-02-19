@@ -9,17 +9,29 @@
         </div>
         <div class="portal-table-container">
 
+        @if(Session::has('success'))
+            <div class="alert alert-success" role="alert">
+                {{Session::get('success')}}
+            </div>
+        @endif
+
         <table class="portal-table sortable" id="categories-table">
             <tr>
                 <td><div class="table-element">Title</div></td>
                 <td><div class="table-element">Date</div></td>
-                <td><div class="table-element">Delete</div></td>
-                <td><div class="table-element">Add</div></td>
+                <td><div class="table-element">Delete date from system</div></td>
             </tr>
+            @foreach($nonWorkingDates AS $nWD)
+            <tr>
+                <td><div class="table-element">{{$nWD->day}}</div></td>
+                <td><div class="table-element">{{$nWD->non_working_date}}</div></td>
+                <td><div class="table-element"><a id="{{$nWD->id}}" class="deletedate"><div class="btn btn-primary btn-blue">Delete</div></a></div></td>
+            </tr>
+            @endforeach
 
         </table>
         
-        <form action="/portal/settings/costs/add-non-working-days" method="post">
+        <form action="/portal/settings/non-working-days/add-non-working-days" method="post" class="my-5">
             @csrf
 
             <div class="form-group">
