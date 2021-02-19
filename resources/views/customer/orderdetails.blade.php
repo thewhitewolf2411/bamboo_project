@@ -335,7 +335,7 @@
 
     function changeSection(id){
         const element = document.getElementById(id);
-        const offset = 0;
+        const offset = -120;
         const bodyRect = document.getElementById('sale-item-container').getBoundingClientRect().top;
         const elementRect = element.getBoundingClientRect().bottom;
         const elementPosition = elementRect - bodyRect;
