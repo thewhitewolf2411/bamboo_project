@@ -347,7 +347,7 @@
                                                 <div class="account-info-row padded">
                                                     <div class="col p-0 mr-3">
                                                         <label for="email" class="verify-label">Email address</label>
-                                                        <input type="email" name="email" id="verify_email" required class="verification-input"/>
+                                                        <input type="email" name="email" id="acc_email" required class="verification-input"/>
                                                     </div>
 
                                                     <div class="col p-0">
@@ -355,10 +355,17 @@
                                                         <input type="password" name="old_pass" id="old_pass" required class="verification-input"/>
                                                     </div>
                                                 </div>
-                                                <div class="account-info-row w-50 ml-auto pl-2">
-                                                    <div class="col p-0 ml-auto">
+                                                <div class="account-info-row">
+                                                    
+                                                    <div class="col p-0 pr-3 mt-3">
+                                                        <div id="newpass" class="alert alert-danger hidden" role="alert">
+                                                            Email and current password required
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col p-0">
                                                         <label for="new_pass" class="verify-label">New Password</label>
-                                                        <input type="text" name="new_pass" id="new_pass" required class="verification-input" onkeyup="checkNewPass()"/>
+                                                        <input type="text" name="new_pass" id="new_pass" required class="verification-input"/>
                                                         <div id="pass-check-info" class="pass-strength hidden">
                                                             <div class="row m-0">
                                                                 <div id="progress">
@@ -392,7 +399,7 @@
                                                 Bad credentials.
                                             </div> --}}
                                             <div class="modal-footer border-0 p-0 padded mt-4">
-                                                <button type="button" class="btn btn-secondary disabled ml-auto w-25" onclick="saveChanges()">Save Changes</button>
+                                                <button type="button" class="btn btn-secondary disabled ml-auto w-25" id="savepass" onclick="saveChanges()">Save Changes</button>
                                             </div>
                                         </div>
                                     </div>
@@ -404,7 +411,7 @@
                             </div>
 
                             <div id="section-communications" class="page-sections hidden">
-                                <div class="element-three-top-container">
+                                {{-- <div class="element-three-top-container">
                                     <h3>Newsletter subscription</h3>
                                 </div>
                                 <div class="element-three-bottom">
@@ -454,6 +461,45 @@
                                                 }
                                             });
                                     </script>
+                                </div> --}}
+
+                                <div class="section-item-content">
+                                    <div class="section-header">
+                                        <p class="section-item-title">Communications</p>
+                                    </div>
+                                    <div class="line-bottom"></div>
+                                    <div class="row m-0 mt-3 mb-3 justify-content-between">
+                                        <p class="communications-title">Newsletter subscriptions</p>
+                                        <div class="action-button-right purple" onclick="saveSubscriptions()">
+                                            <p class="action-button-right-text">Save Changes</p>
+                                            <img class="right-link-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                        </div>
+                                    </div>
+                                    <div class="row m-0 mt-3 mb-3 justify-content-between">
+                                        <div class="newsletter-box @if(Auth::user()->sub === 0)inactive @endif" id="yes-newsletterbox">
+                                            <div class="newsletter-text row">
+                                                Yes, I would love to hear about the <br>
+                                                latest amazing offers, hints & tips.
+                                            </div>
+                                            @if(Auth::user()->sub === 1) 
+                                                <img class="tick-img" id="yes-newsletter" src="/customer_page_images/body/Icon-Tick-Selected.svg" onclick="chooseNewsletter('yes')">
+                                            @else
+                                                <img class="tick-img" id="yes-newsletter" src="/customer_page_images/body/Icon-Tick-Selected-clear.svg" onclick="chooseNewsletter('yes')">
+                                            @endif
+                                        </div>
+
+                                        <div class="newsletter-box @if(Auth::user()->sub === 1)inactive @endif" id="no-newsletterbox">
+                                            <div class="newsletter-text row">
+                                                No, I would not love to hear about the <br>
+                                                latest amazing offers, hints & tips.
+                                            </div>
+                                            @if(Auth::user()->sub === 0) 
+                                                <img class="tick-img" id="no-newsletter" src="/customer_page_images/body/Icon-Tick-Selected.svg" onclick="chooseNewsletter('no')">
+                                            @else
+                                                <img class="tick-img" id="no-newsletter" src="/customer_page_images/body/Icon-Tick-Selected-clear.svg" onclick="chooseNewsletter('no')">
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -706,6 +752,27 @@
                 </div> --}}
 
 
+                <!-- info message modal -->
+                <div class="modal fade" id="infoMessageModal" tabindex="-1" role="dialog" aria-labelledby="infoMessageModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content padded">
+                            <div class="validation-modal-header">
+                                <img class="close-modal-img ml-auto" src="{{asset('/customer_page_images/body/modal-close.svg')}}" data-dismiss="modal" aria-label="Close">
+                                <h5 class="validationModal-title" id="infoMessageModalLabel">Success</h5>
+                            </div>
+                            <div class="line-bottom"></div>
+                            <div class="modal-body">
+                                <div class="account-info-row padded">
+                                    Your password was changed successfully.
+                                </div>
+                            </div>
+                            <div class="modal-footer border-0 p-0 padded mt-4">
+                                <button type="button" class="btn btn-green ml-auto w-25" id="savepass" data-dismiss="modal" aria-label="Close">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             
         </main>
@@ -852,6 +919,15 @@
         button.onclick = function() {changeSection(button.id)};
     }
 
+    document.getElementById("old_pass").addEventListener('keyup', function(){
+        checkNewPass()
+    });
+    document.getElementById("acc_email").addEventListener('keyup',  function(){
+        checkNewPass()
+    });
+    document.getElementById("new_pass").addEventListener('keyup',  function(){
+        checkNewPass()
+    });
 
 
     function changeSection(id){
@@ -933,6 +1009,12 @@
         let pass = document.getElementById("new_pass").value;
         let passcheck = document.getElementById("pass-check-info");
 
+        let current = document.getElementById("old_pass");
+        let email = document.getElementById("acc_email");
+        let save_btn = document.getElementById('savepass');
+
+        pass = pass.trim();
+
         if(pass !== ""){
             // show pass info
             if(passcheck.classList.contains("hidden")){
@@ -996,25 +1078,17 @@
             }
 
             // check for uppercase
-            let splitted = pass.split('');
-            for (let i = 0; i < splitted.length; i++) {
-                let char = splitted[i];
-                let is_symbol = format.test(char);
-                
-                let is_number = false;
-                let is_number_ch = pass.match(/\d+/g);
-                if(Array.isArray(is_number_ch)){
-                    is_number = true;
-                } else {
-                    is_number = false;
+            let countUpperCase = 0;
+            let i = 0;
+            while (i <= pass.length) {
+                const character = pass.charAt(i);
+                if (character === character.toUpperCase() && character !== character.toLowerCase()) {
+                    countUpperCase++;
                 }
-
-                if(is_symbol !== true && is_number !== true){
-                    let uppercased = char.toUpperCase();
-                    if(char === uppercased){
-                        has_uppercase_letter = true;
-                    }
-                }
+                i++;
+            }
+            if(countUpperCase > 0){
+                has_uppercase_letter = true;
             }
 
             if(has_uppercase_letter){
@@ -1057,7 +1131,7 @@
                 }
             }
 
-            percentage = pass_quality * 2.5 + "0%";
+            percentage = Math.round(pass_quality * 2.5) + "0%";
 
             // set bar percentage
             document.getElementById("bar").style.width = percentage;
@@ -1065,7 +1139,31 @@
             // pass text strength
             if(has_ten_characters && has_number && has_symbol && has_uppercase_letter){
                 document.getElementById("pass-strength").innerHTML = 'Fair';
+
+                if(current.value && email.value){
+                    if(save_btn.classList.contains('btn-secondary')){
+                        save_btn.classList.remove('btn-secondary');
+                        if(!save_btn.classList.contains('btn-orange')){
+                            save_btn.classList.add('btn-orange');
+                        }
+                    }
+                    if(save_btn.classList.contains('disabled')){
+                        save_btn.classList.remove('disabled');
+                    }
+                }
             } else {
+
+                if(!save_btn.classList.contains('btn-secondary')){
+                    save_btn.classList.add('btn-secondary');
+                    if(save_btn.classList.contains('btn-orange')){
+                        save_btn.classList.remove('btn-orange');
+                    }
+                }
+                if(!save_btn.classList.contains('disabled')){
+                    save_btn.classList.add('disabled');
+                }
+                
+
                 document.getElementById("pass-strength").innerHTML = 'Unsecure';
             }
 
@@ -1077,4 +1175,151 @@
             }
         }
     }
+
+    function saveChanges(){
+        let email = document.getElementById("acc_email");
+        let old_pass = document.getElementById("old_pass");
+        let new_pass = document.getElementById("new_pass");
+        let alert = document.getElementById("newpass");
+
+        email.value = email.value.trim();
+        old_pass.value = old_pass.value.trim();
+
+        if(!email.value && !old_pass.value){
+            alert.innerHTML = "Email and current password required";
+            if(alert.classList.contains('hidden')){
+                alert.classList.remove('hidden');
+            }
+
+            setTimeout(function(){
+                if(!alert.classList.contains('hidden')){
+                    alert.classList.add('hidden');
+                }
+            },3000);
+        } else {
+            let save_btn = document.getElementById('savepass');
+            if(!save_btn.classList.contains('disabled')){
+
+                $.ajax({
+                    type: "POST",
+                    url: 'userprofile/changepass',
+                    data: {
+                        email: email.value,
+                        old_pass: old_pass.value,
+                        new_pass: new_pass.value
+                    },
+                    success: function(data, textStatus, xhr) {
+                        if(xhr.status == 203){
+                            alert.innerHTML = data;
+                            if(alert.classList.contains('hidden')){
+                                alert.classList.remove('hidden');
+                            }
+
+                            setTimeout(function(){
+                                if(!alert.classList.contains('hidden')){
+                                    alert.classList.add('hidden');
+                                }
+                            },3000);
+                        } else {
+                            email.value = "";
+                            old_pass.value = "";
+                            new_pass.value = "";
+                            document.getElementById("bar").style.width = "0%";
+
+                            document.getElementById("pass-min-length").classList.remove('hidden');
+                            document.getElementById("pass-number").classList.remove('hidden');
+                            document.getElementById("pass-symbol").classList.remove('hidden');
+                            document.getElementById("pass-uppercase").classList.remove('hidden');
+                            document.getElementById("pass-strength").innerHTML = "Unsecure";
+
+                            $('#accountInfoModal').modal('hide');
+                            $('#infoMessageModal').modal('show');
+                        }
+                    }
+
+                });
+
+            }
+        }
+    }
+
+    function chooseNewsletter(option){
+        let boxyes = document.getElementById('yes-newsletterbox');
+        let boxno = document.getElementById('no-newsletterbox');
+        switch (option) {
+            case 'yes':
+                document.getElementById('yes-newsletter').src = "/customer_page_images/body/Icon-Tick-Selected.svg";
+                document.getElementById('no-newsletter').src = "/customer_page_images/body/Icon-Tick-Selected-clear.svg";
+                if(boxyes.classList.contains('inactive')){
+                    boxyes.classList.remove('inactive');
+                }
+                if(!boxno.classList.contains('inactive')){
+                    boxno.classList.add('inactive');
+                }
+                break;
+            case 'no':
+                document.getElementById('no-newsletter').src = "/customer_page_images/body/Icon-Tick-Selected.svg";
+                document.getElementById('yes-newsletter').src = "/customer_page_images/body/Icon-Tick-Selected-clear.svg";
+                if(!boxyes.classList.contains('inactive')){
+                    boxyes.classList.add('inactive');
+                }
+                if(boxno.classList.contains('inactive')){
+                    boxno.classList.remove('inactive');
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    function saveSubscriptions(){
+        let selected_newsletter = null;
+        let yes_newsletter = document.getElementById("yes-newsletterbox");
+        let no_newsletter = document.getElementById("no-newsletterbox");
+        if(!yes_newsletter.classList.contains('inactive')){
+            selected_newsletter = 'yes';
+        } else {
+            selected_newsletter = 'no';
+        }
+
+        $.ajax({
+            type: "POST",
+            url: 'userprofile/updatecommunications',
+            data: {
+                newsletter: selected_newsletter,
+            },
+            success: function(data, textStatus, xhr) {
+                
+                // if(xhr.status == 203){
+                //     alert.innerHTML = data;
+                //     if(alert.classList.contains('hidden')){
+                //         alert.classList.remove('hidden');
+                //     }
+
+                //     setTimeout(function(){
+                //         if(!alert.classList.contains('hidden')){
+                //             alert.classList.add('hidden');
+                //         }
+                //     },3000);
+                // } else {
+                //     email.value = "";
+                //     old_pass.value = "";
+                //     new_pass.value = "";
+                //     document.getElementById("bar").style.width = "0%";
+
+                //     document.getElementById("pass-min-length").classList.remove('hidden');
+                //     document.getElementById("pass-number").classList.remove('hidden');
+                //     document.getElementById("pass-symbol").classList.remove('hidden');
+                //     document.getElementById("pass-uppercase").classList.remove('hidden');
+                //     document.getElementById("pass-strength").innerHTML = "Unsecure";
+
+                //     $('#accountInfoModal').modal('hide');
+                //     $('#infoMessageModal').modal('show');
+                // }
+            }
+
+        });
+    }
+
 </script>

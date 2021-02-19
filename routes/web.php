@@ -44,6 +44,8 @@ Route::get('/userprofile/show/wishlist', 'Customer\CustomerController@showWishli
 Route::get('/userprofile/deleteorder/{id}', 'Customer\CustomerController@deleteOrder');
 
 Route::post('/userprofile/verify', 'Customer\CustomerController@verify')->middleware('auth');
+Route::post('/userprofile/changepass', 'Customer\CustomerController@changePass')->middleware('auth');
+Route::post('/userprofile/updatecommunications', 'Customer\CustomerController@updateCommunications')->middleware('auth');
 
 
 Route::get('/products/{category}', 'Customer\CustomerController@customerCategoryView')->name('customerproducts');

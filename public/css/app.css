@@ -11935,6 +11935,7 @@ main p, a, span {
   line-height: 30px;
   color: white;
   border-radius: 25px;
+  transition: 0.25s ease-in-out;
 }
 
 .blue-dot {
@@ -11948,6 +11949,42 @@ main p, a, span {
 
 .pass-info-text {
   font-size: 12px;
+}
+
+.communications-title {
+  font-family: Sharp Sans No1 Bold;
+  font-size: 18px;
+  margin: 0;
+}
+
+.newsletter-box {
+  display: flex;
+  flex-direction: row;
+  border: 2px solid #a375bc;
+  border-radius: 5px;
+  padding: 25px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.newsletter-box.inactive {
+  border: 2px solid #dac7e4;
+}
+
+.tick-img {
+  width: 25px;
+  display: block;
+  cursor: pointer;
+}
+
+.newsletter-text {
+  font-size: 17px;
+  width: 340px;
+}
+
+.newsletter-text.row {
+  display: flex;
+  flex-direction: row;
 }
 
 header {

@@ -271,6 +271,9 @@ class CustomerController extends Controller
 
     }
 
+    /**
+     * Verify user login.
+     */
     public function verify(Request $request){
         if(isset($request->email) && isset($request->pass)){
             if($request->email === Auth::user()->email && $request->pass === Crypt::decrypt(Auth::user()->password)){
@@ -280,6 +283,42 @@ class CustomerController extends Controller
         }
         return response(404);
     }
+
+    /**
+     * Change user password.
+     */
+    public function changePass(Request $request){
+        if(isset($request->email) && isset($request->old_pass) && isset($request->new_pass)){
+            $correct_email = $request->email === Auth::user()->email;
+            $correct_old_pass = $request->old_pass === Crypt::decrypt(Auth::user()->password);
+            $same_pass = $request->new_pass === Crypt::decrypt(Auth::user()->password);
+            if($correct_email && $correct_old_pass){
+                if($same_pass){
+                    return response("Your new password must be different from your previous password.", 203);
+                }
+                $user = Auth::user();
+                $user->password = Crypt::encrypt($request->new_pass);
+                $user->save();
+                return response('', 200);
+            } else {
+                return response('Incorrect email/password.', 203);
+            }
+        } else {
+            return response('Missing data.', 203);
+        }
+    }
+
+    /**
+     * Update communications preferences. 
+     */
+    public function updateCommunications(Request $request){
+        if(isset($request->newsletter)){
+            $newsletter_state = ($request->newsletter ==='yes') ? 1 : 0;
+            Auth::user()->sub = $newsletter_state;
+            Auth::user()->save();
+        }
+    }
+
 
     public function showOrderDetails($order){
 
