@@ -96,9 +96,9 @@ Route::post('/portal/seeddata', 'Portal\PortalController@seedData')->name('seedD
 //customer-care
 Route::get('/portal/customer-care', 'Portal\CustomerCareController@showCustomerCare')->name('customerCare');
 Route::get('/portal/customer-care/trade-in/all/{search?}', 'Portal\CustomerCareController@showTradeIn')->name('tradeIn');
-Route::get('/portal/customer-care/trade-in/{id}', 'Portal\CustomerCareController@showTradeInDetails')->name('tradeInDetails');
+Route::get('/portal/customer-care/trade-in/{id}', 'Portal\CustomerCareController@showTradeInDetails');
 Route::get('/portal/customer-care/trade-in/{id}/details', 'Portal\CustomerCareController@showMoreTradeInDetails')->name('tradeInDetails');
-Route::post('/portal/customer-care/trade-in/printlabel', 'Portal\CustomerCareController@PrintTradeInLabel')->name('tradeInLabel');
+Route::post('/portal/customer-care/trade-in/printlabel', 'Portal\CustomerCareController@PrintTradeInLabel');
 Route::post('/portal/customer-care/trade-in/printlabelbulk', 'Portal\CustomerCareController@PrintTradeInLabelBulk')->name('tradeInLabel');
 
 // audit notes
@@ -114,7 +114,7 @@ Route::get('/deleteorder/{id}', 'Portal\CustomerCareController@deleteTradeIn');
 Route::get('/totesting/{id}', 'Portal\CustomerCareController@returnToTesting');
 
 Route::get('/portal/customer-care/destroy-device', 'Portal\CustomerCareController@showDestroyDevice')->name('destroyDevice');
-Route::get('/portal/customer-care/trade-pack/{search?}', 'Portal\CustomerCareController@showTradePack')->name('tradePack');
+Route::get('/portal/customer-care/trade-pack/{search?}', 'Portal\CustomerCareController@showTradePack');
 Route::post('/portal/customer-care/trade-in/setassent', 'Portal\CustomerCareController@setTradePackAsSent')->name('tradePack');
 Route::get('/portal/customer-care/seller', 'Portal\CustomerCareController@showSeller')->name('seller');
 Route::get('/portal/customer-care/seller/{id}', 'Portal\CustomerCareController@showSellerDetails');
@@ -206,24 +206,6 @@ Route::get('/portal/testing/checkimei/{id}', 'Portal\TestingController@showCheck
 Route::get('/portal/testing/checkimeiresult/{id}', 'Portal\TestingController@showCheckImeiReultPage');
 Route::get('/portal/testing/result/{id}','Portal\TestingController@showReceivingResultPage');
 
-// Route::post('/portal/testing/receive/checkdevicestatus', 'Portal\TestingController@checkDeviceStatus')->middleware('auth');
-// Route::post('/portal/testing/receive/settradeinstatus', 'Portal\TestingController@setTradeInStatus')->middleware('auth');
-// Route::post('/portal/testing/receive/devicemissing', 'Portal\TestingController@isDeviceMissing')->middleware('auth');
-// Route::post('/portal/testing/receive/devicecorrect', 'Portal\TestingController@isDeviceCorrect')->middleware('auth');
-// Route::post('/portal/testing/receive/deviceimeivisibility', 'Portal\TestingController@deviceImeiVisibility')->middleware('auth');
-// Route::post('/portal/testing/receive/checkimei', 'Portal\TestingController@checkimei')->middleware('auth');
-// Route::post('/portal/testing/receive/usercheckimei', 'Portal\TestingController@userCheckImei')->middleware('auth');
-// Route::post('/portal/testing/receive/printnewlabel', 'Portal\TestingController@printNewLabel')->middleware('auth');
-// Route::post('/portal/testing/receive/sendtotray', 'Portal\TestingController@sendtotray')->middleware('auth');
-// Route::post('/portal/receiving/printnewlabel' , 'Portal\TestingController@downloadSingleFile')->middleware('auth');
-
-// Route::get('/portal/testing/checkforserial/{id}', 'Portal\TestingController@showCheckForSerialPage')->middleware('auth');
-// Route::post('/portal/testing/receive/deviceserialvisibility', 'Portal\TestingController@deviceSerialVisibility')->middleware('auth');
-
-// Route::post('/portal/testing/getDeviceData', 'Portal\TestingController@getDeviceData')->middleware('auth');
-
-// Route::post('/portal/testing/getDeviceNetworkData', 'Portal\TestingController@getDeviceNetworkData')->middleware('auth');
-
 //payments
 Route::group(['prefix' => 'portal/payments'], function () {
     Route::get('/', 'Portal\PaymentsController@showPaymentPage');
@@ -310,6 +292,13 @@ Route::get('/portal/settings/brands','Portal\SettingsController@showSettingsBran
 Route::get('/portal/brands/edit/{id?}', 'Portal\SettingsController@showAddBrandsView');
 Route::post('portal/brands/editbrabnd', 'Portal\SettingsController@editBrand');
 Route::get('/portal/settings/barcode-id','Portal\SettingsController@showSettingsBarcodeIdPage');
+
+Route::get('/portal/settings/costs', 'Portal\SettingsController@showCostsPage');
+Route::post('/portal/settings/costs/update', 'Portal\SettingsController@updateCosts');
+
+Route::get('/portal/settings/non-working-days', 'Portal\SettingsController@showNonWorkingDaysPage');
+Route::post('/portal/settings/costs/add-non-working-days', 'Portal\SettingsController@addNonWorkingDays');
+
 
 //cms
 Route::get('/portal/cms', 'Portal\CmsController@showCmsPage');

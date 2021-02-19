@@ -10,6 +10,8 @@ use App\Eloquent\PortalUsers;
 use App\Eloquent\Colour;
 use App\Eloquent\Network;
 use App\Eloquent\Brand;
+use App\Eloquent\AdditionalCosts;
+use App\Eloquent\NonWorkingDays;
 
 class SettingsController extends Controller
 {
@@ -204,5 +206,35 @@ class SettingsController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
         return view('portal.settings.brands')->with('brands', $brands)->with('portalUser', $portalUser);
+    }
+
+    public function showCostsPage(){
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $additionalCosts = AdditionalCosts::first();
+        #dd($additionalCosts);
+
+        return view('portal.settings.costs', ['portalUser'=>$portalUser, 'additionalCosts'=>$additionalCosts]);
+    }
+
+    public function updateCosts(Request $request){
+        $additionalCosts = AdditionalCosts::first();
+
+        $additionalCosts->admin_costs = $request->admin_costs;
+        $additionalCosts->logistics_costs = $request->logistics_costs;
+
+        $additionalCosts->save();
+
+        return redirect()->back()->with(['success'=>'You have succesfully updated costs.']);
+    }
+
+    public function showNonWorkingDaysPage(){
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $nonWorkingDates = NonWorkingDays::get();
+
+        return view('portal.settings.dates', ['portalUser'=>$portalUser, 'nonWorkingDates'=>$nonWorkingDates]);
     }
 }

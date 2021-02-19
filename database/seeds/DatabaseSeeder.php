@@ -1357,5 +1357,10 @@ class DatabaseSeeder extends Seeder
             'network_name'=>'unlocked',
             'network_image'=>'/networks/unlocked.png'
         ]);
+
+        DB::table('additional_costs')->insert([
+            'admin_costs'=>0,
+            'logistics_costs'=>0
+        ]);
     }
 }
