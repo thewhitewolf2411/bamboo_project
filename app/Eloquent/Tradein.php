@@ -561,4 +561,24 @@ class Tradein extends Model
         return false;
     }
     
+    public function getDeviceMemory(){
+        $product = ProductInformation::where('product_id', $this->product_id)->first();
+        if($product){
+            return $product->memory;
+        }
+    }
+
+    public function getDeviceNetwork(){
+        if(isset($this->correct_network)){
+            return $this->correct_network;
+        }
+        return $this->customer_network;
+    }
+
+    public function getDeviceColour(){
+        $color = Colour::where('product_id', $this->product_id)->first();
+        if($color){
+            return $color->color_value;
+        }
+    }
 }

@@ -11866,6 +11866,10 @@ main p, a, span {
   font-size: 14px;
 }
 
+.personal-info-dropdown {
+  margin-top: 6px;
+}
+
 .personal-info-text-input {
   display: flex;
   align-items: center;
@@ -12069,6 +12073,55 @@ main p, a, span {
 .collapse-title {
   margin: 0;
   font-size: 18px;
+}
+
+.sale-detail-col {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.sale-row-1, .sale-row-2 {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
+.sale-detail-infobox {
+  width: 190px;
+}
+
+.sale-item-label {
+  font-size: 14px;
+}
+
+.sale-item-val {
+  font-family: Sharp Sans No1 Bold;
+  font-size: 18px;
+  margin: 0;
+}
+
+.sale-detail-btn {
+  width: 160px;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.sale-detail-btn > p {
+  padding: 3px;
+  color: white;
+}
+
+.sale-detail-btn-img {
+  margin-left: 10px;
 }
 
 header {

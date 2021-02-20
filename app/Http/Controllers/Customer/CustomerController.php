@@ -255,12 +255,16 @@ class CustomerController extends Controller
             ]);
 
             $userdata->password = Crypt::decrypt($userdata->password);
+            $available_os = ['iOS', 'Android', 'Other'];
+            $available_devices = SellingProduct::all();
 
             return view('customer.profile', [
                 'userdata' => $userdata, 
                 'tradeins' => $tradeins, 
                 'tradeouts' => $tradeouts,
-                'notifications' => $notifications
+                'notifications' => $notifications,
+                'os' => $available_os,
+                'devices' => $available_devices
             ]);
 #                ->with('userorders', $userorders);
 
@@ -282,6 +286,10 @@ class CustomerController extends Controller
             return response(500);
         }
         return response(404);
+    }
+
+    public function updatePersonalInfo(Request $request){
+        dd($request->all());
     }
 
     /**

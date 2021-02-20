@@ -91,7 +91,44 @@
                                     </div>
                                     <div class="line-bottom"></div>
                                     <div class="collapse" id="collapseSaleDetails">
-                                        <p class="section-item-title-regular">sale details</p>
+                                        <div class="row m-0 justify-content-between">
+                                            <div class="sale-detail-col">
+                                                <div class="sale-row-1">
+                                                    <div class="col sale-detail-infobox m-0">
+                                                        <p class="sale-item-label">Order #</p>
+                                                        <p class="sale-item-val">Order #{!!$tradein->barcode!!}</p>
+                                                    </div>
+                                                    <div class="col sale-detail-infobox m-0">
+                                                        <p class="sale-item-label">Date of sale</p>
+                                                        <p class="sale-item-val">{!!$tradein->created_at->toFormattedDateString()!!}</p>
+                                                    </div>
+                                                    <div class="col sale-detail-infobox m-0">
+                                                        <p class="sale-item-label">Device</p>
+                                                        <p class="sale-item-val">{!!$tradein->getProductName($tradein->id)!!}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="sale-row-2">
+                                                    <div class="col sale-detail-infobox m-0">
+                                                        <p class="sale-item-label">Memory</p>
+                                                        <p class="sale-item-val">{!!$tradein->getDeviceMemory()!!}</p>
+                                                    </div>
+                                                    <div class="col sale-detail-infobox m-0">
+                                                        <p class="sale-item-label">Network</p>
+                                                        <p class="sale-item-val">{!!$tradein->getDeviceNetwork()!!}</p>
+                                                    </div>
+                                                    <div class="col sale-detail-infobox m-0">
+                                                        <p class="sale-item-label">Colour</p>
+                                                        <p class="sale-item-val">{!!$tradein->getDeviceColour()!!}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="sale-detail-col">
+                                                <a class="btn-purple sale-detail-btn" href="#"><p>Download as PDF</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White.svg')}}"></a>
+                                                <a class="btn-purple sale-detail-btn" href="#"><p>Email me a copy</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+                                                <a class="btn-blue sale-detail-btn" href="#"><p>Get in touch</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+                                                <a class="btn-primary sale-detail-btn" href="#"><p>Cancel Sale</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -334,6 +371,10 @@
 
 
     function changeSection(id){
+        if(id === 'sales-my'){
+            window.localStorage.setItem('backtosales', true);
+            window.location.href =  window.location.href.substring(0, window.location.href.length-1);
+        }
         const element = document.getElementById(id);
         const offset = -120;
         const bodyRect = document.getElementById('sale-item-container').getBoundingClientRect().top;

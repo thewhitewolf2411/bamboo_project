@@ -2,7 +2,7 @@
 <html>
     <head>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <script src="{{ asset('js/Customer.js') }}"></script>
+        {{-- <script src="{{ asset('js/Customer.js') }}"></script> --}}
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -229,23 +229,39 @@
                                                     <div class="personal-info-row">
                                                         <div class="col p-0 mr-3">
                                                             <label for="firstname" class="personal-info-label">Delivery Address</label>
-                                                            <input type="text" name="first_name" id="first_name" required class="personal-info-text-input"/>
+                                                            <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" value="{!!Auth::user()->delivery_address!!}" placeholder="Example delivery address" required autofocus>
                                                         </div>
 
                                                         <div class="col p-0 mr-3">
                                                             <label for="last_name" class="personal-info-label">Billing Address</label>
-                                                            <input type="text" name="last_name" id="last_name" required class="personal-info-text-input"/>
+                                                            <input class="form-control js-typeahead" type="text" id="billing_address" name="billing_address" value="{!!Auth::user()->billing_address!!}" placeholder="Example billing address" required autofocus>
                                                         </div>
 
                                                         <div class="col p-0 mr-3">
-                                                            <label for="birth_date" class="personal-info-label">Current Phone</label>
-                                                            <input type="text" name="birth_date" id="birth_date" required class="personal-info-text-input"/>
+                                                            <label for="current_phone" class="personal-info-label personal-info-dropdown">Current Phone</label>
+                                                            <select class="form-control" id="currentPhone" name="current_phone">
+                                                                @foreach($devices as $device)
+                                                                    @if(Auth::user()->current_phone == $device->id)
+                                                                        <option value="{{$device->id}}" selected>{{$device->product_name}}</option>
+                                                                    @else
+                                                                        <option value="{{$device->id}}">{{$device->product_name}}</option>
+                                                                    @endif
+                                                                @endforeach
+                                                              </select>                                                        
                                                         </div>
 
                                                         <div class="col p-0">
-                                                            <label for="contact_number" class="personal-info-label">Prefferred OS</label>
-                                                            <input type="text" name="contact_number" id="contact_number" required class="personal-info-text-input"/>
-                                                        </div>
+                                                            <label for="prefferred_os" class="personal-info-label personal-info-dropdown">Prefferred OS</label>
+                                                            <select class="form-control" id="prefferedOS" name="prefferred_os">
+                                                                @foreach($os as $operating_system)
+                                                                @if(Auth::user()->preffered_os == $operating_system)
+                                                                    <option value="{{$operating_system}}" selected>{{$operating_system}}</option>
+                                                                @else
+                                                                    <option value="{{$operating_system}}">{{$operating_system}}</option>
+                                                                @endif
+                                                            @endforeach
+                                                              </select>                                                                   
+                                                            </div>
                                                     </div>
 
                                                 </div>
@@ -253,7 +269,7 @@
                                                     Bad credentials.
                                                 </div> --}}
                                                 <div class="modal-footer border-0 p-0 padded mt-5">
-                                                    <button type="button" class="btn btn-secondary disabled ml-auto w-25" onclick="verify()">Save changes</button>
+                                                    <button type="button" class="btn btn-secondary disabled ml-auto w-25" onclick="saveChanges()">Save changes</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -453,7 +469,7 @@
 
                                                 <div class="col">
                                                     <p class="sale-item-label">View</p>
-                                                    <a href="userprofile/{{$tradein->id}}"><img class="sale-item-link-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Orange.svg')}}"></a>
+                                                    <a href="/userprofile/{{$tradein->id}}"><img class="sale-item-link-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Orange.svg')}}"></a>
                                                 </div>
                                                 
                                                 {{-- <div class="w-25 p-2">
@@ -478,58 +494,6 @@
                             </div>
 
                             <div id="section-communications" class="page-sections hidden">
-                                {{-- <div class="element-three-top-container">
-                                    <h3>Newsletter subscription</h3>
-                                </div>
-                                <div class="element-three-bottom">
-    
-                                    <div class="newsletter-subscription">
-                                        
-                                        <label class="news-label">
-                                            <input id="radio-checked-yes" type="radio" name="sub" value="true" disabled @if($userdata->sub == 1) checked="checked" @endif>
-                                
-                                            <div class="news-label-content">
-                                                <p><b>Yes,</b> I would love to hear about the latest amazing offers, hints & tips</p>
-                                                <div class="news-label-selected-container">
-                                                    <img id="select-image-yes" src="{{asset('/customer_page_images/body/Icon-Tick-Selected-clear.svg')}}" width="48px" height="48px">
-                                                    <p id="select-text-yes">Select</p>
-                                                </div>
-                                            </div>
-                                
-                                        </label>
-                                
-                                        <label class="news-label">
-                                            <input id="radio-checked-no" type="radio" name="sub" value="false" disabled @if($userdata->sub == 0) checked="checked" @endif>
-                                
-                                            <div class="news-label-content">
-                                                <p><b>No,</b>  I do not want to hear about the latest amazing offers, hints & tips</p>
-                                                <div class="news-label-selected-container">
-                                                    <img id="select-image-no" src="{{asset('/customer_page_images/body/Icon-Tick-Selected-clear.svg')}}" width="48px" height="48px">
-                                                    <p id="select-text-no">Select</p>
-                                                </div>
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <button id="update-sub-submit" type="submit" class="btn btn-primary btn-hidden mt-3" style="background: #A375BC;" disabled>Update</button>
-    
-                                    <script>
-                                            $('input[type=radio][name=sub]').change(function() {
-                                                if (this.value == 'true') {
-                                                    $('#select-image-yes').attr('src', '/customer_page_images/body/Icon-Tick-Selected.svg');
-                                                    $('#select-text-yes').text('Selected');
-                                                    $('#select-image-no').attr('src', '/customer_page_images/body/Icon-Tick-Selected-clear.svg');
-                                                    $('#select-text-no').text('Select');
-                                                }
-                                                else if (this.value == 'false') {
-                                                    $('#select-image-yes').attr('src', '/customer_page_images/body/Icon-Tick-Selected-clear.svg');
-                                                    $('#select-text-yes').text('Select');
-                                                    $('#select-image-no').attr('src', '/customer_page_images/body/Icon-Tick-Selected.svg');
-                                                    $('#select-text-no').text('Selected');
-                                                }
-                                            });
-                                    </script>
-                                </div> --}}
-
                                 <div class="section-item-content">
                                     <div class="section-header">
                                         <p class="section-item-title">Communications</p>
@@ -903,11 +867,19 @@
 </html>
 
 <script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    (function() {
+        let backtosales = window.localStorage.getItem('backtosales');
+        if(backtosales){
+            changeSection('menu-sales');
+            window.localStorage.removeItem('backtosales');
         }
-    });
+    })();
+
+    // $.ajaxSetup({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //     }
+    // });
 
     let buttons = document.getElementsByClassName('change-page');
     for (let index = 0; index < buttons.length; index++) {
@@ -970,32 +942,38 @@
         let email = document.getElementById('verify_email').value;
         let pass = document.getElementById('verify_pass').value;
 
-        $.ajax({
-            type: "POST",
-            url: 'userprofile/verify',
-            data: {
-                email: email,
-                pass: pass
-            },
-            success: function(data){
-                if(data === "200"){
-                    $('#validationModal').modal('hide');
-                    $('#personalInfoModal').modal('show');
-                    document.getElementById('verify_email').value = "";
-                    document.getElementById('verify_pass').value = "";
-                } else {
-                    let error_alert = document.getElementById('verification-error');
-                    if(error_alert.classList.contains('hidden')){
-                        error_alert.classList.remove('hidden');
-                    }
-                    setTimeout(function(){
-                        if(!error_alert.classList.contains('hidden')){
-                            error_alert.classList.add('hidden');
-                        }
-                    }, 3000);
-                }
-            },
-        });
+        $('#validationModal').modal('hide');
+        $('#personalInfoModal').modal('show');
+
+        // $.ajax({
+        //     type: "POST",
+        //     url: 'userprofile/verify',
+        //     headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //     },
+        //     data: {
+        //         email: email,
+        //         pass: pass
+        //     },
+        //     success: function(data){
+        //         if(data === "200"){
+        //             $('#validationModal').modal('hide');
+        //             $('#personalInfoModal').modal('show');
+        //             document.getElementById('verify_email').value = "";
+        //             document.getElementById('verify_pass').value = "";
+        //         } else {
+        //             let error_alert = document.getElementById('verification-error');
+        //             if(error_alert.classList.contains('hidden')){
+        //                 error_alert.classList.remove('hidden');
+        //             }
+        //             setTimeout(function(){
+        //                 if(!error_alert.classList.contains('hidden')){
+        //                     error_alert.classList.add('hidden');
+        //                 }
+        //             }, 3000);
+        //         }
+        //     },
+        // });
     }
 
 
@@ -1197,6 +1175,9 @@
                 $.ajax({
                     type: "POST",
                     url: 'userprofile/changepass',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     data: {
                         email: email.value,
                         old_pass: old_pass.value,
@@ -1280,37 +1261,54 @@
         $.ajax({
             type: "POST",
             url: 'userprofile/updatecommunications',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             data: {
                 newsletter: selected_newsletter,
             },
             success: function(data, textStatus, xhr) {
-                
-                // if(xhr.status == 203){
-                //     alert.innerHTML = data;
-                //     if(alert.classList.contains('hidden')){
-                //         alert.classList.remove('hidden');
-                //     }
+            }
 
-                //     setTimeout(function(){
-                //         if(!alert.classList.contains('hidden')){
-                //             alert.classList.add('hidden');
-                //         }
-                //     },3000);
-                // } else {
-                //     email.value = "";
-                //     old_pass.value = "";
-                //     new_pass.value = "";
-                //     document.getElementById("bar").style.width = "0%";
+        });
+    }
 
-                //     document.getElementById("pass-min-length").classList.remove('hidden');
-                //     document.getElementById("pass-number").classList.remove('hidden');
-                //     document.getElementById("pass-symbol").classList.remove('hidden');
-                //     document.getElementById("pass-uppercase").classList.remove('hidden');
-                //     document.getElementById("pass-strength").innerHTML = "Unsecure";
+    function saveChanges(){
+        let firstname = document.getElementById('first_name');
+        let lastname = document.getElementById('last_name');
+        let birthdate = document.getElementById('birth_date');
+        let contact_number = document.getElementById('contact_number');
+        let delivery_address = document.getElementById('delivery_address');
+        let billing_address = document.getElementById('billing_address');
+        let current_phone = document.getElementById('currentPhone');
+        let preffered_os = document.getElementById('prefferedOS');
 
-                //     $('#accountInfoModal').modal('hide');
-                //     $('#infoMessageModal').modal('show');
-                // }
+        let firstnameval = firstname.value.trim();
+        let lastnameval = lastname.value.trim();
+        let birthdateval = birthdate.value.trim();
+        let contact_numberval = contact_number.value.trim();
+        let billing_val = billing_address.value.trim();
+        let delivery_val = delivery_address.value.trim();
+        let current_phoneval = current_phone.value;
+        let preffered_osval = preffered_os.value;
+
+        $.ajax({
+            type: "POST",
+            url: 'userprofile/updatepersonalinfo',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                first_name: firstnameval,
+                last_name: lastnameval,
+                birth_date: birthdateval,
+                contact_number: contact_numberval,
+                delivery_address: delivery_val,
+                billing_address: billing_val,
+                current_phone: current_phoneval,
+                preffered_os: preffered_osval
+            },
+            success: function(data, textStatus, xhr) {
             }
 
         });
