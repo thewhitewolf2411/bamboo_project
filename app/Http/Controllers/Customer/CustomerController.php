@@ -288,8 +288,30 @@ class CustomerController extends Controller
         return response(404);
     }
 
+
     public function updatePersonalInfo(Request $request){
-        dd($request->all());
+        // validate data
+        $validation_error_msg = [];
+        $required = ['first_name', 'last_name', 'birth_date', 'contact_number', 'delivery_address', 'billing_address', 'current_phone', 'preffered_os'];
+        foreach($required as $field){
+            if(!isset($request->all()[$field])){
+                array_push($validation_error_msg, 'Field ' . str_replace('_', ' ', ucfirst($field)) . " can't be empty. ");
+            }
+        }
+        if(!empty($validation_error_msg)){
+            return response(['status' => 'error', 'msg' => $validation_error_msg]);
+        }
+        $user = User::find(Auth::user()->id);
+        $user->update([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'contact_number' => $request->contact_number,
+            'delivery_address' => $request->delivery_address,
+            'billing_address' => $request->billing_address,
+            'current_phone' => $request->current_phone,
+            'preffered_os' => $request->preffered_os
+        ]);
+        return response(['status' => 'success', 'msg' => 'Personal info successfully updated.']);
     }
 
     /**

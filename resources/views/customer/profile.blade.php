@@ -265,11 +265,11 @@
                                                     </div>
 
                                                 </div>
-                                                {{-- <div class="alert alert-danger hidden" role="alert" id="verification-error">
-                                                    Bad credentials.
-                                                </div> --}}
+                                                
+                                                <div class="alert alert-danger hidden" role="alert" id="personal-info-error">
+                                                </div>
                                                 <div class="modal-footer border-0 p-0 padded mt-5">
-                                                    <button type="button" class="btn btn-secondary disabled ml-auto w-25" onclick="saveChanges()">Save changes</button>
+                                                    <button type="button" class="btn btn-orange ml-auto w-25" onclick="saveChanges()">Save changes</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -289,39 +289,9 @@
                                         </div>
                                     @endif
 
-
-
-                                    {{-- <input type="hidden" name="user" value="{{Auth::user()->id}}">
-                                    <div class="element-three-top">
-                                        <div class="profile-element-container p-1">
-                                            <label for="name" class="profile-small">First Name</label>
-                                            <input id="input-name" name="name" type="text" class="form-control" value="{{$userdata->first_name}}" disabled required></input>
-                                        </div>
-                                        <div class="profile-element-container p-1">
-                                            <label for="lastname" class="profile-small">Last Name</label>
-                                            <input id="input-lastname" name="lastname" type="text" class="form-control" value="{{$userdata->last_name}}" disabled required></input>
-                                        </div>
-                                    </div>
-                                    <div class="element-three-bottom ">
-                                        <div class="profile-element-container p-1">
-                                            <label for="delivery_address" class="profile-small">Delivery address</label>
-                                            <textarea id="delivery_address" name="delivery_address" type="text" class="form-control" value="{{$userdata->delivery_address}}" disabled required>{{$userdata->delivery_address}}</textarea>
-                                        </div>
-                                        <div class="profile-element-container p-1">
-                                            <label for="billing_address" class="profile-small">Billing address</label>
-                                            <textarea id="billing_address" name="billing_address" type="text" class="form-control" value="{{$userdata->billing_address}}" disabled required>{{$userdata->billing_address}}</textarea>
-                                        </div>
-                                        <div class="profile-element-container p-1">
-                                            <label for="contact-number" class="profile-small">Contact number</label>
-                                            <input id="contact-number" name="contact_number" type="number" class="form-control" value="{{$userdata->contact_number}}" disabled required></input>
-                                        </div>
-                                    </div> --}}
                 
                                 </div>
 
-                                {{-- <form id="change-name" action="/userprofile/changename"  method="POST">
-                                    @csrf
-                                </form> --}}
                             </div>
 
                             <div id="section-account" class="page-sections hidden">
@@ -942,38 +912,38 @@
         let email = document.getElementById('verify_email').value;
         let pass = document.getElementById('verify_pass').value;
 
-        $('#validationModal').modal('hide');
-        $('#personalInfoModal').modal('show');
+        // $('#validationModal').modal('hide');
+        // $('#personalInfoModal').modal('show');
 
-        // $.ajax({
-        //     type: "POST",
-        //     url: 'userprofile/verify',
-        //     headers: {
-        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //     },
-        //     data: {
-        //         email: email,
-        //         pass: pass
-        //     },
-        //     success: function(data){
-        //         if(data === "200"){
-        //             $('#validationModal').modal('hide');
-        //             $('#personalInfoModal').modal('show');
-        //             document.getElementById('verify_email').value = "";
-        //             document.getElementById('verify_pass').value = "";
-        //         } else {
-        //             let error_alert = document.getElementById('verification-error');
-        //             if(error_alert.classList.contains('hidden')){
-        //                 error_alert.classList.remove('hidden');
-        //             }
-        //             setTimeout(function(){
-        //                 if(!error_alert.classList.contains('hidden')){
-        //                     error_alert.classList.add('hidden');
-        //                 }
-        //             }, 3000);
-        //         }
-        //     },
-        // });
+        $.ajax({
+            type: "POST",
+            url: 'userprofile/verify',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                email: email,
+                pass: pass
+            },
+            success: function(data){
+                if(data === "200"){
+                    $('#validationModal').modal('hide');
+                    $('#personalInfoModal').modal('show');
+                    document.getElementById('verify_email').value = "";
+                    document.getElementById('verify_pass').value = "";
+                } else {
+                    let error_alert = document.getElementById('verification-error');
+                    if(error_alert.classList.contains('hidden')){
+                        error_alert.classList.remove('hidden');
+                    }
+                    setTimeout(function(){
+                        if(!error_alert.classList.contains('hidden')){
+                            error_alert.classList.add('hidden');
+                        }
+                    }, 3000);
+                }
+            },
+        });
     }
 
 
@@ -1309,8 +1279,37 @@
                 preffered_os: preffered_osval
             },
             success: function(data, textStatus, xhr) {
-            }
-
+                if(data.status === 'error'){
+                    // show alert error
+                    let popup = document.getElementById('personal-info-error');
+                    popup.innerHTML = data.msg;
+                    if(popup.classList.contains('alert-success')){
+                        popup.classList.remove('alert-success');
+                        popup.classList.add('alert-danger');
+                    }
+                    if(popup.classList.contains('hidden')){
+                        popup.classList.remove('hidden');
+                    }
+                    setTimeout(function(){
+                        popup.classList.add('hidden');
+                    }, 3000);
+                }
+                if(data.status === 'success'){
+                    // show alert success
+                    let popup = document.getElementById('personal-info-error');
+                    popup.innerHTML = data.msg;
+                    if(popup.classList.contains('alert-danger')){
+                        popup.classList.remove('alert-danger');
+                        popup.classList.add('alert-success');
+                    }
+                    if(popup.classList.contains('hidden')){
+                        popup.classList.remove('hidden');
+                    }
+                    setTimeout(function(){
+                        popup.classList.add('hidden');
+                    }, 3000);
+                }
+            },
         });
     }
 
