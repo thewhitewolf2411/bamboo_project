@@ -249,7 +249,7 @@ function toggleScanOption(option){
 
 function search(){
     if(CAN_SCAN){
-        //clearSearchTable();
+        clearSearchTable();
 
         let searchterm = document.getElementById('search_id').value;
 
