@@ -43,7 +43,7 @@
 
                         <form class="d-flex align-items-center ml-auto mr-auto text-center" action="/portal/payments/confirm" method="GET">              
                             <label for="searchbatches">Search by Reference/Barcode/ID:</label>
-                            <input type="text" minlength="7" name="search" class="form-control mx-3 my-0" @if(isset(request()->search)) value="{{request()->search}}" @endif required>
+                            <input type="text" minlength="3" name="search" class="form-control mx-3 my-0" @if(isset(request()->search)) value="{{request()->search}}" @endif required>
                             <button type="submit" class="btn btn-primary btn-blue">Search</button>
                             @if(isset(request()->search)) <a class="btn" href="/portal/payments/confirm">Cancel</a> @endif
                         </form>
