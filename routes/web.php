@@ -247,7 +247,32 @@ Route::post('/portal/testing/getDeviceData', 'Portal\TestingController@getDevice
 Route::post('/portal/testing/getDeviceNetworkData', 'Portal\TestingController@getDeviceNetworkData');
 
 //reports
-Route::get('/portal/reports', 'Portal\ReportsController@showReportsPage');
+
+Route::group(['prefix'=>'portal/reports'], function(){
+    Route::get('/', 'Portal\ReportsController@showReportsPage');
+
+    Route::get('/overview', 'Portal\ReportsController@showReportsOverviewPage');
+    Route::post('/getoverviewreport', 'Portal\ReportsController@generateOverviewReport');
+
+    Route::get('/stock', 'Portal\ReportsController@showReportsStockPage');
+    Route::post('/getstockreport', 'Portal\ReportsController@generateStockReport');
+
+    Route::get('/receiving', 'Portal\ReportsController@showReportsReceivingPage');
+    Route::post('/getreceivingreport', 'Portal\ReportsController@generateReceivingReport');
+
+    Route::get('/testing', 'Portal\ReportsController@showReportsTestingPage');
+    Route::post('/gettestingreport', 'Portal\ReportsController@generateTestingReport');
+
+    Route::get('/awaiting-payment', 'Portal\ReportsController@showReportsAwaitingPaymentPage');
+    Route::post('/getawaitingpaymentreport', 'Portal\ReportsController@generateOverviewReport');
+
+    Route::get('/recycle-customer-returns', 'Portal\ReportsController@showReportsRecycleCustomerReturnsPage');
+    Route::post('/getrecyclecustomerreturnswreport', 'Portal\ReportsController@generateOverviewReport');
+    
+    Route::get('/finance-recycle-reports', 'Portal\ReportsController@showReportsFinanceRecycleReportsPage');
+    Route::post('/getfinancerecyclereport', 'Portal\ReportsController@generateFinanceRecycleReport');
+
+});
 
 //feeds
 Route::get('/portal/feeds', 'Portal\FeedsController@showFeedsPage');

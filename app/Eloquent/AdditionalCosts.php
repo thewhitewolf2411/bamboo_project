@@ -18,6 +18,6 @@ class AdditionalCosts extends Model{
      * @var array
      */
     protected $fillable = [
-        'admin_costs','logistics_costs'
+        'administration_costs','carriage_costs', 'miscellaneous_costs_total','miscellaneous_costs_individual'
     ];
 }

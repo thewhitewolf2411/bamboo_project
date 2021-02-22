@@ -4,7 +4,7 @@
 <div class="portal-app-container">
     <div class="portal-title-container">
         <div class="portal-title">
-            <p>Edit costs</p>
+            <p>Service Costs</p>
         </div>
     </div>
     <div class="portal-table-container">
@@ -18,13 +18,35 @@
             @csrf
 
             <div class="form-group">
-                <label for="admin_costs">Update Admin costs:</label>
-                <input class="form-control" type="number" step="0.01" id="admin_costs" name="admin_costs" value="{{$additionalCosts->admin_costs}}">
+                <label for="admin_costs">Administration costs: (format '£x.xx')</label>
+                <div class="d-flex align-items-center">
+                    <p>£</p>
+                    <input class="form-control m-0" type="number" step="0.01" id="administration_costs" name="administration_costs" value="{{$additionalCosts->administration_costs}}">
+                </div>
             </div>
         
             <div class="form-group">
-                <label for="logistics_costs">Update Logistics costs:</label>
-                <input class="form-control" type="number" step="0.01" id="logistics_costs" name="logistics_costs" value="{{$additionalCosts->logistics_costs}}">
+                <label for="logistics_costs">Carriage: (format '£x.xx')</label>
+                <div class="d-flex align-items-center">
+                    <p>£</p>
+                    <input class="form-control m-0" type="number" step="0.01" id="carriage_costs" name="carriage_costs" value="{{$additionalCosts->carriage_costs}}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="miscellaneous_costs_total">Miscellaneous total: (format '£x.xx')</label>
+                <div class="d-flex align-items-center">
+                    <p>£</p>
+                    <input class="form-control m-0" type="number" step="0.01" id="miscellaneous_costs_total" name="miscellaneous_costs_total" value="{{$additionalCosts->miscellaneous_costs_total}}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="miscellaneous_costs_individual">Individual Miscellaneous cost: (format '£x.xx')</label>
+                <div class="d-flex align-items-center">
+                    <p>£</p>
+                    <input class="form-control m-0" type="number" step="0.01" id="miscellaneous_costs_individual" name="miscellaneous_costs_individual" value="{{$additionalCosts->miscellaneous_costs_individual}}">
+                </div>
             </div>
 
             <input type="submit" class="btn btn-primary btn-blue" value="Change costs" onclick="return confirm('Are you sure you want to update costs?')">

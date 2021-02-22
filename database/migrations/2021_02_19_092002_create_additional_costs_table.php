@@ -15,8 +15,10 @@ class CreateAdditionalCostsTable extends Migration
     {
         Schema::create('additional_costs', function (Blueprint $table) {
             $table->id();
-            $table->float('admin_costs')->default(0);
-            $table->float('logistics_costs')->default(0);
+            $table->float('administration_costs')->default(0);
+            $table->float('carriage_costs')->default(0);
+            $table->float('miscellaneous_costs_total')->default(0);
+            $table->float('miscellaneous_costs_individual')->default(0);
             $table->timestamps();
         });
     }

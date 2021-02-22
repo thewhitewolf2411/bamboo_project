@@ -1359,8 +1359,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('additional_costs')->insert([
-            'admin_costs'=>0,
-            'logistics_costs'=>0
+            'administration_costs'=>0.00,
+            'carriage_costs'=>0.00,
+            'miscellaneous_costs_total'=>0.00,
+            'miscellaneous_costs_individual'=>0.00,
         ]);
     }
 }

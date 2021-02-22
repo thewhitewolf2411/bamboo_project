@@ -219,10 +219,15 @@ class SettingsController extends Controller
     }
 
     public function updateCosts(Request $request){
+
+        #dd($request->all());
+
         $additionalCosts = AdditionalCosts::first();
 
-        $additionalCosts->admin_costs = $request->admin_costs;
-        $additionalCosts->logistics_costs = $request->logistics_costs;
+        $additionalCosts->administration_costs = $request->administration_costs;
+        $additionalCosts->carriage_costs = $request->carriage_costs;
+        $additionalCosts->miscellaneous_costs_total = $request->miscellaneous_costs_total;
+        $additionalCosts->miscellaneous_costs_individual = $request->miscellaneous_costs_individual;
 
         $additionalCosts->save();
 

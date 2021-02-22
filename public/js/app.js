@@ -37246,6 +37246,8 @@ __webpack_require__(/*! ./scripts/PrintTradeIn */ "./resources/js/scripts/PrintT
 
 __webpack_require__(/*! ./scripts/dates */ "./resources/js/scripts/dates.js");
 
+__webpack_require__(/*! ./scripts/Reports */ "./resources/js/scripts/Reports.js");
+
 "use strict";
 /*
 window.Vue = require('vue');
@@ -37401,6 +37403,48 @@ function markOrderAsSent(trade_out_id) {
 
   $('#mark_as_complete_trade_out_trigger').click();
 }
+
+/***/ }),
+
+/***/ "./resources/js/scripts/Reports.js":
+/*!*****************************************!*\
+  !*** ./resources/js/scripts/Reports.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+$('#generate-overview-report-btn').on('click', function () {
+  $.ajax({
+    url: "/portal/reports/getoverviewreport",
+    type: "POST",
+    success: function success(response) {
+      window.open(response, "_blank");
+    }
+  });
+});
+$('#generate-stock-report-btn').on('click', function () {
+  $.ajax({
+    url: "/portal/reports/getstockreport",
+    type: "POST",
+    success: function success(response) {
+      window.open(response, "_blank");
+    }
+  });
+});
+$('#generate-receiving-report-btn').on('click', function () {
+  $.ajax({
+    url: "/portal/reports/getreceivingreport",
+    type: "POST",
+    success: function success(response) {
+      window.open(response, "_blank");
+    }
+  });
+});
 
 /***/ }),
 
@@ -38111,8 +38155,8 @@ $('#buildssaleslot-scandeviceinput').on('input', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Haris Muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Haris Muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
