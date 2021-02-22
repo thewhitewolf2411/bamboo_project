@@ -55,8 +55,8 @@
 
                             <tr id="batch-{{$batch_device->id}}" class="@if(!$batch_device->can_create_fc)nofc @if(!$batch_device->canCreateFPBatch())nofp @endif @endif">
                                 <td><div class="table-element">{!!$batch_device->batchReference()!!}</div></td>
-                                <td><div class="table-element">{!!$batch_device->tradeinId()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->tradeinBarcode()!!}</div></td>
+                                <td><div class="table-element">{!!$batch_device->tradeinId()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->orderDate()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->product()!!}</div></td>
                                 <td><div class="table-element">£ {!!$batch_device->price()!!}</div></td>
