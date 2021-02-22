@@ -102,6 +102,8 @@
                                     </div>
                                 </div>
 
+                                <div class="alert alert-danger w-75 text-center ml-auto mr-auto hidden mb-4" role="alert" id="scanerror"></div>
+
                                 <div class="scanning-items-table justify-content-around mb-4">
                                     <div class="all-batch-available-devices">
                                         <table class="portal-table sortable" id="tradeins-table">
@@ -255,7 +257,18 @@ function search(){
             type: "GET",
             url: "awaiting/batchsearch?term="+searchterm + "&option=" + scanoption,
             success: function(response) {
-                loadResults(response);
+                if(response.error){
+                    let erroralert = document.getElementById('scanerror');
+                    erroralert.innerHTML = response.error;
+                    if(erroralert.classList.contains('hidden')){
+                        erroralert.classList.remove('hidden');
+                    }
+                    setTimeout(function(){
+                        erroralert.classList.add('hidden');
+                    },10000)
+                } else {
+                    loadResults(response);
+                }
             }
         });
     } else {

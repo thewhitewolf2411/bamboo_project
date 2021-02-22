@@ -132,9 +132,9 @@ class PaymentsController extends Controller
             $tradeins = Tradein::where(function ($query) use($barcode){
                     $query->where('barcode', $barcode)->orWhere('barcode_original', $barcode);
                 })->where(function($query){
-                    $query->where('job_state', '=', "10")->orWhere('job_state', '=', "16");
+                    $query->where('job_state','=','10')->orWhere('job_state', '=', '12')->orWhere('job_state', '=', '16');
                 })->get();
-                
+                            
             foreach($tradeins as $tradein){
                 $tradein->model = $tradein->getProductName($tradein->id);
             }
@@ -154,16 +154,24 @@ class PaymentsController extends Controller
             switch ($searchoption) {
                 case 'trolley':
                     $trolleys = Trolley::where('trolley_name', 'LIKE', "%{$searchterm}%")->get()->pluck('id')->toArray();
-                    $trolley_content = TrolleyContent::whereIn('tray_id', $trolleys)->get()->pluck('tray_id')->toArray();
+                    $trolley_content = Tray::whereIn('trolley_id', $trolleys)->get()->pluck('id')->toArray();
                     $trays = TrayContent::whereIn('tray_id', $trolley_content)->get()->pluck('trade_in_id')->toArray();
                     $tradeins = Tradein::whereIn('id', $trays)->where(function($query){
-                        $query->where('job_state', '=', '10');
+                        $query->where('job_state','=','10')->orWhere('job_state', '=', '12')->orWhere('job_state', '=', '16');
                     })->get();
+                    $error_msg = [];
+
                     if($tradeins->count() > 0){
                         foreach($tradeins as $tradein){
                             $tradein->product = $tradein->getProductName($tradein->id);
                             $tradein->stock_location = $tradein->getTrayName($tradein->id);
                         }
+                    } else {
+                        array_push($error_msg, 'No matching devices for scanned trolley name.');
+                    }
+
+                    if(!empty($error_msg)){
+                        return response(['error' => $error_msg]);
                     }
                     return $tradeins;
                     break;
@@ -172,29 +180,48 @@ class PaymentsController extends Controller
                     $trays = Tray::where('tray_name', 'LIKE', "%{$searchterm}%")->get()->pluck('id')->toArray();
                     $tray_content = TrayContent::whereIn('tray_id', $trays)->get()->pluck('trade_in_id')->toArray();
                     $tradeins = Tradein::whereIn('id', $tray_content)->where(function($query){
-                        $query->where('job_state', '=', '10');
+                        $query->where('job_state','=','10')->orWhere('job_state', '=', '12')->orWhere('job_state', '=', '16');
                     })->get();
+                    $error_msg = [];
+
                     if($tradeins->count() > 0){
                         foreach($tradeins as $tradein){
                             $tradein->product = $tradein->getProductName($tradein->id);
                             $tradein->stock_location = $tradein->getTrayName($tradein->id);
                         }
+                    } else {
+                        array_push($error_msg, 'No matching devices for scanned tray name.');
                     }
+                    if(!empty($error_msg)){
+                        return response(['error' => $error_msg]);
+                    }
+
                     return $tradeins;
                     break;
 
                 case 'barcode':
-                    $tradeins = Tradein::where('barcode', $searchterm)->orWhere('barcode_original', $searchterm)
+                    $tradeins_results = Tradein::where('barcode', $searchterm)->orWhere('barcode_original', $searchterm)
                         ->where(function($query){
-                            $query->where('job_state', '=', '10');
+                            $query->where('job_state','=','10')->orWhere('job_state', '=', '12')->orWhere('job_state', '=', '16');
                         })->get();
 
-                    if($tradeins->count() > 0){
-                        foreach($tradeins as $tradein){
-                            $tradein->product = $tradein->getProductName($tradein->id);
-                            $tradein->stock_location = $tradein->getTrayName($tradein->id);
+                    $error_msg = [];
+                    $tradeins = collect();
+                    if($tradeins_results->count() > 0){
+                        foreach($tradeins_results as $tradein){
+                            if(!$tradein->isInQuarantine()){
+                                $tradein->product = $tradein->getProductName($tradein->id);
+                                $tradein->stock_location = $tradein->getTrayName($tradein->id);
+                                $tradeins->push($tradein);
+                            } else {
+                                array_push($error_msg, 'This device cannot be marked for payment. Reason: Device in Quarantine.');
+                            }
                         }
                     }
+                    if(!empty($error_msg)){
+                        return response(['error' => $error_msg]);
+                    }
+
                     return $tradeins;
                     break;
 
