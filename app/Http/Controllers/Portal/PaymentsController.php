@@ -200,7 +200,7 @@ class PaymentsController extends Controller
                     break;
 
                 case 'barcode':
-                    $tradeins_results = Tradein::where('barcode', $searchterm)->orWhere('barcode_original', $searchterm)
+                    $tradeins_results = Tradein::where('barcode', $searchterm)
                         ->where(function($query){
                             $query->where('job_state','=','10')->orWhere('job_state', '=', '12')->orWhere('job_state', '=', '16');
                         })->get();
@@ -217,6 +217,8 @@ class PaymentsController extends Controller
                                 array_push($error_msg, 'This device cannot be marked for payment. Reason: Device in Quarantine.');
                             }
                         }
+                    } else {
+                        array_push($error_msg, 'No matching devices for scanned tradein barcode.');
                     }
                     if(!empty($error_msg)){
                         return response(['error' => $error_msg]);
