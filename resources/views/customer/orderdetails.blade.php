@@ -198,15 +198,15 @@
                                                 <div class="row justify-content-start">
                                                     <div class="col">
                                                         <p class="m-0">Name on account</p>
-                                                        <p style="font-size: 20px;">{!!$userdata->accountName()!!}</p>
+                                                        <p style="font-size: 20px;">{!!Auth::user()->accountName()!!}</p>
                                                     </div>
                                                     <div class="col">
                                                         <p class="m-0">Account number</p>
-                                                        <p style="font-size: 20px;">{!!$userdata->accountNumber()!!}</p>
+                                                        <p style="font-size: 20px;">{!!Auth::user()->accountNumber()!!}</p>
                                                     </div>
                                                     <div class="col">
                                                         <p class="m-0">Sort Code</p>
-                                                        <p style="font-size: 20px;">{!!$userdata->sortCode()!!}</p>
+                                                        <p style="font-size: 20px;">{!!Auth::user()->sortCode()!!}</p>
                                                     </div>
             
                                                     <button type="button" class="btn btn-purple" style="color: white;" data-toggle="modal" data-target="#accountDetils">
@@ -299,6 +299,14 @@
 </html>
 
 <script>
+
+    let payment_updated = "{!!Session::has('account_success')!!}";
+    let payment_failed =  "{!!Session::has('account_fails')!!}";
+    if(payment_failed || payment_updated){
+        changeSection('section-payment');
+        $('#collapsePayment').collapse('show');
+    }
+
     let buttons = document.getElementsByClassName('change-sales-page');
     for (let index = 0; index < buttons.length; index++) {
         let button = buttons[index];
