@@ -58,7 +58,7 @@ class PaymentsController extends Controller
 
             $tradeins = Tradein::where('barcode', request()->search)->orWhere('barcode_original', request()->search)
                 ->where(function($query){
-                    $query->where('job_state','=','10')->orWhere('job_state', '=', '16');
+                    $query->where('job_state','=','10')->orWhere('job_state', '=', '12')->orWhere('job_state', '=', '16');
                 })->get();
 
             
@@ -104,7 +104,7 @@ class PaymentsController extends Controller
             })->get();
 
             // get devices
-            $tradeins = Tradein::where('job_state','=','10')->orWhere('job_state', '=', '16')->get();
+            $tradeins = Tradein::where('job_state','=','10')->orWhere('job_state', '=', '12')->orWhere('job_state', '=', '16')->get();
         }
 
         $num_ref = PaymentBatch::where('batch_type', 1)->get()->count() + 1;

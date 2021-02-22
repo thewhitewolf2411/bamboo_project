@@ -58,7 +58,7 @@
                             </div></td> --}}
                         </tr>
                         @foreach($tradeins as $tradein)
-                            @if($tradein->canProccessPayment())
+                            {{-- @if($tradein->canProccessPayment()) --}}
                                 <tr id="tradein-{{$tradein->id}}">
                                     <td><div class="table-element">{{$tradein->barcode}}</div></td>
                                     <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
@@ -67,7 +67,7 @@
                                     <td><div class="table-element">£ {{$tradein->bamboo_price}}</div></td>
                                     <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
                                 </tr>
-                            @endif
+                            {{-- @endif --}}
                         @endforeach
                     </table>
                 </div>
