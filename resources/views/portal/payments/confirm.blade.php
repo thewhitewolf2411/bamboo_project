@@ -65,8 +65,8 @@
                         @foreach($devices as $batch_device)
                             <tr id="batch-{{$batch_device->id}}">
                                 <td><div class="table-element">{!!$batch_device->batchReference()!!}</div></td>
-                                <td><div class="table-element">{!!$batch_device->tradeinId()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->tradeinBarcode()!!}</div></td>
+                                <td><div class="table-element">{!!$batch_device->tradeinId()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->orderDate()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->product()!!}</div></td>
                                 <td><div class="table-element">£ {!!$batch_device->price()!!}</div></td>
