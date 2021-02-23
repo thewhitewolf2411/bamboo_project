@@ -367,8 +367,8 @@ class PaymentsController extends Controller
 
             // by tradein id || tradein barcode
             $tradeins = Tradein::where(function($query) use($searchterm){
-                $query->where('barcode', 'LIKE', "%".$searchterm."%")->orWhere('barcode_original', 'LIKE', "%".$searchterm."%");
                 $query->where('job_state', '=', '24')->orWhere('job_state', '=', '23');
+                $query->where('barcode', 'LIKE', "%".$searchterm."%")->orWhere('barcode_original', 'LIKE', "%".$searchterm."%");
             })->get()->pluck('id')->toArray();
 
             $devices_by_tradein = PaymentBatchDevice::whereIn('tradein_id', $tradeins)->get();
