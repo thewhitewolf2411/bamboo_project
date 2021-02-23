@@ -381,7 +381,7 @@ class PaymentsController extends Controller
                 }
 
                 if(file_exists('exported_batches.zip')){
-                    dd('exported_batches.zip');
+                    //dd('exported_batches.zip');
                 }
 
                 $zipname = 'exported_batches.zip';

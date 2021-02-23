@@ -70,7 +70,7 @@
                         @endforeach
                     </table>
 
-                    <div id="alert_message" class="alert alert-danger w-50 m-4 ml-auto mr-auto text-center hidden" role="alert">
+                    <div id="alert_message" class="alert alert-danger w-75 m-4 ml-auto mr-auto text-center hidden" role="alert">
                         This is a danger alert—check it out!
                     </div>
 
@@ -113,6 +113,8 @@ $(document).ready(function(){
 var ANY_SELECTED = false;
 var CAN_SUBMIT = false;
 var BATCH_TYPE = null;
+var CAN_FP = false;
+var ignored_devices = [];
 
 function selectAll(){
     let rowCount = document.getElementById("failed-batch-devices-table").rows.length;
@@ -187,31 +189,31 @@ function toggleFpBatch(){
     if(ANY_SELECTED){
 
         let items = document.getElementsByName('selected_devices');
-        var device_ids = [];
+        var alertmsg =  document.getElementById('alert_message');
+        alertmsg.innerHTML = '';
+        var selectedids = [];
         for (let index = 0; index < items.length; index++) {
 
             let element = document.getElementById('batch-'+items[index].id);
+            let input = document.getElementById(items[index].id);
+            if(input.tagName === "INPUT" && input.checked){
+                if(element.classList.contains('nofp')){
+                    let actualid = element.id.split('-');
+                    ignored_devices.push(actualid[1]);
 
-            if(element.classList.contains('nofp')){
+                    let barcode = element.childNodes[3].childNodes[0].innerHTML;
 
-                var alertmsg =  document.getElementById('alert_message');
-                let barcode = element.childNodes[3].childNodes[0].innerHTML;
-
-                alertmsg.innerHTML = "Can't create FP batch. User possesing highlighted device ( Barcode: " + barcode + " ) hasn't updated his bank account details yet.";
-                if(alertmsg.classList.contains('hidden')){
-                    alertmsg.classList.remove('hidden');
+                    alertmsg.innerHTML += "Notice - Device with barcode [" + barcode + "] not in FP batch. The user has not updated their bank account information. <br>";
+                    if(alertmsg.classList.contains('hidden')){
+                        alertmsg.classList.remove('hidden');
+                    }
+                    element.style = 'border: 2px solid #ff6f60';
+                } else {
+                    selectedids.push(items[index].id);
                 }
-                element.style = 'border: 2px solid #ff6f60';
-
-                if(!fpbtn.classList.contains('disabled')){
-                    fpbtn.classList.add('disabled');
-                }
-                BATCH_TYPE = null;
-
-                return;
             }
         }
-
+        
         if(fcbtn.classList.contains('btn-orange')){
             fcbtn.classList.remove('btn-orange');
             fcbtn.classList.add('btn-blue');
@@ -231,6 +233,12 @@ function toggleFpBatch(){
                 submit.classList.add('disabled');
             }
             BATCH_TYPE = null;
+        }
+
+        if(selectedids.length === 0){
+            if(!submit.classList.contains('disabled')){
+                submit.classList.add('disabled');
+            }
         }
     }
 }
@@ -297,13 +305,24 @@ function submitBatch(){
     var device_ids = [];
     for (let index = 0; index < items.length; index++) {
         if(items[index].checked){
-            device_ids.push(items[index].id);
+            if(BATCH_TYPE === 'FP'){
+                let elem = document.getElementById('batch-'+items[index].id);
+                if(!elem.classList.contains('nofp')){
+                    device_ids.push(items[index].id);
+                }
+            } else {
+                device_ids.push(items[index].id);
+            }
         }
         
     }
+
     if(BATCH_TYPE !== null){
         CAN_SUBMIT = true;
     } else {
+        CAN_SUBMIT = false;
+    }
+    if(device_ids.length === 0){
         CAN_SUBMIT = false;
     }
 
