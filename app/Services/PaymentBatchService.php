@@ -156,29 +156,27 @@ class PaymentBatchService {
             $payment_batch->exported = true;
             $payment_batch->save();
 
-        }
-
-        $path = storage_path().'/app/public/exports/batches';
-        $filename = '/batch_export_'.time().'.csv';
-
-        if(!is_dir($path)){
-            mkdir($path, 0777, true);
-        }
+            $path = storage_path().'/app/public/exports/batches';
+            $filename = '/batch_export_'.$payment_batch->reference.'_'.time().'.csv';
+    
+            if(!is_dir($path)){
+                mkdir($path, 0777, true);
+            }
+                
+            $file_path = $path.$filename;
+    
+            $fp = fopen($file_path, 'w');
+    
+            foreach ($payment_rows as $row) {
+                fwrite($fp, $row."\n");
+            }
             
-        $file_path = $path.$filename;
-
-        $fp = fopen($file_path, 'w');
-
-        foreach ($payment_rows as $row) {
-            fwrite($fp, $row."\n");
+            fclose($fp);
+            $payment_batch->csv_file = $filename;
+            $payment_batch->save();
         }
-        
-        fclose($fp);
 
-        foreach($batches as $batch){
-            $batch->csv_file = $filename;
-            $batch->save();
-        }
+
 
         return $file_path;
     }

@@ -20,6 +20,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use ZipArchive;
 
 class PaymentsController extends Controller
 {
@@ -333,7 +334,7 @@ class PaymentsController extends Controller
             $batchService = new PaymentBatchService();
             $file = $batchService->generateCSV($batch_ids);
 
-            return response($batch_ids[0], 200);
+            return response(implode(",",$batch_ids), 200);
         }
     }
 
@@ -342,13 +343,66 @@ class PaymentsController extends Controller
      */
     public function downloadCSV(){
         if(isset(request()->batch_id)){
-            $payment_batch = PaymentBatch::findOrFail(request()->batch_id);
-            return response()->download(storage_path().'/app/public/exports/batches/' . $payment_batch->csv_file);
+            $exploded = explode(',', request()->batch_id);
+            if(count($exploded) > 1){
+                $batches = PaymentBatch::whereIn('id', $exploded)->get();
+
+                $files = [];
+                foreach($batches as $batch){
+                    $files[$batch->csv_file] = storage_path().'/app/public/exports/batches/' . $batch->csv_file;
+                }
+                $zipname = 'batches.zip';
+                $zip = new ZipArchive;
+                $zip->open($zipname, ZipArchive::CREATE);
+                foreach($files as $name => $path){
+                    $zip->addFromString($name, file_get_contents($path));
+                }
+                $zip->close();
+                
+                header('Content-Type: application/zip');
+                header('Content-disposition: attachment; filename='.$zipname);
+                header('Content-Length: ' . filesize($zipname));
+                readfile($zipname);
+                unlink($zipname); 
+
+            } else {
+                $payment_batch = PaymentBatch::findOrFail(request()->batch_id);
+                return response()->download(storage_path().'/app/public/exports/batches/' . $payment_batch->csv_file);
+            }
         }
-        if(isset(request()->batchdevice_id)){
-            $device = PaymentBatchDevice::find(request()->batchdevice_id);
-            $payment_batch = PaymentBatch::findOrFail($device->payment_batch_id);
-            return response()->download(storage_path().'/app/public/exports/batches/' . $payment_batch->csv_file);
+        if(isset(request()->batchdevice_ids)){
+            $exploded = explode(',', request()->batchdevice_ids);
+            if(count($exploded) > 1){
+                $files = [];
+                foreach($exploded as $device_id){
+                    $device = PaymentBatchDevice::find($device_id);
+                    $payment_batch = PaymentBatch::find($device->payment_batch_id);
+                    $files[$payment_batch->csv_file] = storage_path().'/app/public/exports/batches/' . $payment_batch->csv_file;
+                }
+
+                if(file_exists('exported_batches.zip')){
+                    dd('exported_batches.zip');
+                }
+
+                $zipname = 'exported_batches.zip';
+                $zip = new ZipArchive;
+                $zip->open($zipname, ZipArchive::CREATE);
+                foreach($files as $name => $path){
+                    $zip->addFromString($name, file_get_contents($path));
+                }
+                $zip->close();
+
+                header('Content-Type: application/zip');
+                header('Content-disposition: attachment; filename='.$zipname);
+                header('Content-Length: ' . filesize($zipname));
+                readfile($zipname);
+                unlink($zipname); 
+
+            } else {
+                $device = PaymentBatchDevice::find(request()->batchdevice_ids);
+                $payment_batch = PaymentBatch::findOrFail($device->payment_batch_id);
+                return response()->download(storage_path().'/app/public/exports/batches/' . $payment_batch->csv_file);
+            }            
         }
     }
 

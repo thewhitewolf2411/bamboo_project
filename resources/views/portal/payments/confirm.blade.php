@@ -145,21 +145,13 @@ function checkBatchDevices(){
             total++;
         }
     });
-    if(total === 1){
-        ONE_SELECTED = true;
-        if(exportbtn.classList.contains('disabled')){
-            exportbtn.classList.remove('disabled');
-        }
-    } else {
-        ONE_SELECTED = false;
-        if(!exportbtn.classList.contains('disabled')){
-            exportbtn.classList.add('disabled');
-        }
-    }
 
     if(ANY_SELECTED){
         if(successbtn.classList.contains('disabled')){
             successbtn.classList.remove('disabled');
+        }
+        if(exportbtn.classList.contains('disabled')){
+            exportbtn.classList.remove('disabled');
         }
         if(failbtn.classList.contains('disabled')){
             failbtn.classList.remove('disabled');
@@ -170,6 +162,9 @@ function checkBatchDevices(){
         }
         if(!failbtn.classList.contains('disabled')){
             failbtn.classList.add('disabled');
+        }
+        if(!exportbtn.classList.contains('disabled')){
+            exportbtn.classList.add('disabled');
         }
     }
 }
@@ -301,15 +296,15 @@ function markAsFailed(){
 }
 
 function exportBatch(){
-    if(ONE_SELECTED){
+    if(ANY_SELECTED){
         let items = document.getElementsByName('selected_devices');
-        let id;
+        let ids = [];
         items.forEach(element => {
             if(element.checked){
-                id = element.id;
+                ids.push(element.id);
             }
         });
-        window.open("/portal/payments/submit/downloadcsv?batchdevice_id="+id, "_blank");
+        window.open("/portal/payments/submit/downloadcsv?batchdevice_ids="+ids, "_blank");
     }
 }
 
