@@ -61,7 +61,7 @@ class PaymentsController extends Controller
                     $query->where('job_state','=','10')->orWhere('job_state', '=', '12')->orWhere('job_state', '=', '16');
                 })->get();
 
-            
+
             // get tray content containing tradein
             $trays_content = TrayContent::whereIn('trade_in_id', $tradein_ids)->get();
             $tray_ids = $trays_content->pluck('tray_id')->toArray();
@@ -85,6 +85,14 @@ class PaymentsController extends Controller
                 ->orWhere('trolley_name', 'like', 'TH%')
                 ->orWhere('trolley_name', 'like', 'TM%');
             })->get();
+
+            // check if device is already submitted for payment
+            foreach($tradeins as $key => $tradein){
+                $already_submitted = PaymentBatchDevice::where("tradein_id", $tradein->id)->first();
+                if($already_submitted){
+                    $tradeins->forget($key);
+                }
+            }
 
         } else {
 
@@ -134,7 +142,7 @@ class PaymentsController extends Controller
                 })->where(function($query){
                     $query->where('job_state','=','10')->orWhere('job_state', '=', '12')->orWhere('job_state', '=', '16');
                 })->get();
-                            
+            
             foreach($tradeins as $tradein){
                 $tradein->model = $tradein->getProductName($tradein->id);
             }
