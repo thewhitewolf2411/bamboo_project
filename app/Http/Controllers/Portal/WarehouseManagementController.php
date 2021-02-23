@@ -21,6 +21,7 @@ use App\Services\Boxing;
 use PDF;
 use DNS1D;
 use DNS2D;
+use Session;
 
 class WarehouseManagementController extends Controller
 {
@@ -45,7 +46,19 @@ class WarehouseManagementController extends Controller
         $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->get();
         $brands = Brand::all();
 
-        return view('portal.warehouse.box-management', ['portalUser'=>$portalUser, 'boxes'=>$boxes, 'brands'=>$brands]);
+        $boxedTradeIns = array();
+
+        foreach($boxes as $box){
+            $boxContent = TrayContent::where('tray_id', $box->id)->get();
+            foreach($boxContent as $bC){
+                $tradein = Tradein::where('id', $bC->trade_in_id)->first();
+                $tradein->model = $tradein->getProductName($tradein->product_id);
+                $tradein->product_id = $tradein->getBrandName($tradein->product_id);
+                array_push($boxedTradeIns, $tradein);
+            }
+        }
+
+        return view('portal.warehouse.box-management', ['portalUser'=>$portalUser, 'boxes'=>$boxes, 'brands'=>$brands, 'boxedTradeIns'=>$boxedTradeIns]);
     }
 
     public function createBox(Request $request){
@@ -92,8 +105,75 @@ class WarehouseManagementController extends Controller
 
         ]);
 
-        return redirect()->back()->with(['boxname'=>$newBox->id, 'boxcreated'=>true]);
+        return redirect('/portal/warehouse-management/box-management/' . $newBox->id);
 
+    }
+
+    public function showBoxingPage($id){
+
+        $box = Tray::where('id', $id)->first();
+        $user = Auth::user();
+        $portalUser = PortalUsers::where('user_id', $user->id)->first();
+        $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->get();
+        $brands = Brand::all();
+
+        $id = $box->tray_name;
+
+        $boxedTradeIns = array();
+
+        foreach($boxes as $box){
+            $boxContent = TrayContent::where('tray_id', $box->id)->get();
+            foreach($boxContent as $bC){
+                $tradein = Tradein::where('id', $bC->trade_in_id)->first();
+                $tradein->model = $tradein->getProductName($tradein->product_id);
+                $tradein->product_id = $tradein->getBrandName($tradein->product_id);
+                array_push($boxedTradeIns, $tradein);
+            }
+        }
+
+        $brandLet = substr($id, 1, 1);
+        $brand = "";
+
+        $barcode = DNS1D::getBarcodeHTML($id, 'C128');
+
+        if($brandLet === "A"){
+            $brand = "Apple";
+        }
+        if($brandLet === "S"){
+            $brand = "Samsung";
+        }
+        if($brandLet === "H"){
+            $brand = "Huaweii";
+        }
+        if($brandLet === "M"){
+            $brand = "Miscellaneous";
+        }
+        if($brandLet === "Q"){
+            $brand = "Quarantine";
+        }
+
+        $path = public_path().'/pdf/boxlabels/';
+        if(!is_dir($path)){
+            mkdir($path, 0777, true);
+        }
+
+        $boxContent = TrayContent::where('tray_id', $box->id)->get();
+
+        $tradeins = array();
+
+        foreach($boxContent as $bC){
+            $tradein = Tradein::where('id', $bC->trade_in_id)->first();
+            $tradein->model = $tradein->getProductName($tradein->product_id);
+            $tradein->product_id = $tradein->getBrandName($tradein->product_id);
+            array_push($tradeins, $tradein);
+        }
+
+        $filename = public_path() . "/pdf/boxlabels/box-" . $box->id . ".pdf";
+        $customPaper = array(0,0,141.90,283.80);
+        PDF::loadView('portal.labels.boxlabel', array('barcode'=>$barcode, 'id'=>$id, 'brand'=>$brand))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
+
+
+        return view('portal.warehouse.box-management', ['portalUser'=>$portalUser, 'boxes'=>$boxes, 'brands'=>$brands, 'box'=>$box, 'tradeins'=>$tradeins, 'boxedTradeIns'=>$boxedTradeIns]);
     }
 
     public function getBoxDevices(Request $request){

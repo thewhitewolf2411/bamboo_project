@@ -212,26 +212,48 @@ class SettingsController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $additionalCosts = AdditionalCosts::first();
+        $additionalCosts = AdditionalCosts::where('id', 1)->first();
+        $miscalaniousCosts = AdditionalCosts::where('id', '!=', 1)->get();
         #dd($additionalCosts);
 
-        return view('portal.settings.costs', ['portalUser'=>$portalUser, 'additionalCosts'=>$additionalCosts]);
+        return view('portal.settings.costs', ['portalUser'=>$portalUser, 'additionalCosts'=>$additionalCosts, 'miscalaniousCosts'=>$miscalaniousCosts]);
     }
 
     public function updateCosts(Request $request){
 
         #dd($request->all());
 
-        $additionalCosts = AdditionalCosts::first();
+        $additionalCosts = AdditionalCosts::where('id', 1)->first();
 
         $additionalCosts->administration_costs = $request->administration_costs;
         $additionalCosts->carriage_costs = $request->carriage_costs;
-        $additionalCosts->miscellaneous_costs_total = $request->miscellaneous_costs_total;
-        $additionalCosts->miscellaneous_costs_individual = $request->miscellaneous_costs_individual;
+        #$additionalCosts->miscellaneous_costs_total = $request->miscellaneous_costs_total;
+        #$additionalCosts->miscellaneous_costs_individual = $request->miscellaneous_costs_individual;
 
         $additionalCosts->save();
 
         return redirect()->back()->with(['success'=>'You have succesfully updated costs.']);
+    }
+
+    public function addCosts(Request $request){
+        #dd($request->all());
+        if($request->per_job_deduction > 0){
+            AdditionalCosts::create([
+                'administration_costs'=>0.00,
+                'carriage_costs'=>0.00,
+                'miscellaneous_costs'=>$request->miscellaneous_costs,
+                'per_job_deduction'=>$request->per_job_deduction,
+                'applied_to'=>0,
+                'cost_description'=>$request->cost_description
+            ]);
+    
+            return redirect()->back()->with(['success'=>'You have succesfully added costs.']);
+        }
+        else{
+            dd("here"); 
+        }
+
+
     }
 
     public function showNonWorkingDaysPage(){

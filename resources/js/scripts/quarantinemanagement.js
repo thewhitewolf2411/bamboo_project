@@ -215,14 +215,14 @@ $('#adddevicetradeinid').on('input', function(){
 });
 
 $('.printboxlabel').on('click', function(){
-    var boxname = $('#adddeviceboxid').attr('value');
-    if(boxname === null){
-        boxname = $('#viewboxid').attr('value');
-    }
+    var boxname = $(this).attr('data-value');
 
     $.ajax({
         url: "/portal/warehouse-management/box-management/printboxlabel",
         type:"POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
         data:{
             boxname:boxname,
         },
@@ -236,16 +236,16 @@ $('.printboxlabel').on('click', function(){
 });
 
 $('.printboxmanifest').on('click', function(){
-    var boxname = $('#adddeviceboxid').attr('value');
-    if(boxname === null){
-        boxname = $('#viewboxid').attr('value');
-    }
+    var boxname = $(this).attr('data-value');
 
     $.ajax({
         url: "/portal/warehouse-management/box-management/printboxmanifest",
         type:"POST",
         data:{
             boxname:boxname,
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data, textStatus, xhr){
             window.open(data);
@@ -257,16 +257,16 @@ $('.printboxmanifest').on('click', function(){
 });
 
 $('.printboxsummary').on('click', function(){
-    var boxname = $('#adddeviceboxid').attr('value');
-    if(boxname === null){
-        boxname = $('#viewboxid').attr('value');
-    }
+    var boxname = $(this).attr('data-value');
 
     $.ajax({
         url: "/portal/warehouse-management/box-management/printboxsummary",
         type:"POST",
         data:{
             boxname:boxname,
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(data, textStatus, xhr){
             window.open(data);

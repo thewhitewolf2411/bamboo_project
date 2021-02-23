@@ -17,8 +17,10 @@ class CreateAdditionalCostsTable extends Migration
             $table->id();
             $table->float('administration_costs')->default(0);
             $table->float('carriage_costs')->default(0);
-            $table->float('miscellaneous_costs_total')->default(0);
-            $table->float('miscellaneous_costs_individual')->default(0);
+            $table->float('miscellaneous_costs')->default(0);
+            $table->float('per_job_deduction')->default(0);
+            $table->string('cost_description')->nullable();
+            $table->integer('applied_to')->default(0);
             $table->timestamps();
         });
     }

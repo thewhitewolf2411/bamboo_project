@@ -320,6 +320,7 @@ Route::get('/portal/settings/barcode-id','Portal\SettingsController@showSettings
 
 Route::get('/portal/settings/costs', 'Portal\SettingsController@showCostsPage');
 Route::post('/portal/settings/costs/update', 'Portal\SettingsController@updateCosts');
+Route::post('/portal/settings/costs/add', 'Portal\SettingsController@addCosts');
 
 Route::get('/portal/settings/non-working-days', 'Portal\SettingsController@showNonWorkingDaysPage');
 Route::post('/portal/settings/non-working-days/add-non-working-days', 'Portal\SettingsController@addNonWorkingDays');
@@ -356,6 +357,7 @@ Route::get('/portal/trolleys/delete/{id}', 'Portal\TrolleyController@deleteTroll
 Route::group(['prefix'=>'portal/warehouse-management'], function(){
     Route::get('/', 'Portal\WarehouseManagementController@showWarehouseManagementPage');
     Route::get('/box-management', 'Portal\WarehouseManagementController@showBoxManagementPage');
+    Route::get('/box-management/{id}', 'Portal\WarehouseManagementController@showBoxingPage');
     
     Route::get('/getdevices', 'Portal\WarehouseManagementController@getBoxDevices');
     Route::post('/box-management/createbox', 'Portal\WarehouseManagementController@createBox');
