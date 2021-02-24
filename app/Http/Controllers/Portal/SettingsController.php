@@ -12,6 +12,7 @@ use App\Eloquent\Network;
 use App\Eloquent\Brand;
 use App\Eloquent\AdditionalCosts;
 use App\Eloquent\NonWorkingDays;
+use App\Eloquent\Clients;
 
 class SettingsController extends Controller
 {
@@ -250,10 +251,8 @@ class SettingsController extends Controller
             return redirect()->back()->with(['success'=>'You have succesfully added costs.']);
         }
         else{
-            dd("here"); 
+            dd("Misato Katsuragi."); 
         }
-
-
     }
 
     public function showNonWorkingDaysPage(){
@@ -284,5 +283,40 @@ class SettingsController extends Controller
         $nonWorkingDate->delete();
 
         return response(['Success'], 200);
+    }
+
+    public function showClientsPage(){
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $clients = Clients::all();
+
+        return view('portal.settings.clients', ['portalUser'=>$portalUser, 'clients'=>$clients]);
+        
+    }
+
+    public function addClient(Request $request){
+        #dd($request->all());
+
+        Clients::create([
+            'account_name'=>$request->account_name,
+            'contact_name'=>$request->contact_name,
+            'address'=>$request->address,
+            'post_code'=>$request->post_code,
+            'country'=>$request->country,
+            'contact_email'=>$request->contact_email,
+            'contact_number'=>$request->contact_number,
+            'vat_code'=>$request->vat_code,
+            'payment_type'=>$request->payment_type
+        ]);
+
+        return redirect()->back()->with('success', 'You have added client.');
+    }
+
+    public function deleteClient(Request $request){
+        $clientid = $request->clientid;
+
+        Clients::where('id', $clientid)->first()->delete();
+        return 200;
     }
 }

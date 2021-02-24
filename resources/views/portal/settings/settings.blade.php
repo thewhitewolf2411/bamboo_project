@@ -36,6 +36,11 @@
                             <p>Edit Non-working Days</p>
                         </div>
                     </a>
+                    <a href="/portal/settings/clients" class="col-2 my-2">
+                        <div class="portal-content-element">
+                            <p>Clients</p>
+                        </div>
+                    </a>
                 </div>
             </div>
             

@@ -37252,6 +37252,8 @@ __webpack_require__(/*! ./scripts/BoxManagement */ "./resources/js/scripts/BoxMa
 
 __webpack_require__(/*! ./scripts/SearchTable */ "./resources/js/scripts/SearchTable.js");
 
+__webpack_require__(/*! ./scripts/Settings */ "./resources/js/scripts/Settings.js");
+
 "use strict";
 /*
 window.Vue = require('vue');
@@ -45666,6 +45668,36 @@ $.each(DataTable,function(prop,val){$.fn.DataTable[prop]=val;});// Information a
 
 /***/ }),
 
+/***/ "./resources/js/scripts/Settings.js":
+/*!******************************************!*\
+  !*** ./resources/js/scripts/Settings.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$('.deleteclient').on('click', function () {
+  var clientid = $(this).attr('data-value');
+  var c = confirm("Are you sure you want to delete client " + clientid + "?");
+
+  if (c) {
+    $.ajax({
+      url: "/portal/settings/clients/delete",
+      type: "POST",
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data: {
+        clientid: clientid
+      },
+      success: function success(response) {
+        location.reload();
+      }
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/scripts/bayoverview.js":
 /*!*********************************************!*\
   !*** ./resources/js/scripts/bayoverview.js ***!
@@ -46062,36 +46094,42 @@ $('.openbox').on('click', function () {
     });
   }
 });
-$('.suspendbox').on('click', function () {
-  var boxname = $(this).attr('id');
-  var c = confirm("Are you sure you want to suspend box " + boxname + "?");
+$('#suspend-box').on('click', function () {
+  var boxid = $(this).attr('data-value');
+  var c = confirm("Are you sure you want to suspend box " + boxid + "?");
 
   if (c) {
     $.ajax({
       url: "/portal/warehouse-management/box-management/suspendbox",
       type: "POST",
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
       data: {
-        boxname: boxname
+        boxid: boxid
       },
       success: function success(response) {
-        location.reload();
+        location.href = '/portal/warehouse-management/box-management/';
       }
     });
   }
 });
-$('.closebox').on('click', function () {
-  var boxname = $(this).attr('id');
-  var c = confirm("Are you sure you want to close the box " + boxname + "?");
+$('#complete-box').on('click', function () {
+  var boxid = $(this).attr('data-value');
+  var c = confirm("Are you sure you want to close the box " + boxid + "?");
 
   if (c) {
     $.ajax({
       url: "/portal/warehouse-management/box-management/completebox",
       type: "POST",
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
       data: {
-        boxname: boxname
+        boxid: boxid
       },
       success: function success(response) {
-        location.reload();
+        location.href = '/portal/warehouse-management/box-management/';
       }
     });
   }

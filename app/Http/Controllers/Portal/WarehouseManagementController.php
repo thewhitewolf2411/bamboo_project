@@ -161,6 +161,8 @@ class WarehouseManagementController extends Controller
 
         $tradeins = array();
 
+        $showLabel = true;
+
         foreach($boxContent as $bC){
             $tradein = Tradein::where('id', $bC->trade_in_id)->first();
             $tradein->model = $tradein->getProductName($tradein->product_id);
@@ -168,12 +170,16 @@ class WarehouseManagementController extends Controller
             array_push($tradeins, $tradein);
         }
 
+
         $filename = public_path() . "/pdf/boxlabels/box-" . $box->id . ".pdf";
+        if(file_exists($filename)){
+            $showLabel = false;
+        }
         $customPaper = array(0,0,141.90,283.80);
         PDF::loadView('portal.labels.boxlabel', array('barcode'=>$barcode, 'id'=>$id, 'brand'=>$brand))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
 
 
-        return view('portal.warehouse.box-management', ['portalUser'=>$portalUser, 'boxes'=>$boxes, 'brands'=>$brands, 'box'=>$box, 'tradeins'=>$tradeins, 'boxedTradeIns'=>$boxedTradeIns]);
+        return view('portal.warehouse.box-management', ['portalUser'=>$portalUser, 'boxes'=>$boxes, 'brands'=>$brands, 'box'=>$box, 'tradeins'=>$tradeins, 'boxedTradeIns'=>$boxedTradeIns, 'showLabel'=>$showLabel]);
     }
 
     public function getBoxDevices(Request $request){
@@ -195,8 +201,20 @@ class WarehouseManagementController extends Controller
     }
 
     public function addDeviceToBox(Request $request){
+        #dd($request->all());
 
-        $tradein = Tradein::where('barcode', $request->tradeinid)->first();
+        $tradein = Tradein::where('barcode', $request->tradein_barcode)->first();
+        $box = Tray::where('id', $request->boxid)->first();
+
+        if($tradein === null){
+            return redirect()->back()->with('error','No such device');
+        }
+
+        $result = new Boxing();
+        $result = $result->checkBoxStatusForDevice($tradein, $box, $request);
+        if($result[1] === 404){
+            return redirect()->back()->with('error', $result[0]);
+        }
 
         $box = Tray::where('id', $request->boxid)->first();
         $box->number_of_devices = $box->number_of_devices + 1;
@@ -234,7 +252,7 @@ class WarehouseManagementController extends Controller
 
     public function suspendBox(Request $request){
         
-        $boxname = $request->boxname;
+        $boxname = $request->boxid;
         $tray = Tray::where('id', $boxname)->first();
         $tray->status = 2;
         $tray->save();
@@ -243,12 +261,13 @@ class WarehouseManagementController extends Controller
     }
 
     public function completeBox(Request $request){
-        
-        $boxname = $request->boxname;
+        #dd($request->all());
+        $boxname = $request->boxid;
         $tray = Tray::where('id', $boxname)->first();
         $tray->status = 3;
         $tray->save();
 
+        #return \redirect('/portal/warehouse-management/box-management/');
         return 200;
     }
 

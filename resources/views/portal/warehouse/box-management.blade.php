@@ -79,14 +79,24 @@
                 <form @isset($box) action="/portal/warehouse-management/box-management/addtobox" method="post" @endisset>
                     @csrf
 
+                    @isset($box)
+                    <input type="hidden" name="boxid" value="{{$box->id}}">
+                    @endisset
+
                     <div class="form-group">
                         <label for="tradein_barcode">Scan trade in barcode:</label>
-                        <input type="number" class="form-control" name="tradein_barcode" id="tradein_barcode" required>
+                        <input type="number" class="form-control" name="tradein_barcode" id="tradein_barcode" required autofocus>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6"><button type="submit" class="btn btn-primary my-3" @if(isset($box)) @else disabled @endif>Submit</button></div>
                     </div>
+
+                    @if(Session::has('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{Session::get('error')}}
+                      </div>
+                    @endif
                 </form>
 
                 @if(isset($box))
@@ -94,8 +104,8 @@
                 <div class="row my-3">
                     <div class="button-box col-lg-12">
                         <button id="cancel-box" style="width:32%" class="btn btn-info" role="button">Cancel</button>
-                        <button id="suspend-box" style="width:32%" class="btn btn-info" role="button">Suspend</button>
-                        <button id="complete-box" style="width:32%" class="btn btn-info" role="button">Complete box</button>
+                        <button id="suspend-box" style="width:32%" class="btn btn-info" data-value="{{$box->id}}" role="button">Suspend</button>
+                        <button id="complete-box" style="width:32%" class="btn btn-info" data-value="{{$box->id}}" role="button">Complete box</button>
                     </div>
                 </div>
 
@@ -183,7 +193,7 @@
                                 <td><div class="table-element">{{$boxedTradein->barcode}}</div></td>
                                 <td><div class="table-element">{{$boxedTradein->cosmetic_condition}}</div></td>
                                 <td><div class="table-element">{{$boxedTradein->imei_number}}</div></td>
-                                <td><div class="table-element">{{$boxedTradein->getProductName($tradein->product_id)}}</div></td>
+                                <td><div class="table-element">{{$boxedTradein->getProductName($boxedTradein->product_id)}}</div></td>
                                 <td><div class="table-element"><input type="checkbox"></div></td>
                             </tr>
                             @endforeach
@@ -215,7 +225,7 @@
                                     <td><div class="table-element">{{$test->tray_name}}</div></td>
                                     <td><div class="table-element">{{$test->number_of_devices}}</div></td>
                                     <td><div class="table-element">{{$test->getBoxStatus()}}</div></td>
-                                    <td><div class="table-element"><a role="button" class="printboxlabel" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Label</a> / <a role="button" class="printboxmanifest" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Manifest</a> / <a role="button" class="printboxsummary" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Summary</a> / <a role="button" class="" id="{{$test->tray_name}}">Re-open Box</a></div></td>
+                                    <td><div class="table-element"><a role="button" class="printboxlabel" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Label</a> / <a role="button" class="printboxmanifest" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Manifest</a> / <a role="button" class="printboxsummary" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Summary</a> / <a href="/portal/warehouse-management/box-management/{{$test->id}}" id="{{$test->tray_name}}">Re-open Box</a></div></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -230,12 +240,17 @@
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.23/datatables.js" defer></script>
 @if(isset($box) && $box !== null)
+
+    @if($showLabel)
+    <script>
+        window.open('/pdf/boxlabels/box-' + {{$box->id}}  + '.pdf', '_blank');
+    </script>
+    @endif
+
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script>
 
     (function() {
-        window.open('/pdf/boxlabels/box-' + {{$box->id}}  + '.pdf', '_blank');
-
         $('#boxed-devices').removeClass('btn-red');
         $('#boxes-summary').removeClass('btn-red');
         

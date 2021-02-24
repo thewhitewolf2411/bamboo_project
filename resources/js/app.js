@@ -16,6 +16,7 @@ require('./scripts/dates');
 require('./scripts/Reports');
 require('./scripts/BoxManagement');
 require('./scripts/SearchTable');
+require('./scripts/Settings');
 
 "use strict";
 

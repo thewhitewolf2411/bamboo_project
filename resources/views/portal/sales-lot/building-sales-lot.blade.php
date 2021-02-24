@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="portal-app-container">
+<div class="container-fluid">
     <div class="portal-title-container">
         <div class="portal-title">
             <p>Building Sales Lot</p>
@@ -13,22 +13,18 @@
         <div class="row">
 
             <div class="col-md-6">
-                <div class="row d-flex justify-content-between py-3">
-                    <a role="button" class="mx-3" id="changetoviewtradeins">
-                        <div class="btn btn-primary btn-primary-active">
-                            View by Trade-in barcode No.
-                        </div>
-                    </a>
-                    <a role="button" class="mx-3" id="changetoviewboxes">
-                        <div class="btn btn-primary btn-primary-nonactive">
-                            View By Box Ref.
-                        </div>
-                    </a>
-                    <a role="button" class="mx-3" id="addtolot" style="opacity: 0.65">
-                        <div class="btn btn-primary btn-blue">
-                            Add to lot
-                        </div>
-                    </a>
+                <div class="d-flex">
+                    <div class="button-box col-lg-12 my-3 d-flex" data-toggle="buttons">
+                        <label class="btn btn-secondary active" style="display: flex; align-items:center; justify-content:center; max-width:310px;margin:0;">
+                            <input type="radio" name="options" id="changetoviewtradeins" autocomplete="off" checked style="opacity: 0; height:0 !important; width:0 !important; margin:0 !important;"> View by Trade-in Barcode number
+                        </label>
+                        <label class="btn btn-secondary" style="display: flex; align-items:center; justify-content:center; max-width:310px;margin:0;">
+                            <input type="radio" name="options" id="changetoviewboxes" autocomplete="off" style="opacity: 0; height:0 !important; width:0 !important; margin:0 !important;"> View by box number
+                        </label>
+                    </div>
+                    <div class="">
+                        <button id="addtolot" class="btn btn-info" role="button">Add to Lot</button>
+                    </div>
                 </div>
 
                 <table class="portal-table sortable table-visible" id="boxedtradeinstable">

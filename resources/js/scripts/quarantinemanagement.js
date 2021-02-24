@@ -121,41 +121,47 @@ $('.openbox').on('click', function(){
 
 });
 
-$('.suspendbox').on('click', function(){
-    var boxname = $(this).attr('id');
+$('#suspend-box').on('click', function(){
+    var boxid = $(this).attr('data-value');
 
-    var c = confirm("Are you sure you want to suspend box " + boxname + "?");
+    var c = confirm("Are you sure you want to suspend box " + boxid + "?");
 
     if(c){
         $.ajax({
             url: "/portal/warehouse-management/box-management/suspendbox",
             type:"POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             data:{
-                boxname:boxname,
+                boxid:boxid,
             },
             success:function(response){
-                location.reload();
+                location.href = '/portal/warehouse-management/box-management/';
             },
         });
     }
 
 });
 
-$('.closebox').on('click', function(){
-    var boxname = $(this).attr('id');
+$('#complete-box').on('click', function(){
+    var boxid = $(this).attr('data-value');
 
-    var c = confirm("Are you sure you want to close the box " + boxname + "?");
+    var c = confirm("Are you sure you want to close the box " + boxid + "?");
 
     if(c){
 
         $.ajax({
             url: "/portal/warehouse-management/box-management/completebox",
             type:"POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             data:{
-                boxname:boxname,
+                boxid:boxid,
             },
             success:function(response){
-                location.reload();
+                location.href = '/portal/warehouse-management/box-management/';
             },
         });
     }

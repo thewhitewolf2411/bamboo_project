@@ -326,6 +326,9 @@ Route::get('/portal/settings/non-working-days', 'Portal\SettingsController@showN
 Route::post('/portal/settings/non-working-days/add-non-working-days', 'Portal\SettingsController@addNonWorkingDays');
 Route::post('/portal/settings/non-working-days/remove-non-working-days', 'Portal\SettingsController@deleteNonWorkingDay');
 
+route::get('/portal/settings/clients', 'Portal\SettingsController@showClientsPage');
+route::post('/portal/settings/clients/add', 'Portal\SettingsController@addClient');
+route::post('/portal/settings/clients/delete', 'Portal\SettingsController@deleteClient');
 
 //cms
 Route::get('/portal/cms', 'Portal\CmsController@showCmsPage');

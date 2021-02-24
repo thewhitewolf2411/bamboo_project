@@ -98,7 +98,7 @@
                 @if($portalUser->sales_lot)
                     <a href="/portal/sales-lot" class="col-2 my-2">
                         <div class="portal-content-element">
-                            <p>Sales Lot </p>
+                            <p>Sales Lots </p>
                         </div>
                     </a>
                 @endif
