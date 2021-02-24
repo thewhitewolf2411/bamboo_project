@@ -73,7 +73,8 @@ class TestingController extends Controller
         if($tradein->job_state === "9" || $tradein->job_state === "10" || $tradein->job_state === "13" || $tradein->job_state === "14"){
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
-            $networks = Network::all();
+            $product_networks = ProductNetworks::where('product_id', $tradein->product_id)->get()->pluck('network_id');
+            $networks = Network::whereIn('id', $product_networks)->get();
             $productinformation = ProductInformation::where('product_id', $tradein->product_id)->get();
             $productColors = Colour::where('product_id', $tradein->product_id)->get();
             $sellingProduct = SellingProduct::all();
