@@ -473,7 +473,11 @@ class TestingController extends Controller
         
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 
-        $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->correct_product_id), $tradein->getProductName($tradein->correct_product_id), $tradein->imei_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
+        if($tradein->serial_number !== null && $tradein->imei_number === null){
+            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->correct_product_id), $tradein->getProductName($tradein->correct_product_id), $tradein->serial_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
+        } else {
+            $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->correct_product_id), $tradein->getProductName($tradein->correct_product_id), $tradein->imei_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
+        }
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
