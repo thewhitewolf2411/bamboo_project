@@ -242,6 +242,7 @@ Route::post('/portal/receiving/printnewlabel' , 'Portal\TestingController@downlo
 
 Route::get('/portal/testing/checkforserial/{id}', 'Portal\TestingController@showCheckForSerialPage');
 Route::post('/portal/testing/receive/deviceserialvisibility', 'Portal\TestingController@deviceSerialVisibility');
+Route::post('/portal/testing/receive/saveserial', 'Portal\TestingController@saveSerial');
 
 Route::post('/portal/testing/getDeviceData', 'Portal\TestingController@getDeviceData');
 Route::post('/portal/testing/getDeviceNetworkData', 'Portal\TestingController@getDeviceNetworkData');
