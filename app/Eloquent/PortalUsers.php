@@ -30,6 +30,7 @@ class PortalUsers extends Model
             'box_management',
             'quarantine_managment',
             'warehouse_management',
+            'despatch',
         'customer_care',
             'order_management',
             'create_order',

@@ -122,6 +122,9 @@ class UsersController extends Controller
         if($request->warehouse_management == "on"){
             $portalUser->warehouse_management = true;
         }
+        if($request->despatch == "on"){
+            $portalUser->despatch = true;
+        }
         if($request->customer_care == "on"){
             $portalUser->customer_care = true;
         }

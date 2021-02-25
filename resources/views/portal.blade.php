@@ -103,6 +103,14 @@
                     </a>
                 @endif
 
+                @if($portalUser->despatch)
+                    <a href="/portal/despatch" class="col-2 my-2">
+                        <div class="portal-content-element">
+                            <p>Despatch </p>
+                        </div>
+                    </a>
+                @endif
+
             </div>
 
         </div>

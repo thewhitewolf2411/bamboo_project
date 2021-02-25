@@ -412,3 +412,12 @@ Route::group(['prefix'=>'portal/sales-lot'], function(){
 
 
 });
+
+
+Route::group(['prefix' => 'portal/despatch'], function(){
+
+    Route::get('/', 'Portal\DespatchController@index');
+    Route::get('/despatchdevices', 'Portal\DespatchController@showDespatchDevices');
+    Route::get('/archive', 'Portal\DespatchController@showArchive');
+
+});

@@ -104,6 +104,10 @@
                                     <input type="checkbox" class="form-check-input" name="warehouse_management" id="warehouse_management">
                                     <label class="form-check-label" for="warehouse_management">Warehouse Management</label>
                                 </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="despatch" id="despatch">
+                                    <label class="form-check-label" for="despatch">Despatch</label>
+                                </div>
                             </div>
 
                             <div class="form-group p20 w-25">
