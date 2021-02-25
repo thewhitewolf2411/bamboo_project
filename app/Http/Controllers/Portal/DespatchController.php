@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Portal;
 
 use App\Eloquent\PortalUsers;
+use App\Eloquent\Tradein;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,8 @@ class DespatchController extends Controller
      */
     public function showDespatchDevices(){
         $portalUser = PortalUsers::where('user_id', Auth::user()->id)->first();
-        return view('portal.despatch.despatch', ['portalUser' => $portalUser]);
+        $tradeins = Tradein::where('job_state', '20')->orWhere('job_state', '19')->get();
+        return view('portal.despatch.despatch', ['portalUser' => $portalUser, 'tradeins' => $tradeins]);
     }
 
     /**

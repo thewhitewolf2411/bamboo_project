@@ -57,7 +57,10 @@ class Tradein extends Model
     }
 
     public function postCode(){
-        return null;
+        $user = $this->customer();
+        $address_line = $user->billing_address;
+        $post_code = explode(',', $address_line);
+        return $post_code[count($post_code)-1];
     }
     
     public function location(){
@@ -645,5 +648,21 @@ class Tradein extends Model
         }
         return false;
     }
+
+    public function customerName(){
+        $user = User::find($this->user_id);
+        return $user->first_name . " " . $user->last_name;
+    }
     
+    public function addressLine(){
+        $user = $this->customer();
+        $address_line = $user->billing_address;
+        $post_code = explode(',', $address_line);
+        return $post_code[0];
+    }
+
+    public function carrier(){}
+    public function trackingReference(){
+        return $this->tracking_reference;
+    }
 }

@@ -26,26 +26,27 @@
                     <table class="portal-table sortable">
                         <tr>
                             <td><div class="table-element">Trade-in ID</div></td>
-                            <td><div class="table-element">Trade-in barcode number</div></td>
-                            <td><div class="table-element">Model</div></td>
-                            <td><div class="table-element">Customer Name</div></td>
-                            <td><div class="table-element">Postcode</div></td>
-                            <td><div class="table-element">Address Line 1</div></td>
-                            <td><div class="table-element">Bamboo Status</div></td>
-                            <td><div class="table-element">Carrier</div></td>
-                            <td><div class="table-element">Tracking Reference</div></td>
+                            <td class="text-center"><div class="table-element">Trade-in barcode number</div></td>
+                            <td class="text-center"><div class="table-element">Model</div></td>
+                            <td class="text-center"><div class="table-element">Customer Name</div></td>
+                            <td class="text-center"><div class="table-element">Postcode</div></td>
+                            <td class="text-center"><div class="table-element">Address Line 1</div></td>
+                            <td class="text-center"><div class="table-element">Bamboo Status</div></td>
+                            <td class="text-center"><div class="table-element">Carrier</div></td>
+                            <td class="text-center"><div class="table-element">Tracking Reference</div></td>
                         </tr>
                         @foreach($tradeins as $tradein)
-                            @if($tradein->canProccessPayment())
-                                <tr id="tradein-{{$tradein->id}}">
-                                    <td><div class="table-element">{{$tradein->barcode}}</div></td>
-                                    <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
-                                    <td><div class="table-element">{{$tradein->getOrderDate()}}</div></td>
-                                    <td><div class="table-element">{{$tradein->getProductName($tradein->id)}}</div></td>
-                                    <td><div class="table-element">£ {{$tradein->bamboo_price}}</div></td>
-                                    <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
-                                </tr>
-                            @endif
+                            <tr id="tradein-{{$tradein->id}}">
+                                <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                                <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
+                                <td><div class="table-element">{{$tradein->getProductName($tradein->id)}}</div></td>
+                                <td><div class="table-element">{{$tradein->customerName()}}</div></td>
+                                <td><div class="table-element">{{$tradein->postCode()}}</div></td>
+                                <td><div class="table-element">{{$tradein->addressLine()}}</div></td>
+                                <td class="text-center"><div class="table-element">{{$tradein->getBambooStatus()}}</div></td>
+                                <td class="text-center"><div class="table-element">Royal Mail</div></td>
+                                <td><div class="table-element">{{$tradein->tracking_reference}}</div></td>
+                            </tr>
                         @endforeach
                     </table>
                 </div>
