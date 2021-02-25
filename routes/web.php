@@ -242,12 +242,38 @@ Route::post('/portal/receiving/printnewlabel' , 'Portal\TestingController@downlo
 
 Route::get('/portal/testing/checkforserial/{id}', 'Portal\TestingController@showCheckForSerialPage');
 Route::post('/portal/testing/receive/deviceserialvisibility', 'Portal\TestingController@deviceSerialVisibility');
+Route::post('/portal/testing/receive/saveserial', 'Portal\TestingController@saveSerial');
 
 Route::post('/portal/testing/getDeviceData', 'Portal\TestingController@getDeviceData');
 Route::post('/portal/testing/getDeviceNetworkData', 'Portal\TestingController@getDeviceNetworkData');
 
 //reports
-Route::get('/portal/reports', 'Portal\ReportsController@showReportsPage');
+
+Route::group(['prefix'=>'portal/reports'], function(){
+    Route::get('/', 'Portal\ReportsController@showReportsPage');
+
+    Route::get('/overview', 'Portal\ReportsController@showReportsOverviewPage');
+    Route::post('/getoverviewreport', 'Portal\ReportsController@generateOverviewReport');
+
+    Route::get('/stock', 'Portal\ReportsController@showReportsStockPage');
+    Route::post('/getstockreport', 'Portal\ReportsController@generateStockReport');
+
+    Route::get('/receiving', 'Portal\ReportsController@showReportsReceivingPage');
+    Route::post('/getreceivingreport', 'Portal\ReportsController@generateReceivingReport');
+
+    Route::get('/testing', 'Portal\ReportsController@showReportsTestingPage');
+    Route::post('/gettestingreport', 'Portal\ReportsController@generateTestingReport');
+
+    Route::get('/awaiting-payment', 'Portal\ReportsController@showReportsAwaitingPaymentPage');
+    Route::post('/getawaitingpaymentreport', 'Portal\ReportsController@generateOverviewReport');
+
+    Route::get('/recycle-customer-returns', 'Portal\ReportsController@showReportsRecycleCustomerReturnsPage');
+    Route::post('/getrecyclecustomerreturnswreport', 'Portal\ReportsController@generateOverviewReport');
+    
+    Route::get('/finance-recycle-reports', 'Portal\ReportsController@showReportsFinanceRecycleReportsPage');
+    Route::post('/getfinancerecyclereport', 'Portal\ReportsController@generateFinanceRecycleReport');
+
+});
 
 //feeds
 Route::get('/portal/feeds', 'Portal\FeedsController@showFeedsPage');
@@ -295,11 +321,15 @@ Route::get('/portal/settings/barcode-id','Portal\SettingsController@showSettings
 
 Route::get('/portal/settings/costs', 'Portal\SettingsController@showCostsPage');
 Route::post('/portal/settings/costs/update', 'Portal\SettingsController@updateCosts');
+Route::post('/portal/settings/costs/add', 'Portal\SettingsController@addCosts');
 
 Route::get('/portal/settings/non-working-days', 'Portal\SettingsController@showNonWorkingDaysPage');
 Route::post('/portal/settings/non-working-days/add-non-working-days', 'Portal\SettingsController@addNonWorkingDays');
 Route::post('/portal/settings/non-working-days/remove-non-working-days', 'Portal\SettingsController@deleteNonWorkingDay');
 
+route::get('/portal/settings/clients', 'Portal\SettingsController@showClientsPage');
+route::post('/portal/settings/clients/add', 'Portal\SettingsController@addClient');
+route::post('/portal/settings/clients/delete', 'Portal\SettingsController@deleteClient');
 
 //cms
 Route::get('/portal/cms', 'Portal\CmsController@showCmsPage');
@@ -331,6 +361,7 @@ Route::get('/portal/trolleys/delete/{id}', 'Portal\TrolleyController@deleteTroll
 Route::group(['prefix'=>'portal/warehouse-management'], function(){
     Route::get('/', 'Portal\WarehouseManagementController@showWarehouseManagementPage');
     Route::get('/box-management', 'Portal\WarehouseManagementController@showBoxManagementPage');
+    Route::get('/box-management/{id}', 'Portal\WarehouseManagementController@showBoxingPage');
     
     Route::get('/getdevices', 'Portal\WarehouseManagementController@getBoxDevices');
     Route::post('/box-management/createbox', 'Portal\WarehouseManagementController@createBox');

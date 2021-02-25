@@ -33,7 +33,7 @@ class Tradein extends Model
     protected $fillable = [
         'user_id', 'barcode','barcode_original','product_id', 'correct_product_id','customer_grade',
         'bamboo_grade', 'job_state', 'order_price','bamboo_price','customer_memory','customer_network',
-        'correct_memory','correct_network', 'missing_image', 'imei_number',
+        'correct_memory','correct_network', 'missing_image', 'imei_number', 'serial_number',
         'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number','expiry_date'
     ];
 
@@ -201,7 +201,7 @@ class Tradein extends Model
     }
 
     public function isGoogleLocked(){
-        if($this->job_state === '11b' || $this->job_state === '15b'){
+        if($this->job_state === '11a' || $this->job_state === '11b' || $this->job_state === '11a' || $this->job_state === '11b'){
             return true;
         }
         return false;
@@ -349,8 +349,24 @@ class Tradein extends Model
 
             return true;
         }
+    }
 
+    public function isFullyFunctional(){
+        $matches = ["11e", "15e"];
 
+        if(in_array($this->job_state, $matches)){
+            return false;
+        }
+        return true;
+    }
+
+    public function isFimpLocked(){
+        $matches = ["11a", "11b", "15a", "15b"];
+
+        if(in_array($this->job_state, $matches)){
+            return true;
+        }
+        return false;
     }
 
     public function getDeviceStatus(){

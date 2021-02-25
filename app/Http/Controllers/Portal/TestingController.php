@@ -73,7 +73,8 @@ class TestingController extends Controller
         if($tradein->job_state === "9" || $tradein->job_state === "10" || $tradein->job_state === "13" || $tradein->job_state === "14"){
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
-            $networks = Network::all();
+            $product_networks = ProductNetworks::where('product_id', $tradein->product_id)->get()->pluck('network_id');
+            $networks = Network::whereIn('id', $product_networks)->get();
             $productinformation = ProductInformation::where('product_id', $tradein->product_id)->get();
             $productColors = Colour::where('product_id', $tradein->product_id)->get();
             $sellingProduct = SellingProduct::all();
@@ -315,12 +316,31 @@ class TestingController extends Controller
 
             $klaviyoemail = new KlaviyoEmail();
             $klaviyoemail->noImei($user, $tradein);
+            $tradein->save();
+            return redirect('/portal/testing/result/' . $tradein->id);
         }
+        if($request->visible_serial === "yes"){
+            $portalUser = PortalUsers::where('user_id', Auth::user()->id)->first();
+            return view('portal.testing.receiving.checkserial', [
+                'tradein'       =>  $tradein, 
+                'product'       =>  $tradein, 
+                'user'          =>  Auth::user(),
+                'portalUser'    =>  $portalUser
+                ]
+            );
+        }
+    }
 
-
-
-        $tradein->save();
-        return redirect('/portal/testing/result/' . $tradein->id);
+    /**
+     * Save device serial number and finish receiving.
+     */
+    public function saveSerial(Request $request){
+        if(isset($request->tradein_id) && isset($request->serial_number)){
+            $tradein = Tradein::find($request->tradein_id);
+            $tradein->serial_number = $request->serial_number;
+            $tradein->save();
+            return redirect('/portal/testing/result/' . $tradein->id);
+        }
     }
 
     /**
@@ -454,7 +474,11 @@ class TestingController extends Controller
         
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 
-        $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->correct_product_id), $tradein->getProductName($tradein->correct_product_id), $tradein->imei_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
+        if($tradein->serial_number !== null && $tradein->imei_number === null){
+            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->correct_product_id), $tradein->getProductName($tradein->correct_product_id), $tradein->serial_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
+        } else {
+            $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->correct_product_id), $tradein->getProductName($tradein->correct_product_id), $tradein->imei_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
+        }
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
@@ -535,9 +559,9 @@ class TestingController extends Controller
         $traycontent->trade_in_id = $tradein->id;
         $traycontent->save();
 
-        if($tradein->visible_serial !== null){
-            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
 
+        if($tradein->serial_number !== null && $tradein->imei_number === null){
+            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->serial_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
         } else {
             $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
         }

@@ -31,6 +31,7 @@ class CreateTradeinTable extends Migration
             $table->string('correct_network')->nullable();
             $table->string('missing_image')->nullable();
             $table->string('imei_number', 15)->nullable()->default(null);
+            $table->string('serial_number')->nullable()->default(null);
             $table->string('quarantine_reason')->nullable()->default(null);
             $table->date('quarantine_date')->nullable()->default(null);
             $table->boolean('offer_accepted')->nullable();
