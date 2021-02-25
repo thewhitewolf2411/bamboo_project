@@ -430,6 +430,22 @@ class CustomerController extends Controller
                     'card_number' => Crypt::encrypt($request->account_number),
                     'sort_code' => Crypt::encrypt($request->sort_code_1 . $request->sort_code_2 . $request->sort_code_3)
                 ]);
+
+                $tradein_ids = Tradein::where('user_id', Auth::user()->id)->get()->pluck('id')->toArray();
+                if($tradein_ids){
+                    $payment_batch_devices = PaymentBatchDevice::whereIn('tradein_id', $tradein_ids)->where('payment_state', 2)->get();
+                    if($payment_batch_devices->count() > 0){
+                        // update bank_details_updated and bank_details_updated_order columns, so that FP batch can be created
+
+                        foreach($payment_batch_devices as $payment_batch_device){
+                            // check type (ignore FC batch types)
+                            $payment_batch_device->bank_details_updated = true;
+                            $payment_batch_device->bank_details_update_order = 1;
+                            $payment_batch_device->bank_details_updated_at = Carbon::now();
+                            $payment_batch_device->save();            
+                        }
+                    }
+                }
                 
                 return redirect()->back()->with('account_success', 'Payment details added successfully.');
 

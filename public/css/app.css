@@ -14205,6 +14205,26 @@ input[type=number] {
   cursor: pointer;
 }
 
+.scanning-items-table {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+}
+
+.modal-xl {
+  max-width: 100% !important;
+}
+
+.modal.small-padding {
+  padding-left: 50px !important;
+  padding-right: 50px !important;
+}
+
+.all-batch-available-devices, .scanned {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
 .register-elements-container {
   width: 50%;
 }

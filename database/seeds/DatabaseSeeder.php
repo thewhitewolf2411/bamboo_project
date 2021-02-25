@@ -50,6 +50,23 @@ class DatabaseSeeder extends Seeder
             'account_disabled'=>false,
         ]);
 
+        DB::table('users')->insert([
+
+            'first_name'=>'zumra',
+            'last_name'=>'alcatel',
+            'email'=>'zumra@alcatel.com',
+            'password'=>Crypt::encrypt('Lambda12'),
+            'current_phone'=>'2',
+            'preffered_os'=>'iOS',
+            'sub'=>false,
+            'username'=>'zumra',
+            'delivery_address'=>'The Works, 414 Union Street, Aberdeen, AB10 1TQ',
+            'billing_address'=>'Widapa Ltd, 25 Second Drove, Peterborough, PE1 5XA',
+            'contact_number'=>'061172442',
+            'type_of_user'=>0,
+            'account_disabled'=>false,
+        ]);
+
         DB::table('portal_users')->insert([
             'user_id'=>1,
             'recycle'=>true,
