@@ -201,7 +201,7 @@ class Tradein extends Model
     }
 
     public function isGoogleLocked(){
-        if($this->job_state === '11b' || $this->job_state === '15b'){
+        if($this->job_state === '11a' || $this->job_state === '11b' || $this->job_state === '11a' || $this->job_state === '11b'){
             return true;
         }
         return false;
