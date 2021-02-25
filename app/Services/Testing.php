@@ -432,7 +432,7 @@ class Testing{
             }
 
             $tradein->bamboo_price = $bambooprice;
-            $tradein->cosmetic_condition = $request->cosmetic_condition;
+            #$tradein->cosmetic_condition = $request->cosmetic_condition;
             $tradein->save();
     
             $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;
