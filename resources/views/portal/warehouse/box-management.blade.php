@@ -1,7 +1,6 @@
 @extends('portal.layouts.portal')
 
 @section('content')
-
 <div class="container-fluid">
     <div class="portal-title-container">
         <div class="portal-title">
@@ -10,320 +9,272 @@
     </div>
     <div class="portal-table-container p-0">
 
-        <div class="py-3">
-            <a role="button" data-toggle="modal" data-target="#createboxmodal">
-                <div class="btn btn-primary btn-blue">
-                    <p style="color: #fff;">Create box</p>
-                </div>
-            </a>
-            <a>
-                <div class="btn btn-primary btn-blue" id="showinprogress">
-                    <p style="color: #fff;">In progress</p>
-                </div>
-            </a>
-            <a>
-                <div class="btn btn-primary btn-blue" id="showboxed">
-                    <p style="color: #fff;">Boxed</p>
-                </div>
-            </a>
-        </div>
-
-        @if(Session::has('success'))
-        <div class="alert alert-success" role="alert">
-            {{Session::get('success')}}
-        </div>
-        @endif
-
         <div class="d-flex">
-            <div class="col-md-7">
-                <table class="portal-table uncompletebox sortable" id="box-table">
-                    <tr>
-                        <td><div class="table-element">Box No.</div></td>
-                        <td><div class="table-element">Grade</div></td>
-                        <td><div class="table-element">Manufacturer</div></td>
-                        <td><div class="table-element">Network</div></td>
-                        <td><div class="table-element">Boxed Devices</div></td>
-                        <td><div class="table-element">Status</div></td>
-                        <td><div class="table-element">Open Box</div></td>
-                        <td><div class="table-element">Suspend Box</div></td>
-                        <td><div class="table-element">Complete Box</div></td>
-                    </tr>
-                    @foreach ($boxes as $box)
-                        @if($box->getBoxStatus()!=='Complete')
-                        <tr class="boxrowhover">
-                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->id}}">{{$box->tray_name}}</div></td>
-                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->id}}">{{$box->tray_grade}}</div></td>
-                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->id}}">{{$box->tray_brand}}</div></td>
-                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->id}}">{{$box->tray_network}}</div></td>
-                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->id}}">{{$box->number_of_devices}}/{{$box->max_number_of_devices}}</div></td>
-                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->id}}">{{$box->getBoxStatus()}}</div></td>
-                            <td class="py-0">@if($box->getBoxStatus()==='Open')<div class="table-element" >Box open </div> @elseif($box->getBoxStatus()==='Complete') <div class="table-element" >Box is closed </div> @else<div id="{{$box->id}}" class="table-element openbox"><i class="fa fa-folder-open" aria-hidden="true" title="Open box"></i></div>@endif</div></td>
-                            <td class="py-0">@if($box->getBoxStatus()==='Suspended')<div class="table-element openbox" >Box suspended</div> @elseif($box->getBoxStatus()==='Complete') <div class="table-element" >Box is closed </div  @else<div id="{{$box->id}}" class="table-element suspendbox"><i class="fa fa-pause" aria-hidden="true" title="Suspend box"></div>@endif</i></div></td>
-                            <td class="py-0">@if($box->getBoxStatus()==='Complete')<div class="table-element openbox" >Box closed</div> @else<div id="{{$box->id}}" class="table-element closebox"><i class="fa fa-check" aria-hidden="true" title="Close box"></div>@endif</i></div></td>
-                        </tr>
-                        @endif
-                    @endforeach
-                </table>
-                <table class="portal-table completebox sortable" id="box-table">
-                    <tr>
-                        <td><div class="table-element">Box No.</div></td>
-                        <td><div class="table-element">Grade</div></td>
-                        <td><div class="table-element">Manufacturer</div></td>
-                        <td><div class="table-element">Network</div></td>
-                        <td><div class="table-element">Boxed Devices</div></td>
-                        <td><div class="table-element">Status</div></td>
-                        <td><div class="table-element">Open Box</div></td>
-                    </tr>
-                    @foreach ($boxes as $box)
-                        @if($box->getBoxStatus() === 'Complete')
-                        <tr class="boxrowhover">
-                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->id}}">{{$box->tray_name}}</div></td>
-                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->id}}">{{$box->tray_grade}}</div></td>
-                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->id}}">{{$box->tray_brand}}</div></td>
-                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->id}}">{{$box->tray_network}}</div></td>
-                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->id}}">{{$box->number_of_devices}}/{{$box->max_number_of_devices}}</div></td>
-                            <td class="py-0"><div class="table-element @if($box->status===1) boxrow @else boxrownotopen @endif" id="{{$box->id}}">{{$box->getBoxStatus()}}</div></td>
-                            <td class="py-0"><div id="{{$box->tray_name}}" class="table-element openbox"><i class="fa fa-folder-open" aria-hidden="true"></i></div></div></td>
-                        </tr>
-                        @endif
-                    @endforeach
-                </table>
-            </div>
+            <div class="col-md-4">
+                <form action="/portal/warehouse-management/box-management/createbox" method="post">
+                    @csrf
 
-            <div class="col-md-5 boxtablehidden" id="boxtabledevices">
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <form action="/portal/warehouse-management/box-management/addtobox" method="POST">
-                        
-                            @csrf
-                            <input type="hidden" name="boxid" value="" id="adddeviceboxid">
-
-                            <div class="form-group">
-                                <label for="adddevicetradeinid">Scan or type Trade-in ID:</label>
-                                <input class="form-control" type="text" name='tradeinid' id="adddevicetradeinid" required>
-                            </div>
-
-                            <input type="submit" class="btn btn-primary" id="adddevicebtn" value="Add device" disabled>
-                        </form>
-
-                        <div id="alerts"></div>
+                    <div class="form-group">
+                        <label for="manifacturer">Please select manufacturer</label>
+                        <select class="form-control" name="manifacturer" id="manifacturer" required>
+                            <option selected value="" disabled>Please select manufacturer</option>
+                            @foreach ($brands as $brand)
+                                <option value="{{$brand->id}}">{{$brand->brand_name}}</option>
+                            @endforeach
+                            <option value="M">Miscellaneous</option>
+                        </select>
                     </div>
-                    <div class="col-md-6 d-flex justify-content-between align-items-center">
-                        <div class="col-md-4">
-                            <div class="btn btn-primary btn-blue printboxlabel"><p style="color: #fff">Print box label</p></div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="btn btn-primary btn-blue printboxmanifest"><p style="color: #fff">Print box manifest</p></div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="btn btn-primary btn-blue printboxsummary"><p style="color: #fff">Print box summary</p></div>
-                        </div>
+                    
+                    <div class="form-group">
+                        <label for="reference">Please select reference:</label>
+                        <select class="form-control" name="reference" id="reference" required>
+                            <option selected value="" disabled>Please select reference</option>
+                            <option value="a">A</option>
+                            <option value="b+">B+</option>
+                            <option value="b">B</option>
+                            <option value="c">C</option>
+                            <option value="wsi">WSI</option>
+                            <option value="wsd">WSD</option>
+                            <option value="nwsi">NWSI</option>
+                            <option value="nwsd">NWSD</option>
+                            <option value="cat">CAT</option>
+                            <option value="fimp">FMIP</option>
+                            <option value="gock">GOCK</option>
+                            <option value="sick">SICK</option>
+                            <option value="tab">TAB</option>
+                            <option value="sw">SW</option>
+                        </select>
                     </div>
 
+                    <div class="form-group">
+                        <label for="network">Please select network:</label>
+                        <select class="form-control" name="network" id="network" disabled>
+                            <option selected value="" disabled>Please select network</option>
+                            <option value="l">Locked</option>
+                            <option value="u">Unlocked</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="boxdevices">Please select Box devices:</label>
+                        <select class="form-control" name="boxdevices" id="boxdevices">
+                            <option selected value="" disabled>Please select box devices</option>
+                            <option value="1">Mobile Phones</option>
+                            <option value="2">Tablets</option>
+                            <option value="3">Smart watches</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="capacity">Please select capacity of the box:</label>
+                        <input type="number" max="100" class="form-control" name="capacity" id="capacity" required>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6"><input type="submit" class="btn btn-primary my-3" value="Start"></div>
+                    </div>
+                </form>
+
+                <!--  -->
+                <form @isset($box) action="/portal/warehouse-management/box-management/addtobox" method="post" @endisset>
+                    @csrf
+
+                    @isset($box)
+                    <input type="hidden" name="boxid" value="{{$box->id}}">
+                    @endisset
+
+                    <div class="form-group">
+                        <label for="tradein_barcode">Scan trade in barcode:</label>
+                        <input type="number" class="form-control" name="tradein_barcode" id="tradein_barcode" required autofocus>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6"><button type="submit" class="btn btn-primary my-3" @if(isset($box)) @else disabled @endif>Submit</button></div>
+                    </div>
+
+                    @if(Session::has('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{Session::get('error')}}
+                      </div>
+                    @endif
+                </form>
+
+                @if(isset($box))
+
+                <div class="row my-3">
+                    <div class="button-box col-lg-12">
+                        <button id="cancel-box" style="width:32%" class="btn btn-info" role="button">Cancel</button>
+                        <button id="suspend-box" style="width:32%" class="btn btn-info" data-value="{{$box->id}}" role="button">Suspend</button>
+                        <button id="complete-box" style="width:32%" class="btn btn-info" data-value="{{$box->id}}" role="button">Complete box</button>
+                    </div>
                 </div>
-                <table class="portal-table sortable" id="boxdevices">
-                    <tr>
-                        <td><div class="table-element">Box No.</div></td>
-                        <td><div class="table-element">Barcode</div></td>
-                        <td><div class="table-element">Grade</div></td>
-                        <td><div class="table-element">IMEI</div></td>
-                        <td><div class="table-element">Manufacturer</div></td>
-                        <td><div class="table-element">Model</div></td>
-                    </tr>
-                </table>
+
+                @endif
             </div>
 
-            <div class="col-md-5 boxtablehidden" id="notopen">
-                <div class="row mb-5">
-                    <div class="col-md-12 d-flex justify-content-between align-items-center">
-                        <div class="col-md-4">
-                            <div id="" class="w-100 btn btn-primary btn-blue printboxlabel"><p style="color: #fff">Print box label</p></div>
-                        </div>
-                        <div class="col-md-4">
-                            <div id="" class="w-100 btn btn-primary btn-blue printboxmanifest"><p style="color: #fff">Print box manifest</p></div>
-                        </div>
-                        <div class="col-md-4">
-                            <div id="" class="w-100 btn btn-primary btn-blue printboxsummary"><p style="color: #fff">Print box summary</p></div>
-                        </div>
+            
+            
+            <div class="col-md-8" id="boxtabledevices">
+                <div class="row my-3">
+                    <div class="button-box col-lg-12">
+                        <button id="box-in-progress" class="btn btn-info" role="button" @if(!isset($box)) disabled @endif>In progress</button>
+                        <button id="boxed-devices" class="btn btn-info" role="button">Boxed</button>
+                        <button id="boxes-summary" class="btn btn-info" role="button">Summary</button>
                     </div>
-
                 </div>
-                <table class="portal-table sortable" id="notopenboxdevices">
-                    <tr>
-                        <td><div class="table-element">Box No.</div></td>
-                        <td><div class="table-element">Barcode</div></td>
-                        <td><div class="table-element">Grade</div></td>
-                        <td><div class="table-element">IMEI</div></td>
-                        <td><div class="table-element">Manufacturer</div></td>
-                        <td><div class="table-element">Model</div></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div id="createboxmodal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Create new box</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body p-5">
-            <form action="/portal/warehouse-management/box-management/createbox" method="post">
-                @csrf
+                <div class="box-table-hidden" id="box-in-progress-table-container">
+                    <table class="portal-table" id="box-in-progress-table">
+                        <thead>
+                            <tr>
+                                <td><div class="table-element">Box number</div></td>
+                                <td><div class="table-element">Trade in barcode</div></td>
+                                <td><div class="table-element">Grade</div></td>
+                                <td><div class="table-element">IMEI</div></td>
+                                <td><div class="table-element">Manufacturer/Model</div></td>
+                                <td><div class="table-element">Checkbox</div></td>
+                            </tr> 
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td><div class="table-element">Box number</div></td>
+                                <td><div class="table-element">Trade in barcode</div></td>
+                                <td><div class="table-element">Grade</div></td>
+                                <td><div class="table-element">IMEI</div></td>
+                                <td><div class="table-element">Manufacturer/Model</div></td>
+                                <td><div class="table-element">Checkbox</div></td>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @if(isset($box))
 
-                <div class="form-group">
-                    <label for="manifacturer">Please select manufacturer</label>
-                    <select class="form-control" name="manifacturer" id="manifacturer" required>
-                        <option selected value="" disabled>Please select manufacturer</option>
-                        @foreach ($brands as $brand)
-                            <option value="{{$brand->id}}">{{$brand->brand_name}}</option>
-                        @endforeach
-                        <option value="M">Miscellaneous</option>
-                    </select>
+                            @foreach ($tradeins as $tradein)
+                            <tr>
+                                <td><div class="table-element">{{$box->tray_name}}</div></td>
+                                <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                                <td><div class="table-element">{{$tradein->cosmetic_condition}}</div></td>
+                                <td><div class="table-element">{{$tradein->imei_number}}</div></td>
+                                <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                                <td><div class="table-element"><input type="checkbox"></div></td>
+                            </tr>
+                            @endforeach
+
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="box-table-hidden" id="boxed-devices-table-container">
+                    <table class="portal-table" id="boxed-devices-table">
+                        <thead>
+                            <tr>
+                                <td><div class="table-element">Box number</div></td>
+                                <td><div class="table-element">Trade in barcode</div></td>
+                                <td><div class="table-element">Grade</div></td>
+                                <td><div class="table-element">IMEI</div></td>
+                                <td><div class="table-element">Manufacturer/Model</div></td>
+                                <td><div class="table-element">Status</div></td>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td><div class="table-element">Box number</div></td>
+                                <td><div class="table-element">Trade in barcode</div></td>
+                                <td><div class="table-element">Grade</div></td>
+                                <td><div class="table-element">IMEI</div></td>
+                                <td><div class="table-element">Manufacturer/Model</div></td>
+                                <td><div class="table-element">Status</div></td>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach ($boxedTradeIns as $boxedTradein)
+                            <tr>
+                                <td><div class="table-element">{{$boxedTradein->getTrayName($boxedTradein->id)}}</div></td>
+                                <td><div class="table-element">{{$boxedTradein->barcode}}</div></td>
+                                <td><div class="table-element">{{$boxedTradein->cosmetic_condition}}</div></td>
+                                <td><div class="table-element">{{$boxedTradein->imei_number}}</div></td>
+                                <td><div class="table-element">{{$boxedTradein->getProductName($boxedTradein->product_id)}}</div></td>
+                                <td><div class="table-element"><input type="checkbox"></div></td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
                 
-                <div class="form-group">
-                    <label for="reference">Please select reference:</label>
-                    <select class="form-control" name="reference" id="reference" required>
-                        <option selected value="" disabled>Please select reference</option>
-                        <option value="a">A</option>
-                        <option value="b+">B+</option>
-                        <option value="b">B</option>
-                        <option value="c">C</option>
-                        <option value="wsi">WSI</option>
-                        <option value="wsd">WSD</option>
-                        <option value="nwsi">NWSI</option>
-                        <option value="nwsd">NWSD</option>
-                        <option value="cat">CAT</option>
-                        <option value="fimp">FMIP</option>
-                        <option value="gock">GOCK</option>
-                        <option value="sick">SICK</option>
-                        <option value="tab">TAB</option>
-                        <option value="sw">SW</option>
-                    </select>
+                <div class="box-table-hidden" id="box-summary-table-container">
+                    <table class="portal-table" id="box-summary-table">
+                        <thead>
+                            <tr>
+                                <td><div class="table-element">Box number</div></td>
+                                <td><div class="table-element">Total Quantity</div></td>
+                                <td><div class="table-element">Status</div></td>
+                                <td><div class="table-element">Actions</div></td>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td><div class="table-element">Box number</div></td>
+                                <td><div class="table-element">Total Quantity</div></td>
+                                <td><div class="table-element">Status</div></td>
+                                <td><div class="table-element">Actions</div></td>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            @foreach ($boxes as $test)
+                                <tr>
+                                    <td><div class="table-element">{{$test->tray_name}}</div></td>
+                                    <td><div class="table-element">{{$test->number_of_devices}}</div></td>
+                                    <td><div class="table-element">{{$test->getBoxStatus()}}</div></td>
+                                    <td><div class="table-element"><a role="button" class="printboxlabel" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Label</a> / <a role="button" class="printboxmanifest" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Manifest</a> / <a role="button" class="printboxsummary" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Summary</a> / <a href="/portal/warehouse-management/box-management/{{$test->id}}" id="{{$test->tray_name}}">Re-open Box</a></div></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+
+                    </table>
                 </div>
 
-                <div class="form-group">
-                    <label for="network">Please select network:</label>
-                    <select class="form-control" name="network" id="network" disabled>
-                        <option selected value="" disabled>Please select network</option>
-                        <option value="l">Locked</option>
-                        <option value="u">Unlocked</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="boxdevices">Please select Box devices:</label>
-                    <select class="form-control" name="boxdevices" id="boxdevices">
-                        <option selected value="" disabled>Please select box devices</option>
-                        <option value="1">Mobile Phones</option>
-                        <option value="2">Tablets</option>
-                        <option value="3">Smart watches</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="capacity">Please select capacity of the box:</label>
-                    <input type="number" max="100" class="form-control" name="capacity" id="capacity" required>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6"><input type="submit" class="btn btn-primary my-3" value="Submit"></div>
-                    <div class="col-md-6"><a role="button" class="w-100 my-3" data-dismiss="modal" aria-label="Cancel"><div class="btn btn-primary w-100 my-3">Cancel</div> </a></div>
-                </div>
-            </form>
-        </div>
+            </div>
         </div>
     </div>
 </div>
 
-@if(Session::has('addedtobox'))
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.23/datatables.js" defer></script>
+@if(isset($box) && $box !== null)
 
-<script
-			src="https://code.jquery.com/jquery-3.5.1.js"
-			  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-			  crossorigin="anonymous"></script>
+    @if($showLabel)
+    <script>
+        window.open('/pdf/boxlabels/box-' + {{$box->id}}  + '.pdf', '_blank');
+    </script>
+    @endif
 
-<script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
 
-    var boxname = "{{Session::get('addedtobox')}}";
-
-    $('.boxrowhover').each(function(){
-        $(this).removeClass('boxrowhoverselected');
-    });
-
-    $('.boxrow#' + boxname).parent().parent().toggleClass('boxrowhoverselected');
-
-    $('#boxtabledevices').removeClass('boxtablehidden');
-    $('#notopen').addClass('boxtablehidden');
-
-    $.ajax({
-        url: "/portal/warehouse-management/getdevices",
-        type:"GET",
-        data:{
-            boxname:boxname,
-        },
-        success:function(response){
-            $('.tabledevices').remove();
-            $('#adddeviceboxid').prop('value', '');
-            $('#adddeviceboxid').prop('value', boxname);
-            $('#adddevicetradeinid').focus();
-            for(var i = 0; i<response.length; i++){
-                $('#boxdevices').append('<tr class="tabledevices"><td><div class="table-element">' + boxname + '</div></td><td><div class="table-element">' + response[i].barcode + '</div></td><td><div class="table-element">' + response[i].bamboo_grade + '</div></td><td><div class="table-element">' + response[i].imei_number + '</div></td><td><div class="table-element">' + response[i].product_id + '</div></td><td><div class="table-element">' + response[i].model + '</div></td></tr>')
-            }
-        },
-    });
-    
-
-
-</script>
-
-@endif
-
-@if(Session::has('boxcreated') && Session::get('boxcreated'))
-<script
-			src="https://code.jquery.com/jquery-3.5.1.js"
-			  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-			  crossorigin="anonymous"></script>
-<script>
-
-var boxname = "{{Session::get('boxname')}}";
-
-$('.boxrowhover').each(function(){
-    $(this).removeClass('boxrowhoverselected');
-});
-
-$('#' + boxname).parent().parent().toggleClass('boxrowhoverselected');
-
-$('#boxtabledevices').removeClass('boxtablehidden');
-$('#notopen').addClass('boxtablehidden');
-
-$.ajax({
-    url: "/portal/warehouse-management/getdevices",
-    type:"GET",
-    data:{
-        boxname:boxname,
-    },
-    success:function(response){
-        $('.tabledevices').remove();
-        $('#adddeviceboxid').prop('value', '');
-        $('#adddeviceboxid').prop('value', boxname);
-        $('#adddevicetradeinid').focus();
-        for(var i = 0; i<response.length; i++){
-            $('#boxdevices').append('<tr class="tabledevices"><td><div class="table-element">' + boxname + '</div></td><td><div class="table-element">' + response[i].barcode + '</div></td><td><div class="table-element">' + response[i].bamboo_grade + '</div></td><td><div class="table-element">' + response[i].imei_number + '</div></td><td><div class="table-element">' + response[i].product_id + '</div></td><td><div class="table-element">' + response[i].model + '</div></td></tr>')
+    (function() {
+        $('#boxed-devices').removeClass('btn-red');
+        $('#boxes-summary').removeClass('btn-red');
+        
+        $('#box-in-progress').toggleClass('btn-red');
+        if($('#box-in-progress-table-container').hasClass('box-table-hidden')){
+            $('#box-in-progress-table-container').removeClass('box-table-hidden');
+            $('#box-in-progress-table-container').addClass('box-table-show');
         }
-    },
-});
-</script>
+        else{
+            $('#box-in-progress-table-container').addClass('box-table-hidden');
+            $('#box-in-progress-table-container').removeClass('box-table-show');
+        }
+
+        $('#boxed-devices-table-container').addClass('box-table-hidden');
+        $('#boxed-devices-table-container').removeClass('box-table-show');
+
+        $('#box-summary-table-container').addClass('box-table-hidden');
+        $('#box-summary-table-container').removeClass('box-table-show');
+
+
+    })();
+
+
+    </script>
 
 @endif
-
-
-
 @endsection

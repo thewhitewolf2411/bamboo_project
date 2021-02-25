@@ -28,12 +28,17 @@
                     </a>
                     <a href="/portal/settings/costs" class="col-2 my-2">
                         <div class="portal-content-element">
-                            <p>Edit costs</p>
+                            <p>Service Costs</p>
                         </div>
                     </a>
                     <a href="/portal/settings/non-working-days" class="col-2 my-2">
                         <div class="portal-content-element">
                             <p>Edit Non-working Days</p>
+                        </div>
+                    </a>
+                    <a href="/portal/settings/clients" class="col-2 my-2">
+                        <div class="portal-content-element">
+                            <p>Clients</p>
                         </div>
                     </a>
                 </div>

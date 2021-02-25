@@ -13,6 +13,10 @@ require('./scripts/completedsaleslot');
 require('./scripts/saleslotpicking');
 require('./scripts/PrintTradeIn');
 require('./scripts/dates');
+require('./scripts/Reports');
+require('./scripts/BoxManagement');
+require('./scripts/SearchTable');
+require('./scripts/Settings');
 
 "use strict";
 

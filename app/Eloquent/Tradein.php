@@ -201,7 +201,7 @@ class Tradein extends Model
     }
 
     public function isGoogleLocked(){
-        if($this->job_state === '11b' || $this->job_state === '15b'){
+        if($this->job_state === '11a' || $this->job_state === '11b' || $this->job_state === '11a' || $this->job_state === '11b'){
             return true;
         }
         return false;
@@ -349,8 +349,24 @@ class Tradein extends Model
 
             return true;
         }
+    }
 
+    public function isFullyFunctional(){
+        $matches = ["11e", "15e"];
 
+        if(in_array($this->job_state, $matches)){
+            return false;
+        }
+        return true;
+    }
+
+    public function isFimpLocked(){
+        $matches = ["11a", "11b", "15a", "15b"];
+
+        if(in_array($this->job_state, $matches)){
+            return true;
+        }
+        return false;
     }
 
     public function getDeviceStatus(){

@@ -12249,6 +12249,12 @@ h3, h4, h5 {
   color: #000;
 }
 
+.btn-red {
+  background: red !important;
+  border: 1px solid red !important;
+  color: #fff;
+}
+
 .row-height-140 {
   height: 140px !important;
   min-height: 140px !important;
@@ -14142,62 +14148,61 @@ input[type=number] {
   color: #000 !important;
 }
 
-#box-table {
-  width: auto !important;
-}
-
-.boxrow {
-  width: 100%;
-  height: 100%;
-}
-
-.boxrowhover {
-  cursor: pointer;
-}
-
-.boxrowhover:hover {
-  background: #fff3cd !important;
-}
-
-.boxrowhoverselected {
-  background: #d4edda !important;
-}
-
-.boxrowhoverselected:hover {
-  background: #d4edda !important;
-}
-
-.boxtablehidden {
+.box-table-hidden {
   display: none;
+}
+
+.box-table-show {
+  display: block;
+  width: 100% !important;
+}
+
+.box-table-show table {
+  width: 100% !important;
+}
+
+.box-table-show tfoot {
+  display: table-header-group;
+}
+
+#box-in-progress-table_filter {
+  display: none !important;
+}
+
+#box-in-progress-table tfoot td {
+  padding: 0 !important;
+}
+
+#box-in-progress-table tfoot td input {
+  margin: 0 !important;
+}
+
+#boxed-devices-table_filter {
+  display: none !important;
+}
+
+#boxed-devices-table tfoot td {
+  padding: 0 !important;
+}
+
+#boxed-devices-table tfoot td input {
+  margin: 0 !important;
+}
+
+#box-summary-table_filter {
+  display: none !important;
+}
+
+#box-summary-table tfoot td {
+  padding: 0 !important;
+}
+
+#box-summary-table tfoot td input {
+  margin: 0 !important;
 }
 
 .sortable:hover {
   cursor: pointer;
-}
-
-.btn-primary-nonactive {
-  opacity: 0.7 !important;
-}
-
-.table-invisible {
-  display: none;
-}
-
-.buildsaleslot-active {
-  opacity: 1;
-  height: 100%;
-}
-
-.buildsaleslot-hidden {
-  display: none;
-}
-
-.box-picked {
-  background-color: #d4edda !important;
-}
-
-.device-picked {
-  background-color: #d4edda !important;
 }
 
 .register-elements-container {
