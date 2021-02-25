@@ -14205,6 +14205,14 @@ input[type=number] {
   cursor: pointer;
 }
 
+.table-invisible {
+  display: none;
+}
+
+.table-visible {
+  display: block;
+}
+
 .register-elements-container {
   width: 50%;
 }

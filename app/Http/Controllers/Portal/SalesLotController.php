@@ -25,63 +25,31 @@ class SalesLotController extends Controller
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
 
-        $tradeins = Tradein::where('job_state', '!=', '28')->get();
+        $boxes = Tray::where('tray_type', 'Bo')->where('status', 3)->get();
+        $tradeins = array();
 
-        foreach($tradeins as $key=>$tradein){
-            if(!$tradein->isBoxed()){
-                $tradeins->forget($key);
+        foreach($boxes as $box){
+            $boxcontent = TrayContent::where('tray_id', $box->id)->get();
+
+            foreach($boxcontent as $bc){
+                $tradein = Tradein::where('id', $bc->trade_in_id)->first();
+                array_push($tradeins, $tradein);
             }
         }
-
-        $boxes = Tray::where('tray_type', 'Bo')->where('status', 3)->get();
 
 
         return view('portal.sales-lot.building-sales-lot', ['portalUser'=>$portalUser, 'tradeins'=>$tradeins, 'boxes'=>$boxes]);
     }
 
     public function buildSalesLot(Request $request){
-        $salesLot = new SalesLot();
-        $salesLot->sales_lot_status = 1;
-        $salesLot->save();
+        
+        #dd($request->all());
 
-        if(isset($request['checkedboxesid'])){
-            foreach($request['checkedboxesid'] as $boxid){
+        $selectedBoxes = $request->selectedBoxes;
+        $selectedTradeins = $request->selectedTradeIns;
 
-                $box = Tray::where('tray_name', $boxid)->first();
-                $box->status = 4;
-                $box->save();
+        #dd($selectedBoxes, $selectedTradeins);
 
-                $boxcontent = TrayContent::where('tray_id', $box->id)->get();
-                foreach($boxcontent as $bc){
-                    $tradein = Tradein::where('id', $bc->trade_in_id)->first();
-                    $tradein->job_state = '28';
-                    $tradein->save();
-                }
-    
-                $salesLotContent = new SalesLotContent();
-                $salesLotContent->sales_lot_id = $salesLot->id;
-                $salesLotContent->box_id = $box->id;
-                $salesLotContent->save();
-    
-            }
-        }
-
-
-        if(isset($request['checkedtradeinsid'])){
-            foreach($request['checkedtradeinsid'] as $tradeinid){
-                $salesLotContent = new SalesLotContent();
-                $salesLotContent->sales_lot_id = $salesLot->id;
-                $salesLotContent->device_id = $tradeinid;
-                $salesLotContent->save();
-    
-                $tradein = Tradein::where('id', $tradeinid)->first();
-                $tradein->job_state = '28';
-                $tradein->save();
-            }
-        }
-
-
-        return response('Success', 200);
         
     }
 

@@ -517,3 +517,12 @@ input[type=number] {
 .sortable:hover{
     cursor: pointer;
 }
+
+
+.table-invisible{
+    display: none;
+}
+
+.table-visible{
+    display: block;
+}
