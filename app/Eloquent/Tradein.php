@@ -662,6 +662,7 @@ class Tradein extends Model
     }
 
     public function carrier(){}
+    
     public function trackingReference(){
         return $this->tracking_reference;
     }
