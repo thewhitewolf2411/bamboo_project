@@ -12,9 +12,11 @@
         </div>
     </div>
 
-    <div class="row ml-auto mt-0 mr-auto mb-2">
-        <a class="btn btn-info" href="/portal/despatch/exportarchive">Export</a>
-    </div>
+    @if($despatched->count() > 0)
+        <div class="row ml-auto mt-0 mr-auto mb-2">
+            <a class="btn btn-info" href="/portal/despatch/exportarchive">Export</a>
+        </div>
+    @endif
 
     <div class="portal-table-container">
 
