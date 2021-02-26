@@ -449,7 +449,7 @@ class QuarantineController extends Controller
     public function changeTray($tradeinId, $newTrayId){
 
         $tradein = Tradein::where('id', $tradeinId)->first();
-        $oldTray = Tray::where('id', $tradein->getTrayId($tradein->id))->first();
+        $oldTray = Tray::where('id', $tradein->getTrayId())->first();
 
         if(count($oldTray)<1){
 

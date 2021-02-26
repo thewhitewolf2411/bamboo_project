@@ -405,6 +405,7 @@ Route::group(['prefix'=>'portal/sales-lot'], function(){
 
     Route::get('/building-sales-lot', 'Portal\SalesLotController@showBuildingSalesLotPage');
     Route::post('/building-sales-lot/build-lot', 'Portal\SalesLotController@buildSalesLot');
+    Route::post('/building-sales-lot/build-lot/getboxdata', 'Portal\SalesLotController@getBoxData');
 
     Route::get('/completed-sales-lots', 'Portal\SalesLotController@showCompletedSalesLotPage');
     Route::get('/completed-sales-lots/get-saleslot-content', 'Portal\SalesLotController@getSalesLotContent');

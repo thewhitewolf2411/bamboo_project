@@ -28,7 +28,7 @@
                 </div>
 
                 <table class="portal-table sortable table-visible" id="boxedtradeinstable">
-                    <tr>
+saleslotboxes-content-table            <tr>
                         <td><div class="table-element">Trade in Barcode numbers</div></td>
                         <td><div class="table-element">Box number</div></td>
                         <td><div class="table-element">Customer Grade</div></td>
@@ -41,12 +41,12 @@
                         <td><div class="table-element">Checkbox</div></td>
                     </tr>
                     @foreach ($tradeins as $key=>$tradein)
-                    <tr>
+                    <tr id="{{$tradein->id}}">
                         <td><div class="table-element">{{$tradein->barcode}}</div></td>
-                        <td><div class="table-element"></div></td>
+                        <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
                         <td><div class="table-element">{{$tradein->customer_grade}}</div></td>
                         <td><div class="table-element">{{$tradein->bamboo_grade}}</div></td>
-                        <td><div class="table-element">{{$tradein->getDeviceName($tradein->product_id)}}</div></td>
+                        <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                         <td><div class="table-element">{{$tradein->correct_memory}}</div></td>
                         <td><div class="table-element">{{$tradein->correct_network}}</div></td>
                         <td><div class="table-element"></div></td>
@@ -103,6 +103,32 @@
 
         </div>
 
+    </div>
+</div>
+
+<div class="modal fade" id="saleslotboxes-content" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 1200px !important" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+            </div>
+            <div class="modal-body mx-auto">
+                <table class="portal-table sortable table-visible my-5" id="saleslotboxes-content-table">
+                    <tr>
+                        <td><div class="table-element">Trade in Barcode numbers</div></td>
+                        <td><div class="table-element">Box number</div></td>
+                        <td><div class="table-element">Customer Grade</div></td>
+                        <td><div class="table-element">Bamboo Grade</div></td>
+                        <td><div class="table-element">Model/Manufacturer</div></td>
+                        <td><div class="table-element">GB Size</div></td>
+                        <td><div class="table-element">Network</div></td>
+                        <td><div class="table-element">Colour</div></td>
+                        <td><div class="table-element">Cost</div></td>
+                        <td><div class="table-element">Checkbox</div></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 

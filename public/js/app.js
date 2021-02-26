@@ -46235,10 +46235,51 @@ $('#addtolot').on('click', function () {
   });
   $('.box-sales-lot:checked').each(function () {
     selectedBoxes.push($(this).attr('data-value'));
-    $('#saleslotboxes').append($('#closedboxtable #' + $(this).attr('data-value')));
-    $('#addtolot').prop('disabled', true);
-    $('#closedboxtable #' + $(this).attr('data-value')).remove();
-  }); //console.log(selectedBoxes, selectedTradeIns);
+  });
+  $.ajax({
+    url: "/portal/sales-lot/building-sales-lot/build-lot",
+    type: "POST",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+      selectedTradeIns: selectedTradeIns,
+      selectedBoxes: selectedBoxes
+    },
+    success: function success(response) {
+      for (var i = 0; i < response[0].length; i++) {
+        //console.log(response[0][i].trade_in_id);
+        $('#boxedtradeinstable #' + response[0][i].trade_in_id).remove();
+      }
+
+      for (var i = 0; i < response[2].length; i++) {
+        $('#saleslotboxes').append('<tr class="saleslotbox" data-value="' + response[2][i].id + '"><td><div class="table-element">' + response[2][i].tray_name + '</div></td><td><div class="table-element">' + response[2][i].tray_grade + '</div></td><td><div class="table-element">' + response[2][i].tray_network + '</div></td><td><div class="table-element">' + response[2][i].total_qty + '/' + response[2][i].number_of_devices + '</div></td><td><div class="table-element">' + response[2][i].total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="remove-from-lot" data-value="' + response[2][i].id + '"></div></td></tr>');
+        $('#closedboxtable #' + response[2][i].id).remove();
+      }
+    }
+  });
+});
+$('#saleslotboxes').on('click', '.saleslotbox', function () {
+  var boxid = $(this).attr('data-value');
+  $.ajax({
+    url: "/portal/sales-lot/building-sales-lot/build-lot/getboxdata",
+    type: "POST",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+      boxid: boxid
+    },
+    success: function success(response) {
+      for (var i = 0; i < response.length; i++) {
+        $('#saleslotboxes-content-table').append('<tr><td><div class="table-element">Trade in Barcode numbers</div></td><td><div class="table-element">Box number</div></td><td><div class="table-element">Customer Grade</div></td><td><div class="table-element">Bamboo Grade</div></td><td><div class="table-element">Model/Manufacturer</div></td><td><div class="table-element">GB Size</div></td><td><div class="table-element">Network</div></td><td><div class="table-element">Colour</div></td><td><div class="table-element">Cost</div></td><td><div class="table-element">Checkbox</div></td></tr>');
+      }
+    }
+  });
+  $('#saleslotboxes-content .modal-header').empty();
+  $('#saleslotboxes-content .modal-header').append($(this).attr('data-value'));
+  $('#saleslotboxes-content .modal-header').append($(this).attr('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><img src="{{ url(' + "/customer_page_images/body/modal-close.svg" + ') }}"></span></button>'));
+  $('#saleslotboxes-content').modal('show');
 });
 
 /***/ }),
