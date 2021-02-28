@@ -19,6 +19,13 @@ $(document).on('change', function(){
     else{
         $('#completelot').prop('disabled', true);
     }
+        
+    if($('#saleslotboxes-content-table .selecteddevicesforremoval:checked').length > 0){
+        $('.modal #removefromlot').prop('disabled', false);
+    }
+    else{
+        $('.modal #removefromlot').prop('disabled', true);
+    }
 
 });
 
@@ -69,6 +76,7 @@ $('#addtolot').on('click', function(){
 $('#saleslotboxes').on('click','.saleslotbox' ,function(){
 
     var boxid = $(this).attr('data-value');
+    $('.appended-tradeins').remove();
 
     $.ajax({
         url: "/portal/sales-lot/building-sales-lot/build-lot/getboxdata",
@@ -81,7 +89,8 @@ $('#saleslotboxes').on('click','.saleslotbox' ,function(){
         },
         success:function(response){
             for(var i=0; i<response.length; i++){
-                $('#saleslotboxes-content-table').append('<tr><td><div class="table-element">Trade in Barcode numbers</div></td><td><div class="table-element">Box number</div></td><td><div class="table-element">Customer Grade</div></td><td><div class="table-element">Bamboo Grade</div></td><td><div class="table-element">Model/Manufacturer</div></td><td><div class="table-element">GB Size</div></td><td><div class="table-element">Network</div></td><td><div class="table-element">Colour</div></td><td><div class="table-element">Cost</div></td><td><div class="table-element">Checkbox</div></td></tr>');
+                console.log(response[i]);
+                $('#saleslotboxes-content-table').append('<tr class="appended-tradeins" id="' + response[i].id + '"><td><div class="table-element">' + response[i].barcode + '</div></td><td><div class="table-element">' + response[i].box_location + '</div></td><td><div class="table-element">' + response[i].customer_grade + '</div></td><td><div class="table-element">' + response[i].bamboo_grade + '</div></td><td><div class="table-element">' + response[i].product_name + '</div></td><td><div class="table-element">' + response[i].correct_memory + '</div></td><td><div class="table-element">' + response[i].correct_network + '</div></td><td><div class="table-element">Colour</div></td><td><div class="table-element">£' + response[i].bamboo_price + '</div></td><td><div class="table-element"><input type="checkbox" class="selecteddevicesforremoval"></div></td></tr>');
             }
             
         },

@@ -113,6 +113,10 @@ saleslotboxes-content-table            <tr>
 
             </div>
             <div class="modal-body mx-auto">
+                <div class="my-3">
+                    <button class="btn btn-primary" id="removefromlot" disabled>Remove</button>
+                </div>
+                
                 <table class="portal-table sortable table-visible my-5" id="saleslotboxes-content-table">
                     <tr>
                         <td><div class="table-element">Trade in Barcode numbers</div></td>

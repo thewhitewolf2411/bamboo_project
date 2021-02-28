@@ -100,12 +100,18 @@ class SalesLotController extends Controller
             if($key === intval($request->boxid)){
                 foreach($item as $i){
                     $tradein = Tradein::where('id', $i->trade_in_id)->first();
+                    $tradein->box_location = $tradein->getTrayName($tradein->id);
+                    $tradein->product_name = $tradein->getProductName($tradein->product_id);
                     array_push($tradeins, $tradein);
                 }
             }
         }
 
         return response($tradeins, 200);
+    }
+
+    public function createNewLot(Request $request){
+        dd($request->all());
     }
 
     public function showCompletedSalesLotPage(){
