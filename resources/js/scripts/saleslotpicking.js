@@ -1,3 +1,5 @@
+const { get } = require("jquery");
+
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -56,16 +58,32 @@ $('#addtolot').on('click', function(){
             selectedBoxes:selectedBoxes,
         },
         success:function(response){
-
             for(var i = 0; i<response[0].length; i++){
-                //console.log(response[0][i].trade_in_id);
                 $('#boxedtradeinstable #' + response[0][i].trade_in_id).remove();
             }
 
             for(var i = 0; i<response[2].length; i++){
+                if($("#saleslotboxes tr[data-value='" + response[2][i].id + "']").length>0){
+                    var num = $('#saleslotboxes tr[data-value="' + response[2][i].id + '"] td:nth-child(4)').text().split('/')[0];
+                    for(var j=0; j<response[0].length; j++){
+                        if(response[0][j].tray_id === response[2][i].id){
+                            num++;
+                        }
+                    }
+                    $('#saleslotboxes tr[data-value="' + response[2][i].id + '"] td:nth-child(4)').html('<div class="table-element">' + num  +'/'+ response[2][i].number_of_devices + '</div>' );
+                }
+                else{
+                    $('#saleslotboxes').append('<tr class="saleslotbox" data-value="' + response[2][i].id + '"><td><div class="table-element">' + response[2][i].tray_name + '</div></td><td><div class="table-element">' + response[2][i].tray_grade + '</div></td><td><div class="table-element">' + response[2][i].tray_network + '</div></td><td><div class="table-element">' + response[2][i].total_qty +'/'+ response[2][i].number_of_devices + '</div></td><td><div class="table-element">' + response[2][i].total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="remove-from-lot" data-value="' + response[2][i].id + '"></div></td></tr>');
+                }
 
-                $('#saleslotboxes').append('<tr class="saleslotbox" data-value="' + response[2][i].id + '"><td><div class="table-element">' + response[2][i].tray_name + '</div></td><td><div class="table-element">' + response[2][i].tray_grade + '</div></td><td><div class="table-element">' + response[2][i].tray_network + '</div></td><td><div class="table-element">' + response[2][i].total_qty +'/'+ response[2][i].number_of_devices + '</div></td><td><div class="table-element">' + response[2][i].total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="remove-from-lot" data-value="' + response[2][i].id + '"></div></td></tr>');
                 $('#closedboxtable #' + response[2][i].id).remove();
+
+                if($('#saleslotboxes tr').length > 1){
+                    $('#completelot').prop('disabled', false);
+                }
+                else{
+                    $('#completelot').prop('disabled', true);
+                }
             }
         },
     });
@@ -89,7 +107,6 @@ $('#saleslotboxes').on('click','.saleslotbox' ,function(){
         },
         success:function(response){
             for(var i=0; i<response.length; i++){
-                console.log(response[i]);
                 $('#saleslotboxes-content-table').append('<tr class="appended-tradeins" id="' + response[i].id + '"><td><div class="table-element">' + response[i].barcode + '</div></td><td><div class="table-element">' + response[i].box_location + '</div></td><td><div class="table-element">' + response[i].customer_grade + '</div></td><td><div class="table-element">' + response[i].bamboo_grade + '</div></td><td><div class="table-element">' + response[i].product_name + '</div></td><td><div class="table-element">' + response[i].correct_memory + '</div></td><td><div class="table-element">' + response[i].correct_network + '</div></td><td><div class="table-element">Colour</div></td><td><div class="table-element">£' + response[i].bamboo_price + '</div></td><td><div class="table-element"><input type="checkbox" class="selecteddevicesforremoval"></div></td></tr>');
             }
             
@@ -101,5 +118,56 @@ $('#saleslotboxes').on('click','.saleslotbox' ,function(){
     $('#saleslotboxes-content .modal-header').append($(this).attr('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><img src="{{ url(' + "/customer_page_images/body/modal-close.svg" + ') }}"></span></button>'));
     
     $('#saleslotboxes-content').modal('show');
+
+});
+
+
+$('.modal #removefromlot').on('click', function(){
+
+    var selectedTradeIns = [];
+
+    $('#saleslotboxes-content-table .selecteddevicesforremoval:checked').each(function() {
+        selectedTradeIns.push($(this).parent().parent().parent().attr('id'));
+    });
+
+    $.ajax({
+        url: "/portal/sales-lot/building-sales-lot/build-lot/getboxdata/remove",
+        type:"POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data:{
+            selectedTradeIns:selectedTradeIns,
+        },
+        success:function(response){
+            var i = 0;
+            $('#saleslotboxes-content-table .selecteddevicesforremoval:checked').each(function(){
+
+                $('#boxedtradeinstable').append('<tr id="' + response[i].id + '"><td><div class="table-element">' + response[i].barcode + '</div></td><td><div class="table-element">' + response[i].box_location + '</div></td><td><div class="table-element">' + response[i].customer_grade + '</div></td><td><div class="table-element">' + response[i].bamboo_grade + '</div></td><td><div class="table-element">' + response[i].product_name + '</div></td><td><div class="table-element">' + response[i].correct_memory + '</div></td><td><div class="table-element">' + response[i].correct_network + '</div></td><td><div class="table-element">Colour</div></td><td><div class="table-element">£' + response[i].bamboo_price + '</div></td><td><div class="table-element"><input type="checkbox" class="tradein-sales-lot"></div></td></tr>')
+
+                $(this).parent().parent().parent().remove();
+                i++;
+            })            
+        },
+    });
+});
+
+
+$('#completelot').on('click', function(){
+
+    var c = confirm('Are you sure you want to build a lot using selected items?');
+
+    if(c){
+        $.ajax({
+            url: "/portal/sales-lot/building-sales-lot/create-lot",
+            type:"POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success:function(response){
+                location.reload();
+            },
+        });
+    }
 
 });

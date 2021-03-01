@@ -14213,6 +14213,11 @@ input[type=number] {
   display: block;
 }
 
+.saleslot-active {
+  background-color: #d4edda !important;
+  color: #155724;
+}
+
 .register-elements-container {
   width: 50%;
 }
