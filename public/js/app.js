@@ -45880,6 +45880,7 @@ $('.saleslots').on('click', function () {
     $(this).removeClass('saleslot-active');
   });
   $(this).addClass('saleslot-active');
+  $('#saleslot-option-buttons button').prop('disabled', false);
 });
 $(document).on('change', '#changestate', function () {
   if ($('#changestate').val() === '2') {

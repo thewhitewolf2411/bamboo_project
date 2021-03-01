@@ -24,7 +24,7 @@
             @endif
 
             <div class="col-md-12">
-                <div class="button-box col-lg-8 my-3 d-flex" id="saleslot-option-buttons" data-toggle="buttons">
+                <div class="button-box col-lg-8 my-3 d-flex" id="saleslot-option-buttons">
                     <button class="btn btn-primary" id="view-sales-lot-btn" disabled>View Sales Lot</button>
                     <button class="btn btn-primary" id="edit-lot-btn" disabled>Edit Lot</button>
                     <button class="btn btn-primary" id="sell-lot-btn" disabled>Sell Lot</button>

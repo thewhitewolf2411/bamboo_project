@@ -14,6 +14,8 @@ $('.saleslots').on('click', function(){
 
     $(this).addClass('saleslot-active');
 
+    $('#saleslot-option-buttons button').prop('disabled', false);
+
 });
 
 
