@@ -37564,6 +37564,15 @@ $('#generate-receiving-report-btn').on('click', function () {
     }
   });
 });
+$('#generate-testing-report-btn').on('click', function () {
+  $.ajax({
+    url: "/portal/reports/gettestingreport",
+    type: "POST",
+    success: function success(response) {
+      window.open(response, "_blank");
+    }
+  });
+});
 
 /***/ }),
 

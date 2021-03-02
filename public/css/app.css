@@ -14205,6 +14205,19 @@ input[type=number] {
   cursor: pointer;
 }
 
+.table-invisible {
+  display: none;
+}
+
+.table-visible {
+  display: block;
+}
+
+.saleslot-active {
+  background-color: #d4edda !important;
+  color: #155724;
+}
+
 .scanning-items-table {
   display: flex;
   flex-wrap: nowrap;

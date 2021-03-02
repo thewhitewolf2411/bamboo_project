@@ -10,6 +10,13 @@
     </div>
     <div class="portal-table-container">
 
+        <a role="button" id="generate-testing-report-btn">
+
+            <div class="btn btn-primary btn-blue">
+                Generate Testing Report
+            </div>
+
+        </a>
 
     </div>
 </div>

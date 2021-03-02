@@ -666,4 +666,16 @@ class Tradein extends Model
     public function trackingReference(){
         return $this->tracking_reference;
     }
+
+    public function isInTesting(){
+        $testing_states = [
+            '10', '11', '12', '13', '15', 
+            '11a', '11b', '11c', '11d', '11e', '11f', '11g', '11h', '11i', '11j',
+            '15a', '15b', '15c', '15d', '15e', '15f', '15g', '15h', '15i', '15j'
+        ];
+        if(in_array($this->job_state , $testing_states)){
+            return true;
+        }
+        return false;
+    }
 }
