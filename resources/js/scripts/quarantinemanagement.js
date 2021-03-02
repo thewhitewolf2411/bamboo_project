@@ -5,6 +5,132 @@ $.ajaxSetup({
     }
 });
 
+$('#manifacturer').on('change', function(){
+
+    var options;
+    switch($(this).val()){
+        case "1":
+            options = {
+                '':'',
+                'a':'(A) AP',
+                'b+':'(B+) AP',
+                'b':'(B) AP',
+                'c':'(C) AP',
+                'wsi':'(WSI) AP',
+                'wsd':'(WSD) AP',
+                'nwsi':'(NWSI) AP',
+                'nwsd':'(NWSD) AP',
+                'cat':'(CAT) AP',
+                'fimp':'(FMIP) AP',
+                //'gock':'(GOCK) AP',
+                'sick':'(SICK) AP',
+                'tab':'(TAB) AP',
+                'sw':'(SW) AP',
+                'bl':'(BL) AP',
+            }
+            $('#reference').empty(); // remove old options
+            $.each(options, function(key,value) {
+                $('#reference').append($("<option></option>")
+                .attr("value", key).text(value));
+            });
+
+            $('#reference').prop('disabled', false);
+            $('#reference').prop('required', true);
+            break;
+        case "2":
+            options = {
+                '':'',
+                'a':'(A) SA',
+                'b+':'(B+) SA',
+                'b':'(B) SA',
+                'c':'(C) SA',
+                'wsi':'(WSI) SA',
+                'wsd':'(WSD) SA',
+                'nwsi':'(NWSI) SA',
+                'nwsd':'(NWSD) SA',
+                'cat':'(CAT) SA',
+                //'fimp':'(FMIP) SA',
+                'gock':'(GOCK) SA',
+                'sick':'(SICK) SA',
+                'tab':'(TAB) SA',
+                'sw':'(SW) SA',
+                'bl':'(BL) SA',
+            }
+            $('#reference').empty(); // remove old options
+            $.each(options, function(key,value) {
+                $('#reference').append($("<option></option>")
+                .attr("value", key).text(value));
+            });
+
+            $('#reference').prop('disabled', false);
+            $('#reference').prop('required', true);
+            break;
+        case "3":
+            options = {
+                '':'',
+                'a':'(A) HU',
+                'b+':'(B+) HU',
+                'b':'(B) HU',
+                'c':'(C) HU',
+                'wsi':'(WSI) HU',
+                'wsd':'(WSD) HU',
+                'nwsi':'(NWSI) HU',
+                'nwsd':'(NWSD) HU',
+                'cat':'(CAT) HU',
+                //'fimp':'(FMIP) HU',
+                'gock':'(GOCK) HU',
+                'sick':'(SICK) HU',
+                'tab':'(TAB) HU',
+                'sw':'(SW) HU',
+                'bl':'(BL) HU',
+            }
+            $('#reference').empty(); // remove old options
+            $.each(options, function(key,value) {
+                $('#reference').append($("<option></option>")
+                .attr("value", key).text(value));
+            });
+
+            $('#reference').prop('disabled', false);
+            $('#reference').prop('required', true);
+            break;
+        case "4":
+            options = {
+                '':'',
+                'a':'(A) MI',
+                'b+':'(B+) MI',
+                'b':'(B) MI',
+                'c':'(C) MI',
+                'wsi':'(WSI) MI',
+                'wsd':'(WSD) MI',
+                'nwsi':'(NWSI) MI',
+                'nwsd':'(NWSD) MI',
+                'cat':'(CAT) MI',
+                //'fimp':'(FMIP) HU',
+                'gock':'(GOCK) MI',
+                'sick':'(SICK) MI',
+                'tab':'(TAB) MI',
+                'sw':'(SW) MI',
+                'bl':'(BL) MI',
+            }
+            $('#reference').empty(); // remove old options
+            $.each(options, function(key,value) {
+                $('#reference').append($("<option></option>")
+                .attr("value", key).text(value));
+            });
+
+            $('#reference').prop('disabled', false);
+            $('#reference').prop('required', true);
+            break;
+        default:
+            
+            $('#reference').prop('disabled', true);
+            $('#reference').prop('required', false);
+            break;
+    }
+
+});
+
+
 $('#reference').on('change', function(){
 
     if(this.value == 'a' || this.value == 'b+' || this.value == 'b' || this.value == 'c'){

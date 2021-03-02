@@ -433,6 +433,7 @@ class Testing{
 
             $tradein->bamboo_price = $bambooprice;
             #$tradein->cosmetic_condition = $request->cosmetic_condition;
+            $tradein->product_colour = $request->device_color;
             $tradein->save();
     
             $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;

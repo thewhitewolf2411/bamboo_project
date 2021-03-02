@@ -172,25 +172,6 @@ function testingElementChanged(){
         .attr("value", value).text(key));
     });
 
-    /*if(fimpOrGoogleLock == "true" || pinLock == "true"){
-
-        //$('#cosmetic_condition').prop('disabled', true);
-        $('#cosmetic_condition').prop('disabled', false);
-        $('#cosmetic_condition').prop('required', true);
-
-    }
-    else{
-        $('#cosmetic_condition').empty(); // remove old options
-        $.each(options, function(key,value) {
-            $('#cosmetic_condition').append($("<option></option>")
-            .attr("value", value).text(key));
-        });
-
-        $('#cosmetic_condition').prop('disabled', false);
-        $('#cosmetic_condition').prop('required', true);
-    }
-*/
-
 }
 
 function cosmeticElementChanged(){

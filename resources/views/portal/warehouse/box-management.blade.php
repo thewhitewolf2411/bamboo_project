@@ -15,19 +15,19 @@
                     @csrf
 
                     <div class="form-group">
-                        <label for="manifacturer">Please select manufacturer</label>
+                        <label for="manifacturer">Manufacturer:</label>
                         <select class="form-control" name="manifacturer" id="manifacturer" required>
                             <option selected value="" disabled>Please select manufacturer</option>
                             @foreach ($brands as $brand)
                                 <option value="{{$brand->id}}">{{$brand->brand_name}}</option>
                             @endforeach
-                            <option value="M">Miscellaneous</option>
+                            <option value="4">Miscellaneous</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
-                        <label for="reference">Please select reference:</label>
-                        <select class="form-control" name="reference" id="reference" required>
+                        <label for="reference">Box Reference:</label>
+                        <select class="form-control" name="reference" id="reference" disabled>
                             <option selected value="" disabled>Please select reference</option>
                             <option value="a">A</option>
                             <option value="b+">B+</option>
@@ -43,11 +43,12 @@
                             <option value="sick">SICK</option>
                             <option value="tab">TAB</option>
                             <option value="sw">SW</option>
+                            <option value="bl">BL</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="network">Please select network:</label>
+                        <label for="network">Network:</label>
                         <select class="form-control" name="network" id="network" disabled>
                             <option selected value="" disabled>Please select network</option>
                             <option value="l">Locked</option>
@@ -56,17 +57,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="boxdevices">Please select Box devices:</label>
-                        <select class="form-control" name="boxdevices" id="boxdevices">
-                            <option selected value="" disabled>Please select box devices</option>
-                            <option value="1">Mobile Phones</option>
-                            <option value="2">Tablets</option>
-                            <option value="3">Smart watches</option>
-                        </select>
+                        <label for="capacity">Box number:</label>
+                        <input type="number" class="form-control" name="number" id="number" disabled>
                     </div>
 
                     <div class="form-group">
-                        <label for="capacity">Please select capacity of the box:</label>
+                        <label for="capacity">Box Capacity:</label>
                         <input type="number" max="100" class="form-control" name="capacity" id="capacity" required>
                     </div>
 
@@ -116,10 +112,21 @@
             
             <div class="col-md-8" id="boxtabledevices">
                 <div class="row my-3">
-                    <div class="button-box col-lg-12">
+                    <div class="button-box col-lg-4">
                         <button id="box-in-progress" class="btn btn-info" role="button" @if(!isset($box)) disabled @endif>In progress</button>
                         <button id="boxed-devices" class="btn btn-info" role="button">Boxed</button>
                         <button id="boxes-summary" class="btn btn-info" role="button">Summary</button>
+                    </div>
+                    <div class="button-box col-lg-4">
+                        @if(isset($box))
+                        <p style="color: red"><b>Boxed device: {{$box->number_of_devices}} / {{$box->max_number_of_devices}}</b></p>
+                        <p style="color: red"><b>Devices left to scan: {{$box->max_number_of_devices - $box->number_of_devices}}</b></p>
+                        @endif
+                    </div>
+                    <div class="button-box col-lg-4">
+                        @if(isset($box))
+                        <button id="remove-device-from-box" class="btn btn-info" role="button" disabled>Remove devices</button>
+                        @endif
                     </div>
                 </div>
 

@@ -23,8 +23,8 @@
             </div>
             @endif
 
-            <div class="col-md-12" style="display: flex; justify-content:center">
-                <div class="button-box col-lg-8 my-3 d-flex" id="saleslot-option-buttons">
+            <div class="col-md-12" style="display: flex;">
+                <div class="button-box my-3 d-flex" id="saleslot-option-buttons">
                     <button class="btn btn-primary" id="view-sales-lot-btn" disabled>View Sales Lot</button>
                     <button class="btn btn-primary" id="edit-lot-btn" disabled>Edit Lot</button>
                     <button class="btn btn-primary" id="sell-lot-btn" disabled>Sell Lot</button>
@@ -77,35 +77,37 @@
         </div>
         <div class="modal-body p-5">
 
-            <h5 class="modal-title">Full Boxes</h5>
-            <table class="portal-table my-3" id="sales-lot-boxes">
-                <tr>
-                    <th><div class="table-element">Box Name</div></th>
-                    <th><div class="table-element">Box Location</div></th>
-                    <th><div class="table-element">Qty</div></th>
-                </tr>
-            </table>
-
-            <h5 class="modal-title">Individual Devices</h5>
-            <table class="portal-table my-3" id="sales-lot-devices">
-                <tr>
-                    <th><div class="table-element">Trade in id</div></th>
-                    <th><div class="table-element">Model</div></th>
-                    <th><div class="table-element">IMEI</div></th>
-                    <th><div class="table-element">Box Name</div></th>
-                    <th><div class="table-element">Bay Location</div></th>
-                </tr>
-            </table>
-
-            <form id="changelotstateform" action="/portal/sales-lot/completed-sales-lots/change-state" method="POST">
+            <form action="/portal/sales-lot/completed-sales-lots/change-state" method="POST">
                 @csrf
+                <h5 class="modal-title">Sell Lot</h5>
+                <table class="portal-table my-3" id="sales-lot-boxes">
+                    <tr>
+                        <th><div class="table-element">Sales Lot No:</div></th>
+                        <th><div class="table-element" id="salelot-number"></div></th>
+                    </tr>
+                    <tr>
+                        <th><div class="table-element">Customer:</div></th>
+                        <th><div class="table-element">
+                            <select class="form-control">
+                                
+                            </select>
+                        </div></th>
+                    </tr>
+                    <tr>
+                        <th><div class="table-element">Device QTY:</div></th>
+                        <th><div class="table-element" id="device-qty">
+                            
+                        </div></th>
+                    </tr>
+                    <tr>
+                        <th><div class="table-element">Sold Value:</div></th>
+                        <th><div class="table-element">
+                            <input type="number" class="form-control" id="sold-for-input" required>    
+                        </div></th>
+                    </tr>
+                </table>
 
-                <input type="hidden" name="saleslotid" id="saleslotidform" value="">
-                <div id="changelotstatedata">
-
-
-                </div>
-
+                <input type="submit" class="btn btn-primary" id="sell-lot-confirm-btn" value="Submit">
             </form>
         </div>
         </div>
