@@ -45808,40 +45808,6 @@ $('#changetoviewboxes').on('click', function () {
     $('#changetoviewtradeins div').removeClass('btn-primary-active');
   }
 });
-$('#addtolot').on('click', function () {
-  var checkedboxes = $('.box-click:checkbox:checked');
-  var checkedtradeins = $('.tradein-click:checkbox:checked');
-  var checkedboxesid = [];
-  var checkedtradeinsid = [];
-
-  if (checkedtradeins.length + checkedboxes.length >= 1) {
-    $('#removefromlot').css("opacity", 1);
-    $('#buildalot').prop("disabled", false);
-  }
-
-  for (var i = 0; i < checkedtradeins.length; i++) {
-    checkedtradeinsid.push(checkedtradeins[i].id);
-  }
-
-  for (var i = 0; i < checkedboxes.length; i++) {
-    checkedboxesid.push(checkedboxes[i].id);
-  }
-
-  console.log(checkedboxesid);
-
-  for (var i = 0; i < checkedboxesid.length; i++) {
-    $('#box-' + checkedboxesid[i]).find('td:last-child').remove();
-    $('#selected-boxes').append('<tr id="' + checkedboxesid[i] + '">' + $('#box-' + checkedboxesid[i]).html() + '</tr>');
-    $('.' + checkedboxesid[i]).parent().remove();
-    $('#box-' + checkedboxesid[i]).remove();
-  }
-
-  for (var i = 0; i < checkedtradeinsid.length; i++) {
-    $('#tradein-' + checkedtradeinsid[i]).find('td:last-child').remove();
-    $('#selected-tradeins').append('<tr id="' + checkedtradeinsid[i] + '">' + $('#tradein-' + checkedtradeinsid[i]).html() + '</tr>');
-    $('#tradein-' + checkedtradeinsid[i]).remove();
-  }
-});
 $('.clickable').on('click', function () {
   var k = 0;
   var chckbox = $('.clickable');
@@ -45914,35 +45880,7 @@ $('.saleslots').on('click', function () {
     $(this).removeClass('saleslot-active');
   });
   $(this).addClass('saleslot-active');
-  var saleslotid = $(this).prop('id');
-  $('#saleslotidform').val(saleslotid);
-  $.ajax({
-    url: "/portal/sales-lot/completed-sales-lots/get-saleslot-content",
-    type: "GET",
-    data: {
-      saleslotid: saleslotid
-    },
-    success: function success(response) {
-      $('#sales-lot-boxes td').each(function () {
-        $(this).remove();
-      });
-      $('#sales-lot-devices td').each(function () {
-        $(this).remove();
-      });
-
-      for (var i = 0; i < response.boxes.length; i++) {
-        $('#sales-lot-boxes').append('<tr> <td> ' + response.boxes[i].tray_name + '</td><td>' + response.boxes[i].trolley_id + '</td><td>' + response.boxes[i].number_of_devices + '</td> </tr>');
-      }
-
-      for (var i = 0; i < response.devices.length; i++) {
-        $('#sales-lot-devices').append('<tr> <td> ' + response.devices[i].barcode + '</td><td>' + response.devices[i].product_name + '</td><td>' + response.devices[i].imei_number + '</td><td>' + response.devices[i].box_location + '</td><td>' + response.devices[i].bay_location + '</td></tr>');
-      }
-
-      $('#changelotstatedata').empty();
-      $('#changelotstatedata').append('<div class="form-group"><select id="changestate" name="changestate" class="form-control"><option value="" selected default disabled>Change state of Sale lot</option><option value="1">Sales Lot Under Offer</option><option value="2">Sales Lot Sold</option><option value="4">Sales Lot Sold - Payment Received</option> </select></div><div id="changestatesubmit"><input type="submit" class="btn btn-primary btn-blue" value="Change state"></div>');
-    }
-  });
-  $('#salelot-action').modal('show');
+  $('#saleslot-option-buttons button').prop('disabled', false);
 });
 $(document).on('change', '#changestate', function () {
   if ($('#changestate').val() === '2') {
@@ -46239,150 +46177,149 @@ $('.printboxsummary').on('click', function () {
   !*** ./resources/js/scripts/saleslotpicking.js ***!
   \*************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+var _require = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"),
+    get = _require.get;
 
 $.ajaxSetup({
   headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
   }
 });
-$(document).ready(function () {
-  $('#pick-sales-lot-boxes').show();
-  $('#pick-sales-lot-devices').hide();
-  $('#showscanboxdiv').find('div').removeClass('btn-blue');
-  $('#showscanboxdiv').find('div').addClass('btn-warning');
-  $('#showscandevicediv').find('div').removeClass('btn-warning');
-  $('#showscandevicediv').find('div').addClass('btn-blue');
-  var boxesCount = $('#pick-sales-lot-boxes tr').length - 1;
-  var devicesCount = $('#pick-sales-lot-devices tr').length - 1;
-  var pickedBoxesCount = $('#pick-sales-lot-boxes tr.box-picked').length;
-  var pickedDevicesCount = $('#pick-sales-lot-devices tr.device-picked').length;
-  var remainingBoxesCount = boxesCount - pickedBoxesCount;
-  var remainingDevicesCount = devicesCount - pickedDevicesCount;
-  $('#remaining').text(remainingBoxesCount + ' boxes and ' + remainingDevicesCount + ' devices.');
-  $('#picked').text(pickedBoxesCount + ' boxes and ' + pickedDevicesCount + ' devices.');
-
-  if (remainingDevicesCount + remainingBoxesCount === 0) {
-    $('#cancelpickingsaleslot').prop('disabled', true);
-    $('#completepickingsaleslot').prop('disabled', false);
-    $('#suspendpickingsaleslot').prop('disabled', true);
+$(document).on('change', function () {
+  if ($('#boxedtradeinstable .tradein-sales-lot:checked').length + $('#closedboxtable .box-sales-lot:checked').length > 0) {
+    $('#addtolot').prop('disabled', false);
   } else {
-    $('#cancelpickingsaleslot').prop('disabled', false);
-    $('#completepickingsaleslot').prop('disabled', true);
-    $('#suspendpickingsaleslot').prop('disabled', false);
-  }
-});
-$('.saleslotpicking').on('click', function () {
-  var saleslotid = this.id;
-
-  if ($('#saleslotstatus' + saleslotid).attr('data-value') === '2' || $('#saleslotstatus' + saleslotid).attr('data-value') === '4') {
-    $('#startpicklot').prop('href', '/portal/warehouse-management/picking-despatch/pick-lot/' + saleslotid);
+    $('#addtolot').prop('disabled', true);
   }
 
-  $('#printpicknote').attr('data-value', saleslotid);
+  if ($('#saleslotboxes tr').length > 1) {
+    $('#completelot').prop('disabled', false);
+  } else {
+    $('#completelot').prop('disabled', true);
+  }
+
+  if ($('#saleslotboxes-content-table .selecteddevicesforremoval:checked').length > 0) {
+    $('.modal #removefromlot').prop('disabled', false);
+  } else {
+    $('.modal #removefromlot').prop('disabled', true);
+  }
+});
+$('#addtolot').on('click', function () {
+  var tradeins = $('.tradein-sales-lot:checked');
+  var boxes = $('.box-sales-lot:checked');
+  var selectedTradeIns = [];
+  var selectedBoxes = [];
+  $('.tradein-sales-lot:checked').each(function () {
+    selectedTradeIns.push($(this).attr('data-value'));
+  });
+  $('.box-sales-lot:checked').each(function () {
+    selectedBoxes.push($(this).attr('data-value'));
+  });
   $.ajax({
-    url: "/portal/sales-lot/completed-sales-lots/get-saleslot-content",
-    type: "GET",
+    url: "/portal/sales-lot/building-sales-lot/build-lot",
+    type: "POST",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
     data: {
-      saleslotid: saleslotid
+      selectedTradeIns: selectedTradeIns,
+      selectedBoxes: selectedBoxes
     },
     success: function success(response) {
-      $('#sales-lot-boxes td').each(function () {
-        $(this).remove();
-      });
-      $('#sales-lot-devices td').each(function () {
-        $(this).remove();
-      });
-
-      for (var i = 0; i < response.boxes.length; i++) {
-        $('#sales-lot-boxes').append('<tr> <td> ' + response.boxes[i].tray_name + '</td><td>' + response.boxes[i].trolley_id + '</td><td>' + response.boxes[i].number_of_devices + '</td> </tr>');
+      for (var i = 0; i < response[0].length; i++) {
+        $('#boxedtradeinstable #' + response[0][i].trade_in_id).remove();
       }
 
-      for (var i = 0; i < response.devices.length; i++) {
-        $('#sales-lot-devices').append('<tr> <td> ' + response.devices[i].barcode + '</td><td>' + response.devices[i].product_name + '</td><td>' + response.devices[i].imei_number + '</td><td>' + response.devices[i].box_location + '</td><td>' + response.devices[i].bay_location + '</td></tr>');
+      for (var i = 0; i < response[2].length; i++) {
+        if ($("#saleslotboxes tr[data-value='" + response[2][i].id + "']").length > 0) {
+          var num = $('#saleslotboxes tr[data-value="' + response[2][i].id + '"] td:nth-child(4)').text().split('/')[0];
+
+          for (var j = 0; j < response[0].length; j++) {
+            if (response[0][j].tray_id === response[2][i].id) {
+              num++;
+            }
+          }
+
+          $('#saleslotboxes tr[data-value="' + response[2][i].id + '"] td:nth-child(4)').html('<div class="table-element">' + num + '/' + response[2][i].number_of_devices + '</div>');
+        } else {
+          $('#saleslotboxes').append('<tr class="saleslotbox" data-value="' + response[2][i].id + '"><td><div class="table-element">' + response[2][i].tray_name + '</div></td><td><div class="table-element">' + response[2][i].tray_grade + '</div></td><td><div class="table-element">' + response[2][i].tray_network + '</div></td><td><div class="table-element">' + response[2][i].total_qty + '/' + response[2][i].number_of_devices + '</div></td><td><div class="table-element">' + response[2][i].total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="remove-from-lot" data-value="' + response[2][i].id + '"></div></td></tr>');
+        }
+
+        $('#closedboxtable #' + response[2][i].id).remove();
+
+        if ($('#saleslotboxes tr').length > 1) {
+          $('#completelot').prop('disabled', false);
+        } else {
+          $('#completelot').prop('disabled', true);
+        }
       }
     }
   });
-  $('#salelot-picking').modal('show');
 });
-$('#printpicknote').on('click', function () {
-  var saleslotid = $(this).attr('data-value');
+$('#saleslotboxes').on('click', '.saleslotbox', function () {
+  var boxid = $(this).attr('data-value');
+  $('.appended-tradeins').remove();
   $.ajax({
-    url: "/portal/warehouse-management/picking-despatch/print-pick-note",
+    url: "/portal/sales-lot/building-sales-lot/build-lot/getboxdata",
     type: "POST",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
     data: {
-      saleslotid: saleslotid
+      boxid: boxid
     },
     success: function success(response) {
-      window.open(response, "_blank");
+      for (var i = 0; i < response.length; i++) {
+        $('#saleslotboxes-content-table').append('<tr class="appended-tradeins" id="' + response[i].id + '"><td><div class="table-element">' + response[i].barcode + '</div></td><td><div class="table-element">' + response[i].box_location + '</div></td><td><div class="table-element">' + response[i].customer_grade + '</div></td><td><div class="table-element">' + response[i].bamboo_grade + '</div></td><td><div class="table-element">' + response[i].product_name + '</div></td><td><div class="table-element">' + response[i].correct_memory + '</div></td><td><div class="table-element">' + response[i].correct_network + '</div></td><td><div class="table-element">Colour</div></td><td><div class="table-element">£' + response[i].bamboo_price + '</div></td><td><div class="table-element"><input type="checkbox" class="selecteddevicesforremoval"></div></td></tr>');
+      }
     }
   });
+  $('#saleslotboxes-content .modal-header').empty();
+  $('#saleslotboxes-content .modal-header').append($(this).attr('data-value'));
+  $('#saleslotboxes-content .modal-header').append($(this).attr('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><img src="{{ url(' + "/customer_page_images/body/modal-close.svg" + ') }}"></span></button>'));
+  $('#saleslotboxes-content').modal('show');
 });
-$('#showscanboxdiv').on('click', function () {
-  $('#buildsaleslot-scanboxdiv').removeClass('buildsaleslot-hidden');
-  $('#buildsaleslot-scanboxdiv').addClass('buildsaleslot-active');
-  $('#buildsaleslot-scandevicediv').removeClass('buildsaleslot-active');
-  $('#buildsaleslot-scandevicediv').addClass('buildsaleslot-hidden');
-  $('#pick-sales-lot-boxes').show();
-  $('#pick-sales-lot-devices').hide();
-  $('#buildssaleslot-scanboxinput').show();
-  $('#buildssaleslot-scandeviceinput').hide();
-  $('#buildssaleslot-scanboxinput').focus();
-  $(this).find('div').removeClass('btn-blue');
-  $(this).find('div').addClass('btn-warning');
-  $('#showscandevicediv').find('div').removeClass('btn-warning');
-  $('#showscandevicediv').find('div').addClass('btn-blue');
-});
-$('#showscandevicediv').on('click', function () {
-  $('#buildsaleslot-scandevicediv').removeClass('buildsaleslot-hidden');
-  $('#buildsaleslot-scandevicediv').addClass('buildsaleslot-active');
-  $('#buildsaleslot-scanboxdiv').removeClass('buildsaleslot-active');
-  $('#buildsaleslot-scanboxdiv').addClass('buildsaleslot-hidden');
-  $('#pick-sales-lot-boxes').hide();
-  $('#pick-sales-lot-devices').show();
-  $('#buildssaleslot-scanboxinput').hide();
-  $('#buildssaleslot-scandeviceinput').show();
-  $('#buildssaleslot-scandeviceinput').focus();
-  $(this).find('div').removeClass('btn-blue');
-  $(this).find('div').addClass('btn-warning');
-  $('#showscanboxdiv').find('div').removeClass('btn-warning');
-  $('#showscanboxdiv').find('div').addClass('btn-blue');
-});
-$('#buildssaleslot-scanboxinput').on('input', function () {
-  var boxname = $(this).val();
-  var saleslotid = $('#buildsaleslot-salelot').val();
+$('.modal #removefromlot').on('click', function () {
+  var selectedTradeIns = [];
+  $('#saleslotboxes-content-table .selecteddevicesforremoval:checked').each(function () {
+    selectedTradeIns.push($(this).parent().parent().parent().attr('id'));
+  });
   $.ajax({
-    url: "/portal/warehouse-management/picking-despatch/pick-lot/checkboxstatus",
+    url: "/portal/sales-lot/building-sales-lot/build-lot/getboxdata/remove",
     type: "POST",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
     data: {
-      boxname: boxname,
-      saleslotid: saleslotid
+      selectedTradeIns: selectedTradeIns
     },
-    success: function success(data, textStatus, xhr) {
-      $('#buildssaleslot-scanboxsubmit').prop('disabled', false);
-    },
-    error: function error(data, textStatus, xhr) {
-      $('#buildssaleslot-scanboxsubmit').prop('disabled', true);
+    success: function success(response) {
+      var i = 0;
+      $('#saleslotboxes-content-table .selecteddevicesforremoval:checked').each(function () {
+        $('#boxedtradeinstable').append('<tr id="' + response[i].id + '"><td><div class="table-element">' + response[i].barcode + '</div></td><td><div class="table-element">' + response[i].box_location + '</div></td><td><div class="table-element">' + response[i].customer_grade + '</div></td><td><div class="table-element">' + response[i].bamboo_grade + '</div></td><td><div class="table-element">' + response[i].product_name + '</div></td><td><div class="table-element">' + response[i].correct_memory + '</div></td><td><div class="table-element">' + response[i].correct_network + '</div></td><td><div class="table-element">Colour</div></td><td><div class="table-element">£' + response[i].bamboo_price + '</div></td><td><div class="table-element"><input type="checkbox" class="tradein-sales-lot"></div></td></tr>');
+        $(this).parent().parent().parent().remove();
+        i++;
+      });
     }
   });
 });
-$('#buildssaleslot-scandeviceinput').on('input', function () {
-  var devicebarcode = $(this).val();
-  var saleslotid = $('#buildsaleslot-salelot').val();
-  $.ajax({
-    url: "/portal/warehouse-management/picking-despatch/pick-lot/checkdevicestatus",
-    type: "POST",
-    data: {
-      devicebarcode: devicebarcode,
-      saleslotid: saleslotid
-    },
-    success: function success(data, textStatus, xhr) {
-      $('#buildssaleslot-scandevicesubmit').prop('disabled', false);
-    },
-    error: function error(data, textStatus, xhr) {
-      $('#buildssaleslot-scandevicesubmit').prop('disabled', true);
-    }
-  });
+$('#completelot').on('click', function () {
+  var c = confirm('Are you sure you want to build a lot using selected items?');
+
+  if (c) {
+    $.ajax({
+      url: "/portal/sales-lot/building-sales-lot/create-lot",
+      type: "POST",
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success: function success(response) {
+        location.reload();
+      }
+    });
+  }
 });
 
 /***/ }),

@@ -189,8 +189,8 @@ class Tradein extends Model
         }
     }
 
-    public function getTrayId($id){
-        $trayid = TrayContent::where('trade_in_id', $id)->first();
+    public function getTrayId(){
+        $trayid = TrayContent::where('trade_in_id', $this->id)->first();
         if($trayid !== null){
             $trayid = $trayid->tray_id;
             return $trayid;

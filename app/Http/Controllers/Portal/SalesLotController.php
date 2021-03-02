@@ -11,6 +11,7 @@ use App\Eloquent\Tradein;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
 use Illuminate\Support\Facades\Auth;
+use Session;
 
 class SalesLotController extends Controller
 {
@@ -25,64 +26,190 @@ class SalesLotController extends Controller
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
 
-        $tradeins = Tradein::where('job_state', '!=', '28')->get();
+        $boxes = Tray::where('tray_type', 'Bo')->where('status', 3)->get();
+        $tradeins = array();
 
-        foreach($tradeins as $key=>$tradein){
-            if(!$tradein->isBoxed()){
-                $tradeins->forget($key);
+        #$sli = SalesLotContent::all();
+        foreach($boxes as $box){
+            $boxcontent = TrayContent::where('tray_id', $box->id)->get();
+
+            foreach($boxcontent as $bc){
+                if(SalesLotContent::where('device_id', $bc->trade_in_id)->first() === null){
+                    $tradein = Tradein::where('id', $bc->trade_in_id)->first();
+                    array_push($tradeins, $tradein);
+                }
             }
         }
 
-        $boxes = Tray::where('tray_type', 'Bo')->where('status', 3)->get();
-
+        if(Session::has('allTradeins')){
+            Session::forget('allTradeins');
+        }
 
         return view('portal.sales-lot.building-sales-lot', ['portalUser'=>$portalUser, 'tradeins'=>$tradeins, 'boxes'=>$boxes]);
     }
 
     public function buildSalesLot(Request $request){
-        $salesLot = new SalesLot();
-        $salesLot->sales_lot_status = 1;
-        $salesLot->save();
 
-        if(isset($request['checkedboxesid'])){
-            foreach($request['checkedboxesid'] as $boxid){
+        $selectedBoxes = $request->selectedBoxes;
+        $selectedTradeins = $request->selectedTradeIns;
 
-                $box = Tray::where('tray_name', $boxid)->first();
-                $box->status = 4;
-                $box->save();
-
-                $boxcontent = TrayContent::where('tray_id', $box->id)->get();
-                foreach($boxcontent as $bc){
-                    $tradein = Tradein::where('id', $bc->trade_in_id)->first();
-                    $tradein->job_state = '28';
-                    $tradein->save();
+        $boxcontent = "";
+        if(!empty($selectedTradeins)){
+            $boxcontent = TrayContent::whereIn('trade_in_id', $selectedTradeins)->get()->groupBy('tray_id');
+            foreach($boxcontent as $key=>$bc){
+                if(is_array($selectedBoxes) && in_array($key, $selectedBoxes)){
+                    $pos = array_search($key, $selectedBoxes);
+                    unset($selectedBoxes[$pos]);
                 }
-    
-                $salesLotContent = new SalesLotContent();
-                $salesLotContent->sales_lot_id = $salesLot->id;
-                $salesLotContent->box_id = $box->id;
-                $salesLotContent->save();
-    
             }
         }
-
-
-        if(isset($request['checkedtradeinsid'])){
-            foreach($request['checkedtradeinsid'] as $tradeinid){
-                $salesLotContent = new SalesLotContent();
-                $salesLotContent->sales_lot_id = $salesLot->id;
-                $salesLotContent->device_id = $tradeinid;
-                $salesLotContent->save();
-    
-                $tradein = Tradein::where('id', $tradeinid)->first();
-                $tradein->job_state = '28';
-                $tradein->save();
-            }
+        else{
+            $boxcontent = array();
+        }
+        $boxcontent2 = "";
+        if(!empty($selectedBoxes)){
+            $boxcontent2 = TrayContent::whereIn('tray_id', $selectedBoxes)->get();
+        }
+        else{
+            $boxcontent2 = array();
+        }
+        $boxcontent = "";
+        if(!empty($selectedTradeins)){
+            $boxcontent = TrayContent::whereIn('trade_in_id', $selectedTradeins)->get();
+        }
+        else{
+            $boxcontent = array();
         }
 
+        if(empty($boxcontent) || empty($boxcontent2)){
+            if(empty($boxcontent)){
+                $allItems = $boxcontent2;
+                $allItems = $allItems->groupBy('tray_id');
+            }
+            if(empty($boxcontent2)){
+                $allItems = $boxcontent;
+                $allItems = $allItems->groupBy('tray_id');
+            }
+        }
+        else{
+            $allItems = $boxcontent->merge($boxcontent2);
+            $allItems = $allItems->groupBy('tray_id');
+        }
 
-        return response('Success', 200);
         
+
+        $boxes = array();
+
+        foreach($allItems as $key=>$item){
+            $box = Tray::where('id', $key)->first();
+            $box->total_cost = 0;
+            $box->total_qty = count($allItems[$key]);
+            array_push($boxes, $box);
+        }
+
+        $boxcontent2 = "";
+        if(!empty($selectedBoxes)){
+            $boxcontent2 = TrayContent::whereIn('tray_id', $selectedBoxes)->get();
+            $boxcontent2 = $boxcontent2->toArray();
+        }
+        else{
+            $boxcontent2 = array();
+        }
+        $boxcontent = "";
+        if(!empty($selectedTradeins)){
+            $boxcontent = TrayContent::whereIn('trade_in_id', $selectedTradeins)->get();
+            $boxcontent = $boxcontent->toArray();
+        }
+        else{
+            $boxcontent = array();
+        }
+
+        $allTradeins = array_merge($boxcontent, $boxcontent2);
+        $allCurrentTradeins = $allTradeins;
+        #dd($allCurrentTradeins);
+
+        if(Session::has('allTradeins')){
+            $allTradeins = array_unique(array_merge($allTradeins, Session::get('allTradeins')), SORT_REGULAR);
+        }
+
+        Session::put(['allTradeins'=>$allTradeins]);
+
+        return response([$allCurrentTradeins, $allItems, $boxes], 200);
+        
+    }
+
+    public function getBoxName($id){
+        return Tray::where('id', $id)->first()->tray_name;
+    }
+
+    public function getBoxData(Request $request){
+        #dd(Session::get('allItems'), $request->all());
+
+        #dd(Session::get('allTradeins'), $request->all());
+
+        $tradeins = array();
+        foreach(Session::get('allTradeins') as $item){
+            //dd($item['tray_id']);
+            if($item['tray_id'] === intval($request->boxid)){
+                $tradein = Tradein::where('id', $item['trade_in_id'])->first();
+                $tradein->box_location = $tradein->getTrayName($tradein->id);
+                $tradein->product_name = $tradein->getProductName($tradein->product_id);
+                array_push($tradeins, $tradein);
+            }
+        }
+
+        return response($tradeins, 200);
+    }
+
+    public function removeFromBox(Request $request){
+        #dd($request->all());
+
+        $selectedTradeins = $request->selectedTradeIns;
+        $sessionItems = Session::get('allTradeins');
+
+        $tradeins = array();
+
+        foreach($selectedTradeins as $selectedTradein){
+            foreach($sessionItems as $key=>$sessionItem){
+                if($sessionItem['trade_in_id'] === intval($selectedTradein)){
+                    $tradein = Tradein::where('id', $sessionItem['trade_in_id'])->first();
+                    $tradein->box_location = $tradein->getTrayName($tradein->id);
+                    $tradein->product_name = $tradein->getProductName($tradein->product_id);
+                    array_push($tradeins, $tradein);
+                    unset($sessionItems[$key]);
+                }
+            }
+        }
+        #dd($sessionItems);
+
+        Session::put(['allTradeins'=>$sessionItems]);
+
+        return response($tradeins, 200);
+    }
+
+    public function createNewLot(Request $request){
+
+        $salesLotItems = Session::get('allTradeins');
+        #dd($salesLotItems);
+
+        $saleLot = SalesLot::create([
+            'sales_lot_status'=>1,
+        ]);
+
+        foreach($salesLotItems as $salesLotItem){
+
+            $tradein = Tradein::where('id', $salesLotItem['trade_in_id'])->first();
+
+            $sli = new SalesLotContent();
+            $sli->sales_lot_id = $saleLot->id;
+            $sli->box_id = $tradein->getTrayId();
+            $sli->device_id = $tradein->id;
+            $sli->save();
+        }
+
+        #Sesson::forget();
+
+        return response(200);
     }
 
     public function showCompletedSalesLotPage(){
