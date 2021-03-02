@@ -50,7 +50,7 @@
                     <div class="form-group">
                         <label for="network">Network:</label>
                         <select class="form-control" name="network" id="network" disabled>
-                            <option selected value="" disabled>Please select network</option>
+                            <option selected value='' disabled>Please select network</option>
                             <option value="l">Locked</option>
                             <option value="u">Unlocked</option>
                         </select>

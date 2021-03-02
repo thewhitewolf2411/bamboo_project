@@ -363,7 +363,9 @@ Route::group(['prefix'=>'portal/warehouse-management'], function(){
     Route::get('/box-management', 'Portal\WarehouseManagementController@showBoxManagementPage');
     Route::get('/box-management/{id}', 'Portal\WarehouseManagementController@showBoxingPage');
     
+    
     Route::get('/getdevices', 'Portal\WarehouseManagementController@getBoxDevices');
+    Route::post('/getboxnumber', 'Portal\WarehouseManagementController@getBoxNumber');
     Route::post('/box-management/createbox', 'Portal\WarehouseManagementController@createBox');
     Route::post('/box-management/addtobox', 'Portal\WarehouseManagementController@addDeviceToBox');
     Route::post('/box-management/openbox', 'Portal\WarehouseManagementController@openBox');

@@ -44,7 +44,7 @@ class WarehouseManagementController extends Controller
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
         $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->where('status', '!=', 1)->get();
-        $brands = Brand::whereIn('id', [1,2,3]);
+        $brands = Brand::whereIn('id', [1,2,3])->get();
 
         $boxedTradeIns = array();
 
@@ -115,7 +115,7 @@ class WarehouseManagementController extends Controller
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
         $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->where('status', '!=', 1)->get();
-        $brands = Brand::all();
+        $brands = Brand::whereIn('id', [1,2,3])->get();
 
         $id = $box->tray_name;
 
@@ -814,6 +814,31 @@ class WarehouseManagementController extends Controller
         }
 
         return redirect('/portal/warehouse-management/picking-despatch')->with(['success'=>'Sales lot despatched']);
+    }
+
+    public function getBoxNumber(Request $request){
+        #dd($request->all());
+
+        $brandLet = strtoupper($request->manufacturer);
+        $brand = "";
+
+
+        if($brandLet === "1"){
+            $brand = "Apple";
+        }
+        if($brandLet === "2"){
+            $brand = "Samsung";
+        }
+        if($brandLet === "3"){
+            $brand = "Huaweii";
+        }
+        if($brandLet === "4"){
+            $brand = "Miscellaneous";
+        }
+
+        $boxes = Tray::where('tray_type', 'Bo')->where('tray_brand', $brand)->where('tray_grade', strtoupper($request->reference))->get();
+
+        return response(count($boxes), 200);
     }
 
 }

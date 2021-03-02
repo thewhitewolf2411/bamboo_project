@@ -14165,6 +14165,14 @@ input[type=number] {
   display: table-header-group;
 }
 
+.table-visible tfoot {
+  display: table-header-group;
+}
+
+#boxedtradeinstable_filter {
+  display: none;
+}
+
 #box-in-progress-table_filter {
   display: none !important;
 }

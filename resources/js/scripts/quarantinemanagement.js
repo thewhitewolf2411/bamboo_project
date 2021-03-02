@@ -304,6 +304,30 @@ $(document).ready(function(){
 
 });
 
+$('select').on('change', function(){
+    if($('#manifacturer').val() != '' && $('#reference').val() != ''){
+        var manufacturer = $('#manifacturer').val();
+        var reference = $('#reference').val();
+        var network = $('#network').val();
+
+        $.ajax({
+            url: "/portal/warehouse-management/getboxnumber",
+            type:"POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data:{
+                manufacturer:manufacturer,
+                reference:reference,
+                network:network
+            },
+            success:function(response){
+                $('#number').val('0' + (parseInt(response) + 1));
+            },
+        });
+    }
+});
+
 $('#showinprogress').on('click', function(){
     $('.completebox').hide();
     $('.uncompletebox').show();

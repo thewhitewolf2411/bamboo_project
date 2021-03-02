@@ -37370,20 +37370,6 @@ $(document).ready(function () {
       }
     });
   });
-  $('#box-summary-table tfoot td').each(function () {
-    var title = $(this).text();
-    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-  });
-  var boxsummarytable = $('#box-summary-table').DataTable(); // Apply the search
-
-  boxsummarytable.columns().every(function () {
-    var that = this;
-    $('input', this.footer()).on('keyup change', function () {
-      if (that.search() !== this.value) {
-        that.search(this.value).draw();
-      }
-    });
-  });
 });
 $('#box-in-progress').on('click', function () {
   $('#boxed-devices').removeClass('btn-red');
@@ -45908,6 +45894,22 @@ $('#sell-lot-btn').on('click', function () {
   $('#salelot-action #salelot-number').html(selectedid);
   $('#salelot-action #device-qty').html(selectedquantity);
 });
+$(document).ready(function () {
+  $('#boxedtradeinstable tfoot td').each(function () {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+  var boxsummarytable = $('#boxedtradeinstable').DataTable(); // Apply the search
+
+  boxsummarytable.columns().every(function () {
+    var that = this;
+    $('input', this.footer()).on('keyup change', function () {
+      if (that.search() !== this.value) {
+        that.search(this.value).draw();
+      }
+    });
+  });
+});
 
 /***/ }),
 
@@ -46216,6 +46218,28 @@ $(document).ready(function () {
   if (document.getElementsByClassName('completebox').length > 0) {
     $('.completebox').hide();
     $('#showboxed').css('opacity', 0.65);
+  }
+});
+$('select').on('change', function () {
+  if ($('#manifacturer').val() != '' && $('#reference').val() != '') {
+    var manufacturer = $('#manifacturer').val();
+    var reference = $('#reference').val();
+    var network = $('#network').val();
+    $.ajax({
+      url: "/portal/warehouse-management/getboxnumber",
+      type: "POST",
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data: {
+        manufacturer: manufacturer,
+        reference: reference,
+        network: network
+      },
+      success: function success(response) {
+        $('#number').val('0' + (parseInt(response) + 1));
+      }
+    });
   }
 });
 $('#showinprogress').on('click', function () {
