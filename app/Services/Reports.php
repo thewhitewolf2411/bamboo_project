@@ -6,7 +6,7 @@ use App\Eloquent\AdditionalCosts;
 use App\Eloquent\TestingFaults;
 use App\Eloquent\Tradein;
 use Schema;
-
+use \PhpOffice\PhpSpreadsheet\Cell\DataType;
 class Reports{
 
     public function overviewReport(){
@@ -605,7 +605,7 @@ class Reports{
                 $sheet->setCellValue('B'.$index, $tradein->barcode);
                 $sheet->setCellValue('C'.$index, $tradein->getBrandName($tradein->product_id));
                 $sheet->setCellValue('D'.$index, $tradein->getProductName($tradein->product_id));
-                $sheet->setCellValue('E'.$index, $tradein->imei_number);
+                $sheet->setCellValueExplicit('E'.$index, (string)$tradein->imei_number, DataType::TYPE_STRING);
                 $sheet->setCellValue('F'.$index, $correct_network);
                 $sheet->setCellValue('G'.$index, $tradein->product_colour);
                 $sheet->setCellValue('H'.$index, $tradein->customer_grade);
