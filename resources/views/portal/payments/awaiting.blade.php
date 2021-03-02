@@ -27,133 +27,98 @@
 
     <main class="portal-main">
         <div class="app">
-            <div class="portal-app-container">
-                <div class="portal-title-container">
-                    <div class="portal-title">
-                        <div class="row justify-content-around">
-                            <p class="pt-2 text-center">Awaiting Payments</p>
 
-                            <form class="d-flex align-items-center mx-5 text-center" action="/portal/payments/awaiting" method="GET">              
-                                <label for="searchtradeins">Search by Trade-in barcode / Trade-in ID:</label>
-                                <input type="text" minlength="7" name="search" class="form-control mx-3 my-0" @if(isset(request()->search)) value="{{request()->search}}" @endif required>
-                                <button type="submit" class="btn btn-primary btn-blue">Search</button>
-                                @if(isset(request()->search)) <a class="btn" href="/portal/payments/awaiting">Cancel</a> @endif
-                            </form>
+            <div class="portal-title-container">
+                <div class="portal-title">
+                    <div class="row justify-content-around">
+                        <p class="pt-2 text-center">Awaiting Payments</p>
+
+                        <form class="d-flex align-items-center mx-5 text-center" action="/portal/payments/awaiting" method="GET">              
+                            <label for="searchtradeins">Search by Trade-in barcode / Trade-in ID:</label>
+                            <input type="text" minlength="7" name="search" class="form-control mx-3 my-0" @if(isset(request()->search)) value="{{request()->search}}" @endif required>
+                            <button type="submit" class="btn btn-primary btn-blue">Search</button>
+                            @if(isset(request()->search)) <a class="btn" href="/portal/payments/awaiting">Cancel</a> @endif
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="m-auto w-75">
+                <div class="mt-4 mb-4 row">
+                    <div class="btn btn-primary btn-blue w-25 mr-0 ml-auto" style="display:block;" onclick="showBatchCreate()">New Batch</div>
+                    <div id="batchref" class="ml-0 mr-auto p-2 border">{!!$batch_ref!!}</div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div id="scanning-payment-items" class="hidden">
+                    <h5 class="text-center mb-3">Choose scanning option:</h5>
+                    <div class="row justify-content-around mt-2" id="scan-options">
+                        <div>
+                            <div id="trolly-option" class="btn btn-light" onclick="toggleScanOption('trolley')">TROLLY</div>
+                            <div id="tray-option" class="btn btn-light" onclick="toggleScanOption('tray')">TRAY</div>
+                            <div id="tradein-option" class="btn btn-light" onclick="toggleScanOption('barcode')">TRADEIN-BARCODE</div>
+                        </div>
+                    </div>
+                    <div class="row" id="search-box">
+                        <div class="row ml-auto mr-auto">
+                            <div class="d-flex align-items-center mx-5 text-center p-4">              
+                                <input id="search_id" type="text" minlength="7" class="form-control mx-3 my-0" required>
+                                <div id="searchbtn" class="btn btn-primary btn-blue disabled" onclick="search()">Scan</div>
+                                <div id="create-button" class="btn btn-secondary disabled w-100 ml-2" onclick="createBatch()">Create batch</div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="m-auto w-75">
-                    <div class="mt-4 mb-4 row">
-                        <div class="btn btn-primary btn-blue w-25 mr-0 ml-auto" data-toggle="modal" data-target="#batchModal" onclick="showSearch()" style="display:block;">New Batch</div>
-                        <div id="batchref" class="ml-0 mr-auto p-2 border">{!!$batch_ref!!}</div>
-                    </div>
-                </div>
 
-                <div class="portal-table-container">
-                    <h5 class="text-center">Devices</h5>
-                    <table class="portal-table sortable">
-                        <tr>
-                            <td><div class="table-element">Trade-in ID</div></td>
-                            <td><div class="table-element">Trade-in barcode number</div></td>
-                            <td><div class="table-element">Order date</div></td>
-                            <td><div class="table-element">Product</div></td>
-                            <td><div class="table-element">Price</div></td>
-                            <td><div class="table-element">Stock location</div></td>
-                        </tr>
-                        @foreach($tradeins as $tradein)
+                <div class="alert alert-danger w-75 text-center ml-auto mr-auto hidden mb-4" role="alert" id="scanerror"></div>
+
+                <div class="scanning-items-table justify-content-around mb-4">
+
+                    <div class="all-batch-available-devices" id="all-devices-div">
+
+                        <table class="portal-table sortable" id="tradeins-table">
                             <tr>
-                                <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
-                                <td><div class="table-element">{{$tradein->barcode}}</div></td>
-                                <td><div class="table-element">{{$tradein->getOrderDate()}}</div></td>
-                                <td><div class="table-element">{{$tradein->getProductName($tradein->id)}}</div></td>
-                                <td><div class="table-element">£ {{$tradein->bamboo_price}}</div></td>
-                                <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
+                                <td><div class="table-element">Trade-in ID</div></td>
+                                <td><div class="table-element">Trade-in barcode number</div></td>
+                                <td><div class="table-element">Order date</div></td>
+                                <td><div class="table-element">Product</div></td>
+                                <td><div class="table-element">Price</div></td>
+                                <td><div class="table-element">Stock location</div></td>
                             </tr>
-                        @endforeach
-                    </table>
-                </div>
-
-                <!-- Batch modal -->
-                <div class="modal fade small-padding" id="batchModal" tabindex="-1" role="dialog" aria-labelledby="batchModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-xl" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="batchModalLabel">Create batch</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true" style="color: black;">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <h5 class="text-center mb-3 mt-3">Choose scanning option:</h5>
-                                <div class="row justify-content-around mt-2 hidden" id="scan-options">
-                                    <div>
-                                        <div id="trolly-option" class="btn btn-light" onclick="toggleScanOption('trolley')">TROLLY</div>
-                                        <div id="tray-option" class="btn btn-light" onclick="toggleScanOption('tray')">TRAY</div>
-                                        <div id="tradein-option" class="btn btn-light" onclick="toggleScanOption('barcode')">TRADEIN-BARCODE</div>
-                                    </div>
+                            @foreach($tradeins as $tradein)
+                                <tr id="tradein-{{$tradein->id}}">
+                                    <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
+                                    <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                                    <td><div class="table-element">{{$tradein->getOrderDate()}}</div></td>
+                                    <td><div class="table-element">{{$tradein->getProductName($tradein->id)}}</div></td>
+                                    <td><div class="table-element">£ {{$tradein->bamboo_price}}</div></td>
+                                    <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                    <div class="scanned mr-auto hidden" id="scanned-awaiting-table">
+                        <div id="batch-devices-box">
+                            <div class="portal-table-container p-0 pl-1">
+                                <div id="search-results">
+                                    <table class="portal-table sortable" id="search-results-table">
+                                        <tr id="hr">
+                                            <td><div class="table-element">Trade-in barcode number</div></td>
+                                            <td><div class="table-element">Product</div></td>
+                                            <td><div class="table-element">Stock location</div></td>
+                                            <td><div class="table-element"></div></td>
+                                        </tr>
+                                    </table>
                                 </div>
-                                <div class="row hidden" id="search-box">
-                                    <div class="row ml-auto mr-auto">
-                                        <div class="d-flex align-items-center mx-5 text-center p-4">              
-                                            <input id="search_id" type="text" minlength="7" class="form-control mx-3 my-0" required>
-                                            <div id="searchbtn" class="btn btn-primary btn-blue disabled" onclick="search()">Scan</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="alert alert-danger w-75 text-center ml-auto mr-auto hidden mb-4" role="alert" id="scanerror"></div>
-
-                                <div class="scanning-items-table justify-content-around mb-4">
-                                    <div class="all-batch-available-devices">
-                                        <table class="portal-table sortable" id="tradeins-table">
-                                            <tr>
-                                                <td><div class="table-element">Trade-in ID</div></td>
-                                                <td><div class="table-element">Trade-in barcode number</div></td>
-                                                <td><div class="table-element">Order date</div></td>
-                                                <td><div class="table-element">Product</div></td>
-                                                <td><div class="table-element">Price</div></td>
-                                                <td><div class="table-element">Stock location</div></td>
-                                            </tr>
-                                            @foreach($tradeins as $tradein)
-                                                <tr id="tradein-{{$tradein->id}}">
-                                                    <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
-                                                    <td><div class="table-element">{{$tradein->barcode}}</div></td>
-                                                    <td><div class="table-element">{{$tradein->getOrderDate()}}</div></td>
-                                                    <td><div class="table-element">{{$tradein->getProductName($tradein->id)}}</div></td>
-                                                    <td><div class="table-element">£ {{$tradein->bamboo_price}}</div></td>
-                                                    <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
-                                                </tr>
-                                            @endforeach
-                                        </table>
-                                    </div>
-                                    <div class="scanned">
-                                        <div id="batch-devices-box">
-                                            <div class="portal-table-container p-0 pl-1">
-                                                <div id="search-results">
-                                                    <table class="portal-table sortable" id="search-results-table">
-                                                        <tr id="hr">
-                                                            <td><div class="table-element">Trade-in barcode number</div></td>
-                                                            <td><div class="table-element">Product</div></td>
-                                                            <td><div class="table-element">Stock location</div></td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <a data-dismiss="modal" class="btn btn-secondary">Cancel</a>
-                                <button id="create-button" onclick="createBatch()" type="button" class="btn btn-secondary disabled">Create batch</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
             </div>
+
         </div>
     </main>
 
@@ -181,13 +146,22 @@ var scanoption = null;
 var CAN_SCAN = null;
 
 
-function showSearch(){
-    let options = document.getElementById('scan-options');
-    let box = document.getElementById('search-box');
-    if(options.classList.contains('hidden')) options.classList.remove('hidden');
-    if(box.classList.contains('hidden')) box.classList.remove('hidden');
-    clearSearchTable();
+function showBatchCreate(){
+    let scanitems = document.getElementById('scanning-payment-items');
+    let alldevices = document.getElementById('all-devices-div');
+    let scanneddevices = document.getElementById("scanned-awaiting-table");
+
+    if(scanitems.classList.contains('hidden')){
+        scanitems.classList.remove('hidden');
+    }
+    if(!alldevices.classList.contains('ml-auto')){
+        alldevices.classList.add('ml-auto');
+    }
+    if(scanneddevices.classList.contains('hidden')){
+        scanneddevices.classList.remove('hidden');
+    }
 }
+
 
 function toggleScanOption(option){
     let element;
@@ -249,7 +223,7 @@ function toggleScanOption(option){
 
 function search(){
     if(CAN_SCAN){
-        clearSearchTable();
+        //clearSearchTable();
 
         let searchterm = document.getElementById('search_id').value;
 
@@ -354,9 +328,21 @@ function loadResults(results){
                 stock_location_div.innerHTML = item.stock_location;
                 td_stock_location.appendChild(stock_location_div);
 
+                let td_remove = document.createElement('td');
+                let remove_div = document.createElement('div');
+                remove_div.classList.add('table-element');
+
+                let remove_action = document.createElement('div');
+                remove_action.innerHTML = "&#10005;";
+                remove_action.onclick = function(){removeFromScanned(item.id)};
+
+                remove_div.appendChild(remove_action);
+                td_remove.appendChild(remove_div);
+
                 row.appendChild(td_barcode);
                 row.appendChild(td_product);
                 row.appendChild(td_stock_location);
+                row.appendChild(td_remove);
 
                 container.appendChild(row);
             }
@@ -377,6 +363,12 @@ function loadResults(results){
         results_table.classList.remove('hidden');
     }
 
+    checkSubmit();
+}
+
+function removeFromScanned(id){
+    let element = document.getElementById(id);
+    element.parentNode.removeChild(element);
     checkSubmit();
 }
 
