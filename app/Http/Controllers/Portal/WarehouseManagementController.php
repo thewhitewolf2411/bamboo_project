@@ -43,8 +43,8 @@ class WarehouseManagementController extends Controller
     public function showBoxManagementPage(){
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
-        $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->get();
-        $brands = Brand::all();
+        $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->where('status', '!=', 1)->get();
+        $brands = Brand::whereIn('id', [1,2,3]);
 
         $boxedTradeIns = array();
 
@@ -114,7 +114,7 @@ class WarehouseManagementController extends Controller
         $box = Tray::where('id', $id)->first();
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
-        $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->get();
+        $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->where('status', '!=', 1)->get();
         $brands = Brand::all();
 
         $id = $box->tray_name;
@@ -344,7 +344,7 @@ class WarehouseManagementController extends Controller
         $boxContent = TrayContent::where('tray_id', $box->id)->get();
         $tradeins = array();
 
-        $brandLet = substr($boxname, 0, 1);
+        $brandLet = substr($boxname, 1, 1);
         $brand = "";
 
         if($brandLet === "A"){
@@ -362,6 +362,8 @@ class WarehouseManagementController extends Controller
         if($brandLet === "Q"){
             $brand = "Quarantine";
         }
+
+        #dd($brandLet);
 
         foreach($boxContent as $bC){
 

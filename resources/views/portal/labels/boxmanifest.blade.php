@@ -25,7 +25,6 @@
     <div style='text-align:center;'>
     
         <h2>Box {{$boxname}} manifest</h2>
-
         <table>
             <tr>
                 <th>Box number</th>
@@ -39,7 +38,7 @@
             <tr>
                 <td>{{$boxname}}</td>
                 <td>{{$tradein->barcode}}</td>
-                <td>{{$brand}}</td>
+                <td>{{$tradein->getBrandName(null)}}</td>
                 <td>{{$tradein->getProductName($tradein->product_id)}}</td>
                 <td>{{$tradein->cosmetic_condition}}</td>
                 <td>{!! $tradein->getIMEIBarcode() !!} <br> {{$tradein->imei_number}}</td>

@@ -28,7 +28,7 @@
                 </div>
 
                 <table class="portal-table sortable table-visible" id="boxedtradeinstable">
-saleslotboxes-content-table            <tr>
+                    <tr>
                         <td><div class="table-element">Trade in Barcode numbers</div></td>
                         <td><div class="table-element">Box number</div></td>
                         <td><div class="table-element">Customer Grade</div></td>

@@ -19,14 +19,23 @@ $('.saleslots').on('click', function(){
 });
 
 
-$(document).on('change', '#changestate', function(){
+$('#view-sales-lot-btn').on('click', function(){
 
-    if($('#changestate').val() === '2'){
-        $('#changestatesubmit').remove();
-        $('#changelotstatedata').append('<div id="customer-name-input" class="form-group"><input type="text" name="customername" placeholder="Enter customer name"></div><div id="changestatesubmit"><input type="submit" class="btn btn-primary btn-blue" value="Change state"></div>');
-    }
-    else{
-        $('#customer-name-input').remove();
-    }
+    var selectedid =  $('.saleslot-active').attr('id');
+
+    window.open('/portal/sales-lot/completed-sales-lot/view-lot/' + selectedid, '_self');
+
+});
+
+$('#sell-lot-btn').on('click', function(){
+
+    $('#salelot-action').modal('show');
+
+    var selectedid =  $('.saleslot-active').attr('id');
+    var selectedquantity = $('.saleslot-active td:nth-child(3) > div:nth-child(1)').html();
+    //console.log(selectedquantity);
+
+    $('#salelot-action #salelot-number').html(selectedid);
+    $('#salelot-action #device-qty').html(selectedquantity);
 
 });

@@ -251,40 +251,27 @@ class SalesLotController extends Controller
         return response(['boxes'=>$boxes, 'devices'=>$devices], 200);
     }
 
-    public function changeSalesLotState(Request $request){
+    public function sellLot(Request $request){
 
-        #dd($request->all());
+        dd($request->all());
 
-        $salesLot = SalesLot::where('id', $request->saleslotid)->first();
+    }
 
-        $salesLotStatus = $salesLot->sales_lot_status;
+    public function showSingleLotPage($id){
+        $user = Auth::user();
+        $portalUser = PortalUsers::where('user_id', $user->id)->first();
 
-        if(intval($salesLotStatus) === intval($request->changestate)){
-            return redirect()->back()->with('error', 'Lot no.' . $salesLot->id . ' is already marked as "' . $salesLot->getStatus(intval($request->changestate)) . '"');
+        $salesLots = SalesLot::where('id', $id)->first();
+        $salesLotContent = SalesLotContent::where('sales_lot_id', $id)->get();
+
+        $tradeins = array();
+
+        foreach($salesLotContent as $sLC){
+            $tradein = Tradein::where('id', $sLC->device_id)->first();
+            array_push($tradeins, $tradein);
         }
 
-        if($salesLotStatus + 1 === intval($request->changestate)){
-            $salesLot->sales_lot_status = $salesLot->sales_lot_status + 1;
-            
-            if(isset($request->customername)){
-                $salesLot->sold_to = $request->customername;
-            }
-
-            if($request->changestate === '2'){
-                $salesLot->date_sold = \Carbon\Carbon::now();
-            }
-
-            if($request->changestate === '4'){
-                $salesLot->payment_date = \Carbon\Carbon::now();
-            }
-
-            $salesLot->save();
-
-            return redirect()->back()->with('success', 'You have succesfully changed state of Lot no.' . $salesLot->id . ' to "' . $salesLot->getStatus($salesLot->sales_lot_status) . '"');
-        }
-        else{
-            return redirect()->back()->with('error', 'You cannot change state of Lot no.' . $salesLot->id . ' to "' . $salesLot->getStatus(intval($request->changestate)) . '"');
-        }
+        return view('portal.sales-lot.view-sales-lot', ['portalUser'=>$portalUser, 'salesLots'=>$salesLots, 'tradeins'=>$tradeins]);
 
     }
 }
