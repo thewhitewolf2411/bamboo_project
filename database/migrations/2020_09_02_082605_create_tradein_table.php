@@ -29,6 +29,7 @@ class CreateTradeinTable extends Migration
             $table->string('customer_network')->nullable(true)->default(null);
             $table->string('correct_memory')->nullable();
             $table->string('correct_network')->nullable();
+            $table->string('product_colour')->nullable();
             $table->string('missing_image')->nullable();
             $table->string('imei_number', 15)->nullable()->default(null);
             $table->string('serial_number')->nullable()->default(null);

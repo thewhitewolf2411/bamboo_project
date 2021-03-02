@@ -33,7 +33,7 @@ class Tradein extends Model
     protected $fillable = [
         'user_id', 'barcode','barcode_original','product_id', 'correct_product_id','customer_grade',
         'bamboo_grade', 'job_state', 'order_price','bamboo_price','customer_memory','customer_network',
-        'correct_memory','correct_network', 'missing_image', 'imei_number', 'serial_number',
+        'correct_memory','correct_network', 'product_colour', 'missing_image', 'imei_number', 'serial_number',
         'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 'expiry_date'
     ];
 
