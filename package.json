@@ -24,6 +24,8 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "datatables.net": "^1.10.23",
+        "datatables.net-buttons": "^1.6.5",
         "vue-multiselect": "^2.1.6"
     }
 }

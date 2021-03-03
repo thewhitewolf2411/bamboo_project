@@ -22,7 +22,7 @@
                 {{Session::get('error')}}
             </div>
             @endif
-
+            
             <div class="col-md-12" style="display: flex;">
                 <div class="button-box my-3 d-flex" id="saleslot-option-buttons">
                     <button class="btn btn-primary" id="view-sales-lot-btn" disabled>View Sales Lot</button>
@@ -33,18 +33,33 @@
                     <button class="btn btn-primary" id="pre-alret-btn" disabled>ISM Pre-alert</button>
                 </div>
             </div>
+
             <div class="col-md-12">
                 <table class="portal-table sortable table-visible" id="boxedtradeinstable">
-                    <tr>
-                        <td><div class="table-element">Lot no.</div></td>
-                        <td><div class="table-element">Date Created</div></td>
-                        <td><div class="table-element">Qty</div></td>
-                        <td><div class="table-element">Cost</div></td>
-                        <td><div class="table-element">Sold Value</div></td>
-                        <td><div class="table-element">Status</div></td>
-                        <td><div class="table-element">Date sold</div></td>
-                        <td><div class="table-element">Payment date</div></td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <td><div class="table-element">Lot no.</div></td>
+                            <td><div class="table-element">Date Created</div></td>
+                            <td><div class="table-element">Qty</div></td>
+                            <td><div class="table-element">Cost</div></td>
+                            <td><div class="table-element">Sold Value</div></td>
+                            <td><div class="table-element">Status</div></td>
+                            <td><div class="table-element">Date sold</div></td>
+                            <td><div class="table-element">Payment date</div></td>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td><div class="table-element">Lot no.</div></td>
+                            <td><div class="table-element">Date Created</div></td>
+                            <td><div class="table-element">Qty</div></td>
+                            <td><div class="table-element">Cost</div></td>
+                            <td><div class="table-element">Sold Value</div></td>
+                            <td><div class="table-element">Status</div></td>
+                            <td><div class="table-element">Date sold</div></td>
+                            <td><div class="table-element">Payment date</div></td>
+                        </tr>
+                    </tfoot>
                     @foreach ($salesLots as $saleLot)
                     <tr class="saleslots" id="{{$saleLot->id}}">
                         <td><div class="table-element">{{$saleLot->id}}</div></td>
@@ -65,6 +80,9 @@
 
     </div>
 </div>
+
+
+
 
 <div id="salelot-action" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
     <div class="modal-dialog" role="document">
@@ -88,8 +106,10 @@
                     <tr>
                         <th><div class="table-element">Customer:</div></th>
                         <th><div class="table-element">
-                            <select class="form-control">
-                                
+                            <select class="form-control" name="clients" id="clients">
+                                @foreach ($clients as $client)
+                                    <option value="{{$client->id}}">{{$client->account_name}}</option>
+                                @endforeach
                             </select>
                         </div></th>
                     </tr>

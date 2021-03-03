@@ -39,3 +39,27 @@ $('#sell-lot-btn').on('click', function(){
     $('#salelot-action #device-qty').html(selectedquantity);
 
 });
+
+$(document).ready(function(){
+
+    $('#boxedtradeinstable tfoot td').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );    
+
+    var boxsummarytable = $('#boxedtradeinstable').DataTable();
+    
+    // Apply the search
+    boxsummarytable.columns().every( function () {
+    
+        var that = this;
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    });
+
+});

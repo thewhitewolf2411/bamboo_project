@@ -10,6 +10,7 @@ use App\Eloquent\SalesLotContent;
 use App\Eloquent\Tradein;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
+use App\Eloquent\Clients;
 use Illuminate\Support\Facades\Auth;
 use Session;
 
@@ -215,10 +216,11 @@ class SalesLotController extends Controller
     public function showCompletedSalesLotPage(){
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
+        $clients = Clients::all();
 
         $salesLots = SalesLot::all();
 
-        return view('portal.sales-lot.completed-sales-lot', ['portalUser'=>$portalUser, 'salesLots'=>$salesLots]);
+        return view('portal.sales-lot.completed-sales-lot', ['portalUser'=>$portalUser, 'salesLots'=>$salesLots, 'clients'=>$clients]);
     }
 
     public function getSalesLotContent(Request $request){

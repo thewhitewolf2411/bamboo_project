@@ -17,6 +17,7 @@ class CreateTrayContentTable extends Migration
             $table->id();
             $table->integer('tray_id');
             $table->integer('trade_in_id');
+            $table->integer('pseudo_tray_id')->nullable();
             $table->timestamps();
         });
     }

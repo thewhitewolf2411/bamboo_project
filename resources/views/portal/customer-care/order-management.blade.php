@@ -103,8 +103,10 @@
                             {{-- <i class="fa fa-times" style="color:black !important;"></i> --}}
                             <img style="width: 15px;" src="{{url('/images/undo.png')}}">
                         </a>
+                        @elseif($tradein->deviceInPaymentProcess())
+                            <div class="alert alert-warning mb-0">Device is in payment process.</div>
                         @else
-                            <div class="alert alert-warning mb-0">Hasen't been tested yet.</div>
+                            <div class="alert alert-warning mb-0">Device hasn't been tested yet.</div>
                         @endif
                     </td>
                                                 

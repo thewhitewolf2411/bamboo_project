@@ -363,7 +363,9 @@ Route::group(['prefix'=>'portal/warehouse-management'], function(){
     Route::get('/box-management', 'Portal\WarehouseManagementController@showBoxManagementPage');
     Route::get('/box-management/{id}', 'Portal\WarehouseManagementController@showBoxingPage');
     
+    
     Route::get('/getdevices', 'Portal\WarehouseManagementController@getBoxDevices');
+    Route::post('/getboxnumber', 'Portal\WarehouseManagementController@getBoxNumber');
     Route::post('/box-management/createbox', 'Portal\WarehouseManagementController@createBox');
     Route::post('/box-management/addtobox', 'Portal\WarehouseManagementController@addDeviceToBox');
     Route::post('/box-management/openbox', 'Portal\WarehouseManagementController@openBox');
@@ -412,7 +414,7 @@ Route::group(['prefix'=>'portal/sales-lot'], function(){
     
     Route::get('/completed-sales-lots', 'Portal\SalesLotController@showCompletedSalesLotPage');
     Route::get('/completed-sales-lots/get-saleslot-content', 'Portal\SalesLotController@getSalesLotContent');
-    Route::post('/completed-sales-lots/change-state', 'Portal\SalesLotController@changeSalesLotState');
+    Route::post('/completed-sales-lots/change-state', 'Portal\SalesLotController@sellLot');
     Route::get('/completed-sales-lot/view-lot/{id}', 'Portal\SalesLotController@showSingleLotPage');
 
 });

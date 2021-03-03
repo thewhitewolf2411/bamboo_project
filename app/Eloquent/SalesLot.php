@@ -18,7 +18,7 @@ class SalesLot extends Model
 
 
     protected $fillable = [
-        'sales_lot_status','date_sold','payment_date'
+        'sales_lot_status', 'sold_to', 'date_sold','sold_to', 'sold_value', 'payment_date'
     ];
 
     public function getSalesLotQuantity(){

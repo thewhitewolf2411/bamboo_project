@@ -1383,5 +1383,41 @@ class DatabaseSeeder extends Seeder
             'per_job_deduction'=>0.00,
             'applied_to'=>0
         ]);
+
+        DB::table('clients')->insert([
+            'account_name'=>'Tesla Motors',
+            'contact_name'=>'Elon Musk',
+            'address'=>'Hethel, UK',
+            'post_code'=>'01234',
+            'country'=>'USA',
+            'contact_email'=>'some@dummy.email',
+            'contact_number'=>'1',
+            'vat_code'=>'T1',
+            'payment_type'=>'Transfer'
+        ]);
+
+        DB::table('clients')->insert([
+            'account_name'=>'SpaceX',
+            'contact_name'=>'Elon Musk',
+            'address'=>'Austin,Texas, US',
+            'post_code'=>'01234',
+            'country'=>'USA',
+            'contact_email'=>'some@dummy.email',
+            'contact_number'=>'1',
+            'vat_code'=>'T1',
+            'payment_type'=>'Transfer'
+        ]);
+
+        DB::table('clients')->insert([
+            'account_name'=>'Nurolink',
+            'contact_name'=>'Elon Musk',
+            'address'=>'Austin,Texas, US',
+            'post_code'=>'01234',
+            'country'=>'USA',
+            'contact_email'=>'some@dummy.email',
+            'contact_number'=>'1',
+            'vat_code'=>'T1',
+            'payment_type'=>'Transfer'
+        ]);
     }
 }
