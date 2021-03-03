@@ -638,7 +638,6 @@ class Reports{
         return '/reports/testing/' . $filename;
     }
 
-    
     public function recycleCustomerReturns(){
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
