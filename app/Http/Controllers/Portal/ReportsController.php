@@ -114,4 +114,12 @@ class ReportsController extends Controller
         return response($file, 200);
     }
 
+    public function generateRecycleCustomerReturnsReport(){
+        $reports = new Reports();
+
+        $file = $reports->recycleCustomerReturns();
+
+        return response($file, 200);
+    }
+
 }

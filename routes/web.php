@@ -268,7 +268,7 @@ Route::group(['prefix'=>'portal/reports'], function(){
     Route::post('/getawaitingpaymentreport', 'Portal\ReportsController@generateOverviewReport');
 
     Route::get('/recycle-customer-returns', 'Portal\ReportsController@showReportsRecycleCustomerReturnsPage');
-    Route::post('/getrecyclecustomerreturnswreport', 'Portal\ReportsController@generateOverviewReport');
+    Route::post('/getrecyclecustomerreturnswreport', 'Portal\ReportsController@generateRecycleCustomerReturnsReport');
     
     Route::get('/finance-recycle-reports', 'Portal\ReportsController@showReportsFinanceRecycleReportsPage');
     Route::post('/getfinancerecyclereport', 'Portal\ReportsController@generateFinanceRecycleReport');
