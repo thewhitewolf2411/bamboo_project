@@ -287,6 +287,7 @@ $('#complete-box').on('click', function(){
                 boxid:boxid,
             },
             success:function(response){
+                window.open(response);
                 location.href = '/portal/warehouse-management/box-management/';
             },
         });
@@ -294,6 +295,7 @@ $('#complete-box').on('click', function(){
 
 
 });
+
 
 $(document).ready(function(){
 

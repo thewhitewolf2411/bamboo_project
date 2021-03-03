@@ -55637,6 +55637,7 @@ $('#complete-box').on('click', function () {
         boxid: boxid
       },
       success: function success(response) {
+        window.open(response);
         location.href = '/portal/warehouse-management/box-management/';
       }
     });

@@ -72,5 +72,18 @@ class Tray extends Model
         return $price;
     }
 
+    public function getBoxBrand(){
+        switch($this->tray_brand){
+            case "Apple":
+                return 1;
+            case "Samsung":
+                return 2;
+            case "Huaweii":
+                return 3;
+            default:
+                return 4;
+        }
+    }
+
 
 }

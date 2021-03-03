@@ -106,8 +106,10 @@
                     <tr>
                         <th><div class="table-element">Customer:</div></th>
                         <th><div class="table-element">
-                            <select class="form-control">
-                                
+                            <select class="form-control" name="clients" id="clients">
+                                @foreach ($clients as $client)
+                                    <option value="{{$client->id}}">{{$client->account_name}}</option>
+                                @endforeach
                             </select>
                         </div></th>
                     </tr>

@@ -21,7 +21,7 @@ class TrayContent extends Model
      * @var array
      */
     protected $fillable = [
-        'tray_id','trade_in_id'
+        'tray_id','trade_in_id', 'pseudo_tray_id'
     ];
 
 }

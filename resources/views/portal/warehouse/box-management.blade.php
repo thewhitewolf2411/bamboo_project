@@ -245,12 +245,13 @@
     </div>
 </div>
 
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.23/datatables.js" defer></script>
 @if(isset($box) && $box !== null)
 
-    @if($showLabel)
+    @if(Session::get('boxstatus') && Session::get('boxstatus')===3)
     <script>
-        window.open('/pdf/boxlabels/box-' + {{$box->id}}  + '.pdf', '_blank');
+        //window.open('/pdf/boxlabels/box-' + {{$box->id}}  + '.pdf', '_blank');
+        window.open('{!!Session::get('response')->original!!}');
+        location.href="/portal/warehouse-management/box-management/";
     </script>
     @endif
 
