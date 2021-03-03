@@ -106,4 +106,12 @@ class ReportsController extends Controller
         return response($file, 200);
     }
 
+    public function generateTestingReport(){
+        $reports = new Reports();
+
+        $file = $reports->testingReport();
+
+        return response($file, 200);
+    }
+
 }

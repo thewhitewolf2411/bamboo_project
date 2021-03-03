@@ -468,8 +468,11 @@ class TestingController extends Controller
         #dd($request->all());
 
         $testing = new Testing();
-        $quarantineName = $testing->testDevice($request)['tray_name'];
-        $quarantineTrays = $testing->testDevice($request)['tray'];
+        // $quarantineName = $testing->testDevice($request)['tray_name'];
+        // $quarantineTrays = $testing->testDevice($request)['tray'];
+        $testingResult =  $testing->testDevice($request);
+        $quarantineName = $testingResult['tray_name'];
+        $quarantineTrays = $testingResult['tray'];
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
