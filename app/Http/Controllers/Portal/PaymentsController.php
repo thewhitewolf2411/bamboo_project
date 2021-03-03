@@ -332,7 +332,7 @@ class PaymentsController extends Controller
             // generate payment batch csv file
             $batch_ids = request()->batches;
             $batchService = new PaymentBatchService();
-            $file = $batchService->generateCSV($batch_ids);
+            $batchService->generateCSV($batch_ids);
 
             return response(implode(",",$batch_ids), 200);
         }
@@ -345,26 +345,36 @@ class PaymentsController extends Controller
         if(isset(request()->batch_id)){
             $exploded = explode(',', request()->batch_id);
             if(count($exploded) > 1){
+                $csvdata = "";
+                $items = [];
                 $batches = PaymentBatch::whereIn('id', $exploded)->get();
-
-                $files = [];
+                $count = 0;
                 foreach($batches as $batch){
-                    $files[$batch->csv_file] = storage_path().'/app/public/exports/batches/' . $batch->csv_file;
+                    $file = storage_path().'/app/public/exports/batches/' . $batch->csv_file;
+                    if(file_exists($file)){
+                        $handle = fopen($file, "r");
+                        $contents = fread($handle, filesize($file));
+                        $items[$count] = $contents;
+                        fclose($handle);
+                        $count++;
+                    }
                 }
-                $zipname = 'batches.zip';
-                $zip = new ZipArchive;
-                $zip->open($zipname, ZipArchive::CREATE);
-                foreach($files as $name => $path){
-                    $zip->addFromString($name, file_get_contents($path));
-                }
-                $zip->close();
-                
-                header('Content-Type: application/zip');
-                header('Content-disposition: attachment; filename='.$zipname);
-                header('Content-Length: ' . filesize($zipname));
-                readfile($zipname);
-                unlink($zipname); 
-
+                $csvdata = implode('', $items);
+                $file = fopen("export_batches.xlsx", 'w');
+                fwrite($file, $csvdata);
+                fclose($file);
+                ob_clean();
+                $file = "export_batches.xlsx";
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment; filename='.basename($file));
+                header('Content-Transfer-Encoding: binary');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($file));
+                readfile($file);
+                unlink($file);
             } else {
                 $payment_batch = PaymentBatch::findOrFail(request()->batch_id);
                 return response()->download(storage_path().'/app/public/exports/batches/' . $payment_batch->csv_file);
@@ -373,31 +383,38 @@ class PaymentsController extends Controller
         if(isset(request()->batchdevice_ids)){
             $exploded = explode(',', request()->batchdevice_ids);
             if(count($exploded) > 1){
-                $files = [];
-                foreach($exploded as $device_id){
-                    $device = PaymentBatchDevice::find($device_id);
-                    $payment_batch = PaymentBatch::find($device->payment_batch_id);
-                    $files[$payment_batch->csv_file] = storage_path().'/app/public/exports/batches/' . $payment_batch->csv_file;
+                $csvdata = "";
+                $items = [];
+                $batches = PaymentBatch::whereIn('id', $exploded)->get();
+                $count = 0;
+                foreach($batches as $batch){
+                    $file = storage_path().'/app/public/exports/batches/' . $batch->csv_file;
+                    if(file_exists($file)){
+                        $handle = fopen($file, "r");
+                        $contents = fread($handle, filesize($file));
+                        $items[$count] = $contents;
+                        rewind($handle);
+                        fclose($handle);
+                        $count++;
+                    }
                 }
 
-                if(file_exists('exported_batches.zip')){
-                    //dd('exported_batches.zip');
-                }
-
-                $zipname = 'exported_batches.zip';
-                $zip = new ZipArchive;
-                $zip->open($zipname, ZipArchive::CREATE);
-                foreach($files as $name => $path){
-                    $zip->addFromString($name, file_get_contents($path));
-                }
-                $zip->close();
-
-                header('Content-Type: application/zip');
-                header('Content-disposition: attachment; filename='.$zipname);
-                header('Content-Length: ' . filesize($zipname));
-                readfile($zipname);
-                unlink($zipname); 
-
+                $csvdata = implode('', $items);
+                $file = fopen("export_batches.xlsx", 'w');
+                fwrite($file, $csvdata);
+                fclose($file);
+                ob_clean();
+                $file = "export_batches.xlsx";
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment; filename='.basename($file));
+                header('Content-Transfer-Encoding: binary');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($file));
+                readfile($file);
+                unlink($file);
             } else {
                 $device = PaymentBatchDevice::find(request()->batchdevice_ids);
                 $payment_batch = PaymentBatch::findOrFail($device->payment_batch_id);

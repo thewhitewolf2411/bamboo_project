@@ -66,10 +66,10 @@ class PaymentBatchService {
     public function generateCSV(array $payment_batches_ids){
 
         // create csv file
-        $payment_rows = [];
         $batches = collect();
 
         foreach($payment_batches_ids as $id){
+            $payment_rows = [];
 
             $payment_batch = PaymentBatch::find($id);
             $payment_batch_devices = PaymentBatchDevice::where('payment_batch_id', $payment_batch->id)->get();
@@ -175,8 +175,6 @@ class PaymentBatchService {
             $payment_batch->csv_file = $filename;
             $payment_batch->save();
         }
-
-
 
         return $file_path;
     }

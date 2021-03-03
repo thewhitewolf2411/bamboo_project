@@ -10,6 +10,13 @@
     </div>
     <div class="portal-table-container">
 
+        <a role="button" id="generate-recycle-report-btn">
+
+            <div class="btn btn-primary btn-blue">
+                Generate Recycle Customer Returns Report
+            </div>
+
+        </a>
 
     </div>
 </div>

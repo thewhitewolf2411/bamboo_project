@@ -638,4 +638,133 @@ class Reports{
         return '/reports/testing/' . $filename;
     }
 
+    public function recycleCustomerReturns(){
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'Trade in ID');
+        $sheet->setCellValue('B1', 'Trade in barcode');
+        $sheet->setCellValue('C1', 'Model');
+        $sheet->setCellValue('D1', 'Customer Name');
+        $sheet->setCellValue('E1', 'Postcode');
+        $sheet->setCellValue('F1', 'Address line 1');
+        $sheet->setCellValue('G1', 'Fail reason');
+        $sheet->setCellValue('H1', 'Quarantine reason');
+        $sheet->setCellValue('I1', 'Customer Grade');
+        $sheet->setCellValue('J1', 'Customer Grade After Testing');
+        $sheet->setCellValue('K1', 'Bamboo Status');
+        $sheet->setCellValue('L1', 'Tracking Reference');
+        $sheet->setCellValue('M1', 'Return Date');
+
+        $tradeins = Tradein::whereIn('job_state', ['19', '20', '21'])->get();
+
+        foreach($tradeins as $key=>$tradein){
+
+            $tradeinauditTPDespatched = TradeinAudit::where('tradein_id', $tradein->id)->where('customer_status', 'Trade Pack Despatched')->first();
+            $tradeinauditReceived = TradeinAudit::where('tradein_id', $tradein->id)->where('stock_location', '!=' ,'Not received yet.')->first();
+            $tradeinauditTested = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Device has passed testing')->first();
+            $tradeinauditBoxed = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Awaiting Box build')->first();
+            $tradeinauditReturned = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Device Marked to return to customer')->first();
+            if($tradeinauditTPDespatched === null){
+                $tradeinauditTPDespatched = '';
+            }
+            else{
+                $tradeinauditTPDespatched = $tradeinauditTPDespatched->created_at;
+            }
+            $tradeinauditUser = '';
+            if($tradeinauditReceived === null){
+                $tradeinauditReceived = '';
+                $tradeinauditUser = '';
+            }
+            else{
+                $tradeinauditUser = $tradeinauditReceived->getUser();
+                $tradeinauditReceived = $tradeinauditReceived->created_at;
+            }
+            if($tradeinauditTested === null){
+                $tradeinauditTested = '';
+            }
+            else{
+                $tradeinauditTested = $tradeinauditTested->created_at;
+            }
+            if($tradeinauditBoxed === null){
+                $tradeinauditBoxed = '';
+            }
+            else{
+                $tradeinauditBoxed = $tradeinauditBoxed->created_at;
+            }
+            if($tradeinauditReturned === null){
+                $tradeinauditReturned = '';
+            }
+            else{
+                $tradeinauditReturned = $tradeinauditReturned->created_at->format('d.m.Y');
+            }
+
+            $testing_faults = [];
+            $fully_functional = 'Yes';
+            $faults_col = "";
+            $testingFaults = TestingFaults::where('tradein_id', $tradein->id)->first();
+            if($testingFaults !== null){
+                $available_faults = [
+                    "audio_test" => "Audio Test",
+                    "front_microphone" => "Front Microphone",
+                    "headset_test" => "Headset Test",
+                    "loud_speaker_test" => "Loud Speaker Test",
+                    "microphone_playback_test" => "Microphone Playback Test",
+                    "buttons_test" => "Buttons Test",
+                    "sensor_test" => "Sensor Test",
+                    "camera_test" => "Camera Test",
+                    "glass_condition" => "Glass Condition",
+                    "vibration" => "Vibration",
+                    "original_colour" => "Original Colour",
+                    "battery_health" => "Battery Health",
+                    "nfc" => "NFC",
+                    "no_power" => "No Power",
+                    "fake_missing_parts" => "Fake Missing Parts",
+                ];
+
+                foreach($available_faults as $fault => $text){
+                    if($testingFaults[$fault] !== null){
+                        array_push($testing_faults, $text);
+                    }
+                }
+                $fully_functional = 'No';
+            }
+
+            if(count($testing_faults) > 1){
+                $faults_col = implode(' / ', $testing_faults);
+            } else {
+                if(count($testing_faults) === 1){
+                    $faults_col = $testing_faults[0];
+                }
+            }
+
+            $index = $key+2;
+
+            $sheet->setCellValue('A'.$index, $tradein->barcode_original);
+            $sheet->setCellValue('B'.$index, $tradein->barcode);
+            $sheet->setCellValue('C'.$index, $tradein->getProductName($tradein->product_id));
+            $sheet->setCellValue('D'.$index, $tradein->customerName());
+            $sheet->setCellValue('E'.$index, $tradein->postCode());
+            $sheet->setCellValue('F'.$index, $tradein->addressLine());
+            $sheet->setCellValue('G'.$index, $faults_col);
+            $sheet->setCellValue('H'.$index, $tradein->getBambooStatus());
+            $sheet->setCellValue('I'.$index, $tradein->customer_grade);
+            $sheet->setCellValue('J'.$index, $tradein->bamboo_grade);
+            $sheet->setCellValue('K'.$index, $tradein->getBambooStatus());
+            $sheet->setCellValue('L'.$index, $tradein->tracking_reference);
+            $sheet->setCellValue('M'.$index, $tradeinauditReturned);
+        }
+        
+
+        if(!is_dir(public_path() . '/reports/recycle_customer_returns_')){
+            mkdir(public_path() . '/reports/recycle_customer_returns_', 0777, true);
+        }
+
+        $filename = 'recycle_customer_returns_report_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
+        $writer->save(public_path() . '/reports/recycle_customer_returns_/' . $filename);
+
+        return '/reports/recycle_customer_returns_/' . $filename;
+    }
 }
