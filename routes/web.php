@@ -273,6 +273,10 @@ Route::group(['prefix'=>'portal/reports'], function(){
     Route::get('/finance-recycle-reports', 'Portal\ReportsController@showReportsFinanceRecycleReportsPage');
     Route::post('/getfinancerecyclereport', 'Portal\ReportsController@generateFinanceRecycleReport');
 
+    Route::post('/finance-recycle-reports/generate-purchased-report', 'Portal\ReportsController@generatePurchasedReport');
+    Route::post('/finance-recycle-reports/generate-current-report', 'Portal\ReportsController@generateCurrentReport');
+    Route::post('/finance-recycle-reports/generate-transfer-report', 'Portal\ReportsController@generateTransferReport');
+    
 });
 
 //feeds

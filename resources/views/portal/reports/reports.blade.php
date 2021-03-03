@@ -50,11 +50,11 @@
                         </div>
                     </a>
 
-                    {{-- <a href="/portal/reports/finance-recycle-reports" class="col-2 my-2">
+                    <a href="/portal/reports/finance-recycle-reports" class="col-2 my-2">
                         <div class="portal-content-element">
                                 <p>Finance Recycle reports </p>
                         </div>
-                    </a> --}}
+                    </a>
     
                 </div>
     

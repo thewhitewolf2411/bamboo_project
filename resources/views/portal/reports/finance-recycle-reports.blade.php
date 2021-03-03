@@ -11,21 +11,18 @@
     <div class="portal-table-container">
 
         <div class="row justify-content-center">
-            <div class="btn btn-primary btn-blue ml-2 mr-2" id="purchased-report-btn" onclick="setFinanceReportType('purchased')">
+            <button class="btn btn-primary btn-blue ml-2 mr-2" id="purchased-report-btn" data-toggle="modal" data-target="#purchased-report-modal">
                 Generate Purchased Units Report
-            </div>
+            </button>
 
-            <div class="btn btn-primary btn-blue ml-2 mr-2" id="current-report-btn" onclick="setFinanceReportType('current')">
+            <button class="btn btn-primary btn-blue ml-2 mr-2" id="current-report-btn" data-toggle="modal" data-target="#current-report-modal">
                 Generate Current Status Report
-            </div>
+            </button>
 
-            <div class="btn btn-primary btn-blue ml-2 mr-2" id="transfer-report-btn" onclick="setFinanceReportType('transfer')">
+            <button class="btn btn-primary btn-blue ml-2 mr-2" id="transfer-report-btn" data-toggle="modal" data-target="#transfer-report-modal">
                 Generate Device Transfer Report
-            </div>
-            
-            <div class="btn btn-light hidden ml-2 mr-2" id="reset-selected-type" onclick="setFinanceReportType('reset')">
-                Cancel
-            </div>
+            </button>
+
         </div>
 
         <div class="row justify-content-center mt-4" id="filters">
@@ -43,7 +40,7 @@
                 </div>
             </div>
             <div class="row hidden" id="status-filter">
-                <select class="form-control mx-3" name="bamboo_status">
+                <select class="form-control m-3" name="bamboo_status">
                     <option value="" disabled selected>Choose a status</option>
                 </select>
             </div>
@@ -57,115 +54,116 @@
     </div>
 </div>
 
+<div class="modal fade" id="purchased-report-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Generate purchased report</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><img src="{{ url('/customer_page_images/body/modal-close.svg') }}"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center mt-4" id="filters">
+                    <form action="/portal/reports/finance-recycle-reports/generate-purchased-report" method="POST" class="w-75">
+                        @csrf
+                        <div class="col" id="date-period-filter">
+                            <div class="col">
+                                <h5 class="text-center"> Choose date period:</h5>
+                            </div>
+                            <div class="d-flex m-auto">
+                                <div class="input-group mr-4">
+                                    <input type="date" name="from" required/>
+                                </div>
+                                <div class="input-group">
+                                    <input type="date" id="max-date-2" name="to" required/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="submit" class="btn btn-primary" value="Generate">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="current-report-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Generate current report</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><img src="{{ url('/customer_page_images/body/modal-close.svg') }}"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center mt-4" id="filters">
+                    <form action="/portal/reports/finance-recycle-reports/generate-current-report" method="POST" class="w-75">
+                        @csrf
+                        <div class="row" id="status-filter">
+                            <select class="form-control m-3" name="bamboo_status">
+                                <option value="" disabled selected>Choose a status</option>
+                                <option value="all">All</option>
+                                @foreach ($tradeins as $key=>$tradein)
+                                    
+                                    <option value="{{$key}}">{{$tradein[0]->getBambooStatus()}} | Count {{count($tradein)}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <input type="submit" class="btn btn-primary" value="Generate">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="transfer-report-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Generate transfer report</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><img src="{{ url('/customer_page_images/body/modal-close.svg') }}"></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center mt-4" id="filters">
+                    <form action="" method="POST" class="w-75">
+                        @csrf
+                        <div class="row" id="transfer_filter">
+                            <select class="form-control m-3" name="transfer_status">
+                                <option value="/portal/reports/finance-recycle-reports/generate-transfer-report" disabled selected>Choose transfer option</option>
+                            </select>
+                        </div>
+
+                        <input type="submit" class="btn btn-primary" value="Generate">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 
-    function setFinanceReportType(type){
-        var purchased_btn = document.getElementById('purchased-report-btn');
-        var current_btn = document.getElementById('current-report-btn');
-        var transfer_btn = document.getElementById('transfer-report-btn');
-        var periodfilter = document.getElementById('date-period-filter');
-        var statusfilter = document.getElementById('status-filter');
-        var transferfilter = document.getElementById('transfer_filter');
-        var reset = document.getElementById('reset-selected-type');
+var today = new Date();
+var dd = today.getDate()+1;
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+ if(dd<10){
+        dd='0'+dd
+    } 
+    if(mm<10){
+        mm='0'+mm
+    } 
 
-        switch (type) {
-            case "purchased":
-                if(!current_btn.classList.contains('hidden')){
-                    current_btn.classList.add('hidden');
-                }
-                if(!transfer_btn.classList.contains('hidden')){
-                    transfer_btn.classList.add('hidden');
-                }
-                if(periodfilter.classList.contains('hidden')){
-                    periodfilter.classList.remove('hidden');
-                }
-                if(!statusfilter.classList.contains('hidden')){
-                    statusfilter.classList.add('hidden');
-                }
-                if(reset.classList.contains('hidden')){
-                    reset.classList.remove('hidden');
-                }
-                if(!transferfilter.classList.contains('hidden')){
-                    reset.classList.add('hidden');
-                }
-                break;
-
-            case "current":
-                if(!purchased_btn.classList.contains('hidden')){
-                    purchased_btn.classList.add('hidden');
-                }
-                if(!transfer_btn.classList.contains('hidden')){
-                    transfer_btn.classList.add('hidden');
-                }
-
-                if(!periodfilter.classList.contains('hidden')){
-                    periodfilter.classList.add('hidden');
-                }
-                if(statusfilter.classList.contains('hidden')){
-                    statusfilter.classList.remove('hidden');
-                }
-                if(!transferfilter.classList.contains('hidden')){
-                    reset.classList.add('hidden');
-                }
-
-                if(reset.classList.contains('hidden')){
-                    reset.classList.remove('hidden');
-                }
-                break;
-
-            case "transfer":
-                if(!purchased_btn.classList.contains('hidden')){
-                    purchased_btn.classList.add('hidden');
-                }
-                if(!current_btn.classList.contains('hidden')){
-                    current_btn.classList.add('hidden');
-                }
-
-                if(periodfilter.classList.contains('hidden')){
-                    periodfilter.classList.remove('hidden');
-                }
-                if(!statusfilter.classList.contains('hidden')){
-                    statusfilter.classList.add('hidden');
-                }
-                if(transferfilter.classList.contains('hidden')){
-                    reset.classList.remove('hidden');
-                }
-
-                if(reset.classList.contains('hidden')){
-                    reset.classList.remove('hidden');
-                }
-                break;
-        
-            case "reset":
-                if(purchased_btn.classList.contains('hidden')){
-                    purchased_btn.classList.remove('hidden');
-                }
-                if(current_btn.classList.contains('hidden')){
-                    current_btn.classList.remove('hidden');
-                }
-                if(transfer_btn.classList.contains('hidden')){
-                    transfer_btn.classList.remove('hidden');
-                }
-
-                if(!periodfilter.classList.contains('hidden')){
-                    periodfilter.classList.add('hidden');
-                }
-                if(!statusfilter.classList.contains('hidden')){
-                    statusfilter.classList.add('hidden');
-                }
-                if(!transferfilter.classList.contains('hidden')){
-                    reset.classList.add('hidden');
-                }
-
-                if(!reset.classList.contains('hidden')){
-                    reset.classList.add('hidden');
-                }
-            default:
-                break;
-        }
-    }
+today = yyyy+'-'+mm+'-'+dd;
+document.getElementById("max-date-2").setAttribute("max", today);
 
 </script>
-
 
 @endsection

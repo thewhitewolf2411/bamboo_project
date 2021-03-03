@@ -157,8 +157,8 @@ class Reports{
         }
 
         if(!is_dir(public_path() . '/reports/overview')){
-            mkdir(public_path() . '/reports/overview', 0777, true);
-        }
+           mkdir(public_path() . '/reports/overview', 0777, true);
+        } 
 
         $filename = 'overview_report_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
 
