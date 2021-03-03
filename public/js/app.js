@@ -55102,6 +55102,15 @@ $('#generate-testing-report-btn').on('click', function () {
     }
   });
 });
+$('#generate-recycle-report-btn').on('click', function () {
+  $.ajax({
+    url: "/portal/reports/getrecyclecustomerreturnswreport",
+    type: "POST",
+    success: function success(response) {
+      window.open(response, "_blank");
+    }
+  });
+});
 
 /***/ }),
 
