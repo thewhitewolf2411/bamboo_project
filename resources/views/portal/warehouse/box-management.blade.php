@@ -162,7 +162,7 @@
                                 <td><div class="table-element">{{$tradein->cosmetic_condition}}</div></td>
                                 <td><div class="table-element">{{$tradein->imei_number}}</div></td>
                                 <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
-                                <td><div class="table-element"><input type="checkbox"></div></td>
+                                <td><div class="table-element"><input type="checkbox" class="select-to-remove-from-box" id="{{$tradein->id}}"></div></td>
                             </tr>
                             @endforeach
 
@@ -180,7 +180,6 @@
                                 <td><div class="table-element">Grade</div></td>
                                 <td><div class="table-element">IMEI</div></td>
                                 <td><div class="table-element">Manufacturer/Model</div></td>
-                                <td><div class="table-element">Status</div></td>
                             </tr>
                         </thead>
                         <tfoot>
@@ -190,7 +189,6 @@
                                 <td><div class="table-element">Grade</div></td>
                                 <td><div class="table-element">IMEI</div></td>
                                 <td><div class="table-element">Manufacturer/Model</div></td>
-                                <td><div class="table-element">Status</div></td>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -201,7 +199,6 @@
                                 <td><div class="table-element">{{$boxedTradein->cosmetic_condition}}</div></td>
                                 <td><div class="table-element">{{$boxedTradein->imei_number}}</div></td>
                                 <td><div class="table-element">{{$boxedTradein->getProductName($boxedTradein->product_id)}}</div></td>
-                                <td><div class="table-element"><input type="checkbox"></div></td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -247,7 +244,7 @@
 
 @if(isset($box) && $box !== null)
 
-    @if(Session::get('boxstatus') && Session::get('boxstatus')===3)
+    @if(Session::get('boxstatus') && Session::get('boxstatus')===3 && isset(Session::get('response')->original))
     <script>
         //window.open('/pdf/boxlabels/box-' + {{$box->id}}  + '.pdf', '_blank');
         window.open('{!!Session::get('response')->original!!}');

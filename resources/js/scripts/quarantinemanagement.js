@@ -292,10 +292,53 @@ $('#complete-box').on('click', function(){
             },
         });
     }
+});
 
+
+$('.select-to-remove-from-box').on('change', function(){
+
+    var selected = [];
+
+    $('.select-to-remove-from-box:checked').each(function() {
+        selected.push($(this).attr('id'));
+    });
+
+    if(selected.length > 0){
+        $('#remove-device-from-box').prop('disabled', false);
+    }
+    else{
+        $('#remove-device-from-box').prop('disabled', true);
+    }
 
 });
 
+$('#remove-device-from-box').on('click', function(){
+
+    var c = confirm("Are you sure you want to remove selected devices from box?");
+
+    if(c){
+        var selected = [];
+
+        $('.select-to-remove-from-box:checked').each(function() {
+            selected.push($(this).attr('id'));
+        });
+
+        $.ajax({
+            url: "/portal/warehouse-management/box-management/removedevices",
+            type:"POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data:{
+                selected:selected,
+            },
+            success:function(response){
+                location.reload();
+            },
+        });
+    }
+
+});
 
 $(document).ready(function(){
 

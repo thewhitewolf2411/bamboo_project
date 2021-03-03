@@ -157,8 +157,7 @@ class WarehouseManagementController extends Controller
             mkdir($path, 0777, true);
         }
 
-        $boxContent = TrayContent::where('tray_id', $currentBox->id)->get();
-
+        $boxContent = TrayContent::where('pseudo_tray_id', $currentBox->id)->get();
         $tradeins = array();
 
         $showLabel = true;
@@ -216,29 +215,43 @@ class WarehouseManagementController extends Controller
         }
 
         $box = Tray::where('id', $request->boxid)->first();
+
         $box->number_of_devices = $box->number_of_devices + 1;
+        $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+
+        if($oldTrayContent === null){
+            $oldTrayContent = new TrayContent();
+            $oldTrayContent->tray_id = 0;
+            $oldTrayContent->trade_in_id = $tradein->id;
+            $oldTrayContent->pseudo_tray_id = $box->id;
+        }
+
+        $oldTrayContent->pseudo_tray_id = $box->id;
+        $oldTrayContent->save();
 
         $response = "";
         if($box->number_of_devices === $box->max_number_of_devices){
             $box->status = 3;
+            
+            $boxContent = TrayContent::where('pseudo_tray_id', $box->id)->get();
+
+            foreach($boxContent as $bC){
+                $oldTray = Tray::where('id', $bC->tray_id)->orWhere('id', $bC->pseudo_tray_id)->first();
+                if($oldTray->tray_id !== $oldTray->pseudo_tray_id){
+                    $oldTray->number_of_devices = $bC->number_of_devices - 1;
+                    $box->number_of_devices = $box->number_of_devices + 1;
+                }
+                $oldTray->save();
+    
+                $bC->tray_id = $request->boxid;
+                $bC->save();
+            }
 
             $request->boxname = $box->tray_name;
 
             $response = $this->printBoxManifest($request);
         }
 
-        $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
-    
-        $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
-        $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
-        $oldTray->save();
-
-        $oldTrayContent->delete();
-
-        $traycontent = new TrayContent();
-        $traycontent->tray_id = $box->id;
-        $traycontent->trade_in_id = $tradein->id;
-        $traycontent->save();
         $box->save();
 
         return redirect()->back()->with(['success', 'You have added device ' . $request->tradeinid . ' to this box.', 'addedtobox'=>$request->boxid, 'boxstatus'=>$box->status, 'response'=>$response]);
@@ -269,6 +282,21 @@ class WarehouseManagementController extends Controller
         $boxname = $request->boxid;
         $tray = Tray::where('id', $boxname)->first();
         $tray->status = 3;
+
+        $boxContent = TrayContent::where('pseudo_tray_id', $request->boxid)->get();
+
+        foreach($boxContent as $bC){
+            $oldTray = Tray::where('id', $bC->tray_id)->orWhere('id', $bC->pseudo_tray_id)->first();
+            if($oldTray->tray_id !== $oldTray->pseudo_tray_id){
+                $oldTray->number_of_devices = $bC->number_of_devices - 1;
+                $tray->number_of_devices = $tray->number_of_devices + 1;
+            }
+            $oldTray->save();
+
+            $bC->tray_id = $request->boxid;
+            $bC->save();
+        }
+
         $tray->save();
 
         $request->boxname = $tray->tray_name;
@@ -277,6 +305,22 @@ class WarehouseManagementController extends Controller
 
         #return \redirect('/portal/warehouse-management/box-management/');
         return $response;
+    }
+
+    public function removeDevicesFromBox(Request $request){
+
+        foreach($request->selected as $selectedDevice){
+            $trayContent = TrayContent::where('trade_in_id', $selectedDevice)->first();
+
+            $tray = Tray::where('id', $trayContent->tray_id)->first();
+
+            $tray->number_of_devices = $tray->number_of_devices-1;
+            $tray->save();
+
+            $trayContent->delete();
+        }
+
+        return 200;
     }
 
     public function checkBoxStatusForDevice(Request $request){

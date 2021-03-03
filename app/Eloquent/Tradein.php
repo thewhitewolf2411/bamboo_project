@@ -163,12 +163,15 @@ class Tradein extends Model
     public function getTrayName($id){
         #dd($id);
         $trayid = TrayContent::where('trade_in_id', $id)->first();
-        if($trayid !== null){
+        if($trayid !== null && TrayContent::where('trade_in_id', $id)->first()->tray_id !== 0){
             $trayid = $trayid->tray_id;
             $trayname = Tray::where('id', $trayid)->first()->tray_name;
             return $trayname;
         }
         else{
+            if($this->deviceInPaymentProcess() || TrayContent::where('trade_in_id', $id)->first()->tray_id === 0){
+                return "Not assigned.";
+            }
             return "Not received yet.";
         }
 
