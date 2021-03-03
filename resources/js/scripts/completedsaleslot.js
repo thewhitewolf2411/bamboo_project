@@ -66,6 +66,11 @@ $('#sales-export-btn').on('click', function(){
     window.open("/portal/sales-lot/completed-sales-lot/clientsalesexport/"+selectedid);
 });
 
+$('#ism-pre-alert').on('click', function(){
+    var selectedid =  $('.saleslot-active').attr('id');
+    window.open("/portal/sales-lot/completed-sales-lot/ismprealert/"+selectedid);
+});
+
 $(document).ready(function(){
 
     $('#boxedtradeinstable tfoot td').each( function () {

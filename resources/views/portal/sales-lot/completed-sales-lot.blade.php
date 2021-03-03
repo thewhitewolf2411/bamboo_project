@@ -30,7 +30,7 @@
                     <button class="btn btn-primary" id="sell-lot-btn" disabled>Sell Lot</button>
                     <button class="btn btn-primary" id="payment-received-btn" disabled>Payment Received</button>
                     <button class="btn btn-primary" id="sales-export-btn" disabled>Client Sales Export</button>
-                    <button class="btn btn-primary" id="pre-alret-btn" disabled>ISM Pre-alert</button>
+                    <button class="btn btn-primary" id="ism-pre-alert" disabled>ISM Pre-alert</button>
                 </div>
             </div>
 

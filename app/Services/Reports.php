@@ -756,15 +756,15 @@ class Reports{
         }
         
 
-        if(!is_dir(public_path() . '/reports/recycle_customer_returns_')){
-            mkdir(public_path() . '/reports/recycle_customer_returns_', 0777, true);
+        if(!is_dir(public_path() . '/exports/recycle_customer_returns_')){
+            mkdir(public_path() . '/exports/recycle_customer_returns_', 0777, true);
         }
 
         $filename = 'recycle_customer_returns_report_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
-        $writer->save(public_path() . '/reports/recycle_customer_returns_/' . $filename);
+        $writer->save(public_path() . '/exports/recycle_customer_returns_/' . $filename);
 
-        return '/reports/recycle_customer_returns_/' . $filename;
+        return '/exports/recycle_customer_returns_/' . $filename;
     }
 }
