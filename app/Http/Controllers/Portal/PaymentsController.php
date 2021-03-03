@@ -332,7 +332,7 @@ class PaymentsController extends Controller
             // generate payment batch csv file
             $batch_ids = request()->batches;
             $batchService = new PaymentBatchService();
-            $file = $batchService->generateCSV($batch_ids);
+            $batchService->generateCSV($batch_ids);
 
             return response(implode(",",$batch_ids), 200);
         }
@@ -359,7 +359,7 @@ class PaymentsController extends Controller
                         $count++;
                     }
                 }
-                $csvdata = $items[count($items) - 1];
+                $csvdata = implode('', $items);
                 $file = fopen("export_batches.xlsx", 'w');
                 fwrite($file, $csvdata);
                 fclose($file);
@@ -392,14 +392,14 @@ class PaymentsController extends Controller
                     if(file_exists($file)){
                         $handle = fopen($file, "r");
                         $contents = fread($handle, filesize($file));
-                        echo $contents."<br>";
                         $items[$count] = $contents;
                         rewind($handle);
                         fclose($handle);
                         $count++;
                     }
                 }
-                $csvdata = $items[count($items) - 1];
+
+                $csvdata = implode('', $items);
                 $file = fopen("export_batches.xlsx", 'w');
                 fwrite($file, $csvdata);
                 fclose($file);
