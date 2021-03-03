@@ -375,6 +375,7 @@ Route::group(['prefix'=>'portal/warehouse-management'], function(){
     Route::post('/box-management/printboxmanifest', 'Portal\WarehouseManagementController@printBoxManifest');
     Route::post('/box-management/printboxsummary', 'Portal\WarehouseManagementController@printBoxSummary');
     Route::post('/box-management/checkboxstatusfordevice', 'Portal\WarehouseManagementController@checkBoxStatusForDevice');
+    Route::post('/box-management/removedevices', 'Portal\WarehouseManagementController@removeDevicesFromBox');
     
     Route::get('/bay-overview', 'Portal\WarehouseManagementController@showBayOverviewPage');
     Route::get('/bay-overview/create', 'Portal\WarehouseManagementController@showCreateBayPage');
