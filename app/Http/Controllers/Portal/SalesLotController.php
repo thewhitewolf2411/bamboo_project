@@ -11,6 +11,7 @@ use App\Eloquent\Tradein;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
 use App\Eloquent\Clients;
+use App\Eloquent\SellingProduct;
 use Illuminate\Support\Facades\Auth;
 use Session;
 
@@ -275,5 +276,75 @@ class SalesLotController extends Controller
 
         return view('portal.sales-lot.view-sales-lot', ['portalUser'=>$portalUser, 'salesLots'=>$salesLots, 'tradeins'=>$tradeins]);
 
+    }
+
+    public function markLotPaymentRecieved(Request $request){
+        if(isset($request->lot_id)){
+            $salesLot = SalesLot::find($request->lot_id);
+            if($salesLot){
+                $salesLot->sales_lot_status = 4;
+                $salesLot->save();
+                return response(['success' => 200]);
+            }
+        }
+        return response(['fail' => 404]);
+    }
+
+    public function clientSalesExport($lot_id){
+        $salesLot = SalesLot::findOrFail($lot_id);
+        $deviceIds = SalesLotContent::where('sales_lot_id', $lot_id)->get()->pluck('device_id')->toArray();
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'Manufacturer');
+        $sheet->setCellValue('B1', 'Model');
+        $sheet->setCellValue('C1', 'GB');
+        $sheet->setCellValue('D1', 'COLOUR');
+        $sheet->setCellValue('E1', 'Mobile Phone Network Name');
+        $sheet->setCellValue('F1', 'GRADE A');
+        $sheet->setCellValue('G1', 'GRADE B+');
+        $sheet->setCellValue('H1', 'GRADE B');
+        $sheet->setCellValue('I1', 'GRADE C');
+        $sheet->setCellValue('J1', 'WSI');
+        $sheet->setCellValue('K1', 'WSD');
+        $sheet->setCellValue('L1', 'NWSI');
+        $sheet->setCellValue('M1', 'NWSD');
+        $sheet->setCellValue('N1', 'Grand Total');
+
+        $tradeins = SellingProduct::whereIn('id', $deviceIds)->get();
+        dd($tradeins);
+
+        foreach($tradeins as $key=>$tradein){
+
+            $index = $key+2;
+
+            $sheet->setCellValue('A'.$index, $tradein->barcode_original);
+            $sheet->setCellValue('B'.$index, $tradein->barcode);
+            $sheet->setCellValue('C'.$index, $tradein->getProductName($tradein->product_id));
+            $sheet->setCellValue('D'.$index, $tradein->customerName());
+            $sheet->setCellValue('E'.$index, $tradein->postCode());
+            $sheet->setCellValue('F'.$index, $tradein->addressLine());
+            $sheet->setCellValue('G'.$index, $faults_col);
+            $sheet->setCellValue('H'.$index, $tradein->getBambooStatus());
+            $sheet->setCellValue('I'.$index, $tradein->customer_grade);
+            $sheet->setCellValue('J'.$index, $tradein->bamboo_grade);
+            $sheet->setCellValue('K'.$index, $tradein->getBambooStatus());
+            $sheet->setCellValue('L'.$index, $tradein->tracking_reference);
+            $sheet->setCellValue('M'.$index, $tradeinauditReturned);
+        }
+        
+
+        if(!is_dir(public_path() . '/reports/recycle_customer_returns_')){
+            mkdir(public_path() . '/reports/recycle_customer_returns_', 0777, true);
+        }
+
+        $filename = 'client_sales_export' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
+        $writer->save(public_path() . '/reports/recycle_customer_returns_/' . $filename);
+
+        return '/reports/recycle_customer_returns_/' . $filename;
+        dd($salesLotContent);
     }
 }

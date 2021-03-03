@@ -55340,6 +55340,31 @@ $('#sell-lot-btn').on('click', function () {
   $('#salelot-action #salelot-number').html(selectedid);
   $('#salelot-action #device-qty').html(selectedquantity);
 });
+$('#payment-received-btn').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+
+  if (confirm("Do you want to mark Lot " + selectedid + " as 'Payment Recieved?")) {
+    // Save it!
+    $.ajax({
+      type: "POST",
+      url: "/portal/sales-lot/completed-sales-lot/markaspaymentrecieved",
+      data: {
+        lot_id: selectedid
+      },
+      success: function success(data) {
+        if (data.success) {
+          if (data.success === 200) {
+            window.location.reload();
+          }
+        }
+      }
+    });
+  }
+});
+$('#sales-export-btn').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+  window.open("/portal/sales-lot/completed-sales-lot/clientsalesexport/" + selectedid);
+});
 $(document).ready(function () {
   $('#boxedtradeinstable tfoot td').each(function () {
     var title = $(this).text();
