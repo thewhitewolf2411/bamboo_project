@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Portal;
 
+use App\Eloquent\AdditionalCosts;
+use App\Eloquent\Brand;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Eloquent\PortalUsers;
@@ -11,6 +13,8 @@ use App\Eloquent\Tradein;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
 use App\Eloquent\Clients;
+use App\Eloquent\ProductInformation;
+use App\Eloquent\SellingProduct;
 use Illuminate\Support\Facades\Auth;
 use Session;
 
@@ -275,5 +279,189 @@ class SalesLotController extends Controller
 
         return view('portal.sales-lot.view-sales-lot', ['portalUser'=>$portalUser, 'salesLots'=>$salesLots, 'tradeins'=>$tradeins]);
 
+    }
+
+    public function markLotPaymentRecieved(Request $request){
+        if(isset($request->lot_id)){
+            $salesLot = SalesLot::find($request->lot_id);
+            if($salesLot){
+                $salesLot->sales_lot_status = 4;
+                $salesLot->save();
+                return response(['success' => 200]);
+            }
+        }
+        return response(['fail' => 404]);
+    }
+
+    public function clientSalesExport($lot_id){
+        $salesLot = SalesLot::findOrFail($lot_id);
+        $deviceIds = SalesLotContent::where('sales_lot_id', $lot_id)->get()->pluck('device_id')->toArray();
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'Manufacturer');
+        $sheet->setCellValue('B1', 'Model');
+        $sheet->setCellValue('C1', 'GB');
+        $sheet->setCellValue('D1', 'COLOUR');
+        $sheet->setCellValue('E1', 'Mobile Phone Network Name');
+        $sheet->setCellValue('F1', 'GRADE A');
+        $sheet->setCellValue('G1', 'GRADE B+');
+        $sheet->setCellValue('H1', 'GRADE B');
+        $sheet->setCellValue('I1', 'GRADE C');
+        $sheet->setCellValue('J1', 'WSI');
+        $sheet->setCellValue('K1', 'WSD');
+        $sheet->setCellValue('L1', 'NWSI');
+        $sheet->setCellValue('M1', 'NWSD');
+        $sheet->setCellValue('N1', 'Grand Total');
+
+        $tradeins = Tradein::whereIn('id', $deviceIds)->get();
+        $grouped = $tradeins->groupBy(['product_id', 'correct_memory', 'product_colour', 'correct_network']);
+
+        foreach($grouped as $device_id => $devices){
+
+            $brand = Brand::find($device_id)->brand_name;
+            $product = SellingProduct::find($device_id);
+            $model = $product->product_name;
+
+            $gradeA = 0;
+            $gradeBplus = 0;
+            $gradeB = 0;
+            $gradeC = 0;
+            $wsi = 0;
+            $wsd = 0;
+            $nwsi = 0;
+            $nwsd = 0;
+            $grandTotal = 0;
+
+            $key = 2;
+            foreach($devices as $memory => $memory_group){
+
+                $gb = $memory;
+
+                foreach($memory_group as $color => $color_group){
+
+                    $colour = $color;
+                    
+                    foreach($color_group as $network => $network_group){
+
+                        $network_name = $network;
+
+                        foreach($network_group as $single_device){
+
+                            if($single_device->cosmetic_condition === "A"){
+                                $gradeA++;
+                                $grandTotal++;
+                            }
+                            if($single_device->cosmetic_condition === "B+"){
+                                $gradeBplus++;
+                                $grandTotal++;
+                            }
+                            if($single_device->cosmetic_condition === "B"){
+                                $gradeB++;
+                                $grandTotal++;
+                            }
+                            if($single_device->cosmetic_condition === "C"){
+                                $gradeC++;
+                                $grandTotal++;
+                            }
+                            if($single_device->cosmetic_condition === "WSI"){
+                                $wsi++;
+                                $grandTotal++;
+                            }
+                            if($single_device->cosmetic_condition === "WSD"){
+                                $wsd++;
+                                $grandTotal++;
+                            }
+                            if($single_device->cosmetic_condition === "NWSI"){
+                                $nwsi++;
+                                $grandTotal++;
+                            }
+                            if($single_device->cosmetic_condition === "NWSI"){
+                                $nwsd++;
+                                $grandTotal++;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            $sheet->setCellValue('A'.$key, $brand);
+            $sheet->setCellValue('B'.$key, $model);
+            $sheet->setCellValue('C'.$key, $gb);
+            $sheet->setCellValue('D'.$key, $colour);
+            $sheet->setCellValue('E'.$key, $network_name);
+            $sheet->setCellValue('F'.$key, $gradeA);
+            $sheet->setCellValue('G'.$key, $gradeBplus);
+            $sheet->setCellValue('H'.$key, $gradeB);
+            $sheet->setCellValue('I'.$key, $gradeC);
+            $sheet->setCellValue('J'.$key, $wsi);
+            $sheet->setCellValue('K'.$key, $wsd);
+            $sheet->setCellValue('L'.$key, $nwsi);
+            $sheet->setCellValue('M'.$key, $nwsd);
+            $sheet->setCellValue('N'.$key, $grandTotal);
+            $key++;
+            
+        }
+
+        $filename = 'client_sales_export' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
+    }
+
+
+    public function ISMPreAlert($lot_id){
+        $salesLot = SalesLot::findOrFail($lot_id);
+        $deviceIds = SalesLotContent::where('sales_lot_id', $lot_id)->get()->pluck('device_id')->toArray();
+        $tradeins = Tradein::whereIn('id', $deviceIds)->get();
+        
+        // header just in case
+        //$data = array(["Ext Job Ref ID", "Manufacturer", "Model Number", "GB", "COLOUR", "IMEI", "Grade", "Network", "FMIP", "Cost"]);
+        $data = array();
+
+        foreach($tradeins as $tradein){
+            if($tradein->correct_product_id !== null){
+                $product = SellingProduct::find($tradein->correct_product_id);
+            } else {
+                $product = SellingProduct::find($tradein->product_id);
+            }
+            $brand = Brand::find($product->brand_id)->brand_name;
+            $productInfo = ProductInformation::where('product_id', $product->id)->first();
+            $additionalCost = AdditionalCosts::first();
+
+            $cost = $tradein->bamboo_price + $additionalCost->administration_costs + (2 * $additionalCost->carriage_costs);
+            // price = bamboo_price + administration costs + 2 * carriage cost per device
+            $isFimpLocked = $tradein->isFimpLocked() ? 'Yes' : 'No';
+
+            $tradein_info = [
+                $tradein->barcode, 
+                $brand,
+                $product->product_name,
+                $tradein->correct_memory,
+                $tradein->product_colour,
+                $tradein->imei_number,
+                $tradein->cosmetic_condition,
+                $tradein->correct_network,
+                $isFimpLocked,
+                $cost
+            ];
+            array_push($data, $tradein_info);
+        }
+        
+        $csv = fopen("php://output", 'w');        
+        foreach ($data as $fields) {
+            fputcsv($csv, $fields);
+        }
+        fclose($csv);
+
+        $filename = 'PreAlert_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.csv';
+        header("Content-type: text/csv");
+        header("Content-Disposition: attachment; filename=".$filename);
+        header("Pragma: no-cache");
+        header("Expires: 0");
     }
 }

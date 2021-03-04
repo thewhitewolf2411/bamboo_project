@@ -421,6 +421,9 @@ Route::group(['prefix'=>'portal/sales-lot'], function(){
     Route::get('/completed-sales-lots/get-saleslot-content', 'Portal\SalesLotController@getSalesLotContent');
     Route::post('/completed-sales-lots/change-state', 'Portal\SalesLotController@sellLot');
     Route::get('/completed-sales-lot/view-lot/{id}', 'Portal\SalesLotController@showSingleLotPage');
+    Route::post('/completed-sales-lot/markaspaymentrecieved', 'Portal\SalesLotController@markLotPaymentRecieved');
+    Route::get('/completed-sales-lot/clientsalesexport/{lot_id}', 'Portal\SalesLotController@clientSalesExport');
+    Route::get('/completed-sales-lot/ismprealert/{lot_id}', 'Portal\SalesLotController@ISMPreAlert');
 
 });
 
