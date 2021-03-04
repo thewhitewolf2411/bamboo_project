@@ -169,7 +169,7 @@ class Tradein extends Model
             return $trayname;
         }
         else{
-            if($this->deviceInPaymentProcess() || TrayContent::where('trade_in_id', $id)->first()->tray_id === 0){
+            if($this->deviceInPaymentProcess() || (TrayContent::where('trade_in_id', $id)->first() !== null && TrayContent::where('trade_in_id', $id)->first()->tray_id === 0)){
                 return "Not assigned.";
             }
             return "Not received yet.";
