@@ -413,7 +413,7 @@ class CustomerController extends Controller
             }
         }
 
-        return redirect()->back();
+        return redirect('/userprofile');
     }
 
     public function changeName(Request $request){

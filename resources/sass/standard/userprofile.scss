@@ -182,6 +182,10 @@
     background: #a9a9a9;
 }
 
+.notification-error-img{
+    width: 24px;
+}
+
 
 
 .personal-info-row{
@@ -389,6 +393,7 @@
     padding: 25px;
     padding-left: 40px;
     padding-right: 40px;
+    cursor: pointer;
 }
 
 .newsletter-box.inactive{

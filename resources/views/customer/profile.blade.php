@@ -102,6 +102,7 @@
                                     <div class="notifications-list">
                                         @foreach($notifications as $notification)
                                             <div class="notification-card @if($notification['state'] === 'alert') red-border @endif">
+                                                @if($notification['state'] === 'alert')<img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">@endif
                                                 {{$notification['text']}}
                                             </div>
                                             <div class="notification-card-border"></div>
@@ -402,6 +403,7 @@
                                         @foreach($notifications as $notification)
                                             @if($notification['state'] === 'alert')
                                                 <div class="notification-card @if($notification['state'] === 'alert') red-border @endif">
+                                                    @if($notification['state'] === 'alert')<img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">@endif
                                                     {{$notification['text']}}
                                                 </div>
                                             @endif
@@ -445,21 +447,6 @@
                                                     <a href="/userprofile/{{$tradein->id}}"><img class="sale-item-link-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Orange.svg')}}"></a>
                                                 </div>
                                                 
-                                                {{-- <div class="w-25 p-2">
-                                                <div class="w-25 p-2">
-                                                    @if($tradein->job_state <= 2 )
-                                                    <a href="/userprofile/deleteorder/{{$tradein->barcode}}">
-                                                        <div class="btn btn-danger">
-                                                            <p class="profile-large" style="color: #fff;">Cancel Order</p>
-                                                        </div>
-                                                    </a>
-                                                    @endif
-                                                </div>
-                                                <div class="w-25 p-2">
-                                                    <button type="button" class="btn btn-primary btn-orange profile-large" style="color: #fff;" onclick="showModal({{$tradein->id}})">
-                                                        View details
-                                                    </button>
-                                                </div> --}}
                                             </div>
                                         @endforeach
                                     </div>
@@ -509,159 +496,6 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- <div class="profile-container">
-
-                    <div class="profile-element profile-element-one">
-                        <div class="name-container">
-                            <span><i class="fa fa-user-o" aria-hidden="true"></i>
-                            <h3>Hello {{$userdata->first_name}}</h3></span>
-                        </div>
-                        <div class="logout-container">
-                            <a href='/logout' class="btn btn-primary" style="background: #A3D147; color: #000; border:1px solid #A3D147">Not {{$userdata->first_name}}? <strong>Log out</strong></a>
-                        </div>
-                    </div>
-
-                    <div class="profile-element profile-element-two">
-                        <div class="profile-element-two-left">
-                            <div class="bamboo-icon-container">
-                                <img src="{{ asset('/customer_page_images/body/Bamboo-icon.svg') }}">
-                            </div>
-                            <div class="profile-element-two-content">
-                                <div class="profile-element-two-text">
-                                    <h4>BAMBOO CREDITS</h4>
-                                    <p>Woohoo! You have done your part in saving the world by trading in your old devices. You can use you bamboo credits against any order within our shop.</p>
-                                </div>
-                                <div class="profile-element-two-btns">
-                                    <!-- <div class="url-footer-container" id="start-shopping">
-                                        <a href="/shop">Start Shopping</a>
-                                    </div> -->
-                                    <div class="url-footer-container" id="start-selling">
-                                        <a href="/sell">Start Selling</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="profile-element-two-right">
-                            <div class="profile-element-two-right-balance">
-                                <p><strong>£{{$userdata->bamboo_credit}}</strong></p>
-                            </div>
-                            <p style="margin: 0;">Cleared balance</p>
-                        </div>
-                    </div>
-
-                    <div class="profile-element profile-element-four">
-                    
-                        <div class="profile-element-two-text py-3">
-                            <h4>ORDER HISTORY</h4>
-                        </div>
-
-                        <div class="profile-element-two-text py-3">
-                            <h4 style="color: #23AAF7;">Shopping</h4>
-                        </div>
-
-                        <div class="customer-orders customer-buying py-3">
-                            <div class="d-flex order-row order-row-border-black">
-                                <div class="w-25 p-2">
-                                    <p class="profile-small">Order #</p>
-                                </div>
-                                <div class="w-50 p-2">
-                                    <p class="profile-small">Date</p>
-                                </div>
-                                <div class="w-25 p-2">
-
-                                </div>
-                                <div class="w-25 p-2">
-                                    <p class="profile-small">View more</p>
-                                </div>
-                            </div>
-
-                            @foreach($tradeouts as $tradeout)
-                            <div class="d-flex order-row order-row-border-black">
-                                <div class="w-25 p-2">
-                                    <p class="profile-large">Order #{{$tradeout->id}}</p>
-                                </div>
-                                <div class="w-50 p-2">
-                                    <p class="profile-large">{{$tradeout->created_at->toFormattedDateString()}}</p>
-                                </div>
-                                <div class="w-25 p-2">
-                                    <a href="">
-                                        <div class="btn btn-danger">
-                                            <p class="profile-large" style="color: #fff;">Cancel Order</p>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="w-25 p-2">
-                                    <button type="button" class="btn btn-primary btn-blue profile-large" style="color: #fff;" onclick="showTradeOutModal({{$tradeout->id}})">
-                                        View details
-                                    </button>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-
-                        <div class="profile-element-two-text py-3">
-                            <h4 style="color: #F28E33;">Selling</h4>
-                        </div>
-
-                        <div class="customer-orders customer-selling py-3">
-                            <div class="d-flex order-row order-row-border-black">
-                                <div class="w-25 p-2">
-                                    <p class="profile-small">Order #</p>
-                                </div>
-                                <div class="w-50 p-2">
-                                    <p class="profile-small">Date</p>
-                                </div>
-                                <div class="w-25 p-2">
-
-                                </div>
-                                <div class="w-25 p-2">
-                                    <p class="profile-small">View more</p>
-                                </div>
-                            </div>
-
-                            @foreach($tradeins as $tradein)
-                            <div class="d-flex order-row">
-                                <div class="w-25 p-2">
-                                    <p class="profile-large">Order #{{$tradein->barcode}}</p>
-                                </div>
-                                <div class="w-50 p-2">
-                                    <p class="profile-large">{{$tradein->created_at->toFormattedDateString()}}</p>
-                                </div>
-                                <div class="w-25 p-2">
-                                    @if($tradein->job_state <= 2 )
-                                    <a href="/userprofile/deleteorder/{{$tradein->barcode}}">
-                                        <div class="btn btn-danger">
-                                            <p class="profile-large" style="color: #fff;">Cancel Order</p>
-                                        </div>
-                                    </a>
-                                    @endif
-                                </div>
-                                <div class="w-25 p-2">
-                                    <button type="button" class="btn btn-primary btn-orange profile-large" style="color: #fff;" onclick="showModal({{$tradein->id}})">
-                                        View details
-                                    </button>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-
-                        <div class="profile-element profile-element-four border-0">
-                    
-                            <div class="profile-element-two-text py-3">
-                                <h4>PAYMENT</h4>
-                            </div>
-            
-                
-                
-                        </div>
-
-
-
-                    </div>
-
-
-                </div> --}}
 
 
                 <!-- info message modal -->

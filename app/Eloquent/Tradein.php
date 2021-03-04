@@ -375,6 +375,18 @@ class Tradein extends Model
         return false;
     }
 
+    public function stuckAtProcessing(){
+        $matches = [
+            '4', '5', '6', '7', 
+            '8', '8a', '8b', '8c', '8d', '8e', '8f',
+        ];
+
+        if(in_array($this->job_state, $matches)){
+            return true;
+        }
+        return false;
+    }
+
     public function getDeviceStatus(){
 
         // array[0] - bamboo status
