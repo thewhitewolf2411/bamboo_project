@@ -414,6 +414,9 @@
                                     </div>
                                     <div class="line-bottom"></div>
                                     <div class="item-sales-col">
+                                        @if($tradeins->count() < 1)
+                                            <h6 class="pt-4 text-center">You have no sales.</h6>
+                                        @endif
                                         @foreach($tradeins as $tradein)
                                             <div class="sale-item">
 
@@ -477,27 +480,27 @@
                                         </div>
                                     </div>
                                     <div class="row m-0 mt-3 mb-3 justify-content-between">
-                                        <div class="newsletter-box @if(Auth::user()->sub === 0)inactive @endif" id="yes-newsletterbox">
+                                        <div class="newsletter-box @if(Auth::user()->sub === 0)inactive @endif" id="yes-newsletterbox" onclick="chooseNewsletter('yes')">
                                             <div class="newsletter-text row">
                                                 Yes, I would love to hear about the <br>
                                                 latest amazing offers, hints & tips.
                                             </div>
                                             @if(Auth::user()->sub === 1) 
-                                                <img class="tick-img" id="yes-newsletter" src="/customer_page_images/body/Icon-Tick-Selected.svg" onclick="chooseNewsletter('yes')">
+                                                <img class="tick-img" id="yes-newsletter" src="/customer_page_images/body/Icon-Tick-Selected.svg">
                                             @else
-                                                <img class="tick-img" id="yes-newsletter" src="/customer_page_images/body/Icon-Tick-Selected-clear.svg" onclick="chooseNewsletter('yes')">
+                                                <img class="tick-img" id="yes-newsletter" src="/customer_page_images/body/Icon-Tick-Selected-clear.svg">
                                             @endif
                                         </div>
 
-                                        <div class="newsletter-box @if(Auth::user()->sub === 1)inactive @endif" id="no-newsletterbox">
+                                        <div class="newsletter-box @if(Auth::user()->sub === 1)inactive @endif" id="no-newsletterbox" onclick="chooseNewsletter('no')">
                                             <div class="newsletter-text row">
                                                 No, I would not love to hear about the <br>
                                                 latest amazing offers, hints & tips.
                                             </div>
                                             @if(Auth::user()->sub === 0) 
-                                                <img class="tick-img" id="no-newsletter" src="/customer_page_images/body/Icon-Tick-Selected.svg" onclick="chooseNewsletter('no')">
+                                                <img class="tick-img" id="no-newsletter" src="/customer_page_images/body/Icon-Tick-Selected.svg">
                                             @else
-                                                <img class="tick-img" id="no-newsletter" src="/customer_page_images/body/Icon-Tick-Selected-clear.svg" onclick="chooseNewsletter('no')">
+                                                <img class="tick-img" id="no-newsletter" src="/customer_page_images/body/Icon-Tick-Selected-clear.svg">
                                             @endif
                                         </div>
                                     </div>
