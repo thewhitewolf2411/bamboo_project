@@ -5,7 +5,7 @@
 <div class="portal-app-container">
     <div class="portal-title-container">
         <div class="portal-title">
-            <p>Sales Lot</p>
+            <p>Sales Lots</p>
         </div>
     </div>
     <div class="portal-content-container">

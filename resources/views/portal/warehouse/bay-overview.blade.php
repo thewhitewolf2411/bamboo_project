@@ -17,6 +17,11 @@
                     <button type="submit" class="btn btn-primary btn-blue">Go</button>
                 </div>
             </form>
+            @if(Session::has('searcherror'))
+            <div class="alert alert-danger" role="alert">
+                {{Session::get('searcherror')}}
+            </div>
+            @endif
         </div>
 
         <div class="portal-table-container">

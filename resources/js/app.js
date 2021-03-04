@@ -4,6 +4,8 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+require('datatables.net');
+require('datatables.net-buttons');
 require('./bootstrap');
 
 require('./scripts/quarantinemanagement');
@@ -12,6 +14,12 @@ require('./scripts/buildingsaleslot');
 require('./scripts/completedsaleslot');
 require('./scripts/saleslotpicking');
 require('./scripts/PrintTradeIn');
+require('./scripts/dates');
+require('./scripts/Reports');
+require('./scripts/BoxManagement');
+//require('./scripts/SearchTable');
+require('./scripts/Settings');
+
 
 "use strict";
 

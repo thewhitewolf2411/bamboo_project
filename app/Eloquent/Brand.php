@@ -33,16 +33,16 @@ class Brand extends Model
 
     public function getBrandFirstName(){
         if($this->id === 1){
-            return "A";
+            return "Apple";
         }
         else if($this->id === 2){
-            return "S";
+            return "Samsung";
         }
         else if($this->id === 3){
-            return "H";
+            return "Huaweii";
         }
         else{
-            return "M";
+            return "Miscellaneous";
         }
     }
 }

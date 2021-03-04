@@ -9,6 +9,10 @@ use Auth;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Colour;
 use App\Eloquent\Network;
+use App\Eloquent\Brand;
+use App\Eloquent\AdditionalCosts;
+use App\Eloquent\NonWorkingDays;
+use App\Eloquent\Clients;
 
 class SettingsController extends Controller
 {
@@ -203,5 +207,116 @@ class SettingsController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
         return view('portal.settings.brands')->with('brands', $brands)->with('portalUser', $portalUser);
+    }
+
+    public function showCostsPage(){
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $additionalCosts = AdditionalCosts::where('id', 1)->first();
+        $miscalaniousCosts = AdditionalCosts::where('id', '!=', 1)->get();
+        #dd($additionalCosts);
+
+        return view('portal.settings.costs', ['portalUser'=>$portalUser, 'additionalCosts'=>$additionalCosts, 'miscalaniousCosts'=>$miscalaniousCosts]);
+    }
+
+    public function updateCosts(Request $request){
+
+        #dd($request->all());
+
+        $additionalCosts = AdditionalCosts::where('id', 1)->first();
+
+        $additionalCosts->administration_costs = $request->administration_costs;
+        $additionalCosts->carriage_costs = $request->carriage_costs;
+        #$additionalCosts->miscellaneous_costs_total = $request->miscellaneous_costs_total;
+        #$additionalCosts->miscellaneous_costs_individual = $request->miscellaneous_costs_individual;
+
+        $additionalCosts->save();
+
+        return redirect()->back()->with(['success'=>'You have succesfully updated costs.']);
+    }
+
+    public function addCosts(Request $request){
+        #dd($request->all());
+        if($request->per_job_deduction > 0){
+            AdditionalCosts::create([
+                'administration_costs'=>0.00,
+                'carriage_costs'=>0.00,
+                'miscellaneous_costs'=>$request->miscellaneous_costs,
+                'per_job_deduction'=>$request->per_job_deduction,
+                'applied_to'=>0,
+                'cost_description'=>$request->cost_description
+            ]);
+    
+            return redirect()->back()->with(['success'=>'You have succesfully added costs.']);
+        }
+        else{
+            dd("Misato Katsuragi."); 
+        }
+    }
+
+    public function showNonWorkingDaysPage(){
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $nonWorkingDates = NonWorkingDays::get();
+
+        return view('portal.settings.dates', ['portalUser'=>$portalUser, 'nonWorkingDates'=>$nonWorkingDates]);
+    }
+
+    public function addNonWorkingDays(Request $request){
+        #dd($request);
+
+        $nonWorkingDate = NonWorkingDays::create([
+
+            'day'=>$request->non_working_day_title,
+            'non_working_date'=> \Carbon\Carbon::parse($request->non_working_day),
+        ]);
+
+        return redirect()->back()->with(['success'=>'You have succesfully added new Non-working Date.']);
+    }
+
+    public function deleteNonWorkingDay(Request $request){
+        #dd($request->all());
+
+        $nonWorkingDate = NonWorkingDays::where('id', $request->dateid)->first();
+        $nonWorkingDate->delete();
+
+        return response(['Success'], 200);
+    }
+
+    public function showClientsPage(){
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $clients = Clients::all();
+
+        return view('portal.settings.clients', ['portalUser'=>$portalUser, 'clients'=>$clients]);
+        
+    }
+
+    public function addClient(Request $request){
+        #dd($request->all());
+
+        Clients::create([
+            'account_name'=>$request->account_name,
+            'contact_name'=>$request->contact_name,
+            'address'=>$request->address,
+            'post_code'=>$request->post_code,
+            'country'=>$request->country,
+            'contact_email'=>$request->contact_email,
+            'contact_number'=>$request->contact_number,
+            'vat_code'=>$request->vat_code,
+            'payment_type'=>$request->payment_type
+        ]);
+
+        return redirect()->back()->with('success', 'You have added client.');
+    }
+
+    public function deleteClient(Request $request){
+        $clientid = $request->clientid;
+
+        Clients::where('id', $clientid)->first()->delete();
+        return 200;
     }
 }

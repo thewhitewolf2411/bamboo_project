@@ -66,10 +66,10 @@ class PaymentBatchService {
     public function generateCSV(array $payment_batches_ids){
 
         // create csv file
-        $payment_rows = [];
         $batches = collect();
 
         foreach($payment_batches_ids as $id){
+            $payment_rows = [];
 
             $payment_batch = PaymentBatch::find($id);
             $payment_batch_devices = PaymentBatchDevice::where('payment_batch_id', $payment_batch->id)->get();
@@ -119,47 +119,61 @@ class PaymentBatchService {
                     }
                 }
                     
-                $single_payment['T010'] = env('BAMBOO_ACCOUNT_NUMBER');     // debit account identifier (bamboo account)
-                $single_payment['T014'] = $tradein->bamboo_price;           // device price (bamboo evaluated price)
-                $single_payment['T016'] = Carbon::parse($payment_batch->arrive_at)->format('dmY');  // credit date
-                $single_payment['T022'] = $account_identifier;              // user bank account identifier -- TODO
-                $single_payment['T028'] = $account_number;                  // user bank account number     -- TODO
-                $single_payment['T030'] = $beneficiary_name . " " . $user->billing_address; // beneficiary name and address line
-                $single_payment['T034'] = "INVOICE " . $tradein->barcode;   // beneficiary reference
+                // $single_payment['T010'] = env('BAMBOO_ACCOUNT_NUMBER');     // debit account identifier (bamboo account)
+                // $single_payment['T014'] = $tradein->bamboo_price;           // device price (bamboo evaluated price)
+                // $single_payment['T016'] = Carbon::parse($payment_batch->arrive_at)->format('dmY');  // credit date
+                // $single_payment['T022'] = $account_identifier;              // user bank account identifier -- TODO
+                // $single_payment['T028'] = $account_number;                  // user bank account number     -- TODO
+                // //$single_payment['T030'] = $beneficiary_name . " " . $user->billing_address; // beneficiary name and address line - not okay for them
+                // $single_payment['T030'] = '"'.$beneficiary_name.'"';
+                // $single_payment['T034'] = "INVOICE " . $tradein->barcode;   // beneficiary reference
     
-                $payment_row = '';
-                foreach($single_payment as $payment_column_data){
-                    $payment_row.=$payment_column_data;
-                }
-    
+                // $payment_row = '';
+                // foreach($single_payment as $payment_column_data){
+                //     $payment_row.=$payment_column_data;
+                // }
+                
+                $payment_row = 
+                    ",,,01,,,,,,,,,".
+                    env('BAMBOO_ACCOUNT_NUMBER').
+                    ",,,,".
+                    $tradein->bamboo_price.
+                    ",,".
+                    Carbon::parse($payment_batch->arrive_at)->format('dmY').
+                    ",,,,,,".
+                    $account_identifier.
+                    ",,,,,,".
+                    $account_number.
+                    ",,".
+                    '"'.$beneficiary_name.'"'.
+                    ",,,,".
+                    "INVOICE " . $tradein->barcode.
+                    ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,";
+                
                 array_push($payment_rows, $payment_row);
             }
             
             $payment_batch->exported = true;
             $payment_batch->save();
 
-        }
-
-        $path = storage_path().'/app/public/exports/batches';
-        $filename = '/batch_export_'.time().'.csv';
-
-        if(!is_dir($path)){
-            mkdir($path, 0777, true);
-        }
+            $path = storage_path().'/app/public/exports/batches';
+            $filename = '/batch_export_'.$payment_batch->reference.'_'.time().'.csv';
+    
+            if(!is_dir($path)){
+                mkdir($path, 0777, true);
+            }
+                
+            $file_path = $path.$filename;
+    
+            $fp = fopen($file_path, 'w');
+    
+            foreach ($payment_rows as $row) {
+                fwrite($fp, $row."\n");
+            }
             
-        $file_path = $path.$filename;
-
-        $fp = fopen($file_path, 'w');
-
-        foreach ($payment_rows as $row) {
-            fwrite($fp, $row."\n");
-        }
-        
-        fclose($fp);
-
-        foreach($batches as $batch){
-            $batch->csv_file = $filename;
-            $batch->save();
+            fclose($fp);
+            $payment_batch->csv_file = $filename;
+            $payment_batch->save();
         }
 
         return $file_path;

@@ -38,50 +38,7 @@ $('#changetoviewboxes').on('click', function(){
     }
 });
 
-$('#addtolot').on('click', function(){
 
-
-    var checkedboxes = $('.box-click:checkbox:checked');
-    var checkedtradeins = $('.tradein-click:checkbox:checked');
-    var checkedboxesid = [];
-    var checkedtradeinsid = [];
-
-    if(checkedtradeins.length + checkedboxes.length >= 1){
-        $('#removefromlot').css("opacity", 1);
-        $('#buildalot').prop("disabled", false);
-    }
-
-    for(var i=0; i<checkedtradeins.length; i++){
-        checkedtradeinsid.push(checkedtradeins[i].id);
-    }
-
-    for(var i=0; i<checkedboxes.length; i++){
-        checkedboxesid.push(checkedboxes[i].id);
-    }
-
-    console.log(checkedboxesid);
-
-    for(var i=0; i<checkedboxesid.length; i++){
-
-        $('#box-' + checkedboxesid[i]).find('td:last-child').remove();
-
-        $('#selected-boxes').append('<tr id="'+ checkedboxesid[i] +'">' + $('#box-' + checkedboxesid[i]).html() + '</tr>');
-        
-        $('.' + checkedboxesid[i]).parent().remove();
-        $('#box-' + checkedboxesid[i]).remove();
-
-    }
-
-    for(var i=0; i<checkedtradeinsid.length; i++){
-
-        $('#tradein-' + checkedtradeinsid[i]).find('td:last-child').remove();
-
-        $('#selected-tradeins').append('<tr id="'+ checkedtradeinsid[i] +'">' + $('#tradein-' + checkedtradeinsid[i]).html() + '</tr>');
-        $('#tradein-' + checkedtradeinsid[i]).remove();
-
-    }
-
-});
 
 $('.clickable').on('click', function(){
     var k=0;

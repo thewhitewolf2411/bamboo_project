@@ -21,6 +21,7 @@ use App\Services\Boxing;
 use PDF;
 use DNS1D;
 use DNS2D;
+use Session;
 
 class WarehouseManagementController extends Controller
 {
@@ -42,61 +43,146 @@ class WarehouseManagementController extends Controller
     public function showBoxManagementPage(){
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
-        $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->get();
-        $brands = Brand::all();
+        $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->where('status', '!=', 1)->get();
+        $brands = Brand::whereIn('id', [1,2,3])->get();
 
-        return view('portal.warehouse.box-management', ['portalUser'=>$portalUser, 'boxes'=>$boxes, 'brands'=>$brands]);
+        $boxedTradeIns = array();
+
+        foreach($boxes as $box){
+            $boxContent = TrayContent::where('tray_id', $box->id)->get();
+            foreach($boxContent as $bC){
+                $tradein = Tradein::where('id', $bC->trade_in_id)->first();
+                $tradein->model = $tradein->getProductName($tradein->product_id);
+                $tradein->product_id = $tradein->getBrandName($tradein->product_id);
+                array_push($boxedTradeIns, $tradein);
+            }
+        }
+
+        return view('portal.warehouse.box-management', ['portalUser'=>$portalUser, 'boxes'=>$boxes, 'brands'=>$brands, 'boxedTradeIns'=>$boxedTradeIns]);
     }
 
     public function createBox(Request $request){
 
         #dd($request->all());
+        $manifacturer = "";
 
-        $brand = Brand::where('id', $request->manifacturer)->first();
-        $manifacturer = $brand->getBrandFirstName();
+        if($request->manifacturer === "M"){
+            $manifacturer = "Miscellaneous";
+        }
+        else{
+            $brand = Brand::where('id', $request->manifacturer)->first();
+            $manifacturer = $brand->getBrandFirstName();
+        }
 
-        $boxnumber = count(Tray::where('tray_type', 'Bo')->get());
+        $boxnumber = count(Tray::where('tray_type', 'Bo')->where('tray_grade', strtoupper($request->reference))->get())+1;
 
         if($boxnumber<10){
-            $boxnumber = '0000000' . $boxnumber;
+            $boxnumber = '0' . $boxnumber;
         }elseif($boxnumber>=10 && $boxnumber<100){
-            $boxnumber = '000000' . $boxnumber;
-        }elseif($boxnumber>=100 && $boxnumber<1000){
-            $boxnumber = '00000' . $boxnumber;
-        }elseif($boxnumber>=1000 && $boxnumber<10000){
-            $boxnumber = '0000' . $boxnumber;
-        }elseif($boxnumber>=10000 && $boxnumber<100000){
-            $boxnumber = '000' . $boxnumber;
-        }elseif($boxnumber>=100000 && $boxnumber<1000000){
-            $boxnumber = '00' . $boxnumber;
+            $boxnumber = $boxnumber;
         }
+
 
         $locked = 'Unlocked';
         if($request->network === 'l'){
             $locked = 'Locked';
         }
 
-        $trayname = strtoupper($manifacturer . $request->reference . $request->network . $boxnumber);
+        //$trayname = strtoupper(substr($manifacturer,0,1) . $request->reference . $request->network . $boxnumber);
+
+        $trayname = strtoupper("(" . $request->reference . ")" . substr($manifacturer, 0, 2) . $boxnumber);
 
         $newBox = Tray::create([
 
             'tray_name'=>$trayname,
             'tray_type'=>'Bo',
-            'tray_brand'=>strtoupper($manifacturer),
+            'tray_brand'=>$manifacturer,
             'tray_grade'=>strtoupper($request->reference),
             'tray_network'=>$locked,
             'max_number_of_devices'=>$request->capacity,
             'box_devices'=>$request->boxdevices,
+            'status'=>1
 
         ]);
 
-        return redirect()->back()->with('success', 'Box ' . $trayname . ' was successfully created' );
+        return redirect('/portal/warehouse-management/box-management/' . $newBox->id);
 
+    }
+
+    public function showBoxingPage($id){
+
+        $currentBox = Tray::where('id', $id)->first();
+        $user = Auth::user();
+        $portalUser = PortalUsers::where('user_id', $user->id)->first();
+        $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->where('status', '!=', 1)->get();
+        $brands = Brand::whereIn('id', [1,2,3])->get();
+
+        $id = $currentBox->tray_name;
+
+        $boxedTradeIns = array();
+
+        foreach($boxes as $box){
+            $boxContent = TrayContent::where('tray_id', $currentBox->id)->get();
+            foreach($boxContent as $bC){
+                $tradein = Tradein::where('id', $bC->trade_in_id)->first();
+                $tradein->model = $tradein->getProductName($tradein->product_id);
+                $tradein->product_id = $tradein->getBrandName($tradein->product_id);
+                array_push($boxedTradeIns, $tradein);
+            }
+        }
+
+        $brandLet = substr($id, 1, 1);
+        $brand = "";
+
+        $barcode = DNS1D::getBarcodeHTML($id, 'C128');
+
+        if($brandLet === "A"){
+            $brand = "Apple";
+        }
+        if($brandLet === "S"){
+            $brand = "Samsung";
+        }
+        if($brandLet === "H"){
+            $brand = "Huaweii";
+        }
+        if($brandLet === "M"){
+            $brand = "Miscellaneous";
+        }
+        if($brandLet === "Q"){
+            $brand = "Quarantine";
+        }
+
+        $path = public_path().'/pdf/boxlabels/';
+        if(!is_dir($path)){
+            mkdir($path, 0777, true);
+        }
+
+        $boxContent = TrayContent::where('pseudo_tray_id', $currentBox->id)->get();
+        $tradeins = array();
+
+        $showLabel = true;
+
+        foreach($boxContent as $bC){
+            $tradein = Tradein::where('id', $bC->trade_in_id)->first();
+            $tradein->model = $tradein->getProductName($tradein->product_id);
+            $tradein->product_id = $tradein->getBrandName($tradein->product_id);
+            array_push($tradeins, $tradein);
+        }
+
+
+        $filename = public_path() . "/pdf/boxlabels/box-" . $currentBox->id . ".pdf";
+        if(file_exists($filename)){
+            $showLabel = false;
+        }
+        $customPaper = array(0,0,141.90,283.80);
+        PDF::loadView('portal.labels.boxlabel', array('barcode'=>$barcode, 'id'=>$id, 'brand'=>$brand))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
+
+        return view('portal.warehouse.box-management', ['portalUser'=>$portalUser, 'boxes'=>$boxes, 'brands'=>$brands, 'box'=>$currentBox, 'tradeins'=>$tradeins, 'boxedTradeIns'=>$boxedTradeIns, 'showLabel'=>$showLabel]);
     }
 
     public function getBoxDevices(Request $request){
 
-        $tray = Tray::where('tray_name', $request->boxname)->first();
+        $tray = Tray::where('id', $request->boxname)->first();
 
         $boxContent = TrayContent::where('tray_id', $tray->id)->get();
 
@@ -113,33 +199,68 @@ class WarehouseManagementController extends Controller
     }
 
     public function addDeviceToBox(Request $request){
+        #dd($request->all());
 
-        $tradein = Tradein::where('barcode', $request->tradeinid)->first();
+        $tradein = Tradein::where('barcode', $request->tradein_barcode)->first();
+        $box = Tray::where('id', $request->boxid)->first();
 
-        $box = Tray::where('tray_name', $request->boxid)->first();
+        if($tradein === null){
+            return redirect()->back()->with('error','No such device');
+        }
+
+        $result = new Boxing();
+        $result = $result->checkBoxStatusForDevice($tradein, $box, $request);
+        if($result[1] === 404){
+            return redirect()->back()->with('error', $result[0]);
+        }
+
+        $box = Tray::where('id', $request->boxid)->first();
+
         $box->number_of_devices = $box->number_of_devices + 1;
-
         $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+
+        if($oldTrayContent === null){
+            $oldTrayContent = new TrayContent();
+            $oldTrayContent->tray_id = 0;
+            $oldTrayContent->trade_in_id = $tradein->id;
+            $oldTrayContent->pseudo_tray_id = $box->id;
+        }
+
+        $oldTrayContent->pseudo_tray_id = $box->id;
+        $oldTrayContent->save();
+
+        $response = "";
+        if($box->number_of_devices === $box->max_number_of_devices){
+            $box->status = 3;
+            
+            $boxContent = TrayContent::where('pseudo_tray_id', $box->id)->get();
+
+            foreach($boxContent as $bC){
+                $oldTray = Tray::where('id', $bC->tray_id)->orWhere('id', $bC->pseudo_tray_id)->first();
+                if($oldTray->tray_id !== $oldTray->pseudo_tray_id){
+                    $oldTray->number_of_devices = $bC->number_of_devices - 1;
+                    $box->number_of_devices = $box->number_of_devices + 1;
+                }
+                $oldTray->save();
     
-        $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
-        $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
-        $oldTray->save();
+                $bC->tray_id = $request->boxid;
+                $bC->save();
+            }
 
-        $oldTrayContent->delete();
+            $request->boxname = $box->tray_name;
 
-        $traycontent = new TrayContent();
-        $traycontent->tray_id = $box->id;
-        $traycontent->trade_in_id = $tradein->id;
-        $traycontent->save();
+            $response = $this->printBoxManifest($request);
+        }
+
         $box->save();
 
-        return redirect()->back()->with(['success', 'You have added device ' . $request->tradeinid . ' to this box.', 'addedtobox'=>$request->boxid]);
+        return redirect()->back()->with(['success', 'You have added device ' . $request->tradeinid . ' to this box.', 'addedtobox'=>$request->boxid, 'boxstatus'=>$box->status, 'response'=>$response]);
     }
 
     public function openBox(Request $request){
 
         $boxname = $request->boxname;
-        $tray = Tray::where('tray_name', $boxname)->first();
+        $tray = Tray::where('id', $boxname)->first();
         $tray->status = 1;
         $tray->save();
 
@@ -148,8 +269,8 @@ class WarehouseManagementController extends Controller
 
     public function suspendBox(Request $request){
         
-        $boxname = $request->boxname;
-        $tray = Tray::where('tray_name', $boxname)->first();
+        $boxname = $request->boxid;
+        $tray = Tray::where('id', $boxname)->first();
         $tray->status = 2;
         $tray->save();
 
@@ -157,11 +278,47 @@ class WarehouseManagementController extends Controller
     }
 
     public function completeBox(Request $request){
-        
-        $boxname = $request->boxname;
-        $tray = Tray::where('tray_name', $boxname)->first();
+        #dd($request->all());
+        $boxname = $request->boxid;
+        $tray = Tray::where('id', $boxname)->first();
         $tray->status = 3;
+
+        $boxContent = TrayContent::where('pseudo_tray_id', $request->boxid)->get();
+
+        foreach($boxContent as $bC){
+            $oldTray = Tray::where('id', $bC->tray_id)->orWhere('id', $bC->pseudo_tray_id)->first();
+            if($oldTray->tray_id !== $oldTray->pseudo_tray_id){
+                $oldTray->number_of_devices = $bC->number_of_devices - 1;
+                $tray->number_of_devices = $tray->number_of_devices + 1;
+            }
+            $oldTray->save();
+
+            $bC->tray_id = $request->boxid;
+            $bC->save();
+        }
+
         $tray->save();
+
+        $request->boxname = $tray->tray_name;
+
+        $response = $this->printBoxManifest($request);
+
+        #return \redirect('/portal/warehouse-management/box-management/');
+        return $response;
+    }
+
+    public function removeDevicesFromBox(Request $request){
+
+        foreach($request->selected as $selectedDevice){
+            $trayContent = TrayContent::where('trade_in_id', $selectedDevice)->first();
+
+            $tray = Tray::where('id', $trayContent->tray_id)->first();
+
+            $tray->number_of_devices = $tray->number_of_devices-1;
+            $tray->save();
+
+            $trayContent->delete();
+        }
 
         return 200;
     }
@@ -170,7 +327,7 @@ class WarehouseManagementController extends Controller
         #dd($request->all());
 
         $tradein = Tradein::where('barcode', $request->tradeinid)->first();
-        $box = Tray::where('tray_name', $request->boxname)->first();
+        $box = Tray::where('id', $request->boxname)->first();
 
         if($request->tradeinid === null){
             return response('Device barcode cannot be empty.', 404);
@@ -233,6 +390,7 @@ class WarehouseManagementController extends Controller
     }
 
     public function printBoxSummary(Request $request){
+
         $boxname = $request->boxname;
 
         $box = Tray::where('tray_name', $boxname)->first();
@@ -257,6 +415,8 @@ class WarehouseManagementController extends Controller
         if($brandLet === "Q"){
             $brand = "Quarantine";
         }
+
+        #dd($brandLet);
 
         foreach($boxContent as $bC){
 
@@ -297,7 +457,6 @@ class WarehouseManagementController extends Controller
 
     public function printBoxManifest(Request $request){
         $boxname = $request->boxname;
-
         $box = Tray::where('tray_name', $boxname)->first();
         $boxContent = TrayContent::where('tray_id', $box->id)->get();
         $tradeins = array();
@@ -307,7 +466,8 @@ class WarehouseManagementController extends Controller
             array_push($tradeins, $tradein);
         }
 
-        $brandLet = substr($boxname, 1, 1);
+        $brandLet = substr($boxname, 0, 1);
+        #dd($brandLet);
         $brand = "";
 
         if($brandLet === "A"){
@@ -352,6 +512,9 @@ class WarehouseManagementController extends Controller
     public function showBayPage(Request $request){
 
         $bay = Trolley::where('trolley_name', $request->bay_id_scan)->first();
+        if($bay === null){
+            return redirect()->back()->with(['searcherror'=>'No such bay']);
+        }
         $bayBoxes = Tray::where('trolley_id', $bay->id)->get();
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
@@ -369,21 +532,27 @@ class WarehouseManagementController extends Controller
 
     public function createBay(Request $request){
         #dd($request);
-        $bay = Trolley::create([
-            'trolley_name'=>$request->bay_name,
-            'trolley_type'=>'Bay',
-            'trolley_brand'=>'B',
-            'number_of_trays'=>0
-        ]);
+        $bays = Trolley::where('trolley_name', $request->bay_name)->get();
 
-        return redirect('/portal/warehouse-management/bay-overview')->with(['success'=>'You have succesfully created new Bay']);
+        if(count($bays)<1){
+            $bay = Trolley::create([
+                'trolley_name'=>$request->bay_name,
+                'trolley_type'=>'Bay',
+                'trolley_brand'=>'B',
+                'number_of_trays'=>0
+            ]);
+
+            return redirect('/portal/warehouse-management/bay-overview')->with(['success'=>'You have succesfully created new Bay']);
+        }
+
+        return redirect('/portal/warehouse-management/bay-overview')->with(['error'=>'Bay with name ' . $request->bay_name . ' already exists.']);
     }
 
     public function deleteBay(Request $request){
-        $bay = Trolley::where('trolley_name', $request->bayname);
+        $bay = Trolley::where('trolley_name', $request->bayname)->first();
         $bay->delete();
 
-        return response('', 200);
+        return redirect('/portal/warehouse-management/bay-overview')->with(['success'=>'Bay ' . $request->bayname . ' succesfully deleted.']);
     }
 
     public function printBay(Request $request){
@@ -697,6 +866,31 @@ class WarehouseManagementController extends Controller
         }
 
         return redirect('/portal/warehouse-management/picking-despatch')->with(['success'=>'Sales lot despatched']);
+    }
+
+    public function getBoxNumber(Request $request){
+        #dd($request->all());
+
+        $brandLet = strtoupper($request->manufacturer);
+        $brand = "";
+
+
+        if($brandLet === "1"){
+            $brand = "Apple";
+        }
+        if($brandLet === "2"){
+            $brand = "Samsung";
+        }
+        if($brandLet === "3"){
+            $brand = "Huaweii";
+        }
+        if($brandLet === "4"){
+            $brand = "Miscellaneous";
+        }
+
+        $boxes = Tray::where('tray_type', 'Bo')->where('tray_brand', $brand)->where('tray_grade', strtoupper($request->reference))->get();
+
+        return response(count($boxes), 200);
     }
 
 }

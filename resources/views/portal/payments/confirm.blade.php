@@ -43,7 +43,7 @@
 
                         <form class="d-flex align-items-center ml-auto mr-auto text-center" action="/portal/payments/confirm" method="GET">              
                             <label for="searchbatches">Search by Reference/Barcode/ID:</label>
-                            <input type="text" minlength="7" name="search" class="form-control mx-3 my-0" @if(isset(request()->search)) value="{{request()->search}}" @endif required>
+                            <input type="text" minlength="3" name="search" class="form-control mx-3 my-0" @if(isset(request()->search)) value="{{request()->search}}" @endif required>
                             <button type="submit" class="btn btn-primary btn-blue">Search</button>
                             @if(isset(request()->search)) <a class="btn" href="/portal/payments/confirm">Cancel</a> @endif
                         </form>
@@ -65,8 +65,8 @@
                         @foreach($devices as $batch_device)
                             <tr id="batch-{{$batch_device->id}}">
                                 <td><div class="table-element">{!!$batch_device->batchReference()!!}</div></td>
-                                <td><div class="table-element">{!!$batch_device->tradeinId()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->tradeinBarcode()!!}</div></td>
+                                <td><div class="table-element">{!!$batch_device->tradeinId()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->orderDate()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->product()!!}</div></td>
                                 <td><div class="table-element">£ {!!$batch_device->price()!!}</div></td>
@@ -145,21 +145,13 @@ function checkBatchDevices(){
             total++;
         }
     });
-    if(total === 1){
-        ONE_SELECTED = true;
-        if(exportbtn.classList.contains('disabled')){
-            exportbtn.classList.remove('disabled');
-        }
-    } else {
-        ONE_SELECTED = false;
-        if(!exportbtn.classList.contains('disabled')){
-            exportbtn.classList.add('disabled');
-        }
-    }
 
     if(ANY_SELECTED){
         if(successbtn.classList.contains('disabled')){
             successbtn.classList.remove('disabled');
+        }
+        if(exportbtn.classList.contains('disabled')){
+            exportbtn.classList.remove('disabled');
         }
         if(failbtn.classList.contains('disabled')){
             failbtn.classList.remove('disabled');
@@ -170,6 +162,9 @@ function checkBatchDevices(){
         }
         if(!failbtn.classList.contains('disabled')){
             failbtn.classList.add('disabled');
+        }
+        if(!exportbtn.classList.contains('disabled')){
+            exportbtn.classList.add('disabled');
         }
     }
 }
@@ -301,15 +296,15 @@ function markAsFailed(){
 }
 
 function exportBatch(){
-    if(ONE_SELECTED){
+    if(ANY_SELECTED){
         let items = document.getElementsByName('selected_devices');
-        let id;
+        let ids = [];
         items.forEach(element => {
             if(element.checked){
-                id = element.id;
+                ids.push(element.id);
             }
         });
-        window.open("/portal/payments/submit/downloadcsv?batchdevice_id="+id, "_blank");
+        window.open("/portal/payments/submit/downloadcsv?batchdevice_ids="+ids, "_blank");
     }
 }
 

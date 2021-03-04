@@ -14,6 +14,7 @@ use App\User;
 use Carbon\Carbon;
 use DNS1D;
 use DNS2D;
+use PDF;
 
 class Tradein extends Model
 {
@@ -32,8 +33,8 @@ class Tradein extends Model
     protected $fillable = [
         'user_id', 'barcode','barcode_original','product_id', 'correct_product_id','customer_grade',
         'bamboo_grade', 'job_state', 'order_price','bamboo_price','customer_memory','customer_network',
-        'correct_memory','correct_network', 'missing_image', 'imei_number',
-        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number'
+        'correct_memory','correct_network', 'product_colour', 'missing_image', 'imei_number', 'serial_number',
+        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 'expiry_date'
     ];
 
 
@@ -56,7 +57,10 @@ class Tradein extends Model
     }
 
     public function postCode(){
-        return null;
+        $user = $this->customer();
+        $address_line = $user->billing_address;
+        $post_code = explode(',', $address_line);
+        return $post_code[count($post_code)-1];
     }
     
     public function location(){
@@ -159,12 +163,15 @@ class Tradein extends Model
     public function getTrayName($id){
         #dd($id);
         $trayid = TrayContent::where('trade_in_id', $id)->first();
-        if($trayid !== null){
+        if($trayid !== null && TrayContent::where('trade_in_id', $id)->first()->tray_id !== 0){
             $trayid = $trayid->tray_id;
             $trayname = Tray::where('id', $trayid)->first()->tray_name;
             return $trayname;
         }
         else{
+            if($this->deviceInPaymentProcess() || TrayContent::where('trade_in_id', $id)->first()->tray_id === 0){
+                return "Not assigned.";
+            }
             return "Not received yet.";
         }
 
@@ -188,8 +195,8 @@ class Tradein extends Model
         }
     }
 
-    public function getTrayId($id){
-        $trayid = TrayContent::where('trade_in_id', $id)->first();
+    public function getTrayId(){
+        $trayid = TrayContent::where('trade_in_id', $this->id)->first();
         if($trayid !== null){
             $trayid = $trayid->tray_id;
             return $trayid;
@@ -200,7 +207,7 @@ class Tradein extends Model
     }
 
     public function isGoogleLocked(){
-        if($this->job_state === '11b' || $this->job_state === '15b'){
+        if($this->job_state === '11a' || $this->job_state === '11b' || $this->job_state === '11a' || $this->job_state === '11b'){
             return true;
         }
         return false;
@@ -286,6 +293,85 @@ class Tradein extends Model
             }
         }
 
+        return false;
+    }
+
+    public function getDeviceLabel(){
+        $barcodeNumber = $this->barcode;
+        $barcode = DNS1D::getBarcodeHTML($this->barcode, 'C128');
+        $location = $this->getTrayName($this->id);
+
+        $customPaper = array(0,0,141.90,283.80);
+
+        $quarantineReason = $this->getBambooStatus();
+
+
+        if($this->isInQuarantine()){
+            
+            $pdf = PDF::loadView('portal.labels.devicelabels.quarantinelabel', 
+            array(
+                'barcode_number'=>$barcodeNumber,
+                'manifacturer'=>$this->getBrandName($this->product_id),
+                'model'=>$this->getProductName($this->product_id),
+                'imei'=>$this->imei_number,
+                'location'=>$location,
+                'quarantineReason'=>$quarantineReason,
+                'barcode'=>$barcode,
+                ))
+            ->setPaper($customPaper, 'landscape')
+            ->save('pdf/devicelabel-'. $barcodeNumber .'.pdf');
+
+            return true;
+        }
+        else if($this->job_state === "10"){
+            $pdf = PDF::loadView('portal.labels.devicelabels.testingpassed', 
+            array(
+                'barcode_number'=>$barcodeNumber,
+                'manifacturer'=>$this->getBrandName($this->product_id),
+                'model'=>$this->getProductName($this->product_id),
+                'imei'=>$this->imei_number,
+                'location'=>$location,
+                'bambooGrade'=>$this->cosmetic_condition,
+                'network'=>$this->correct_network,
+                'barcode'=>$barcode,
+                ))
+            ->setPaper($customPaper, 'landscape')
+            ->save('pdf/devicelabel-'. $barcodeNumber .'.pdf');
+
+            return true;
+        }
+        else{
+            $pdf = PDF::loadView('portal.labels.devicelabels.receivingpass', 
+            array(
+                'barcode_number'=>$barcodeNumber,
+                'manifacturer'=>$this->getBrandName($this->product_id),
+                'model'=>$this->getProductName($this->product_id),
+                'imei'=>$this->imei_number,
+                'location'=>$location,
+                'barcode'=>$barcode,
+                ))
+            ->setPaper($customPaper, 'landscape')
+            ->save('pdf/devicelabel-'. $barcodeNumber .'.pdf');
+
+            return true;
+        }
+    }
+
+    public function isFullyFunctional(){
+        $matches = ["11e", "15e"];
+
+        if(in_array($this->job_state, $matches)){
+            return false;
+        }
+        return true;
+    }
+
+    public function isFimpLocked(){
+        $matches = ["11a", "11b", "15a", "15b"];
+
+        if(in_array($this->job_state, $matches)){
+            return true;
+        }
         return false;
     }
 
@@ -480,6 +566,11 @@ class Tradein extends Model
     }
 
     public function getBambooStatus(){
+        $matches = ["8a", "8b", "8c", "8d", "8e", "8f"];
+
+        if(in_array($this->job_state, $matches)){
+            return "Blacklisted";
+        }
         return $this->getDeviceStatus()[0];
     }
 
@@ -560,6 +651,20 @@ class Tradein extends Model
         }
         return false;
     }
+
+    public function customerName(){
+        $user = User::find($this->user_id);
+        return $user->first_name . " " . $user->last_name;
+    }
+    
+    public function addressLine(){
+        $user = $this->customer();
+        $address_line = $user->billing_address;
+        $post_code = explode(',', $address_line);
+        return $post_code[0];
+    }
+
+    public function carrier(){}
     
     public function getDeviceMemory(){
         $product = ProductInformation::where('product_id', $this->product_id)->first();
@@ -580,5 +685,21 @@ class Tradein extends Model
         if($color){
             return $color->color_value;
         }
+    }
+    
+    public function trackingReference(){
+        return $this->tracking_reference;
+    }
+
+    public function isInTesting(){
+        $testing_states = [
+            '10', '11', '12', '13', '15', 
+            '11a', '11b', '11c', '11d', '11e', '11f', '11g', '11h', '11i', '11j',
+            '15a', '15b', '15c', '15d', '15e', '15f', '15g', '15h', '15i', '15j'
+        ];
+        if(in_array($this->job_state , $testing_states)){
+            return true;
+        }
+        return false;
     }
 }

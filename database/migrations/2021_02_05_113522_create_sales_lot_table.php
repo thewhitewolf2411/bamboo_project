@@ -18,6 +18,7 @@ class CreateSalesLotTable extends Migration
             $table->integer('sales_lot_status')->default(0);
             $table->string('sold_to')->nullable();
             $table->date('date_sold')->nullable();
+            $table->string('sold_value')->nullable();
             $table->date('payment_date')->nullable();
             $table->timestamps();
         });

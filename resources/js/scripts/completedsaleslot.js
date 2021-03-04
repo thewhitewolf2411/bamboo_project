@@ -14,52 +14,83 @@ $('.saleslots').on('click', function(){
 
     $(this).addClass('saleslot-active');
 
-    var saleslotid = $(this).prop('id');
-
-    $('#saleslotidform').val(saleslotid);
-
-    $.ajax({
-        url: "/portal/sales-lot/completed-sales-lots/get-saleslot-content",
-        type:"GET",
-        data:{
-            saleslotid:saleslotid,
-        },
-        success:function(response){
-            $('#sales-lot-boxes td').each(function(){
-                $(this).remove();
-            });
-
-            $('#sales-lot-devices td').each(function(){
-                $(this).remove();
-            });
-
-            for(var i=0; i<response.boxes.length; i++){
-                $('#sales-lot-boxes').append('<tr> <td> ' + response.boxes[i].tray_name + '</td><td>' + response.boxes[i].trolley_id + '</td><td>' + response.boxes[i].number_of_devices + '</td> </tr>')
-            }
-
-            for(var i=0; i<response.devices.length; i++){
-                $('#sales-lot-devices').append('<tr> <td> ' + response.devices[i].barcode + '</td><td>' + response.devices[i].product_name + '</td><td>' + response.devices[i].imei_number + '</td><td>' + response.devices[i].box_location + '</td><td>' + response.devices[i].bay_location + '</td></tr>')
-            }
-
-            $('#changelotstatedata').empty();
-            $('#changelotstatedata').append('<div class="form-group"><select id="changestate" name="changestate" class="form-control"><option value="" selected default disabled>Change state of Sale lot</option><option value="1">Sales Lot Under Offer</option><option value="2">Sales Lot Sold</option><option value="4">Sales Lot Sold - Payment Received</option> </select></div><div id="changestatesubmit"><input type="submit" class="btn btn-primary btn-blue" value="Change state"></div>');
-        },
-    });
-
-
-    $('#salelot-action').modal('show');
+    $('#saleslot-option-buttons button').prop('disabled', false);
 
 });
 
 
-$(document).on('change', '#changestate', function(){
+$('#view-sales-lot-btn').on('click', function(){
 
-    if($('#changestate').val() === '2'){
-        $('#changestatesubmit').remove();
-        $('#changelotstatedata').append('<div id="customer-name-input" class="form-group"><input type="text" name="customername" placeholder="Enter customer name"></div><div id="changestatesubmit"><input type="submit" class="btn btn-primary btn-blue" value="Change state"></div>');
+    var selectedid =  $('.saleslot-active').attr('id');
+
+    window.open('/portal/sales-lot/completed-sales-lot/view-lot/' + selectedid, '_self');
+
+});
+
+$('#sell-lot-btn').on('click', function(){
+
+    $('#salelot-action').modal('show');
+
+    var selectedid =  $('.saleslot-active').attr('id');
+    var selectedquantity = $('.saleslot-active td:nth-child(3) > div:nth-child(1)').html();
+    //console.log(selectedquantity);
+
+    $('#salelot-action #salelot-number').html(selectedid);
+    $('#salelot-action #device-qty').html(selectedquantity);
+
+});
+
+$('#payment-received-btn').on('click', function(){
+    var selectedid =  $('.saleslot-active').attr('id');
+    if (confirm("Do you want to mark Lot " + selectedid + " as 'Payment Recieved?")) {
+        // Save it!
+        $.ajax({
+            type: "POST",
+            url: "/portal/sales-lot/completed-sales-lot/markaspaymentrecieved",
+            data: {
+                lot_id: selectedid
+            },
+            success: function(data){
+                if(data.success){
+                    if(data.success === 200){
+                        window.location.reload();
+                    }
+                }
+            }
+          });
     }
-    else{
-        $('#customer-name-input').remove();
-    }
+});
+
+$('#sales-export-btn').on('click', function(){
+    var selectedid =  $('.saleslot-active').attr('id');
+    window.open("/portal/sales-lot/completed-sales-lot/clientsalesexport/"+selectedid);
+});
+
+$('#ism-pre-alert').on('click', function(){
+    var selectedid =  $('.saleslot-active').attr('id');
+    window.open("/portal/sales-lot/completed-sales-lot/ismprealert/"+selectedid);
+});
+
+$(document).ready(function(){
+
+    $('#boxedtradeinstable tfoot td').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );    
+
+    var boxsummarytable = $('#boxedtradeinstable').DataTable();
+    
+    // Apply the search
+    boxsummarytable.columns().every( function () {
+    
+        var that = this;
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    });
 
 });

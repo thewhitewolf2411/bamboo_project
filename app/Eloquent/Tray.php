@@ -23,7 +23,7 @@ class Tray extends Model
      * @var array
      */
     protected $fillable = [
-        'tray_name', 'tray_type','tray_brand', 'tray_grade', 'tray_network', 'box_devices', 'trolley_id','number_of_devices','max_number_of_devices'
+        'tray_name', 'tray_type','tray_brand', 'tray_grade', 'tray_network', 'box_devices', 'trolley_id','number_of_devices','max_number_of_devices','status'
     ];
 
     public function getTrolleyName($trolley_id){
@@ -70,6 +70,19 @@ class Tray extends Model
         }
 
         return $price;
+    }
+
+    public function getBoxBrand(){
+        switch($this->tray_brand){
+            case "Apple":
+                return 1;
+            case "Samsung":
+                return 2;
+            case "Huaweii":
+                return 3;
+            default:
+                return 4;
+        }
     }
 
 

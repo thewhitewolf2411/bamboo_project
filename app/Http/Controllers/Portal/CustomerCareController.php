@@ -256,8 +256,8 @@ class CustomerCareController extends Controller
             array_push($tradeins, $tradein);
         }
 
-        if(count($tradeins)>25){
-            return \redirect()->back()->with('error', 'You can\'t print more than 25 tradeins in one go.');
+        if(count($tradeins)>50){
+            return \redirect()->back()->with('error', 'You can\'t print more than 50 tradeins in one go.');
         }
 
         foreach($barcodes as $barcode){
@@ -647,7 +647,7 @@ class CustomerCareController extends Controller
 
         $tradein = Tradein::where('barcode', $request->print_device_id)->first();
 
-        $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
+        /*$barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 
         $trayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
         if($trayContent !== null){
@@ -658,9 +658,11 @@ class CustomerCareController extends Controller
             $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->serial_number, $tray->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
         } else {
             $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $tray->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
-        }
+        }*/
 
-        return redirect()->back()->with(['success'=>'pdf/devicelabel-'. $tradein->barcode .'.pdf']);
+        if($tradein->getDeviceLabel()){
+            return redirect()->back()->with(['success'=>'pdf/devicelabel-'. $tradein->barcode .'.pdf']);
+        }
 
     }
 

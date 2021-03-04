@@ -2,11 +2,19 @@
 namespace app\Services;
 
 use app\Eloquent\Tradein;
+use app\Eloquent\Tray;
 
 class BinService{
 
-    public function handleDeviceBin(Tradein $tradein, $bintype){
+    public function handleDeviceBin(Tradein $tradein, $bintype, $binname){
 
+        #dd();
+
+        if($tradein->getTrayName($tradein->id) === $binname){
+
+            return response(['deviceadded'=>0, 'error'=>'Device already allocated to bin.']);
+
+        }
 
         return response(['deviceadded'=>1, 'order'=>$tradein, 'model'=>$tradein->getProductName($tradein->product_id)]);
 

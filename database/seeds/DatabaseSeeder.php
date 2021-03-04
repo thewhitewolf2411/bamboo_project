@@ -50,6 +50,23 @@ class DatabaseSeeder extends Seeder
             'account_disabled'=>false,
         ]);
 
+        DB::table('users')->insert([
+
+            'first_name'=>'zumra',
+            'last_name'=>'alcatel',
+            'email'=>'zumra@alcatel.com',
+            'password'=>Crypt::encrypt('Lambda12'),
+            'current_phone'=>'2',
+            'preffered_os'=>'iOS',
+            'sub'=>false,
+            'username'=>'zumra',
+            'delivery_address'=>'The Works, 414 Union Street, Aberdeen, AB10 1TQ',
+            'billing_address'=>'Widapa Ltd, 25 Second Drove, Peterborough, PE1 5XA',
+            'contact_number'=>'061172442',
+            'type_of_user'=>0,
+            'account_disabled'=>false,
+        ]);
+
         DB::table('portal_users')->insert([
             'user_id'=>1,
             'recycle'=>true,
@@ -86,6 +103,7 @@ class DatabaseSeeder extends Seeder
             'payment_confirmations'=>true,
             'failed_payments'=>true,
             'sales_lot'=>true,
+            'despatch'=>true
         ]);
 
         DB::table('product_category')->insert([
@@ -119,7 +137,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('brand')->insert([
-            'brand_name'=>'Huawei',
+            'brand_name'=>'Huaweii',
             'brand_image'=>'/Image 15_1597675746.png',
             'total_produts'=>0
         ]);
@@ -1274,7 +1292,7 @@ class DatabaseSeeder extends Seeder
 
         //bins
         DB::table('trays')->insert([
-            'tray_name'=>'FIMP-1',
+            'tray_name'=>'FMIP-1',
             'tray_type'=>'B',
             'tray_brand'=>'Q',
             'tray_grade'=>'FIMP',
@@ -1356,6 +1374,50 @@ class DatabaseSeeder extends Seeder
         DB::table('networks')->insert([
             'network_name'=>'unlocked',
             'network_image'=>'/networks/unlocked.png'
+        ]);
+
+        DB::table('additional_costs')->insert([
+            'administration_costs'=>0.00,
+            'carriage_costs'=>0.00,
+            'miscellaneous_costs'=>0.00,
+            'per_job_deduction'=>0.00,
+            'applied_to'=>0
+        ]);
+
+        DB::table('clients')->insert([
+            'account_name'=>'Tesla Motors',
+            'contact_name'=>'Elon Musk',
+            'address'=>'Hethel, UK',
+            'post_code'=>'01234',
+            'country'=>'USA',
+            'contact_email'=>'some@dummy.email',
+            'contact_number'=>'1',
+            'vat_code'=>'T1',
+            'payment_type'=>'Transfer'
+        ]);
+
+        DB::table('clients')->insert([
+            'account_name'=>'SpaceX',
+            'contact_name'=>'Elon Musk',
+            'address'=>'Austin,Texas, US',
+            'post_code'=>'01234',
+            'country'=>'USA',
+            'contact_email'=>'some@dummy.email',
+            'contact_number'=>'1',
+            'vat_code'=>'T1',
+            'payment_type'=>'Transfer'
+        ]);
+
+        DB::table('clients')->insert([
+            'account_name'=>'Nurolink',
+            'contact_name'=>'Elon Musk',
+            'address'=>'Austin,Texas, US',
+            'post_code'=>'01234',
+            'country'=>'USA',
+            'contact_email'=>'some@dummy.email',
+            'contact_number'=>'1',
+            'vat_code'=>'T1',
+            'payment_type'=>'Transfer'
         ]);
     }
 }

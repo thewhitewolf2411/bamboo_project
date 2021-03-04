@@ -117,7 +117,7 @@
 
                                         <div class="row w-100">
                                             <div class="col-md-9 d-flex align-items-center">
-                                            <p>{{$tradein->getBambooStatus()}}</p>
+                                            <p>{{$tradein->quarantine_reason}}</p>
                                             </div>
                                             <div class="col-md-3">
                                                 <a onclick="removeQuarantineReason({{$tradein->id}})" class="btn btn-green" title="Remove quarantine reason">x</a>
@@ -131,7 +131,7 @@
                                 <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
                                 <td><div class="table-element">{{$tradein->created_at}}</div></td>
                                 <td><div class="table-element">{{$tradein->quarantine_date}}</div></td>
-                                <td><div class="table-element">{{$tradein->bamboo_grade}}</div></td>
+                                <td><div class="table-element">{{$tradein->cosmetic_condition}}</div></td>
                                 <td><div class="table-element"><input onclick="enablebtn()" class="exportbtn" type="checkbox" name="tradein-{{$tradein->id}}"></div></td>
                             </tr>
 
@@ -245,20 +245,7 @@
                             @csrf
                             @foreach(Session::get('allocateToTrays') as $tradein)
                                 <input type="hidden" name="tradein-{{$tradein->id}}" value="{{$tradein->id}}">
-                            @if(!$tradein->hasDeviceBeenTestedFirstTime() && !$tradein->hasDeviceBeenTestedSecondTime())
-                            <script>
-                            
-                                $('#statement').append('<div class="alert alert-warning"> Order number ' + {!! $tradein->barcode !!} + ' has not finish testing and require other action. Are you sure you want to allocate it? </div>')
-                            
-                            </script>
-                            @elseif($tradein->hasDeviceBeenTestedSecondTime())
-                            <script>
-                            
-                                $('#statement').append('<div class="alert alert-warning"> Order number ' + {!! $tradein->barcode !!} + ' was already tested second time and will not be able to return to testing. </div>')
-                            
-                            </script>
-                            @endif
-                            <tr @if(!$tradein->hasDeviceBeenTestedFirstTime()) style="background: #fff3cd !important" @else style="background: #d4edda !important" @endif>
+                            <tr>
                                 <td><div class="table-element">{{$tradein->barcode}}</div></td>
                                 <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                                 <td><div class="table-element">{{$tradein->imei_number}}</div></td>

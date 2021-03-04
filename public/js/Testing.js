@@ -58,15 +58,8 @@ function testingElementChanged(){
 
         options = {
             '':'',
-            'Grade A':'Grade A',
-            'Grade B+':'Grade B+',
-            'Grade B':'Grade B',
-            'Grade C':'Grade C',
             'WSI':'WSI',
             'WSD':'WSD',
-            'NWSI':'NWSI',
-            'NWSD':'NWSD',
-            'Catastrophic':'Catastrophic'
         }
 
         $('#customer_grade').val("Faulty");
@@ -83,15 +76,8 @@ function testingElementChanged(){
     
             options = {
                 '':'',
-                'Grade A':'Grade A',
-                'Grade B+':'Grade B+',
-                'Grade B':'Grade B',
-                'Grade C':'Grade C',
                 'WSI':'WSI',
                 'WSD':'WSD',
-                'NWSI':'NWSI',
-                'NWSD':'NWSD',
-                'Catastrophic':'Catastrophic'
             }
 
             $('#customer_grade').val("Faulty");
@@ -117,30 +103,16 @@ function testingElementChanged(){
                 'NWSD':'NWSD',
                 'Catastrophic':'Catastrophic'
             }
-        }
 
-
-        if(correctDevice == "false"){
-            $('#select_correct_device_container').removeClass('form-group-hidden');
-        }
-        else{
-            $('#select_correct_device_container').addClass('form-group-hidden');
-        }
-
-        if(deviceFullyFunctional == "false"){
-            $('#device-fully-functional-options').removeClass('form-group-hidden');
-            options = {
-                '':'',
-                'WSI':'WSI',
-                'WSD':'WSD',
-                'NWSI':'NWSI',
-                'NWSD':'NWSD',
-                'Catastrophic':'Catastrophic'
+            if(correctDevice == "false"){
+                $('#select_correct_device_container').removeClass('form-group-hidden');
             }
-        }
-        else{
-            $('#device-fully-functional-options').addClass('form-group-hidden');
-            if(waterDamage == "true"){
+            else{
+                $('#select_correct_device_container').addClass('form-group-hidden');
+            }
+    
+            if(deviceFullyFunctional == "false"){
+                $('#device-fully-functional-options').removeClass('form-group-hidden');
                 options = {
                     '':'',
                     'WSI':'WSI',
@@ -151,16 +123,39 @@ function testingElementChanged(){
                 }
             }
             else{
-                options = {
-                    '':'',
-                    'Grade A':'Grade A',
-                    'Grade B+':'Grade B+',
-                    'Grade B':'Grade B',
-                    'Grade C':'Grade C',
-                    'WSD':'WSD',
+                $('#device-fully-functional-options').addClass('form-group-hidden');
+                if(waterDamage == "true" && customerGrade == 2){
+                    options = {
+                        '':'',
+                        'WSI':'WSI',
+                        'WSD':'WSD',
+                    }
+                }
+                else if(waterDamage == "true" && customerGrade != 2){
+                    options = {
+                        '':'',
+                        'WSI':'WSI',
+                        'WSD':'WSD',
+                        'NWSI':'NWSI',
+                        'NWSD':'NWSD',
+                        'Catastrophic':'Catastrophic'
+                    }
+                }
+                else{
+                    options = {
+                        '':'',
+                        'Grade A':'Grade A',
+                        'Grade B+':'Grade B+',
+                        'Grade B':'Grade B',
+                        'Grade C':'Grade C',
+                        'WSD':'WSD',
+                    }
                 }
             }
         }
+
+
+
         
 
     }
@@ -176,25 +171,6 @@ function testingElementChanged(){
         $('#cosmetic_condition').append($("<option></option>")
         .attr("value", value).text(key));
     });
-
-    /*if(fimpOrGoogleLock == "true" || pinLock == "true"){
-
-        //$('#cosmetic_condition').prop('disabled', true);
-        $('#cosmetic_condition').prop('disabled', false);
-        $('#cosmetic_condition').prop('required', true);
-
-    }
-    else{
-        $('#cosmetic_condition').empty(); // remove old options
-        $.each(options, function(key,value) {
-            $('#cosmetic_condition').append($("<option></option>")
-            .attr("value", value).text(key));
-        });
-
-        $('#cosmetic_condition').prop('disabled', false);
-        $('#cosmetic_condition').prop('required', true);
-    }
-*/
 
 }
 
