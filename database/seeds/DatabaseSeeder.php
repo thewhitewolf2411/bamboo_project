@@ -137,7 +137,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('brand')->insert([
-            'brand_name'=>'Huaweii',
+            'brand_name'=>'Huawei',
             'brand_image'=>'/Image 15_1597675746.png',
             'total_produts'=>0
         ]);

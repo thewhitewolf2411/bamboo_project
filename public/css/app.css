@@ -14980,11 +14980,6 @@ input[type=number] {
   padding-right: 50px !important;
 }
 
-.all-batch-available-devices, .scanned {
-  max-height: 300px;
-  overflow-y: scroll;
-}
-
 .register-elements-container {
   width: 50%;
 }

@@ -78,7 +78,7 @@ class Tray extends Model
                 return 1;
             case "Samsung":
                 return 2;
-            case "Huaweii":
+            case "Huawei":
                 return 3;
             default:
                 return 4;

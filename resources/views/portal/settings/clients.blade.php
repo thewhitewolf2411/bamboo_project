@@ -47,7 +47,7 @@
                         <div class="form-group">
                             <label for="post_code">Post Code:</label>
                             <div class="d-flex align-items-center">
-                                <input class="form-control m-0" type="number" id="post_code" name="post_code">
+                                <input class="form-control m-0" type="text" id="post_code" name="post_code">
                             </div>
                         </div>
 
@@ -90,7 +90,7 @@
                                 <select class="form-control m-0" name="payment_type" id="payment_type">
                                     <option value="Transfer">Transfer</option>
                                     <option value="Credit Account">Credit Account</option>
-                                    <option value="Uprfont">Upfront</option>
+                                    <option value="Upfont">Upfront</option>
                                 </select>
                             </div>
                         </div>

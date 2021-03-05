@@ -93,7 +93,7 @@
                                     <td><div class="table-element">{{$tradein->barcode}}</div></td>
                                     <td><div class="table-element">{{$tradein->getOrderDate()}}</div></td>
                                     <td><div class="table-element">{{$tradein->getProductName($tradein->id)}}</div></td>
-                                    <td><div class="table-element">£ {{$tradein->bamboo_price}}</div></td>
+                                    <td><div class="table-element">£ {{$tradein->getDevicePrice()}}</div></td>
                                     <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
                                 </tr>
                             @endforeach
@@ -243,6 +243,8 @@ function search(){
                 } else {
                     loadResults(response);
                 }
+
+                document.getElementById('search_id').value = null;
             }
         });
     } else {

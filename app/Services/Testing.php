@@ -78,8 +78,6 @@ class Testing{
             if($request->pin_lock === "true"){
                 
                 $tradein->job_state = "15c";
-                //$tradein->save();
-                $tradein->cosmetic_condition = 'PIN';
 
                 $klaviyoemail = new KlaviyoEmail();
                 $klaviyoemail->pinLocked($user, $tradein);
@@ -88,18 +86,15 @@ class Testing{
                 if($request->fimp_or_google_lock === "true"){
                     if($tradein->getBrandId($tradein->product_id) === 1){
                         $tradein->job_state = "15a";
-                        $tradein->cosmetic_condition = 'FMIP';
 
                         $klaviyoemail = new KlaviyoEmail();
                         $klaviyoemail->FIMP($user, $tradein);
                     }
                     else{
                         $tradein->job_state = "15b";
-                        $tradein->cosmetic_condition = 'GOCK';
                         $klaviyoemail = new KlaviyoEmail();
                         $klaviyoemail->googleLocked($user, $tradein);
                     }
-                    //$tradein->save();
                 }
             }
 
@@ -111,7 +106,6 @@ class Testing{
                 $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'Q')->where('number_of_devices', "<" ,100)->first();
                 $quarantineName = $quarantineTrays->tray_name;
                 $tradein->quarantine_date = \Carbon\Carbon::now();
-                // $tradein->save();
             }
             else{
                 $bambogradeval = $request->bamboo_customer_grade;
@@ -134,8 +128,6 @@ class Testing{
                     else{
                         $tradein->correct_network = $tradein->customer_network;
                     }
-
-                    // $tradein->save();
 
                 $bambooprice = $this->generateDevicePrice($tradein->correct_product_id, $tradein->correct_memory, $tradein->correct_network, $bambogradeval);
                 $tradein->bamboo_price = $bambooprice;
@@ -192,7 +184,6 @@ class Testing{
                             }
                             break;
                     }
-
                     if($tradein->job_state === "9"){
                         $tradein->job_state = "10";
                     }
@@ -233,7 +224,6 @@ class Testing{
             }
 
             $tradein->bamboo_price = $bambooprice;
-            // $tradein->save();
     
             $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;
             $quarantineTrays->save();
@@ -246,6 +236,12 @@ class Testing{
     
             $oldTrayContent->delete();
     
+            if($tradein->cosmetic_condition === null){
+                $tradein->cosmetic_condition = $request->cosmetic_condition;
+            }
+
+            $tradein->save();
+
             $traycontent = new TrayContent();
             $traycontent->tray_id = $quarantineTrays->id;
             $traycontent->trade_in_id = $tradein->id;
@@ -261,8 +257,6 @@ class Testing{
             if($request->pin_lock === "true"){
                 
                 $tradein->job_state = "11c";
-                // $tradein->save();
-                $tradein->cosmetic_condition = 'PIN';
 
                 $klaviyomail = new KlaviyoEmail();
                 $klaviyomail->pinLocked($user, $tradein);
@@ -271,7 +265,6 @@ class Testing{
                 if($request->fimp_or_google_lock === "true"){
                     if($tradein->getBrandId($tradein->product_id) === 1){
                         $tradein->job_state = "11a";
-                        $tradein->cosmetic_condition = 'FMIP';
                         $klaviyomail = new KlaviyoEmail();
                         $klaviyomail->FIMP($user, $tradein);
                     }
@@ -279,9 +272,7 @@ class Testing{
                         $tradein->job_state = "11b";
                         $klaviyomail = new KlaviyoEmail();
                         $klaviyomail->googleLocked($user, $tradein);
-                        $tradein->cosmetic_condition = 'GOCK';
-                    }
-                    // $tradein->save();
+                    };
                 }
             }
 
@@ -293,7 +284,6 @@ class Testing{
                 $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'Q')->where('number_of_devices', "<" ,100)->first();
                 $quarantineName = $quarantineTrays->tray_name;
                 $tradein->quarantine_date = \Carbon\Carbon::now();
-                // $tradein->save();
             }
             else{
                 $bambogradeval = $request->bamboo_customer_grade;
@@ -318,9 +308,6 @@ class Testing{
                     else{
                         $tradein->correct_network = $tradein->customer_network;
                     }
-                // }
-
-                // $tradein->save();
 
                 $bambooprice = $this->generateDevicePrice($tradein->correct_product_id, $tradein->correct_memory, $tradein->correct_network, $bambogradeval);
                 $tradein->bamboo_price = $bambooprice;
@@ -434,6 +421,11 @@ class Testing{
             $tradein->bamboo_price = $bambooprice;
             #$tradein->cosmetic_condition = $request->cosmetic_condition;
             $tradein->product_colour = $request->device_color;
+
+            if($tradein->cosmetic_condition === null){
+                $tradein->cosmetic_condition = $request->cosmetic_condition;
+            }
+
             $tradein->save();
     
             $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;

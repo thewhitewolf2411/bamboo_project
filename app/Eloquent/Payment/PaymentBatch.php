@@ -62,7 +62,7 @@ class PaymentBatch extends Model
         $tradein_ids = PaymentBatchDevice::where('payment_batch_id', $this->id)->get()->pluck('tradein_id');
         $tradeins = Tradein::whereIn('id', $tradein_ids)->get();
         foreach($tradeins as $tradein){
-            $total+=$tradein->bamboo_price;
+            $total+=$tradein->getDevicePrice();
         }
 
         return "£ " . $total ;

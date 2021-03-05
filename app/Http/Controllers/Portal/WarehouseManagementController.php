@@ -143,7 +143,7 @@ class WarehouseManagementController extends Controller
             $brand = "Samsung";
         }
         if($brandLet === "H"){
-            $brand = "Huaweii";
+            $brand = "Huawei";
         }
         if($brandLet === "M"){
             $brand = "Miscellaneous";
@@ -367,7 +367,7 @@ class WarehouseManagementController extends Controller
             $brand = "Samsung";
         }
         if($brandLet === "H"){
-            $brand = "Huaweii";
+            $brand = "Huawei";
         }
         if($brandLet === "M"){
             $brand = "Miscellaneous";
@@ -407,7 +407,7 @@ class WarehouseManagementController extends Controller
             $brand = "Samsung";
         }
         if($brandLet === "H"){
-            $brand = "Huaweii";
+            $brand = "Huawei";
         }
         if($brandLet === "M"){
             $brand = "Miscellaneous";
@@ -477,7 +477,7 @@ class WarehouseManagementController extends Controller
             $brand = "Samsung";
         }
         if($brandLet === "H"){
-            $brand = "Huaweii";
+            $brand = "Huawei";
         }
         if($brandLet === "M"){
             $brand = "Miscellaneous";
@@ -882,7 +882,7 @@ class WarehouseManagementController extends Controller
             $brand = "Samsung";
         }
         if($brandLet === "3"){
-            $brand = "Huaweii";
+            $brand = "Huawei";
         }
         if($brandLet === "4"){
             $brand = "Miscellaneous";

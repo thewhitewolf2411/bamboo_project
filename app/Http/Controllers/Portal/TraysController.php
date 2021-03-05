@@ -136,7 +136,7 @@ class TraysController extends Controller
             $brand = "Samsung";
         }
         if($brandLet === "H"){
-            $brand = "Huaweii";
+            $brand = "Huawei";
         }
         if($brandLet === "M"){
             $brand = "Miscellaneous";

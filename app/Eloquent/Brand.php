@@ -39,7 +39,7 @@ class Brand extends Model
             return "Samsung";
         }
         else if($this->id === 3){
-            return "Huaweii";
+            return "Huawei";
         }
         else{
             return "Miscellaneous";

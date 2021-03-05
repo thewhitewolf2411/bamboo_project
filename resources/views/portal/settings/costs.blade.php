@@ -26,16 +26,14 @@
                         <div class="form-group">
                             <label for="admin_costs">Administration costs:</label>
                             <div class="d-flex align-items-center">
-                                <p>£</p>
-                                <input class="form-control m-0" type="number" step="0.01" id="administration_costs" name="administration_costs" value="{{$additionalCosts->administration_costs}}">
+                                <input class="form-control m-0" type="text" step="0.01" id="administration_costs" name="administration_costs" pattern="^\£\d{1,3}(,\d{3})*(\.\d+)?£" data-type="currency" value="{{$additionalCosts->administration_costs}}">
                             </div>
                         </div>
                     
                         <div class="form-group">
                             <label for="logistics_costs">Carriage:</label>
                             <div class="d-flex align-items-center">
-                                <p>£</p>
-                                <input class="form-control m-0" type="number" step="0.01" id="carriage_costs" name="carriage_costs" value="{{$additionalCosts->carriage_costs}}">
+                                <input class="form-control m-0" type="text" step="0.01" id="carriage_costs" name="carriage_costs" pattern="^\£\d{1,3}(,\d{3})*(\.\d+)?£" data-type="currency" value="{{$additionalCosts->carriage_costs}}">
                             </div>
                         </div>
             
@@ -51,16 +49,14 @@
                         <div class="form-group">
                             <label for="miscellaneous_costs">Miscellaneous cost:</label>
                             <div class="d-flex align-items-center">
-                                <p>£</p>
-                                <input class="form-control m-0" type="number" step="0.01" id="miscellaneous_costs" name="miscellaneous_costs" required>
+                                <input class="form-control m-0" type="text" step="0.01" id="miscellaneous_costs" name="miscellaneous_costs" pattern="^\£\d{1,3}(,\d{3})*(\.\d+)?£" data-type="currency" required>
                             </div>
                         </div>
                     
                         <div class="form-group">
                             <label for="per_job_deduction">Per job deduction:</label>
                             <div class="d-flex align-items-center">
-                                <p>£</p>
-                                <input class="form-control m-0" type="number" step="0.01" id="per_job_deduction" name="per_job_deduction" required>
+                                <input class="form-control m-0" type="text" step="0.01" id="per_job_deduction" name="per_job_deduction" pattern="^\£\d{1,3}(,\d{3})*(\.\d+)?£" data-type="currency" required>
                             </div>
                         </div>
 
@@ -68,7 +64,7 @@
                             <label for="">Live unallocated cost:</label>
                             <div class="d-flex align-items-center">
                                 <p>£</p>
-                                <input class="form-control m-0" type="number" step="0.01" id="" name="" disabled>
+                                <input class="form-control m-0" type="number" step="0.01" id="" name="" data-type="currency" disabled>
                             </div>
                         </div>
 
@@ -131,5 +127,97 @@
 
     </div>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script>
+
+// Jquery Dependency
+
+$("input[data-type='currency']").on({
+    keyup: function() {
+      formatCurrency($(this));
+    },
+    blur: function() { 
+      formatCurrency($(this), "blur");
+    }
+});
+
+
+function formatNumber(n) {
+  // format number 1000000 to 1,234,567
+  return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}
+
+
+function formatCurrency(input, blur) {
+  // appends $ to value, validates decimal side
+  // and puts cursor back in right position.
+  
+  // get input value
+  var input_val = input.val();
+  
+  // don't validate empty input
+  if (input_val === "") { return; }
+  
+  // original length
+  var original_len = input_val.length;
+
+  // initial caret position 
+  var caret_pos = input.prop("selectionStart");
+    
+  // check for decimal
+  if (input_val.indexOf(".") >= 0) {
+
+    // get position of first decimal
+    // this prevents multiple decimals from
+    // being entered
+    var decimal_pos = input_val.indexOf(".");
+
+    // split number by decimal point
+    var left_side = input_val.substring(0, decimal_pos);
+    var right_side = input_val.substring(decimal_pos);
+
+    // add commas to left side of number
+    left_side = formatNumber(left_side);
+
+    // validate right side
+    right_side = formatNumber(right_side);
+    
+    // On blur make sure 2 numbers after decimal
+    if (blur === "blur") {
+      right_side += "00";
+    }
+    
+    // Limit decimal to only 2 digits
+    right_side = right_side.substring(0, 2);
+
+    // join number by .
+    input_val = "£" + left_side + "." + right_side;
+
+  } else {
+    // no decimal entered
+    // add commas to number
+    // remove all non-digits
+    input_val = formatNumber(input_val);
+    input_val = "£" + input_val;
+    
+    // final formatting
+    if (blur === "blur") {
+      input_val += ".00";
+    }
+  }
+  
+  // send updated string to input
+  input.val(input_val);
+
+  // put caret back in the right position
+  var updated_len = input_val.length;
+  caret_pos = updated_len - original_len + caret_pos;
+  input[0].setSelectionRange(caret_pos, caret_pos);
+}
+
+
+</script>
 
 @endsection

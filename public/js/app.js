@@ -54985,6 +54985,11 @@ window.printDeviceLabel = function (print_device_id) {
   $('#print_device_barcode').click();
 };
 
+window.printTradePackTradeIn = function (tradein_id) {
+  $('#print_trade_pack_trade_in_id').val(tradein_id);
+  $('#print_trade_pack_trade_in_trigger').click();
+};
+
 function setNumberOfTradePacks(number_of_trade_packs_to_print) {
   $('#number_of_bulk_prints').val(number_of_trade_packs_to_print);
   $('#bulk_label_print_button').prop('disabled', false);

@@ -58,7 +58,7 @@ class Tradein extends Model
 
     public function postCode(){
         $user = $this->customer();
-        $address_line = $user->billing_address;
+        $address_line = $user->delivery_address;
         $post_code = explode(',', $address_line);
         return $post_code[count($post_code)-1];
     }
@@ -408,7 +408,7 @@ class Tradein extends Model
             /*8e*/  ['Knox','Awaiting Response'],
             /*8f*/  ['Assetwatch','Awaiting Response'],
             /*9*/   ['Awaiting Testing','Trade Pack Received'],    // old - ['Awaiting Testing','Awaiting Testing']
-            /*10*/  ['Device has passed testing','Testing'],
+            /*10*/  ['Device has passed testing','Trade Pack Received'],
             /* First Test results */
             /*11*/  ['Quarantine','Awaiting Response'],
             /*11a*/  ['FMIP','Awaiting Response'],
@@ -421,7 +421,7 @@ class Tradein extends Model
             /*11h*/  ['Signs of water damage','Awaiting Response'],
             /*11i*/  ['Downgrade','Awaiting Response'],
             /*11j*/  ['Older than 14 days','Awaiting Response'],
-            /*12*/  ['Device has passed testing','Testing'],
+            /*12*/  ['Device has passed testing','Trade Pack Received'],
             /*13*/  ['Device was requested for retest','Awaiting Testing'],
             /*14*/  ['Awaiting 2nd Test','Awaiting Testing'],
             /* Second Test results */
@@ -436,7 +436,7 @@ class Tradein extends Model
             /*15h*/  ['Signs of water damage','Awaiting Response'],
             /*15i*/  ['Downgraded','Awaiting Response'],
             /*15j*/  ['Older than 14 days','Awaiting Response'],
-            /*16*/  ['Device has passed 2nd testing','Testing'],
+            /*16*/  ['Device has passed testing','Testing'],
             /*17*/  ['Device marked for destruction','Order expired'],
             /*18*/  ['Device destroyed','Order expired'],
             /*19*/  ['Device requested by customer','Returning Device'],
@@ -713,5 +713,13 @@ class Tradein extends Model
             return true;
         }
         return false;
+    }
+
+    public function getDevicePrice(){
+        if($this->bamboo_price > $this->order_price){
+            return $this->order_price;
+        }
+
+        return $this->bamboo_price;
     }
 }

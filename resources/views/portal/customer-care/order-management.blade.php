@@ -92,7 +92,7 @@
                                 <img style="width: 15px;" src="{{url('/images/undo.png')}}">
                             </a>
                         @else
-                            <div class="alert alert-warning mb-0">Unable to return this device to receiving</div>
+                            <div></div>
                         @endif
                     </td>
                         
@@ -104,19 +104,19 @@
                             <img style="width: 15px;" src="{{url('/images/undo.png')}}">
                         </a>
                         @elseif($tradein->deviceInPaymentProcess())
-                            <div class="alert alert-warning mb-0">Device is in payment process.</div>
+                            <div></div>
                         @else
-                            <div class="alert alert-warning mb-0">Device hasn't been tested yet.</div>
+                            <div></div>
                         @endif
                     </td>
                                                 
                     <td class="text-center 4 p-0">
-                        @if($tradein->job_state === '20')
+                        @if($tradein->hasDeviceBeenReceived() && !$tradein->deviceInPaymentProcess())
                             <a href="#" title="Send to Despatch" onclick="sendToDespatch({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a>
                         @elseif($tradein->job_state === '21')
                             <div class="alert alert-success mb-0" role="alert">Device was dispatched to customer</div>
                         @else
-                            <div class="alert alert-warning mb-0">Unable to dispatch this device to customer</div>
+                            <div></div>
                         @endif
                     </td>
 

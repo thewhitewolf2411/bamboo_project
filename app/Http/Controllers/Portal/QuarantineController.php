@@ -110,6 +110,7 @@ class QuarantineController extends Controller
     }
 
     public function allocateToTray(Request $request){
+        #dd($request->all());
         $tradeinNumbers = $request->all();
 
         #array_pop($tradeinNumbers);
@@ -175,7 +176,7 @@ class QuarantineController extends Controller
                 
                 //after receiving
                 if($newTray->tray_type === 'R'){
-                    $tradein->job_state = '13';
+                    $tradein->job_state = '14';
                 }
                 //after testing
                 elseif($newTray->tray_type === 'T'){

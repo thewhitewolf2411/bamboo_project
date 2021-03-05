@@ -360,11 +360,11 @@ class PaymentsController extends Controller
                     }
                 }
                 $csvdata = implode('', $items);
-                $file = fopen("export_batches.xlsx", 'w');
+                $file = fopen("export_batches.csv", 'w');
                 fwrite($file, $csvdata);
                 fclose($file);
                 ob_clean();
-                $file = "export_batches.xlsx";
+                $file = "export_batches.csv";
                 header('Content-Description: File Transfer');
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 header('Content-Disposition: attachment; filename='.basename($file));
@@ -400,11 +400,11 @@ class PaymentsController extends Controller
                 }
 
                 $csvdata = implode('', $items);
-                $file = fopen("export_batches.xlsx", 'w');
+                $file = fopen("export_batches.csv", 'w');
                 fwrite($file, $csvdata);
                 fclose($file);
                 ob_clean();
-                $file = "export_batches.xlsx";
+                $file = "export_batches.csv";
                 header('Content-Description: File Transfer');
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 header('Content-Disposition: attachment; filename='.basename($file));
