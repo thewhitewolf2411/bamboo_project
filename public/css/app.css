@@ -11870,6 +11870,37 @@ main p, a, span {
   font-size: 14px;
 }
 
+.personal-info-address {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  font-family: Sharp Sans No1 Bold;
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.arrow.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  margin-bottom: 2px;
+}
+
+.arrow.up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.enter-manually > p {
+  font-size: 15px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .personal-info-dropdown {
   margin-top: 6px;
 }
