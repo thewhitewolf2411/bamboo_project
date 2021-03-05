@@ -12173,24 +12173,38 @@ main p, a, span {
   margin-left: 10px;
 }
 
-.processing-info-row {
+.emoji-info-row {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
 }
 
-.processing-info-text {
+.emoji-col {
+  display: flex;
+  flex-direction: column;
+  width: 160px;
+}
+
+.emoji-img {
+  display: block;
+  width: 154px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.emoji-text {
+  font-family: Sharp Sans No1 Bold;
+  font-size: 32px;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.emoji-info-text {
   font-size: 20px;
   padding-top: 25px;
   text-align: left;
   font-family: Sharp Sans No1 Bold;
   margin: 0;
-  margin-left: 5%;
-}
-
-.uhoh-processing {
-  display: block;
-  width: 135px;
-  height: 150px;
   margin-left: 5%;
 }
 

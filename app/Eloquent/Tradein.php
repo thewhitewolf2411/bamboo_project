@@ -714,4 +714,49 @@ class Tradein extends Model
         }
         return false;
     }
+
+    public function getIMEIDowngradeOffer(){
+        dd($this);
+    }
+
+    public function notReceivedAfterSevenDays(){
+        $now = Carbon::now();
+        $expires = Carbon::parse($this->expiry_date);
+        $diff = $expires->diffInDays($now);
+        //dd($diff, $diff >= 7 && $diff < 10, $now->format('d.m.Y'), $expires->format('d.m.Y'));
+
+        if($diff < 7 && $diff > 3){
+            return true;
+        }
+        return false;
+    }
+
+    public function notReceivedAfterTenDays(){
+        $now = Carbon::now();
+        $expires = Carbon::parse($this->expiry_date);
+        $diff = $expires->diffInDays($now);
+
+        if($diff <= 3 && $diff > 0){
+            return true;
+        }
+        return false;
+    }
+
+    public function notReceivedAfterFourteenDays(){
+        $now = Carbon::now();
+        $expires = Carbon::parse($this->expiry_date);
+        $diff = $expires->diffInDays($now);
+        if($now >= $expires){
+            return true;
+        }
+        return false;
+    }
+
+
+    public function notReceivedYet(){
+        if($this->notReceivedAfterSevenDays() || $this->notReceivedAfterTenDays() || $this->notReceivedAfterFourteenDays()){
+            return true;
+        }
+        return false;
+    }
 }
