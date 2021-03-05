@@ -39,6 +39,7 @@ main p, a, span{
     font-size: 40px;
     font-weight: 600;
     color: #fff;
+    font-family: Sharp Sans No1 Semibold;
 }
 
 .start-buttons-container{
@@ -159,9 +160,14 @@ main p, a, span{
     height: 0;
 }
 
+.selling-content-container-mobile{
+    display: none;
+}
+
 .grading-container{
     background: #A375BC;
     padding-bottom: 0;
+    display: none;
 }
 
 .center-grading-elements{
@@ -244,7 +250,7 @@ main p, a, span{
 
 .trustpilot-container{
     background: #FCC44C;
-    display: flex;
+    display: none;
     flex-direction: row;
     width: 100vw;
     justify-content: space-evenly;
@@ -1348,11 +1354,14 @@ main p, a, span{
     display: none;
 }
 
+
+
 @media screen and (max-width: 600px) and (min-width: 325px){
 
     .home-element{
         padding: 1rem;
         padding-bottom: 0;
+        margin-top: 1rem;
     }
     
     .home-title-container .left-container{
@@ -1465,5 +1474,48 @@ main p, a, span{
         width: auto;
         height: auto;
         padding: 1rem 2rem !important;
+    }
+
+    .selling-content-container {
+        display: none;
+        flex-direction: row;
+        justify-content: space-evenly;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+    
+    .selling-content-container-mobile{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .how-first-text-container{
+        width: 50%;
+        height: auto;
+    }
+
+    .play-container {
+        width: 50px;
+        height: 50px;
+    }
+
+    .play-container .fa {
+        font-size: 20px !important;
+    }
+
+    .news-label-selected-container p{
+        margin-left: 5px;
+    }
+    .terms-container{
+        width: auto !important;
+    }
+
+    .modal-second-element-active{
+        padding: 25px !important;
     }
 }

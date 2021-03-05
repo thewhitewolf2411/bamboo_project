@@ -15,13 +15,13 @@
         
         <div class="hovers-header">
             <div class="hover-link" id="user-hover-link">
-                <a href="/setpage/account"><i class="fa fa-user-o" aria-hidden="true"></i><p class="showhover">Account</p></a>
+                <a href="/setpage/account"><div class="img"></div><p class="showhover">Account</p></a>
             </div>
             <div class="hover-link" id="wishlist-hover-link">
-                <a href="/userprofile/show/wishlist"><i class="fa fa-heart-o" aria-hidden="true"></i><p class="showhover">Wishlist</p></a>
+                <a href="/userprofile/show/wishlist"><div class="img"></div><p class="showhover">Wishlist</p></a>
             </div>
             <div class="hover-link" id="card-hover-link">
-                <a href="/cart"><img src="{{asset('/customer_page_images/body/Icon-Shop.svg')}}"><p class="showhover">Basket</p></a>
+                <a href="/cart"><div class="img"></div><p class="showhover">Basket</p></a>
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span style="color:#000;" class="navbar-toggler-icon"></span>
