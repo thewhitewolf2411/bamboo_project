@@ -864,4 +864,12 @@ class Tradein extends Model
         }
         return 'Not received yet.';
     }
+
+    public function getDevicePrice(){
+        if($this->bamboo_price > $this->order_price){
+            return $this->order_price;
+        }
+
+        return $this->bamboo_price;
+    }
 }
