@@ -196,7 +196,7 @@
 
                                     <!-- personal info modal -->
                                     <div class="modal fade" id="personalInfoModal" tabindex="-1" role="dialog" aria-labelledby="personalInfoModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-dialog modal-xl" role="document">
                                             <div class="modal-content padded">
                                                 <div class="validation-modal-header">
                                                     <img class="close-modal-img ml-auto" src="{{asset('/customer_page_images/body/modal-close.svg')}}" data-dismiss="modal" aria-label="Close">
@@ -230,12 +230,41 @@
                                                     <div class="personal-info-row">
                                                         <div class="col p-0 mr-3">
                                                             <label for="firstname" class="personal-info-label">Delivery Address</label>
-                                                            <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" value="{!!Auth::user()->delivery_address!!}" placeholder="Example delivery address" required autofocus>
+                                                            <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" placeholder="Enter postcode" required>
+                                                            
+                                                            <div class="enter-manually mb-2 user-select-none" onclick="toggleManualAddress('delivery')"><p>Enter Address Manually <i id="manual-delivery-arrow" class="arrow down ml-2"></i></p></div>
+
+                                                            <div id="manual-delivery" class="hidden">
+                                                                <input type="text" class="form-control mb-0" name="manual_delivery_address_details" id="delivery_house_name" placeholder="House name or number">
+                                                                <input type="text" class="form-control mb-0" name="manual_delivery_address_details" id="delivery_street_name" placeholder="Street Name">
+                                                                <input type="text" class="form-control mb-0" name="manual_delivery_address_details" id="delivery_town" placeholder="Town">
+                                                                <input type="text" class="form-control mb-0" name="manual_delivery_address_details" id="delivery_city" placeholder="City">
+                                                                <input type="text" class="form-control mb-0" name="manual_delivery_address_details" id="delivery_post_code" placeholder="Post code">
+                                                                <div class="btn btn-light disabled mt-2" id="save_manual_delivery" onclick="saveAddress('delivery')">Save address</div>
+                                                            </div>
+                                                            <p class="personal-info-address" id="current-personal-delivery-address">
+                                                                {!!str_replace(',', '<br>', Auth::user()->delivery_address)!!}
+                                                            </p>
                                                         </div>
 
                                                         <div class="col p-0 mr-3">
                                                             <label for="last_name" class="personal-info-label">Billing Address</label>
-                                                            <input class="form-control js-typeahead" type="text" id="billing_address" name="billing_address" value="{!!Auth::user()->billing_address!!}" placeholder="Example billing address" required autofocus>
+                                                            <input class="form-control js-typeahead" type="text" id="billing_address" name="billing_address" placeholder="Enter postcode" required>
+
+                                                            <div class="enter-manually mb-2 user-select-none" onclick="toggleManualAddress('billing')"><p>Enter Address Manually <i id="manual-billing-arrow" class="arrow down ml-2"></i></p></div>
+
+                                                            <div id="manual-billing" class="hidden">
+                                                                <input type="text" class="form-control mb-0" name="manual_billing_address_details" id="billing_house_name" placeholder="House name or number">
+                                                                <input type="text" class="form-control mb-0" name="manual_billing_address_details" id="billing_street_name" placeholder="Street Name">
+                                                                <input type="text" class="form-control mb-0" name="manual_billing_address_details" id="billing_town" placeholder="Town">
+                                                                <input type="text" class="form-control mb-0" name="manual_billing_address_details" id="billing_city" placeholder="City">
+                                                                <input type="text" class="form-control mb-0" name="manual_billing_address_details" id="billing_post_code" placeholder="Post code">
+                                                                <div class="btn btn-light disabled mt-2" id="save_manual_billing" onclick="saveAddress('billing')">Save address</div>
+                                                            </div>
+
+                                                            <p class="personal-info-address" id="current-personal-billing-address">
+                                                                {!!str_replace(',', '<br>', Auth::user()->billing_address)!!}
+                                                            </p>
                                                         </div>
 
                                                         <div class="col p-0 mr-3">
@@ -704,6 +733,18 @@
         checkNewPass()
     });
 
+    let manual_delivery_inputs = document.getElementsByName('manual_delivery_address_details');
+    for (let index = 0; index < manual_delivery_inputs.length; index++) {
+        let elem = manual_delivery_inputs[index];
+        elem.onkeyup = function() {validateManualDeliveryAddress()};
+    }
+
+    let manual_billing_inputs = document.getElementsByName('manual_billing_address_details');
+    for (let index = 0; index < manual_billing_inputs.length; index++) {
+        let elem = manual_billing_inputs[index];
+        elem.onkeyup = function() {validateManualBillingAddress()};
+    }
+
 
     function changeSection(id){
         let splitted = id.split('-');
@@ -751,6 +792,7 @@
 
         // $('#validationModal').modal('hide');
         // $('#personalInfoModal').modal('show');
+        // return;
 
         $.ajax({
             type: "POST",
@@ -1054,7 +1096,6 @@
         }
     }
 
-
     function saveSubscriptions(){
         let selected_newsletter = null;
         let yes_newsletter = document.getElementById("yes-newsletterbox");
@@ -1080,6 +1121,177 @@
         });
     }
 
+    function validateManualDeliveryAddress(){
+        var manual_delivery_section = document.getElementById('manual-delivery');
+        var save_delivery = document.getElementById('save_manual_delivery');
+
+        if(!manual_delivery_section.classList.contains('hidden')){
+            let house_name_valid = false; 
+            let street_name_valid = false; 
+            let town_valid = false; 
+            let city_valid = false; 
+            let post_code_valid = false; 
+
+            let housename = document.getElementById('delivery_house_name');
+            let streetname = document.getElementById('delivery_street_name');
+            let town = document.getElementById('delivery_town');
+            let city = document.getElementById('delivery_city');
+            let postcode = document.getElementById('delivery_post_code');
+
+            if(housename.value && streetname.value && town.value && city.value && postcode.value){
+                if(save_delivery.classList.contains('disabled')){
+                    save_delivery.classList.remove('disabled');
+                    if(!save_delivery.classList.contains('btn-green')){
+                        save_delivery.classList.add('btn-green');
+                    }
+                }
+            } else {
+                if(!save_delivery.classList.contains('disabled')){
+                    if(save_delivery.classList.contains('btn-green')){
+                        save_delivery.classList.remove('btn-green');
+                    }
+                    save_delivery.classList.add('disabled');
+                }
+            }
+        }
+    }
+
+    function validateManualBillingAddress(){
+        var manual_billing_section = document.getElementById('manual-billing');
+        var save_billing = document.getElementById('save_manual_billing');
+
+        if(!manual_billing_section.classList.contains('hidden')){
+            let house_name_valid = false; 
+            let street_name_valid = false; 
+            let town_valid = false; 
+            let city_valid = false; 
+            let post_code_valid = false; 
+
+            let housename = document.getElementById('billing_house_name');
+            let streetname = document.getElementById('billing_street_name');
+            let town = document.getElementById('billing_town');
+            let city = document.getElementById('billing_city');
+            let postcode = document.getElementById('billing_post_code');
+
+            if(housename.value && streetname.value && town.value && city.value && postcode.value){
+                if(save_billing.classList.contains('disabled')){
+                    save_billing.classList.remove('disabled');
+                    if(!save_billing.classList.contains('btn-green')){
+                        save_billing.classList.add('btn-green');
+                    }
+                }
+            } else {
+                if(!save_billing.classList.contains('disabled')){
+                    if(save_billing.classList.contains('btn-green')){
+                        save_billing.classList.remove('btn-green');
+                    }
+                    save_billing.classList.add('disabled');
+                }
+            }
+        }
+    }
+
+    function toggleManualAddress(type){
+        var manual_delivery = document.getElementById('manual-delivery');
+        var arrow_delivery = document.getElementById('manual-delivery-arrow');
+        var personal_delivery = document.getElementById('current-personal-delivery-address');
+
+        var manual_billing = document.getElementById('manual-billing');
+        var arrow_billing = document.getElementById('manual-billing-arrow');
+        var personal_billing = document.getElementById('current-personal-billing-address');
+
+
+        switch (type) {
+            case 'delivery':
+                if(manual_delivery.classList.contains('hidden')){
+                    manual_delivery.classList.remove('hidden');
+                    if(!personal_delivery.classList.contains('hidden')){
+                        personal_delivery.classList.add('hidden');
+                    }
+
+                    if(arrow_delivery.classList.contains('down')){
+                        arrow_delivery.classList.remove('down');
+                        arrow_delivery.classList.add('up');
+                    }
+                    document.getElementById('delivery_address').readOnly = true;
+                } else {
+                    manual_delivery.classList.add('hidden');
+                    if(personal_delivery.classList.contains('hidden')){
+                        personal_delivery.classList.remove('hidden');
+                    }
+
+                    if(arrow_delivery.classList.contains('up')){
+                        arrow_delivery.classList.remove('up');
+                        arrow_delivery.classList.add('down');
+                    }
+                    document.getElementById('delivery_address').readOnly = false;
+                }
+                break;
+        
+            case 'billing':
+                if(manual_billing.classList.contains('hidden')){
+                    manual_billing.classList.remove('hidden');
+                    if(!personal_billing.classList.contains('hidden')){
+                        personal_billing.classList.add('hidden');
+                    }
+
+                    if(arrow_billing.classList.contains('down')){
+                        arrow_billing.classList.remove('down');
+                        arrow_billing.classList.add('up');
+                    }
+                    document.getElementById('billing_address').readOnly = true;
+
+                } else {
+                    manual_billing.classList.add('hidden');
+                    if(personal_billing.classList.contains('hidden')){
+                        personal_billing.classList.remove('hidden');
+                    }
+
+                    if(arrow_billing.classList.contains('up')){
+                        arrow_billing.classList.remove('up');
+                        arrow_billing.classList.add('down');
+                    }
+                    document.getElementById('billing_address').readOnly = false;
+                }
+                break;
+        
+            default:
+                break;
+        }
+    }
+
+    function saveAddress(type){
+        switch (type) {
+            case 'delivery':
+
+                let housename_delivery = document.getElementById('delivery_house_name').value;
+                let streetname_delivery = document.getElementById('delivery_street_name').value;
+                let town_delivery = document.getElementById('delivery_town').value;
+                let city_delivery = document.getElementById('delivery_city').value;
+                let postcode_delivery = document.getElementById('delivery_post_code').value;
+
+                let address_delivery = housename_delivery + ", " + streetname_delivery + ", " + town_delivery + ", " + city_delivery + ", " + postcode_delivery;
+
+                document.getElementById('delivery_address').value = address_delivery;
+
+                break;
+            case 'billing':
+
+                let housename_billing = document.getElementById('billing_house_name').value;
+                let streetname_billing = document.getElementById('billing_street_name').value;
+                let town_billing = document.getElementById('billing_town').value;
+                let city_billing = document.getElementById('billing_city').value;
+                let postcode_billing = document.getElementById('billing_post_code').value;
+
+                let address_billing = housename_billing + ", " + streetname_billing + ", " + town_billing + ", " + city_billing + ", " + postcode_billing;
+
+                document.getElementById('billing_address').value = address_billing;
+                break;
+            default:
+                break;
+        }
+    }
+
     function saveChanges(){
         let firstname = document.getElementById('first_name');
         let lastname = document.getElementById('last_name');
@@ -1101,7 +1313,7 @@
 
         $.ajax({
             type: "POST",
-            url: 'userprofile/updatepersonalinfo',
+            url: '/userprofile/updatepersonalinfo',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
