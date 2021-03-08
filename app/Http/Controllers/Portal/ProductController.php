@@ -445,7 +445,7 @@ class ProductController extends Controller
 
         $productInfo = ProductInformation::where('product_id', $request->product_id)->get();
         $networks = ProductNetworks::where('product_id', $request->product_id)->get();
-
+        #dd(count($networks));
         foreach($productInfo as $info){
             if($request->{"memory_".$info->id} == null || $request->{"price1_".$info->id} == null || $request->{"price2_".$info->id} == null || $request->{"price3_".$info->id} == null || $request->{"price4_".$info->id} == null || $request->{"price5_".$info->id} == null){
                 $info->delete();
@@ -481,7 +481,7 @@ class ProductController extends Controller
             $network = $networks[0];
 
             foreach($networks as $network){
-                
+                #dd($network);
                 if($request->{"network_".$network->id} != $network->knockoff_price){
                     $network->knockoff_price = $request->{"network_".$network->id};
                     $network->save();

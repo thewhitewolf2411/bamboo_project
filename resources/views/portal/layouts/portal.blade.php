@@ -15,6 +15,10 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Sortable -->
+   <script src="{{ asset('js/Sort.js') }}"></script>
+   <script src="{{ asset('js/Quarantine.js') }}"></script>
+
 </head>
 
 <body class="portal-body">

@@ -101,12 +101,12 @@
                                         @foreach($productinformation as $info)
                                         <tr>
                                             <input type="hidden" name="info{{$info->id}}" value="{{$info->id}}">
-                                            <th><input class="table-element" type="text" name="memory_{{$info->id}}" value="{{$info->memory}}"></th>
-                                            <th><input class="table-element" type="number" name="price1_{{$info->id}}" value="{{$info->excellent_working}}"></th>
-                                            <th><input class="table-element" type="number" name="price2_{{$info->id}}" value="{{$info->good_working}}"></th>
-                                            <th><input class="table-element" type="number" name="price3_{{$info->id}}" value="{{$info->poor_working}}"></th>
-                                            <th><input class="table-element" type="number" name="price4_{{$info->id}}" value="{{$info->damaged_working}}"></th>
-                                            <th><input class="table-element" type="number" name="price5_{{$info->id}}" value="{{$info->faulty}}"></th>
+                                            <th><input class="table-element" type="text" name="memory_{{$info->id}}" value="{{$info->memory}}" required></th>
+                                            <th><input class="table-element" type="number" name="price1_{{$info->id}}" value="{{$info->excellent_working}}" required></th>
+                                            <th><input class="table-element" type="number" name="price2_{{$info->id}}" value="{{$info->good_working}}" required></th>
+                                            <th><input class="table-element" type="number" name="price3_{{$info->id}}" value="{{$info->poor_working}}" required></th>
+                                            <th><input class="table-element" type="number" name="price4_{{$info->id}}" value="{{$info->damaged_working}}" required></th>
+                                            <th><input class="table-element" type="number" name="price5_{{$info->id}}" value="{{$info->faulty}}" required></th>
                                             <th><div class="table-element">
 
                                             <a onclick="return confirm('Are you sure? This will delete this product option from customer view!')" href="/portal/product/removesellingproductoption/{{$info->id}}">
@@ -157,7 +157,7 @@
                                         </tr>
                                         <tr>
                                             @foreach($productnetworks as $network)
-                                            <td><div class="table-element"><input class="table-element" type="number" name="network_{{$network->id}}" value="{{$network->knockoff_price}}"></div></td>
+                                            <td><div class="table-element"><input class="table-element" type="number" name="network_{{$network->id}}" value="{{$network->knockoff_price}}" required></div></td>
                                             @endforeach
                                         </tr>
                                     </table>

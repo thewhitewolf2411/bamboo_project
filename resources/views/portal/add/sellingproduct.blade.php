@@ -152,7 +152,7 @@
                                         </tr>
                                         <tr>
                                             @foreach($networks as $network)
-                                            <td><div class="table-element"><input class="table-element" type="number" name="network_{{$network->id}}"></div></td>
+                                            <td><div class="table-element"><input class="table-element" type="number" name="network_{{$network->id}}" value="0" required></div></td>
                                             @endforeach
                                         </tr>
                                     </table>

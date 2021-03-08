@@ -50,7 +50,7 @@
                             <td><div class="table-element">Product</div></td>
                             <td><div class="table-element">Product Memory</div></td>
                             <td><div class="table-element">Product Network</div></td>
-                            <td><div class="table-element">Product IMEI number</div></td>
+                            <td><div class="table-element">{{$tradein->imei_number === null ? 'Product Serial Number' : 'Product IMEI number'}}</div></td>
                             <td><div class="table-element">Customer Grade</div></td>
                         </tr>
                         <tr>
@@ -59,8 +59,8 @@
                             <td><div class="table-element">{{$tradein->created_at}}</div></td>
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                             <td><div class="table-element">{{$tradein->customer_memory}}</div></td>
-                            <td><div class="table-element">{{$tradein->customer_network}}</div></td>
-                            <td><div class="table-element">{{$tradein->imei_number}}</div></td>
+                            <td><div class="table-element">{{$tradein->customer_network === null ? 'N/A' : $tradein->customer_network}}</div></td>
+                            <td><div class="table-element">{{$tradein->imei_number === null ? $tradein->serial_number : $tradein->imei_number}}</div></td>
                             <td><div class="table-element">{{$tradein->customer_grade}}</div></td>
                         </tr>
 
@@ -220,7 +220,7 @@
                             <label for="correct_network">
                                 Is network correct?
                             </label>
-                            <select class="form-control" id="correct_network" name="correct_network" onchange="testingElementChanged()" required>
+                            <select class="form-control" id="correct_network" name="correct_network" onchange="testingElementChanged()" @if(count($networks)>0) required @else disabled @endif>
                                 <option disabled selected value> -- select an option -- </option>
                                 <option id="correct_network_false" value="false">No</option>
                                 <option id="correct_network_true" value="true">Yes</option>
@@ -282,7 +282,7 @@
                         </div>
 
                         <div class="form-group submit-buttons d-flex justify-content-between w-100 p-3">
-                            <a href="/portal/testing/receive" style="margin: 0;">
+                            <a href="/portal/testing/find" style="margin: 0;">
                                 <div class="btn btn-primary btn-blue">
                                     <p style="color: #fff; font-size: 16px; line-height: 24px;">Back</p>
                                 </div>

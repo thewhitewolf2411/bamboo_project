@@ -105,7 +105,20 @@ class WarehouseManagementController extends Controller
 
         ]);
 
-        return redirect('/portal/warehouse-management/box-management/' . $newBox->id);
+        $brand = $manifacturer;
+
+        $barcode = DNS1D::getBarcodeHTML($trayname, 'C128');
+
+        $path = public_path().'/pdf/boxlabels/';
+        if(!is_dir($path)){
+            mkdir($path, 0777, true);
+        }
+
+        $filename = public_path() . "/pdf/boxlabels/box-" . $trayname . ".pdf";
+        $customPaper = array(0,0,141.90,283.80);
+        PDF::loadView('portal.labels.boxlabel', array('barcode'=>$barcode, 'id'=>$trayname, 'brand'=>$brand))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
+
+        return redirect('/portal/warehouse-management/box-management/' . $newBox->id)->with(['filename'=>"/pdf/boxlabels/box-" . $trayname . ".pdf"]);
 
     }
 
@@ -305,6 +318,30 @@ class WarehouseManagementController extends Controller
 
         #return \redirect('/portal/warehouse-management/box-management/');
         return $response;
+    }
+
+    public function cancelBox(Request $request){
+        #dd($request->all());
+
+        $tray = Tray::where('id', $request->boxid)->first();
+
+        $trayContentPseud = TrayContent::where('pseudo_tray_id', $request->boxid)->get();
+        $trayContent = TrayContent::where('tray_id', $request->boxid)->get();
+
+        foreach($trayContentPseud as $tCP){
+            $tCP->pseudo_tray_id = null;
+            $tCP->save();
+        }
+
+        if(count($trayContent)>0){
+            $tray->status = 3;
+            $tray->save();
+        }
+        else{
+            $tray->delete();
+        }
+
+        return 200;
     }
 
     public function removeDevicesFromBox(Request $request){

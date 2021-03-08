@@ -99,7 +99,7 @@
 
                 <div class="row my-3">
                     <div class="button-box col-lg-12">
-                        <button id="cancel-box" style="width:32%" class="btn btn-info" role="button">Cancel</button>
+                        <button id="cancel-box" style="width:32%" class="btn btn-info" data-value="{{$box->id}}" role="button">Cancel</button>
                         <button id="suspend-box" style="width:32%" class="btn btn-info" data-value="{{$box->id}}" role="button">Suspend</button>
                         <button id="complete-box" style="width:32%" class="btn btn-info" data-value="{{$box->id}}" role="button">Complete box</button>
                     </div>
@@ -249,6 +249,13 @@
         //window.open('/pdf/boxlabels/box-' + {{$box->id}}  + '.pdf', '_blank');
         window.open('{!!Session::get('response')->original!!}');
         location.href="/portal/warehouse-management/box-management/";
+    </script>
+    @endif
+
+    @if(Session::has('filename'))
+    <script>
+        //window.open('/pdf/boxlabels/box-' + {{$box->id}}  + '.pdf', '_blank');
+        window.open("{!!Session::get('filename')!!}");
     </script>
     @endif
 

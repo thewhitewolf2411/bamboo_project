@@ -14908,6 +14908,10 @@ input[type=number] {
   display: table-header-group;
 }
 
+#quarantine-overview-table tfoot {
+  display: table-header-group;
+}
+
 #boxedtradeinstable_filter {
   display: none;
 }

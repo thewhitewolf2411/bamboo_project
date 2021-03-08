@@ -123,18 +123,26 @@ class Reports{
 
             $index = $key+2;
 
+            $total = "";
+            if($tradein->bamboo_price === null){
+                $total = $tradein->order_price + $tradein->admin_cost +  $tradein->carriage_cost + $additionalCosts->miscellaneous_costs_individual;
+            }
+            else{
+                $total = $tradein->bamboo_price + $tradein->admin_cost +  $tradein->carriage_cost + $additionalCosts->miscellaneous_costs_individual;
+            }
+
             $sheet->setCellValue('A'.$index, $tradein->barcode_original);
             $sheet->setCellValue('B'.$index, $tradein->barcode);
             $sheet->setCellValue('C'.$index, $tradein->getBrandName($tradein->product_id));
             $sheet->setCellValue('D'.$index, $tradein->getProductName($tradein->product_id));
             $sheet->setCellValue('E'.$index, $tradein->imei_number);
             $sheet->setCellValue('F'.$index, $correctMemory);
-            $sheet->setCellValue('G'.$index, '');
+            $sheet->setCellValue('G'.$index, $tradein->product_colour);
             $sheet->setCellValue('H'.$index, $tradein->order_price);
             $sheet->setCellValue('I'.$index, $tradein->bamboo_price);
-            $sheet->setCellValue('J'.$index, $additionalCosts->administration_costs);
-            $sheet->setCellValue('K'.$index, $additionalCosts->carriage_costs + $additionalCosts->miscellaneous_costs_individual);
-            $sheet->setCellValue('L'.$index, $tradein->bamboo_price + $additionalCosts->administration_costs + $additionalCosts->carriage_costs + $additionalCosts->miscellaneous_costs_individual);
+            $sheet->setCellValue('J'.$index, $tradein->admin_cost);
+            $sheet->setCellValue('K'.$index, $tradein->carriage_cost + $additionalCosts->miscellaneous_costs_individual);
+            $sheet->setCellValue('L'.$index, '£' . $total);
             $sheet->setCellValue('M'.$index, $tradein->customer_grade);
             $sheet->setCellValue('N'.$index, $tradein->bamboo_grade);
             $sheet->setCellValue('O'.$index, $tradein->customer_grade);
@@ -281,7 +289,7 @@ class Reports{
                 $sheet->setCellValue('D'.$index, $tradein->getProductName($tradein->product_id));
                 $sheet->setCellValue('E'.$index, $tradein->imei_number);
                 $sheet->setCellValue('F'.$index, $correctMemory);
-                $sheet->setCellValue('G'.$index, '');
+                $sheet->setCellValue('G'.$index, $tradein->product_colour);
                 $sheet->setCellValue('H'.$index, $tradein->customer_grade);
                 $sheet->setCellValue('I'.$index, $tradein->bamboo_grade);
                 $sheet->setCellValue('J'.$index, $tradein->customer_grade);
@@ -323,23 +331,16 @@ class Reports{
         $sheet->setCellValue('D1', 'Model');
         $sheet->setCellValue('E1', 'IMEI');
         $sheet->setCellValue('F1', 'Network');
-        #$sheet->setCellValue('G1', 'Colour');
-        $sheet->setCellValue('H1', 'Customer Grade');
-        #$sheet->setCellValue('I1', 'Customer Grade after testing');
-        #$sheet->setCellValue('J1', 'Bamboo Grade');
-        #$sheet->setCellValue('K1', 'Customer Status');
-        #$sheet->setCellValue('L1', 'Bamboo Status');
-        #$sheet->setCellValue('M1', 'Fully Functional');
-        $sheet->setCellValue('N1', 'Date Order Placed');
-        $sheet->setCellValue('O1', 'TP Despatch Date');
-        $sheet->setCellValue('P1', 'Date Received');
-        $sheet->setCellValue('Q1', 'Date Tested');
-        $sheet->setCellValue('R1', 'Quarantine Date');
-        $sheet->setCellValue('S1', 'Box Date');
-        $sheet->setCellValue('T1', 'Processor Name');
-        $sheet->setCellValue('U1', 'Quarantine');
-        $sheet->setCellValue('V1', 'FMIP');
-        $sheet->setCellValue('W1', 'Stock Location');
+        $sheet->setCellValue('G1', 'Customer Grade');
+        $sheet->setCellValue('H1', 'Date Order Placed');
+        $sheet->setCellValue('I1', 'Despatch Date');
+        $sheet->setCellValue('J1', 'Date Received');
+        $sheet->setCellValue('K1', 'Offer Price');
+        $sheet->setCellValue('L1', 'Admin');
+        $sheet->setCellValue('M1', 'Logistics');
+        $sheet->setCellValue('N1', 'Quarantine Date');
+        $sheet->setCellValue('O1', 'Stock Location');
+        $sheet->setCellValue('P1', 'Processor Name');
 
         $tradeins = Tradein::all();
         $additionalCosts = AdditionalCosts::first();
@@ -348,12 +349,12 @@ class Reports{
 
             if(!$tradein->deviceInPaymentProcess()){
 
-                $correctMemory = '';
+                $correctNetwork = '';
                 if($tradein->correct_network === null){
-                    $correctMemory = $tradein->customer_network;
+                    $correctNetwork = $tradein->customer_network;
                 }
                 else{
-                    $correctMemory = $tradein->correct_network;
+                    $correctNetwork = $tradein->correct_network;
                 }
 
                 $fullyFunctional = '';
@@ -425,24 +426,18 @@ class Reports{
                 $sheet->setCellValue('C'.$index, $tradein->getBrandName($tradein->product_id));
                 $sheet->setCellValue('D'.$index, $tradein->getProductName($tradein->product_id));
                 $sheet->setCellValue('E'.$index, $tradein->imei_number);
-                $sheet->setCellValue('F'.$index, $correctMemory);
-                $sheet->setCellValue('G'.$index, '');
-                $sheet->setCellValue('H'.$index, $tradein->customer_grade);
-                $sheet->setCellValue('I'.$index, $tradein->bamboo_grade);
-                $sheet->setCellValue('J'.$index, $tradein->customer_grade);
-                $sheet->setCellValue('K'.$index, $tradein->cosmetic_condition);
-                $sheet->setCellValue('L'.$index, $tradein->getBambooStatus());
-                $sheet->setCellValue('M'.$index, $fullyFunctional);
-                $sheet->setCellValue('N'.$index, $tradein->created_at);
-                $sheet->setCellValue('O'.$index, $tradeinauditTPDespatched);
-                $sheet->setCellValue('P'.$index, $tradeinauditReceived);
-                $sheet->setCellValue('Q'.$index, $tradeinauditTested);
-                $sheet->setCellValue('R'.$index, $tradein->quarantine_date);
-                $sheet->setCellValue('S'.$index, $tradeinauditBoxed);
-                $sheet->setCellValue('T'.$index, $tradeinauditUser);
-                $sheet->setCellValue('U'.$index, $quarantine);
-                $sheet->setCellValue('V'.$index, $fimp);
-                $sheet->setCellValue('W'.$index, $tradein->getTrayName($tradein->id));
+                $sheet->setCellValue('F'.$index, $correctNetwork);
+                $sheet->setCellValue('G'.$index, $tradein->customer_grade);
+                $sheet->setCellValue('H'.$index, $tradein->created_at);
+                $sheet->setCellValue('I'.$index, $tradeinauditTPDespatched);
+                $sheet->setCellValue('J'.$index, $tradeinauditReceived);
+                $sheet->setCellValue('K'.$index, $tradein->order_price);
+                $sheet->setCellValue('L'.$index, $tradein->admin_cost);
+                $sheet->setCellValue('M'.$index, $tradein->carriage_cost);
+                $sheet->setCellValue('N'.$index, $tradein->quarantine_date);
+                $sheet->setCellValue('O'.$index, $tradein->getTrayName($tradein->id));
+                $sheet->setCellValue('P'.$index, '');
+
             }
         }
 

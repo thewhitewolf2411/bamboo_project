@@ -34,7 +34,8 @@ class Tradein extends Model
         'user_id', 'barcode','barcode_original','product_id', 'correct_product_id','customer_grade',
         'bamboo_grade', 'job_state', 'order_price','bamboo_price','customer_memory','customer_network',
         'correct_memory','correct_network', 'product_colour', 'missing_image', 'imei_number', 'serial_number',
-        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 'expiry_date'
+        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 
+        'expiry_date', 'carriage_cost', 'admin_cost'
     ];
 
 
@@ -440,7 +441,7 @@ class Tradein extends Model
             /*17*/  ['Device marked for destruction','Order expired'],
             /*18*/  ['Device destroyed','Order expired'],
             /*19*/  ['Device requested by customer','Returning Device'],
-            /*20*/  ['Device marked to return to customer','Returning Device'],
+            /*20*/  ['Return to customer','Returning Device'],
             /*21*/  ['Despatched to customer','Returning Device'],
             /*22*/  ['Awaiting Box build','Awaiting payment'],
             /*23*/  ['Awaiting Box build','Submitted for payment'],
@@ -671,7 +672,7 @@ class Tradein extends Model
     
     public function addressLine(){
         $user = $this->customer();
-        $address_line = $user->billing_address;
+        $address_line = $user->delivery_address;
         $post_code = explode(',', $address_line);
         return $post_code[0];
     }

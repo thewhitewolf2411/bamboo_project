@@ -29,8 +29,7 @@
             <tr>
                 <th>Box number</th>
                 <th>Trade-in Barcode number</th>
-                <th>Manufacturer</th>
-                <th>Model</th>
+                <th>Make/Model</th>
                 <th>Grade</th>
                 <th>IMEI</th>
             </tr>
@@ -38,7 +37,6 @@
             <tr>
                 <td>{{$boxname}}</td>
                 <td>{{$tradein->barcode}}</td>
-                <td>{{$tradein->getBrandName(null)}}</td>
                 <td>{{$tradein->getProductName($tradein->product_id)}}</td>
                 <td>{{$tradein->cosmetic_condition}}</td>
                 <td>{!! $tradein->getIMEIBarcode() !!} <br> {{$tradein->imei_number}}</td>

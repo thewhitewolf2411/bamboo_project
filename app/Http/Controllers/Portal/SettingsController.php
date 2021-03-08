@@ -226,8 +226,8 @@ class SettingsController extends Controller
 
         $additionalCosts = AdditionalCosts::where('id', 1)->first();
 
-        $additionalCosts->administration_costs = $request->administration_costs;
-        $additionalCosts->carriage_costs = $request->carriage_costs;
+        $additionalCosts->administration_costs = ltrim($request->administration_costs, '£');
+        $additionalCosts->carriage_costs = ltrim($request->carriage_costs, '£');
         #$additionalCosts->miscellaneous_costs_total = $request->miscellaneous_costs_total;
         #$additionalCosts->miscellaneous_costs_individual = $request->miscellaneous_costs_individual;
 

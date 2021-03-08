@@ -30,13 +30,11 @@
 
         <table>
             <tr>
-                <th>Make</th>
-                <th>Model</th>
+                <th>Make/Model</th>
                 <th>Qty</th>
             </tr>
             @foreach ($tradeins as $tradein)
             <tr>
-                <td>{{$brand}}</td>
                 <td>{{$tradein[1]}}</td>
                 <td>{{$tradein[2]}}</td>
             </tr>

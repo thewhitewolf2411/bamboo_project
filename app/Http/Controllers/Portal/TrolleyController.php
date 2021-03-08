@@ -52,7 +52,7 @@ class TrolleyController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $trolleyTrays = Tray::where('trolley_id', $trolleyid)->get();
+        $trolleyTrays = Tray::where('trolley_id', $trolley->id)->get();
 
 
         return view('portal.trolleys.trolley')->with(['portalUser'=>$portalUser, 'trolley'=>$trolley, 'trolleyTrays'=>$trolleyTrays]);

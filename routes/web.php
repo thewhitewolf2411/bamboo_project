@@ -382,6 +382,7 @@ Route::group(['prefix'=>'portal/warehouse-management'], function(){
     Route::post('/box-management/openbox', 'Portal\WarehouseManagementController@openBox');
     Route::post('/box-management/suspendbox', 'Portal\WarehouseManagementController@suspendBox');
     Route::post('/box-management/completebox', 'Portal\WarehouseManagementController@completeBox');
+    Route::post('/box-management/cancelbox', 'Portal\WarehouseManagementController@cancelBox');
     Route::post('/box-management/printboxlabel', 'Portal\WarehouseManagementController@printBoxLabel');
     Route::post('/box-management/printboxmanifest', 'Portal\WarehouseManagementController@printBoxManifest');
     Route::post('/box-management/printboxsummary', 'Portal\WarehouseManagementController@printBoxSummary');

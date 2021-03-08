@@ -163,8 +163,8 @@ class ReportsController extends Controller
             $sheet->setCellValue('D'.$index, $tradein->cosmetic_condition);
             $sheet->setCellValue('E'.$index, $tradein->imei);
             $sheet->setCellValue('F'.$index, $tradein->bamboo_price);
-            $sheet->setCellValue('G'.$index, 'Carriage');
-            $sheet->setCellValue('H'.$index, 'Total Cost');
+            $sheet->setCellValue('G'.$index, $tradein->carriage_cost);
+            $sheet->setCellValue('H'.$index, $tradein->bamboo_price + $tradein->carriage_cost);
             $sheet->setCellValue('I'.$index, $tradein->created_at);
             $sheet->setCellValue('J'.$index, 'Date passed');
             $sheet->setCellValue('K'.$index, 'Time passed');
@@ -227,8 +227,8 @@ class ReportsController extends Controller
             $sheet->setCellValue('D'.$index, $tradein->cosmetic_condition);
             $sheet->setCellValue('E'.$index, $tradein->imei);
             $sheet->setCellValue('F'.$index, $tradein->bamboo_price);
-            $sheet->setCellValue('G'.$index, 'Carriage');
-            $sheet->setCellValue('H'.$index, 'Total Cost');
+            $sheet->setCellValue('G'.$index, $tradein->carriage_cost);
+            $sheet->setCellValue('H'.$index, $tradein->bamboo_price + $tradein->carriage_cost);
             $sheet->setCellValue('I'.$index, $tradein->created_at);
             $sheet->setCellValue('J'.$index, 'Date passed');
             $sheet->setCellValue('K'.$index, 'Time passed');

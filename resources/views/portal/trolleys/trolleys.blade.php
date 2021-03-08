@@ -19,7 +19,7 @@
    <!-- Sortable -->
    <script src="{{ asset('js/Sort.js') }}"></script>
 
-    <title>Bamboo Recycle::Trolley Managment</title>
+    <title>Bamboo Recycle::Trolley management </title>
 </head>
 
 <body class="portal-body">
@@ -31,7 +31,7 @@
             <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Trolley managment</p>
+                        <p>Trolley management </p>
                     </div>
                 </div>
 

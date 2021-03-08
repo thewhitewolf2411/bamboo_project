@@ -1,13 +1,13 @@
 var SourceUrl = "";
 
 if(window.location.href.indexOf('mobile')>-1){
-  var SourceUrl = 'http://127.0.0.1:8000/sell/shop/mobile';
+  var SourceUrl = 'http://v3.bamboorecycle.com/sell/shop/mobile';
 }
 if(window.location.href.indexOf('tablets')>-1){
-  var SourceUrl = 'http://127.0.0.1:8000/sell/shop/tablets';
+  var SourceUrl = 'http://v3.bamboorecycle.com/sell/shop/tablets';
 }
 if(window.location.href.indexOf('watches')>-1){
-  var SourceUrl = 'http://127.0.0.1:8000/sell/shop/watches';
+  var SourceUrl = 'http://v3.bamboorecycle.com/sell/shop/watches';
 }
 
 

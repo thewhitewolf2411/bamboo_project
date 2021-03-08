@@ -26,6 +26,8 @@ use DNS2D;
 use PDF;
 use App\Services\KlaviyoEmail;
 use App\Services\ExpiryDate;
+use App\Eloquent\AdditionalCosts;
+
 
 class SellController extends Controller
 {
@@ -81,12 +83,7 @@ class SellController extends Controller
             $page = 1;
         }
 
-        if($page == 1){
-            $start = 1;
-        }
-        else{
-            $start = $page * $number - $number;
-        }
+        $start = ($page * $number) - $number;
 
         $products = "";
         $numberofproducts = 0;
@@ -96,41 +93,52 @@ class SellController extends Controller
         switch($parameter){
             case "mobile":
                 if(isset($request->brand)){
-                    $products = SellingProduct::where('category_id', 1)->where('id', '>=', $start)->where('brand_id', $request->brand)->take($number)->get();
+                    $products = SellingProduct::where('category_id', 1)->where('brand_id', $request->brand)->get();
                     $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
                     break;
                 }else{
-                    $products = SellingProduct::where('category_id', 1)->where('id', '>=', $start)->take($number)->get();
+                    $products = SellingProduct::where('category_id', 1)->get();
                     $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
                     break;
                 }
             case "tablets":
                 if(isset($request->brand)){
-                    $products = SellingProduct::where('category_id', 2)->where('id', '>=', $start)->where('brand_id', $request->brand)->take($number)->get();
+                    $products = SellingProduct::where('category_id', 2)->where('brand_id', $request->brand)->get();
                     $numberofproducts = count(SellingProduct::where('category_id', 2)->get());
                     break;
                 }else{
-                    $products = SellingProduct::where('category_id', 2)->where('id', '>=', $start)->take($number)->get();
+                    $products = SellingProduct::where('category_id', 2)->get();
                     $numberofproducts = count(SellingProduct::where('category_id', 2)->get());
                     break;
                 }
             break;
             case "watches":
                 if(isset($request->brand)){
-                    $products = SellingProduct::where('category_id', 3)->where('id', '>=', $start)->where('brand_id', $request->brand)->take($number)->get();
+                    $products = SellingProduct::where('category_id', 3)->where('brand_id', $request->brand)->get();
                     $numberofproducts = count(SellingProduct::where('category_id', 3)->get());
                     break;
                 }else{
-                    $products = SellingProduct::where('category_id', 3)->where('id', '>=', $start)->take($number)->get();
+                    $products = SellingProduct::where('category_id', 3)->get();
                     $numberofproducts = count(SellingProduct::where('category_id', 3)->get());
                     break;
                 }
             break;
             default:
-                $products = SellingProduct::where('product_name', 'LIKE', '%'.$parameter.'%')->take($number)->get();
+                $products = SellingProduct::where('product_name', 'LIKE', '%'.$parameter.'%')->get();
                 $numberofproducts = count($products);
                 break;
         }
+
+        #dd($products->take($number));
+
+        foreach($products as $key=>$product){
+            #dd($start, $start+$number);
+            if($key<$start || $key>=$start+$number){
+                $products->forget($key);
+            }
+        }
+
+        #dd($products);
 
         $numberofpages = $numberofproducts/$number;
         $numberofpages = ceil($numberofpages);
@@ -236,6 +244,10 @@ class SellController extends Controller
                         $klaviyoEmail = new KlaviyoEmail();
                         $klaviyoEmail->ItemSoldTradePack(Auth::user(), $tradein);
                     }
+
+                    $additionalCosts = AdditionalCosts::first();
+                    $tradein->carriage_cost = $additionalCosts->carriage_costs;
+                    $tradein->admin_cost = $additionalCosts->administration_costs;
 
                     $tradein->save();
                     $tradeinexp = $tradein;

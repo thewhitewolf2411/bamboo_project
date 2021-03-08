@@ -153,11 +153,6 @@ function testingElementChanged(){
                 }
             }
         }
-
-
-
-        
-
     }
 
     if(waterDamage == "true"){
@@ -171,6 +166,14 @@ function testingElementChanged(){
         $('#cosmetic_condition').append($("<option></option>")
         .attr("value", value).text(key));
     });
+
+    if($('#correct_network_value option').length < 1){
+        $('#correct_network').prop('disabled', true);
+        $('#correct_network_value').prop('required', false);
+    }
+    else{
+        $('#correct_network').prop('disabled', false);
+    }
 
 }
 
@@ -208,20 +211,37 @@ function cosmeticElementChanged(){
             cosmeticNumGrade = 3;
         }
         else if(cosmeticGrade == "WSI"){
-
-            $('#bamboo_final_grade').val('WSI');
-            $('#customer_grade').val("Damaged Working");
-            $('#bamboo_final_grade').val('Damaged Working');
-            
-            cosmeticNumGrade = 2;
+            if($('#device_fully_functional').val() == 'false'){
+                $('#bamboo_final_grade').val('WSI');
+                $('#customer_grade').val("Faulty");
+                $('#bamboo_final_grade').val('Faulty');
+                
+                cosmeticNumGrade = 1;
+            }
+            else{
+                $('#bamboo_final_grade').val('WSI');
+                $('#customer_grade').val("Damaged Working");
+                $('#bamboo_final_grade').val('Damaged Working');
+                
+                cosmeticNumGrade = 2;
+            }
         }
         else if(cosmeticGrade == "WSD"){
+            if($('#device_fully_functional').val() == 'false'){
+                $('#bamboo_final_grade').val('WSD');
+                $('#customer_grade').val("Faulty");
+                $('#bamboo_final_grade').val('Faulty');
+                
+                cosmeticNumGrade = 1;
+            }
+            else{
+                $('#bamboo_final_grade').val('WSD');
+                $('#customer_grade').val("Damaged Working");
+                $('#bamboo_final_grade').val('Damaged Working');
+                
+                cosmeticNumGrade = 2;
+            }
 
-            $('#bamboo_final_grade').val('WSI');
-            $('#customer_grade').val("Damaged Working");
-            $('#bamboo_final_grade').val('Damaged Working');
-            
-            cosmeticNumGrade = 2;
         }
         else{
             $('#customer_grade').val("Faulty");

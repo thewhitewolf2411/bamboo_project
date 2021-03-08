@@ -33,7 +33,7 @@ class DespatchController extends Controller
         $tradeins = collect();
         if(isset($request->search)){
             $searchterm = $request->search;
-            dd($searchterm);
+            $tradeins = Tradein::where('barcode', $searchterm)->where('job_state', '20')->orWhere('job_state', '19')->get();
         } else {
             $tradeins = Tradein::where('job_state', '20')->orWhere('job_state', '19')->get();
         }
