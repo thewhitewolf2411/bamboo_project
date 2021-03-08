@@ -2,6 +2,7 @@
 
 namespace App\Eloquent;
 
+use App\Audits\TradeinAudit;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Eloquent\SellingProduct;
@@ -76,7 +77,10 @@ class Tradein extends Model
         // $sellingProduct = SellingProduct::where('id', $productId)->first();
         $sellingProduct = SellingProduct::where('id', $this->product_id)->first();
         $brand = Brand::where('id', $sellingProduct->brand_id)->first();
-        return $brand->brand_name;
+        // fix for missing brands
+        if($brand){
+            return $brand->brand_name;
+        }   
     }
 
     public function getCategoryName($productId){
@@ -758,5 +762,106 @@ class Tradein extends Model
             return true;
         }
         return false;
+    }
+
+    public function hasFailedTesting(){
+        $testing_faults = [
+            '11a', '11b', '11c', '11d', '11e', '11f', '11h', '11i',     // first testing
+            '15a', '15b', '15c', '15d', '15e', '15f', '15h', '15i'      // second testing
+        ];
+        if(in_array($this->job_state, $testing_faults)){
+            return true;
+        }
+        return false;
+    }
+
+    public function wrongDevice(){
+        if(isset($this->correct_product_id)){
+            if($this->product_id !== $this->correct_product_id){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function wrongMemory(){
+        if(isset($this->correct_memory)){
+            if($this->customer_memory !== $this->correct_memory){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function wrongNetwork(){
+        if(isset($this->correct_network)){
+            if($this->customer_network !== $this->correct_network){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function getTestingFaults(){
+        $testing_faults = TestingFaults::where('tradein_id', $this->id)->first();
+        $faults = [];
+        $available_faults = [
+            "audio_test" => "Audio Test",
+            "front_microphone" => "Front Microphone",
+            "headset_test" => "Headset Test",
+            "loud_speaker_test" => "Loud Speaker Test",
+            "microphone_playback_test" => "Microphone Playback Test",
+            "buttons_test" => "Buttons Test",
+            "sensor_test" => "Sensor Test",
+            "camera_test" => "Camera Test",
+            "glass_condition" => "Glass Condition",
+            "vibration" => "Vibration",
+            "original_colour" => "Original Colour",
+            "battery_health" => "Battery Health",
+            "nfc" => "NFC",
+            "no_power" => "No Power",
+            "fake_missing_parts" => "Fake Missing Parts",
+        ];
+
+        if($testing_faults){
+            foreach($available_faults as $fault => $text){
+                if($testing_faults[$fault] !== null){
+                    array_push($faults, $text);
+                }
+            }
+        }
+        
+        if(count($faults) > 0){
+            return implode(', ', $faults);
+        }
+        return null;
+    }
+
+    public function isDowngraded(){
+        if($this->customer_grate !== $this->bamboo_grade){
+            return true;
+        }
+        return false;
+    }
+
+    public function lockedFaults(){
+        if($this->isFimpLocked()){
+            return 'Find My IPhone Activation Lock still active';
+        }
+        if($this->isGoogleLocked()){
+            return 'Google Activation Lock still active';
+        }
+        if($this->isPinLocked()){
+            return 'PIN number not provided';
+        }
+        return null;
+    }
+
+    public function getReceivedDate(){
+        $received = TradeinAudit::where('tradein_id', $this->id)->where('customer_status', 'Trade Pack Received')->first();
+        if($received){
+            return $received->created_at->format('d M, Y');
+        }
+        return 'Not received yet.';
     }
 }

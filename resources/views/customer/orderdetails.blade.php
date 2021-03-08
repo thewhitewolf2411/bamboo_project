@@ -233,6 +233,30 @@
 
                                         @endif
 
+                                        @if($tradein->hasFailedTesting())
+                                            <div class="sale-status-row justify-content-center">
+                                                <div class="sale-status-col">
+                                                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
+                                                    <p class="sale-status-text">Testing</p>
+                                                </div>
+                                                <div class="sale-status-purple-line"></div>
+                                                <div class="sale-status-col">
+                                                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
+                                                    <p class="sale-status-text">Awaiting response</p>
+                                                </div>
+                                                <div class="sale-status-grey-line"></div>
+                                                <div class="sale-status-col">
+                                                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
+                                                    <p class="sale-status-text">Submitted for payment</p>
+                                                </div>
+                                            </div>
+
+                                            <p class="sale-status-information text-center mt-4 mb-2">
+                                                Oh no! It looks like there is something holding up your sale.<br>
+                                                Please check testing section to help us resolve the issue and speed up your sale.
+                                            </p>
+                                        @endif
+
                                     </div>
                                 </div>
                             </div>
@@ -327,7 +351,40 @@
                                     </div>
                                     <div class="line-bottom"></div>
                                     <div class="collapse" id="collapseDeliveryDetails">
-                                        <p class="section-item-title-regular">Delivery details</p>
+                                        <div class="row p-4">
+                                            <div class="label-print-type m-2" id="bambooprinttype" onclick="toggleLabelPrintType('bamboo')">
+                                                <div class="col p-0">
+                                                    <img class="label-print-svg" src="{{asset('/customer_page_images/body/free_bamboo_trade_pack.svg')}}">
+                                                    <p class="label-print-text">FREE bamboo <br>Trade Pack</p>
+                                                    <img class="label-select-svg" id="bamboo-print-selected" src="{{asset('/customer_page_images/body/orange_deselected.svg')}}">
+                                                </div>
+
+                                                <a class="btn-purple sale-detail-btn mt-4 hidden" id="call-print-bamboo" href="#"><p>Re-Print Label</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+                                            </div>
+                                            <div class="label-print-type m-2" id="ownprinttype" onclick="toggleLabelPrintType('own')">
+                                                <div class="col p-0">
+                                                    <img class="label-print-svg" src="{{asset('/customer_page_images/body/free_print_own_label.svg')}}">
+                                                    <p class="label-print-text">FREE print your <br>own label</p>
+                                                    <img class="label-select-svg" id="own-print-selected" src="{{asset('/customer_page_images/body/orange_deselected.svg')}}">
+                                                </div>
+
+                                                <a class="btn-purple sale-detail-btn mt-4 hidden" id="call-print-own" href="#"><p>Re-Print Label</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+
+                                            </div>
+                                            <div class="col">
+                                                <p class="delivery-info-dates-label">Date Posted</p>
+                                                <p class="delivery-info-dates-bold">{!!$tradein->created_at->format('d M, Y')!!}</p>
+                                                <br>
+                                                <p class="delivery-info-dates-label">Date Received</p>
+                                                <p class="delivery-info-dates-bold">{!!$tradein->getReceivedDate()!!}</p>
+                                            </div>
+                                            <div class="col">
+                                                {{-- <p class="delivery-info-dates-label">Enter Tracking Number</p> --}}
+                                                <p class="delivery-info-dates-bold"></p>
+                                                <a class="btn-purple delivery-detail-btn mt-4" id="call-print-own" href="#"><p>Edit Tracking Number</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+                                                <a class="btn-green delivery-detail-btn mt-1" id="call-print-own" href="#"><p>Track Parcel</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -440,7 +497,7 @@
                                                     </p>
                                                 </div>
 
-                                            @elseif($tradein->job_state = '9')
+                                            @elseif($tradein->job_state == '9')
                                                 <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
                                                     <div class="emoji-col">
                                                         <img class="emoji-img" src="{{asset('/customer_page_images/body/emoji_winking.svg')}}">
@@ -597,14 +654,187 @@
                                             @endif
 
                                         @else
-                                            offers
+                                            @if($tradein->hasFailedTesting())
+                                                <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
+                                                    <div class="emoji-col">
+                                                        <img class="emoji-img" src="{{asset('/customer_page_images/body/emoji_sad.svg')}}">
+                                                        <p class="emoji-text">Booo!</p>
+                                                    </div>
+                                                    <p class="emoji-info-text">
+                                                        Unfortunately, your device didn’t pass our tests, but
+                                                        fear not, you have a new offer waiting for you.
+                                                    </p>
+                                                </div>
+
+                                                @if($tradein->wrongDevice() || $tradein->wrongMemory() || $tradein->wrongNetwork())
+                                                    <div class="testing-error-item">
+                                                        <div class="col">
+                                                            <p class="testing-error-item-label">Condition</p>
+                                                            <p class="testing-error-item-bold">Device does not meet the following requirements: </p>
+                                                            <br>
+                                                            <p class="testing-error-item-bold">{!!$tradein->getBambooStatus()!!}</p>
+                                                        </div>
+                                                        <div class="col"></div>
+                                                        {{-- <div class="col">
+                                                            <p class="testing-error-item-label">New Offer</p>
+                                                            <p class="testing-new-offer-price">£ 100</p>
+                                                        </div> --}}
+                                                        <div class="col">
+                                                            <a href="#" class="btn btn-orange testing-action-btn">
+                                                                <p>Accept Offer</p>
+                                                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                            </a>
+                                                            <a href="#" class="btn btn-jade testing-action-btn">
+                                                                <p>Return my Device</p>
+                                                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    @if($tradein->getTestingFaults() !== null)
+                                                        <div class="testing-error-item">
+                                                            <div class="col">
+                                                                <p class="testing-error-item-label">Issue</p>
+                                                                <p class="testing-error-item-bold">{!!$tradein->getTestingFaults()!!}</p>
+                                                            </div>
+                                                            <div class="col">
+                                                                <p class="testing-error-item-label">Action required</p>
+                                                                <p class="testing-error-item-bold">Accept faulty offer or request device back</p>
+                                                            </div>
+                                                            <div class="col"></div>
+                                                            <div class="col">
+                                                                <p class="testing-error-item-label">New Offer</p>
+                                                                <p class="testing-new-offer-price">£ 100</p>
+                                                            </div>
+                                                            <div class="col">
+                                                                <a href="#" class="btn btn-orange testing-action-btn">
+                                                                    <p>Accept Offer</p>
+                                                                    <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                </a>
+                                                                <a href="#" class="btn btn-jade testing-action-btn">
+                                                                    <p>Return my Device</p>
+                                                                    <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        @if($tradein->isDowngraded())
+                                                            <div class="testing-error-item">
+                                                                <div class="col">
+                                                                    <p class="testing-error-item-label">Issue</p>
+                                                                    <p class="testing-error-item-bold">Device grade downgraded</p>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <p class="testing-error-item-label">Action required</p>
+                                                                    <p class="testing-error-item-bold">Accept new offer or request device back</p>
+                                                                </div>
+                                                                <div class="col"></div>
+                                                                <div class="col">
+                                                                    <p class="testing-error-item-label">New Offer</p>
+                                                                    <p class="testing-new-offer-price">£ 100</p>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <a href="#" class="btn btn-orange testing-action-btn">
+                                                                        <p>Accept Offer</p>
+                                                                        <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                    </a>
+                                                                    <a href="#" class="btn btn-jade testing-action-btn">
+                                                                        <p>Return my Device</p>
+                                                                        <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            @if($tradein->lockedFaults() !== null)
+                                                                <div class="testing-error-item">
+                                                                    <div class="col">
+                                                                        <p class="testing-error-item-label">Issue</p>
+                                                                        <p class="testing-error-item-bold">{!!$tradein->lockedFaults()!!}</p>
+                                                                    </div>
+                                                                    @if($tradein->isPinLocked())
+                                                                        <div class="col">
+                                                                            <p class="testing-error-item-label">Action required</p>
+                                                                            <p class="testing-error-item-bold">Provide PIN number, accept faulty offer or request your device back.</p>
+                                                                        </div>
+                                                                    @elseif($tradein->isFimpLocked())
+                                                                        <div class="col">
+                                                                            <p class="testing-error-item-label">Action required</p>
+                                                                            <p class="testing-error-item-bold">Remove the Find My iPhone function, accept faulty offer or request your device back.</p>
+                                                                        </div>
+                                                                    @elseif($tradein->isGoogleLocked())
+                                                                        <div class="col">
+                                                                            <p class="testing-error-item-label">Action required</p>
+                                                                            <p class="testing-error-item-bold">Remove Google Activation Lock function, accept faulty offer or request your device back.</p>
+                                                                        </div>
+                                                                    @endif
+                                                                    <div class="col"></div>
+                                                                    <div class="col">
+                                                                        <p class="testing-error-item-label">New Offer</p>
+                                                                        <p class="testing-new-offer-price">£ 100</p>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        @if($tradein->isPinLocked())
+                                                                            <a href="#" class="btn btn-green testing-action-btn">
+                                                                                <p>Enter your PIN</p>
+                                                                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                            </a>
+                                                                            <a href="#" class="btn btn-orange testing-action-btn">
+                                                                                <p>Accept Faulty Offer</p>
+                                                                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                            </a>
+                                                                            <a href="#" class="btn btn-jade testing-action-btn">
+                                                                                <p>Return my Device</p>
+                                                                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                            </a>
+                                                                        @elseif($tradein->isFimpLocked())
+                                                                            <a href="#" class="btn btn-green testing-action-btn">
+                                                                                <p>I have removed</p>
+                                                                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                            </a>
+                                                                            <a href="#" class="btn btn-purple testing-action-btn">
+                                                                                <p>How do I remove?</p>
+                                                                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                            </a>
+                                                                            <a href="#" class="btn btn-orange testing-action-btn">
+                                                                                <p>Accept Faulty Offer</p>
+                                                                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                            </a>
+                                                                            <a href="#" class="btn btn-jade testing-action-btn">
+                                                                                <p>Return my Device</p>
+                                                                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                            </a>
+                                                                        @elseif($tradein->isGoogleLocked())
+                                                                            <a href="#" class="btn btn-green testing-action-btn">
+                                                                                <p>I have removed</p>
+                                                                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                            </a>
+                                                                            <a href="#" class="btn btn-purple testing-action-btn">
+                                                                                <p>How do I do that?</p>
+                                                                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                            </a>
+                                                                            <a href="#" class="btn btn-orange testing-action-btn">
+                                                                                <p>Accept Faulty Offer</p>
+                                                                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                            </a>
+                                                                            <a href="#" class="btn btn-jade testing-action-btn">
+                                                                                <p>Return my Device</p>
+                                                                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                            </a>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        @endif
+                                                    @endif
+                                                @endif
+                                            @endif
                                         @endif
 
                                     </div>
                                 </div>
                             </div>
 
-                            <div id="section-payment" class="sale-item-sections mb-2">
+                            <div id="section-payment" class="sale-item-sections mb-xl-5">
                                 <div class="section-item-content">
                                     <div class="section-header">
                                         <p class="section-item-title">Payment</p>
@@ -866,8 +1096,53 @@
     }
 
 
-    function cancelSale(){
+    function toggleLabelPrintType(type){
+        let owndiv = document.getElementById('ownprinttype');
+        let ownselected = document.getElementById('own-print-selected');
+        let bamboodiv = document.getElementById('bambooprinttype');
+        let bambooselected = document.getElementById('bamboo-print-selected');
+        let callprintown = document.getElementById('call-print-own');
+        let callprintbamboo = document.getElementById('call-print-bamboo');
 
+        console.log(ownselected.src);
+        switch (type) {
+            case 'own':
+                if(!owndiv.classList.contains('selected')){
+                    owndiv.classList.add('selected');
+                    ownselected.src = "/customer_page_images/body/orange_selected.svg";
+                }
+                if(bamboodiv.classList.contains('selected')){
+                    bamboodiv.classList.remove('selected');
+                    bambooselected.src = "/customer_page_images/body/orange_deselected.svg";
+                }
+
+                if(!callprintbamboo.classList.contains('hidden')){
+                    callprintbamboo.classList.add('hidden');
+                }
+                if(callprintown.classList.contains('hidden')){
+                    callprintown.classList.remove('hidden');
+                }
+                break;
+            case 'bamboo':
+                if(!bamboodiv.classList.contains('selected')){
+                    bamboodiv.classList.add('selected');
+                }
+                if(owndiv.classList.contains('selected')){
+                    owndiv.classList.remove('selected');
+                }
+                ownselected.src = "/customer_page_images/body/orange_deselected.svg";
+                bambooselected.src = "/customer_page_images/body/orange_selected.svg";
+                
+                if(!callprintown.classList.contains('hidden')){
+                    callprintown.classList.add('hidden');
+                }
+                if(callprintbamboo.classList.contains('hidden')){
+                    callprintbamboo.classList.remove('hidden');
+                }
+                break;
+            default:
+                break;
+        }
     }
     
 </script>

@@ -12289,6 +12289,110 @@ main p, a, span {
   color: white;
 }
 
+.testing-error-item {
+  display: flex;
+  flex-direction: row;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.testing-error-item-label {
+  font-size: 14px;
+}
+
+.testing-error-item-bold {
+  font-family: Sharp Sans No1 Bold;
+  font-size: 18px;
+  margin: 0;
+}
+
+.testing-new-offer-price {
+  color: #f28e33;
+  font-family: Sharp Sans No1 Bold;
+  font-size: 30px;
+}
+
+.testing-action-img {
+  margin-left: 10px;
+}
+
+.testing-action-btn {
+  width: 160px;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.testing-action-btn > p {
+  padding: 3px;
+  color: white;
+}
+
+.label-print-type {
+  width: 200px;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px;
+  -webkit-filter: opacity(0.3);
+          filter: opacity(0.3);
+}
+
+.label-print-type.selected {
+  border: 3px solid #f28e33;
+  border-radius: 4px;
+  -webkit-filter: opacity(1);
+          filter: opacity(1);
+}
+
+.label-print-svg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.label-select-svg {
+  width: 25px;
+  margin-top: 10px;
+}
+
+.label-print-text {
+  font-family: Sharp Sans No1 Bold;
+  font-size: 18px;
+  margin: 0;
+  margin-top: 12px;
+}
+
+.delivery-info-dates-label {
+  font-size: 14px;
+}
+
+.delivery-info-dates-bold {
+  font-family: Sharp Sans No1 Bold;
+  font-size: 18px;
+  margin: 0;
+}
+
+.delivery-detail-btn {
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.delivery-detail-btn > p {
+  padding: 3px;
+  color: white;
+}
+
 header {
   position: fixed;
   top: 0;
