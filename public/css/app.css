@@ -10183,6 +10183,7 @@ main p, a, span {
   font-size: 40px;
   font-weight: 600;
   color: #fff;
+  font-family: Sharp Sans No1 Semibold;
 }
 
 .start-buttons-container {
@@ -10302,9 +10303,14 @@ main p, a, span {
   height: 0;
 }
 
+.selling-content-container-mobile {
+  display: none;
+}
+
 .grading-container {
   background: #A375BC;
   padding-bottom: 0;
+  display: none;
 }
 
 .center-grading-elements {
@@ -10383,7 +10389,7 @@ main p, a, span {
 
 .trustpilot-container {
   background: #FCC44C;
-  display: flex;
+  display: none;
   flex-direction: row;
   width: 100vw;
   justify-content: space-evenly;
@@ -11484,6 +11490,7 @@ main p, a, span {
   .home-element {
     padding: 1rem;
     padding-bottom: 0;
+    margin-top: 1rem;
   }
 
   .home-title-container .left-container {
@@ -11596,6 +11603,50 @@ main p, a, span {
     width: auto;
     height: auto;
     padding: 1rem 2rem !important;
+  }
+
+  .selling-content-container {
+    display: none;
+    flex-direction: row;
+    justify-content: space-evenly;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .selling-content-container-mobile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .how-first-text-container {
+    width: 50%;
+    height: auto;
+  }
+
+  .play-container {
+    width: 50px;
+    height: 50px;
+  }
+
+  .play-container .fa {
+    font-size: 20px !important;
+  }
+
+  .news-label-selected-container p {
+    margin-left: 5px;
+  }
+
+  .terms-container {
+    width: auto !important;
+  }
+
+  .modal-second-element-active {
+    padding: 25px !important;
   }
 }
 .top-text-shadow {
@@ -12456,7 +12507,6 @@ header {
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
   flex-direction: column;
   cursor: pointer;
@@ -12482,6 +12532,48 @@ header {
 
 #user-hover-link:hover i {
   color: #fff;
+}
+
+#user-hover-link .img {
+  background-image: url("/images/front-end-icons/Icon-Account.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 76px;
+  min-height: 76px;
+  background-size: 50px;
+}
+
+#user-hover-link:hover .img {
+  background-image: url("/images/front-end-icons/Icon-Account-White.svg");
+}
+
+#wishlist-hover-link .img {
+  background-image: url("/images/front-end-icons/Icon-Love.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 76px;
+  min-height: 76px;
+  background-size: 50px;
+}
+
+#wishlist-hover-link:hover .img {
+  background-image: url("/images/front-end-icons/Icon-Love-White.svg");
+}
+
+#card-hover-link .img {
+  background-image: url("/images/front-end-icons/Icon-Shop.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 76px;
+  min-height: 76px;
+  background-size: 50px;
+}
+
+#card-hover-link:hover .img {
+  background-image: url("/images/front-end-icons/Icon-Shop-White.svg");
 }
 
 #wishlist-hover-link, #wishlist-hover-link a, #wishlist-hover-link i {
@@ -12767,7 +12859,7 @@ footer {
 }
 
 .footer-row-6 span {
-  margin-bottom: 20px;
+  font-family: Bebas Neue;
 }
 
 .footer-social-icons-container {
@@ -12879,6 +12971,7 @@ footer {
 
   .footer-row-6 {
     width: 40%;
+    margin-bottom: 20px;
   }
 
   .copyright-container {

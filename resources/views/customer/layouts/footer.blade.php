@@ -17,9 +17,10 @@
         <div class="footer-row-2">
             <span>Follow our adventures</span>
             <div class="footer-social-icons-container">
-                <i class="fa fa-facebook" aria-hidden="true"></i>
-                <i class="fa fa-twitter" aria-hidden="true"></i>
-                <i class="fa fa-instagram" aria-hidden="true"></i>
+                <a href="http://www.facebook.com/BambooMobileTech/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a href="http://www.instagram.com/mobileswithboo/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                <a href="http://www.youtube.com/channel/UCePgdCF8oCRXenvvLADp38w/featured" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a>
             </div>
         </div>
 

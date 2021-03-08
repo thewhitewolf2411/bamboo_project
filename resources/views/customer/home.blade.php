@@ -130,6 +130,50 @@
                 </div>
             </div>
         </div>
+
+        <div class="selling-content-container-mobile active">
+            <div class="how-first-text-container">
+                <div class="how-text-element">
+                    <div class="how-text-title-container">
+                        <p>1. REGISTER YOUR DEVICE TO SELL</p>
+                    </div>
+                    <div class="how-text-container">
+                        <p>Find your old device and how much it's worth. Choose your preferred payment option with all your details.</p>
+                    </div>
+                </div>
+                <div class="how-text-element">
+                    <div class="how-text-title-container">
+                        <p>2. FREE DELIVERY OPTIONS</p>
+                    </div>
+                    <div class="how-text-container">
+                        <p>Once you have completed your sales order, you simply request for a free sales pack or print your own labels to send in your device.</p>
+                    </div>
+                </div>
+                <div class="how-text-element">
+                    <div class="how-text-title-container">
+                        <p>3. FAST SAME DAY PAYMENT</p>
+                    </div>
+                    <div class="how-text-container">
+                        <p>When we receive your device, we will check  it against your order. If it is all correct, payment will be made on the same day of receipt. Woohoo!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="how-images-container">
+                <div class="back-line-container"></div>
+                <div class="how-image-container">
+                    <img src="{{asset('/customer_page_images/body/How-Icon-4.svg')}}">
+                </div>
+                <div class="how-image-container">
+                    <img src="{{asset('/customer_page_images/body/How-Icon-5.svg')}}">
+                </div>
+                <div class="how-image-container">
+                    <img src="{{asset('/customer_page_images/body/How-Icon-6.svg')}}">
+                </div>
+                <div class="url-footer-container" id="start-selling">
+                    <a href="/sell">Start Selling</a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="home-element grading-container">
