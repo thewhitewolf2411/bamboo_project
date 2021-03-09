@@ -48,6 +48,7 @@ Route::post('/userprofile/updatepersonalinfo', 'Customer\CustomerController@upda
 
 Route::post('/userprofile/changepass', 'Customer\CustomerController@changePass')->middleware('auth');
 Route::post('/userprofile/updatecommunications', 'Customer\CustomerController@updateCommunications')->middleware('auth');
+Route::post('/userprofile/adddevicepin', 'Customer\CustomerController@addDevicePIN')->middleware('auth')->name('addDevicePIN');
 
 
 Route::get('/products/{category}', 'Customer\CustomerController@customerCategoryView')->name('customerproducts');

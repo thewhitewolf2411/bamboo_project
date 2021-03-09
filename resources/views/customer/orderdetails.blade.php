@@ -257,6 +257,12 @@
                                             </p>
                                         @endif
 
+                                        @if(Session::has('success'))
+                                            <div class="alert alert-success text-center" role="alert">
+                                                {!!Session::get('success')!!}
+                                            </div>
+                                        @endif
+
                                     </div>
                                 </div>
                             </div>
@@ -770,15 +776,37 @@
                                                                     <div class="col"></div>
                                                                     <div class="col">
                                                                         <p class="testing-error-item-label">New Offer</p>
-                                                                        <p class="testing-new-offer-price">£ 100</p>
+                                                                        <p class="testing-new-offer-price">{!!$tradein->getFaultyOffer()!!}</p>
                                                                     </div>
                                                                     <div class="col">
                                                                         @if($tradein->isPinLocked())
-                                                                            <a href="#" class="btn btn-green testing-action-btn">
+                                                                            <div class="btn btn-green testing-action-btn m-auto" data-toggle="modal" data-target="#pinModal">
                                                                                 <p>Enter your PIN</p>
                                                                                 <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
-                                                                            </a>
-                                                                            <a href="#" class="btn btn-orange testing-action-btn">
+                                                                            </div>
+                                                                            <div class="modal fade" id="pinModal" tabindex="-1" role="dialog" aria-labelledby="pinModalLabel" aria-hidden="true">
+                                                                                <div class="modal-dialog" role="document"> 
+                                                                                    <form method="POST" action="{{route('addDevicePIN', ['tradein'=>$tradein->id])}}">
+                                                                                        @csrf
+                                                                                        <div class="modal-content">
+                                                                                            <div class="modal-header">
+                                                                                                <h5 class="modal-title" id="pinModalLabel">Type your PIN:</h5>
+                                                                                                <img class="close-modal-img ml-auto" src="{{asset('/customer_page_images/body/modal-close.svg')}}" data-dismiss="modal" aria-label="Close">
+                                                                                            </div>
+                                                                                            <div class="modal-body">
+                                                                                                <div class="row mx-3 mt-2 justify-content-center">
+                                                                                                    <input type="number" class="form-group w-25" placeholder="0000" name="pin">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="modal-footer">
+                                                                                                <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                              </div>
+                                                                            <a href="#" class="btn btn-orange testing-action-btn mt-1">
                                                                                 <p>Accept Faulty Offer</p>
                                                                                 <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
                                                                             </a>

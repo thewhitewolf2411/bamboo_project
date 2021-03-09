@@ -585,4 +585,17 @@ class CustomerController extends Controller
         }
         
     }
+
+    /**
+     * Add device missing PIN.
+     */
+    public function addDevicePIN(Request $request){
+        if(isset($request->pin) && isset($request->tradein)){
+            $tradein = Tradein::find($request->tradein);
+            $tradein->pin_number = $request->pin;
+            $tradein->job_state = '9';
+            $tradein->save();
+            return redirect()->back()->with('success', 'Device PIN added successfuly. Device sent to testing.');
+        }
+    }
 }

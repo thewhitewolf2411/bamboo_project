@@ -35,7 +35,7 @@ class Tradein extends Model
         'user_id', 'barcode','barcode_original','product_id', 'correct_product_id','customer_grade',
         'bamboo_grade', 'job_state', 'order_price','bamboo_price','customer_memory','customer_network',
         'correct_memory','correct_network', 'product_colour', 'missing_image', 'imei_number', 'serial_number',
-        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 'expiry_date'
+        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 'expiry_date', 'pin_number'
     ];
 
 
@@ -863,6 +863,12 @@ class Tradein extends Model
             return $received->created_at->format('d M, Y');
         }
         return 'Not received yet.';
+    }
+
+    public function getFaultyOffer(){
+        if($this->isPinLocked()){
+            return null;
+        }
     }
 
     public function getDevicePrice(){

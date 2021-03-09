@@ -42,6 +42,7 @@ class CreateTradeinTable extends Migration
             $table->date('expiry_date');
             $table->float('carriage_cost');
             $table->float('admin_cost');
+            $table->integer('pin_number')->nullable()->default(null);
             $table->timestamps();
         });
     }
