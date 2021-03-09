@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use App\Eloquent\Despatch\DespatchedDevice;
+use App\Eloquent\SellingProduct;
 use Carbon\Carbon;
+
+// https://api.parcel.royalmail.com/
 
 class DespatchService {
 
@@ -114,14 +117,32 @@ class DespatchService {
     /**
      * Despatch devices to RM CD API.
      */
-    public function despatchDevices($tradeins){
+    public function requestDespatch($tradeins){
 
         $json_data = ['items' => []];
+        $info = [];
         foreach($tradeins as $tradein){
+            if($tradein->isDespatched()){
+                array_push($info, "Tradein " . $tradein->barcode ." already dispatched.");
+                continue;
+            }
 
             $customer = $tradein->customer();
             $fullname = $tradein->customerName();
             $orderDate = Carbon::now()->toIso8601ZuluString();
+            $itemWeight = 500;
+            $product = SellingProduct::find($tradein->product_id);
+            if($product){
+                if($product->category_id === 1){
+                    $itemWeight = 500;
+                }
+                if($product->category_id === 1){
+                    $itemWeight = 750;
+                }
+                if($product->category_id === 1){
+                    $itemWeight = 100;
+                }
+            }
 
             $customer_address = $customer->delivery_address;
             $splitted = explode(', ', $customer_address);
@@ -182,7 +203,7 @@ class DespatchService {
                 ],
                 "packages" => [
                     0 => [
-                        "weightInGrams" => 1,
+                        "weightInGrams" => $itemWeight,
                         "packageFormatIdentifier" => "undefined",
                         "customPackageFormatIdentifier" => "string",
                         "dimensions" => [
@@ -249,6 +270,11 @@ class DespatchService {
             array_push($json_data['items'], $order);
         }
 
+    
+        if(empty($json_data['items'])){
+            return ['info' => $info];
+        }
+
         $ch = curl_init( "https://api.parcel.royalmail.com/api/v1/orders" );
         $payload = json_encode($json_data);
         curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
@@ -271,9 +297,9 @@ class DespatchService {
                 foreach($tradeins as $tradein){
                     // save tradein tracking reference
                     if($tradein->tracking_reference === $created_order['orderReference']){
-                        $tradein->job_state = '21';
-                        $tradein->save();
-                        array_push($success_msg, 'Tradein ' . $tradein->barcode . ' despached successfully.');
+                        $tradein->tracking_reference = null;
+                        // $tradein->save();
+                        array_push($success_msg, 'Tradein ' . $tradein->barcode . ' requested for despatch successfully.');
                         
                         DespatchedDevice::create([
                             'tradein_id' => $tradein->id,
@@ -291,8 +317,12 @@ class DespatchService {
                 $failed_order = $failed_order_data['order'];
                 foreach($tradeins as $tradein){
                     if($tradein->tracking_reference === $failed_order['orderReference']){
-                        $tradein->tracking_reference = null;
-                        $tradein->save();
+                        // $tradein->tracking_reference = null;
+                        // $tradein->save();
+                        $device = DespatchedDevice::where('tradein_id', $tradein->id)->first();
+                        if($device){
+                            $device->delete();
+                        }
                     }
                 }
 
@@ -316,8 +346,34 @@ class DespatchService {
 
         return [
             'success' => $success_msg,
-            'error' => $error_msg
+            'error' => $error_msg,
+            'info' => $info
         ];
     }
 
+    /**
+     * Check if order has been manifested.
+     */
+    public function checkIfManifested($order_identifier){
+
+        $ch = curl_init( "https://api.parcel.royalmail.com/api/v1/orders/".$order_identifier );
+        curl_setopt( $ch, CURLOPT_HTTPHEADER, array(
+            'Content-Type:application/json',
+            'Authorization: ' . env('CD_AUTH')
+        ));
+
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $response = json_decode($result,true);
+        if(isset($response[0])){
+            $info = $response[0];
+            if(isset($info['trackingNumber']) && $info['trackingNumber'] !== ''){
+                return $info['trackingNumber'];
+            }
+            return false;
+        }
+        return false;
+    }
 }

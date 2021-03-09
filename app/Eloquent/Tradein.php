@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Eloquent\SellingProduct;
 use App\Eloquent\Category;
 use App\Eloquent\Brand;
+use App\Eloquent\Despatch\DespatchedDevice;
 use App\Eloquent\Payment\UserBankDetails;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
+use App\Services\DespatchService;
 use App\User;
 use Carbon\Carbon;
 use DNS1D;
@@ -871,5 +873,26 @@ class Tradein extends Model
         }
 
         return $this->bamboo_price;
+    }
+
+    public function isDespatched(){
+        $despatched = DespatchedDevice::where('tradein_id', $this->id)->first();
+        if($despatched){
+            return true;
+        }
+        return false;
+    }
+
+    public function isManifested(){
+        $despatched = DespatchedDevice::where('tradein_id', $this->id)->first();
+        if($despatched){
+            $despatchService = new DespatchService();
+            $tracking_number = $despatchService->checkIfManifested($despatched->order_identifier);
+            if($tracking_number !== null && $tracking_number !== false){
+                $this->tracking_reference = $tracking_number;
+                $this->save();
+            }
+        }
+        return false;
     }
 }
