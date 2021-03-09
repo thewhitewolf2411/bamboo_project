@@ -246,6 +246,10 @@ class Tradein extends Model
         return false;
     }
 
+    public function getTestingQuarantineReason(){
+        return $this->getDeviceStatus()[0];
+    }
+
     public function hasDeviceBeenReceived(){
 
         $matches = ["1","2","3","4","5"];
@@ -582,11 +586,22 @@ class Tradein extends Model
     }
 
     public function getBambooStatus(){
-        $matches = ["8a", "8b", "8c", "8d", "8e", "8f"];
+        $blacklisted = ["8a", "8b", "8c", "8d", "8e", "8f"];
 
-        if(in_array($this->job_state, $matches)){
+        if(in_array($this->job_state, $blacklisted)){
             return "Blacklisted";
         }
+
+        $received = [""];
+        if(in_array($this->job_state, $received)){
+            return "Awaiting testing";
+        }
+
+        $tested = ['11a', '11b', '11c', '11d', '11e', '11f', '11g', '11h', '11i', '11j'];
+        if(in_array($this->job_state, $tested)){
+            return "Test Complete";
+        }
+
         return $this->getDeviceStatus()[0];
     }
 

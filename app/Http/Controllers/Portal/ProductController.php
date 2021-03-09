@@ -100,29 +100,6 @@ class ProductController extends Controller
         return view('portal.add.brand')->with('portalUser', $portalUser);
     }
 
-    public function editBrand(Request $request){
-
-        $brand = Brand::where('id', $request->brand_id)->first();
-
-        $brand->brand_name = $request->brand_name;
-
-        $fileNameToStore = "default_brand_image.jpg";
-
-        if($request->brand_image){
-            $filenameWithExt = $request->file('brand_image')->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $extension = $request->file('brand_image')->getClientOriginalExtension();
-            $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            $path = $request->file('brand_image')->storeAs('public/brand_image',$fileNameToStore);
-        }
-
-        $brand->brand_image = $fileNameToStore;
-        $brand->save();
-
-        return redirect()->back()->with('Success', 'You have succesfully edited manifacturer.');
-
-    }
-
     public function ShowEditBrandsView($id){
         //if(!$this->checkAuthLevel(2)){return redirect('/');}
         Brand::where('id', $id)->get();

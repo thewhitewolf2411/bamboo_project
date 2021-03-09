@@ -116,6 +116,42 @@ class SettingsController extends Controller
         return redirect()->back()->with('success', 'You have succesfully added the network.');
     }
 
+    public function showEditBrandsView($id = null){
+        //if(!$this->checkAuthLevel(2)){return redirect('/');}
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        if($id !== null){
+            $brand = Brand::where('id', $id)->first();
+            return view('portal.add.brand')->with(['portalUser'=>$portalUser, 'brand'=>$brand]);
+        }
+
+        return view('portal.add.brand')->with('portalUser', $portalUser);
+    }
+
+    public function editBrand(Request $request){
+
+        #dd($request->all());
+
+        $brand = Brand::where('id', $request->brand_id)->first();
+
+        $brand->brand_name = $request->brand_name;
+
+        if($request->brand_image){
+            $filenameWithExt = $request->file('brand_image')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('brand_image')->getClientOriginalExtension();
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('brand_image')->storeAs('public/brand_images',$fileNameToStore);
+        }
+
+        $brand->brand_image = $fileNameToStore;
+        $brand->save();
+
+        return redirect('portal/settings/brands')->with('Success', 'You have succesfully edited manifacturer.');
+
+    }
+
     public function showSettingsAddConditionsPage(){
         //if(!$this->checkAuthLevel(10)){return redirect('/');}
 

@@ -776,10 +776,10 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TA02-3-CATASTROPHIC',
+            'tray_name'=>'TA02-3',
             'tray_type'=>'T',
             'tray_brand'=>'A',
-            'tray_grade'=>'CAT',
+            'tray_grade'=>'E',
             'trolley_id'=>7,
             'number_of_devices'=>0,
 
@@ -912,10 +912,10 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TS02-3-CATASTROPHIC',
+            'tray_name'=>'TS02-3',
             'tray_type'=>'T',
             'tray_brand'=>'S',
-            'tray_grade'=>'CAT',
+            'tray_grade'=>'E',
             'trolley_id'=>9,
             'number_of_devices'=>0,
 
@@ -1046,10 +1046,10 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TH02-3-CATASTROPHIC',
+            'tray_name'=>'TH02-3',
             'tray_type'=>'T',
             'tray_brand'=>'H',
-            'tray_grade'=>'CAT',
+            'tray_grade'=>'E',
             'trolley_id'=>11,
             'number_of_devices'=>0,
 
@@ -1180,10 +1180,10 @@ class DatabaseSeeder extends Seeder
 
         DB::table('trays')->insert([
 
-            'tray_name'=>'TM02-3-CATASTROPHIC',
+            'tray_name'=>'TM02-3',
             'tray_type'=>'T',
             'tray_brand'=>'M',
-            'tray_grade'=>'CAT',
+            'tray_grade'=>'E',
             'trolley_id'=>13,
             'number_of_devices'=>0,
 
