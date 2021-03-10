@@ -33,20 +33,20 @@ Watch our quick video that explains how our meticulous grading system works. We 
 
     <div class="toggle-elements">
         <div class="toggle-elements-btn">
-            <div class="toggle-element-btn shopping-toggle active">
+            {{-- <div class="toggle-element-btn shopping-toggle active">
                 <a onclick="changeToggleElement('shopping')">
                     <p style="color: #23AAF7;" class="active m-0" id="toggle-element-btn-shopping">Shopping with us</p>
                     <img id="shopping-image" class="ml-3" src="{{ asset('/customer_page_images/body/Group 1087.svg') }}">
                 </a>
-            </div>
-            <div class="toggle-element-btn selling-toggle">
+            </div> --}}
+            <div class="toggle-element-btn selling-toggle" style="width: 100% !important">
                 <a onclick="changeToggleElement('selling')">
                     <p style="color: #FCC44C;" class="m-0" id="toggle-element-btn-selling">Selling with us</p>
-                    <img id="selling-image" class="ml-3" src="{{ asset('/customer_page_images/body/Group 938.svg') }}">
+                    <img id="selling-image" class="ml-3 rotate" src="{{ asset('/customer_page_images/body/Group 938.svg') }}">
                 </a>
             </div>
         </div>
-        <div class="toggle-element shopping-toggle active">
+        {{-- <div class="toggle-element shopping-toggle active">
 
             <div class="shopping-element container">
                 <div class="shopping-element-image">
@@ -80,8 +80,8 @@ Watch our quick video that explains how our meticulous grading system works. We 
                 <a href="#">Start Shopping</a>
             </div>
 
-        </div>
-        <div class="toggle-element selling-toggle">
+        </div> --}}
+        <div class="toggle-element selling-toggle active">
 
             <div class="shopping-element container">
                 <div class="shopping-element-text">
