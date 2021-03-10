@@ -82,9 +82,9 @@
                             <td><div class="table-element text-center">@foreach($order as $tradein){{$tradein->getProductName($tradein->product_id)}} <br> @endforeach</div></td>
                             <td><div class="table-element text-center">{{$tradein->customer()->fullName()}}</div></td>
                             <td><div class="table-element text-center">{{$tradein->postCode()}}</div></td>
-                            <td><div class="table-element text-center"> @foreach($order as $tradein) {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0]}} <br> @endforeach </div></td>
+                            <td><div class="table-element text-center"> @foreach($order as $tradein) {{$tradein->getBambooStatus()}} <br> @endforeach </div></td>
                             <td><div class="table-element text-center">{{$tradein->getTrayName($tradein->id)}}</div></td>
-                            <td><div class="table-element text-center">@foreach($order as $tradein) {{$tradein->getDeviceStatus($tradein->id, $tradein->job_state)[1]}} <br> @endforeach</div></td>
+                            <td><div class="table-element text-center">@foreach($order as $tradein) {{$tradein->getBambooStatus()}} <br> @endforeach</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/customer-care/trade-in/{{$tradein->barcode}}" title="View tradein details">
                                     <i class="fa fa-search"></i>
