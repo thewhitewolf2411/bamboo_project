@@ -55120,17 +55120,6 @@ $(document).ready(function () {
       });
     });
   }
-
-  if ($('.dataTables_info')) {
-    var text = $('.dataTables_info').text().split('of')[0];
-    $('.dataTables_info').text(text);
-  }
-});
-$(document).on('change', function () {
-  if ($('.dataTables_info')) {
-    var text = $('.dataTables_info').text().split('of')[0];
-    $('.dataTables_info').text(text);
-  }
 });
 
 /***/ }),
@@ -55419,6 +55408,7 @@ $('#sell-lot-btn').on('click', function () {
   var selectedquantity = $('.saleslot-active td:nth-child(3) > div:nth-child(1)').html(); //console.log(selectedquantity);
 
   $('#salelot-action #salelot-number').html(selectedid);
+  $('#salelot-action #salelot-number-value').val(selectedid);
   $('#salelot-action #device-qty').html(selectedquantity);
 });
 $('#payment-received-btn').on('click', function () {

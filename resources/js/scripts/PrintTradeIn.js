@@ -198,18 +198,6 @@ $(document).ready(function(){
             } );
         } );
     }
-
-    if($('.dataTables_info')){
-        var text = $('.dataTables_info').text().split('of')[0];
-
-        $('.dataTables_info').text(text);
-    }
 });
 
-$(document).on('change', function(){
-    if($('.dataTables_info')){
-        var text = $('.dataTables_info').text().split('of')[0];
 
-        $('.dataTables_info').text(text);
-    }
-});

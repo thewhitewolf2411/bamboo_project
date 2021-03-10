@@ -66,7 +66,7 @@
                         <td><div class="table-element">{{$saleLot->created_at}}</div></td>
                         <td><div class="table-element">{{$saleLot->getSalesLotQuantity()}}</div></td>
                         <td><div class="table-element">£{{$saleLot->getSalesLotPrice()}}</div></td>
-                        <td><div class="table-element">£{{$saleLot->getSalesLotPrice()}}</div></td>
+                        <td><div class="table-element">£{{$saleLot->sold_value}}</div></td>
                         <td><div class="table-element">{{$saleLot->getStatus($saleLot->sales_lot_status)}}</div></td>
                         <td><div class="table-element">{{$saleLot->date_sold}}</div></td>
                         <td><div class="table-element">{{$saleLot->payment_date}}</div></td>
@@ -95,13 +95,15 @@
         </div>
         <div class="modal-body p-5">
 
-            <form action="/portal/sales-lot/completed-sales-lots/change-state" method="POST">
+            <form action="/portal/sales-lot/completed-sales-lots/change-state" onsubmit="return confirm('Are you sure?')" method="POST">
                 @csrf
                 <h5 class="modal-title">Sell Lot</h5>
                 <table class="portal-table my-3" id="sales-lot-boxes">
                     <tr>
                         <th><div class="table-element">Sales Lot No:</div></th>
+
                         <th><div class="table-element" id="salelot-number"></div></th>
+                        <input type="hidden" id="salelot-number-value" name="salelot_number" value="">
                     </tr>
                     <tr>
                         <th><div class="table-element">Customer:</div></th>
@@ -122,7 +124,7 @@
                     <tr>
                         <th><div class="table-element">Sold Value:</div></th>
                         <th><div class="table-element">
-                            <input type="number" class="form-control" id="sold-for-input" required>    
+                            <input type="number" class="form-control" id="sold-for-input" name="sold_for_input" required>    
                         </div></th>
                     </tr>
                 </table>
