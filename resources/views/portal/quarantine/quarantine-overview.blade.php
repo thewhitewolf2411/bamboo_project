@@ -39,11 +39,11 @@
                 </div>
                 <div class="col-md-3"></div>
                 <div class="col-md-2">
-                    <input id="allocate_to_tray" type="submit" class="custombtn btn-green" onclick="javascript: form.action='/portal/quarantine/allocate-to-tray';" value="Allocate to Tray" disabled>
+                    <input id="allocate_to_tray" type="submit" class="custombtn btn-green" onclick="javascript: form.action='/portal/quarantine/allocate-to-tray';" value="Allocate to Tray">
                 </div>
                 <div class="col-md-3"></div>
                 <div class="col-md-2">
-                    <input id="return_to_customer" type="submit" class="custombtn btn-green" onclick="javascript: form.action='/portal/quarantine/return-to-customer';" value="Return to Customer" disabled>
+                    <input id="return_to_customer" type="submit" class="custombtn btn-green" onclick="javascript: form.action='/portal/quarantine/return-to-customer';" value="Return to Customer">
                 </div>
             </div>
             <table class="portal-table sortable" id="quarantine-overview-table">
@@ -109,7 +109,7 @@
                                 </div>
                                 
                             @else
-                                {{$tradein->getBambooStatus()}}
+                                {{$tradein->getTestingQuarantineReason()}}
                             @endif
                         </div></td>
                         <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
@@ -144,11 +144,23 @@
             </button>
         </div>
         <div class="modal-body p-5">
+
+            <form action="/portal/quarantine/return-to-customer" method="POST">
+                @csrf
+                <div class="form-group my-3">
+                    <label for="submitscannedid_returntocustomer">Scan or type trade in id:</label>
+                    <input type="text" class="form-control" name="submitscannedid_returntocustomer" id="submitscannedid_returntocustomer">
+                    <button class="btn btn-primary btn-blue" id="submitscannedid_returntocustomer">Scan</button>
+                </div>
+            </form>
+
+            <div id="statement">
+                    
+            </div>
+
             <form action="/portal/quarantine/mark-devices-return-to-customer" method="post">
                 <table class="portal-table" id="categories-table">
-                    <div id="statement">
-                    
-                    </div>
+
                     <label>These devices are marked for return to customer. Please confirm.</label>
                     <tr>
                         <td><div class="table-element">Trade-in Barcode</div></td>
@@ -173,7 +185,7 @@
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                             <td><div class="table-element">{{$tradein->imei_number}}</div></td>
                             <td><div class="table-element">{{$tradein->bamboo_grade}}</div></td>
-                            <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
+                            <td><div class="table-element">Despatch</div></td>
                         </tr>
                         @endforeach
 
@@ -213,11 +225,24 @@
             </button>
         </div>
         <div class="modal-body p-5">
+
+            <form action="/portal/quarantine/allocate-to-tray" method="POST">
+                @csrf
+                <div class="form-group my-3">
+                    <label for="submitscannedid_allocatetotray">Scan or type trade in id:</label>
+                    <input type="text" class="form-control" name="submitscannedid_allocatetotray" id="submitscannedid_allocatetotray">
+                    <button class="btn btn-primary btn-blue" id="submitscannedid_allocatetotray">Scan</button>
+                </div>
+            </form>
+
+            <div id="statement">
+                    
+            </div>
+
+
             <form action="/portal/quarantine/reallocate-devices-to-trays" method="post">
                 <table class="portal-table" id="categories-table">
-                    <div id="statement">
-                    
-                    </div>
+
                     <label>These devices are being removed from quarantine to another tray. Please select new destination and confirm.</label>
                     <tr>
                         <td><div class="table-element">Trade-in Barcode</div></td>
@@ -225,26 +250,28 @@
                         <td><div class="table-element">IMEI</div></td>
                         <td><div class="table-element">Bamboo Grade</div></td>
                         <td><div class="table-element">Stock Location</div></td>
-                        <td><div class="table-element">Allocate to tray</div></td>
                     </tr>
                     
                         @csrf
                         @foreach(Session::get('allocateToTrays') as $tradein)
                             <input type="hidden" name="tradein-{{$tradein->id}}" value="{{$tradein->id}}">
-                        <tr>
-                            <td><div class="table-element">{{$tradein->barcode}}</div></td>
-                            <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
-                            <td><div class="table-element">{{$tradein->imei_number}}</div></td>
-                            <td><div class="table-element">{{$tradein->bamboo_grade}}</div></td>
-                            <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
-                            <td><div class="table-element"> <select id="newtray-{{$tradein->id}}" name="newtray-{{$tradein->id}}" class="form-control" >@foreach(Session::get('trays') as $tray) <option value="{{$tray->id}}">{{$tray->tray_name}}</option> @endforeach</select> </div></td>
-                        </tr>
+                            <tr>
+                                <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                                <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                                <td><div class="table-element">{{$tradein->imei_number}}</div></td>
+                                <td><div class="table-element">{{$tradein->bamboo_grade}}</div></td>
+                                <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
+                            </tr>
                         @endforeach
 
-                        
-                </table>
+                    </table>
+
+                    <div class="form-group my-3">
+                        <select id="newtray-{{$tradein->id}}" name="newtray" class="form-control" >@foreach(Session::get('trays') as $tray) <option value="{{$tray->id}}">{{$tray->tray_name}}</option> @endforeach</select>
+                    </div>
+
                 <div class="row">
-                    <div class="col-md-6"><input type="submit" class="btn btn-primary my-3" value="Submit"></div>
+                    <div class="col-md-6"><input type="submit" class="btn btn-primary my-3" value="Submit" @if(count(Session::get('allocateToTrays'))<1) disabled @endif onclick="return confirm('Are you sure you want to allocate these devices to selected tray?.');"></div>
                     <div class="col-md-6"><a role="button" class="w-100 my-3" data-dismiss="modal" aria-label="Cancel"><div class="btn btn-primary w-100 my-3">Cancel</div> </a></div>
                 </div>
             </form>
@@ -359,14 +386,10 @@ function enablebtn(){
 
     if(k>0){
         $('#export_csv').prop("disabled", false);
-        $('#allocate_to_tray').prop("disabled", false);
-        $('#return_to_customer').prop("disabled", false);
     }
 
     else{
         $('#export_csv').prop("disabled", true);
-        $('#allocate_to_tray').prop("disabled", true);
-        $('#return_to_customer').prop("disabled", true);
     }
 
 }

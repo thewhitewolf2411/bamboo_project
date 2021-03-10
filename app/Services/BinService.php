@@ -16,6 +16,12 @@ class BinService{
 
         }
 
+        if(!$tradein->isInQuarantine()){
+
+            return response(['deviceadded'=>0, 'error'=>'Device is not in quarantine.']);
+            
+        }
+
         return response(['deviceadded'=>1, 'order'=>$tradein, 'model'=>$tradein->getProductName($tradein->product_id)]);
 
         /*

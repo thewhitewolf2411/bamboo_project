@@ -27,7 +27,7 @@
                     </div>
                 </div>
 
-                <table class="portal-table sortable table-visible" id="boxedtradeinstable">
+                <table class="portal-table table-visible" id="boxedtradeinstable">
                     <tr>
                         <td><div class="table-element">Trade in Barcode numbers</div></td>
                         <td><div class="table-element">Box number</div></td>
@@ -55,7 +55,7 @@
                     </tr>
                     @endforeach
                 </table>
-                <table class="portal-table sortable table-invisible" id="closedboxtable">
+                <table class="portal-table table-invisible" id="closedboxtable">
                     <tr>
                         <td><div class="table-element">Box number</div></td>
                         <td><div class="table-element">Grade</div></td>

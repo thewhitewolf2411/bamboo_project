@@ -44,7 +44,6 @@ function testingElementChanged(){
         $('#corrent-network-value').addClass('form-group-hidden');
     }
 
-
     //if(fimpOrGoogleLock == "true" || pinLock == "true"){
     if(pinLock == "true"){
         $('#fimp_or_google_lock').prop('disabled', true);
@@ -152,6 +151,14 @@ function testingElementChanged(){
                     }
                 }
             }
+
+            if($('#correct_network_value option').length < 1){
+                $('#correct_network').prop('disabled', true);
+                $('#correct_network_value').prop('required', false);
+            }
+            else{
+                $('#correct_network').prop('disabled', false);
+            }
         }
     }
 
@@ -166,14 +173,6 @@ function testingElementChanged(){
         $('#cosmetic_condition').append($("<option></option>")
         .attr("value", value).text(key));
     });
-
-    if($('#correct_network_value option').length < 1){
-        $('#correct_network').prop('disabled', true);
-        $('#correct_network_value').prop('required', false);
-    }
-    else{
-        $('#correct_network').prop('disabled', false);
-    }
 
 }
 
@@ -254,9 +253,7 @@ function cosmeticElementChanged(){
 
 }
 
-
 var limit = 3;
-
 
 $(document).on('change', 'input[type="checkbox"]', function() {
     if($('.single-checkbox:checked').length > 3){

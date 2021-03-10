@@ -15061,6 +15061,90 @@ input[type=number] {
   display: table-header-group;
 }
 
+#trade-pack-table tfoot {
+  display: table-header-group;
+}
+
+#trade-in-table tfoot {
+  display: table-header-group;
+}
+
+#order-management-table tfoot {
+  display: table-header-group;
+}
+
+.paging_simple_numbers {
+  display: flex;
+}
+
+.paging_simple_numbers .previous {
+  background: #23AAF7 !important;
+  border: 1px solid #23AAF7 !important;
+  color: #fff !important;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  margin: 0 !important;
+}
+
+.paging_simple_numbers .next {
+  cursor: pointer;
+  background: #23AAF7 !important;
+  border: 1px solid #23AAF7 !important;
+  color: #fff !important;
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  margin: 0 !important;
+}
+
+.current {
+  color: #585858 !important;
+  font-family: Sharp Sans No1 Book !important;
+  font-size: 14pt;
+  margin: 0 12px !important;
+  padding: 5px 5px !important;
+  border: 1px solid #eaeaea;
+  border-radius: 0.25rem;
+  display: inline-block;
+  height: 38px;
+}
+
 #boxedtradeinstable_filter {
   display: none;
 }

@@ -16,7 +16,10 @@
 
                     <div class="form-group">
                         <label for="manifacturer">Manufacturer:</label>
-                        <select class="form-control" name="manifacturer" id="manifacturer" required>
+                        @if(isset($box))
+                            <input type="text" class="form-control" disabled value="{{$box->tray_brand}}">
+                        @endif
+                        <select class="form-control" name="manifacturer" id="manifacturer" required @if(isset($box)) style="display: none" @endif>
                             <option selected value="" disabled>Please select manufacturer</option>
                             @foreach ($brands as $brand)
                                 <option value="{{$brand->id}}">{{$brand->brand_name}}</option>
@@ -27,29 +30,35 @@
                     
                     <div class="form-group">
                         <label for="reference">Box Reference:</label>
-                        <select class="form-control" name="reference" id="reference" disabled>
+                        @if(isset($box))
+                            <input type="text" class="form-control" disabled value="{{$box->tray_grade}}">
+                        @endif
+                        <select class="form-control" name="reference" id="reference" disabled @if(isset($box)) style="display: none" @endif>
                             <option selected value="" disabled>Please select reference</option>
-                            <option value="a">A</option>
-                            <option value="b+">B+</option>
-                            <option value="b">B</option>
-                            <option value="c">C</option>
-                            <option value="wsi">WSI</option>
-                            <option value="wsd">WSD</option>
-                            <option value="nwsi">NWSI</option>
-                            <option value="nwsd">NWSD</option>
-                            <option value="cat">CAT</option>
-                            <option value="fimp">FMIP</option>
-                            <option value="gock">GOCK</option>
-                            <option value="sick">SICK</option>
-                            <option value="tab">TAB</option>
-                            <option value="sw">SW</option>
-                            <option value="bl">BL</option>
+                            <option value="a" >A</option>
+                            <option value="b+" >B+</option>
+                            <option value="b" >B</option>
+                            <option value="c" >C</option>
+                            <option value="wsi" >WSI</option>
+                            <option value="wsd" >WSD</option>
+                            <option value="nwsi" >NWSI</option>
+                            <option value="nwsd" >NWSD</option>
+                            <option value="cat" >CAT</option>
+                            <option value="fimp" >FMIP</option>
+                            <option value="gock" >GOCK</option>
+                            <option value="sick" >SICK</option>
+                            <option value="tab" >TAB</option>
+                            <option value="sw" >SW</option>
+                            <option value="bl" >BL</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="network">Network:</label>
-                        <select class="form-control" name="network" id="network" disabled>
+                        @if(isset($box))
+                            <input type="text" class="form-control" disabled value="{{$box->tray_network}}">
+                        @endif
+                        <select class="form-control" name="network" id="network" disabled @if(isset($box)) style="display: none" @endif>
                             <option selected value='' disabled>Please select network</option>
                             <option value="l">Locked</option>
                             <option value="u">Unlocked</option>
@@ -62,12 +71,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="capacity">Box Capacity:</label>
-                        <input type="number" max="100" class="form-control" name="capacity" id="capacity" required>
+                        <label for="capacity" @if(isset($box)) style="display: none" @endif>Box Capacity:</label>
+                        <input type="number" max="100" class="form-control" name="capacity" id="capacity" required @if(isset($box)) style="display: none" @endif>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6"><input type="submit" class="btn btn-primary my-3" value="Start"></div>
+                        <div class="col-md-6"><input type="submit" class="btn btn-primary my-3" value="Start" @if(isset($box)) style="display: none" @endif></div>
                     </div>
                 </form>
 

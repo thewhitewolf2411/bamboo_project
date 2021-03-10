@@ -288,6 +288,13 @@ class TestingController extends Controller
 
                 $user = User::where('id', $tradein->user_id)->first();
 
+                $newPrice = "";
+
+                $testing = new Testing();
+                $newPrice = $testing->generateDevicePrice($tradein->id, $tradein->customer_memory, $tradein->customer_network, 1);
+                
+                $tradein->bamboo_price = $newPrice;
+
                 $klaviyoemail = new KlaviyoEmail();
                 $klaviyoemail->noImei($user, $tradein);
             }
