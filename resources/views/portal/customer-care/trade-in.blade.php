@@ -27,26 +27,43 @@
                     </select>
                     <button type="submit" class="btn btn-primary btn-blue">Search</button>
                 </form>
+                <!--
                 <form class="d-flex align-items-center mx-5" action="/portal/customer-care/trade-in/all/" method="get">              
                     <label for="searchtradeins">Input Trade-in barcode number / Trade-in ID:</label>
                     <input type="text" minlength="3" name="search" class="form-control mx-3 my-0">
                     <button type="submit" class="btn btn-primary btn-blue">Search</button>
                 </form>
+                -->
             </div>
 
 
-            <table class="portal-table sortable" id="categories-table">
-                <tr>
-                    <td><div class="table-element">Trade-in ID</div></td>
-                    <td><div class="table-element">Date Placed</div></td>
-                    <td><div class="table-element">Products</div></td>
-                    <td><div class="table-element">Customer grade</div></td>
-                    <td><div class="table-element">Order Type</div></td>
-                    <td>
-                        <div class="table-element"><input type="checkbox" id="tradein-checkallbtn"></div>
-                    </td>
-                </tr>
-                @csrf
+            <table class="portal-table" id="trade-in-table">
+                <thead>
+                    <tr>
+                        <td><div class="table-element">Trade-in ID</div></td>
+                        <td><div class="table-element">Date Placed</div></td>
+                        <td><div class="table-element">Products</div></td>
+                        <td><div class="table-element">Customer grade</div></td>
+                        <td><div class="table-element">Order Type</div></td>
+                        <td>
+                            <div class="table-element"><input type="checkbox" id="tradein-checkallbtn"></div>
+                        </td>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td><div class="table-element">Trade-in ID</div></td>
+                        <td><div class="table-element">Date Placed</div></td>
+                        <td><div class="table-element">Products</div></td>
+                        <td><div class="table-element">Customer grade</div></td>
+                        <td><div class="table-element">Order Type</div></td>
+                        <td>
+                            <div class="table-element"><input type="checkbox" id="tradein-checkallbtn"></div>
+                        </td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @csrf
                     @foreach($tradeins as $key=>$order)
 
                         @if($order->count() > 0)
@@ -74,6 +91,9 @@
 
                     @endforeach
                 <a role="button" id="print_trade_pack_bulk_form_trigger" class="btn btn-primary mb-5" disabled>Print Trade Pack Trade-In Bulk</a>
+                </tbody>
+
+
             </table>
 
             <form id="print_trade_pack_form" name="form-print-trade-pack" enctype="multipart/form-data" action="/portal/customer-care/trade-in/printlabel" method="post">

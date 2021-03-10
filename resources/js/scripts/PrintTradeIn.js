@@ -113,3 +113,103 @@ function markOrderAsSent(trade_out_id){
     //Trigger printing
     $('#mark_as_complete_trade_out_trigger').click();
 }
+
+$(document).ready(function(){
+    if($('#trade-pack-table')){
+
+        $('#trade-pack-table tfoot td:not(:last-child)').each( function () {
+            var title = $(this).text();
+            $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+        } );    
+    
+        var tradepacktable = $('#trade-pack-table').DataTable();
+    
+        // Apply the search
+        tradepacktable.columns().every( function () {
+    
+            var that = this;
+            $( 'input', this.footer() ).on( 'keyup change', function () {
+                if ( that.search() !== this.value ) {
+                    that
+                        .search( this.value )
+                        .draw();
+                }
+            } );
+        } );
+
+    }
+
+    if($('#trade-in-table')){
+
+        $('#trade-in-table tfoot td:not(:last-child)').each( function () {
+            var title = $(this).text();
+            $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+        } );    
+    
+        $('#trade-in-table tfoot td:last-child').each( function () {
+            $(this).html( '' );
+        } );    
+
+        var tradeintable = $('#trade-in-table').DataTable();
+    
+        // Apply the search
+        tradeintable.columns().every( function () {
+    
+            var that = this;
+            $( 'input', this.footer() ).on( 'keyup change', function () {
+                if ( that.search() !== this.value ) {
+                    that
+                        .search( this.value )
+                        .draw();
+                }
+            } );
+        } );
+
+    }
+
+    if($('#order-management-table')){
+        $('#order-management-table tfoot td:not(:last-child)').each( function () {
+            var title = $(this).text();
+            $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+        } );    
+    
+        $('#order-management-table tfoot td:last-child').each( function () {
+            $(this).html( '' );
+        } );    
+        $('#order-management-table tfoot td:nth-child(12)').each( function () {
+            $(this).html( '' );
+        } ); 
+        $('#order-management-table tfoot td:nth-child(13)').each( function () {
+            $(this).html( '' );
+        } ); 
+
+        var ordermanagementtable = $('#order-management-table').DataTable();
+    
+        // Apply the search
+        ordermanagementtable.columns().every( function () {
+    
+            var that = this;
+            $( 'input', this.footer() ).on( 'keyup change', function () {
+                if ( that.search() !== this.value ) {
+                    that
+                        .search( this.value )
+                        .draw();
+                }
+            } );
+        } );
+    }
+
+    if($('.dataTables_info')){
+        var text = $('.dataTables_info').text().split('of')[0];
+
+        $('.dataTables_info').text(text);
+    }
+});
+
+$(document).on('change', function(){
+    if($('.dataTables_info')){
+        var text = $('.dataTables_info').text().split('of')[0];
+
+        $('.dataTables_info').text(text);
+    }
+});
