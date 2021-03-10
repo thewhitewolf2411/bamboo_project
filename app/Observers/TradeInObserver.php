@@ -67,6 +67,8 @@ class TradeInObserver
             'cheque_number' => $tradein->cheque_number
         ]);
 
+
+        dd($last_audit->toArray(), $audit->toArray(), $tradein->getTrayName($tradein->id));
         $can_store_audit = false;
         if($last_audit){
             if($last_audit->tradein_barcode !== $audit->tradein_barcode){

@@ -35,7 +35,8 @@ class Tradein extends Model
         'user_id', 'barcode','barcode_original','product_id', 'correct_product_id','customer_grade',
         'bamboo_grade', 'job_state', 'order_price','bamboo_price','customer_memory','customer_network',
         'correct_memory','correct_network', 'product_colour', 'missing_image', 'imei_number', 'serial_number',
-        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 'expiry_date'
+        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 
+        'expiry_date', 'location_changed_at'
     ];
 
 
@@ -838,6 +839,7 @@ class Tradein extends Model
     }
 
     public function isDowngraded(){
+        dd('oops tradein 841');
         if($this->customer_grate !== $this->bamboo_grade){
             return true;
         }

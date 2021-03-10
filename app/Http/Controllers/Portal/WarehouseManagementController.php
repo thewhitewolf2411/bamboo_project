@@ -292,6 +292,7 @@ class WarehouseManagementController extends Controller
 
     public function completeBox(Request $request){
         #dd($request->all());
+        
         $boxname = $request->boxid;
         $tray = Tray::where('id', $boxname)->first();
         $tray->status = 3;
@@ -303,6 +304,11 @@ class WarehouseManagementController extends Controller
             if($oldTray->tray_id !== $oldTray->pseudo_tray_id){
                 $oldTray->number_of_devices = $bC->number_of_devices - 1;
                 $tray->number_of_devices = $tray->number_of_devices + 1;
+            }
+            $tradeins = Tradein::whereIn('id', $oldTray->pluck('trade_in_id'))->get();
+            foreach($tradeins as $tradein){
+                $tradein->location_changed_at = now();
+                $tradein->save();
             }
             $oldTray->save();
 
