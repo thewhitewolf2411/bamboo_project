@@ -98,8 +98,8 @@ class PaymentBatchService {
                 $account_number = null;
                 $beneficiary_name = null;
                 if(!$billing_info){
-                    $account_identifier = "000000";
-                    $account_number = "00000000";
+                    $account_identifier = "0";
+                    $account_number = "0";
                     $beneficiary_name = $user->fullName();
                 } else {
                     try {
@@ -134,21 +134,21 @@ class PaymentBatchService {
                 // }
                 
                 $payment_row = 
-                    ",,,01,,,,,,,,,".
+                    "1,,,,,,,,".
                     env('BAMBOO_ACCOUNT_NUMBER').
-                    ",,,,".
+                    ",,,".
                     $tradein->getDevicePrice().
-                    ",,".
+                    ",".
                     Carbon::parse($payment_batch->arrive_at)->format('dmY').
-                    ",,,,,,".
+                    ",,,,,".
                     $account_identifier.
-                    ",,,,,,".
+                    ",,,,,".
                     $account_number.
-                    ",,".
-                    '"'.$beneficiary_name.'"'.
-                    ",,,,".
+                    ",".
+                    $beneficiary_name." ".$user->billing_address.
+                    ",,,".
                     "INVOICE " . $tradein->barcode.
-                    ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,";
+                    ",";
                 
                 array_push($payment_rows, $payment_row);
             }
