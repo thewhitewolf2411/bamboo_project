@@ -55,10 +55,10 @@
                             <input type="email" class="form-control" placeholder="Email" name="email" required>
                         </div>
                         <div class="form-group p20">
-                            <input type="password" class="form-control" placeholder="Password" name="password" required>
+                            <input type="password" class="form-control" placeholder="Password" name="password" id="password" required>
                         </div>
                         <div class="form-group p20">
-                            <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" required>
+                            <input type="password" class="form-control" placeholder="Confirm Password" data-rule-password="true" data-rule-equalTo="#password"  name="confirm_password">
                         </div>
                         <div class="portal-title">
                             <p>Access Level</p>
@@ -93,16 +93,16 @@
                                     <label class="form-check-label" for="trays_managment">Trays Management</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="box_managment" id="box_managment">
-                                    <label class="form-check-label" for="box_managment">Box Management</label>
-                                </div>
-                                <div class="form-group p20 w-25">
                                     <input type="checkbox" class="form-check-input" name="quarantine_managment" id="quarantine_managment">
                                     <label class="form-check-label" for="quarantine_managment">Quarantine Managment</label>
                                 </div>
                                 <div class="form-group p20 w-25">
                                     <input type="checkbox" class="form-check-input" name="warehouse_management" id="warehouse_management">
                                     <label class="form-check-label" for="warehouse_management">Warehouse Management</label>
+                                </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="sales_lots" id="sales_lots">
+                                    <label class="form-check-label" for="warehouse_management">Sales Lots</label>
                                 </div>
                                 <div class="form-group p20 w-25">
                                     <input type="checkbox" class="form-check-input" name="despatch" id="despatch">

@@ -113,14 +113,14 @@ class UsersController extends Controller
         if($request->trays_managment == "on"){
             $portalUser->trays_managment = true;
         }
-        if($request->box_managment == "on"){
-            $portalUser->box_management = true;
-        }
         if($request->quarantine_managment == "on"){
             $portalUser->quarantine_managment = true;
         }
         if($request->warehouse_management == "on"){
             $portalUser->warehouse_management = true;
+        }
+        if($request->sales_lots == "on"){
+            $portalUser->sales_lots = true;
         }
         if($request->despatch == "on"){
             $portalUser->despatch = true;

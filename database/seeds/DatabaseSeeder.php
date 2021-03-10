@@ -76,9 +76,10 @@ class DatabaseSeeder extends Seeder
             'device_testing'=>true,
             'trolley_management'=>true,
             'trays_managment'=>true,
-            'box_management'=>true,
             'quarantine_managment'=>true,
             'warehouse_management'=>true,
+            'sales_lot'=>true,
+            'despatch'=>true,
             'buying'=>true,
             'ecommerence_orders'=>true,
             'ecommerence_users'=>true,
@@ -138,6 +139,54 @@ class DatabaseSeeder extends Seeder
 
         DB::table('brand')->insert([
             'brand_name'=>'Huawei',
+            'brand_image'=>'/Image 15_1597675746.png',
+            'total_produts'=>0
+        ]);
+
+        DB::table('brand')->insert([
+            'brand_name'=>'Google',
+            'brand_image'=>'/Image 15_1597675746.png',
+            'total_produts'=>0
+        ]);
+
+        DB::table('brand')->insert([
+            'brand_name'=>'LG',
+            'brand_image'=>'/Image 15_1597675746.png',
+            'total_produts'=>0
+        ]);
+
+        DB::table('brand')->insert([
+            'brand_name'=>'Motorola',
+            'brand_image'=>'/Image 15_1597675746.png',
+            'total_produts'=>0
+        ]);
+
+        DB::table('brand')->insert([
+            'brand_name'=>'Nokia',
+            'brand_image'=>'/Image 15_1597675746.png',
+            'total_produts'=>0
+        ]);
+
+        DB::table('brand')->insert([
+            'brand_name'=>'OnePlus',
+            'brand_image'=>'/Image 15_1597675746.png',
+            'total_produts'=>0
+        ]);
+
+        DB::table('brand')->insert([
+            'brand_name'=>'Oppo',
+            'brand_image'=>'/Image 15_1597675746.png',
+            'total_produts'=>0
+        ]);
+
+        DB::table('brand')->insert([
+            'brand_name'=>'Sony',
+            'brand_image'=>'/Image 15_1597675746.png',
+            'total_produts'=>0
+        ]);
+
+        DB::table('brand')->insert([
+            'brand_name'=>'Xiaomi',
             'brand_image'=>'/Image 15_1597675746.png',
             'total_produts'=>0
         ]);

@@ -38,7 +38,7 @@
                         <td><div class="table-element">Network</div></td>
                         <td><div class="table-element">Colour</div></td>
                         <td><div class="table-element">Cost</div></td>
-                        <td><div class="table-element">Checkbox</div></td>
+                        <td><div class="table-element"><input type="checkbox" id="boxedtradeinstable-selectall"></div></td>
                     </tr>
                     @foreach ($tradeins as $key=>$tradein)
                     <tr id="{{$tradein->id}}">
@@ -62,7 +62,7 @@
                         <td><div class="table-element">Network</div></td>
                         <td><div class="table-element">Total QTY</div></td>
                         <td><div class="table-element">Total Cost</div></td>
-                        <td><div class="table-element">Checkbox</div></td>
+                        <td><div class="table-element"><input type="checkbox" id="closedboxtable-selectall"> </div></td>
                     </tr>
                     @foreach ($boxes as $box)
                     <tr id="{{$box->id}}">
@@ -89,14 +89,14 @@
                     </div>
                 </div>
 
-                <table class="portal-table sortable" id="saleslotboxes">
+                <table class="portal-table" id="saleslotboxes">
                     <tr>
                         <td><div class="table-element">Box number</div></td>
                         <td><div class="table-element">Grade</div></td>
                         <td><div class="table-element">Network</div></td>
                         <td><div class="table-element">Total QTY</div></td>
                         <td><div class="table-element">Total Cost</div></td>
-                        <td><div class="table-element">Checkbox</div></td>
+                        <td><div class="table-element"><input type="checkbox" id="saleslotboxes-selectall"></div></td>
                     </tr>
                 </table>
             </div>

@@ -55376,6 +55376,27 @@ $('#buildalot').on('click', function () {
     });
   }
 });
+$('#saleslotboxes-selectall').on('click', function () {
+  if (this.checked) {
+    $('.box-sales-lot').prop('checked', true);
+  } else {
+    $('.box-sales-lot').prop('checked', false);
+  }
+});
+$('#boxedtradeinstable-selectall').on('click', function () {
+  if (this.checked) {
+    $('.tradein-sales-lot').prop('checked', true);
+  } else {
+    $('.tradein-sales-lot').prop('checked', false);
+  }
+});
+$('#closedboxtable-selectall').on('click', function () {
+  if (this.checked) {
+    $('.box-sales-lot').prop('checked', true);
+  } else {
+    $('.box-sales-lot').prop('checked', false);
+  }
+});
 
 /***/ }),
 
