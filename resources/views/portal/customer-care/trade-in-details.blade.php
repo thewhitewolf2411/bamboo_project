@@ -166,7 +166,7 @@
                                     <td>
                                         <div class="table-element">
                                             <div class="mr-auto"><strong>Colour:</strong></div>
-                                            <div class="ml-auto">Red</div>
+                                            <div class="ml-auto">{!!$tradein->product_colour!!}</div>
                                         </div>
                                     </td>
                                 </tr>
