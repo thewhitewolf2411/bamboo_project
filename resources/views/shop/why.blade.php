@@ -207,10 +207,10 @@
                 <div class="about-sustainability">
                     <div class="about-images-container">
                         <div class="about-images" id="top-image">
-                            <p>Space for image</p>
+                            <img src="{{asset('/images/ss-img-1.svg')}}">
                         </div>
                         <div class="about-images" id="bottom-image">
-                            <p>Space for image</p>
+                            <img src="{{asset('/images/ss-img-2.svg')}}">
                         </div>
                     </div>
             

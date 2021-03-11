@@ -10499,7 +10499,6 @@ main p, a, span {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 1200px;
 }
 
 .about-top-container {
@@ -10531,7 +10530,11 @@ main p, a, span {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #fff;
+}
+
+.about-image img {
+  width: 100%;
+  height: 100%;
 }
 
 .about-bottom-container {
@@ -10552,7 +10555,6 @@ main p, a, span {
 .about-images {
   width: 280px;
   height: 280px;
-  background: #fff;
   border-radius: 15px;
   display: flex;
   justify-content: center;
@@ -11082,8 +11084,6 @@ main p, a, span {
 }
 
 .about-image-container {
-  width: 400px;
-  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11486,7 +11486,11 @@ main p, a, span {
   display: none;
 }
 
-@media screen and (max-width: 600px) and (min-width: 325px) {
+@media screen and (max-width: 740px) and (min-width: 325px) {
+  main {
+    margin-top: 100px !important;
+  }
+
   .home-element {
     padding: 1rem;
     padding-bottom: 0;
@@ -11647,6 +11651,109 @@ main p, a, span {
 
   .modal-second-element-active {
     padding: 25px !important;
+  }
+
+  .ways-container {
+    flex-direction: column;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .ways-element {
+    width: 100%;
+  }
+
+  .contact-footer {
+    padding: 30px !important;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+
+  .contact-footer-image {
+    margin-bottom: 20px;
+  }
+
+  .contact-footer-text {
+    width: 100%;
+  }
+
+  .contact-footer-arrow {
+    margin-top: 20px;
+  }
+
+  .contact-form-container-active {
+    padding: 15px !important;
+  }
+
+  .contact-form-container-active .row {
+    margin: 0 auto;
+  }
+
+  .support-search-form {
+    width: 100% !important;
+  }
+
+  .support-bottom-row {
+    flex-direction: column;
+  }
+
+  .support-bottom-row a {
+    width: 100% !important;
+    margin: 0 !important;
+    margin-top: 15px !important;
+  }
+
+  .row-height-140 {
+    min-height: auto !important;
+    height: auto !important;
+  }
+
+  .support-faq {
+    flex-direction: column;
+  }
+
+  .faq-left {
+    width: 100% !important;
+  }
+
+  .faq-right {
+    width: 100% !important;
+  }
+
+  .about-first-element {
+    padding: 0 !important;
+    width: 100%;
+  }
+
+  .about-elements {
+    padding: 0 !important;
+  }
+
+  .about-first-element p {
+    padding: 20px !important;
+  }
+
+  .about-element-text {
+    padding: 30px !important;
+    width: 100% !important;
+  }
+
+  .shop-categories-container {
+    padding: 30px !important;
+    flex-direction: column;
+  }
+
+  .how-first-element {
+    padding: 0 !important;
+  }
+
+  .how-first-element .flex-row {
+    flex-direction: column !important;
+  }
+
+  .how-sustainability {
+    padding: 30px !important;
+    height: auto !important;
   }
 }
 .top-text-shadow {
@@ -12482,7 +12589,7 @@ header {
 .hovers-header {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: end;
   width: 300px;
 }
 
@@ -12701,31 +12808,45 @@ header {
   flex-grow: unset;
 }
 
-@media screen and (max-width: 600px) and (min-width: 325px) {
+@media screen and (max-width: 740px) and (min-width: 325px) {
   .header-container {
     padding: 0.375rem;
     padding-top: 0;
-    flex-direction: column-reverse;
-    align-items: center;
     height: auto;
   }
 
   .right-header {
     align-items: center;
-    width: 100vw;
+    width: 30%;
   }
 
   .logo-header-container img {
     width: 100%;
+    padding: 10px;
   }
 
   .left-header {
-    width: 80%;
+    width: 70%;
   }
 
   header {
-    width: auto;
+    width: 100vw;
     max-width: 100vw;
+  }
+
+  #user-hover-link .img {
+    height: 40px;
+    min-height: 40px;
+    background-size: 30px;
+  }
+
+  .hovers-header {
+    width: auto;
+  }
+
+  .hover-link {
+    width: 50px;
+    height: 50px;
   }
 
   .urls-header {
@@ -13144,8 +13265,8 @@ h3, h4, h5 {
 }
 
 .row-height-140 {
-  height: 140px !important;
-  min-height: 140px !important;
+  height: 140px;
+  min-height: 140px;
 }
 
 .pc-15-50 {
