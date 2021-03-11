@@ -338,6 +338,12 @@ function loadResults(results){
                 remove_action.innerHTML = "&#10005;";
                 remove_action.onclick = function(){removeFromScanned(item.id)};
 
+                let info = document.createElement("input");
+                info.id = 'info-'+item.id;
+                info.type = 'hidden';
+                info.value = JSON.stringify(item);
+                row.appendChild(info);
+
                 remove_div.appendChild(remove_action);
                 td_remove.appendChild(remove_div);
 
@@ -370,7 +376,59 @@ function loadResults(results){
 
 function removeFromScanned(id){
     let element = document.getElementById(id);
+    let iteminfoelem = document.getElementById('info-'+id);
+    let iteminfo = JSON.parse(iteminfoelem.value);
     element.parentNode.removeChild(element);
+
+    let table = document.getElementById('tradeins-table').childNodes[1];
+
+    let row = document.createElement('tr');
+    row.id = 'tradein-'+iteminfo.id;
+
+    let td_id = document.createElement('td');
+    let id_div = document.createElement('div');
+    id_div.classList.add('table-element');
+    id_div.innerHTML = iteminfo.barcode_original;
+    td_id.appendChild(id_div);
+
+    let td_barcode = document.createElement('td');
+    let barcode_div = document.createElement('div');
+    barcode_div.classList.add('table-element');
+    barcode_div.innerHTML = iteminfo.barcode;
+    td_barcode.appendChild(barcode_div);
+
+    let td_orderdate = document.createElement('td');
+    let orderdate_div = document.createElement('div');
+    orderdate_div.classList.add('table-element');
+    orderdate_div.innerHTML = iteminfo.order_date;
+    td_orderdate.appendChild(orderdate_div);
+
+    let td_product = document.createElement('td');
+    let product_div = document.createElement('div');
+    product_div.classList.add('table-element');
+    product_div.innerHTML = iteminfo.product;
+    td_product.appendChild(product_div);
+
+    let td_price = document.createElement('td');
+    let price_div = document.createElement('div');
+    price_div.classList.add('table-element');
+    price_div.innerHTML = iteminfo.device_price;
+    td_price.appendChild(price_div);
+
+    let td_location = document.createElement('td');
+    let location_div = document.createElement('div');
+    location_div.classList.add('table-element');
+    location_div.innerHTML = iteminfo.stock_location;
+    td_location.appendChild(location_div);
+
+    row.appendChild(td_id);
+    row.appendChild(td_barcode);
+    row.appendChild(td_orderdate);
+    row.appendChild(td_product);
+    row.appendChild(td_price);
+    row.appendChild(td_location);
+
+    table.appendChild(row);
     checkSubmit();
 }
 

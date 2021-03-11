@@ -174,6 +174,9 @@ class PaymentsController extends Controller
                         foreach($tradeins as $tradein){
                             $tradein->product = $tradein->getProductName($tradein->id);
                             $tradein->stock_location = $tradein->getTrayName($tradein->id);
+                            $tradein->order_date = $tradein->getOrderDate();
+                            $tradein->device_price = $tradein->getDevicePrice();
+                            $tradein->stock_location = $tradein->getTrayName($tradein->id);
                         }
                     } else {
                         array_push($error_msg, 'No matching devices for scanned trolley name.');
@@ -196,6 +199,9 @@ class PaymentsController extends Controller
                     if($tradeins->count() > 0){
                         foreach($tradeins as $tradein){
                             $tradein->product = $tradein->getProductName($tradein->id);
+                            $tradein->stock_location = $tradein->getTrayName($tradein->id);
+                            $tradein->order_date = $tradein->getOrderDate();
+                            $tradein->device_price = $tradein->getDevicePrice();
                             $tradein->stock_location = $tradein->getTrayName($tradein->id);
                         }
                     } else {
@@ -220,6 +226,9 @@ class PaymentsController extends Controller
                         foreach($tradeins_results as $tradein){
                             if(!$tradein->isInQuarantine()){
                                 $tradein->product = $tradein->getProductName($tradein->id);
+                                $tradein->stock_location = $tradein->getTrayName($tradein->id);
+                                $tradein->order_date = $tradein->getOrderDate();
+                                $tradein->device_price = $tradein->getDevicePrice();
                                 $tradein->stock_location = $tradein->getTrayName($tradein->id);
                                 $tradeins->push($tradein);
                             } else {
