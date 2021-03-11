@@ -226,7 +226,8 @@ class Tradein extends Model
     }
 
     public function isBlacklisted(){
-        if($this->job_state === '7'){
+        $blacklisted = ["7", "8a", "8b", "8c", "8d", "8e", "8f"];
+        if(in_array($this->job_state, $blacklisted)){
             return true;
         }
         return false;
