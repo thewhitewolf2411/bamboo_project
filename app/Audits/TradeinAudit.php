@@ -43,7 +43,8 @@ class TradeinAudit extends Model
     public function getUser(){
         $user = User::find($this->user_id);
         if($user->type_of_user < 1){
-            return 'Customer';
+            //return 'Customer';
+            return $user->fullName();
         } else {
             return $user->fullName();
         }
