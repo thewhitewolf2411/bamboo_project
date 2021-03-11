@@ -530,8 +530,8 @@
                         @foreach($audits as $audit)
                         <tr>
                             <td><div class="table-element">{{$audit->created_at->format('d/m/Y H:i')}}</div></td>
-                            <td><div class="table-element text-center">{{$audit->tradein_barcode}}</div></td>
                             <td><div class="table-element text-center">{{$audit->tradein_barcode_original}}</div></td>
+                            <td><div class="table-element text-center">{{$audit->tradein_barcode}}</div></td>
                             <td><div class="table-element text-center">{{$audit->getProduct()}}</div></td>
                             <td><div class="table-element text-center">{{$audit->getUser()}}</div></td>
                             <td><div class="table-element text-center">{{$audit->customer_status}}</div></td>
