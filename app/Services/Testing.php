@@ -434,8 +434,6 @@ class Testing{
             if($tradein->cosmetic_condition === null){
                 $tradein->cosmetic_condition = $request->cosmetic_condition;
             }
-
-            $tradein->save();
     
             $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;
             $quarantineTrays->save();
@@ -452,6 +450,7 @@ class Testing{
             $traycontent->tray_id = $quarantineTrays->id;
             $traycontent->trade_in_id = $tradein->id;
             $traycontent->save();
+            $tradein->save();
     
             $quarantineName = $quarantineTrays->tray_name;
     
