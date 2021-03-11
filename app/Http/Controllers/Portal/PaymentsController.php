@@ -468,6 +468,12 @@ class PaymentsController extends Controller
                 $devices = $devices_by_reference;
             }
 
+            $devices = $devices->filter(function($dev){
+                if($dev->payment_state === null){
+                    return $dev;
+                }
+            });
+
         } else {
             $payment_batches = PaymentBatch::where(function($query){
                 $query->where("exported", true)->orWhere('batch_type', 3);
