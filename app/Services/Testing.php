@@ -216,7 +216,7 @@ class Testing{
                     }
                     else{
                         if($request->water_damage === 'true'){
-                            $tradein->cosmetic_condition = 'DOWN';
+                            $tradein->cosmetic_condition = $request->cosmetic_condition;
                             $tradein->job_state = '15h';
                         }
                         else if($request->device_fully_functional !== 'true'){
@@ -407,7 +407,7 @@ class Testing{
                     else{
                         if($request->water_damage === 'true'){
                             $tradein->job_state = '11h';
-                            $tradein->cosmetic_condition = 'DOWN';
+                            $tradein->cosmetic_condition = $request->cosmetic_condition;
                             $klaviyomail = new KlaviyoEmail();
                             $klaviyomail->wrongDevice($user, $tradein);
                         }

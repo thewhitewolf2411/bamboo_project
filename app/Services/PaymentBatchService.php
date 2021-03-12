@@ -134,21 +134,21 @@ class PaymentBatchService {
                 // }
                 
                 $payment_row = 
-                    "1,,,,,,,,".
+                    ",,,01,,,,,,,,,".
                     env('BAMBOO_ACCOUNT_NUMBER').
-                    ",,,".
+                    ",,,,".
                     $tradein->getDevicePrice().
-                    ",".
+                    ",,".
                     Carbon::parse($payment_batch->arrive_at)->format('dmY').
-                    ",,,,,".
+                    ",,,,,,".
                     $account_identifier.
-                    ",,,,,".
+                    ",,,,,,".
                     $account_number.
-                    ",".
-                    $beneficiary_name." ".$user->billing_address.
-                    ",,,".
+                    ",,".
+                    '"'.$beneficiary_name.'"'. //" ".$user->billing_address.
+                    ",,,,".
                     "INVOICE " . $tradein->barcode.
-                    ",";
+                    ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,";
                 
                 array_push($payment_rows, $payment_row);
             }
@@ -157,7 +157,7 @@ class PaymentBatchService {
             $payment_batch->save();
 
             $path = storage_path().'/app/public/exports/batches';
-            $filename = '/batch_export_'.$payment_batch->reference.'_'.time().'.csv';
+            $filename = '/batch_export_'.$payment_batch->reference.'_'.time().'.txt';
     
             if(!is_dir($path)){
                 mkdir($path, 0777, true);

@@ -15324,6 +15324,10 @@ input[type=number] {
   color: #155724;
 }
 
+.table-element > input {
+  min-width: 20px !important;
+}
+
 .scanning-items-table {
   display: flex;
   flex-wrap: nowrap;

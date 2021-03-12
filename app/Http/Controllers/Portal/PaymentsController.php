@@ -368,14 +368,15 @@ class PaymentsController extends Controller
                         $count++;
                     }
                 }
+                ob_start();
                 $csvdata = implode('', $items);
-                $file = fopen("export_batches.csv", 'w');
+                $file = fopen("export_batches.txt", 'w');
                 fwrite($file, $csvdata);
                 fclose($file);
                 ob_clean();
-                $file = "export_batches.csv";
+                $file = "export_batches.txt";
                 header('Content-Description: File Transfer');
-                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Type: text/csv');
                 header('Content-Disposition: attachment; filename='.basename($file));
                 header('Content-Transfer-Encoding: binary');
                 header('Expires: 0');
@@ -407,15 +408,15 @@ class PaymentsController extends Controller
                         $count++;
                     }
                 }
-
+                ob_start();
                 $csvdata = implode('', $items);
-                $file = fopen("export_batches.csv", 'w');
+                $file = fopen("export_batches.txt", 'w');
                 fwrite($file, $csvdata);
                 fclose($file);
                 ob_clean();
-                $file = "export_batches.csv";
+                $file = "export_batches.txt";
                 header('Content-Description: File Transfer');
-                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Type: text/csv');
                 header('Content-Disposition: attachment; filename='.basename($file));
                 header('Content-Transfer-Encoding: binary');
                 header('Expires: 0');

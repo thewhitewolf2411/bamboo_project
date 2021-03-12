@@ -627,3 +627,7 @@ input[type=number] {
     background-color: #d4edda !important;
     color: #155724;
 }
+
+.table-element > input{
+    min-width: 20px !important;
+}
