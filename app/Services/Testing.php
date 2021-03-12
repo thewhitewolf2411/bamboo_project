@@ -15,8 +15,15 @@ class Testing{
 
     public function testDevice(Request $request){
 
+        #dd($request->cosmetic_condition === 'Catastrophic');
+
         $tradein = Tradein::where('id', $request->tradein_id)->first();
-        $tradein->bamboo_grade = $request->bamboo_final_grade;
+        if($request->cosmetic_condition === 'Catastrophic'){
+            $tradein->bamboo_grade = 'Catastrophic';
+        }
+        else{
+            $tradein->bamboo_grade = $request->bamboo_final_grade;
+        }
         $product = SellingProduct::where('id', $tradein->product_id)->first();
         $user = User::where('id', $tradein->user_id)->first();
 
@@ -101,11 +108,12 @@ class Testing{
             $quarantineTrays = "";
             $quarantineName = "";
 
-            $bambooprice = null;
-            if($tradein->isInQuarantine()){
+            $bambooprice = 0;
+            if($tradein->isInQuarantine() || $request->cosmetic_condition === 'Catastrophic'){
                 $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'Q')->where('number_of_devices', "<" ,100)->first();
                 $quarantineName = $quarantineTrays->tray_name;
                 $tradein->quarantine_date = \Carbon\Carbon::now();
+                $tradein->job_state = '11i';
             }
             else{
                 $bambogradeval = $request->bamboo_customer_grade;
@@ -179,7 +187,7 @@ class Testing{
                                 $tradein->cosmetic_condition = 'NWSD';
                             }
                             if($request->cosmetic_condition === "Catastrophic"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'CAT')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'E')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'CAT';
                             }
                             break;
@@ -208,7 +216,7 @@ class Testing{
                     }
                     else{
                         if($request->water_damage === 'true'){
-                            $tradein->cosmetic_condition = 'DOWN';
+                            $tradein->cosmetic_condition = $request->cosmetic_condition;
                             $tradein->job_state = '15h';
                         }
                         else if($request->device_fully_functional !== 'true'){
@@ -279,11 +287,12 @@ class Testing{
             $quarantineTrays = "";
             $quarantineName = "";
 
-            $bambooprice = null;
-            if($tradein->isInQuarantine()){
+            $bambooprice = 0;
+            if($tradein->isInQuarantine() || $request->cosmetic_condition === 'Catastrophic'){
                 $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'Q')->where('number_of_devices', "<" ,100)->first();
                 $quarantineName = $quarantineTrays->tray_name;
                 $tradein->quarantine_date = \Carbon\Carbon::now();
+                $tradein->job_state = '11i';
             }
             else{
                 $bambogradeval = $request->bamboo_customer_grade;
@@ -359,7 +368,7 @@ class Testing{
                                 $tradein->cosmetic_condition = 'NWSD';
                             }
                             if($request->cosmetic_condition === "Catastrophic"){
-                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'CAT')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
+                                $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'E')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                                 $tradein->cosmetic_condition = 'CAT';
                             }
                             break;
@@ -398,7 +407,7 @@ class Testing{
                     else{
                         if($request->water_damage === 'true'){
                             $tradein->job_state = '11h';
-                            $tradein->cosmetic_condition = 'DOWN';
+                            $tradein->cosmetic_condition = $request->cosmetic_condition;
                             $klaviyomail = new KlaviyoEmail();
                             $klaviyomail->wrongDevice($user, $tradein);
                         }
@@ -425,8 +434,6 @@ class Testing{
             if($tradein->cosmetic_condition === null){
                 $tradein->cosmetic_condition = $request->cosmetic_condition;
             }
-
-            $tradein->save();
     
             $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;
             $quarantineTrays->save();
@@ -443,6 +450,7 @@ class Testing{
             $traycontent->tray_id = $quarantineTrays->id;
             $traycontent->trade_in_id = $tradein->id;
             $traycontent->save();
+            $tradein->save();
     
             $quarantineName = $quarantineTrays->tray_name;
     

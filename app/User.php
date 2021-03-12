@@ -110,7 +110,7 @@ class User extends Authenticatable
     }
 
     public function collectionAddress(){
-        return "<br>" . $this->billing_address . "<br>" . $this->delivery_address;
+        return "<br>" . $this->delivery_address;
     }
 
     public function postCode(){

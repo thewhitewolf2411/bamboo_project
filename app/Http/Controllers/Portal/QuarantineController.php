@@ -13,6 +13,7 @@ use DNS1D;
 use DNS2D;
 use PDF;
 use File;
+use Session;
 use App\Services\BinService;
 use App\Services\KlaviyoEmail;
 use App\User;
@@ -31,6 +32,7 @@ class QuarantineController extends Controller
     }
 
     public function showQuarantineOverviewPage(){
+
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
@@ -111,44 +113,43 @@ class QuarantineController extends Controller
 
     public function allocateToTray(Request $request){
         #dd($request->all());
-        $tradeinNumbers = $request->all();
+        
+        $tradeins = [];
 
-        #array_pop($tradeinNumbers);
-
-        $tradeins = array();
-
-        foreach($tradeinNumbers as $key=>$tiN){
-
-            $id = substr($key, strpos($key, "-") + 1);    
-
-            $tradein = Tradein::where('id', $id)->first();
-            if($tradein != null){
-                array_push($tradeins, $tradein);
+        if($request->submitscannedid_allocatetotray){
+            if(Session::has('allocateToTrays')){
+                $tradeins = Session::get('allocateToTrays');
             }
-
+            $tradein = Tradein::where('barcode', $request->submitscannedid_allocatetotray)->first();
+            array_push($tradeins, $tradein);
+        }
+        else{
+            Session::forget('allocateToTrays');
         }
 
-        $trays = Tray::all();
+        #dd($tradeins);
+        $request->session()->put('allocateToTrays', $tradeins);
 
-        return redirect()->back()->with(['hasAllocateToTrays'=>true, 'allocateToTrays'=>$tradeins, 'trays'=>$trays]);
+        $trays = Tray::where('tray_type', '!=', 'B')->where('tray_type', '!=', 'Bo')->get();
+
+        return redirect()->back()->with(['hasAllocateToTrays'=>true, 'trays'=>$trays]);
     }
 
     public function allocateConfirmedDevices(Request $request){
-        #dd($request->all());
-
         $tradeinNumbers = $request->all();
         array_shift($tradeinNumbers);
 
         $tradeinNumbers = array_values($tradeinNumbers);
 
+        $newTrayId = $tradeinNumbers[count($tradeinNumbers) - 1];
+
+        unset($tradeinNumbers[count($tradeinNumbers) - 1]);
+
         $response = array();
 
-        for($i=0; $i<count($tradeinNumbers); $i=$i+2){
-            #echo($i);
-            #echo(count($tradeinNumbers));
+        for($i=0; $i<count($tradeinNumbers); $i=$i+1){
 
             $tradeinId = $tradeinNumbers[$i];
-            $newTrayId = $tradeinNumbers[$i+1];
             #dd($newTrayId);
             $tradein = Tradein::where('id', $tradeinId)->first();
 
@@ -185,9 +186,7 @@ class QuarantineController extends Controller
 
                 $tradein->save();
             }
-            
         }
-
         
         if(empty($response)){
             return redirect()->back()->with(['success'=>'All devices have been succesfully reallocated to new trays.']);
@@ -199,43 +198,48 @@ class QuarantineController extends Controller
     }
 
     public function returnToCustomer(Request $request){
-        $tradeinNumbers = $request->all();
 
-        #array_pop($tradeinNumbers);
+        $tradeins = [];
 
-        $tradeins = array();
-
-        foreach($tradeinNumbers as $key=>$tiN){
-
-            $id = substr($key, strpos($key, "-") + 1);    
-
-            $tradein = Tradein::where('id', $id)->first();
-            if($tradein != null){
+        if($request->submitscannedid_returntocustomer){
+            if(Session::has('returnToCustomer')){
+                $tradeins = Session::get('returnToCustomer');
+            }
+            $tradein = Tradein::where('barcode', $request->submitscannedid_returntocustomer)->first();
+            if($tradein !== null){
                 array_push($tradeins, $tradein);
             }
-
+        }
+        else{
+            Session::forget('returnToCustomer');
         }
 
-        return redirect()->back()->with(['hasTradeIns'=>true, 'returnToCustomer'=>$tradeins]);
+        $request->session()->put('returnToCustomer', $tradeins);
+
+        return redirect()->back()->with(['hasTradeIns'=>true]);
     }
 
 
     public function markDevicesToReturnToCustomer(Request $request){
+
         $tradeinNumbers = $request->all();
 
-        #array_pop($tradeinNumbers);
+        $tradeinNumbers = array_values($tradeinNumbers);
+
+        unset($tradeinNumbers[0]);
 
         $tradeins = array();
 
         foreach($tradeinNumbers as $key=>$tiN){
 
-            $id = substr($key, strpos($key, "-") + 1);    
-
-            $tradein = Tradein::where('id', $id)->first();
+            $tradein = Tradein::where('id', $tiN)->first();
 
             if($tradein != null){
                 $tradein->job_state = '20';
                 $tradein->save();
+
+                $traycontent = TrayContent::where('trade_in_id', $tiN)->first();
+                $traycontent->delete();
             }
         }
 

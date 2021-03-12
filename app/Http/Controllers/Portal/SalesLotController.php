@@ -259,7 +259,22 @@ class SalesLotController extends Controller
 
     public function sellLot(Request $request){
 
-        dd($request->all());
+        #dd($request->all());
+
+        $saleLot = SalesLot::where('id', $request->salelot_number)->first();
+
+        if(intval($saleLot->sales_lot_status) === 1){
+            $saleLot->sales_lot_status = 2;
+            $saleLot->sold_to = $request->clients;
+            $saleLot->sold_value = $request->sold_for_input;
+            $saleLot->date_sold = \Carbon\Carbon::now();
+    
+            $saleLot->save();
+    
+            return redirect()->back()->with(['success'=>'You succesfully sold the lot.']);
+        }
+
+        return redirect()->back()->with(['error'=>'fail']);
 
     }
 
@@ -284,10 +299,15 @@ class SalesLotController extends Controller
     public function markLotPaymentRecieved(Request $request){
         if(isset($request->lot_id)){
             $salesLot = SalesLot::find($request->lot_id);
-            if($salesLot){
+            if($salesLot && intval($salesLot->sales_lot_status) !== 3){
                 $salesLot->sales_lot_status = 4;
                 $salesLot->save();
                 return response(['success' => 200]);
+            }
+            else{
+                if(intval($salesLot->sales_lot_status) !== 3){
+                    return response(['lot not picked'=>404]);
+                }
             }
         }
         return response(['fail' => 404]);

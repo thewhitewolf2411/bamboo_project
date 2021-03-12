@@ -98,8 +98,8 @@ class PaymentBatchService {
                 $account_number = null;
                 $beneficiary_name = null;
                 if(!$billing_info){
-                    $account_identifier = "000000";
-                    $account_number = "00000000";
+                    $account_identifier = "0";
+                    $account_number = "0";
                     $beneficiary_name = $user->fullName();
                 } else {
                     try {
@@ -145,7 +145,7 @@ class PaymentBatchService {
                     ",,,,,,".
                     $account_number.
                     ",,".
-                    '"'.$beneficiary_name.'"'.
+                    '"'.$beneficiary_name.'"'. //" ".$user->billing_address.
                     ",,,,".
                     "INVOICE " . $tradein->barcode.
                     ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,";
@@ -157,7 +157,7 @@ class PaymentBatchService {
             $payment_batch->save();
 
             $path = storage_path().'/app/public/exports/batches';
-            $filename = '/batch_export_'.$payment_batch->reference.'_'.time().'.csv';
+            $filename = '/batch_export_'.$payment_batch->reference.'_'.time().'.txt';
     
             if(!is_dir($path)){
                 mkdir($path, 0777, true);

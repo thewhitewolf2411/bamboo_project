@@ -40,6 +40,7 @@ class CreateTradeinTable extends Migration
             $table->bigInteger('cheque_number')->nullable(true)->default(null);
             $table->string('tracking_reference')->nullable(true)->default(null);
             $table->date('expiry_date');
+            $table->datetime('location_changed_at')->default(now());
             $table->float('carriage_cost');
             $table->float('admin_cost');
             $table->timestamps();

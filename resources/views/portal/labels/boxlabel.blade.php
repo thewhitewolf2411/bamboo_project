@@ -1,6 +1,6 @@
 <style>
     @page{
-        margin:5%;
+        margin:1cm;
     }
 </style>
     

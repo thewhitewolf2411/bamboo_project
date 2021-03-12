@@ -27,11 +27,11 @@
             </tr>
             @foreach ($salesLots as $salesLot)
             <tr class="saleslotpicking" id="{{$salesLot->id}}">
-                <td><div class="table-element">{{$salesLot->id}}</div></td>
-                <td><div class="table-element">{{$salesLot->created_at}}</div></td>
-                <td><div class="table-element">{{$salesLot->sold_to}}</div></td>
-                <td><div class="table-element" id="saleslotstatus{{$salesLot->id}}" data-value="{{$salesLot->sales_lot_status}}">{{$salesLot->getStatus($salesLot->sales_lot_status)}}</div></td>
-                <td><div class="table-element">{{$salesLot->getSalesLotQuantity()}}</div></td>
+                <td>@if($salesLot->sales_lot_status === 2) <a href="/portal/warehouse-management/picking-despatch/pick-lot/{{$salesLot->id}}"> @endif<div class="table-element">{{$salesLot->id}}</div> @if($salesLot->sales_lot_status === 2) </a> @endif </td>
+                <td>@if($salesLot->sales_lot_status === 2) <a href="/portal/warehouse-management/picking-despatch/pick-lot/{{$salesLot->id}}"> @endif<div class="table-element">{{$salesLot->created_at}}</div> @if($salesLot->sales_lot_status === 2) </a> @endif </td>
+                <td>@if($salesLot->sales_lot_status === 2) <a href="/portal/warehouse-management/picking-despatch/pick-lot/{{$salesLot->id}}"> @endif<div class="table-element">{{$salesLot->sold_to}}</div> @if($salesLot->sales_lot_status === 2) </a> @endif </td>
+                <td>@if($salesLot->sales_lot_status === 2) <a href="/portal/warehouse-management/picking-despatch/pick-lot/{{$salesLot->id}}"> @endif<div class="table-element" id="saleslotstatus{{$salesLot->id}}" data-value="{{$salesLot->sales_lot_status}}">{{$salesLot->getStatus($salesLot->sales_lot_status)}}</div> @if($salesLot->sales_lot_status === 2) </a> @endif </td>
+                <td>@if($salesLot->sales_lot_status === 2) <a href="/portal/warehouse-management/picking-despatch/pick-lot/{{$salesLot->id}}"> @endif<div class="table-element">{{$salesLot->getSalesLotQuantity()}}</div> @if($salesLot->sales_lot_status === 2) </a> @endif </td>
                 <td><div class="table-element"></div></td>
             </tr>
             @endforeach

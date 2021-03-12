@@ -169,7 +169,7 @@
         length.classList.remove("valid");
         length.classList.add("invalid");
     }
-    }
+}
 
     function showPassword(){
         var x = document.getElementById("psw");

@@ -50,8 +50,8 @@
                     <td><div class="table-element">Bay Location</div></td>
                     <td><div class="table-element">Box Quantity</div></td>
                     <td><div class="table-element">Units</div></td>
-                    <td><div class="table-element">Delete Bin</div></td>
-                    <td><div class="table-element">Print Bin Label</div></td>
+                    <td><div class="table-element">Delete Bay</div></td>
+                    <td><div class="table-element">Print Bay Label</div></td>
                 </tr>
                 @foreach ($bays as $bay)
                 <tr>

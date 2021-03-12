@@ -174,6 +174,9 @@ class PaymentsController extends Controller
                         foreach($tradeins as $tradein){
                             $tradein->product = $tradein->getProductName($tradein->id);
                             $tradein->stock_location = $tradein->getTrayName($tradein->id);
+                            $tradein->order_date = $tradein->getOrderDate();
+                            $tradein->device_price = $tradein->getDevicePrice();
+                            $tradein->stock_location = $tradein->getTrayName($tradein->id);
                         }
                     } else {
                         array_push($error_msg, 'No matching devices for scanned trolley name.');
@@ -196,6 +199,9 @@ class PaymentsController extends Controller
                     if($tradeins->count() > 0){
                         foreach($tradeins as $tradein){
                             $tradein->product = $tradein->getProductName($tradein->id);
+                            $tradein->stock_location = $tradein->getTrayName($tradein->id);
+                            $tradein->order_date = $tradein->getOrderDate();
+                            $tradein->device_price = $tradein->getDevicePrice();
                             $tradein->stock_location = $tradein->getTrayName($tradein->id);
                         }
                     } else {
@@ -220,6 +226,9 @@ class PaymentsController extends Controller
                         foreach($tradeins_results as $tradein){
                             if(!$tradein->isInQuarantine()){
                                 $tradein->product = $tradein->getProductName($tradein->id);
+                                $tradein->stock_location = $tradein->getTrayName($tradein->id);
+                                $tradein->order_date = $tradein->getOrderDate();
+                                $tradein->device_price = $tradein->getDevicePrice();
                                 $tradein->stock_location = $tradein->getTrayName($tradein->id);
                                 $tradeins->push($tradein);
                             } else {
@@ -359,14 +368,15 @@ class PaymentsController extends Controller
                         $count++;
                     }
                 }
+                ob_start();
                 $csvdata = implode('', $items);
-                $file = fopen("export_batches.csv", 'w');
+                $file = fopen("export_batches.txt", 'w');
                 fwrite($file, $csvdata);
                 fclose($file);
                 ob_clean();
-                $file = "export_batches.csv";
+                $file = "export_batches.txt";
                 header('Content-Description: File Transfer');
-                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Type: text/csv');
                 header('Content-Disposition: attachment; filename='.basename($file));
                 header('Content-Transfer-Encoding: binary');
                 header('Expires: 0');
@@ -398,15 +408,15 @@ class PaymentsController extends Controller
                         $count++;
                     }
                 }
-
+                ob_start();
                 $csvdata = implode('', $items);
-                $file = fopen("export_batches.csv", 'w');
+                $file = fopen("export_batches.txt", 'w');
                 fwrite($file, $csvdata);
                 fclose($file);
                 ob_clean();
-                $file = "export_batches.csv";
+                $file = "export_batches.txt";
                 header('Content-Description: File Transfer');
-                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Type: text/csv');
                 header('Content-Disposition: attachment; filename='.basename($file));
                 header('Content-Transfer-Encoding: binary');
                 header('Expires: 0');
@@ -458,6 +468,12 @@ class PaymentsController extends Controller
             } else {
                 $devices = $devices_by_reference;
             }
+
+            $devices = $devices->filter(function($dev){
+                if($dev->payment_state === null){
+                    return $dev;
+                }
+            });
 
         } else {
             $payment_batches = PaymentBatch::where(function($query){

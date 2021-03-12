@@ -326,7 +326,7 @@ Route::get('/portal/settings/delivery-options','Portal\SettingsController@showSe
 Route::get('/portal/settings/checkout-options','Portal\SettingsController@showSettingsCheckoutOptionsPage');
 Route::get('/portal/settings/promotional-codes','Portal\SettingsController@showSettingsPromotionalCodesPage');
 Route::get('/portal/settings/brands','Portal\SettingsController@showSettingsBrandsPage');
-Route::get('/portal/brands/edit/{id?}', 'Portal\SettingsController@showAddBrandsView');
+Route::get('/portal/brands/edit/{id?}', 'Portal\SettingsController@showEditBrandsView');
 Route::post('portal/brands/editbrabnd', 'Portal\SettingsController@editBrand');
 Route::get('/portal/settings/barcode-id','Portal\SettingsController@showSettingsBarcodeIdPage');
 

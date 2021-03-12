@@ -37,7 +37,8 @@ class Tradein extends Model
         'user_id', 'barcode','barcode_original','product_id', 'correct_product_id','customer_grade',
         'bamboo_grade', 'job_state', 'order_price','bamboo_price','customer_memory','customer_network',
         'correct_memory','correct_network', 'product_colour', 'missing_image', 'imei_number', 'serial_number',
-        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 'expiry_date'
+        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 
+        'expiry_date', 'location_changed_at'
     ];
 
 
@@ -227,7 +228,8 @@ class Tradein extends Model
     }
 
     public function isBlacklisted(){
-        if($this->job_state === '7'){
+        $blacklisted = ["7", "8a", "8b", "8c", "8d", "8e", "8f"];
+        if(in_array($this->job_state, $blacklisted)){
             return true;
         }
         return false;
@@ -246,6 +248,10 @@ class Tradein extends Model
             return true;
         }
         return false;
+    }
+
+    public function getTestingQuarantineReason(){
+        return $this->getDeviceStatus()[0];
     }
 
     public function hasDeviceBeenReceived(){
@@ -401,7 +407,7 @@ class Tradein extends Model
         $states = [
             /*0*/   [],
             /*1*/   ['Awaiting trade pack','Order Placed'],     // old - ['Order Request received','Order Placed']
-            /*2*/   ['Awaiting Receipt/Customer Sent','Trade Pack Despatched'],
+            /*2*/   ['Awaiting Receipt','Trade Pack Despatched'],
             /*3*/   ['Awaiting Receipt','Trade Pack Despatched'],
             /*4*/   ['Lost in transit','Lost in transit'],
             /*5*/   ['Never Received','Expired'],
@@ -414,10 +420,10 @@ class Tradein extends Model
             /*8e*/  ['Knox','Awaiting Response'],
             /*8f*/  ['Assetwatch','Awaiting Response'],
             /*9*/   ['Awaiting Testing','Trade Pack Received'],    // old - ['Awaiting Testing','Awaiting Testing']
-            /*10*/  ['Device has passed testing','Testing'],
+            /*10*/  ['Test Complete','Testing'],
             /* First Test results */
             /*11*/  ['Quarantine','Awaiting Response'],
-            /*11a*/  ['FMIP','Awaiting Response'],
+            /*11a*/  ['FMIP Lock','Awaiting Response'],
             /*11b*/  ['Google Lock','Awaiting Response'],
             /*11c*/  ['PIN Lock','Awaiting Response'],
             /*11d*/  ['Incorrect Model','Awaiting Response'],
@@ -426,13 +432,13 @@ class Tradein extends Model
             /*11g*/  ['Incorrect Network','Awaiting Response'],
             /*11h*/  ['Signs of water damage','Awaiting Response'],
             /*11i*/  ['Downgrade','Awaiting Response'],
-            /*11j*/  ['Older than 14 days','Awaiting Response'],
-            /*12*/  ['Device has passed testing','Testing'],
-            /*13*/  ['Device was requested for retest','Awaiting Testing'],
-            /*14*/  ['Awaiting 2nd Test','Awaiting Testing'],
+            /*11j*/  ['Order not valid ','Awaiting Response'],
+            /*12*/  ['Test complete','Testing'],
+            /*13*/  ['Awaiting retesting','Device marked for retest'],
+            /*14*/  ['Awaiting retesting','Device marked for retest'],
             /* Second Test results */
             /*15*/  ['2nd Test Quarantine','Awaiting Response'],
-            /*15a*/  ['FMIP','Awaiting Response'],
+            /*15a*/  ['FMIP Lock','Awaiting Response'],
             /*15b*/  ['Google Lock','Awaiting Response'],
             /*15c*/  ['PIN Lock','Awaiting Response'],
             /*15d*/  ['Incorrect Model','Awaiting Response'],
@@ -441,12 +447,12 @@ class Tradein extends Model
             /*15g*/  ['Incorrect Network','Awaiting Response'],
             /*15h*/  ['Signs of water damage','Awaiting Response'],
             /*15i*/  ['Downgraded','Awaiting Response'],
-            /*15j*/  ['Older than 14 days','Awaiting Response'],
-            /*16*/  ['Device has passed 2nd testing','Testing'],
-            /*17*/  ['Device marked for destruction','Order expired'],
+            /*15j*/  ['Order not valid','Awaiting Response'],
+            /*16*/  ['2nd test complete','Testing'],
+            /*17*/  ['Blacklisted','Order expired'],
             /*18*/  ['Device destroyed','Order expired'],
-            /*19*/  ['Device requested by customer','Returning Device'],
-            /*20*/  ['Device marked to return to customer','Returning Device'],
+            /*19*/  ['Return to customer','Returning Device'],
+            /*20*/  ['Return to customer','Returning Device'],
             /*21*/  ['Despatched to customer','Returning Device'],
             /*22*/  ['Awaiting Box build','Awaiting payment'],
             /*23*/  ['Awaiting Box build','Submitted for payment'],
@@ -584,11 +590,22 @@ class Tradein extends Model
     }
 
     public function getBambooStatus(){
-        $matches = ["8a", "8b", "8c", "8d", "8e", "8f"];
+        $blacklisted = ["8a", "8b", "8c", "8d", "8e", "8f"];
 
-        if(in_array($this->job_state, $matches)){
+        if(in_array($this->job_state, $blacklisted)){
             return "Blacklisted";
         }
+
+        $received = [""];
+        if(in_array($this->job_state, $received)){
+            return "Awaiting testing";
+        }
+
+        $tested = ['11a', '11b', '11c', '11d', '11e', '11f', '11g', '11h', '11i', '11j'];
+        if(in_array($this->job_state, $tested)){
+            return "Test Complete";
+        }
+
         return $this->getDeviceStatus()[0];
     }
 
@@ -840,6 +857,7 @@ class Tradein extends Model
     }
 
     public function isDowngraded(){
+        dd('oops tradein 841');
         if($this->customer_grate !== $this->bamboo_grade){
             return true;
         }

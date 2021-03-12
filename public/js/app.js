@@ -55057,6 +55057,71 @@ function markOrderAsSent(trade_out_id) {
   $('#mark_as_complete_trade_out_trigger').click();
 }
 
+$(document).ready(function () {
+  if ($('#trade-pack-table')) {
+    $('#trade-pack-table tfoot td:not(:last-child)').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    var tradepacktable = $('#trade-pack-table').DataTable(); // Apply the search
+
+    tradepacktable.columns().every(function () {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+        if (that.search() !== this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
+  }
+
+  if ($('#trade-in-table')) {
+    $('#trade-in-table tfoot td:not(:last-child)').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    $('#trade-in-table tfoot td:last-child').each(function () {
+      $(this).html('');
+    });
+    var tradeintable = $('#trade-in-table').DataTable(); // Apply the search
+
+    tradeintable.columns().every(function () {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+        if (that.search() !== this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
+  }
+
+  if ($('#order-management-table')) {
+    $('#order-management-table tfoot td:not(:last-child)').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    $('#order-management-table tfoot td:last-child').each(function () {
+      $(this).html('');
+    });
+    $('#order-management-table tfoot td:nth-child(12)').each(function () {
+      $(this).html('');
+    });
+    $('#order-management-table tfoot td:nth-child(13)').each(function () {
+      $(this).html('');
+    });
+    var ordermanagementtable = $('#order-management-table').DataTable(); // Apply the search
+
+    ordermanagementtable.columns().every(function () {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+        if (that.search() !== this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
+  }
+});
+
 /***/ }),
 
 /***/ "./resources/js/scripts/Reports.js":
@@ -55311,6 +55376,27 @@ $('#buildalot').on('click', function () {
     });
   }
 });
+$('#saleslotboxes-selectall').on('click', function () {
+  if (this.checked) {
+    $('.box-sales-lot').prop('checked', true);
+  } else {
+    $('.box-sales-lot').prop('checked', false);
+  }
+});
+$('#boxedtradeinstable-selectall').on('click', function () {
+  if (this.checked) {
+    $('.tradein-sales-lot').prop('checked', true);
+  } else {
+    $('.tradein-sales-lot').prop('checked', false);
+  }
+});
+$('#closedboxtable-selectall').on('click', function () {
+  if (this.checked) {
+    $('.box-sales-lot').prop('checked', true);
+  } else {
+    $('.box-sales-lot').prop('checked', false);
+  }
+});
 
 /***/ }),
 
@@ -55343,6 +55429,7 @@ $('#sell-lot-btn').on('click', function () {
   var selectedquantity = $('.saleslot-active td:nth-child(3) > div:nth-child(1)').html(); //console.log(selectedquantity);
 
   $('#salelot-action #salelot-number').html(selectedid);
+  $('#salelot-action #salelot-number-value').val(selectedid);
   $('#salelot-action #device-qty').html(selectedquantity);
 });
 $('#payment-received-btn').on('click', function () {
@@ -56057,8 +56144,8 @@ $('#completelot').on('click', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

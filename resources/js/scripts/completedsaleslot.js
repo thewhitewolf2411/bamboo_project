@@ -36,6 +36,7 @@ $('#sell-lot-btn').on('click', function(){
     //console.log(selectedquantity);
 
     $('#salelot-action #salelot-number').html(selectedid);
+    $('#salelot-action #salelot-number-value').val(selectedid);
     $('#salelot-action #device-qty').html(selectedquantity);
 
 });
