@@ -19,6 +19,8 @@
    <script src="{{ asset('js/Sort.js') }}"></script>
    <script src="{{ asset('js/Quarantine.js') }}"></script>
 
+   <title>Bamboo Portal</title>
+
 </head>
 
 <body class="portal-body">

@@ -22,8 +22,8 @@
                         <img src="{{asset('/customer_page_images/body/contact-images/image-1.svg')}}">
                     </div>
                 </a>
-            </div>
-            <div class="ways-element">
+            </div>-
+            {{--<div class="ways-element">
                 <a onclick="showContactForm('live')">
                     <div class="contact-div" id="contact-live">
                         <div class="center-title-container">
@@ -32,7 +32,7 @@
                         <img src="{{asset('/customer_page_images/body/contact-images/image-2.svg')}}">
                     </div>
                 </a>
-            </div>
+            </div>--}}
             <div class="ways-element">
                 <a onclick="showContactForm('telephone')">
                     <div class="contact-div" id="contact-telephone">
@@ -43,7 +43,7 @@
                     </div>
                 </a>
             </div>
-            <div class="ways-element">
+            {{--<div class="ways-element">
                 <a onclick="showContactForm('whatsapp')">
                     <div class="contact-div" id="contact-whatsapp">
                         <div class="center-title-container">
@@ -52,7 +52,7 @@
                         <img src="{{asset('/customer_page_images/body/contact-images/image-4.svg')}}">
                     </div>
                 </a>
-            </div>
+            </div>--}}
         </div>
         
     </div>
@@ -203,17 +203,17 @@
             contactbuttons[0].classList.remove('contact-div-hidden');
             contactforms[0].classList.add('contact-form-container-active');
             break;
-            case "live":
-            contactbuttons[1].classList.remove('contact-div-hidden');
-            contactforms[1].classList.add('contact-form-container-active');
+            //case "live":
+            //contactbuttons[1].classList.remove('contact-div-hidden');
+            //contactforms[1].classList.add('contact-form-container-active');
             break;
             case "telephone":
-            contactbuttons[2].classList.remove('contact-div-hidden');
+            contactbuttons[1].classList.remove('contact-div-hidden');
             contactforms[2].classList.add('contact-form-container-active');
             break;
-            case "whatsapp":
-            contactbuttons[3].classList.remove('contact-div-hidden');
-            contactforms[3].classList.add('contact-form-container-active');
+            //case "whatsapp":
+            //contactbuttons[3].classList.remove('contact-div-hidden');
+            //contactforms[3].classList.add('contact-form-container-active');
             break;
         }
 

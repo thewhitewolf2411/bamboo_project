@@ -51,12 +51,12 @@ class SellController extends Controller
     public function showSellView(){
 
         $products = BuyingProduct::all();
-        return view('sell.welcome')->with('products', $products);;
+        return view('sell.welcome')->with(['products'=>$products, 'recycleBasket'=>true]);
     }
 
     public function showSellWhy(){
         $products = BuyingProduct::all();
-        return view('sell.why')->with('products', $products);
+        return view('sell.why')->with(['products'=>$products, 'recycleBasket'=>true]);
     }
 
 
@@ -148,7 +148,7 @@ class SellController extends Controller
             array_push($pages, $i);
         }
 
-        return view('sell.shop')->with(['products' => $products, 'pages'=>$pages, 'currentpage'=>$page, 'category'=>$parameter])->with(['brands'=>$brands]);
+        return view('sell.shop', ['products' => $products, 'pages'=>$pages, 'currentpage'=>$page, 'category'=>$parameter, 'recycleBasket'=>true, 'brands'=>$brands]);
     }
 
     public function showSellItem($id){
@@ -159,7 +159,7 @@ class SellController extends Controller
         $productNetworks = ProductNetworks::where('product_id', $id)->get();
 
         $products = SellingProduct::all();
-        return view('sell.item')->with(['product'=>$product, 'products'=>$products, 'productInformation'=>$sellingProductInformation, 'networks'=>$productNetworks]);
+        return view('sell.item', ['product'=>$product, 'products'=>$products, 'productInformation'=>$sellingProductInformation, 'networks'=>$productNetworks, 'recycleBasket'=>true]);
 
     }
     

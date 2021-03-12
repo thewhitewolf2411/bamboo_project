@@ -27,7 +27,7 @@
                     </div>
                 </div>
 
-                <table class="portal-table sortable table-visible" id="boxedtradeinstable">
+                <table class="portal-table table-visible" id="boxedtradeinstable">
                     <tr>
                         <td><div class="table-element">Trade in Barcode numbers</div></td>
                         <td><div class="table-element">Box number</div></td>
@@ -38,7 +38,7 @@
                         <td><div class="table-element">Network</div></td>
                         <td><div class="table-element">Colour</div></td>
                         <td><div class="table-element">Cost</div></td>
-                        <td><div class="table-element">Checkbox</div></td>
+                        <td><div class="table-element"><input type="checkbox" id="boxedtradeinstable-selectall"></div></td>
                     </tr>
                     @foreach ($tradeins as $key=>$tradein)
                     <tr id="{{$tradein->id}}">
@@ -55,14 +55,14 @@
                     </tr>
                     @endforeach
                 </table>
-                <table class="portal-table sortable table-invisible" id="closedboxtable">
+                <table class="portal-table table-invisible" id="closedboxtable">
                     <tr>
                         <td><div class="table-element">Box number</div></td>
                         <td><div class="table-element">Grade</div></td>
                         <td><div class="table-element">Network</div></td>
                         <td><div class="table-element">Total QTY</div></td>
                         <td><div class="table-element">Total Cost</div></td>
-                        <td><div class="table-element">Checkbox</div></td>
+                        <td><div class="table-element"><input type="checkbox" id="closedboxtable-selectall"> </div></td>
                     </tr>
                     @foreach ($boxes as $box)
                     <tr id="{{$box->id}}">
@@ -89,14 +89,14 @@
                     </div>
                 </div>
 
-                <table class="portal-table sortable" id="saleslotboxes">
+                <table class="portal-table" id="saleslotboxes">
                     <tr>
                         <td><div class="table-element">Box number</div></td>
                         <td><div class="table-element">Grade</div></td>
                         <td><div class="table-element">Network</div></td>
                         <td><div class="table-element">Total QTY</div></td>
                         <td><div class="table-element">Total Cost</div></td>
-                        <td><div class="table-element">Checkbox</div></td>
+                        <td><div class="table-element"><input type="checkbox" id="saleslotboxes-selectall"></div></td>
                     </tr>
                 </table>
             </div>

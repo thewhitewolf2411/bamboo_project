@@ -23,7 +23,6 @@ class CreatePortalUsersTable extends Migration
             $table->boolean('device_testing')->default(false);
             $table->boolean('trolley_management')->default(false);
             $table->boolean('trays_managment')->default(false);
-            $table->boolean('box_management')->default(false);
             $table->boolean('quarantine_managment')->default(false);
             $table->boolean('warehouse_management')->default(false);
             $table->boolean('sales_lot')->default(false);
