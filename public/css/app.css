@@ -11946,6 +11946,7 @@ main p, a, span {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .personal-info-item {
@@ -12190,6 +12191,12 @@ main p, a, span {
   flex-direction: row;
 }
 
+@media (max-width: 992px) {
+  .sections-row {
+    width: 100%;
+    padding: 15px;
+  }
+}
 .sales-item {
   background: white;
   height: 60px;
