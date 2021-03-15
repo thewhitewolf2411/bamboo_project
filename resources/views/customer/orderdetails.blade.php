@@ -280,9 +280,9 @@
                                     <div class="collapse" id="collapseNotifications">
                                         <div class="notifications-list">
                                             @foreach($notifications as $notification)
-                                                <div class="notification-card @if($notification['state'] === 'alert') red-border @endif">
-                                                    @if($notification['state'] === 'alert')<img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">@endif
-                                                    {{$notification['text']}}
+                                                <div class="notification-card @if($notification->status === 'alert') red-border @endif">
+                                                    @if($notification->status === 'alert')<img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">@endif
+                                                    {{$notification->content}}
                                                 </div>
                                                 <div class="notification-card-border"></div>
                                             @endforeach
@@ -488,8 +488,8 @@
                                         @endif
 
                                         @if(!$tradein->stuckAtProcessing())
-
-                                            @if($tradein->notReceivedYet() && $tradein->job_state !== '1')
+                                        
+                                            @if($tradein->notReceivedYet())
 
                                                 <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
                                                     <div class="emoji-col">

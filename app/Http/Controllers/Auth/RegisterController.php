@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Auth;
 use Illuminate\Http\Request;
 use App\Services\KlaviyoEmail;
-
+use App\Services\NotificationService;
 use Crypt;
 
 class RegisterController extends Controller
@@ -82,8 +82,8 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $sub = 0;
-        if($data['sub'] === true){
-            $sub = 1;
+        if($data['sub'] === 'true'){
+            $sub = true;
         }
 
         $user = new User();
@@ -116,7 +116,11 @@ class RegisterController extends Controller
         $klaviyoEmail = new KlaviyoEmail();
         $klaviyoEmail->AccountCreated($user);
 
-
+        // send notification (register)
+        if($user->sub){
+            $notificationService = new NotificationService();
+            $notificationService->send($user, 1);
+        }
         return $user;
     }
 }

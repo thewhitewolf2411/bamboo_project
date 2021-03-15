@@ -101,9 +101,9 @@
                                     <div class="line-bottom"></div>
                                     <div class="notifications-list">
                                         @foreach($notifications as $notification)
-                                            <div class="notification-card @if($notification['state'] === 'alert') red-border @endif">
-                                                @if($notification['state'] === 'alert')<img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">@endif
-                                                {{$notification['text']}}
+                                            <div class="notification-card @if($notification->status === 'alert') red-border @endif">
+                                                @if($notification->status === 'alert')<img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">@endif
+                                                {{$notification->content}}
                                             </div>
                                             <div class="notification-card-border"></div>
                                         @endforeach
@@ -430,12 +430,10 @@
                                     <div class="line-bottom"></div>
                                     <div class="notifications-list">
                                         @foreach($notifications as $notification)
-                                            @if($notification['state'] === 'alert')
-                                                <div class="notification-card @if($notification['state'] === 'alert') red-border @endif">
-                                                    @if($notification['state'] === 'alert')<img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">@endif
-                                                    {{$notification['text']}}
-                                                </div>
-                                            @endif
+                                            <div class="notification-card @if($notification->status === 'alert') red-border @endif">
+                                                @if($notification->status === 'alert')<img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">@endif
+                                                {{$notification->content}}
+                                            </div>
                                         @endforeach
                                     </div>
                                 </div>

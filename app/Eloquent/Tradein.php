@@ -13,6 +13,7 @@ use App\Eloquent\Payment\UserBankDetails;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
 use App\Services\DespatchService;
+use App\Services\NotificationService;
 use App\User;
 use Carbon\Carbon;
 use DNS1D;
@@ -387,6 +388,13 @@ class Tradein extends Model
         return false;
     }
 
+    public function isBeingReceived(){
+        if(in_array($this->job_state, ['1', '2'])){
+            return true;
+        }
+        return false;
+    }
+
     public function stuckAtProcessing(){
         $matches = [
             '4', '5', '6', '7', 
@@ -743,12 +751,13 @@ class Tradein extends Model
     }
 
     public function notReceivedAfterSevenDays(){
-        $now = Carbon::now();
+        $now = Carbon::now()->addDays(7);
         $expires = Carbon::parse($this->expiry_date);
         $diff = $expires->diffInDays($now);
         //dd($diff, $diff >= 7 && $diff < 10, $now->format('d.m.Y'), $expires->format('d.m.Y'));
-
-        if($diff < 7 && $diff > 3){
+        if($diff <= 7 && $diff > 3){
+            $notificationService = new NotificationService();
+            $notificationService->sendNotReceivedYet($this);
             return true;
         }
         return false;
