@@ -443,7 +443,8 @@ Route::group(['prefix' => 'portal/despatch'], function(){
     Route::get('/despatchdevices', 'Portal\DespatchController@showDespatchDevices');
     Route::get('/archive', 'Portal\DespatchController@showArchive');
 
-    Route::post('/sendtodespatch', 'Portal\DespatchController@despatchDevices')->name('sendToDespatch');
+    Route::post('/requestdespatch', 'Portal\DespatchController@requestDespatch')->name('requestDespatch');
+    Route::post('/confirmdespatch', 'Portal\DespatchController@confirmDespatch')->name('confirmDespatch');
     Route::post('/exportdespatch', 'Portal\DespatchController@exportDevices')->name('exportDespatch');
 
     Route::get('/exportarchive', 'Portal\DespatchController@exportArchive');

@@ -83,17 +83,67 @@ class DespatchController extends Controller
     /**
      * Despatch devices to RM C&D.
      */
-    public function despatchDevices(Request $request){
+    public function requestDespatch(Request $request){
         if(isset($request->despatch_ids)){
-            $ids = $request->despatch_ids;
+            $ids = explode(",",$request->despatch_ids);
             $tradeins = Tradein::whereIn('id', $ids)->get();
 
             if($tradeins->count() > 0){
                 $despatchService = new DespatchService();
-                $result = $despatchService->despatchDevices($tradeins);
-                return response($result);
+                $result = $despatchService->requestDespatch($tradeins);
+
+                $messages = [];
+                if(!empty($result['error'])){
+                    $messages['error'] = $result['error'];
+                }
+                if(!empty($result['success'])){
+                    $messages['success'] = $result['success'];
+                }
+                if(!empty($result['info'])){
+                    $messages['info'] = $result['info'];
+                }
+                return redirect()->back()->with('messages', $messages);
             }
         }
+    }
+
+    public function confirmDespatch(Request $request){
+        $error = [];
+        $success = [];
+        if(isset($request->despatch_ids)){
+            
+            $ids = explode(',', $request->despatch_ids);
+            $tradeins = Tradein::whereIn('id', $ids)->get();
+
+            if($tradeins->count() > 0){
+                foreach($tradeins as $tradein){
+                    $despatchDevice = DespatchedDevice::where('tradein_id', $tradein->id)->first();
+                    if($tradein->job_state === '20' && $despatchDevice){
+                        if($tradein->tracking_reference !== null){
+                            $tradein->job_state = '21';
+                            $tradein->save();
+                            array_push($success, 'Tradein ' . $tradein->barcode . ' despatch confirmed succesfully.');
+                        } else {
+                            array_push($error, 'Tradein ' . $tradein->barcode . ' not manifested yet.');
+                        }
+
+                    } else {
+                        array_push($error, 'Tradein ' . $tradein->barcode . ' first needs to be requested for despatch.');
+                    }
+                }
+            }
+        } else {
+            $error = ['Selected devices were not manifested yet.'];
+        }
+        
+        $messages = [];
+        if(!empty($error)){
+            $messages['error'] = $error;
+        }
+        if(!empty($success)){
+            $messages['success'] = $success;
+        }
+        return redirect()->back()->with('messages', $messages);
     }
 
     /**
