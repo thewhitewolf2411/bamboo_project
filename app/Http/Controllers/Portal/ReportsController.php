@@ -100,19 +100,20 @@ class ReportsController extends Controller
         return response($file, 200);
     }
 
-    public function generateReceivingReport(){
+    public function generateReceivingReport(Request $request){
         $reports = new Reports();
 
-        $file = $reports->receivingReport();
+        $file = $reports->receivingReport($request);
         #dd($file);
 
         return response($file, 200);
     }
 
-    public function generateTestingReport(){
+    public function generateTestingReport(Request $request){
+
         $reports = new Reports();
 
-        $file = $reports->testingReport();
+        $file = $reports->testingReport($request);
 
         return response($file, 200);
     }

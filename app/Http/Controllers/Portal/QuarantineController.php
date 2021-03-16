@@ -17,6 +17,7 @@ use Session;
 use App\Services\BinService;
 use App\Services\KlaviyoEmail;
 use App\Services\MoveToTray;
+use App\Services\Testing;
 use App\User;
 
 class QuarantineController extends Controller
@@ -280,6 +281,10 @@ class QuarantineController extends Controller
         if($request->val === '8e'){
             $klaviyoemail = new KlaviyoEmail();
             $klaviyoemail->blacklisted($user, $tradein);
+
+            $testingClass = new Testing();
+            $bambooPrice = $testingClass->generateDevicePrice($tradein->product_id, $tradein->customer_memory, $tradein->customer_network, 1);
+            $tradein->bamboo_price = $bambooPrice;
 
             $tradein->quarantine_reason = "Knox";
         }

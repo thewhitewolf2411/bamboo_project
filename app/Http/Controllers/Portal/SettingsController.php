@@ -137,15 +137,16 @@ class SettingsController extends Controller
 
         $brand->brand_name = $request->brand_name;
 
-        if($request->brand_image){
+        if(isset($request->brand_image)){
             $filenameWithExt = $request->file('brand_image')->getClientOriginalName();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('brand_image')->getClientOriginalExtension();
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
             $path = $request->file('brand_image')->storeAs('public/brand_images',$fileNameToStore);
+            $brand->brand_image = $fileNameToStore;
         }
 
-        $brand->brand_image = $fileNameToStore;
+        
         $brand->save();
 
         return redirect('portal/settings/brands')->with('Success', 'You have succesfully edited manifacturer.');

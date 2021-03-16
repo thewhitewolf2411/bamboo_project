@@ -55154,24 +55154,6 @@ $('#generate-stock-report-btn').on('click', function () {
     }
   });
 });
-$('#generate-receiving-report-btn').on('click', function () {
-  $.ajax({
-    url: "/portal/reports/getreceivingreport",
-    type: "POST",
-    success: function success(response) {
-      window.open(response, "_blank");
-    }
-  });
-});
-$('#generate-testing-report-btn').on('click', function () {
-  $.ajax({
-    url: "/portal/reports/gettestingreport",
-    type: "POST",
-    success: function success(response) {
-      window.open(response, "_blank");
-    }
-  });
-});
 $('#generate-recycle-report-btn').on('click', function () {
   $.ajax({
     url: "/portal/reports/getrecyclecustomerreturnswreport",
@@ -55798,6 +55780,10 @@ $('#complete-box').on('click', function () {
       success: function success(response) {
         window.open(response);
         location.href = '/portal/warehouse-management/box-management/';
+      },
+      error: function error(response) {
+        console.log(response);
+        alert(response.responseText);
       }
     });
   }

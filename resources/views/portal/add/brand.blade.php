@@ -55,7 +55,7 @@
                             <div class="form-group select_brand_button">
                                 <div class="form-group">
                                     <label for="brand_image">Brand image:</label>
-                                    <input name="brand_image" type="file" accept="image/x-png,image/gif,image/jpeg" required>
+                                    <input name="brand_image" type="file" accept="image/x-png,image/gif,image/jpeg" @if(!isset($brand)) required @endif>
                                   </div>
                             </div>
 

@@ -9,14 +9,28 @@
         </div>
     </div>
     <div class="portal-table-container">
-
-        <a role="button" id="generate-testing-report-btn">
-
-            <div class="btn btn-primary btn-blue">
-                Generate Testing Report
-            </div>
-
-        </a>
+        <div class="row">
+            <form action="/portal/reports/gettestingreport" method="POST" class="col-md-12">
+                @csrf
+    
+                <div id="date-period-filter" class="col-md-12">
+                    <div class="col">
+                        <h5 class="text-center"> Choose date period:</h5>
+                    </div>
+                    <div class="d-flex w-50 m-auto">
+                        <div class="input-group mr-4">
+                            <input type="date" name="from"/>
+                        </div>
+                        <div class="input-group">
+                            <input type="date" name="to"/>
+                        </div>
+                    </div>
+                </div>
+        
+                <input type="submit" class="btn btn-primary btn-blue" value="Generate Testing Report">
+    
+            </form>
+        </div>
 
     </div>
 </div>

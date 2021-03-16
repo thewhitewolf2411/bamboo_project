@@ -530,12 +530,16 @@ main p, a, span{
 
 .sign-up form{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     padding: 50px;
 
     width: 80%;
+}
+
+.sign-up .terms-container{
+    width: auto;
 }
 
 .email-input{
