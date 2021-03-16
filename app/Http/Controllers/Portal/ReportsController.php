@@ -80,21 +80,21 @@ class ReportsController extends Controller
     }
 
 
-    public function generateOverviewReport(){
+    public function generateOverviewReport(Request $request){
         
         $reports = new Reports();
 
-        $file = $reports->overviewReport();
+        $file = $reports->overviewReport($request);
         #dd($file);
 
         return response($file, 200);
 
     }
 
-    public function generateStockReport(){
+    public function generateStockReport(Request $request){
         $reports = new Reports();
 
-        $file = $reports->stockReport();
+        $file = $reports->stockReport($request);
         #dd($file);
 
         return response($file, 200);

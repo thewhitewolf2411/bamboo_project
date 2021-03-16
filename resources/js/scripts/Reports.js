@@ -16,17 +16,6 @@ $('#generate-overview-report-btn').on('click', function(){
 
 });
 
-$('#generate-stock-report-btn').on('click', function(){
-
-    $.ajax({
-        url: "/portal/reports/getstockreport",
-        type:"POST",
-        success:function(response){
-            window.open(response, "_blank");
-        },
-    });
-
-});
 
 $('#generate-recycle-report-btn').on('click', function(){
 
