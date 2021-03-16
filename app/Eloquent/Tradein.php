@@ -752,7 +752,7 @@ class Tradein extends Model
     }
 
     public function notReceivedAfterSevenDays(){
-        $now = Carbon::now()->addDays(7);
+        $now = Carbon::now();
         $expires = Carbon::parse($this->expiry_date);
         $diff = $expires->diffInDays($now);
         //dd($diff, $diff >= 7 && $diff < 10, $now->format('d.m.Y'), $expires->format('d.m.Y'));
@@ -928,8 +928,6 @@ class Tradein extends Model
         return false;
     }
 
-    //public function 
-
     public function isManifested(){
         $despatched = DespatchedDevice::where('tradein_id', $this->id)->first();
         if($despatched){
@@ -941,5 +939,57 @@ class Tradein extends Model
             }
         }
         return false;
+    }
+
+    public function getBlacklistedIssue(){
+        switch ($this->job_state) {
+            case '8a':
+                return 'This device has been reported as stolen.';
+                break;
+            case '8b':
+                return 'Insurance claim.';
+                break;
+            case '8c':
+                return 'Blocked/FRP.';
+                break;
+            case '8d':
+                return 'Stolen.';
+                break;
+            case '8e':
+                return 'Device has KNOX disabled.';
+                break;
+            case '8f':
+                return 'Assetwatch.';
+                break;
+            default:
+                # code...
+                break;
+        }
+    }
+
+    public function getBlacklistedActionInfo(){
+        switch ($this->job_state) {
+            case '8a':
+                return 'Please get in touch.';
+                break;
+            case '8b':
+                return 'Please get in touch.';
+                break;
+            case '8c':
+                return 'Please get in touch.';
+                break;
+            case '8d':
+                return 'Please get in touch.';
+                break;
+            case '8e':
+                return 'Please get in touch.';
+                break;
+            case '8f':
+                return 'Please get in touch.';
+                break;
+            default:
+                # code...
+                break;
+        }
     }
 }

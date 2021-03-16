@@ -16,6 +16,7 @@ use File;
 use Session;
 use App\Services\BinService;
 use App\Services\KlaviyoEmail;
+use App\Services\NotificationService;
 use App\User;
 
 class QuarantineController extends Controller
@@ -292,6 +293,10 @@ class QuarantineController extends Controller
         $tradein->job_state = $request->val;
 
         $tradein->save();
+
+        // send notification - device blacklisted
+        $notificationService = new NotificationService();
+        $notificationService->sendBlacklisted($tradein);
 
         return 200;
     }

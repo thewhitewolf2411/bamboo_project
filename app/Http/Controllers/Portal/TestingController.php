@@ -25,6 +25,7 @@ use App\Eloquent\Colour;
 use App\Eloquent\TestingFaults;
 use App\Eloquent\ProductNetworks;
 use App\Services\KlaviyoEmail;
+use App\Services\NotificationService;
 use App\Services\Testing;
 
 
@@ -215,7 +216,10 @@ class TestingController extends Controller
             if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>1){
                 $mti = true;
             }
-    
+
+            // send notification - missing device
+            $notificationService = new NotificationService();
+            $notificationService->sendMissingDevice($tradein);
 
             return redirect('/portal/testing/result/' . $tradein->id);
         }
@@ -291,7 +295,7 @@ class TestingController extends Controller
                 $newPrice = "";
 
                 $testing = new Testing();
-                $newPrice = $testing->generateDevicePrice($tradein->id, $tradein->customer_memory, $tradein->customer_network, 1);
+                $newPrice = $testing->generateDevicePrice($tradein->product_id, $tradein->customer_memory, $tradein->customer_network, 1);
                 
                 $tradein->bamboo_price = $newPrice;
 
@@ -301,6 +305,10 @@ class TestingController extends Controller
             else{
                 $tradein->job_state = "9";
             }
+
+            // send notification - no imei
+            $notificationService = new NotificationService();
+            $notificationService->sendNoIMEI($tradein);
         }
         $tradein->save();
 

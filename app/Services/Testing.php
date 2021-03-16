@@ -453,6 +453,9 @@ class Testing{
             $tradein->save();
     
             $quarantineName = $quarantineTrays->tray_name;
+
+            // check for testing faults to send notification
+            //$this->checkNotification();
     
             return ['tray_name'=>$quarantineName, 'tray'=>$quarantineTrays];
         }
@@ -498,6 +501,13 @@ class Testing{
         return $price;
     }
 
+    public function checkNotification($tradein){
+        $is_pinlocked = false;
+        $fmip = false;
+        $glock = false;
+        $wrong_device = false;
+        $incorrect_gb = false;
+    }
 }
 
 

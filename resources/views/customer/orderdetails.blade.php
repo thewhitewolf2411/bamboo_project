@@ -57,7 +57,7 @@
                                     <div class="collapse" id="collapseSaleStatus">
                                         <p class="section-item-title-regular">Thanks for your sale! Check out the details below</p>
 
-                                        @if($tradein->job_state === '1' || $tradein->job_state === '2' )                                            
+                                        @if($tradein->job_state === '1' || $tradein->job_state === '2' || $tradein->job_state === '3')                                            
 
                                             @if($tradein->notReceivedYet())
 
@@ -220,27 +220,47 @@
                                         @endif
 
                                         @if($tradein->stuckAtProcessing())
-                                            <div class="sale-status-row justify-content-center">
-                                                <div class="sale-status-col">
-                                                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
-                                                    <p class="sale-status-text">Trade pack recieved</p>
-                                                </div>
-                                                <div class="sale-status-purple-line"></div>
-                                                <div class="sale-status-col">
-                                                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
-                                                    <p class="sale-status-text">Awaiting response</p>
-                                                </div>
-                                                <div class="sale-status-grey-line"></div>
-                                                <div class="sale-status-col">
-                                                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-                                                    <p class="sale-status-text">Submitted for payment</p>
-                                                </div>
-                                            </div>
 
-                                            <p class="sale-status-information text-center mt-4 mb-2">
-                                                Oh no! It looks like there is something holding up your sale.<br>
-                                                Please check processing section to help us resolve the issue and speed up your sale.
-                                            </p>
+                                            @if($tradein->job_state === '7')
+                                                <div class="sale-status-row justify-content-center">
+                                                    <div class="sale-status-col">
+                                                        <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
+                                                        <p class="sale-status-text">Trade pack recieved</p>
+                                                    </div>
+                                                    <div class="sale-status-purple-line"></div>
+                                                    <div class="sale-status-col">
+                                                        <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
+                                                        <p class="sale-status-text">Awaiting response</p>
+                                                    </div>
+                                                    <div class="sale-status-grey-line"></div>
+                                                    <div class="sale-status-col">
+                                                        <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
+                                                        <p class="sale-status-text">Submitted for payment</p>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <div class="sale-status-row justify-content-center">
+                                                    <div class="sale-status-col">
+                                                        <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
+                                                        <p class="sale-status-text">Trade pack recieved</p>
+                                                    </div>
+                                                    <div class="sale-status-purple-line"></div>
+                                                    <div class="sale-status-col">
+                                                        <img class="sale-status-img" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
+                                                        <p class="sale-status-text">Awaiting response</p>
+                                                    </div>
+                                                    <div class="sale-status-grey-line"></div>
+                                                    <div class="sale-status-col">
+                                                        <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
+                                                        <p class="sale-status-text">Submitted for payment</p>
+                                                    </div>
+                                                </div>
+
+                                                <p class="sale-status-information text-center mt-4 mb-2">
+                                                    Oh no! It looks like there is something holding up your sale.<br>
+                                                    Please check processing section to help us resolve the issue and speed up your sale.
+                                                </p>
+                                            @endif
 
                                         @endif
 
@@ -289,6 +309,28 @@
                                                 Oh no! It looks like there is something holding up your sale.<br>
                                                 Please check payment section to help us resolve the issue and speed up your sale.
                                             </p>
+                                        @endif
+
+                                        {{-- second testing --}}
+                                        @if($tradein->job_state === '14')
+                                            <div class="sale-status-row justify-content-center">
+                                                <div class="sale-status-col">
+                                                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
+                                                    <p class="sale-status-text">Trade Pack Received</p>
+                                                </div>
+                                                <div class="sale-status-purple-line"></div>
+                                                <div class="sale-status-col">
+                                                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
+                                                    <p class="sale-status-text">Testing</p>
+                                                </div>
+                                                <div class="sale-status-grey-line"></div>
+                                                <div class="sale-status-col">
+                                                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
+                                                    <p class="sale-status-text">Submitted for payment</p>
+                                                </div>
+                                            </div>
+
+                                            <p class="sale-status-information text-center mt-4 mb-2">Your order is awaiting second testing.</p>
                                         @endif
 
                                         @if(Session::has('success'))
@@ -455,24 +497,93 @@
                                                     </p>
                                                 </div>
                                             @endif
+
                                         @else
-                                        
+
                                             @if($tradein->stuckAtProcessing())
 
-                                                <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
-                                                    <div class="emoji-col">
-                                                        <img class="emoji-img" src="{{asset('/customer_page_images/body/emoji_confused.svg')}}">
-                                                        <p class="emoji-text">Uh-oh!</p>
+                                                {{-- waiting blacklisted reason --}}
+                                                @if($tradein->job_state === '7')
+                                                    <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
+                                                        <div class="emoji-col">
+                                                            <img class="emoji-img" src="{{asset('/customer_page_images/body/emoji_winking.svg')}}">
+                                                            <p class="emoji-text">Woohoo!</p>
+                                                        </div>
+                                                        <p class="emoji-info-text">
+                                                            We have received your device and it is currently being
+                                                            processed with our trusty team of bamboo’ers.
+                                                        </p>
                                                     </div>
-                                                    <p class="emoji-info-text">
-                                                        There is an issue whilst trying to process your order.
-                                                        <br>
-                                                        <br>
-                                                        See below for details.
-                                                    </p>
-                                                </div>
 
+                                                @else
+
+                                                    {{-- blacklisted info --}}
+                                                    <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
+                                                        <div class="emoji-col">
+                                                            <img class="emoji-img" src="{{asset('/customer_page_images/body/emoji_confused.svg')}}">
+                                                            <p class="emoji-text">Uh-oh!</p>
+                                                        </div>
+                                                        <p class="emoji-info-text">
+                                                            There is an issue whilst trying to process your order.
+                                                            <br>
+                                                            <br>
+                                                            See below for details.
+                                                        </p>
+                                                    </div>
+
+                                                    @if($tradein->isBlacklisted())
+                                                        <div class="process-error-item">
+                                                            <div class="col-5">
+                                                                <p class="process-error-item-label">Issue</p>
+                                                                <p class="process-error-item-bold">{!!$tradein->getBlacklistedIssue()!!}</p>
+                                                            </div>
+                                                            <div class="col">
+                                                                <p class="process-error-item-label">Action required</p>
+                                                                <p class="process-error-item-bold">{!!$tradein->getBlacklistedActionInfo()!!}</p>
+                                                            </div>
+                                                            <div class="col">
+                                                                <a href="#" class="btn btn-blue process-action-btn">
+                                                                    <p>Get in touch</p>
+                                                                    <img class="process-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+
+                                                @endif
+
+                                                {{-- no imei --}}
+                                                @if($tradein->job_state === '6')
+                                                    <div class="process-error-item">
+                                                        <div class="col">
+                                                            <p class="process-error-item-label">Issue</p>
+                                                            <p class="process-error-item-bold">No IMEI number</p>
+                                                        </div>
+                                                        <div class="col">
+                                                            <p class="process-error-item-label">Action required</p>
+                                                            <p class="process-error-item-bold">
+                                                                You have a new offer
+                                                                for your device.
+                                                            </p>
+                                                        </div>
+                                                        <div class="col">
+                                                            <p class="process-error-item-label">New Offer</p>
+                                                            {{-- <p class="process-new-offer-price">{!!$tradein->getIMEIDowngradeOffer()!!}</p> --}}
+                                                        </div>
+                                                        <div class="col">
+                                                            <a href="#" class="btn btn-orange process-action-btn">
+                                                                <p>Accept Offer</p>
+                                                                <img class="process-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                            </a>
+                                                            <a href="#" class="btn btn-jade process-action-btn">
+                                                                <p>Return my device</p>
+                                                                <img class="process-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                             
+                                                {{-- missing device --}}
                                                 @if($tradein->job_state === '4')
                                                     <div class="process-error-item">
                                                         <div class="col">
@@ -505,55 +616,11 @@
                                                     </div>
                                                 @endif
 
-                                                @if($tradein->job_state === '6')
-                                                    <div class="process-error-item">
-                                                        <div class="col">
-                                                            <p class="process-error-item-label">Issue</p>
-                                                            <p class="process-error-item-bold">No IMEI number</p>
-                                                        </div>
-                                                        <div class="col">
-                                                            <p class="process-error-item-label">Action required</p>
-                                                            <p class="process-error-item-bold">
-                                                                You have a new offer
-                                                                for your device.
-                                                            </p>
-                                                        </div>
-                                                        <div class="col">
-                                                            <p class="process-error-item-label">New Offer</p>
-                                                            {{-- <p class="process-new-offer-price">{!!$tradein->getIMEIDowngradeOffer()!!}</p> --}}
-                                                        </div>
-                                                        <div class="col">
-                                                            <a href="#" class="btn btn-orange process-action-btn">
-                                                                <p>Accept Offer</p>
-                                                                <img class="process-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
-                                                            </a>
-                                                            <a href="#" class="btn btn-jade process-action-btn">
-                                                                <p>Return my device</p>
-                                                                <img class="process-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                @endif
-
                                             @endif
 
                                             @if(!$tradein->stuckAtProcessing())
                                             
-                                                @if($tradein->notReceivedYet())
-
-                                                    <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
-                                                        <div class="emoji-col">
-                                                            <img class="emoji-img" src="{{asset('/customer_page_images/body/emoji_sad.svg')}}">
-                                                            <p class="emoji-text">Uh-oh!</p>
-                                                        </div>
-                                                        <p class="emoji-info-text">
-                                                            There is an issue whilst trying to process your order.
-                                                            <br>
-                                                            See below for details.
-                                                        </p>
-                                                    </div>
-
-                                                @elseif($tradein->job_state == '9')
+                                                @if($tradein->job_state == '9')
                                                     <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
                                                         <div class="emoji-col">
                                                             <img class="emoji-img" src="{{asset('/customer_page_images/body/emoji_winking.svg')}}">
@@ -689,7 +756,23 @@
 
                                         @if(!$tradein->isInTesting())
 
-                                            @if($tradein->job_state === '9')
+                                            @if($tradein->deviceInPaymentProcess())
+
+                                                @if($tradein->job_state === '25')
+                                                    <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
+                                                        <div class="emoji-col">
+                                                            <img class="emoji-img" src="{{asset('/customer_page_images/body/emoji_winking.svg')}}">
+                                                            <p class="emoji-text">Woohoo!</p>
+                                                        </div>
+                                                        <p class="emoji-info-text">
+                                                            Your device passed our checks with flying colours.
+                                                            Your payment will now be submitted.
+                                                        </p>
+                                                    </div>
+                                                @endif
+
+                                            @else
+
                                                 <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
                                                     <div class="emoji-col">
                                                         <img class="emoji-img" src="{{asset('/customer_page_images/body/emoji_winking.svg')}}">
@@ -699,25 +782,9 @@
                                                         Your order is awaiting testing.
                                                     </p>
                                                 </div>
-                                            @else
-                                                @if($tradein->deviceInPaymentProcess())
-
-                                                    @if($tradein->job_state === '25')
-                                                        <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
-                                                            <div class="emoji-col">
-                                                                <img class="emoji-img" src="{{asset('/customer_page_images/body/emoji_winking.svg')}}">
-                                                                <p class="emoji-text">Woohoo!</p>
-                                                            </div>
-                                                            <p class="emoji-info-text">
-                                                                Your device passed our checks with flying colours.
-                                                                Your payment will now be submitted.
-                                                            </p>
-                                                        </div>
-                                                    @endif
-
-                                                @endif
 
                                             @endif
+
 
                                         @else
                                             @if($tradein->hasFailedTesting())

@@ -11,12 +11,13 @@ class NotificationService {
         1,  // sign up              - singed up to newsletter
         // 2,  // sign up           - not singed up to newsletter (disabled)
         // 3,  // contact us        - contact us form or device valuation (disabled)
-
         4,  // checkout             - item sold to bamboo (own label) max 3 sent
-
         5,  // checkout             - item sold to bamboo (trade pack)
 
-        6,  // not received yet notification
+        6,  // not received yet
+        7,  // no imei
+        8,  // missing device
+        9   // imei blacklisted
     ];
 
     public $states = [
@@ -105,4 +106,53 @@ class NotificationService {
         }
     }
 
+    public function sendNoIMEI($tradein){
+        Notification::create([
+            'user_id'               => $tradein->user_id,
+            'tradein_id'            => $tradein->id,
+            'type'                  => 7,
+            'status'                => 'alert',
+            'content'               => 'No IMEI found on device.',
+            'order'                 => 1,
+            'resolved'              => false
+        ]);
+    }
+
+    public function sendMissingDevice($tradein){
+        Notification::create([
+            'user_id'               => $tradein->user_id,
+            'tradein_id'            => $tradein->id,
+            'type'                  => 8,
+            'status'                => 'alert',
+            'content'               => 'No device in packaging.',
+            'order'                 => 1,
+            'resolved'              => false
+        ]);
+    }
+
+    public function sendBlacklisted($tradein){
+        $notifications = Notification::where('tradein_id', $tradein->id)->where('user_id', $tradein->user_id)->where('type', 9)->get();
+        if($notifications->count() === 1){
+            Notification::create([
+                'user_id'               => $tradein->user_id,
+                'tradein_id'            => $tradein->id,
+                'type'                  => 9,
+                'status'                => 'alert',
+                'content'               => 'Your device is still in quarantine. Device will be destroyed if we do not hear from you in 28 days.',
+                'order'                 => 2,
+                'resolved'              => false
+            ]);
+        }
+        if($notifications->count() === 0) {
+            Notification::create([
+                'user_id'               => $tradein->user_id,
+                'tradein_id'            => $tradein->id,
+                'type'                  => 9,
+                'status'                => 'alert',
+                'content'               => 'This device has been reported as blacklisted. Reason: ' . $tradein->quarantine_reason . '.',
+                'order'                 => 1,
+                'resolved'              => false
+            ]);
+        }
+    }
 }
