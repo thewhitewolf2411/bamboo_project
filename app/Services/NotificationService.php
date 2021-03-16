@@ -79,6 +79,30 @@ class NotificationService {
                 'resolved'              => false
             ]);
         }
+        if($notifications->count() === 1){
+            // second notification of device not received
+            Notification::create([
+                'user_id'               => $tradein->user_id,
+                'tradein_id'            => $tradein->id,
+                'type'                  => 6,
+                'status'                => 'alert',
+                'content'               => 'Device not received after 10 days.',
+                'order'                 => 2,
+                'resolved'              => false
+            ]);
+        }
+        if($notifications->count() === 2){
+            // third notification of device not received
+            Notification::create([
+                'user_id'               => $tradein->user_id,
+                'tradein_id'            => $tradein->id,
+                'type'                  => 6,
+                'status'                => 'alert',
+                'content'               => 'Device not received after 14 days.',
+                'order'                 => 3,
+                'resolved'              => false
+            ]);
+        }
     }
 
 }

@@ -97,6 +97,14 @@
     flex-direction: row;
 }
 
+.sale-status-text{
+    font-size: 12px;
+}
+
+.sale-status-text.bold{
+    font-family: Sharp Sans No1 Bold;
+}
+
 .sale-status-img{
     display: block;
     width: 35px;

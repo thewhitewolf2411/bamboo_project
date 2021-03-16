@@ -9,6 +9,7 @@ use App\Eloquent\SellingProduct;
 use App\Eloquent\Category;
 use App\Eloquent\Brand;
 use App\Eloquent\Despatch\DespatchedDevice;
+use App\Eloquent\Payment\PaymentBatchDevice;
 use App\Eloquent\Payment\UserBankDetails;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
@@ -769,6 +770,8 @@ class Tradein extends Model
         $diff = $expires->diffInDays($now);
 
         if($diff <= 3 && $diff > 0){
+            $notificationService = new NotificationService();
+            $notificationService->sendNotReceivedYet($this);
             return true;
         }
         return false;
@@ -779,6 +782,8 @@ class Tradein extends Model
         $expires = Carbon::parse($this->expiry_date);
         $diff = $expires->diffInDays($now);
         if($now >= $expires){
+            $notificationService = new NotificationService();
+            $notificationService->sendNotReceivedYet($this);
             return true;
         }
         return false;
@@ -908,6 +913,13 @@ class Tradein extends Model
         return $this->bamboo_price;
     }
 
+    public function paymentFailed(){
+        if($this->job_state === "24"){
+            return true;
+        }
+        return false;
+    }
+
     public function isDespatched(){
         $despatched = DespatchedDevice::where('tradein_id', $this->id)->first();
         if($despatched){
@@ -915,6 +927,8 @@ class Tradein extends Model
         }
         return false;
     }
+
+    //public function 
 
     public function isManifested(){
         $despatched = DespatchedDevice::where('tradein_id', $this->id)->first();

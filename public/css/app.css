@@ -11929,8 +11929,8 @@ main p, a, span {
 .notification-card.red-border {
   border: 5px solid #ff0000;
   font-family: Sharp Sans No1 Bold;
-  margin-top: 1.5rem !important;
-  margin-bottom: 1.5rem !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
 }
 
 .notification-card-border {
@@ -12297,6 +12297,14 @@ main p, a, span {
 .sale-status-row {
   display: flex;
   flex-direction: row;
+}
+
+.sale-status-text {
+  font-size: 12px;
+}
+
+.sale-status-text.bold {
+  font-family: Sharp Sans No1 Bold;
 }
 
 .sale-status-img {

@@ -246,7 +246,7 @@ class CustomerController extends Controller
             $tradeouts = Tradeout::where('user_id', $userdata->id)->get();
 
             #dd($tradeins, $tradeouts);
-            $notifications = Notification::where('user_id', Auth::user()->id)->get();
+            $notifications = Notification::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
             // $notifications = collect([
             //     ['id' => 1, 'text'=>'We can’t access your phone, please provide us with your PIN number', 'state' => 'alert'],
             //     ['id'=>2, 'text'=>'We received your device after 14 days. A new offer has been sent', 'state' => 'alert-solved'],
@@ -357,7 +357,7 @@ class CustomerController extends Controller
      */
     public function showOrderDetails($id){
         $tradein = Tradein::findOrFail($id);
-        $notifications = Notification::where('user_id', Auth::user()->id)->get();
+        $notifications = Notification::where('user_id', Auth::user()->id)->where('tradein_id', $id)->orderBy('created_at', 'DESC')->get();
         return view('customer.orderdetails', ['tradein' => $tradein, 'notifications' => $notifications]);
     }
 
