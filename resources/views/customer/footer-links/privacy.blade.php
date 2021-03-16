@@ -25,7 +25,7 @@
         <header>@include('customer.layouts.header')</header>
         <main>
 
-
+        
 
         <div class="app">
                 <div class="enviroment-title-container">

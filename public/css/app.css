@@ -10206,6 +10206,20 @@ main p, a, span {
   text-align: center;
 }
 
+.slavery-title-container-large p {
+  font-size: 34px !important;
+  font-weight: 600;
+  text-align: center;
+  color: #744D26;
+}
+
+.slavery-title-container-small p {
+  font-size: 28px !important;
+  font-weight: 600;
+  text-align: left;
+  color: #744D26;
+}
+
 .how-buttons-container {
   display: flex;
   flex-direction: row;
@@ -11425,6 +11439,19 @@ main p, a, span {
 
 .enviroment-title-container p {
   color: #fff;
+}
+
+.slavery-title-container {
+  background-color: #e9e6e4;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.slavery-title-container p {
+  color: #666666;
 }
 
 .environment-first-element {

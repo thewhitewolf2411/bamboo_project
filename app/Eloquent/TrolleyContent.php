@@ -21,7 +21,7 @@ class TrolleyContent extends Model
      * @var array
      */
     protected $fillable = [
-        'trolley_id','tray_ud'
+        'trolley_id','tray_id'
     ];
 
 }

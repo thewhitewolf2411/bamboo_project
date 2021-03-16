@@ -12,6 +12,8 @@ use App\Eloquent\Despatch\DespatchedDevice;
 use App\Eloquent\Payment\UserBankDetails;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
+use App\Eloquent\Trolley;
+use App\Eloquent\TrolleyContent;
 use App\Services\DespatchService;
 use App\User;
 use Carbon\Carbon;
@@ -170,9 +172,20 @@ class Tradein extends Model
     public function getTrayName($id){
         #dd($id);
         $trayid = TrayContent::where('trade_in_id', $id)->first();
+
         if($trayid !== null && TrayContent::where('trade_in_id', $id)->first()->tray_id !== 0){
             $trayid = $trayid->tray_id;
-            $trayname = Tray::where('id', $trayid)->first()->tray_name;
+            $tray = Tray::where('id', $trayid)->first();
+
+            if($tray->trolley_id !== null){
+                $trolley = Trolley::where('id', $tray->trolley_id)->first();
+                if($trolley->trolley_type === "B"){
+                    return $trolley->trolley_name;
+                }
+            }
+
+            $trayname = $tray->tray_name;
+
             return $trayname;
         }
         else{

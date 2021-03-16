@@ -24,7 +24,121 @@
     <body>
         <header>@include('customer.layouts.header')</header>
         <main>
+            <div class="app">
+                <div class="slavery-title-container">
+                    <div class="center-title-container">
+                        <p>MODERN SLAVERY STATEMENT</p>
+                    </div>
+                </div>
 
+                <div class="container">
+
+                    <div class="col-md-12">
+                        <div class="slavery-title-container-large">
+                            <p>INTRODUCTION</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <p>
+                            This statement is published in accordance with the Modern Slavery Act 2015 and sets out the steps that Bamboo Distribution Ltd has taken, and is continuing to take, to make sure that modern slavery or human trafficking is not taking place within our business or supply chain. <br>
+
+                            Modern slavery encompasses slavery, servitude, human trafficking and forced labour. Bamboo has a zero-tolerance approach to any form of modern slavery. We are committed to acting ethically and with integrity and transparency in all business dealings and to putting effective systems and controls in place to safeguard against any form of 
+                            modern slavery taking place within the business or our supply chain. 
+                        </p>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="slavery-title-container-large">
+                            <p>OUR POLICIES ON SLAVERY AND HUMAN TRAFFICKING </p>
+                        </div>
+                        <p>
+                            Our internal policies replicate our commitment to acting ethically and with integrity in all our business relationships. We operate a number of internal policies to ensure that we are conducting business in an ethical and transparent manner.  These include: 
+                        </p>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="slavery-title-container-small">
+                            <p>1. Recruitment policy</p>
+                        </div>
+                        <p>
+                            We operate a robust recruitment policy, including conducting eligibility to work in the UK checks for all directly employed staff, and agencies on approved frameworks are audited to provide assurance that pre-employment clearance has been obtained for agency staff, to safeguard against human trafficking or individuals being forced to work against their will. 
+                        </p>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="slavery-title-container-small">
+                            <p>2. Equal Opportunities</p>
+                        </div>
+                        <p>
+                            We have a range of controls to protect staff from poor treatment and/or exploitation, which comply with all respective laws and regulations. These include provision of fair pay rates, fair terms and conditions of employment, and access to training and development opportunities. 
+                        </p>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <div class="slavery-title-container-small">
+                            <p>3. Whistle blowing policy</p>
+                        </div>
+                        <p>
+                            We operate a whistle blowing policy so that all employees know that they can raise concerns about how colleagues or people receiving our services are being treated, or about practices within our business or supply chain, without fear of reprisals. 
+                        </p>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="slavery-title-container-small">
+                            <p>4. Supply chain</p>
+                        </div>
+                        <p>
+                            Our approach to supply chain includes: 
+                        </p>
+                        <ul>
+                            <li>Ensuring that our suppliers are carefully selected </li>
+                            <li>Where a supplier has not met or has not been able to demonstrate that it has met our standards, we will immediately cease to trade with that supplier   </li>
+                        </ul>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="slavery-title-container-small">
+                            <p>5. Training </p>
+                        </div>
+                        <p>
+                            All relevant employees are given training to understand modern slavery and our policies and procedures to combat it
+                        </p>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="slavery-title-container-large">
+                            <p>RISK ASSESSMENT AND DUE DILIGENCE </p>
+                        </div>
+                        <p>
+                            We identify suppliers where there is a high risk of modern slavery occurring and increase the level of investigation accordingly. We will not trade with a business which does not meet our standards.  
+                        </p>
+                        <div class="slavery-title-container-large">
+                            <p>MEASURING EFFECTIVENESS </p>
+                        </div>
+                        <p>
+                            We will understand the effectiveness of the steps that we are taking to ensure that slavery is not taking place within our business or supply chain if: 
+                        </p>
+                        <ul>
+                            <li>We receive no reports from our staff, the public, or law enforcement agencies to indicate that modern slavery practices have been identified </li>
+                            <li>We monitor the completion of our modern slavery training</li>
+                            <li>We audit compliance with our procedures </li>
+                        </ul>
+
+                        <p>This statement was approved by the board on 10 December 2018</p>
+                    </div>
+
+                    <div class="col-md-12">
+
+                        <p>Paula Hansson</p>
+                        <p>Company Security</p>
+
+                    </div>
+
+                </div>
+
+            </div>
 
             @if(session('showLogin') || $errors->all())
                 <script>
