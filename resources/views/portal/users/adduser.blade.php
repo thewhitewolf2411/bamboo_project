@@ -38,24 +38,29 @@
                     </div>
                 @endif
                 <div class="register-form-container">
-                    <form method="POST" action="/portal/user/adduser">
+                    <form method="POST" @if(isset($userdata)) action="/portal/user/edituser" @else action="/portal/user/adduser" @endif>
                         @csrf
+
+                        @if(isset($userdata))
+                            <input type="hidden" name="userid" value="{{$userdata->id}}">
+                        @endif
+
                         <div class="d-flex">
                             <div class="form-group p20">
-                                <input type="text" class="form-control" placeholder="First Name" name="first_name" required>
+                                <input type="text" class="form-control" placeholder="First Name" name="first_name" required @if(isset($userdata)) value="{{$userdata->first_name}}" @endif>
                             </div>
                             <div class="form-group p20">
-                                <input type="text" class="form-control" placeholder="Last Name" name="last_name" required>
+                                <input type="text" class="form-control" placeholder="Last Name" name="last_name" required @if(isset($userdata)) value="{{$userdata->last_name}}" @endif>
                             </div>
                         </div>
                         <div class="form-group p20">
-                            <input type="text" class="form-control" placeholder="Username" name="username" required>
+                            <input type="text" class="form-control" placeholder="Username" name="username" required @if(isset($userdata)) value="{{$userdata->username}}" @endif>
                         </div>
                         <div class="form-group p20">
-                            <input type="email" class="form-control" placeholder="Email" name="email" required>
+                            <input type="email" class="form-control" placeholder="Email" name="email" required @if(isset($userdata)) value="{{$userdata->email}}" @endif>
                         </div>
                         <div class="form-group p20">
-                            <input type="password" class="form-control" placeholder="Password" name="password" id="password" required>
+                            <input type="password" class="form-control" placeholder="Password" name="password" id="password" @if(isset($userdata)) @else required @endif>
                         </div>
                         <div class="form-group p20">
                             <input type="password" class="form-control" placeholder="Confirm Password" data-rule-password="true" data-rule-equalTo="#password"  name="confirm_password">
@@ -65,129 +70,129 @@
                         </div>
                         <div class="d-flex flex-wrap p20 access-container">
                             <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="recycle" id="recycle">
+                                <input type="checkbox" class="form-check-input" name="recycle" id="recycle" @if(isset($userdata) && $thisportalUser->recycle) checked @endif>
                                 <label class="form-check-label" for="recycle">Recycle</label>
 
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="trade_pack_despatch" id="trade_pack_despatch">
+                                    <input type="checkbox" class="form-check-input" name="trade_pack_despatch" id="trade_pack_despatch" @if(isset($userdata) && $thisportalUser->trade_pack_despatch) checked @endif>
                                     <label class="form-check-label" for="trade_pack_despatch">Trade Pack Despatch</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="awaiting_receipt" id="awaiting_receipt">
+                                    <input type="checkbox" class="form-check-input" name="awaiting_receipt" id="awaiting_receipt" @if(isset($userdata) && $thisportalUser->awaiting_receipt) checked @endif>
                                     <label class="form-check-label" for="awaiting_receipt">Awaiting Receipt</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="receiving" id="receiving">
+                                    <input type="checkbox" class="form-check-input" name="receiving" id="receiving" @if(isset($userdata) && $thisportalUser->receiving) checked @endif>
                                     <label class="form-check-label" for="receiving">Receiving</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="device_testing" id="device_testing">
+                                    <input type="checkbox" class="form-check-input" name="device_testing" id="device_testing" @if(isset($userdata) && $thisportalUser->recdevice_testingycle) checked @endif>
                                     <label class="form-check-label" for="device_testing">Device Testing</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="trolley_managment" id="trolley_managment">
+                                    <input type="checkbox" class="form-check-input" name="trolley_managment" id="trolley_managment" @if(isset($userdata) && $thisportalUser->trolley_managment) checked @endif>
                                     <label class="form-check-label" for="trolley_managment">Trolley Management</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="trays_managment" id="trays_managment">
+                                    <input type="checkbox" class="form-check-input" name="trays_managment" id="trays_managment" @if(isset($userdata) && $thisportalUser->trays_managment) checked @endif>
                                     <label class="form-check-label" for="trays_managment">Trays Management</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="quarantine_managment" id="quarantine_managment">
+                                    <input type="checkbox" class="form-check-input" name="quarantine_managment" id="quarantine_managment" @if(isset($userdata) && $thisportalUser->quarantine_managment) checked @endif>
                                     <label class="form-check-label" for="quarantine_managment">Quarantine Managment</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="warehouse_management" id="warehouse_management">
+                                    <input type="checkbox" class="form-check-input" name="warehouse_management" id="warehouse_management" @if(isset($userdata) && $thisportalUser->warehouse_management) checked @endif>
                                     <label class="form-check-label" for="warehouse_management">Warehouse Management</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="sales_lots" id="sales_lots">
+                                    <input type="checkbox" class="form-check-input" name="sales_lots" id="sales_lots" @if(isset($userdata) && $thisportalUser->sales_lots) checked @endif>
                                     <label class="form-check-label" for="warehouse_management">Sales Lots</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="despatch" id="despatch">
+                                    <input type="checkbox" class="form-check-input" name="despatch" id="despatch" @if(isset($userdata) && $thisportalUser->despatch) checked @endif>
                                     <label class="form-check-label" for="despatch">Despatch</label>
                                 </div>
                             </div>
 
                             <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="customer_care" id="customer_care">
+                                <input type="checkbox" class="form-check-input" name="customer_care" id="customer_care" @if(isset($userdata) && $thisportalUser->customer_care) checked @endif>
                                 <label class="form-check-label" for="customer_care">Customer Care</label>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="order_management" id="order_management">
+                                    <input type="checkbox" class="form-check-input" name="order_management" id="order_management" @if(isset($userdata) && $thisportalUser->order_management) checked @endif>
                                     <label class="form-check-label" for="order_management">Order Management</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="create_order" id="create_order">
+                                    <input type="checkbox" class="form-check-input" name="create_order" id="create_order" @if(isset($userdata) && $thisportalUser->create_order) checked @endif>
                                     <label class="form-check-label" for="create_order">Create Order</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="customer_accounts" id="customer_accounts">
+                                    <input type="checkbox" class="form-check-input" name="customer_accounts" id="customer_accounts" @if(isset($userdata) && $thisportalUser->customer_accounts) checked @endif>
                                     <label class="form-check-label" for="customer_accounts">Customer Accounts</label>
                                 </div>
                             </div>
 
                             <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="administration" id="administration">
+                                <input type="checkbox" class="form-check-input" name="administration" id="administration" @if(isset($userdata) && $thisportalUser->administration) checked @endif>
                                 <label class="form-check-label" for="administration">Administration</label>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="salvage_models" id="salvage_models">
+                                    <input type="checkbox" class="form-check-input" name="salvage_models" id="salvage_models" @if(isset($userdata) && $thisportalUser->salvage_models) checked @endif>
                                     <label class="form-check-label" for="salvage_models">Salvage Models</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="sales_models" id="sales_models">
+                                    <input type="checkbox" class="form-check-input" name="sales_models" id="sales_models" @if(isset($userdata) && $thisportalUser->sales_models) checked @endif>
                                     <label class="form-check-label" for="sales_models">Sales Models</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="feeds" id="feeds">
+                                    <input type="checkbox" class="form-check-input" name="feeds" id="feeds" @if(isset($userdata) && $thisportalUser->feeds) checked @endif>
                                     <label class="form-check-label" for="feeds">Feeds</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="users" id="users">
+                                    <input type="checkbox" class="form-check-input" name="users" id="users" @if(isset($userdata) && $thisportalUser->users) checked @endif>
                                     <label class="form-check-label" for="users">Users</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="reports" id="reports">
+                                    <input type="checkbox" class="form-check-input" name="reports" id="reports" @if(isset($userdata) && $thisportalUser->reports) checked @endif>
                                     <label class="form-check-label" for="reports">Reports</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="cms" id="cms">
+                                    <input type="checkbox" class="form-check-input" name="cms" id="cms" @if(isset($userdata) && $thisportalUser->cms) checked @endif>
                                     <label class="form-check-label" for="cms">Cms</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="categories" id="categories">
+                                    <input type="checkbox" class="form-check-input" name="categories" id="categories" @if(isset($userdata) && $thisportalUser->categories) checked @endif>
                                     <label class="form-check-label" for="categories">Categories</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="settings" id="settings">
+                                    <input type="checkbox" class="form-check-input" name="settings" id="settings" @if(isset($userdata) && $thisportalUser->settings) checked @endif>
                                     <label class="form-check-label" for="settings">Settings</label>
                                 </div>
                             </div>
 
                             <div class="form-group p20 w-25">
-                                <input type="checkbox" class="form-check-input" name="payments" id="payments">
+                                <input type="checkbox" class="form-check-input" name="payments" id="payments" @if(isset($userdata) && $thisportalUser->payments) checked @endif>
                                 <label class="form-check-label" for="payments">Payments</label>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="awaiting_payments" id="awaiting_payments">
+                                    <input type="checkbox" class="form-check-input" name="awaiting_payments" id="awaiting_payments" @if(isset($userdata) && $thisportalUser->awaiting_payments) checked @endif>
                                     <label class="form-check-label" for="awaiting_payments">Awaiting Payments</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="submit_payments" id="submit_payments">
+                                    <input type="checkbox" class="form-check-input" name="submit_payments" id="submit_payments" @if(isset($userdata) && $thisportalUser->submit_payments) checked @endif>
                                     <label class="form-check-label" for="submit_payments">Submit Payments</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="payment_confirmations" id="payment_confirmations">
+                                    <input type="checkbox" class="form-check-input" name="payment_confirmations" id="payment_confirmations" @if(isset($userdata) && $thisportalUser->payment_confirmations) checked @endif>
                                     <label class="form-check-label" for="payment_confirmations">Payment Confirmations</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="failed_payments" id="failed_payments">
+                                    <input type="checkbox" class="form-check-input" name="failed_payments" id="failed_payments" @if(isset($userdata) && $thisportalUser->failed_payments) checked @endif>
                                     <label class="form-check-label" for="failed_payments">Failed Payments</label>
                                 </div>
                             </div>
 
                         </div>
                         <div class="form-group p20">
-                            <button type="submit" class="btn btn-primary btn-blue">Add new user</button>
+                            <button type="submit" class="btn btn-primary btn-blue">@if(isset($userdata)) Edit User @else Add new user @endif</button>
                         </div>
                     </form>
                 </div>

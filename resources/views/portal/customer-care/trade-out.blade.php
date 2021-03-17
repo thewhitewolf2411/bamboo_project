@@ -55,7 +55,7 @@
                             <td ><div class="table-element">{{$tradeout->barcode}}</div></td>
                             <td><div class="table-element">{{$tradeout->created_at}}</div></td>
                             <td><div class="table-element">{{$tradeout->getProductName($tradein->product_id)}}</div></td>
-                            <td><div class="table-element">{{$tradeout->product_state}}</div></td>
+                            <td><div class="table-element">{{$tradeout->customer_grade}}</div></td>
                             <td><div class="table-element">
                                 <a href="">
                                     <i class="fa fa-pencil"></i>

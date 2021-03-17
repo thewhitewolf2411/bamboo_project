@@ -297,11 +297,12 @@ Route::post('/portal/feeds/export-import/import', 'Portal\FeedsController@feedsI
 //users
 Route::get('/portal/user', 'Portal\UsersController@showUsersPage');
 Route::get('/portal/user/add', 'Portal\UsersController@showAddUserPage');
-Route::get('/portal/user/edit/{id}', 'Portal\UsersController@editUser');
+Route::get('/portal/user/edit/{id}', 'Portal\UsersController@editUserPage');
 Route::get('/portal/user/delete/{id}', 'Portal\UsersController@deleteUser');
 
 Route::post('/portal/user/adduser', 'Portal\UsersController@addUser');
 Route::post('/portal/user/search', 'Portal\UsersController@searchUser');
+Route::post('/portal/user/edituser', 'Portal\UsersController@editUser');
 
 //settings
 Route::get('/portal/settings','Portal\SettingsController@showSettingsPage');

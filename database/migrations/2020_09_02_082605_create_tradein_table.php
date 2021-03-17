@@ -43,6 +43,7 @@ class CreateTradeinTable extends Migration
             $table->datetime('location_changed_at')->default(now());
             $table->float('carriage_cost');
             $table->float('admin_cost');
+            $table->boolean('trade_pack_send_by_customer')->nullable();
             $table->timestamps();
         });
     }

@@ -37,7 +37,7 @@ class SalesLotController extends Controller
         #$sli = SalesLotContent::all();
         foreach($boxes as $box){
             $boxcontent = TrayContent::where('tray_id', $box->id)->get();
-
+            #dd($boxcontent);
             foreach($boxcontent as $bc){
                 if(SalesLotContent::where('device_id', $bc->trade_in_id)->first() === null){
                     $tradein = Tradein::where('id', $bc->trade_in_id)->first();

@@ -38,7 +38,7 @@
                         <a onclick="selectDeviceForTesting({{$tradein->barcode}})" class="ml-0 mr-0"><div class="d-flex flex-column shadow bg-white rounded ml-5 mr-5 p-3 hover">
                             <div class="" style="width:200px;">Product name: {{$tradein->getProductName($tradein->product_id)}}</div>
                             <div class="" style="width:200px;">Customer grade: {{$tradein->customer_grade}}</div>
-                            <div class="" style="width:200px;">Price {{$tradein->getProductPrice($tradein->product_id, $tradein->product_state)}} £</div>
+                            <div class="" style="width:200px;">Price {{$tradein->getProductPrice($tradein->product_id, $tradein->customer_grade)}} £</div>
                         </div></a>
                     @endforeach
 

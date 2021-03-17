@@ -38,9 +38,12 @@ class Boxing{
             return ['Tradein with barcode ' . $request->tradeinid .' is not submitted for payment yet.', 404];
         }
 
-        if(!(($box->tray_network === 'Unlocked' && $tradein->deviceLocked() === false) || ($box->tray_network !== 'Unlocked' && $tradein->deviceLocked() === true))){
-            return ['Network missmatch. Cannot add this device to this box.', 404];
+        if($box->tray_network !== null){
+            if(!(($box->tray_network === 'Unlocked' && $tradein->deviceLocked() === false) || ($box->tray_network !== 'Unlocked' && $tradein->deviceLocked() === true))){
+                return ['Network missmatch. Cannot add this device to this box.', 404];
+            }
         }
+        
 
         if($this->getDeviceGrade($tradein) === false){
             return ['Offer for this device has not been accepted by customer yet.', 404];

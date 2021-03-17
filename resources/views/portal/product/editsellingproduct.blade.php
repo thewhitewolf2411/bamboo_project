@@ -163,7 +163,7 @@
                                     </table>
                                     <div class="portal-title-container">
                                         <div class="portal-title">
-                                            <p>Avalible product colours</p>
+                                            <p>Available product colours</p>
                                         </div>
                                     </div>
                                     <table class="portal-table" id="categories-table">

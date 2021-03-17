@@ -37,15 +37,16 @@ class UsersController extends Controller
         return view('portal.users.adduser')->with('title', 'Add User')->with('portalUser', $portalUser);
     }
 
-    public function editUser($id){
+    public function editUserPage($id){
         //if(!$this->checkAuthLevel(9)){return redirect('/');}
-        $userdata = User::where('id', $id)->get();
-        $userdata = $userdata[0];
+        $userdata = User::where('id', $id)->first();
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.users.adduser')->with('userdata', $userdata)->with('title', 'Edit User '.$userdata->first_name)->with('portalUser', $portalUser);
+        $thisportalUser = PortalUsers::where('user_id', $id)->first();
+
+        return view('portal.users.adduser')->with(['userdata'=>$userdata, 'thisportalUser'=>$thisportalUser, 'title'=>'Edit User '.$userdata->first_name, 'portalUser'=>$portalUser]);
     }
 
     public function deleteUser($id){
@@ -181,6 +182,242 @@ class UsersController extends Controller
         $portalUser->save();
 
         return \redirect('/portal/user');
+    }
+
+    public function editUser(Request $request){
+        #dd($request->all());
+
+        if(isset($request->password)){
+            if($request->password !== $request->confirm_password){
+                return \redirect()->back()->with(['error'=>"Password mismach."]);
+            }
+    
+        }
+
+        $user = User::where('id', $request->userid)->first();
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->password = Crypt::encrypt($request->password);
+        //$user->birthdate = "01.08.2020";
+        $user->current_phone = 0;
+        $user->preffered_os = 'none';
+        $user->sub = 0;
+        $user->delivery_address = "none";
+        $user->billing_address = "none";
+        $user->contact_number = "none";
+        $user->bamboo_credit = 0;
+        $user->username = $request->username;
+        $user->worker_email = "customersupport@bamboorecycle.com";
+        $user->type_of_user = 1;
+        $user->account_disabled = 0;
+
+        $user->save();
+
+        $portalUser = PortalUsers::where('user_id', $request->userid)->first();
+
+        if($request->recycle == "on"){
+            $portalUser->recycle = true;
+        }
+        else{
+            $portalUser->recycle = false;
+        }
+
+        if($request->trade_pack_despatch == "on"){
+            $portalUser->trade_pack_despatch = true;
+        }
+        else{
+            $portalUser->trade_pack_despatch = false;
+        }
+
+        if($request->awaiting_receipt == "on"){
+            $portalUser->awaiting_receipt = true;
+        }
+        else{
+            $portalUser->awaiting_receipt = false;
+        }
+
+        if($request->receiving == "on"){
+            $portalUser->receiving = true;
+        }
+        else{
+            $portalUser->receiving = false;
+        }
+
+        if($request->device_testing == "on"){
+            $portalUser->device_testing = true;
+        }
+        else{
+            $portalUser->device_testing = false;
+        }
+
+        if($request->trolley_managment == "on"){
+            $portalUser->trolley_management = true;
+        }
+        else{
+            $portalUser->trolley_management = false;
+        }
+        
+        if($request->trays_managment == "on"){
+            $portalUser->trays_managment = true;
+        }
+        else{
+            $portalUser->trays_managment = false;
+        }
+
+        if($request->quarantine_managment == "on"){
+            $portalUser->quarantine_managment = true;
+        }
+        else{
+            $portalUser->quarantine_managment = false;
+        }
+
+        if($request->warehouse_management == "on"){
+            $portalUser->warehouse_management = true;
+        }
+        else{
+            $portalUser->warehouse_management = false;
+        }
+
+        if($request->sales_lot == "on"){
+            $portalUser->sales_lot = true;
+        }
+        else{
+            $portalUser->sales_lot = false;
+        }
+
+        if($request->despatch == "on"){
+            $portalUser->despatch = true;
+        }
+        else{
+            $portalUser->despatch = false;
+        }
+
+        if($request->customer_care == "on"){
+            $portalUser->customer_care = true;
+        }
+        else{
+            $portalUser->customer_care = false;
+        }
+
+        if($request->order_management == "on"){
+            $portalUser->order_management = true;
+        }
+        else{
+            $portalUser->order_management = false;
+        }
+
+        if($request->create_order == "on"){
+            $portalUser->create_order = true;
+        }
+        else{
+            $portalUser->create_order = false;
+        }
+
+        if($request->customer_accounts == "on"){
+            $portalUser->customer_accounts = true;
+        }
+        else{
+            $portalUser->customer_accounts = false;
+        }
+
+        if($request->administration == "on"){
+            $portalUser->administration = true;
+        }
+        else{
+            $portalUser->administration = false;
+        }
+
+        if($request->salvage_models == "on"){
+            $portalUser->salvage_models = true;
+        }
+        else{
+            $portalUser->salvage_models = false;
+        }
+
+        if($request->sales_models == "on"){
+            $portalUser->sales_models = true;
+        }
+        else{
+            $portalUser->sales_models = false;
+        }
+
+        if($request->feeds == "on"){
+            $portalUser->feeds = true;
+        }
+        else{
+            $portalUser->feeds = false;
+        }
+
+        if($request->users == "on"){
+            $portalUser->users = true;
+        }
+        else{
+            $portalUser->users = false;
+        }
+
+        if($request->reports == "on"){
+            $portalUser->reports = true;
+        }
+        else{
+            $portalUser->reports = false;
+        }
+
+        if($request->cms == "on"){
+            $portalUser->cms = true;
+        }
+        else{
+            $portalUser->cms = false;
+        }
+
+        if($request->settings == "on"){
+            $portalUser->settings = true;
+        }
+        else{
+            $portalUser->settings = false;
+        }
+
+        if($request->payments == "on"){
+            $portalUser->payments = true;
+        }
+        else{
+            $portalUser->payments = false;
+        }
+
+        if($request->awaiting_payments == "on"){
+            $portalUser->awaiting_payments = true;
+        }
+        else{
+            $portalUser->awaiting_payments = false;
+        }
+
+        if($request->submit_payments == "on"){
+            $portalUser->submit_payments = true;
+        }
+        else{
+            $portalUser->submit_payments = false;
+        }
+
+        if($request->payment_confirmations == "on"){
+            $portalUser->payment_confirmations = true;
+        }
+        else{
+            $portalUser->payment_confirmations = false;
+        }
+
+        if($request->failed_payments == "on"){
+            $portalUser->failed_payments = true;
+        }
+        else{
+            $portalUser->failed_payments = false;
+        }
+
+
+        $portalUser->save();
+
+        return \redirect()->back()->with(['success'=>'You have succesfully eddited a user.']);
+
+
     }
 
     public function searchUser(Request $request){

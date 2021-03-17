@@ -12,7 +12,7 @@
         <div class="portal-search-form-container">
             <form action="/portal/warehouse-management/bay-overview/bay/" method="GET">
                 <div class="form-group d-flex align-items-center justify-content-between">
-                    <label style="margin: 0;" for="tray_id_scan">Please Scan or Type the Bay Number:</label>
+                    <label style="margin: 0;" for="tray_id_scan">Please Scan or Type the Bay name or Box name:</label>
                     <input style="margin: 0; width: 50%;" class="form-control" name="bay_id_scan" id="bay_id_scan" autofocus>
                     <button type="submit" class="btn btn-primary btn-blue">Go</button>
                 </div>

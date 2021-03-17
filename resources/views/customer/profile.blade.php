@@ -621,7 +621,7 @@
                                 <h5 class="modal-title">{{ $tradein->getProductName($tradein->product_id) }}</h5>
                                 <p class="black">Network: {{ $tradein->network }}</p>
                                 <p class="black">Memory: {{ $tradein->memory }}</p>
-                                <p class="black">Grade: {{ $tradein->product_state }}</p>
+                                <p class="black">Grade: {{ $tradein->customer_grade }}</p>
                             </div>
                             <div class="col-md-2"></div>
                             <div class="col-md-4">

@@ -15,10 +15,15 @@ class Testing{
 
     public function testDevice(Request $request){
 
+        #dd($request->all());
         #dd($request->cosmetic_condition === 'Catastrophic');
 
         $tradein = Tradein::where('id', $request->tradein_id)->first();
+
         if($request->cosmetic_condition === 'Catastrophic'){
+            if($tradein->customer_grade !== 'Faulty'){
+                $tradein->job_state = '15i';
+            }
             $tradein->bamboo_grade = 'Catastrophic';
         }
         else{
@@ -107,7 +112,7 @@ class Testing{
         $quarantineTrays = "";
         $quarantineName = "";
 
-        if($tradein->isInQuarantine() || $request->cosmetic_condition === 'Catastrophic'){
+        if($tradein->isInQuarantine()){
             $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'Q')->where('number_of_devices', "<" ,100)->first();
             $quarantineName = $quarantineTrays->tray_name;
             $tradein->quarantine_date = \Carbon\Carbon::now();
@@ -135,7 +140,7 @@ class Testing{
             $tradein->correct_network = $tradein->customer_network;
         }
 
-        if(!($tradein->isInQuarantine() || $request->cosmetic_condition === 'Catastrophic')){
+        if(!($tradein->isInQuarantine())){
             
             $bambooprice = $this->generateDevicePrice($tradein->correct_product_id, $tradein->correct_memory, $tradein->correct_network, $bambogradeval);
 
@@ -143,6 +148,7 @@ class Testing{
                 switch($bambogradeval){
                     case 5:
                         $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'A')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
+                        #dd($quarantineTrays);
                         $tradein->cosmetic_condition = 'A';
                         $tradein->customer_grade = 'Excellent Working';
                         break;
@@ -245,6 +251,10 @@ class Testing{
         $bambogradeval = $request->bamboo_customer_grade;
         $bambooprice = $this->generateDevicePrice($tradein->correct_product_id, $tradein->correct_memory, $tradein->correct_network, $bambogradeval);
         $tradein->bamboo_price = $bambooprice;
+
+        if($quarantineTrays === null){
+            $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
+        }
 
         $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;
         $quarantineTrays->save();

@@ -209,7 +209,7 @@
                             <label for="correct_memory_value">
                                 Select correct memory:
                             </label>
-                            <select class="form-control" id="correct_memory_value" name="correct_memory_value" onchange="testingElementChanged()" required>
+                            <select class="form-control" id="correct_memory_value" name="correct_memory_value" onchange="testingElementChanged()">
                                 @foreach($productinformation as $productinfo)
                                 <option value="{{$productinfo->memory}}">{{$productinfo->memory}}</option>
                                 @endforeach
@@ -231,7 +231,7 @@
                             <label for="correct_network_value">
                                 Select correct network:
                             </label>
-                            <select class="form-control" id="correct_network_value" name="correct_network_value" onchange="testingElementChanged()" required>
+                            <select class="form-control" id="correct_network_value" name="correct_network_value" onchange="testingElementChanged()">
                                 @foreach($networks as $network)
                                 <option value="{{$network->network_name}}">{{$network->network_name}}</option>
                                 @endforeach
@@ -288,7 +288,7 @@
                                 </div>
                             </a>
                             <input type="hidden" id="tradein_id" name="tradein_id" value="{{$tradein->id}}">
-                            <input type="hidden" id="old_customer_grade" name="old_customer_grade" value="{{$tradein->product_state}}">
+                            <input type="hidden" id="old_customer_grade" name="old_customer_grade" value="{{$tradein->customer_grade}}">
                             <input type="hidden" id="bamboo_customer_grade" name="bamboo_customer_grade" value="">
                             <input type="hidden" id="bamboo_final_grade" name="bamboo_final_grade" value="">
                             <button id="receive-button" type="submit" class="btn btn-primary btn-blue check-imei">Submit testing</button>
