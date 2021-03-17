@@ -55,7 +55,7 @@
                     @foreach ($bayboxes as $baybox)
                     <tr>
                         <td><div class="table-element">{{$baybox->tray_name}}</div></td>
-                        <td><div class="table-element">{{$baybox->number_of_devices}}</div></td>
+                        <td><div class="table-element">{{$baybox->getNumberOfDevices()}}</div></td>
                     </tr>
                     @endforeach
                 </table>

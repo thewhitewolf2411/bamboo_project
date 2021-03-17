@@ -52,6 +52,10 @@ class Tray extends Model
         }
     }
 
+    public function getNumberOfDevices(){
+        return count(TrayContent::where('tray_id', $this->id)->get());
+    }
+
     public function canBeDeleted(){
         if($this->number_of_devices > 0){
             return false;

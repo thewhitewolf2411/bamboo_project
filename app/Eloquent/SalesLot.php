@@ -36,8 +36,10 @@ class SalesLot extends Model
             if($sLC->device_id !== null){
                 $qty += 1;
             }
-            if($sLC->box_id !== null){
-                $qty += (Tray::where('id', $sLC->box_id)->first())->number_of_devices;
+            else{
+                if($sLC->box_id !== null){
+                    $qty += (Tray::where('id', $sLC->box_id)->first())->number_of_devices;
+                }
             }
         }
 

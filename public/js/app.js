@@ -55422,6 +55422,9 @@ $('#payment-received-btn').on('click', function () {
             window.location.reload();
           }
         }
+      },
+      error: function error(data) {
+        alert(data.responseText);
       }
     });
   }

@@ -34,7 +34,7 @@
 
                 <div class="portal-search-form-container">
                     <form action="/portal/testing/find/test" method="GET">
-                        <label for="searchinput">Scan Or Type Device Barcode or Tray Barcode:</label>
+                        <label for="searchinput">Scan Or Type Device Trade-in Barcode:</label>
                         <input id="searchinput" type="number" name="scanid" class="form-control" autofocus>
                         <button type="submit" class="btn btn-primary btn-blue">Search</button>
                     </form>

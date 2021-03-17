@@ -57,6 +57,9 @@ $('#payment-received-btn').on('click', function(){
                         window.location.reload();
                     }
                 }
+            },
+            error: function(data){
+                alert(data.responseText);
             }
           });
     }
