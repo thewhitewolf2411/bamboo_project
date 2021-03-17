@@ -73,28 +73,44 @@ class ReportsController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        $tradeins = Tradein::all()->groupBy('job_state');
-        #dd($tradeins);
+        $awaitingTradePack = Tradein::where('job_state', 1)->get();
+        $awaitingReceipt = Tradein::whereIn('job_state', [2,3])->get();
+        $notReceived = Tradein::whereIn('job_state', [4,5])->get();
+        $noImei = Tradein::where('job_state', 6)->get();
+        $blacklisted = Tradein::whereIn('job_state', ["7", "8a", "8b", "8c", "8d", "8e", "8f"])->get();
+        $awaitingTesting = Tradein::where('job_state', 9)->get();
+        $testComplete = Tradein::whereIn('job_state', ["10", "12", "16"])->get();
+        $testingQuarantine = Tradein::whereIn('job_state', ["11", "11a", "11b", "11c", "11d", "11e", "11f", "11g", "11h", "11i", "11j", "15", "15a", "15b", "15c", "15d", "15e", "15f", "15g", "15h", "15i", "15j"])->get();
+        $destroyedDevices = Tradein::whereIn('job_state', [17, 18])->get();
+        $returnToCustomer = Tradein::whereIn('job_state', [19, 20, 21])->get();
+        $awaitingBoxBuild = Tradein::whereIn('job_state', [22,23,24,25])->get();
+
+        #dd($testingQuarantine);
+
+        $tradeins = ['Awaiting Trade Pack'=>$awaitingTradePack, 'Awaiting Receipt'=>$awaitingReceipt, 'Not Received'=>$notReceived, 
+                    'No Imei'=>$noImei, 'Blacklisted'=>$blacklisted, 'Awaiting Testing'=>$awaitingTesting, 
+                    'Test Complete'=>$testComplete, 'Testing Quarantine'=>$testingQuarantine, 'Destroyed Devices'=>$destroyedDevices, 
+                    'Return To Customer'=>$returnToCustomer, 'Awaiting Box Build'=>$awaitingBoxBuild];
 
         return view('portal.reports.finance-recycle-reports', ['portalUser'=>$portalUser, 'tradeins'=>$tradeins]);
     }
 
 
-    public function generateOverviewReport(){
+    public function generateOverviewReport(Request $request){
         
         $reports = new Reports();
 
-        $file = $reports->overviewReport();
+        $file = $reports->overviewReport($request);
         #dd($file);
 
         return response($file, 200);
 
     }
 
-    public function generateStockReport(){
+    public function generateStockReport(Request $request){
         $reports = new Reports();
 
-        $file = $reports->stockReport();
+        $file = $reports->stockReport($request);
         #dd($file);
 
         return response($file, 200);
@@ -190,14 +206,54 @@ class ReportsController extends Controller
     }
 
     public function generateCurrentReport(Request $request){
+
+        #dd($request->all());
+
         $tradeins = "";
 
-        if($request->bamboo_status === 'all'){
-            $tradeins = Tradein::all();
+        switch($request->bamboo_status){
+            case 'all':
+                $tradeins = Tradein::all();
+                break;
+            case 'Awaiting Trade Pack':
+                $tradeins = Tradein::where('job_state', 1)->get();
+                break;
+            case 'Awaiting Receipt':
+                $tradeins = Tradein::whereIn('job_state', [2,3])->get();
+                break;
+            case 'Not Received':
+                $tradeins = Tradein::whereIn('job_state', [4,5])->get();
+                break;
+            case 'No Imei':
+                $tradeins = Tradein::where('job_state', 6)->get();
+                break;
+            case 'Blacklisted':
+                $tradeins = Tradein::whereIn('job_state', ["7", "8a", "8b", "8c", "8d", "8e", "8f"])->get();
+                break;
+            case 'Awaiting Testing':
+                $tradeins = Tradein::where('job_state', 9)->get();
+                break;
+            case 'Test Complete':
+                $tradeins = Tradein::whereIn('job_state', ["10", "12", "16"])->get();
+                break;
+            case 'Testing Quarantine':
+                $tradeins = Tradein::whereIn('job_state', ["11", "11a", "11b", "11c", "11d", "11e", "11f", "11g", "11h", "11i", "11j", "15", "15a", "15b", "15c", "15d", "15e", "15f", "15g", "15h", "15i", "15j"])->get();
+                break;
+            case 'Destroyed Devices':
+                $tradeins = Tradein::whereIn('job_state', [17, 18])->get();
+                break;
+            case 'Return To Customer':
+                $tradeins = Tradein::whereIn('job_state', [19, 20, 21])->get();
+                break;
+            case 'Awaiting Box Build':
+                $tradeins = Tradein::whereIn('job_state', [22,23,24,25])->get();
+                break;
+            default:
+                $tradeins = Tradein::all();
+                break;
         }
-        else{
-            $tradeins = Tradein::where('job_state', $request->bamboo_status)->get();
-        }
+
+        #dd($tradeins);
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -216,11 +272,9 @@ class ReportsController extends Controller
         $sheet->setCellValue('L1', 'Date Paid');
         $sheet->setCellValue('M1', 'Location');
 
+        $index = 2;
+
         foreach($tradeins as $key=>$tradein){
-            $index = $key+1;
-            if($index === 1){
-                $index = 2;
-            }
 
             $sheet->setCellValue('A'.$index, $tradein->barcode);
             $sheet->setCellValue('B'.$index, $tradein->getBrandName($tradein->product_id));
@@ -235,6 +289,8 @@ class ReportsController extends Controller
             $sheet->setCellValue('K'.$index, 'Time passed');
             $sheet->setCellValue('L'.$index, 'Date Paid');
             $sheet->setCellValue('M'.$index, $tradein->getTrayName($tradein->id));
+
+            $index++;
         }
 
 
@@ -242,7 +298,7 @@ class ReportsController extends Controller
             mkdir(public_path() . '/reports/current', 0777, true);
         }
         
-        $filename = 'current_report_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
+        $filename = 'current_report_[' . $request->bamboo_status . ']';
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
         $writer->save(public_path() . '/reports/current/' . $filename);

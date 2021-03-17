@@ -41,8 +41,8 @@ class Tradein extends Model
         'user_id', 'barcode','barcode_original','product_id', 'correct_product_id','customer_grade',
         'bamboo_grade', 'job_state', 'order_price','bamboo_price','customer_memory','customer_network',
         'correct_memory','correct_network', 'product_colour', 'missing_image', 'imei_number', 'serial_number',
-        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 'expiry_date', 'pin_number',
-        'location_changed_at'
+        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 'pin_number',
+        'expiry_date', 'location_changed_at', 'trade_pack_send_by_customer'
     ];
 
 
@@ -623,7 +623,7 @@ class Tradein extends Model
             return "Awaiting testing";
         }
 
-        $tested = ['11a', '11b', '11c', '11d', '11e', '11f', '11g', '11h', '11i', '11j'];
+        $tested = ['11a', '11b', '11c', '11d', '11e', '11f', '11g', '11h', '11i', '11j', '15a', '15b', '15c', '15d', '15e', '15f', '15g', '15h', '15i', '15j'];
         if(in_array($this->job_state, $tested)){
             return "Test Complete";
         }

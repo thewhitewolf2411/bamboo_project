@@ -51,7 +51,7 @@
                                 <div class="d-flex w-100">
                                     <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
                                         <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
-                                        <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                     </div>
 

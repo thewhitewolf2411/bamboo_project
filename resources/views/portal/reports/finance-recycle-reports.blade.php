@@ -89,6 +89,8 @@
     </div>
 </div>
 
+
+
 <div class="modal fade" id="current-report-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -106,9 +108,9 @@
                             <select class="form-control m-3" name="bamboo_status">
                                 <option value="" disabled selected>Choose a status</option>
                                 <option value="all">All</option>
+
                                 @foreach ($tradeins as $key=>$tradein)
-                                    
-                                    <option value="{{$key}}">{{$tradein[0]->getBambooStatus()}} | Count {{count($tradein)}}</option>
+                                    <option value="{{$key}}">{{$key}} | {{count($tradein)}}</option>
                                 @endforeach
                             </select>
                         </div>

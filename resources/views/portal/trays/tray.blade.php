@@ -97,7 +97,13 @@
                             <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
                             <td><div class="table-element">{{$tradein->barcode}}</div></td>
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
-                            <td><div class="table-element">{{$tradein->imei_number}}</div></td>
+                            <td><div class="table-element">
+                                @if($tradein->imei_number === null)
+                                    {{$tradein->serial_number}}
+                                @else
+                                    {{$tradein->imei_number}}
+                                @endif
+                            </div></td>
                         </tr>
                         @endforeach
                     </table>

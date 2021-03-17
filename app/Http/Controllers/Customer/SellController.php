@@ -226,6 +226,7 @@ class SellController extends Controller
                     $tradein->product_id = $item->product_id;
                     $tradein->order_price = $item->price;
                     $tradein->job_state = 1;
+                    $tradein->trade_pack_send_by_customer = false;
                     $tradein->expiry_date = $eD;
 
                     $name = $item->getProductName($item->id);
@@ -237,6 +238,7 @@ class SellController extends Controller
                     if($labelstatus == "2"){
                         $tradein->job_state = 2;
 
+                        $tradein->trade_pack_send_by_customer = true;
                         $klaviyoEmail = new KlaviyoEmail();
                         $klaviyoEmail->ItemSoldPrintOwnLabel(Auth::user(), $tradein);
                     }

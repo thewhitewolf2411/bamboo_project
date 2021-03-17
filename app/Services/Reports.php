@@ -10,7 +10,7 @@ use Schema;
 use \PhpOffice\PhpSpreadsheet\Cell\DataType;
 class Reports{
 
-    public function overviewReport(){
+    public function overviewReport(Request $request){
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -32,7 +32,7 @@ class Reports{
         $sheet->setCellValue('O1', 'Bamboo Grade');
         $sheet->setCellValue('P1', 'Customer Status');
         $sheet->setCellValue('Q1', 'Bamboo Status');
-        $sheet->setCellValue('R1', 'Fully FUnctional');
+        $sheet->setCellValue('R1', 'Fully Functional');
         $sheet->setCellValue('S1', 'Date Order Placed');
         $sheet->setCellValue('T1', 'TP Despatch Date');
         $sheet->setCellValue('U1', 'Date Received');
@@ -47,7 +47,22 @@ class Reports{
         $sheet->setCellValue('AD1', 'FMIP');
         $sheet->setCellValue('AE1', 'Stock Location');
 
-        $tradeins = Tradein::all();
+        $from = "";
+        $to = "";
+        if(isset($request->from) && isset($request->to)){
+            $from = \Carbon\Carbon::parse($request->from);
+            $to = \Carbon\Carbon::parse($request->to);
+        }
+
+        $tradeins = "";
+
+        if(isset($request->from) && isset($request->to)){
+            $tradeins = Tradein::whereBetween('created_at', [$from, $to])->get();
+        }
+        else{
+            $tradeins = Tradein::all();
+        }
+        
         $additionalCosts = AdditionalCosts::first();
 
         foreach($tradeins as $key=>$tradein){
@@ -132,11 +147,20 @@ class Reports{
                 $total = $tradein->bamboo_price + $tradein->admin_cost +  $tradein->carriage_cost + $additionalCosts->miscellaneous_costs_individual;
             }
 
+            $number = "";
+
+            if($tradein->imei_number === null){
+                $number = $tradein->serial_number;
+            }
+            else{
+                $number = $tradein->imei_number;
+            }
+
             $sheet->setCellValue('A'.$index, $tradein->barcode_original);
             $sheet->setCellValue('B'.$index, $tradein->barcode);
             $sheet->setCellValue('C'.$index, $tradein->getBrandName($tradein->product_id));
             $sheet->setCellValue('D'.$index, $tradein->getProductName($tradein->product_id));
-            $sheet->setCellValue('E'.$index, $tradein->imei_number);
+            $sheet->setCellValue('E'.$index, $number);
             $sheet->setCellValue('F'.$index, $correctMemory);
             $sheet->setCellValue('G'.$index, $tradein->product_colour);
             $sheet->setCellValue('H'.$index, $tradein->order_price);
@@ -174,10 +198,14 @@ class Reports{
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
         $writer->save(public_path() . '/reports/overview/' . $filename);
 
-        return '/reports/overview/' . $filename;
+        #return '/reports/overview/' . $filename;
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
     }
 
-    public function stockReport(){
+    public function stockReport(Request $request){
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
@@ -205,12 +233,27 @@ class Reports{
         $sheet->setCellValue('V1', 'FMIP');
         $sheet->setCellValue('W1', 'Stock Location');
 
-        $tradeins = Tradein::all();
+        $from = "";
+        $to = "";
+        if(isset($request->from) && isset($request->to)){
+            $from = \Carbon\Carbon::parse($request->from);
+            $to = \Carbon\Carbon::parse($request->to);
+        }
+
+        $tradeins = "";
+
+        if(isset($request->from) && isset($request->to)){
+            $tradeins = Tradein::whereBetween('created_at', [$from, $to])->get();
+        }
+        else{
+            $tradeins = Tradein::all();
+        }
         $additionalCosts = AdditionalCosts::first();
 
+        $i=2;
         foreach($tradeins as $key=>$tradein){
 
-            if(!$tradein->deviceInPaymentProcess()){
+            if($tradein->isBoxed()){
 
                 $correctMemory = '';
                 if($tradein->correct_network === null){
@@ -282,31 +325,33 @@ class Reports{
                     $tradeinauditReturned = $tradeinauditReturned->created_at;
                 }
 
-                $index = $key+2;
+                #$index = $key+2;
 
-                $sheet->setCellValue('A'.$index, $tradein->barcode_original);
-                $sheet->setCellValue('B'.$index, $tradein->barcode);
-                $sheet->setCellValue('C'.$index, $tradein->getBrandName($tradein->product_id));
-                $sheet->setCellValue('D'.$index, $tradein->getProductName($tradein->product_id));
-                $sheet->setCellValue('E'.$index, $tradein->imei_number);
-                $sheet->setCellValue('F'.$index, $correctMemory);
-                $sheet->setCellValue('G'.$index, $tradein->product_colour);
-                $sheet->setCellValue('H'.$index, $tradein->customer_grade);
-                $sheet->setCellValue('I'.$index, $tradein->bamboo_grade);
-                $sheet->setCellValue('J'.$index, $tradein->customer_grade);
-                $sheet->setCellValue('K'.$index, $tradein->cosmetic_condition);
-                $sheet->setCellValue('L'.$index, $tradein->getBambooStatus());
-                $sheet->setCellValue('M'.$index, $fullyFunctional);
-                $sheet->setCellValue('N'.$index, $tradein->created_at);
-                $sheet->setCellValue('O'.$index, $tradeinauditTPDespatched);
-                $sheet->setCellValue('P'.$index, $tradeinauditReceived);
-                $sheet->setCellValue('Q'.$index, $tradeinauditTested);
-                $sheet->setCellValue('R'.$index, $tradein->quarantine_date);
-                $sheet->setCellValue('S'.$index, $tradeinauditBoxed);
-                $sheet->setCellValue('T'.$index, $tradeinauditUser);
-                $sheet->setCellValue('U'.$index, $quarantine);
-                $sheet->setCellValue('V'.$index, $fimp);
-                $sheet->setCellValue('W'.$index, $tradein->getTrayName($tradein->id));
+                $sheet->setCellValue('A'.$i, $tradein->barcode_original);
+                $sheet->setCellValue('B'.$i, $tradein->barcode);
+                $sheet->setCellValue('C'.$i, $tradein->getBrandName($tradein->product_id));
+                $sheet->setCellValue('D'.$i, $tradein->getProductName($tradein->product_id));
+                $sheet->setCellValue('E'.$i, $tradein->imei_number);
+                $sheet->setCellValue('F'.$i, $correctMemory);
+                $sheet->setCellValue('G'.$i, $tradein->product_colour);
+                $sheet->setCellValue('H'.$i, $tradein->customer_grade);
+                $sheet->setCellValue('I'.$i, $tradein->bamboo_grade);
+                $sheet->setCellValue('J'.$i, $tradein->customer_grade);
+                $sheet->setCellValue('K'.$i, $tradein->cosmetic_condition);
+                $sheet->setCellValue('L'.$i, $tradein->getBambooStatus());
+                $sheet->setCellValue('M'.$i, $fullyFunctional);
+                $sheet->setCellValue('N'.$i, $tradein->created_at);
+                $sheet->setCellValue('O'.$i, $tradeinauditTPDespatched);
+                $sheet->setCellValue('P'.$i, $tradeinauditReceived);
+                $sheet->setCellValue('Q'.$i, $tradeinauditTested);
+                $sheet->setCellValue('R'.$i, $tradein->quarantine_date);
+                $sheet->setCellValue('S'.$i, $tradeinauditBoxed);
+                $sheet->setCellValue('T'.$i, $tradeinauditUser);
+                $sheet->setCellValue('U'.$i, $quarantine);
+                $sheet->setCellValue('V'.$i, $fimp);
+                $sheet->setCellValue('W'.$i, $tradein->getTrayName($tradein->id));
+
+                $i++;
             }
         }
 
@@ -317,9 +362,13 @@ class Reports{
         $filename = 'stock_report_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
-        $writer->save(public_path() . '/reports/stock/' . $filename);
+        #$writer->save(public_path() . '/reports/stock/' . $filename);
 
-        return '/reports/stock/' . $filename;
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+        $writer->save('php://output');
+
+        #return '/reports/stock/' . $filename;
     }
 
     public function receivingReport(Request $request){

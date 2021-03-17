@@ -44,6 +44,7 @@ class CreateTradeinTable extends Migration
             $table->float('carriage_cost');
             $table->float('admin_cost');
             $table->integer('pin_number')->nullable()->default(null);
+            $table->boolean('trade_pack_send_by_customer')->nullable();
             $table->timestamps();
         });
     }

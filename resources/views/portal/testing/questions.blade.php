@@ -58,7 +58,7 @@
                                     <div class="d-flex w-100">
                                         <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
                                             <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
-                                            <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                            <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
                                             <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                         </div>
                                         <div class="d-flex w-50 border p-3"><p>This device has been marked for quarantine because:</p><br>
@@ -97,7 +97,7 @@
                                         <div class="d-flex w-100">
                                             <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
                                                 <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
-                                                <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                                <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
                                                 <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                             </div>
                                             <div class="d-flex w-25 border p-3"><label for="missing-yes">Device is present.</label><input id="missing-yes" type="radio" name="missing" value="present" required></div>
@@ -136,7 +136,7 @@
                                                 <div class="d-flex w-100">
                                                     <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
                                                         <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
-                                                        <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                                        <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
                                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                                     </div>
                                                     <div class="d-flex w-25 border p-3"><label for="visible_imei_yes">Yes.</label><input id="visible_imei_yes" type="radio" name="visible_imei" value="yes" required></div>
@@ -177,7 +177,7 @@
                                                 <div class="d-flex w-100">
                                                     <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
                                                         <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
-                                                        <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                                        <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
                                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                                     </div>
                                                     <div class="d-flex w-50 border p-3"><input id="imei_number" type="number" name="imei_number" required title="15 characters required"></div>
@@ -211,7 +211,7 @@
                                                     <div class="d-flex w-100">
                                                         <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
                                                             <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
-                                                            <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                                            <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
                                                             <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                                         </div>
                                                         <div class="d-flex w-50 border p-3"><p>Device IMEI number is not visible and as such has been marked as risk.</p></div>
@@ -257,7 +257,7 @@
                                 <div class="d-flex w-100">
                                     <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
                                         <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
-                                        <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                     </div>
                                     <div class="d-flex w-50 border p-3"><p>Device has passed checkmend check, and is now ready for testing.</p></div>
@@ -285,7 +285,7 @@
                                 <div class="d-flex w-100">
                                     <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
                                         <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
-                                        <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                     </div>
                                     <div class="d-flex w-50 border p-3"><p>New label has been printed.</p></div>
@@ -327,7 +327,7 @@
                                 <div class="d-flex w-100">
                                     <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
                                         <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
-                                        <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                     </div>
                                     <div class="d-flex w-50 border p-3"><p>New label has been printed.</p></div>
@@ -358,7 +358,7 @@
                                 <div class="d-flex w-100">
                                     <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
                                         <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
-                                        <p class="mr-0 ml-0">User grade: {{$tradein->product_state}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                     </div>
                                     <div class="d-flex w-50 border p-3"><p>Device has been send to tray.</p></div>

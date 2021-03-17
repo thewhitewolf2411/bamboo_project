@@ -516,7 +516,6 @@ class TestingController extends Controller
         $newBarcode = "";
 
         $sellingProduct = SellingProduct::where('id', $tradein->product_id)->first();
-        $brands = Brand::all();
 
         if($tradein->isInQuarantine() === true){
             $newBarcode .= "90";
@@ -531,7 +530,7 @@ class TestingController extends Controller
             }
             else{
                 $newBarcode .= $tradein->job_state . $sellingProduct->brand_id;
-                mt_rand(1000, 9999);
+                $newBarcode .= mt_rand(1000, 9999);
             }
         }
 
@@ -539,6 +538,8 @@ class TestingController extends Controller
             $tradein->barcode = $newBarcode;
         }
         
+        #dd($tradein->barcode);
+
         // $tradein->save();
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 

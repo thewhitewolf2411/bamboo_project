@@ -83,9 +83,12 @@ class WarehouseManagementController extends Controller
         }
 
 
-        $locked = 'Unlocked';
+        $locked = null;
         if($request->network === 'l'){
             $locked = 'Locked';
+        }
+        elseif($request->network === 'u'){
+            $locked = 'Unlocked';
         }
 
         //$trayname = strtoupper(substr($manifacturer,0,1) . $request->reference . $request->network . $boxnumber);
@@ -611,6 +614,7 @@ class WarehouseManagementController extends Controller
 
         $filename = public_path() . "/pdf/baylabels/bay-" . $bay->trolley_name . ".pdf";
         $customPaper = array(0,0,141.90,283.80);
+        #dd($bay->getTrolleyBarcode());
         PDF::loadView('portal.labels.baylabel', array('bay'=>$bay))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
     
         return response("/pdf/baylabels/bay-" . $bay->trolley_name . ".pdf", 200);
