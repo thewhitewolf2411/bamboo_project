@@ -1029,22 +1029,27 @@
                                             @endif
     
                                             @if(Auth::user()->hasPaymentDetails())
-                                                <div class="row justify-content-start">
-                                                    <div class="col">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-3">
                                                         <p class="m-0">Name on account</p>
                                                         <p style="font-size: 20px;">{!!Auth::user()->accountName()!!}</p>
                                                     </div>
-                                                    <div class="col">
+                                                    <div class="col-2">
                                                         <p class="m-0">Account number</p>
                                                         <p style="font-size: 20px;">{!!Auth::user()->accountNumber()!!}</p>
                                                     </div>
-                                                    <div class="col">
+                                                    <div class="col-2">
                                                         <p class="m-0">Sort Code</p>
                                                         <p style="font-size: 20px;">{!!Auth::user()->sortCode()!!}</p>
                                                     </div>
+
+                                                    <div class="col-2">
+                                                        <p class="payment-price-label">Agreed Price</p>
+                                                        <p class="payment-agreed-price">£{!!$tradein->bamboo_price!!}</p>
+                                                    </div>
             
-                                                    <button type="button" class="btn btn-purple" style="color: white;" data-toggle="modal" data-target="#accountDetils">
-                                                        Re-enter details
+                                                    <button type="button" class="btn btn-purple payment-details-btn" style="color: white;" data-toggle="modal" data-target="#accountDetils">
+                                                        Re-enter details <img class="payment-pen-icon" src="{{asset('/images/pen.png')}}">
                                                     </button>
                                                 </div>
                                             @else

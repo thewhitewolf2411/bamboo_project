@@ -228,6 +228,7 @@ class QuarantineController extends Controller
         $tradeinNumbers = $request->all();
 
         $tradeinNumbers = array_values($tradeinNumbers);
+        $notificationService = new NotificationService();
 
         unset($tradeinNumbers[0]);
 
@@ -240,6 +241,9 @@ class QuarantineController extends Controller
             if($tradein != null){
                 $tradein->job_state = '20';
                 $tradein->save();
+
+                // send notification - marked for return
+                $notificationService->sendMarkedToReturn($tradein);
 
                 $traycontent = TrayContent::where('trade_in_id', $tiN)->first();
                 $traycontent->delete();

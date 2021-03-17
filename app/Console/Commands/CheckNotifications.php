@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Eloquent\Despatch\DespatchedDevice;
+use App\Eloquent\Payment\PaymentBatchDevice;
 use App\Eloquent\Tradein;
 use App\Services\NotificationService;
 use Carbon\Carbon;
@@ -43,8 +45,8 @@ class CheckNotifications extends Command
         // check blacklisted devices
         $this->checkBlacklistedDevices();
 
-        // check devices awaiting for despatch
-        $this->checkDevicesWaitingForDespatch();
+        // check devices awaiting for payment
+        $this->checkDevicesWaitingForPayment();
 
         return 0;
     }
@@ -67,12 +69,28 @@ class CheckNotifications extends Command
         }
     }
 
-    public function checkDevicesWaitingForDespatch(){
-        $tradeins = Tradein::where('job_state', '21')->get();
+
+    public function checkDevicesWaitingForPayment(){
+        $tradeins = Tradein::where('job_state', '24')->get();
+        $notificationService = new NotificationService();
         $now = Carbon::now();
+
         foreach($tradeins as $tradein){
-            
+            $payment_batch_device = PaymentBatchDevice::where('tradein_id', $tradein->id)->first();
+
+            $failed_at = $payment_batch_device->failed_at;
+            $diff = $now->diffInDays($failed_at);
+
+            // if bank details are not updated after 3 days
+            if($payment_batch_device->bank_details_updated_at === null && $diff === 3 && $diff < 6){
+                $notificationService->unsuccessfulPaymentReminder($tradein, 1);
+            }
+
+            // if bank details are not updated after 3 days
+            if($payment_batch_device->bank_details_updated_at === null && $diff >= 6){
+                $notificationService->unsuccessfulPaymentReminder($tradein, 2);
+            }
         }
-        dd($tradeins);
     }
+
 }

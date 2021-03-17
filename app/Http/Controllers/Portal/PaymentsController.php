@@ -15,6 +15,7 @@ use App\Eloquent\Payment\PaymentBatchDevice;
 use App\Eloquent\Payment\BatchDeviceEmail;
 use App\Services\BatchService;
 use App\Services\KlaviyoEmail;
+use App\Services\NotificationService;
 use App\Services\PaymentBatchService;
 use App\User;
 use Carbon\Carbon;
@@ -552,6 +553,7 @@ class PaymentsController extends Controller
      * Mark device payment as failed.
      */
     public function markAsFailed(Request $request){
+        $notificationService = new NotificationService();
         if(isset($request->ids)){
 
             $cheque_numbers = null;
@@ -591,6 +593,9 @@ class PaymentsController extends Controller
 
                         $user = User::find($tradein->user_id);
                         $klaviyo->paymentUnsuccesful($user, $tradein);
+
+                        // send notification - unsuccessful payment
+                        $notificationService->paymentUnsuccessful($tradein);
 
                         BatchDeviceEmail::create([
                             'type' => 2,

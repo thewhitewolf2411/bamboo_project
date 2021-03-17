@@ -12598,6 +12598,28 @@ main p, a, span {
   color: white;
 }
 
+.payment-price-label {
+  font-size: 14px;
+}
+
+.payment-agreed-price {
+  color: #f28e33;
+  font-family: Sharp Sans No1 Bold;
+  font-size: 30px;
+}
+
+.payment-details-btn {
+  display: flex;
+  flex-direction: row;
+  max-height: 40px;
+}
+
+.payment-pen-icon {
+  width: 21px;
+  height: 20px;
+  margin-left: 10px;
+}
+
 header {
   position: fixed;
   top: 0;

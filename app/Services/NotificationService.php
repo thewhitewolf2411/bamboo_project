@@ -17,7 +17,11 @@ class NotificationService {
         6,  // not received yet
         7,  // no imei
         8,  // missing device
-        9   // imei blacklisted
+        9,  // imei blacklisted
+        10, // marked to return
+        11, // sent to despatch
+        12, // testing notification
+        13, // unsuccessful payment
     ];
 
     public $states = [
@@ -35,7 +39,7 @@ class NotificationService {
                     'status'                => 'info',
                     'content'               => 'Welcome, thank you for choosing Bamboo Mobile.',
                     'order'                 => 1,
-                    'resolved'              => false
+                    'resolved'              => true
                 ]);
                 break;
             case 4:
@@ -46,7 +50,7 @@ class NotificationService {
                     'status'                => 'info',
                     'content'               => 'Order placed. Woohoo! Your order has been placed.',
                     'order'                 => 1,
-                    'resolved'              => false
+                    'resolved'              => true
                 ]);
                 break;
             case 5:
@@ -57,7 +61,7 @@ class NotificationService {
                     'status'                => 'info',
                     'content'               => 'Order placed. Woohoo! Your order has been placed, a Trade Pack will be sent out to you shortly.',
                     'order'                 => 1,
-                    'resolved'              => false
+                    'resolved'              => true
                 ]);
                 break;
             default:
@@ -153,6 +157,106 @@ class NotificationService {
                 'order'                 => 1,
                 'resolved'              => false
             ]);
+        }
+    }
+
+    public function sendMarkedToReturn($tradein){
+        Notification::create([
+            'user_id'               => $tradein->user_id,
+            'tradein_id'            => $tradein->id,
+            'type'                  => 10,
+            'status'                => 'info',
+            'content'               => 'Status Update: Order Cancelled ['.$tradein->barcode.'].',
+            'order'                 => 1,
+            'resolved'              => true
+        ]);    
+    }
+
+    public function sendDespatched($tradein){
+        Notification::create([
+            'user_id'               => $tradein->user_id,
+            'tradein_id'            => $tradein->id,
+            'type'                  => 11,
+            'status'                => 'info',
+            'content'               => 'Status Update: Your device has been returned to you.',
+            'order'                 => 1,
+            'resolved'              => true
+        ]);    
+    }
+
+    public function testingSuccess($tradein){
+        Notification::create([
+            'user_id'               => $tradein->user_id,
+            'tradein_id'            => $tradein->id,
+            'type'                  => 12,
+            'status'                => 'info',
+            'content'               => 'Status Update: Woohoo! Your device has successfully passed our tests.',
+            'order'                 => 1,
+            'resolved'              => true
+        ]);    
+    }
+
+    public function secondTestingSuccess($tradein){
+        Notification::create([
+            'user_id'               => $tradein->user_id,
+            'tradein_id'            => $tradein->id,
+            'type'                  => 12,
+            'status'                => 'info',
+            'content'               => 'Status Update: Woohoo! Your device has successfully passed our tests.',
+            'order'                 => 1,
+            'resolved'              => true
+        ]);    
+    }
+
+    public function sendTestingFailed($tradein, $reason){
+        Notification::create([
+            'user_id'               => $tradein->user_id,
+            'tradein_id'            => $tradein->id,
+            'type'                  => 12,
+            'status'                => 'alert',
+            'content'               => $reason,
+            'order'                 => 1,
+            'resolved'              => false
+        ]);    
+    }
+
+    public function paymentUnsuccessful($tradein){
+        Notification::create([
+            'user_id'               => $tradein->user_id,
+            'tradein_id'            => $tradein->id,
+            'type'                  => 13,
+            'status'                => 'alert',
+            'content'               => 'Payment was unsuccessful.',
+            'order'                 => 1,
+            'resolved'              => false
+        ]); 
+    }
+
+    public function unsuccessfulPaymentReminder($tradein, $order){
+        $notifications_count = Notification::where('tradein_id', $tradein->id)->where('user_id', $tradein->user_id)->where('type', 13)->get()->count();
+
+        if($order === 1 && $notifications_count === 1){
+            Notification::create([
+                'user_id'               => $tradein->user_id,
+                'tradein_id'            => $tradein->id,
+                'type'                  => 13,
+                'status'                => 'alert',
+                'content'               => 'We still need your payment details.',
+                'order'                 => 2,
+                'resolved'              => false
+            ]); 
+        }
+
+        if($order === 2 && $notifications_count === 2){
+            Notification::create([
+                'user_id'               => $tradein->user_id,
+                'tradein_id'            => $tradein->id,
+                'type'                  => 13,
+                'status'                => 'alert',
+                'content'               => 'Correct payment details still not received. Cheque has been despatched.',
+                'order'                 => 3,
+                'resolved'              => false
+            ]); 
         }
     }
 }
