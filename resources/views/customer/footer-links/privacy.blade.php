@@ -25,7 +25,7 @@
         <header>@include('customer.layouts.header')</header>
         <main>
 
-
+        
 
         <div class="app">
                 <div class="enviroment-title-container">
@@ -84,6 +84,10 @@
                         <input class="email-input" type="email" placeholder="Enter email address here">
                         <input class="email-submit" type="submit" value="Sign me up!">
             
+                        <div class="terms-container">
+                            <input type="checkbox" class="mx-3" id="terms" name="terms" required>
+                            <label for="terms">I agree to Bamboo Mobile <a href="/terms">Terms and Conditions</a></label>
+                        </div>
                     </form>
             
                 </div>

@@ -295,9 +295,14 @@ class WarehouseManagementController extends Controller
         
         $boxname = $request->boxid;
         $tray = Tray::where('id', $boxname)->first();
-        $tray->status = 3;
+        
 
         $boxContent = TrayContent::where('pseudo_tray_id', $request->boxid)->get();
+        if(count($boxContent) === 0){
+            return response("Can't close the empty box!", 400);
+        }
+
+        $tray->status = 3;
         $tradeins = $boxContent->pluck('trade_in_id')->toArray();
 
         foreach($boxContent as $bC){

@@ -17,6 +17,8 @@ use Session;
 use App\Services\BinService;
 use App\Services\KlaviyoEmail;
 use App\Services\NotificationService;
+use App\Services\MoveToTray;
+use App\Services\Testing;
 use App\User;
 
 class QuarantineController extends Controller
@@ -157,7 +159,7 @@ class QuarantineController extends Controller
             $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
             $newTray = Tray::where('id', $newTrayId)->first();
 
-            if($newTray->tray_brand !== $tradein->getBrandLetter($tradein->product_id)){
+            if(!MoveToTray::checkTrayValidity($request, $tradein, $newTray)){
                 return redirect()->back()->with('error', 'Order no ' . $tradein->barcode .  ' cannot be placed in this tray.');
             }
             else{
@@ -184,7 +186,7 @@ class QuarantineController extends Controller
                 elseif($newTray->tray_type === 'T'){
                     $tradein->job_state = '12';
                 }
-
+                $tradein->location_changed_at = \Carbon\Carbon::now();
                 $tradein->save();
             }
         }
@@ -280,6 +282,10 @@ class QuarantineController extends Controller
         if($request->val === '8e'){
             $klaviyoemail = new KlaviyoEmail();
             $klaviyoemail->blacklisted($user, $tradein);
+
+            $testingClass = new Testing();
+            $bambooPrice = $testingClass->generateDevicePrice($tradein->product_id, $tradein->customer_memory, $tradein->customer_network, 1);
+            $tradein->bamboo_price = $bambooPrice;
 
             $tradein->quarantine_reason = "Knox";
         }
@@ -431,6 +437,9 @@ class QuarantineController extends Controller
             $traycontent->tray_id = $bin->id;
             $traycontent->trade_in_id = $tradein->id;
             $traycontent->save();
+
+            $tradein->location_changed_at = \Carbon\Carbon::now();
+            $tradein->save();
         }
 
         return redirect()->back()->with('success', 'All devices have been moved to ' . $bin->tray_name);

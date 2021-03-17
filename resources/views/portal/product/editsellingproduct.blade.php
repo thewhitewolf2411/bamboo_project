@@ -171,6 +171,7 @@
                                             @foreach($colors as $color)
                                             <td><div class="table-element"><input class="table-element" type="text" name="color_{{$color->id}}" value="{{$color->color_value}}"></div></td>
                                             @endforeach
+                                            <td><div class="table-element"><input class="table-element" type="text" name="color_new" placeholder="Add new colour"></div></td>
                                         </tr>
                                     </table>
 

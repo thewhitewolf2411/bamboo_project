@@ -28,30 +28,6 @@ $('#generate-stock-report-btn').on('click', function(){
 
 });
 
-$('#generate-receiving-report-btn').on('click', function(){
-
-    $.ajax({
-        url: "/portal/reports/getreceivingreport",
-        type:"POST",
-        success:function(response){
-            window.open(response, "_blank");
-        },
-    });
-
-});
-
-$('#generate-testing-report-btn').on('click', function(){
-
-    $.ajax({
-        url: "/portal/reports/gettestingreport",
-        type:"POST",
-        success:function(response){
-            window.open(response, "_blank");
-        },
-    });
-
-});
-
 $('#generate-recycle-report-btn').on('click', function(){
 
     $.ajax({

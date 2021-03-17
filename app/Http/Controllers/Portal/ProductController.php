@@ -402,7 +402,13 @@ class ProductController extends Controller
     }
 
     public function saveEditedSellingProduct(Request $request){
-        #dd($request->all());
+
+        if(isset($request->color_new)){
+            Colour::create([
+                'product_id'=>$request->product_id,
+                'color_value'=>$request->color_new
+            ]);
+        }
 
         $product = SellingProduct::where('id', $request->product_id)->first();
         $product->product_name = $request->product_name;

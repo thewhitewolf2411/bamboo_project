@@ -13,6 +13,8 @@ use App\Eloquent\Payment\PaymentBatchDevice;
 use App\Eloquent\Payment\UserBankDetails;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
+use App\Eloquent\Trolley;
+use App\Eloquent\TrolleyContent;
 use App\Services\DespatchService;
 use App\Services\NotificationService;
 use App\User;
@@ -172,9 +174,20 @@ class Tradein extends Model
     public function getTrayName($id){
         #dd($id);
         $trayid = TrayContent::where('trade_in_id', $id)->first();
+
         if($trayid !== null && TrayContent::where('trade_in_id', $id)->first()->tray_id !== 0){
             $trayid = $trayid->tray_id;
-            $trayname = Tray::where('id', $trayid)->first()->tray_name;
+            $tray = Tray::where('id', $trayid)->first();
+
+            if($tray->trolley_id !== null){
+                $trolley = Trolley::where('id', $tray->trolley_id)->first();
+                if($trolley->trolley_type === "B"){
+                    return $trolley->trolley_name;
+                }
+            }
+
+            $trayname = $tray->tray_name;
+
             return $trayname;
         }
         else{
@@ -737,7 +750,7 @@ class Tradein extends Model
 
     public function isInTesting(){
         $testing_states = [
-            '10', '11', '12', '13', '15', 
+            '9', '10', '11', '12', '13', '15', '16',
             '11a', '11b', '11c', '11d', '11e', '11f', '11g', '11h', '11i', '11j',
             '15a', '15b', '15c', '15d', '15e', '15f', '15g', '15h', '15i', '15j'
         ];
@@ -991,5 +1004,11 @@ class Tradein extends Model
                 # code...
                 break;
         }
+    }
+    
+    public function getLastProcessorName(){
+        $audit = TradeinAudit::where('tradein_id', $this->id)->orderBy('created_at', 'desc')->first();
+        $user = User::find($audit->user_id);
+        return $user->first_name . " " . $user->last_name;
     }
 }

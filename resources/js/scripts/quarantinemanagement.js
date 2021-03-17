@@ -314,6 +314,10 @@ $('#complete-box').on('click', function(){
                 window.open(response);
                 location.href = '/portal/warehouse-management/box-management/';
             },
+            error:function(response){
+                console.log(response);
+                alert(response.responseText);
+            }
         });
     }
 });

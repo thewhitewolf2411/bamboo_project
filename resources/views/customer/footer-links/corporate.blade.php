@@ -26,6 +26,14 @@
         <main>
 
 
+            <div class="app">
+
+                <div class="container">
+
+                </div>
+
+            </div>
+
             @if(session('showLogin') || $errors->all())
                 <script>
                     $(window).on('load',function(){
