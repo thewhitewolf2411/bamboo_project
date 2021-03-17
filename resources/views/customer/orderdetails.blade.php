@@ -434,25 +434,31 @@
                                     <div class="line-bottom"></div>
                                     <div class="collapse" id="collapseDeliveryDetails">
                                         <div class="row p-4">
-                                            <div class="label-print-type m-2" id="bambooprinttype" onclick="toggleLabelPrintType('bamboo')">
-                                                <div class="col p-0">
-                                                    <img class="label-print-svg" src="{{asset('/customer_page_images/body/free_bamboo_trade_pack.svg')}}">
-                                                    <p class="label-print-text">FREE bamboo <br>Trade Pack</p>
-                                                    <img class="label-select-svg" id="bamboo-print-selected" src="{{asset('/customer_page_images/body/orange_deselected.svg')}}">
+
+                                            @if($tradein->trade_pack_send_by_customer === 0)
+                                                <div class="label-print-type selected m-2">
+                                                    <div class="col p-0">
+                                                        <img class="label-print-svg" src="{{asset('/customer_page_images/body/free_bamboo_trade_pack.svg')}}">
+                                                        <p class="label-print-text">FREE bamboo <br>Trade Pack</p>
+                                                        <img class="label-select-svg" id="bamboo-print-selected" src="{{asset('/customer_page_images/body/orange_selected.svg')}}">
+                                                    </div>
+
+                                                    <a class="btn-purple sale-detail-btn mt-4" id="call-print-bamboo" href="#"><p>Re-Print Label</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
                                                 </div>
+                                            @endif
 
-                                                <a class="btn-purple sale-detail-btn mt-4 hidden" id="call-print-bamboo" href="#"><p>Re-Print Label</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
-                                            </div>
-                                            <div class="label-print-type m-2" id="ownprinttype" onclick="toggleLabelPrintType('own')">
-                                                <div class="col p-0">
-                                                    <img class="label-print-svg" src="{{asset('/customer_page_images/body/free_print_own_label.svg')}}">
-                                                    <p class="label-print-text">FREE print your <br>own label</p>
-                                                    <img class="label-select-svg" id="own-print-selected" src="{{asset('/customer_page_images/body/orange_deselected.svg')}}">
+                                            @if($tradein->trade_pack_send_by_customer === 1)
+                                                <div class="label-print-type selected m-2">
+                                                    <div class="col p-0">
+                                                        <img class="label-print-svg" src="{{asset('/customer_page_images/body/free_print_own_label.svg')}}">
+                                                        <p class="label-print-text">FREE print your <br>own label</p>
+                                                        <img class="label-select-svg" id="own-print-selected" src="{{asset('/customer_page_images/body/orange_selected.svg')}}">
+                                                    </div>
+
+                                                    <a class="btn-purple sale-detail-btn mt-4" id="call-print-own" href="#"><p>Re-Print Label</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
                                                 </div>
+                                            @endif
 
-                                                <a class="btn-purple sale-detail-btn mt-4 hidden" id="call-print-own" href="#"><p>Re-Print Label</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
-
-                                            </div>
                                             <div class="col">
                                                 <p class="delivery-info-dates-label">Date Posted</p>
                                                 <p class="delivery-info-dates-bold">{!!$tradein->created_at->format('d M, Y')!!}</p>
@@ -1275,55 +1281,6 @@
                 break;
             case 'sales-payment':
                 $('#collapsePayment').collapse('show');
-                break;
-            default:
-                break;
-        }
-    }
-
-
-    function toggleLabelPrintType(type){
-        let owndiv = document.getElementById('ownprinttype');
-        let ownselected = document.getElementById('own-print-selected');
-        let bamboodiv = document.getElementById('bambooprinttype');
-        let bambooselected = document.getElementById('bamboo-print-selected');
-        let callprintown = document.getElementById('call-print-own');
-        let callprintbamboo = document.getElementById('call-print-bamboo');
-
-        switch (type) {
-            case 'own':
-                if(!owndiv.classList.contains('selected')){
-                    owndiv.classList.add('selected');
-                    ownselected.src = "/customer_page_images/body/orange_selected.svg";
-                }
-                if(bamboodiv.classList.contains('selected')){
-                    bamboodiv.classList.remove('selected');
-                    bambooselected.src = "/customer_page_images/body/orange_deselected.svg";
-                }
-
-                if(!callprintbamboo.classList.contains('hidden')){
-                    callprintbamboo.classList.add('hidden');
-                }
-                if(callprintown.classList.contains('hidden')){
-                    callprintown.classList.remove('hidden');
-                }
-                break;
-            case 'bamboo':
-                if(!bamboodiv.classList.contains('selected')){
-                    bamboodiv.classList.add('selected');
-                }
-                if(owndiv.classList.contains('selected')){
-                    owndiv.classList.remove('selected');
-                }
-                ownselected.src = "/customer_page_images/body/orange_deselected.svg";
-                bambooselected.src = "/customer_page_images/body/orange_selected.svg";
-                
-                if(!callprintown.classList.contains('hidden')){
-                    callprintown.classList.add('hidden');
-                }
-                if(callprintbamboo.classList.contains('hidden')){
-                    callprintbamboo.classList.remove('hidden');
-                }
                 break;
             default:
                 break;
