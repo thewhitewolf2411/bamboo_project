@@ -8,6 +8,7 @@ use App\Eloquent\Tradein;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\DespatchService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -120,6 +121,7 @@ class DespatchController extends Controller
                     $despatchDevice = DespatchedDevice::where('tradein_id', $tradein->id)->first();
                     if($tradein->job_state === '20' && $despatchDevice){
                         if($tradein->tracking_reference !== null){
+                            $despatchDevice->despatched_at = Carbon::now();
                             $tradein->job_state = '21';
                             $tradein->save();
                             array_push($success, 'Tradein ' . $tradein->barcode . ' despatch confirmed succesfully.');

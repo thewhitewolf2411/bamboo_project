@@ -355,7 +355,6 @@ class DespatchService {
      * Check if order has been manifested.
      */
     public function checkIfManifested($order_identifier){
-
         $ch = curl_init( "https://api.parcel.royalmail.com/api/v1/orders/".$order_identifier );
         curl_setopt( $ch, CURLOPT_HTTPHEADER, array(
             'Content-Type:application/json',
