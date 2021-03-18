@@ -41,7 +41,7 @@ class Tradein extends Model
         'user_id', 'barcode','barcode_original','product_id', 'correct_product_id','customer_grade',
         'bamboo_grade', 'job_state', 'order_price','bamboo_price','customer_memory','customer_network',
         'correct_memory','correct_network', 'product_colour', 'missing_image', 'imei_number', 'serial_number',
-        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 'pin_number',
+        'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 'pin_pattern_number',
         'expiry_date', 'location_changed_at', 'trade_pack_send_by_customer'
     ];
 
@@ -229,7 +229,7 @@ class Tradein extends Model
     }
 
     public function isGoogleLocked(){
-        if($this->job_state === '11a' || $this->job_state === '11b' || $this->job_state === '11a' || $this->job_state === '11b'){
+        if($this->job_state === '11b' || $this->job_state === '15b'){
             return true;
         }
         return false;
@@ -394,7 +394,7 @@ class Tradein extends Model
     }
 
     public function isFimpLocked(){
-        $matches = ["11a", "11b", "15a", "15b"];
+        $matches = ["11a", "15a"];
 
         if(in_array($this->job_state, $matches)){
             return true;
@@ -812,8 +812,8 @@ class Tradein extends Model
 
     public function hasFailedTesting(){
         $testing_faults = [
-            '11a', '11b', '11c', '11d', '11e', '11f', '11h', '11i',     // first testing
-            '15a', '15b', '15c', '15d', '15e', '15f', '15h', '15i'      // second testing
+            '11a', '11b', '11c', '11d', '11e', '11f', '11g', '11h', '11i',     // first testing
+            '15a', '15b', '15c', '15d', '15e', '15f', '15g', '15h', '15i'      // second testing
         ];
         if(in_array($this->job_state, $testing_faults)){
             return true;
@@ -884,8 +884,7 @@ class Tradein extends Model
     }
 
     public function isDowngraded(){
-        dd('oops tradein 841');
-        if($this->customer_grate !== $this->bamboo_grade){
+        if($this->customer_grade !== $this->bamboo_grade){
             return true;
         }
         return false;
@@ -899,7 +898,7 @@ class Tradein extends Model
             return 'Google Activation Lock still active';
         }
         if($this->isPinLocked()){
-            return 'PIN number not provided';
+            return 'Pattern/PIN number not provided';
         }
         return null;
     }

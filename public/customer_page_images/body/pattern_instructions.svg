@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="199" height="388" viewBox="0 0 199 388">
+  <g id="Group_2817" data-name="Group 2817" transform="translate(-652 -639)">
+    <g id="Group_2813" data-name="Group 2813" transform="translate(-5725 17825)">
+      <g id="Rectangle_880" data-name="Rectangle 880" transform="translate(6377 -17186)" fill="none" stroke="#f28e33" stroke-width="5">
+        <rect width="199" height="388" rx="28" stroke="none"/>
+        <rect x="2.5" y="2.5" width="194" height="383" rx="25.5" fill="none"/>
+      </g>
+      <line id="Line_331" data-name="Line 331" x2="194" transform="translate(6377.5 -17152.5)" fill="none" stroke="#f28e33" stroke-width="5"/>
+      <line id="Line_332" data-name="Line 332" x2="194" transform="translate(6377.5 -16832.5)" fill="none" stroke="#f28e33" stroke-width="5"/>
+    </g>
+    <circle id="Ellipse_87" data-name="Ellipse 87" cx="22" cy="22" r="22" transform="translate(671 730)" fill="#8973a4"/>
+    <circle id="Ellipse_95" data-name="Ellipse 95" cx="22" cy="22" r="22" transform="translate(671 892)" fill="#8973a4"/>
+    <circle id="Ellipse_88" data-name="Ellipse 88" cx="22" cy="22" r="22" transform="translate(730 730)" fill="#8973a4"/>
+    <circle id="Ellipse_91" data-name="Ellipse 91" cx="22" cy="22" r="22" transform="translate(730 811)" fill="#8973a4"/>
+    <circle id="Ellipse_94" data-name="Ellipse 94" cx="22" cy="22" r="22" transform="translate(730 892)" fill="#8973a4"/>
+    <circle id="Ellipse_89" data-name="Ellipse 89" cx="22" cy="22" r="22" transform="translate(789 730)" fill="#8973a4"/>
+    <circle id="Ellipse_93" data-name="Ellipse 93" cx="22" cy="22" r="22" transform="translate(789 892)" fill="#8973a4"/>
+    <path id="Path_875" data-name="Path 875" d="M4467.236-17262.1h118.946l-118.946,161.391h114.569" transform="translate(-3773 18015)" fill="none" stroke="#f28e33" stroke-linecap="round" stroke-linejoin="round" stroke-width="7"/>
+    <text id="_1" data-name="1" transform="translate(694 762)" fill="#fff" font-size="26" font-family="SegoeUI, Segoe UI"><tspan x="-7.008" y="0">1</tspan></text>
+    <g id="Group_2816" data-name="Group 2816" opacity="0.4">
+      <circle id="Ellipse_92" data-name="Ellipse 92" cx="22" cy="22" r="22" transform="translate(671 811)" fill="#8973a4"/>
+      <text id="_4" data-name="4" transform="translate(692 843)" fill="#fff" font-size="26" font-family="SegoeUI, Segoe UI"><tspan x="-7.008" y="0">4</tspan></text>
+    </g>
+    <text id="_7" data-name="7" transform="translate(692 924)" fill="#fff" font-size="26" font-family="SegoeUI, Segoe UI"><tspan x="-7.008" y="0">7</tspan></text>
+    <text id="_2" data-name="2" transform="translate(752 762)" fill="#fff" font-size="26" font-family="SegoeUI, Segoe UI"><tspan x="-7.008" y="0">2</tspan></text>
+    <text id="_5" data-name="5" transform="translate(752 843)" fill="#fff" font-size="26" font-family="SegoeUI, Segoe UI"><tspan x="-7.008" y="0">5</tspan></text>
+    <text id="_8" data-name="8" transform="translate(752 924)" fill="#fff" font-size="26" font-family="SegoeUI, Segoe UI"><tspan x="-7.008" y="0">8</tspan></text>
+    <text id="_3" data-name="3" transform="translate(810 762)" fill="#fff" font-size="26" font-family="SegoeUI, Segoe UI"><tspan x="-7.008" y="0">3</tspan></text>
+    <g id="Group_2815" data-name="Group 2815" opacity="0.4">
+      <circle id="Ellipse_90" data-name="Ellipse 90" cx="22" cy="22" r="22" transform="translate(789 811)" fill="#8973a4"/>
+      <text id="_6" data-name="6" transform="translate(810 843)" fill="#fff" font-size="26" font-family="SegoeUI, Segoe UI"><tspan x="-7.008" y="0">6</tspan></text>
+    </g>
+    <text id="_9" data-name="9" transform="translate(810 924)" fill="#fff" font-size="26" font-family="SegoeUI, Segoe UI"><tspan x="-7.008" y="0">9</tspan></text>
+  </g>
+</svg>

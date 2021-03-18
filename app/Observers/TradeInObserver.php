@@ -28,7 +28,8 @@ class TradeInObserver
             'bamboo_grade' => null,
             'value' => $tradein->order_price,
             'stock_location' => $tradein->getTrayName($tradein->id),
-            'cheque_number' => null
+            'cheque_number' => null,
+            'pin_pattern_number' => null
         ]);
         // TradeinAudit::create([
         //     'tradein_id'    => $tradein->id,
@@ -64,7 +65,8 @@ class TradeInObserver
             'bamboo_grade' => $tradein->cosmetic_condition,
             'value' => ($tradein->bamboo_price !== null) ? (string)$tradein->bamboo_price : (string)$tradein->order_price,
             'stock_location' => $tradein->getTrayName($tradein->id),
-            'cheque_number' => $tradein->cheque_number
+            'cheque_number' => $tradein->cheque_number,
+            'pin_pattern_number' => $tradein->pin_pattern_number
         ]);
 
         $can_store_audit = false;
@@ -109,6 +111,10 @@ class TradeInObserver
                 //echo 'tray';
             }
             if($last_audit->cheque_number !== $audit->cheque_number){
+                $can_store_audit = true;
+                //echo 'tray';
+            }
+            if($last_audit->pin_pattern_number !== $audit->pin_pattern_number){
                 $can_store_audit = true;
                 //echo 'tray';
             }

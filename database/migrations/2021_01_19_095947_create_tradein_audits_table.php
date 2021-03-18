@@ -27,6 +27,7 @@ class CreateTradeinAuditsTable extends Migration
             $table->string('value', 255);
             $table->string('stock_location', 255)->nullable();
             $table->string('cheque_number', 255)->nullable();
+            $table->string('pin_pattern_number', 255)->nullable();
             $table->timestamps();
         });
     }

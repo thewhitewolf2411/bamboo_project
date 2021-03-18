@@ -22,6 +22,7 @@ class NotificationService {
         11, // sent to despatch
         12, // testing notification
         13, // unsuccessful payment
+        14, // trade pack received after 14 days
     ];
 
     public $states = [
@@ -48,7 +49,7 @@ class NotificationService {
                     'tradein_id'            => $tradein->id,
                     'type'                  => $type,
                     'status'                => 'info',
-                    'content'               => 'Order placed. Woohoo! Your order has been placed.',
+                    'content'               => 'Status update: Order placed. Woohoo! Your order has been placed.',
                     'order'                 => 1,
                     'resolved'              => true
                 ]);
@@ -59,7 +60,7 @@ class NotificationService {
                     'tradein_id'            => $tradein->id,
                     'type'                  => $type,
                     'status'                => 'info',
-                    'content'               => 'Order placed. Woohoo! Your order has been placed, a Trade Pack will be sent out to you shortly.',
+                    'content'               => 'Status update: Order placed. Woohoo! Your order has been placed, a Trade Pack will be sent out to you shortly.',
                     'order'                 => 1,
                     'resolved'              => true
                 ]);
@@ -258,5 +259,17 @@ class NotificationService {
                 'resolved'              => false
             ]); 
         }
+    }
+
+    public function receivedAfterFourteenDays($tradein){
+        Notification::create([
+            'user_id'               => $tradein->user_id,
+            'tradein_id'            => $tradein->id,
+            'type'                  => 14,
+            'status'                => 'alert',
+            'content'               => 'Trade pack received after 14 days. A new offer has been sent.',
+            'order'                 => 1,
+            'resolved'              => false
+        ]); 
     }
 }

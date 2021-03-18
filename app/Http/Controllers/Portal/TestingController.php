@@ -146,6 +146,7 @@ class TestingController extends Controller
         #dd($request);
 
         $tradein = Tradein::where('id', $request->tradein_id)->first();
+        $notificationService = new NotificationService();
 
         $expiryDate = Carbon::parse($tradein->expiry_date);
         $daysToExpiry = Carbon::now()->diffInDays($expiryDate, false);
@@ -187,8 +188,10 @@ class TestingController extends Controller
                 $tradein->job_state = "11j";
                 $tradein->save();
                 array_push($message, "This order has been identified by system as older than 14 days and has been marked for quarantine. Please confirm this.");
+
+                // send notification - trade pack received after 14 days
+                $notificationService->receivedAfterFourteenDays($tradein);
             }
-       
         }
 
         if($request->missing == "missing"){

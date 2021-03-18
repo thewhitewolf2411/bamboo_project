@@ -526,6 +526,7 @@
                                 <td><div class="table-element">Value</div></td>
                                 <td><div class="table-element text-center">Stock Location</div></td>
                                 <td><div class="table-element">Cheque Number</div></td>
+                                <td><div class="table-element">Pattern/PIN</div></td>
                                 <td></td>
                             </tr>
                             @foreach($tradein->audit_records as $audit)
@@ -542,6 +543,7 @@
                                 <td><div class="table-element text-center">£ {{$audit->value}}</div></td>
                                 <td><div class="table-element text-center">{{$audit->stock_location}}</div></td>
                                 <td><div class="table-element">{{$audit->cheque_number}}</div></td>
+                                <td><div class="table-element">{{$audit->pin_pattern_number}}</div></td>
                                 <td @if(Auth::user()->admin()) @if($audit->notes_count > 0) style="background: #f1f15f" @endif @endif>
                                     <div class="add-note-button" @if(Auth::user()->admin()) data-toggle="modal" data-target="#noteModal" onclick="openNoteModal({{$audit}})" @endif>&nbsp;+&nbsp;</div>
                                 </td>

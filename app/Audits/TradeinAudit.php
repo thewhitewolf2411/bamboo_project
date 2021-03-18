@@ -33,7 +33,8 @@ class TradeinAudit extends Model
         'bamboo_grade',
         'value',
         'stock_location',
-        'cheque_number'
+        'cheque_number',
+        'pin_pattern_number'
     ];
 
     public function getProduct(){

@@ -103,6 +103,7 @@
                                         @foreach($notifications as $notification)
                                             <div class="notification-card @if($notification->status === 'alert') red-border @endif">
                                                 @if($notification->status === 'alert')<img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">@endif
+                                                @if($notification->status === 'info')<img class="notification-green-img mr-4 ml-2" src="{{asset('/customer_page_images/body/green_bell.svg')}}">@endif
                                                 {{$notification->content}}
                                             </div>
                                             <div class="notification-card-border"></div>
@@ -432,6 +433,7 @@
                                         @foreach($notifications as $notification)
                                             <div class="notification-card @if($notification->status === 'alert') red-border @endif">
                                                 @if($notification->status === 'alert')<img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">@endif
+                                                @if($notification->status === 'info')<img class="notification-green-img mr-4 ml-2" src="{{asset('/customer_page_images/body/green_bell.svg')}}">@endif
                                                 {{$notification->content}}
                                             </div>
                                         @endforeach

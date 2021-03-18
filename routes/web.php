@@ -49,6 +49,12 @@ Route::post('/userprofile/updatepersonalinfo', 'Customer\CustomerController@upda
 Route::post('/userprofile/changepass', 'Customer\CustomerController@changePass')->middleware('auth');
 Route::post('/userprofile/updatecommunications', 'Customer\CustomerController@updateCommunications')->middleware('auth');
 Route::post('/userprofile/adddevicepin', 'Customer\CustomerController@addDevicePIN')->middleware('auth')->name('addDevicePIN');
+Route::post('/userprofile/addDevicePattern', 'Customer\CustomerController@addDevicePattern')->middleware('auth')->name('addDevicePattern');
+
+Route::get('/userprofile/acceptoffer/{id}', 'Customer\CustomerController@acceptFaultyOffer')->middleware('auth')->name('acceptFaultyOffer');
+Route::get('/userprofile/sendtoretest/{id}', 'Customer\CustomerController@sendToRetesting')->middleware('auth')->name('retestDevice');
+Route::get('/userprofile/returndevice/{id}', 'Customer\CustomerController@returnDevice')->middleware('auth')->name('returnDevice');
+
 
 
 Route::get('/products/{category}', 'Customer\CustomerController@customerCategoryView')->name('customerproducts');

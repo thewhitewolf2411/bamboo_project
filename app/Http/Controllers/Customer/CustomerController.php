@@ -361,6 +361,120 @@ class CustomerController extends Controller
         return view('customer.orderdetails', ['tradein' => $tradein, 'notifications' => $notifications]);
     }
 
+    /**
+     * Accept faulty offfer.
+     */
+    public function acceptFaultyOffer($tradein_id){
+        $tradein = Tradein::findOrFail($tradein_id);
+
+        switch ($tradein->job_state) {
+            // no imei
+            case '6':
+                // set notification as resolved
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 7)->first();
+                $notification->resolved = true;
+                $notification->save();
+
+                // set state to test complete
+                $tradein->job_state = '12';
+                $tradein->save();
+
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                break;
+            
+            // incorrect network
+            case '15g':
+                // set notification as resolved
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+
+                // set state to test complete
+                $tradein->job_state = '12';
+                $tradein->save();
+
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                break;
+
+            // fmip
+            case '15a':
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+
+                // set state to test complete
+                $tradein->job_state = '12';
+                $tradein->save();
+
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                break;
+
+            // glock
+            case '15b':
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+
+                // set state to test complete
+                $tradein->job_state = '12';
+                $tradein->save();
+
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                break;
+            default:
+                # code...
+                break;
+        }
+    }
+
+    /**
+     * Send device to retesting.
+     */
+    public function sendToRetesting($tradein_id){
+        $tradein = Tradein::findOrFail($tradein_id);
+        switch ($tradein->job_state) {
+            // fmip
+            case '15a':
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+                break;
+            // glock
+            case '15b':
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+                break;
+            default:
+                # code...
+                break;
+        }
+        // send device to retesting
+        $tradein->job_state = '13';
+        $tradein->save();
+
+        return redirect()->back()->with('success', 'Success. Device sent to retesting.');
+    }
+
+
+    /**
+     * Return device to customer.
+     */
+    public function returnDevice($tradein_id){
+        $tradein = Tradein::findOrFail($tradein_id);
+
+        $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+        $notification->resolved = true;
+        $notification->save();
+
+        // mark device send to customer
+        $tradein->job_state = '19';
+        $tradein->save();
+
+        return redirect()->back()->with('success', 'Device marked for return.');
+    }
+
+
     public function showWishlist(){
 
         if(!Auth::user()){
@@ -587,10 +701,20 @@ class CustomerController extends Controller
     public function addDevicePIN(Request $request){
         if(isset($request->pin) && isset($request->tradein)){
             $tradein = Tradein::find($request->tradein);
-            $tradein->pin_number = $request->pin;
+            $tradein->pin_pattern_number = $request->pin;
             $tradein->job_state = '9';
             $tradein->save();
             return redirect()->back()->with('success', 'Device PIN added successfuly. Device sent to testing.');
+        }
+    }
+
+    public function addDevicePattern(Request $request){
+        if(isset($request->pattern) && isset($request->tradein)){
+            $tradein = Tradein::find($request->tradein);
+            $tradein->pin_pattern_number = $request->pattern;
+            $tradein->job_state = '9';
+            $tradein->save();
+            return redirect()->back()->with('success', 'Device Pattern added successfuly. Device sent to testing.');
         }
     }
 }

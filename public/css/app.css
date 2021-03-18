@@ -11969,7 +11969,7 @@ main p, a, span {
   background: #a9a9a9;
 }
 
-.notification-error-img {
+.notification-error-img, .notification-green-img {
   width: 24px;
 }
 
@@ -12618,6 +12618,75 @@ main p, a, span {
   width: 21px;
   height: 20px;
   margin-left: 10px;
+}
+
+#select-lock-option {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.or-center {
+  margin: 0;
+  font-size: 26px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+#select-pattern-lock, #select-pin-lock {
+  text-align: center;
+  margin: 15px;
+  cursor: pointer;
+  width: 200px;
+  height: 200px;
+}
+
+#select-pattern-lock:hover, #select-pin-lock:hover {
+  border: 3px solid #f28e33;
+  border-radius: 3px;
+}
+
+#select-pattern-lock > p, #select-pin-lock > p {
+  font-size: 26px;
+  margin-top: 5px;
+}
+
+#pattern-lock, #pin-lock {
+  padding: 25px;
+}
+
+.pattern-lock-img, .pin-lock-img {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+}
+
+#select-lock-back {
+  cursor: pointer;
+  display: flex;
+  width: 85px;
+}
+
+#select-lock-back > p {
+  margin: 0;
+  margin-left: 10px;
+  font-size: 15px;
+  margin-top: 3px;
+}
+
+.back-locks-img {
+  width: 30px;
+  height: 30px;
+}
+
+.patern-sequence-info {
+  text-align: center;
+}
+
+.pattern-text-description {
+  font-size: 16px;
+  max-width: 227px;
+  margin-top: 15px;
 }
 
 header {
