@@ -12996,7 +12996,7 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 150px;
+  width: 160px;
 }
 
 .footer-row-6 a {
@@ -13011,7 +13011,7 @@ footer {
 }
 
 .footer-row-6 span {
-  font-family: Bebas Neue;
+  font-family: Bebas Neue, Helvetica, sans-serif;
 }
 
 .footer-social-icons-container {
@@ -13175,7 +13175,7 @@ body {
   font-family: Sharp Sans No1 Book;
 }
 
-a, p, label {
+a, p, label, ul, li {
   margin: 0 auto;
   font-size: 9pt;
   font-family: Sharp Sans No1 Book;

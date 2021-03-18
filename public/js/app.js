@@ -55951,6 +55951,26 @@ $('.printboxsummary').on('click', function () {
     }
   });
 });
+$('#newtray').on('change', function () {
+  var newTrayId = $(this).val();
+  console.log(newTrayId);
+  $.ajax({
+    url: "/portal/quarantine/check-allocation",
+    type: "POST",
+    data: {
+      newTrayId: newTrayId
+    },
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(data, textStatus, xhr) {
+      $('#submitallocation').prop("disabled", false);
+    },
+    error: function error(data) {
+      alert(data.responseText);
+    }
+  });
+});
 
 /***/ }),
 

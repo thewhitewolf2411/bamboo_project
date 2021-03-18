@@ -564,10 +564,26 @@ class WarehouseManagementController extends Controller
 
     public function showBayPage(Request $request){
 
-        $bay = Trolley::where('trolley_name', $request->bay_id_scan)->first();
-        if($bay === null){
-            return redirect()->back()->with(['searcherror'=>'No such bay']);
+        #dd($request->all());
+
+        $box = Tray::where('tray_name', $request->bay_id_scan)->first();
+        if($box == null){
+            $bay = Trolley::where('trolley_name', $request->bay_id_scan)->first();
+            if($bay === null){
+                return redirect()->back()->with(['searcherror'=>'No such bay or box.']);
+            }
         }
+
+        $binid = $box->trolley_id;
+        if($binid === null){
+            return redirect()->back()->with(['searcherror'=>'Box has not been allocated to bin yet.']);
+        }
+
+        $bay = Trolley::where('id', $binid)->first();
+        if($bay->trolley_type !== "Bay"){
+            return redirect()->back()->with(['searcherror'=>'Something went wrong, please try.']);
+        }
+
         $bayBoxes = Tray::where('trolley_id', $bay->id)->get();
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
