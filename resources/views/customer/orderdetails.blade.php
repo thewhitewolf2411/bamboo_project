@@ -150,7 +150,7 @@
                                            
                                         @endif
 
-                                        @if($tradein->job_state === '10')
+                                        @if($tradein->job_state === '10' || $tradein->job_state === '12')
 
                                             <div class="sale-status-row justify-content-center">
                                                 <div class="sale-status-col">
@@ -1328,9 +1328,15 @@
 
     let payment_updated = "{!!Session::has('account_success')!!}";
     let payment_failed =  "{!!Session::has('account_fails')!!}";
+    let notification_resolved = "{!!Session::has('success')!!}"
     if(payment_failed || payment_updated){
         changeSection('section-payment');
         $('#collapsePayment').collapse('show');
+    }
+
+    if(notification_resolved){
+        changeSection('section-sale-status');
+        $('#collapseSaleStatus').collapse('show');
     }
 
     let buttons = document.getElementsByClassName('change-sales-page');
