@@ -64,7 +64,7 @@ class Tradein extends Model
 
     public function postCode(){
         $user = $this->customer();
-        $address_line = $user->billing_address;
+        $address_line = $user->delivery_address;
         $post_code = explode(',', $address_line);
         return $post_code[count($post_code)-1];
     }

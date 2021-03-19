@@ -15,8 +15,6 @@ class SalesLotContent extends Model
 
 
     protected $fillable = [
-        'sales_lot_id','box_id','device_id'
+        'sales_lot_id','box_id','device_id', 'picked'
     ];
-
-    
 }

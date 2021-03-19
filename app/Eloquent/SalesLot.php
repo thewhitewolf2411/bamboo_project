@@ -93,5 +93,9 @@ class SalesLot extends Model
         }
     }
 
+
+    public function getCustomerName(){
+        return Clients::where('id', $this->sold_to)->first()->account_name;
+    }
     
 }

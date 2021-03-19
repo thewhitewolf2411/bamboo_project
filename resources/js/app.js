@@ -19,6 +19,7 @@ require('./scripts/Reports');
 require('./scripts/BoxManagement');
 //require('./scripts/SearchTable');
 require('./scripts/Settings');
+require('./scripts/SalesLotDespatch');
 
 
 "use strict";

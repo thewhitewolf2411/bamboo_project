@@ -498,6 +498,15 @@ input[type=number] {
     display: table-header-group;
 }
 
+#pick-sales-lot-boxes tfoot{
+    display: table-header-group;
+}
+
+#pick-sales-lot-devices tfoot{
+    display: table-header-group;
+}
+
+
 .paging_simple_numbers{
     display: flex;
 }
@@ -630,4 +639,28 @@ input[type=number] {
 
 .table-element > input{
     min-width: 20px !important;
+}
+
+.buildsaleslot-hidden{
+    display: none;
+}
+
+#pick-sales-lot-devices_wrapper{
+    display: none;
+}
+
+#pick-sales-lot-devices > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(1) {
+    width: auto !important;
+}
+#pick-sales-lot-devices > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(2) {
+    width: auto !important;
+}
+#pick-sales-lot-devices > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(3) {
+    width: auto !important;
+}
+#pick-sales-lot-devices > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(4) {
+    width: auto !important;
+}
+#pick-sales-lot-devices > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(5) {
+    width: auto !important;
 }
