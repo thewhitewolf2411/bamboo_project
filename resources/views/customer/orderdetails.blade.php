@@ -440,9 +440,9 @@
                                                 </div>
                                             </div>
                                             <div class="sale-detail-col">
-                                                <a class="btn-purple sale-detail-btn" href="#"><p>Download as PDF</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White.svg')}}"></a>
+                                                <div class="btn-purple sale-detail-btn" onclick="print('{{$tradein->id}}')"><p>Download as PDF</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White.svg')}}"></div>
                                                 <a class="btn-purple sale-detail-btn" href="#"><p>Email me a copy</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
-                                                <a class="btn-blue sale-detail-btn" href="#"><p>Get in touch</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+                                                <a class="btn-blue sale-detail-btn" href="/setpage/contact" target="_blank"><p>Get in touch</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
                                                 @if(!$tradein->hasDeviceBeenReceived())
                                                     <a class="btn-primary sale-detail-btn" href="/userprofile/deleteorder/{{$tradein->barcode}}"><p>Cancel Sale</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
                                                 @endif
@@ -607,7 +607,7 @@
                                                                 <p class="process-error-item-bold">{!!$tradein->getBlacklistedActionInfo()!!}</p>
                                                             </div>
                                                             <div class="col">
-                                                                <a href="#" class="btn btn-blue process-action-btn">
+                                                                <a href="/setpage/contact" target="_blank" class="btn btn-blue process-action-btn">
                                                                     <p>Get in touch</p>
                                                                     <img class="process-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
                                                                 </a>

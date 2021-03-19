@@ -12222,12 +12222,6 @@ main p, a, span {
   flex-direction: row;
 }
 
-@media (max-width: 992px) {
-  .sections-row {
-    width: 100%;
-    padding: 15px;
-  }
-}
 .sales-item {
   background: white;
   height: 60px;
@@ -12689,6 +12683,25 @@ main p, a, span {
   margin-top: 15px;
 }
 
+@media (max-width: 992px) {
+  .sections-row {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .sale-status-purple-line {
+    width: 100px;
+  }
+
+  .sale-status-grey-line {
+    width: 100px;
+  }
+}
+@media (max-width: 740px) {
+  .sections-menu {
+    display: none;
+  }
+}
 header {
   position: fixed;
   top: 0;
