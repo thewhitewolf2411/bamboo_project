@@ -13,6 +13,7 @@ use App\Eloquent\SellingProduct;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
 use App\Services\KlaviyoEmail;
+use App\Services\NotificationService;
 use App\User;
 use Auth;
 use DNS1D;
@@ -560,6 +561,7 @@ class CustomerCareController extends Controller
      */
     public function sendToDespatch(){
         if(isset(request()->id)){
+            $notificationService = new NotificationService();
             $tradeIn = Tradein::find(request()->id);
             if($tradeIn){
                 if(!$tradeIn->hasDeviceBeenReceived()){
@@ -572,6 +574,8 @@ class CustomerCareController extends Controller
                 }
                 $tradeIn->job_state = '21';
                 $tradeIn->save();
+                // send notification - marked for return
+                $notificationService->sendMarkedToReturn($tradeIn->id);
                 return response(200);
             }
         }

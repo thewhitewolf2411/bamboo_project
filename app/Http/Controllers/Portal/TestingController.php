@@ -25,6 +25,7 @@ use App\Eloquent\Colour;
 use App\Eloquent\TestingFaults;
 use App\Eloquent\ProductNetworks;
 use App\Services\KlaviyoEmail;
+use App\Services\NotificationService;
 use App\Services\Testing;
 use App\Eloquent\AdditionalCosts;
 
@@ -164,6 +165,7 @@ class TestingController extends Controller
 
             $tradein->misc_cost = $miscCost->per_job_deduction;
         }
+        $notificationService = new NotificationService();
 
         $expiryDate = Carbon::parse($tradein->expiry_date);
         $daysToExpiry = Carbon::now()->diffInDays($expiryDate, false);
@@ -205,8 +207,10 @@ class TestingController extends Controller
                 $tradein->job_state = "11j";
                 $tradein->save();
                 array_push($message, "This order has been identified by system as older than 14 days and has been marked for quarantine. Please confirm this.");
+
+                // send notification - trade pack received after 14 days
+                $notificationService->receivedAfterFourteenDays($tradein);
             }
-       
         }
 
         if($request->missing == "missing"){
@@ -234,7 +238,10 @@ class TestingController extends Controller
             if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>1){
                 $mti = true;
             }
-    
+
+            // send notification - missing device
+            $notificationService = new NotificationService();
+            $notificationService->sendMissingDevice($tradein);
 
             return redirect('/portal/testing/result/' . $tradein->id);
         }
@@ -320,6 +327,10 @@ class TestingController extends Controller
             else{
                 $tradein->job_state = "9";
             }
+
+            // send notification - no imei
+            $notificationService = new NotificationService();
+            $notificationService->sendNoIMEI($tradein);
         }
         $tradein->save();
 

@@ -16,6 +16,7 @@ use File;
 use Session;
 use App\Services\BinService;
 use App\Services\KlaviyoEmail;
+use App\Services\NotificationService;
 use App\Services\MoveToTray;
 use App\Services\Testing;
 use App\User;
@@ -242,6 +243,7 @@ class QuarantineController extends Controller
         $tradeinNumbers = $request->all();
 
         $tradeinNumbers = array_values($tradeinNumbers);
+        $notificationService = new NotificationService();
 
         unset($tradeinNumbers[0]);
 
@@ -254,6 +256,9 @@ class QuarantineController extends Controller
             if($tradein != null){
                 $tradein->job_state = '20';
                 $tradein->save();
+
+                // send notification - marked for return
+                $notificationService->sendMarkedToReturn($tradein->id);
 
                 $traycontent = TrayContent::where('trade_in_id', $tiN)->first();
                 $traycontent->delete();
@@ -313,6 +318,10 @@ class QuarantineController extends Controller
         $tradein->job_state = $request->val;
 
         $tradein->save();
+
+        // send notification - device blacklisted
+        $notificationService = new NotificationService();
+        $notificationService->sendBlacklisted($tradein);
 
         return 200;
     }

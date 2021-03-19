@@ -9,12 +9,14 @@ use App\Eloquent\SellingProduct;
 use App\Eloquent\Category;
 use App\Eloquent\Brand;
 use App\Eloquent\Despatch\DespatchedDevice;
+use App\Eloquent\Payment\PaymentBatchDevice;
 use App\Eloquent\Payment\UserBankDetails;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
 use App\Eloquent\Trolley;
 use App\Eloquent\TrolleyContent;
 use App\Services\DespatchService;
+use App\Services\NotificationService;
 use App\User;
 use Carbon\Carbon;
 use DNS1D;
@@ -40,7 +42,7 @@ class Tradein extends Model
         'bamboo_grade', 'job_state', 'order_price','bamboo_price','customer_memory','customer_network',
         'correct_memory','correct_network', 'product_colour', 'missing_image', 'imei_number', 'serial_number',
         'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 
-        'expiry_date', 'location_changed_at', 'trade_pack_send_by_customer', 'carriage_cost', 'admin_cost', 'misc_cost'
+        'expiry_date', 'location_changed_at', 'trade_pack_send_by_customer', 'carriage_cost', 'admin_cost', 'misc_cost', 'pin_pattern_number',
     ];
 
 
@@ -227,7 +229,7 @@ class Tradein extends Model
     }
 
     public function isGoogleLocked(){
-        if($this->job_state === '11a' || $this->job_state === '11b' || $this->job_state === '11a' || $this->job_state === '11b'){
+        if($this->job_state === '11b' || $this->job_state === '15b'){
             return true;
         }
         return false;
@@ -392,9 +394,16 @@ class Tradein extends Model
     }
 
     public function isFimpLocked(){
-        $matches = ["11a", "11b", "15a", "15b"];
+        $matches = ["11a", "15a"];
 
         if(in_array($this->job_state, $matches)){
+            return true;
+        }
+        return false;
+    }
+
+    public function isBeingReceived(){
+        if(in_array($this->job_state, ['1', '2'])){
             return true;
         }
         return false;
@@ -760,8 +769,9 @@ class Tradein extends Model
         $expires = Carbon::parse($this->expiry_date);
         $diff = $expires->diffInDays($now);
         //dd($diff, $diff >= 7 && $diff < 10, $now->format('d.m.Y'), $expires->format('d.m.Y'));
-
-        if($diff < 7 && $diff > 3){
+        if($diff <= 7 && $diff > 3){
+            $notificationService = new NotificationService();
+            $notificationService->sendNotReceivedYet($this);
             return true;
         }
         return false;
@@ -773,6 +783,8 @@ class Tradein extends Model
         $diff = $expires->diffInDays($now);
 
         if($diff <= 3 && $diff > 0){
+            $notificationService = new NotificationService();
+            $notificationService->sendNotReceivedYet($this);
             return true;
         }
         return false;
@@ -783,6 +795,8 @@ class Tradein extends Model
         $expires = Carbon::parse($this->expiry_date);
         $diff = $expires->diffInDays($now);
         if($now >= $expires){
+            $notificationService = new NotificationService();
+            $notificationService->sendNotReceivedYet($this);
             return true;
         }
         return false;
@@ -798,8 +812,8 @@ class Tradein extends Model
 
     public function hasFailedTesting(){
         $testing_faults = [
-            '11a', '11b', '11c', '11d', '11e', '11f', '11h', '11i',     // first testing
-            '15a', '15b', '15c', '15d', '15e', '15f', '15h', '15i'      // second testing
+            '11a', '11b', '11c', '11d', '11e', '11f', '11g', '11h', '11i',     // first testing
+            '15a', '15b', '15c', '15d', '15e', '15f', '15g', '15h', '15i'      // second testing
         ];
         if(in_array($this->job_state, $testing_faults)){
             return true;
@@ -870,8 +884,7 @@ class Tradein extends Model
     }
 
     public function isDowngraded(){
-        dd('oops tradein 841');
-        if($this->customer_grate !== $this->bamboo_grade){
+        if($this->customer_grade !== $this->bamboo_grade){
             return true;
         }
         return false;
@@ -885,7 +898,7 @@ class Tradein extends Model
             return 'Google Activation Lock still active';
         }
         if($this->isPinLocked()){
-            return 'PIN number not provided';
+            return 'Pattern/PIN number not provided';
         }
         return null;
     }
@@ -898,12 +911,25 @@ class Tradein extends Model
         return 'Not received yet.';
     }
 
+    public function getFaultyOffer(){
+        if($this->isPinLocked()){
+            return null;
+        }
+    }
+
     public function getDevicePrice(){
         if($this->bamboo_price > $this->order_price){
             return $this->order_price;
         }
 
         return $this->bamboo_price;
+    }
+
+    public function paymentFailed(){
+        if($this->job_state === "24"){
+            return true;
+        }
+        return false;
     }
 
     public function isDespatched(){
@@ -927,9 +953,69 @@ class Tradein extends Model
         return false;
     }
 
+    public function getBlacklistedIssue(){
+        switch ($this->job_state) {
+            case '8a':
+                return 'This device has been reported as stolen.';
+                break;
+            case '8b':
+                return 'Insurance claim.';
+                break;
+            case '8c':
+                return 'Blocked/FRP.';
+                break;
+            case '8d':
+                return 'Stolen.';
+                break;
+            case '8e':
+                return 'Device has KNOX disabled.';
+                break;
+            case '8f':
+                return 'Assetwatch.';
+                break;
+            default:
+                # code...
+                break;
+        }
+    }
+
+    public function getBlacklistedActionInfo(){
+        switch ($this->job_state) {
+            case '8a':
+                return 'Please get in touch.';
+                break;
+            case '8b':
+                return 'Please get in touch.';
+                break;
+            case '8c':
+                return 'Please get in touch.';
+                break;
+            case '8d':
+                return 'Please get in touch.';
+                break;
+            case '8e':
+                return 'Please get in touch.';
+                break;
+            case '8f':
+                return 'Please get in touch.';
+                break;
+            default:
+                # code...
+                break;
+        }
+    }
+    
     public function getLastProcessorName(){
         $audit = TradeinAudit::where('tradein_id', $this->id)->orderBy('created_at', 'desc')->first();
         $user = User::find($audit->user_id);
         return $user->first_name . " " . $user->last_name;
+    }
+
+    public function deviceInReturnProcess(){
+        $in_return = ['19', '20', '21'];
+        if(in_array($this->job_state, $in_return)){
+            return true;
+        }
+        return false;
     }
 }

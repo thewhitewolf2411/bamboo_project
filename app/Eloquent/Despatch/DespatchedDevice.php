@@ -20,7 +20,7 @@ class DespatchedDevice extends Model
      * @var array
      */
     protected $fillable = [
-        'tradein_id','order_identifier','order_reference', 'order_date'
+        'tradein_id','order_identifier','order_reference', 'order_date', 'despatched_at'
     ];
 
     public function getTradeinId(){

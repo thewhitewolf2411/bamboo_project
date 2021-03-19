@@ -280,6 +280,9 @@ class Testing{
 
         $quarantineName = $quarantineTrays->tray_name;
 
+        // check for testing faults to send notification
+        $this->checkForNotifications($tradein);
+
         return ['tray_name'=>$quarantineName, 'tray'=>$quarantineTrays];
 
     }
@@ -329,6 +332,125 @@ class Testing{
         return $price;
     }
 
+    public function checkForNotifications($tradein){
+        $notificationService = new NotificationService();
+        // dd($tradein, $data);
+
+        switch ($tradein->job_state) {
+            // testing complete
+            case '10':
+                $notificationService->testingSuccess($tradein);
+                break;
+
+            // second testing complete
+            case '12':
+                $notificationService->secondTestingSuccess($tradein);
+                break;
+
+            // pin lock (okay)
+            case '11c':
+                $notificationService->sendTestingFailed(
+                    $tradein,
+                    'Pattern/PIN number not provided.'
+                );
+                break;
+            case '15c':
+                $notificationService->sendTestingFailed(
+                    $tradein,
+                    'Pattern/PIN number not provided.'
+                );
+                break;
+
+            // fmip lock (okay)
+            case '11a':
+                $notificationService->sendTestingFailed(
+                    $tradein,
+                    'Find My iPhone still active.'
+                );
+                break;
+            case '15a':
+                $notificationService->sendTestingFailed(
+                    $tradein,
+                    'Find My iPhone still active.'
+                );
+                break;
+
+            // google lock (oke)
+            case '11b':
+                $notificationService->sendTestingFailed(
+                    $tradein,
+                    'Google Activation Lock still active.'
+                );
+                break;
+            case '15b':
+                $notificationService->sendTestingFailed(
+                    $tradein,
+                    'Google Activation Lock still active.'
+                );
+                break;
+
+            // incorrect memory (oke)
+            case '11f':
+                $notificationService->sendTestingFailed(
+                    $tradein,
+                    'Device memory incorrect.'
+                );
+                break;
+            case '15f':
+                $notificationService->sendTestingFailed(
+                    $tradein,
+                    'Device memory incorrect.'
+                );
+                break;
+
+            // incorrect model (oke)
+            case '11d':
+                $notificationService->sendTestingFailed(
+                    $tradein,
+                    'Device model incorrect.'
+                );
+                break;
+            case '15d':
+                $notificationService->sendTestingFailed(
+                    $tradein,
+                    'Device model incorrect.'
+                );
+                break;
+
+
+            // grade downgraded
+            case '11i':
+                $notificationService->sendTestingFailed(
+                    $tradein,
+                    'Device does not meet the following requirements. FAULTS: '. implode(", ", $tradein->getTestingFaults()) . '.'
+                );
+                break;
+            case '15i':
+                $notificationService->sendTestingFailed(
+                    $tradein,
+                    'Device does not meet the following requirements. FAULTS: '. implode(", ", $tradein->getTestingFaults()) . '.'
+                );
+                break;
+
+            // incorrect (locked) network
+            case '11g':
+                $notificationService->sendTestingFailed(
+                    $tradein,
+                    'Device network is incorrect.'
+                );
+                break;
+            case '15g':
+                $notificationService->sendTestingFailed(
+                    $tradein,
+                    'Device network is incorrect.'
+                );
+                break;
+
+            default:
+                # code...
+                break;
+        }
+    }
 }
 
 

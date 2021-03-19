@@ -11,16 +11,20 @@ use App\User;
 use App\Eloquent\Cart;
 use App\Eloquent\Order;
 use App\Eloquent\BuyingProduct;
+use App\Eloquent\Notification;
 use App\Eloquent\Payment\PaymentBatchDevice;
 use App\Eloquent\Payment\UserBankDetails;
 use App\Eloquent\SellingProduct;
 use App\Eloquent\Tradein;
 use App\Eloquent\Tradeout;
 use App\Eloquent\Wishlist;
+use App\Services\NotificationService;
 use Auth;
 use Carbon\Carbon;
 use Crypt;
 use Illuminate\Support\Facades\Hash;
+use DNS1D;
+use PDF;
 
 class CustomerController extends Controller
 {
@@ -245,14 +249,15 @@ class CustomerController extends Controller
             $tradeouts = Tradeout::where('user_id', $userdata->id)->get();
 
             #dd($tradeins, $tradeouts);
-            $notifications = collect([
-                ['id' => 1, 'text'=>'We can’t access your phone, please provide us with your PIN number', 'state' => 'alert'],
-                ['id'=>2, 'text'=>'We received your device after 14 days. A new offer has been sent', 'state' => 'alert-solved'],
-                ['id'=>3, 'text'=>'Status update: Testing. Great news, we are currently testing your device', 'state' => 'info'],
-                ['id'=>4, 'text'=>'Status update: Trade Pack Received. Woohoo! We have received your pack, it will now be passed onto our testing team', 'state' => 'info'],
-                ['id'=>5, 'text'=>'Status update: Trade Pack Dispaatched. Keep an eye out, your trade pack is on its way to you', 'state' => 'info'],
-                ['id'=>6, 'text'=>'Status update: Order placed. Woohoo! Your order has been placed, a Trade Pack will be sent out to you shortly', 'state' => 'info']
-            ]);
+            $notifications = Notification::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->get();
+            // $notifications = collect([
+            //     ['id' => 1, 'text'=>'We can’t access your phone, please provide us with your PIN number', 'state' => 'alert'],
+            //     ['id'=>2, 'text'=>'We received your device after 14 days. A new offer has been sent', 'state' => 'alert-solved'],
+            //     ['id'=>3, 'text'=>'Status update: Testing. Great news, we are currently testing your device', 'state' => 'info'],
+            //     ['id'=>4, 'text'=>'Status update: Trade Pack Received. Woohoo! We have received your pack, it will now be passed onto our testing team', 'state' => 'info'],
+            //     ['id'=>5, 'text'=>'Status update: Trade Pack Dispaatched. Keep an eye out, your trade pack is on its way to you', 'state' => 'info'],
+            //     ['id'=>6, 'text'=>'Status update: Order placed. Woohoo! Your order has been placed, a Trade Pack will be sent out to you shortly', 'state' => 'info']
+            // ]);
 
             $userdata->password = Crypt::decrypt($userdata->password);
             $available_os = ['iOS', 'Android', 'Other'];
@@ -355,16 +360,139 @@ class CustomerController extends Controller
      */
     public function showOrderDetails($id){
         $tradein = Tradein::findOrFail($id);
-        $notifications = collect([
-            ['id' => 1, 'text'=>'We can’t access your phone, please provide us with your PIN number', 'state' => 'alert'],
-            ['id'=>2, 'text'=>'We received your device after 14 days. A new offer has been sent', 'state' => 'alert-solved'],
-            ['id'=>3, 'text'=>'Status update: Testing. Great news, we are currently testing your device', 'state' => 'info'],
-            ['id'=>4, 'text'=>'Status update: Trade Pack Received. Woohoo! We have received your pack, it will now be passed onto our testing team', 'state' => 'info'],
-            ['id'=>5, 'text'=>'Status update: Trade Pack Dispaatched. Keep an eye out, your trade pack is on its way to you', 'state' => 'info'],
-            ['id'=>6, 'text'=>'Status update: Order placed. Woohoo! Your order has been placed, a Trade Pack will be sent out to you shortly', 'state' => 'info']
-        ]);
+        $notifications = Notification::where('user_id', Auth::user()->id)->where('tradein_id', $id)->orderBy('created_at', 'DESC')->get();
         return view('customer.orderdetails', ['tradein' => $tradein, 'notifications' => $notifications]);
     }
+
+    /**
+     * Print tradein label.
+     */
+    public function printLabel(){
+        if(isset(request()->tradein)){
+            $tradein = Tradein::find(request()->tradein);
+            if($tradein){
+                return $this->printTradeinLabel($tradein);
+            }
+        }
+    }
+
+    /**
+     * Accept faulty offfer.
+     */
+    public function acceptFaultyOffer($tradein_id){
+        $tradein = Tradein::findOrFail($tradein_id);
+
+        switch ($tradein->job_state) {
+            // no imei
+            case '6':
+                // set notification as resolved
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 7)->first();
+                $notification->resolved = true;
+                $notification->save();
+
+                // set state to test complete
+                $tradein->job_state = '12';
+                $tradein->save();
+
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                break;
+            
+            // incorrect network
+            case '15g':
+                // set notification as resolved
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+
+                // set state to test complete
+                $tradein->job_state = '12';
+                $tradein->save();
+
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                break;
+
+            // fmip
+            case '15a':
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+
+                // set state to test complete
+                $tradein->job_state = '12';
+                $tradein->save();
+
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                break;
+
+            // glock
+            case '15b':
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+
+                // set state to test complete
+                $tradein->job_state = '12';
+                $tradein->save();
+
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                break;
+            default:
+                # code...
+                break;
+        }
+    }
+
+    /**
+     * Send device to retesting.
+     */
+    public function sendToRetesting($tradein_id){
+        $tradein = Tradein::findOrFail($tradein_id);
+        switch ($tradein->job_state) {
+            // fmip
+            case '15a':
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+                break;
+            // glock
+            case '15b':
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+                break;
+            default:
+                # code...
+                break;
+        }
+        // send device to retesting
+        $tradein->job_state = '13';
+        $tradein->save();
+
+        return redirect()->back()->with('success', 'Success. Device sent to retesting.');
+    }
+
+
+    /**
+     * Return device to customer.
+     */
+    public function returnDevice($tradein_id){
+        $tradein = Tradein::findOrFail($tradein_id);
+        $notificationService = new NotificationService();
+
+        $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+        $notification->resolved = true;
+        $notification->save();
+
+        // mark device send to customer
+        $tradein->job_state = '19';
+        $tradein->save();
+
+        // send notification - mark for return
+        $notificationService->sendMarkedToReturn($tradein->id);
+
+        return redirect()->back()->with('success', 'Device marked for return.');
+    }
+
 
     public function showWishlist(){
 
@@ -406,10 +534,15 @@ class CustomerController extends Controller
 
     public function deleteOrder($orderid){
         $tradeins = Tradein::where('barcode', $orderid)->get();
+        $notificationService = new NotificationService();
 
         if(count($tradeins)>=1){
             foreach($tradeins as $tradein){
+                $user_id = $tradein->user_id;
+                $tradein_id = $tradein->barcode;
                 $tradein->delete();
+                 // send notification - order cancelled
+                $notificationService->orderCancelled($tradein_id, $user_id);
             }
         }
 
@@ -584,5 +717,95 @@ class CustomerController extends Controller
             return redirect()->back()->with('account_fails', $validation_fails);
         }
         
+    }
+
+    /**
+     * Add device missing PIN.
+     */
+    public function addDevicePIN(Request $request){
+        if(isset($request->pin) && isset($request->tradein)){
+            $tradein = Tradein::find($request->tradein);
+            $tradein->pin_pattern_number = $request->pin;
+            $tradein->job_state = '9';
+            $tradein->save();
+            return redirect()->back()->with('success', 'Device PIN added successfuly. Device sent to testing.');
+        }
+    }
+
+    public function addDevicePattern(Request $request){
+        if(isset($request->pattern) && isset($request->tradein)){
+            $tradein = Tradein::find($request->tradein);
+            $tradein->pin_pattern_number = $request->pattern;
+            $tradein->job_state = '9';
+            $tradein->save();
+            return redirect()->back()->with('success', 'Device Pattern added successfuly. Device sent to testing.');
+        }
+    }
+
+
+    /**
+     * Print label from userprofile delivery details.
+     */
+    public function printTradeinLabel($tradein){
+
+        $user = User::find($tradein->user_id);
+        $name = $user->first_name . " " . $user->last_name;
+        $address = $user->delivery_address;
+        $barcode = $tradein->barcode;
+        $created_at = $tradein->updated_at;
+        $barcodeimage = DNS1D::getBarcodeHTML($barcode, 'C128');
+
+        $delAdress = strtr($address, array(', '=>'<br>'));
+
+        $html = "";
+        $html .= "<style>p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
+        $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg'>";
+        $html .= "<p>" . $name . ",</p>";
+        $html .= "<p>". $delAdress .",</p>";
+        $html .= "<br><br>";
+        $html .= "<p>Order#". $barcode . " Date: " . $created_at .  "</p>";
+        $html .= "<p>Dear " . $name . ",</p>";
+        $html .= "<p>Thank you very much for using Bamboo Recycle to recycle your mobile device(s). This package contains your TradePack which you can use to post your recycled device(s) back to Bamboo. Please follow the instructions below on how toreturn your recycled device(s) to Bamboo:</p>";
+        $html .= "  <ol>
+                        <li>Gather your recycled device(s) and remove any sim cards or memory cards from thedevice(s).</li>
+                        <li>Place the device(s) into the Trade Pack that you received from Bamboo with this package. (Please rememberwe only require the handset, unless of course the device you're recycling is brand new and boxed.)</li>
+                        <li>Next, seal the Trade Pack by folding over the sticky flap at the top.</li>
+                        <li>Finally, you must then place the Freepost Label, found on the bottom left of this letter, onto the front of the TradePack then post your Trade Pack back to Bamboo!</li>
+                    </ol> ";
+        $html .= "<p>Once your recycled device(s) are received by Bamboo you will be sent an email confirming this. Your device(s) will thenbe tested to make sure they match the conditions that were set when placing the order. After each device has beensuccessfully tested you will receive a final email confirming payment for the device using the method that you selected.(Please note: Payment will be made on a per device basis.)<br>If you have any problems returning your device(s) please view the FAQs section on our website or contact us directly byemailing customersupport@bamboorecycle.com with your enquiry.</p>";
+        $html .= "<p>Kind Regards,</p>";
+        $html .= "<p>Bamboo Mobile</p>";
+        $html .= "<h3>Freepost return address</h3>";
+        $html .=    "<div style='clear:both; position:relative; display:flex;'>
+                        <div style='width:190pt; height:150px;' >
+                                                <p>FREEPOST 555880PR</p>
+                                                <p>Bamboo Recycle (9100)</p>
+                                                <p>C/O Bamboo Distribution Ltd</p>
+                                                <p>Unit 1, I.O Centre</p>
+                                                <p>Lea Road</p>
+                                                <p>Waltham Abbey</p>
+                                                <p>Hertfordshire</p>
+                                                <p>EN9 1AS</p>
+                                                <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcodeimage ."</div><p>" .  $barcode ."</p></div>
+                        </div>
+                        <div style='margin-left:200pt; margin-top:-150px; width:190pt; height:150px;'>
+                                                <p>FREEPOST 555880PR</p>
+                                                <p>Bamboo Recycle (9100)</p>
+                                                <p>C/O Bamboo Distribution Ltd</p>
+                                                <p>Unit 1, I.O Centre</p>
+                                                <p>Lea Road</p>
+                                                <p>Waltham Abbey</p>
+                                                <p>Hertfordshire</p>
+                                                <p>EN9 1AS</p>
+                                                <div id='barcode-container' style='border:1px solid black; padding:15px; text-align:center;'><div style='margin: 0 auto:'>". $barcodeimage ."</div><p>" .  $barcode ."</p></div>
+                        </div>
+                    </div>";
+        #echo $html;
+        #die();
+
+        $filename = "labeltradeout-" . $barcode . ".pdf";
+        PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
+
+        return response(['code'=>200, 'filename'=>$filename]);
     }
 }

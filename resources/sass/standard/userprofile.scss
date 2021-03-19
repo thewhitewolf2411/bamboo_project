@@ -173,8 +173,8 @@
 .notification-card.red-border{
     border: 5px solid #ff0000;
     font-family:Sharp Sans No1 Bold;
-    margin-top: 1.5rem !important;
-    margin-bottom: 1.5rem !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
 }
 
 .notification-card-border{
@@ -182,16 +182,16 @@
     background: #a9a9a9;
 }
 
-.notification-error-img{
+.notification-error-img, .notification-green-img{
     width: 24px;
 }
-
 
 
 .personal-info-row{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .personal-info-item{
@@ -447,3 +447,24 @@
     flex-direction: row;
 }
 // #23aaf7
+
+
+// general
+@media (max-width: 992px){
+    .sections-row{
+        width: 100%;
+        padding: 15px;
+    }
+}
+
+// tablets
+@media (max-width: 992px) and (min-width:740px){
+    
+}
+
+// mobile
+@media (max-width: 740px){
+    .section-items{
+        //display: none;
+    }
+}

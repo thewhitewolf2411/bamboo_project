@@ -19,6 +19,7 @@ class CreateDespatchedDevicesTable extends Migration
             $table->string('order_identifier');
             $table->string('order_reference');
             $table->string('order_date');
+            $table->dateTime('despatched_at')->nullable(true)->default(null);
             $table->timestamps();
         });
     }

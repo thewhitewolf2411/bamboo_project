@@ -27,7 +27,7 @@ use PDF;
 use App\Services\KlaviyoEmail;
 use App\Services\ExpiryDate;
 use App\Eloquent\AdditionalCosts;
-
+use App\Services\NotificationService;
 
 class SellController extends Controller
 {
@@ -253,6 +253,16 @@ class SellController extends Controller
 
                     $tradein->save();
                     $tradeinexp = $tradein;
+
+                    if($labelstatus == "2"){
+                        // send notification - own label
+                        $notificationService = new NotificationService();
+                        $notificationService->send(Auth::user(), 4, $tradein);
+                    } else {
+                        // send notification - trade pack
+                        $notificationService = new NotificationService();
+                        $notificationService->send(Auth::user(), 5, $tradein);
+                    }
 
                     $item->delete();
 

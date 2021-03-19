@@ -8,6 +8,8 @@ use App\Eloquent\Tradein;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\DespatchService;
+use App\Services\NotificationService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -110,6 +112,7 @@ class DespatchController extends Controller
     public function confirmDespatch(Request $request){
         $error = [];
         $success = [];
+        $notificationService = new NotificationService();
         if(isset($request->despatch_ids)){
             
             $ids = explode(',', $request->despatch_ids);
@@ -118,11 +121,16 @@ class DespatchController extends Controller
             if($tradeins->count() > 0){
                 foreach($tradeins as $tradein){
                     $despatchDevice = DespatchedDevice::where('tradein_id', $tradein->id)->first();
-                    if($tradein->job_state === '20' && $despatchDevice){
+                    if($tradein->job_state === '20' && $despatchDevice !== null){
                         if($tradein->tracking_reference !== null){
+                            $despatchDevice->despatched_at = Carbon::now();
+                            $despatchDevice->save();
                             $tradein->job_state = '21';
                             $tradein->save();
                             array_push($success, 'Tradein ' . $tradein->barcode . ' despatch confirmed succesfully.');
+
+                            // send notification - device despathed
+                            $notificationService->sendDespatched($tradein);
                         } else {
                             array_push($error, 'Tradein ' . $tradein->barcode . ' not manifested yet.');
                         }
