@@ -117,12 +117,12 @@
                                         </tr>
                                         @endforeach
                                         <tr id="newMemoryRow">
-                                            <th><input class="table-element" type="text" name="memory-new"></th>
-                                            <th><input class="table-element" type="number" name="price1-new"></th>
-                                            <th><input class="table-element" type="number" name="price2-new"></th>
-                                            <th><input class="table-element" type="number" name="price3-new"></th>
-                                            <th><input class="table-element" type="number" name="price4-new"></th>
-                                            <th><input class="table-element" type="number" name="price5-new"></th>
+                                            <th><input class="table-element" type="text" name="memory_new"></th>
+                                            <th><input class="table-element" type="number" name="price1_new"></th>
+                                            <th><input class="table-element" type="number" name="price2_new"></th>
+                                            <th><input class="table-element" type="number" name="price3_new"></th>
+                                            <th><input class="table-element" type="number" name="price4_new"></th>
+                                            <th><input class="table-element" type="number" name="price5_new"></th>
                                             <td><div class="table-element">
 
                                             <a onclick="cancelNewMemoryPoint()">
@@ -149,11 +149,18 @@
                                             <p>Different Network Base Prices change in £</p>
                                         </div>
                                     </div>
-                                    <table class="portal-table sortable" id="categories-table">
+                                    <table class="portal-table" id="categories-table">
                                         <tr>
                                             @foreach($productnetworks as $network)
                                             <td><div class="table-element"><img style="max-width:50px; width:50px" src="{{$network->getNetWorkImage($network->network_id)}}"></div></td>
                                             @endforeach
+                                            <td><div class="table-element">                                                
+                                                <a onclick="addNewNetwork()">
+                                                    <div class="btn btn-primary">
+                                                        Add new network
+                                                    </div>
+                                                </a>
+                                            </div></td>
                                         </tr>
                                         <tr>
                                             @foreach($productnetworks as $network)

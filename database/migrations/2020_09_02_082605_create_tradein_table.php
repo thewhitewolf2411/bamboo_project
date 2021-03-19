@@ -41,8 +41,9 @@ class CreateTradeinTable extends Migration
             $table->string('tracking_reference')->nullable(true)->default(null);
             $table->date('expiry_date');
             $table->datetime('location_changed_at')->default(now());
-            $table->float('carriage_cost');
-            $table->float('admin_cost');
+            $table->float('carriage_cost')->nullable();
+            $table->float('admin_cost')->nullable();
+            $table->float('misc_cost')->nullable();
             $table->boolean('trade_pack_send_by_customer')->nullable();
             $table->timestamps();
         });

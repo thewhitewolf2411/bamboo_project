@@ -40,7 +40,7 @@ class Tradein extends Model
         'bamboo_grade', 'job_state', 'order_price','bamboo_price','customer_memory','customer_network',
         'correct_memory','correct_network', 'product_colour', 'missing_image', 'imei_number', 'serial_number',
         'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 
-        'expiry_date', 'location_changed_at', 'trade_pack_send_by_customer'
+        'expiry_date', 'location_changed_at', 'trade_pack_send_by_customer', 'carriage_cost', 'admin_cost', 'misc_cost'
     ];
 
 

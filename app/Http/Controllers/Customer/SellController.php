@@ -247,9 +247,9 @@ class SellController extends Controller
                         $klaviyoEmail->ItemSoldTradePack(Auth::user(), $tradein);
                     }
 
-                    $additionalCosts = AdditionalCosts::first();
-                    $tradein->carriage_cost = $additionalCosts->carriage_costs;
-                    $tradein->admin_cost = $additionalCosts->administration_costs;
+                    #$additionalCosts = AdditionalCosts::first();
+                    #$tradein->carriage_cost = $additionalCosts->carriage_costs;
+                    #$tradein->admin_cost = $additionalCosts->administration_costs;
 
                     $tradein->save();
                     $tradeinexp = $tradein;

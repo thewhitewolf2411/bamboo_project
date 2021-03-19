@@ -460,6 +460,20 @@ class ProductController extends Controller
                 }
             }
         }
+
+        if(isset($request->memory_new) && isset($request->price1_new) && isset($request->price2_new) && isset($request->price3_new) && isset($request->price4_new) && isset($request->price5_new)){
+            $newInfo = new ProductInformation();
+            $newInfo->product_id = $request->product_id;
+            $newInfo->memory = $request->memory_new;
+            $newInfo->excellent_working = $request->price1_new;
+            $newInfo->good_working = $request->price2_new;
+            $newInfo->poor_working = $request->price3_new;
+            $newInfo->damaged_working = $request->price4_new;
+            $newInfo->faulty = $request->price5_new;
+
+            $newInfo->save();
+        }
+
         if(count($networks) !== 0){
             $network = $networks[0];
 

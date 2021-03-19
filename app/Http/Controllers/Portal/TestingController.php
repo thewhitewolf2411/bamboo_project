@@ -26,6 +26,7 @@ use App\Eloquent\TestingFaults;
 use App\Eloquent\ProductNetworks;
 use App\Services\KlaviyoEmail;
 use App\Services\Testing;
+use App\Eloquent\AdditionalCosts;
 
 
 class TestingController extends Controller
@@ -114,8 +115,15 @@ class TestingController extends Controller
     public function receive(Request $request){
         //if(!$this->checkAuthLevel(5)){return redirect('/');}
 
-        #dd($request->scanid);
+        $tradeins = Tradein::where('barcode', $request->scanid)->get();
+        foreach($tradeins as $tradein){
+            if($tradein->job_state === "21"){
+                return redirect()->back()->with('error', 'This order need to be returned to customer.');
+            }
+        }
+
         $tradeins = Tradein::where('barcode', $request->scanid)->whereIn('job_state', ["2","3"])->get();
+
 
         if(count($tradeins)<1){
             return redirect()->back()->with('error', 'Trade pack despach has not been sent, or device was already received.');
@@ -145,6 +153,17 @@ class TestingController extends Controller
         #dd($request);
 
         $tradein = Tradein::where('id', $request->tradein_id)->first();
+        $additionalCosts = AdditionalCosts::first();
+        $tradein->carriage_cost = $additionalCosts->carriage_costs;
+        $tradein->admin_cost = $additionalCosts->administration_costs;
+
+        $miscCost = AdditionalCosts::where('id', '!=', 1)->first();
+        if($miscCost !== null){
+            $miscCost->miscellaneous_costs = $miscCost->miscellaneous_costs - $miscCost->per_job_deduction;
+            $miscCost->save();
+
+            $tradein->misc_cost = $miscCost->per_job_deduction;
+        }
 
         $expiryDate = Carbon::parse($tradein->expiry_date);
         $daysToExpiry = Carbon::now()->diffInDays($expiryDate, false);

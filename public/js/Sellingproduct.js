@@ -13,3 +13,7 @@ function cancelNewMemoryPoint(){
         $('#newMemoryRowButton').removeClass('newMemoryRowButtonDisable');
     }
 }
+
+function addNewMemoryPoint(){
+    
+}

@@ -562,7 +562,14 @@ class CustomerCareController extends Controller
         if(isset(request()->id)){
             $tradeIn = Tradein::find(request()->id);
             if($tradeIn){
-                # received and passed
+                if(!$tradeIn->hasDeviceBeenReceived()){
+                    $tradeins = Tradein::where('barcode', $tradeIn->barcode)->get();
+                    foreach($tradeins as $ti){
+                        $ti->job_state = '21';
+                        $ti->save();
+                    }
+                    return response(200);
+                }
                 $tradeIn->job_state = '21';
                 $tradeIn->save();
                 return response(200);

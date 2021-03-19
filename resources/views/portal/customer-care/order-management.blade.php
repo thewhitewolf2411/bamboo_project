@@ -131,7 +131,7 @@
                             </td>
                                                         
                             <td class="text-center 4 p-0">
-                                @if($tradein->hasDeviceBeenReceived() && !$tradein->deviceInPaymentProcess())
+                                @if(!$tradein->deviceInPaymentProcess())
                                     <a href="#" title="Send to Despatch" onclick="sendToDespatch({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a>
                                 @elseif($tradein->job_state === '21')
                                     <div class="alert alert-success mb-0" role="alert">Device was dispatched to customer</div>

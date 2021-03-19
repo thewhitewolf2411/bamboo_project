@@ -274,13 +274,14 @@ class SettingsController extends Controller
     }
 
     public function addCosts(Request $request){
-        #dd($request->all());
-        if($request->per_job_deduction > 0){
+        #dd(ltrim($request->miscellaneous_costs, '£'));
+        #dd(floatval(str_replace(',', '', ltrim($request->miscellaneous_costs, '£'))));
+        if(floatval(ltrim($request->per_job_deduction, '£')) > 0){
             AdditionalCosts::create([
                 'administration_costs'=>0.00,
                 'carriage_costs'=>0.00,
-                'miscellaneous_costs'=>$request->miscellaneous_costs,
-                'per_job_deduction'=>$request->per_job_deduction,
+                'miscellaneous_costs'=>floatval(str_replace(',', '', ltrim($request->miscellaneous_costs, '£'))),
+                'per_job_deduction'=>floatval(str_replace(',', '', ltrim($request->per_job_deduction, '£'))),
                 'applied_to'=>0,
                 'cost_description'=>$request->cost_description
             ]);
@@ -288,7 +289,8 @@ class SettingsController extends Controller
             return redirect()->back()->with(['success'=>'You have succesfully added costs.']);
         }
         else{
-            dd("Misato Katsuragi."); 
+            dd($request->per_job_deduction);
+            return redirect()->back()->with(['error'=>'Per job deduction cannot be 0 or less than 0.']);
         }
     }
 
