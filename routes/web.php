@@ -51,6 +51,7 @@ Route::post('/userprofile/updatecommunications', 'Customer\CustomerController@up
 Route::post('/userprofile/adddevicepin', 'Customer\CustomerController@addDevicePIN')->middleware('auth')->name('addDevicePIN');
 Route::post('/userprofile/addDevicePattern', 'Customer\CustomerController@addDevicePattern')->middleware('auth')->name('addDevicePattern');
 
+Route::post('/userprofile/printlabel', 'Customer\CustomerController@printLabel')->name('printLabel');
 Route::get('/userprofile/acceptoffer/{id}', 'Customer\CustomerController@acceptFaultyOffer')->middleware('auth')->name('acceptFaultyOffer');
 Route::get('/userprofile/sendtoretest/{id}', 'Customer\CustomerController@sendToRetesting')->middleware('auth')->name('retestDevice');
 Route::get('/userprofile/returndevice/{id}', 'Customer\CustomerController@returnDevice')->middleware('auth')->name('returnDevice');

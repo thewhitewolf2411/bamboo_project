@@ -473,7 +473,7 @@
                                                         <img class="label-select-svg" id="bamboo-print-selected" src="{{asset('/customer_page_images/body/orange_selected.svg')}}">
                                                     </div>
 
-                                                    <a class="btn-purple sale-detail-btn mt-4" id="call-print-bamboo" href="#"><p>Re-Print Label</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+                                                    <div class="btn-purple sale-detail-btn mt-4" id="call-print-bamboo" onclick="print('{{$tradein->id}}')"><p>Re-Print Label</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></div>
                                                 </div>
                                             @endif
 
@@ -485,9 +485,25 @@
                                                         <img class="label-select-svg" id="own-print-selected" src="{{asset('/customer_page_images/body/orange_selected.svg')}}">
                                                     </div>
 
-                                                    <a class="btn-purple sale-detail-btn mt-4" id="call-print-own" href="#"><p>Re-Print Label</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+                                                    <div class="btn-purple sale-detail-btn mt-4" onclick="print('{{$tradein->id}}')" id="call-print-own" ><p>Re-Print Label</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></div>
                                                 </div>
                                             @endif
+
+                                            <div id="label-trade-in-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Trade pack label</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span style="color: black;" aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <iframe id="tradein-iframe"></iframe>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             <div class="col">
                                                 <p class="delivery-info-dates-label">Date Posted</p>
@@ -1454,4 +1470,25 @@
         }
     }
     
+    function print(id){
+        $.ajax({
+            url: "/userprofile/printlabel/",
+            method:"POST",
+                data:{
+                    _token: "{!! csrf_token() !!}",
+                    tradein: id,  
+                },
+            success:function(response){
+                //console.log(response['code'], response.code);
+                if(response['code'] == 200){
+                    $('#tradein-iframe').attr('src', '/' + response['filename']);
+                    $('#label-trade-in-modal').modal('show');
+                }
+            },
+            // error:function(response){
+            //     alert(response.responseText);
+            // }
+        });
+    }
+
 </script>
