@@ -184,7 +184,7 @@
                             <td><div class="table-element">{{$tradein->barcode}}</div></td>
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                             <td><div class="table-element">{{$tradein->imei_number}}</div></td>
-                            <td><div class="table-element">{{$tradein->bamboo_grade}}</div></td>
+                            <td><div class="table-element">{{$tradein->cosmetic_condition}}</div></td>
                             <td><div class="table-element">Despatch</div></td>
                         </tr>
                         @endforeach
@@ -254,24 +254,23 @@
                     
                         @csrf
                         @foreach(Session::get('allocateToTrays') as $tradein)
-                            <input type="hidden" name="tradein-{{$tradein->id}}" value="{{$tradein->id}}">
                             <tr>
                                 <td><div class="table-element">{{$tradein->barcode}}</div></td>
                                 <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                                 <td><div class="table-element">{{$tradein->imei_number}}</div></td>
-                                <td><div class="table-element">{{$tradein->bamboo_grade}}</div></td>
-                                <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
+                                <td><div class="table-element">{{$tradein->cosmetic_condition}}</div></td>
+                                <td><div class="table-element"><select id="newtray" name="newtray-{{$tradein->id}}" class="form-control" ><option value="" selected disabled>Select new tray</option>@foreach(Session::get('trays') as $tray) <option value="{{$tray->id}}">{{$tray->tray_name}}</option> @endforeach</select></div></td>
                             </tr>
                         @endforeach
 
                     </table>
 
                     <div class="form-group my-3">
-                        <select id="newtray-{{$tradein->id}}" name="newtray" class="form-control" >@foreach(Session::get('trays') as $tray) <option value="{{$tray->id}}">{{$tray->tray_name}}</option> @endforeach</select>
+                        
                     </div>
 
                 <div class="row">
-                    <div class="col-md-6"><input type="submit" class="btn btn-primary my-3" value="Submit" @if(count(Session::get('allocateToTrays'))<1) disabled @endif onclick="return confirm('Are you sure you want to allocate these devices to selected tray?.');"></div>
+                    <div class="col-md-6"><input type="submit" id="submitallocation" class="btn btn-primary my-3" value="Submit" disabled onclick="return confirm('Are you sure you want to allocate these devices to selected tray?.');"></div>
                     <div class="col-md-6"><a role="button" class="w-100 my-3" data-dismiss="modal" aria-label="Cancel"><div class="btn btn-primary w-100 my-3">Cancel</div> </a></div>
                 </div>
             </form>

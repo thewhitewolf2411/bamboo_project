@@ -193,6 +193,7 @@ Route::get('/portal/quarantine/quarantine-bins/bin/', 'Portal\QuarantineControll
 Route::get('/portal/quarantine-bins/printlabel/{id}', 'Portal\QuarantineController@printBinLabel');
 
 Route::post('/portal/quarantine/export-csv', 'Portal\QuarantineController@exportCsv');
+Route::post('/portal/quarantine/check-allocation', 'Portal\QuarantineController@checkScannedDevices');
 Route::post('/portal/quarantine/allocate-to-tray', 'Portal\QuarantineController@allocateToTray');
 Route::post('/portal/quarantine/return-to-customer', 'Portal\QuarantineController@returnToCustomer');
 Route::post('/portal/quarantine/mark-devices-return-to-customer', 'Portal\QuarantineController@markDevicesToReturnToCustomer');

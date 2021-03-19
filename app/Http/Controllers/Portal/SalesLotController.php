@@ -270,6 +270,13 @@ class SalesLotController extends Controller
             $saleLot->date_sold = \Carbon\Carbon::now();
     
             $saleLot->save();
+
+            $salesLotContent = SalesLotContent::where('sales_lot_id', $request->salelot_number)->get();
+
+            foreach($salesLotContent as $sLC){
+                $trayContent = TrayContent::where('trade_in_id', $sLC->device_id)->first();
+                $trayContent->delete();
+            }
     
             return redirect()->back()->with(['success'=>'You succesfully sold the lot.']);
         }
@@ -299,18 +306,18 @@ class SalesLotController extends Controller
     public function markLotPaymentRecieved(Request $request){
         if(isset($request->lot_id)){
             $salesLot = SalesLot::find($request->lot_id);
-            if($salesLot && intval($salesLot->sales_lot_status) !== 3){
+            if($salesLot && intval($salesLot->sales_lot_status) === 3){
                 $salesLot->sales_lot_status = 4;
                 $salesLot->save();
-                return response(['success' => 200]);
+                return response('', 200);
             }
             else{
                 if(intval($salesLot->sales_lot_status) !== 3){
-                    return response(['lot not picked'=>404]);
+                    return response('Lot not picked.', 404);
                 }
             }
         }
-        return response(['fail' => 404]);
+        return response('Something went wrong, please try again.', 404);
     }
 
     public function clientSalesExport($lot_id){

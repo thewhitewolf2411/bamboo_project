@@ -138,33 +138,46 @@ class QuarantineController extends Controller
         return redirect()->back()->with(['hasAllocateToTrays'=>true, 'trays'=>$trays]);
     }
 
+    public function checkScannedDevices(Request $request){
+
+        $tradeins = [];
+        if(Session::has('allocateToTrays')){
+            $tradeins = Session::get('allocateToTrays');
+        }
+
+        $tray = Tray::where('id', $request->newTrayId)->first();
+
+        /*foreach($tradeins as $tradein){
+            if($tradein->job_state !== "12"){
+                return response('Offer for device '. $tradein->barcode .' not been accepted yet.', 404);
+            }
+            if($tradein->job_state !== ""){
+                return response('Device ' . $tradein->barcode . ' cannot be moved out of quarantine yet.', 404);
+            }
+        }*/
+
+        return response('', 200);
+    }
+
     public function allocateConfirmedDevices(Request $request){
-        $tradeinNumbers = $request->all();
-        array_shift($tradeinNumbers);
 
-        $tradeinNumbers = array_values($tradeinNumbers);
+        $data = $request->all();
+        array_shift($data);
 
-        $newTrayId = $tradeinNumbers[count($tradeinNumbers) - 1];
+        foreach($data as $key=>$trayid){
+            $tradeinid = explode('-',$key)[1];
+            $newTrayid = $trayid;
 
-        unset($tradeinNumbers[count($tradeinNumbers) - 1]);
-
-        $response = array();
-
-        for($i=0; $i<count($tradeinNumbers); $i=$i+1){
-
-            $tradeinId = $tradeinNumbers[$i];
-            #dd($newTrayId);
-            $tradein = Tradein::where('id', $tradeinId)->first();
-
+            $tradein = Tradein::where('id', $tradeinid)->first();
             $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
-            $newTray = Tray::where('id', $newTrayId)->first();
+            $newTray = Tray::where('id', $newTrayid)->first();
 
             if(!MoveToTray::checkTrayValidity($request, $tradein, $newTray)){
                 return redirect()->back()->with('error', 'Order no ' . $tradein->barcode .  ' cannot be placed in this tray.');
             }
             else{
                 $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
-                $newTray = Tray::where('id', $newTrayId)->first();
+                $newTray = Tray::where('id', $newTrayid)->first();
                 if($oldTrayContent !== null){
                     $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
                     $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
@@ -173,7 +186,7 @@ class QuarantineController extends Controller
                 }
 
                 $traycontent = new TrayContent();
-                $traycontent->tray_id = $newTrayId;
+                $traycontent->tray_id = $newTrayid;
                 $traycontent->trade_in_id = $tradein->id;
                 $traycontent->save();
                 
@@ -189,13 +202,15 @@ class QuarantineController extends Controller
                 $tradein->location_changed_at = \Carbon\Carbon::now();
                 $tradein->save();
             }
-        }
         
-        if(empty($response)){
-            return redirect()->back()->with(['success'=>'All devices have been succesfully reallocated to new trays.']);
-        }
-        else{
-            return redirect()->back()->with(['error'=>'Some devices are allocated to new trays.', 'notallocated'=>$response]);
+        
+            if(empty($response)){
+                return redirect()->back()->with(['success'=>'All devices have been succesfully reallocated to new trays.']);
+            }
+            else{
+                return redirect()->back()->with(['error'=>'Some devices are allocated to new trays.', 'notallocated'=>$response]);
+            }
+
         }
 
     }

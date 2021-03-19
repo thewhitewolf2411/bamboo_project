@@ -66,7 +66,7 @@ class Tradein extends Model
 
     public function postCode(){
         $user = $this->customer();
-        $address_line = $user->billing_address;
+        $address_line = $user->delivery_address;
         $post_code = explode(',', $address_line);
         return $post_code[count($post_code)-1];
     }
@@ -445,7 +445,7 @@ class Tradein extends Model
             /*10*/  ['Test Complete','Testing'],
             /* First Test results */
             /*11*/  ['Quarantine','Awaiting Response'],
-            /*11a*/  ['FMIP Lock','Awaiting Response'],
+            /*11a*/  ['FMIP','Awaiting Response'],
             /*11b*/  ['Google Lock','Awaiting Response'],
             /*11c*/  ['PIN Lock','Awaiting Response'],
             /*11d*/  ['Incorrect Model','Awaiting Response'],
@@ -460,7 +460,7 @@ class Tradein extends Model
             /*14*/  ['Awaiting retesting','Device marked for retest'],
             /* Second Test results */
             /*15*/  ['2nd Test Quarantine','Awaiting Response'],
-            /*15a*/  ['FMIP Lock','Awaiting Response'],
+            /*15a*/  ['FMIP','Awaiting Response'],
             /*15b*/  ['Google Lock','Awaiting Response'],
             /*15c*/  ['PIN Lock','Awaiting Response'],
             /*15d*/  ['Incorrect Model','Awaiting Response'],

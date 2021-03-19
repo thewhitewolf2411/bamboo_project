@@ -124,7 +124,7 @@
                     <tr>
                         <th><div class="table-element">Sold Value:</div></th>
                         <th><div class="table-element">
-                            <input type="number" class="form-control" id="sold-for-input" name="sold_for_input" required>    
+                            <input type="number" class="form-control" id="sold-for-input" name="sold_for_input" step=".01" required>    
                         </div></th>
                     </tr>
                 </table>

@@ -67,7 +67,7 @@
             <a href="/map">Site map</a>
             <a href="/cookies">Cookies</a>
             <a href="/slavery">Modern Slavery Statement</a>
-            <a href="/corporate">Corporate Site</a>
+            <a href="https://www.bamboodistribution.com/" target="_blank">Corporate Site</a>
         </div>
     </div>
 

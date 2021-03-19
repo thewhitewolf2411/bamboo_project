@@ -18,6 +18,7 @@ class CreateSalesLotContentTable extends Migration
             $table->integer('sales_lot_id');
             $table->integer('box_id')->nullable();
             $table->integer('device_id')->nullable();
+            $table->boolean('picked')->default(false);
             $table->timestamps();
         });
     }
