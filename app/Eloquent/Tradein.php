@@ -81,8 +81,11 @@ class Tradein extends Model
 
     public function getBrandName($productId){
 
-        // $sellingProduct = SellingProduct::where('id', $productId)->first();
         $sellingProduct = SellingProduct::where('id', $this->product_id)->first();
+        if($this->correct_product_id !== null){
+            $sellingProduct = SellingProduct::where('id', $this->correct_product_id)->first();
+        }
+        #$sellingProduct = SellingProduct::where('id', $this->correct_product_id)->first();
         $brand = Brand::where('id', $sellingProduct->brand_id)->first();
         // fix for missing brands
         if($brand){
@@ -331,7 +334,6 @@ class Tradein extends Model
         $customPaper = array(0,0,141.90,283.80);
 
         $quarantineReason = $this->getBambooStatus();
-
 
         if($this->isInQuarantine()){
             

@@ -15,10 +15,7 @@ div{
             <span><strong>Trade-In Barcode: </strong>{{$barcode_number}}</span>
         </div>
         <div>
-            <span><strong>Manifacturer: </strong>{{$manifacturer}}</span>
-        </div>
-        <div>
-            <span><strong>Model: </strong>{{$model}}</span>
+            <span><strong>Make/Model: </strong>{{$model}}</span>
         </div>
         <div>
             <span><strong>IMEI: </strong>{{$imei}}</span>
