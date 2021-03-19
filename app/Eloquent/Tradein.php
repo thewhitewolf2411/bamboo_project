@@ -1010,4 +1010,12 @@ class Tradein extends Model
         $user = User::find($audit->user_id);
         return $user->first_name . " " . $user->last_name;
     }
+
+    public function deviceInReturnProcess(){
+        $in_return = ['19', '20', '21'];
+        if(in_array($this->job_state, $in_return)){
+            return true;
+        }
+        return false;
+    }
 }

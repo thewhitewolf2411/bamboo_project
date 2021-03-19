@@ -18,6 +18,7 @@ use App\Eloquent\SellingProduct;
 use App\Eloquent\Tradein;
 use App\Eloquent\Tradeout;
 use App\Eloquent\Wishlist;
+use App\Services\NotificationService;
 use Auth;
 use Carbon\Carbon;
 use Crypt;
@@ -462,6 +463,7 @@ class CustomerController extends Controller
      */
     public function returnDevice($tradein_id){
         $tradein = Tradein::findOrFail($tradein_id);
+        $notificationService = new NotificationService();
 
         $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
         $notification->resolved = true;
@@ -470,6 +472,9 @@ class CustomerController extends Controller
         // mark device send to customer
         $tradein->job_state = '19';
         $tradein->save();
+
+        // send notification - mark for return
+        $notificationService->sendMarkedToReturn($tradein->id);
 
         return redirect()->back()->with('success', 'Device marked for return.');
     }
@@ -515,10 +520,15 @@ class CustomerController extends Controller
 
     public function deleteOrder($orderid){
         $tradeins = Tradein::where('barcode', $orderid)->get();
+        $notificationService = new NotificationService();
 
         if(count($tradeins)>=1){
             foreach($tradeins as $tradein){
+                $user_id = $tradein->user_id;
+                $tradein_id = $tradein->barcode;
                 $tradein->delete();
+                 // send notification - order cancelled
+                $notificationService->orderCancelled($tradein_id, $user_id);
             }
         }
 

@@ -243,7 +243,7 @@ class QuarantineController extends Controller
                 $tradein->save();
 
                 // send notification - marked for return
-                $notificationService->sendMarkedToReturn($tradein);
+                $notificationService->sendMarkedToReturn($tradein->id);
 
                 $traycontent = TrayContent::where('trade_in_id', $tiN)->first();
                 $traycontent->delete();

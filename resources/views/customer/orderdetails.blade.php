@@ -334,6 +334,27 @@
                                             <p class="sale-status-information text-center mt-4 mb-2">Your order is awaiting second testing.</p>
                                         @endif
 
+                                        @if($tradein->deviceInReturnProcess())
+                                            <div class="sale-status-row justify-content-center">
+                                                <div class="sale-status-col">
+                                                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
+                                                    <p class="sale-status-text">Trade Pack Received</p>
+                                                </div>
+                                                <div class="sale-status-purple-line"></div>
+                                                <div class="sale-status-col">
+                                                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
+                                                    <p class="sale-status-text">Sent to despatch</p>
+                                                </div>
+                                                <div class="sale-status-purple-line"></div>
+                                                <div class="sale-status-col">
+                                                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
+                                                    <p class="sale-status-text">Returned to customer</p>
+                                                </div>
+                                            </div>
+
+                                            <p class="sale-status-information text-center mt-4 mb-2">Your device is in return process.</p>
+                                        @endif
+
                                         @if(Session::has('success'))
                                             <div class="alert alert-success text-center" role="alert">
                                                 {!!Session::get('success')!!}
@@ -356,9 +377,17 @@
                                     <div class="line-bottom"></div>
                                     <div class="collapse" id="collapseNotifications">
                                         <div class="notifications-list">
+                                            {{-- {!!dd($notifications)!!} --}}
                                             @foreach($notifications as $notification)
-                                                <div class="notification-card @if($notification->status === 'alert') red-border @endif">
-                                                    @if($notification->status === 'alert')<img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">@endif
+                                                <div class="notification-card @if($notification->status === 'alert' && $notification->resolved === false) red-border @endif">
+                                                    @if($notification->status === 'alert')
+                                                        @if($notification->resolved === false)
+                                                            <img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
+                                                        @else
+                                                            <img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/green_tick.svg')}}">
+                                                        @endif
+                                                    @endif
+                                                    @if($notification->status === 'info')<img class="notification-green-img mr-4 ml-2" src="{{asset('/customer_page_images/body/green_bell.svg')}}">@endif
                                                     {{$notification->content}}
                                                 </div>
                                                 <div class="notification-card-border"></div>

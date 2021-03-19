@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Eloquent\Notification;
+use App\Eloquent\Tradein;
 use App\User;
 
 class NotificationService {
@@ -23,6 +24,8 @@ class NotificationService {
         12, // testing notification
         13, // unsuccessful payment
         14, // trade pack received after 14 days
+
+        15, // order cancelled
     ];
 
     public $states = [
@@ -161,7 +164,8 @@ class NotificationService {
         }
     }
 
-    public function sendMarkedToReturn($tradein){
+    public function sendMarkedToReturn($tradein_id){
+        $tradein = Tradein::find($tradein_id); 
         Notification::create([
             'user_id'               => $tradein->user_id,
             'tradein_id'            => $tradein->id,
@@ -268,6 +272,18 @@ class NotificationService {
             'type'                  => 14,
             'status'                => 'alert',
             'content'               => 'Trade pack received after 14 days. A new offer has been sent.',
+            'order'                 => 1,
+            'resolved'              => false
+        ]); 
+    }
+
+    public function orderCancelled($tradein_id, $user_id){
+        Notification::create([
+            'user_id'               => $user_id,
+            'tradein_id'            => null,
+            'type'                  => 15,
+            'status'                => 'info',
+            'content'               => 'Status Update: Order Cancelled ['.$tradein_id.']',
             'order'                 => 1,
             'resolved'              => false
         ]); 
