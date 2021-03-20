@@ -148,16 +148,19 @@
 
             </div>
 
-            <div id="device-makes" class="device-makes-container">
-                <p class="sell-subtitle mb-2 mt-4">Step 2: Select the make of your device</p>
+            <div id="device-makes" class="device-makes-container hidden">
+                <p class="sell-subtitle mb-5 mt-4">Step 2: Select the make of your device</p>
 
                 <div class="device-brands-row">
                     @foreach($brands as $brand)
-                        <div class="device-brand">
+                        <div class="device-brand" id="brand-{{$brand->id}}" onclick="selectBrand('{!!$brand->id!!}')">
                             <img src="{{asset('images/brands/'.$brand->brand_image)}}">
                         </div>
                     @endforeach
                 </div>
+            </div>
+
+            <div id="device-makes-results" class="hidden">
             </div>
 
             <div class="selling-info-container">
@@ -446,6 +449,13 @@
 
 
             function selectCategory(category){
+                // clear results
+                $('.device-make-result').remove();
+
+                let makes = document.getElementById('device-makes');
+                if(makes.classList.contains('hidden')){
+                    makes.classList.remove('hidden');
+                }
                 let mobile = document.getElementById('selected-mobile');
                 let tablets = document.getElementById('selected-tablets');
                 let watches = document.getElementById('selected-watches');
@@ -456,6 +466,10 @@
 
                 switch (category) {
                     case 'mobile':
+                        mobile.classList.add('selected-category');
+                        tablets.classList.remove('selected-category');
+                        watches.classList.remove('selected-category');
+
                         mobile.style.display = 'flex';
                         tablets.style.display = 'none';
                         watches.style.display = 'none';
@@ -466,6 +480,10 @@
                         break;
 
                     case 'tablets':
+                        mobile.classList.remove('selected-category');
+                        tablets.classList.add('selected-category');
+                        watches.classList.remove('selected-category');
+
                         mobile.style.display = 'none';
                         tablets.style.display = 'flex';
                         watches.style.display = 'none';
@@ -476,6 +494,10 @@
                         break;
 
                     case 'watches':
+                        mobile.classList.remove('selected-category');
+                        tablets.classList.remove('selected-category');
+                        watches.classList.add('selected-category');
+
                         mobile.style.display = 'none';
                         tablets.style.display = 'none';
                         watches.style.display = 'flex';
@@ -488,6 +510,90 @@
                     default:
                         break;
                 }
+            }
+
+            function selectBrand(id){
+                let category_name = document.getElementsByClassName('selected-category')[0].id.split('-')[1];
+                let category;
+                switch (category_name) {
+                    case 'mobile':
+                        category = 1;
+                        break;
+                    case 'tablets':
+                        category = 2;
+                        break;
+                    case 'watches':
+                        category = 3;
+                        break;
+                    default:
+                        break;
+                }
+
+                $('.device-brand').removeClass('selected');
+                $('.device-brand').css('filter', 'opacity(0.3)');
+                let brand = document.getElementById('brand-'+id);
+                brand.classList.add('selected');
+                brand.style = 'filter: opacity(1)';
+
+                $('.device-brand').removeClass('selected');
+
+                $('.device-make-result').remove();
+
+                let devicemakeresults = document.getElementById("device-makes-results");
+                if(devicemakeresults.classList.contains('hidden')){
+                    devicemakeresults.classList.remove('hidden');
+                }
+
+                $.ajax({
+                    type: "GET",
+                    url: '/sell/getdevicebybrand/'+id+'/'+category,
+                    success: function(data, textStatus, jqXHR){
+                        if(jqXHR.status === 200){
+                            if(data.length > 0){
+
+                                for (let index = 0; index < data.length; index++) {
+                                    let singleresult = data[index];
+
+                                    let singledeviceresult = document.createElement('div');
+                                    singledeviceresult.classList.add('device-make-result');
+
+                                    let deviceimg = document.createElement('img');
+                                    deviceimg.classList.add('device-make-result-image');
+                                    deviceimg.src = 'http://127.0.0.1:8000/images/placeholder_phone_image.png';
+
+                                    let devicename = document.createElement('p');
+                                    devicename.classList.add('device-make-result-name');
+                                    devicename.innerHTML = singleresult.product_name;
+
+                                    let selecttoggle = document.createElement('img');
+                                    selecttoggle.src = '/images/front-end-icons/purple_circle.svg';
+                                    selecttoggle.classList.add('select-make-result-device');
+                                    selecttoggle.classList.add('mt-4');
+
+                                    let infotext = document.createElement('p');
+                                    infotext.classList.add('mt-3');
+                                    infotext.innerHTML = 'Select this model';
+
+                                    singledeviceresult.onclick = function(){
+                                        window.location = '/sell/shop/item/'+singleresult.id;
+                                    }
+
+                                    singledeviceresult.appendChild(deviceimg);
+                                    singledeviceresult.appendChild(devicename);
+                                    singledeviceresult.appendChild(selecttoggle);
+                                    singledeviceresult.appendChild(infotext);
+
+                                    devicemakeresults.appendChild(singledeviceresult);
+                                }
+                            } else {
+                                // if(noresults.classList.contains('hidden')){
+                                //     noresults.classList.remove('hidden');
+                                // }
+                            }
+
+                        } else {}
+                    },
+                });
             }
         </script>
     </body>

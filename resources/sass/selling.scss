@@ -619,10 +619,53 @@
 .device-brand{
     flex: 1 0 21%;
     margin: 5px;
+    border: 2px solid #707070;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.device-brand.selected{
+    border-color: #A375BC;
 }
 
 .device-brand > img {
     width: 100px;
+    height: 100px;
     display: block;
     margin: auto;
+}
+
+#device-makes-results{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.device-make-result{
+    display: flex;
+    flex-direction: column;
+    margin: 25px;
+}
+
+.device-make-result > p{
+    font-size: 14px;
+}
+
+.device-make-result-image{
+    width: auto;
+    max-width: 300px;
+}
+
+.device-make-result-name{
+    font-family: Sharp Sans No1 Bold;
+    font-size: 22px !important;
+    text-align: center;
+}
+
+.select-make-result-device{
+    width: 40px;
+    height: 40px;
+    display: block;
+    margin: auto;
+    cursor: pointer;
 }

@@ -145,7 +145,8 @@ class DatabaseSeeder extends Seeder
 
         DB::table('brand')->insert([
             'brand_name'=>'Motorola',
-            'brand_image'=>'/Image 15_1597675746.png',
+            // 'brand_image'=>'/Image 15_1597675746.png',
+            'brand_image'=>'motorola.svg',
             'total_produts'=>0
         ]);
 
@@ -158,13 +159,15 @@ class DatabaseSeeder extends Seeder
 
         DB::table('brand')->insert([
             'brand_name'=>'OnePlus',
-            'brand_image'=>'/Image 15_1597675746.png',
+            //'brand_image'=>'/Image 15_1597675746.png',
+            'brand_image'=>'oneplus.svg',
             'total_produts'=>0
         ]);
 
         DB::table('brand')->insert([
             'brand_name'=>'Oppo',
-            'brand_image'=>'/Image 15_1597675746.png',
+            //'brand_image'=>'/Image 15_1597675746.png',
+            'brand_image'=>'oppo.svg',
             'total_produts'=>0
         ]);
 
@@ -177,7 +180,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('brand')->insert([
             'brand_name'=>'Xiaomi',
-            'brand_image'=>'/Image 15_1597675746.png',
+            'brand_image'=>'xiaomi.svg',
             'total_produts'=>0
         ]);
 

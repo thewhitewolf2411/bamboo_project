@@ -84,6 +84,7 @@ Route::get('/sell/why','Customer\SellController@showSellWhy');
 Route::get('/sell/shop/{parameter}', 'Customer\SellController@showSellShop');
 Route::get('/sell/shop/item/{parameter}', 'Customer\SellController@showSellItem');
 Route::post('/sell/searchdevices', 'Customer\SellController@searchAllSellDevices')->name('searchSellDevices');
+Route::get('/sell/getdevicebybrand/{brand_id}/{category_id}', 'Customer\SellController@getDevicesByBrand')->name('getDevicesByBrand');
 
 
 Route::post('/sell/shop/item/addtocart','Customer\SellController@addSellItemToCart');

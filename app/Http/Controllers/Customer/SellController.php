@@ -196,6 +196,15 @@ class SellController extends Controller
         }
     }
 
+    /**
+     * Return all devices by brand id.
+     * @param string $brand_id
+     */
+    public function getDevicesByBrand($brand_id, $category_id){
+        $devices = SellingProduct::where('brand_id', $brand_id)->where('category_id', $category_id)->take(4)->get();
+        return response($devices, 200);
+    }
+
     public function addSellItemToCart(Request $request){
 
         $userid = Auth::user()->id;
