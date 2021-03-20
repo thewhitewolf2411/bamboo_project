@@ -21,6 +21,7 @@
         "laravel/ui": "^2.0",
         "milon/barcode": "^7.0",
         "phpoffice/phpspreadsheet": "^1.14",
+        "spatie/laravel-cookie-consent": "^2.12",
         "spatie/laravel-googletagmanager": "^2.6",
         "spatie/laravel-robots-middleware": "^1.2"
     },

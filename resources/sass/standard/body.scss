@@ -197,3 +197,98 @@ h3, h4, h5{
 .text-center{
     align-items: center;
 }
+
+
+
+
+
+
+// cookie consent styles
+
+#cookie-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    z-index: 100000;
+    height: 50px;
+    width: 100%;
+    position: relative;
+    color: white;
+    text-align: center;
+    background: #A3D147;
+}
+
+#cookie-container > span{
+    margin: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 14px;
+    margin-left: 15px;
+}
+
+.cookie-consent__message > a{
+    font-size: 14px;
+    color: white;
+    text-decoration: underline;
+    transition: color 0.5s ease-in-out;
+}
+
+.cookie-consent__message > a:hover{
+    color:black;
+}
+
+#accept-cookies {
+    width: 130px;
+    height: 35px;
+    background: white;
+    margin-bottom: auto;
+    margin-top: auto;
+    border-radius: 8px;
+    margin-left: 25px;
+    margin-right: 15px;
+    cursor: pointer;
+    border: none;
+    color: black;
+    font-size: 14px;
+    padding: 5px;
+    transition: color 0.5s ease-in-out;
+}
+
+#accept-cookies:hover{
+    color: #A3D147;
+}
+
+// general
+@media (max-width: 1130px){
+    #cookie-container{
+        height: 60px;
+    }
+}
+
+// tablets - large
+@media (max-width: 990px){
+    #cookie-container{
+        position: fixed;
+        bottom: 0;
+        top: unset;
+    }
+}
+
+// tablets - regular
+@media (max-width: 625px){
+    #cookie-container{
+        height: 100px;
+    }
+}
+
+// mobile
+@media (max-width: 460px){
+
+}
+
+// mobile - small
+@media (max-width: 380px){
+    #cookie-container {
+        height: 120px;
+    }
+}

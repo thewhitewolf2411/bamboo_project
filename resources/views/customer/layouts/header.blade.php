@@ -1,3 +1,5 @@
+@include('cookieConsent::index')
+
 <div class="header-container navbar-expand-lg navbar-light">
 
 
