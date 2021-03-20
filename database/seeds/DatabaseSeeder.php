@@ -110,31 +110,36 @@ class DatabaseSeeder extends Seeder
 
         DB::table('brand')->insert([
             'brand_name'=>'Apple',
-            'brand_image'=>'Image 13_1597675760.png',
+            // 'brand_image'=>'Image 13_1597675760.png',
+            'brand_image'=>'apple.svg',
             'total_produts'=>0
         ]);
 
         DB::table('brand')->insert([
             'brand_name'=>'Samsung',
-            'brand_image'=>'Image 14_1597675775.png',
+            // 'brand_image'=>'Image 14_1597675775.png',
+            'brand_image'=>'samsung.svg',
             'total_produts'=>0
         ]);
 
         DB::table('brand')->insert([
             'brand_name'=>'Huawei',
-            'brand_image'=>'/Image 15_1597675746.png',
+            //'brand_image'=>'/Image 15_1597675746.png',
+            'brand_image'=>'huawei.svg',
             'total_produts'=>0
         ]);
 
         DB::table('brand')->insert([
             'brand_name'=>'Google',
-            'brand_image'=>'/Image 15_1597675746.png',
+            // 'brand_image'=>'/Image 15_1597675746.png',
+            'brand_image'=>'google.svg',
             'total_produts'=>0
         ]);
 
         DB::table('brand')->insert([
             'brand_name'=>'LG',
-            'brand_image'=>'/Image 15_1597675746.png',
+            //'brand_image'=>'/Image 15_1597675746.png',
+            'brand_image'=>'lg.svg',
             'total_produts'=>0
         ]);
 
@@ -146,7 +151,8 @@ class DatabaseSeeder extends Seeder
 
         DB::table('brand')->insert([
             'brand_name'=>'Nokia',
-            'brand_image'=>'/Image 15_1597675746.png',
+            //'brand_image'=>'/Image 15_1597675746.png',
+            'brand_image'=>'nokia.svg',
             'total_produts'=>0
         ]);
 
@@ -164,7 +170,8 @@ class DatabaseSeeder extends Seeder
 
         DB::table('brand')->insert([
             'brand_name'=>'Sony',
-            'brand_image'=>'/Image 15_1597675746.png',
+            // 'brand_image'=>'/Image 15_1597675746.png',
+            'brand_image'=>'sony.svg',
             'total_produts'=>0
         ]);
 

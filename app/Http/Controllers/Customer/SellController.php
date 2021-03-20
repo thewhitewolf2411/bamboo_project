@@ -50,8 +50,10 @@ class SellController extends Controller
 
     public function showSellView(){
 
+
         $products = BuyingProduct::all();
-        return view('sell.welcome')->with(['products'=>$products, 'recycleBasket'=>true]);
+        $brands = Brand::all();
+        return view('sell.welcome', ['products'=>$products, 'recycleBasket'=>true , 'brands' => $brands]);
     }
 
     public function showSellWhy(){
@@ -168,6 +170,30 @@ class SellController extends Controller
         $searchParameter = $request->search_argument;
         
         return redirect('/sell/shop/' . $searchParameter);
+    }
+
+
+    /**
+     * Search available devices for selling.
+     * @param Request $request
+     */
+    public function searchAllSellDevices(Request $request){
+        if(isset($request->term)){
+            // avoid sql injection
+            $trimmed = preg_replace("/[^A-Za-z0-9 ]/", '', $request->term);
+            if($trimmed !== ""){
+                $searchterm = $trimmed;
+                $devices = SellingProduct::where('product_name', 'LIKE', '%'.$searchterm.'%')->get();
+
+                // if matching results
+                if($devices->count() > 0){
+                    return response($devices, 200);
+                } else {
+                    return response([], 200);
+                }
+            }
+            
+        }
     }
 
     public function addSellItemToCart(Request $request){

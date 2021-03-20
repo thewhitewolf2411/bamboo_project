@@ -4,6 +4,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         
@@ -13,7 +14,7 @@
         <link rel="icon" type="image/png" sizes="96x96" href="/customer_page_images/header/favicon-96x96.png">
         
         <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
@@ -74,54 +75,89 @@
             </div>
 
             <div class="sell-title-container">
-                <div class="two-titles">
-                    <div class="center-title-container">
-                        <p>What do you want to sell?</p>
-                    </div>
-                    <div class="center-title-container smaller-title">
-                        <p>Step 1: Use the search bar below to find your specific device or select from one of the options</p>
-                    </div>
-                </div>
+                <p class="sell-title">What do you want to sell?</p>
+                <p class="sell-subtitle mb-5 mt-4">Please use the search bar below or follow the steps to find your device</p>
+
                 <div class="sell-search-container">
                     <div class="search-bar">
-                        <form class="sell-search-form" action="/sell/searchproducts" method="POST">
-                            @csrf
-                            <input type="text" name="search_argument" placeholder="Enter your model">
-                            <button type="submit"><i class="fa fa-search"></i></button>
-                        </form>
-                        <a href=""><div class="d-flex mt-50">
+                        {{-- <form class="sell-search-form" action="/sell/searchproducts" method="POST"> --}}
+                            {{-- @csrf --}}
+                            <div class="search-column-wrap">
+                                <div class="sell-searchfield">
+                                    <input class="search-sell-input" id="searchSellDevices" type="text" name="search_argument" placeholder="Enter the make or model of your device">
+                                    <div class="search-sell-btn"><img class="sell-search-icon" src="{{asset('/images/front-end-icons/search_icon.svg')}}"></div>
+                                </div>
+                                <div id="selling-search-results" class="nomatches">
+                                    {{-- <div class="selling-single-result"><p>Iphone X</p></div>
+                                    <div class="selling-single-result"><p>Iphone S</p></div>
+                                    <div class="selling-single-result"><p>Iphone Z</p></div> --}}
+                                    <div id="no-results-sorry" class="noresults">
+                                        <img class="sorry-result-img" src="{{asset('/customer_page_images/body/emoji_confused.svg')}}">
+                                        <p class="sorry-result-text">We are sorry Boo is unable to find this make/model, please contact Customer Support on <a href="mailto:customersupport@bamboomobile.co.uk">customersupport@bamboomobile.co.uk</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        {{-- </form> --}}
+                        {{-- <a href=""><div class="d-flex mt-50">
                             <p>How do I find the model, IMEI or Serial Number</p>
-                            <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-                        </div></a>
+                            <img src="{{asset('/images/front-end-icons/search_icon.svg')}}">
+                        </div></a> --}}
                     </div>
                 </div>
             </div>
 
+            <div class="col">
+                <p class="sell-subtitle mt-4">OR</p>
+                <p class="sell-subtitle mb-2 mt-4">Step 1: Select your device below</p>
+            </div>
+
             <div class="shop-categories-container w-1000">
-                <a href="#">
-                    <div class="category-container smaller-a">
-                        <p class="shop-title">Mobile Phones</p>
-                        <div class="rounded-background-image" id="rounded-mobile">
-                            <img src="{{asset('/shop_images/category-image-1.png')}}">
-                        </div>
+
+                <div class="single-sell-category" onclick="selectCategory('mobile')" id="mobile-category">
+                    <p class="sell-category-title">Mobile Phones</p>
+                    <div class="rounded-background-image" id="rounded-mobile">
+                        <img src="{{asset('/shop_images/category-image-1.png')}}">
                     </div>
-                </a>
-                <a href="#">
-                    <div class="category-container smaller-a">
-                        <p class="shop-title">Tablets</p>
-                        <div class="rounded-background-image" id="rounded-tablets">
-                            <img src="{{asset('/shop_images/category-image-2.png')}}">
-                        </div>
+                    <div class="selected-category" id="selected-mobile">
+                        <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}">
+                        <p class="mt-1">Selected</p>
                     </div>
-                </a>
-                <a href="#">
-                    <div class="category-container smaller-a">
-                        <p class="shop-title">Watches</p>
-                        <div class="rounded-background-image" id="rounded-watches">
-                            <img src="{{asset('/shop_images/category-image-3.png')}}">
-                        </div>
+                </div>
+
+                <div class="single-sell-category" onclick="selectCategory('tablets')" id="tablets-category">
+                    <p class="sell-category-title">Tablets</p>
+                    <div class="rounded-background-image" id="rounded-tablets">
+                        <img src="{{asset('/shop_images/category-image-2.png')}}">
                     </div>
-                </a>
+                    <div class="selected-category" id="selected-tablets">
+                        <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}">
+                        <p class="mt-1">Selected</p>
+                    </div>
+                </div>
+
+                <div class="single-sell-category" onclick="selectCategory('watches')" id="watches-category">
+                    <p class="sell-category-title">Watches</p>
+                    <div class="rounded-background-image" id="rounded-watches">
+                        <img src="{{asset('/shop_images/category-image-3.png')}}">
+                    </div>
+                    <div class="selected-category" id="selected-watches">
+                        <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}">
+                        <p class="mt-1">Selected</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="device-makes" class="device-makes-container">
+                <p class="sell-subtitle mb-2 mt-4">Step 2: Select the make of your device</p>
+
+                <div class="device-brands-row">
+                    @foreach($brands as $brand)
+                        <div class="device-brand">
+                            <img src="{{asset('images/brands/'.$brand->brand_image)}}">
+                        </div>
+                    @endforeach
+                </div>
             </div>
 
             <div class="selling-info-container">
@@ -336,6 +372,123 @@
                 }
             }
 
+
+            document.getElementById('searchSellDevices').addEventListener('keyup', function(){
+                //setTimeout(() => {
+                    let val = document.getElementById('searchSellDevices').value;
+                    let resultsdiv = document.getElementById("selling-search-results");
+                    let noresults = document.getElementById("no-results-sorry");
+
+                    if(val){
+                        $.ajax({
+                            type: "POST",
+                            url: '/sell/searchdevices',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            data: {
+                                term: val,
+                            },
+                            success: function(data, textStatus, jqXHR){
+                                $('.selling-single-result').remove();
+
+                                if(resultsdiv.classList.contains('nomatches')){
+                                    resultsdiv.classList.remove('nomatches');
+                                }
+                                if(!noresults.classList.contains('hidden')){
+                                    noresults.classList.add('hidden');
+                                }
+
+                                if(jqXHR.status === 200){
+                                    
+                                    if(data.length > 0){
+
+                                        $('.selling-single-result').remove();
+
+                                        for (let index = 0; index < data.length; index++) {
+                                            let singleresult = data[index];
+
+                                            let singledevice = document.createElement('div');
+                                            singledevice.classList.add('selling-single-result');
+                                            let devicename = document.createElement('p');
+                                            devicename.innerHTML = singleresult.product_name;
+                                            singledevice.appendChild(devicename);
+                                            singledevice.onclick = function(){
+                                                window.location = '/sell/shop/item/'+singleresult.id;
+                                            }
+
+                                            resultsdiv.appendChild(singledevice);
+                                        }
+                                    } else {
+                                        if(noresults.classList.contains('hidden')){
+                                            noresults.classList.remove('hidden');
+                                        }
+                                    }
+
+                                } else {
+                                    if(!resultsdiv.classList.contains('nomatches')){
+                                        resultsdiv.classList.add('nomatches');
+                                    }
+                                    if(!noresults.classList.contains('hidden')){
+                                        noresults.classList.add('hidden');
+                                    }
+                                }
+                            },
+                        });
+                    } else {
+                        if(!resultsdiv.classList.contains('nomatches')){
+                            resultsdiv.classList.add('nomatches');
+                        }
+                    }
+                   
+                //}, 500);
+            })
+
+
+            function selectCategory(category){
+                let mobile = document.getElementById('selected-mobile');
+                let tablets = document.getElementById('selected-tablets');
+                let watches = document.getElementById('selected-watches');
+
+                let mobile_category = document.getElementById('mobile-category');
+                let tablets_category = document.getElementById('tablets-category');
+                let watches_category = document.getElementById('watches-category');
+
+                switch (category) {
+                    case 'mobile':
+                        mobile.style.display = 'flex';
+                        tablets.style.display = 'none';
+                        watches.style.display = 'none';
+
+                        mobile_category.style.filter =  'opacity(1)';
+                        tablets_category.style.filter =  'opacity(0.5)';
+                        watches_category.style.filter =  'opacity(0.5)';
+                        break;
+
+                    case 'tablets':
+                        mobile.style.display = 'none';
+                        tablets.style.display = 'flex';
+                        watches.style.display = 'none';
+
+                        mobile_category.style.filter =  'opacity(0.5)';
+                        tablets_category.style.filter =  'opacity(1)';
+                        watches_category.style.filter =  'opacity(0.5)';
+                        break;
+
+                    case 'watches':
+                        mobile.style.display = 'none';
+                        tablets.style.display = 'none';
+                        watches.style.display = 'flex';
+
+                        mobile_category.style.filter =  'opacity(0.5)';
+                        tablets_category.style.filter =  'opacity(0.5)';
+                        watches_category.style.filter =  'opacity(1)';
+                        break;
+                
+                    default:
+                        break;
+                }
+            }
         </script>
     </body>
 </html>

@@ -36,6 +36,8 @@ Route::get('/map', 'Customer\PagesController@showMapPage');
 Route::get('/cookies', 'Customer\PagesController@showCookiesPage');
 Route::get('/slavery', 'Customer\PagesController@showSlaveryPage');
 Route::get('/corporate', 'Customer\PagesController@showCorporatePage');
+Route::get('/returnpolicy', 'Customer\PagesController@showReturnPolicyPage');
+
 
 //User profile
 Route::get('/userprofile', 'Customer\CustomerController@showProfile');
@@ -81,6 +83,8 @@ Route::get('/sell', 'Customer\SellController@showSellView');
 Route::get('/sell/why','Customer\SellController@showSellWhy');
 Route::get('/sell/shop/{parameter}', 'Customer\SellController@showSellShop');
 Route::get('/sell/shop/item/{parameter}', 'Customer\SellController@showSellItem');
+Route::post('/sell/searchdevices', 'Customer\SellController@searchAllSellDevices')->name('searchSellDevices');
+
 
 Route::post('/sell/shop/item/addtocart','Customer\SellController@addSellItemToCart');
 

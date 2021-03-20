@@ -134,6 +134,15 @@ class PagesController extends Controller
         return view('customer.footer-links.corporate')->with('products', $products);
     }
 
+    public function showReturnPolicyPage(){
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+        $products = $buyingProducts->merge($sellingProducts);
+
+        return view('customer.footer-links.returnpolicy')->with('products', $products);
+        
+    }
+
     public function showPaswordResetPage(){
         
         return view('auth.passwords.reset');
