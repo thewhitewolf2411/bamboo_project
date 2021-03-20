@@ -690,6 +690,8 @@ class TestingController extends Controller
     public function generateNewLabel($has_serial, $barcode, $tradein_barcode, $manifacturer, $model, $imei, $location, $cosmetic_condition, $network){
         $customPaper = array(0,0,141.90,283.80);
 
+        
+
         #dd($cosmetic_condition);
         if($has_serial){
             if($cosmetic_condition !== null){
@@ -707,7 +709,7 @@ class TestingController extends Controller
                 ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
             }
             else{
-                $pdf = PDF::loadView('portal.labels.receivingpass', 
+                $pdf = PDF::loadView('portal.labels.devicelabels.receivingpass', 
                 array(
                     'barcode'=>$barcode,
                     'tradein_barcode'=>$tradein_barcode,
@@ -737,7 +739,7 @@ class TestingController extends Controller
                 ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
             }
             else{
-                $pdf = PDF::loadView('portal.labels.receivingpass', 
+                $pdf = PDF::loadView('portal.labels.devicelabels.receivingpass', 
                 array(
                     'barcode'=>$barcode,
                     'tradein_barcode'=>$tradein_barcode,

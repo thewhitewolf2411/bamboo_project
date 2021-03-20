@@ -58,7 +58,7 @@
                 <table class="portal-table table-invisible" id="closedboxtable">
                     <tr>
                         <td><div class="table-element">Box number</div></td>
-                        <td><div class="table-element">Grade</div></td>
+                        <td><div class="table-element">Bamboo Grade</div></td>
                         <td><div class="table-element">Network</div></td>
                         <td><div class="table-element">Total QTY</div></td>
                         <td><div class="table-element">Total Cost</div></td>

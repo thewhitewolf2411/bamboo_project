@@ -1,7 +1,7 @@
 <style>
     @page {
-    margin:5%;
-    
+    margin:1cm;
+    text-align:center;
     }
 
 div{
@@ -10,23 +10,24 @@ div{
 
 </style>
     <div style='margin:0 auto;'>
-    
+
+        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($tradein_barcode,'C128') }}" height="40" width="180" />
         <div>
-            <span><strong>Trade-In Barcode: </strong>{{$barcode_number}}</span>
+            <span><strong>Trade-In Barcode: </strong>{{$tradein_barcode}}</span>
         </div>
         <div>
             <span><strong>Make/Model: </strong>{{$model}}</span>
         </div>
+        @if($imei !== null)
         <div>
             <span><strong>IMEI: </strong>{{$imei}}</span>
         </div>
+        @endif
         <div>
             <span><strong>Location: </strong>{{$location}}</span>
         </div>
 
-        <div style="margin-top: 20px; display: flex; justify-content: center;flex-direction: unset;width: 100%;align-items: center;">
-            <div style="flex: 1;display: inline-block;text-align: right;">{!!$barcode!!}</div>
-        </div>
+
    
     </div>
 

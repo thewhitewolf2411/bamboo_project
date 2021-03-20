@@ -22,7 +22,7 @@
             </div>
         </div>
         
-        <table class="portal-table" id="categories-table">
+        <table class="portal-table" id="saleslot-table">
             <tr>
                 <td><div class="table-element">Lot Ref No.</div></td>
                 <td><div class="table-element">Date raised</div></td>
@@ -35,7 +35,7 @@
             <tr class="saleslotpicking" id="{{$salesLot->id}}">
                 <td>@if($salesLot->sales_lot_status === 2) <a href="/portal/warehouse-management/picking-despatch/pick-lot/{{$salesLot->id}}"> @endif<div class="table-element">{{$salesLot->id}}</div> @if($salesLot->sales_lot_status === 2) </a> @endif </td>
                 <td>@if($salesLot->sales_lot_status === 2) <a href="/portal/warehouse-management/picking-despatch/pick-lot/{{$salesLot->id}}"> @endif<div class="table-element">{{$salesLot->created_at}}</div> @if($salesLot->sales_lot_status === 2) </a> @endif </td>
-                <td>@if($salesLot->sales_lot_status === 2) <a href="/portal/warehouse-management/picking-despatch/pick-lot/{{$salesLot->id}}"> @endif<div class="table-element">{{$salesLot->sold_to}}</div> @if($salesLot->sales_lot_status === 2) </a> @endif </td>
+                <td>@if($salesLot->sales_lot_status === 2) <a href="/portal/warehouse-management/picking-despatch/pick-lot/{{$salesLot->id}}"> @endif<div class="table-element">{{$salesLot->getCustomerName()}}</div> @if($salesLot->sales_lot_status === 2) </a> @endif </td>
                 <td>@if($salesLot->sales_lot_status === 2) <a href="/portal/warehouse-management/picking-despatch/pick-lot/{{$salesLot->id}}"> @endif<div class="table-element" id="saleslotstatus{{$salesLot->id}}" data-value="{{$salesLot->sales_lot_status}}">{{$salesLot->getStatus($salesLot->sales_lot_status)}}</div> @if($salesLot->sales_lot_status === 2) </a> @endif </td>
                 <td>@if($salesLot->sales_lot_status === 2) <a href="/portal/warehouse-management/picking-despatch/pick-lot/{{$salesLot->id}}"> @endif<div class="table-element">{{$salesLot->getSalesLotQuantity()}}</div> @if($salesLot->sales_lot_status === 2) </a> @endif </td>
                 <td><div class="table-element">@if($salesLot->sales_lot_status === 4) <input type="checkbox" data-value="{{$salesLot->id}}" class="tagfordespatch"> @endif</div></td>
