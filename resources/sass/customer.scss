@@ -20,33 +20,41 @@ main p, a, span{
     background: url("../../public/customer_page_images/body/Bamboo_header2.png");
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
 
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    height: 770px;
 }
 
 .home-title-container .left-container{
     display: flex;
     flex-direction: column;
-    width: 30%;
+    width: 35%;
     justify-content: space-between;
     padding: 50px 0 50px 0;
-    height: 400px;
+    // height: 400px;
 }
 
 .home-title-container .left-container .title-container p{
-    font-size: 40px;
+    font-size: 4rem;
     font-weight: 600;
     color: #fff;
     font-family: Sharp Sans No1 Semibold;
+    text-shadow: 0px 3px 20px rgba(0,0,0,0.20);
 }
 
 .start-buttons-container{
     display: flex;
     flex-direction: row;
     justify-content: inherit;
-    width: 350px;
+    //width: 350px;
+}
+
+.start-buttons-container > div.image-button{
+    position: relative;
 }
 
 .how-container{
@@ -332,9 +340,10 @@ main p, a, span{
 
 .devices-container{
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     max-width: 1300px;
-    width: 1300px;
+    //width: 1300px;
     margin-top: 50px;
 }
 
@@ -342,6 +351,7 @@ main p, a, span{
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 60px 100px;
 }
 
 .device-container{
@@ -401,8 +411,9 @@ main p, a, span{
 }
 
 .about-image{
-    width: 450px;
-    height: 450px;
+    display: block;
+    width: 200px;
+    height: auto;
     border-radius: 15px;
     display: flex;
     justify-content: center;
@@ -1393,21 +1404,21 @@ main p, a, span{
         margin-top: 100px !important;
     }
 
-    .home-element{
-        padding: 1rem;
-        padding-bottom: 0;
-        margin-top: 1rem;
-    }
+    // .home-element{
+    //     padding: 1rem;
+    //     padding-bottom: 0;
+    //     margin-top: 1rem;
+    // }
     
-    .home-title-container .left-container{
-        width: 100%;
-        padding: 20px 0;
-    }
+    // .home-title-container .left-container{
+    //     width: 100%;
+    //     padding: 20px 0;
+    // }
 
-    .start-buttons-container{
-        top: 400px;
-        position: absolute;
-    }
+    // .start-buttons-container{
+    //     top: 400px;
+    //     position: absolute;
+    // }
 
     .start-buttons-container #start-shopping, #start-selling, a{
         color: #fff !important;
@@ -1657,4 +1668,91 @@ main p, a, span{
         height: auto !important;
     }
 
+}
+
+
+
+
+// image breakpoint
+@media (max-width: 1420px){
+    .home-title-container{
+        background-position: -150px;
+    }
+}
+
+// image breakpoint 2
+@media (max-width: 1300px){
+    .home-title-container > div.left-container{
+        width: 45%;
+    }
+}
+
+// general
+@media (max-width: 1130px){
+    .home-title-container > div.left-container{
+        width: 50%;
+    }
+    .home-element{
+        //padding: 20px;
+        padding-left: 15%;
+    }
+    .home-title-container{
+        background-position: -180px;
+    }
+}
+
+// tablets - large
+@media (max-width: 990px){
+    .home-title-container .left-container {
+        width: 70% !important;
+    }
+   
+    .home-title-container{
+        background-position: -230px;
+    }
+}
+
+// text breakpoint
+@media (max-width: 770px){
+    .home-title-container .left-container {
+        width: 70% !important;
+    }
+
+    .home-element{
+        padding: 40px;
+    }
+
+    .home-title-container{
+        background-position: -250px;
+    }
+}
+
+// tablets - breakpoint
+@media (max-width: 890px){
+}
+
+
+// tablets - regular
+@media (max-width: 625px){
+    .home-element{
+        padding: 30px;
+    }
+    .home-title-container{
+        background-position: -430px;
+    }
+}
+
+// mobile
+@media (max-width: 560px){
+    .home-title-container .left-container {
+        width: 90% !important;
+    }
+    .image-button{
+        margin-top: 10%;
+    }
+}
+
+// mobile - small
+@media (max-width: 380px){
+    
 }

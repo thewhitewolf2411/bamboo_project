@@ -10,6 +10,7 @@
     height: 80px;
     min-height: 80px;
     padding: 0 150px;
+    box-shadow: 0 4px 6px rgba(0,0,0, 0.16);
 }
 
 .top-upper-elements-container a{
@@ -19,6 +20,7 @@
     align-items: center;
     justify-content: center;
     min-width: 240px;
+    width: 280px;
 }
 
 .top-element-container{
@@ -41,6 +43,7 @@
 }
 
 .top-element-container p{
+    font-family: Sharp Sans No1 Semibold;
     font-size: 14pt;
     color: #fff;
     transition: 0.2s linear;
@@ -430,7 +433,36 @@
 
 
 
-// new
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// new styles
 .sell-title, .sell-subtitle{
     font-family: Sharp Sans No1 Bold;
     text-align: center;
@@ -507,6 +539,7 @@
     background: white;
     overflow-y: scroll;
     overflow-x: hidden;
+    z-index: 1;
 }
 
 #selling-search-results.nomatches{
@@ -563,7 +596,14 @@
 
 
 
-
+.sell-categories-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: auto;
+    margin-bottom: 50px;
+}
 
 .single-sell-category{
     width: 300px;
@@ -604,8 +644,6 @@
 }
 
 .device-makes-container{
-    max-width: 1100px;
-    width: 1100px;
     margin: auto;
 }
 
@@ -639,6 +677,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .device-make-result{
@@ -668,4 +707,102 @@
     display: block;
     margin: auto;
     cursor: pointer;
+}
+
+.selling-info-items-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 150px;
+    background: #EFEFEF 0% 0% no-repeat padding-box;
+}
+
+
+.selling-info-item{
+    width: 250px;
+    height: 200px;
+    text-align: center;
+}
+
+.selling-info-img{
+    width: 120px;
+    height: 120px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.selling-info-bold-text{
+    font-family: Sharp Sans No1 Bold;
+    font-size: 20px;
+    margin-top: auto;
+}
+
+
+
+
+
+
+
+
+
+// general
+@media (max-width: 1130px){
+    
+}
+
+// tablets - large
+@media (max-width: 990px){
+    .selling-info-item{
+        height: 250px;
+    }
+}
+
+// tablets - breakpoint
+@media (max-width: 890px){
+    .top-upper-elements-container{
+        height: 50px;
+        min-height: 50px;
+    }
+    .top-upper-elements-container a {
+        min-width: 150px;
+        width: 150px;
+    }
+    .top-element-container p {
+        font-size: 12pt;
+    }
+}
+
+
+// tablets - regular
+@media (max-width: 625px){
+    .device-brand{
+        flex: 1 0 30%;
+    }
+    .top-upper-elements-container{
+        padding: 0;
+    }
+
+    .top-upper-elements-container a {
+        width: 125px !important;
+        min-width: 125px !important; 
+    }
+
+    .top-upper-elements-container p {
+        font-size: 10pt !important;
+    }
+}
+
+// mobile
+@media (max-width: 460px){
+    .device-brand {
+        flex: 1 0 40%;
+    }
+}
+
+// mobile - small
+@media (max-width: 380px){
+    
 }

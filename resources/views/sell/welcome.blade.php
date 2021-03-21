@@ -24,55 +24,7 @@
     <body>
         <header>@include('customer.layouts.header')</header>
         <main>
-            <div class="sell-top-container">
-                <div class="top-upper-elements-container">
-                    <a href="/sell/shop/mobile">
-                        <div class="top-element-container">
-                            <p>Sell Mobile Phones</p>
-                        </div>
-                    </a>
-                    <a href="/sell/shop/tablets">
-                        <div class="top-element-container">
-                            <p>Sell Tablets</p>
-                        </div>
-                    </a>
-                    <a href="/sell/shop/watches">
-                        <div class="top-element-container">
-                            <p>Sell Watches</p>
-                        </div>
-                    </a>
-                    <a href="/sell/why">
-                        <div class="top-element-container">
-                            <p>Why Sell With Us</p>
-                        </div>
-                    </a>
-                </div>
-                <div class="trustpilot-container">
-                    <div class="trustpilot-element">
-                        <img src="{{asset('/customer_page_images/body/trustpilot.png')}}">
-                    </div>
-                    <div class="trustpilot-element">
-                        <p>Over 65,000 reviews</p>
-                    </div>
-                    <div class="trustpilot-element">
-                        <div class="green-box">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                        </div>
-                        <div class="green-box">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                        </div>
-                        <div class="green-box">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                        </div>
-                        <div class="green-box">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                        </div>
-                        <div class="green-box">
-                            <i class="fa fa-star" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('customer.layouts.sellinglinks')
 
             <div class="sell-title-container">
                 <p class="sell-title">What do you want to sell?</p>
@@ -80,24 +32,22 @@
 
                 <div class="sell-search-container">
                     <div class="search-bar">
-                        {{-- <form class="sell-search-form" action="/sell/searchproducts" method="POST"> --}}
-                            {{-- @csrf --}}
-                            <div class="search-column-wrap">
-                                <div class="sell-searchfield">
-                                    <input class="search-sell-input" id="searchSellDevices" type="text" name="search_argument" placeholder="Enter the make or model of your device">
-                                    <div class="search-sell-btn"><img class="sell-search-icon" src="{{asset('/images/front-end-icons/search_icon.svg')}}"></div>
-                                </div>
-                                <div id="selling-search-results" class="nomatches">
-                                    {{-- <div class="selling-single-result"><p>Iphone X</p></div>
-                                    <div class="selling-single-result"><p>Iphone S</p></div>
-                                    <div class="selling-single-result"><p>Iphone Z</p></div> --}}
-                                    <div id="no-results-sorry" class="noresults">
-                                        <img class="sorry-result-img" src="{{asset('/customer_page_images/body/emoji_confused.svg')}}">
-                                        <p class="sorry-result-text">We are sorry Boo is unable to find this make/model, please contact Customer Support on <a href="mailto:customersupport@bamboomobile.co.uk">customersupport@bamboomobile.co.uk</a></p>
-                                    </div>
+                        <form id="search-form" class="search-column-wrap" action="/sell/searchproducts" method="POST">
+                            @csrf
+                            <div class="sell-searchfield">
+                                <input class="search-sell-input" id="searchSellDevices" type="text" name="search_argument" placeholder="Enter the make or model of your device">
+                                <div class="search-sell-btn"><img class="sell-search-icon" src="{{asset('/images/front-end-icons/search_icon.svg')}}"></div>
+                            </div>
+                            <div id="selling-search-results" class="nomatches">
+                                {{-- <div class="selling-single-result"><p>Iphone X</p></div>
+                                <div class="selling-single-result"><p>Iphone S</p></div>
+                                <div class="selling-single-result"><p>Iphone Z</p></div> --}}
+                                <div id="no-results-sorry" class="noresults">
+                                    <img class="sorry-result-img" src="{{asset('/customer_page_images/body/emoji_confused.svg')}}">
+                                    <p class="sorry-result-text">We are sorry Boo is unable to find this make/model, please contact Customer Support on <a href="mailto:customersupport@bamboomobile.co.uk">customersupport@bamboomobile.co.uk</a></p>
                                 </div>
                             </div>
-                        {{-- </form> --}}
+                        </form>
                         {{-- <a href=""><div class="d-flex mt-50">
                             <p>How do I find the model, IMEI or Serial Number</p>
                             <img src="{{asset('/images/front-end-icons/search_icon.svg')}}">
@@ -111,7 +61,7 @@
                 <p class="sell-subtitle mb-2 mt-4">Step 1: Select your device below</p>
             </div>
 
-            <div class="shop-categories-container w-1000">
+            <div class="sell-categories-container">
 
                 <div class="single-sell-category" onclick="selectCategory('mobile')" id="mobile-category">
                     <p class="sell-category-title">Mobile Phones</p>
@@ -163,22 +113,22 @@
             <div id="device-makes-results" class="hidden">
             </div>
 
-            <div class="selling-info-container">
-                <div class="selling-info-element">
-                    <img src="{{asset('/sell_images/image-1.svg')}}">
-                    <p>SAME DAY PAYMENT</p>
+            <div class="selling-info-items-container">
+                <div class="selling-info-item">
+                    <img class="selling-info-img" src="{{asset('/sell_images/image-1.svg')}}">
+                    <p class="selling-info-bold-text mt-4">SAME DAY PAYMENT</p>
                 </div>
-                <div class="selling-info-element">
-                    <img src="{{asset('/sell_images/image-2.svg')}}">
-                    <p>FREE POSTAGE</p>
+                <div class="selling-info-item">
+                    <img class="selling-info-img" src="{{asset('/sell_images/image-2.svg')}}">
+                    <p class="selling-info-bold-text mt-4">FREE POSTAGE</p>
                 </div>
-                <div class="selling-info-element">
-                    <img src="{{asset('/sell_images/image-3.svg')}}">
-                    <p>DATE IS ALWAYS PROTECTED</p>
+                <div class="selling-info-item">
+                    <img class="selling-info-img" src="{{asset('/sell_images/image-3.svg')}}">
+                    <p class="selling-info-bold-text mt-4">DATE IS ALWAYS PROTECTED</p>
                 </div>
-                <div class="selling-info-element">
-                    <img src="{{asset('/sell_images/image-4.svg')}}">
-                    <p>BAMBOO PRICE OR YOUR DEVICE BACK FREE</p>
+                <div class="selling-info-item">
+                    <img class="selling-info-img" src="{{asset('/sell_images/image-4.svg')}}">
+                    <p class="selling-info-bold-text mt-4">BAMBOO PRICE OR YOUR DEVICE BACK FREE</p>
                 </div>
             </div>
 
@@ -376,7 +326,7 @@
             }
 
 
-            document.getElementById('searchSellDevices').addEventListener('keyup', function(){
+            document.getElementById('searchSellDevices').addEventListener('keyup', function(e){
                 //setTimeout(() => {
                     let val = document.getElementById('searchSellDevices').value;
                     let resultsdiv = document.getElementById("selling-search-results");

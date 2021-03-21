@@ -9,10 +9,19 @@ header{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    height: 200px;
+    height: 150px;
     padding: 0 120px 0 120px;
     justify-content: space-between;
     background: #fff;
+}
+
+.mobile-logo{
+    display: none;
+}
+
+.mobile-logo > img{
+    width: 80px;
+    height: 80px;
 }
 
 .left-header {
@@ -24,6 +33,7 @@ header{
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-top: 50px;
 }
 
 .right-header{
@@ -36,13 +46,18 @@ header{
 .hovers-header{
     display: flex;
     flex-direction: row;
-    justify-content: end;
-    width: 300px;
+    justify-content: flex-end;
+    // width: 300px;
+    width: auto;
 }
 
 .urls-header{
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
+    box-shadow: 0 5px 6px rgba(0,0,0, 0.16);
+    background: white;
+    padding: 0 120px 0 120px;
 }
 
 .hover-link{
@@ -192,11 +207,8 @@ header{
     flex-direction: row;
     justify-content: center;
     align-items: center;
-
-    margin-left: 5px;
-    margin-right: 5px;
-
-    
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .url-header-container a{
@@ -250,11 +262,15 @@ header{
     transition: 0.2s linear;
 }
 
+.url-header-container > a{
+    font-size: 16px;
+}
+
 #start-shopping a:hover{
     font-size: 18px !important;
 }
 
-#start-selling a:hover{
+#start- ing a:hover{
     font-size: 18px !important;
 }
 
@@ -266,6 +282,14 @@ header{
 .navbar-collapse{
     align-items: unset;
     flex-grow: unset;
+}
+
+.navbar-toggler:focus{
+    outline: none;
+}
+
+.header-selling-links{
+    background: #F28E33;
 }
 
 @media screen and (max-width: 740px) and (min-width: 325px){
@@ -281,10 +305,10 @@ header{
         width: 30%;
     }
 
-    .logo-header-container img{
-        width: 100%;
-        padding: 10px;
-    }
+    // .logo-header-container img{
+    //     width: 100%;
+    //     padding: 10px;
+    // }
 
     .left-header{
         width: 70%;
@@ -301,21 +325,30 @@ header{
         background-size: 30px;
     }
 
+    .hover-link:hover{
+        height: 70px !important;
+    }
+
     .hovers-header{
         width: auto;
+        height: 55px;
     }
 
     .hover-link{
-        width: 50px;
+        width: 60px;
         height: 50px;
     }
 
-    .urls-header{
-        flex-direction: column;
-        padding: 1rem;
-        width: 100%;
-        align-items: first baseline;
-        background-color: #FAFAFA;
+    //.urls-header{
+        // flex-direction: column;
+        // padding: 1rem;
+        // width: 100%;
+        // align-items: first baseline;
+        // background-color: #FAFAFA;
+    //}
+
+    .urls-header-mobile{
+        flex-wrap: wrap;
     }
 
     .url-header-container{
@@ -324,7 +357,7 @@ header{
         border-radius: 0 !important;
         border-bottom: 1px solid #AAAAAA !important;
         justify-content: left;
-        height: 30px !important;
+        height: 50px !important;
     }
 
     #start-shopping{
@@ -350,4 +383,118 @@ header{
 
 
 
+}
+
+
+.navbar-toggler{
+    display: none;
+}
+
+.urls-header-mobile{
+    display: flex;
+    justify-content: center;
+    background: white;
+}
+
+.url-header-container.mobile{
+    background: white;
+}
+
+
+.tablet-mobile-menu-wrapper{
+    display: flex;
+    flex-direction: row;
+}
+
+// large breakpoint
+@media (max-width: 1400px){
+    .logo-header-container{
+        margin-top: 35px;
+    }
+    .header-container{
+        padding: 0 60px 60px;
+    }
+}
+
+// general
+@media (max-width: 1130px){
+    .logo-header-container{
+        //margin-top: 5px;
+    }
+    .header-container{
+        padding: 0 60px 60px;
+    }
+}
+
+// tablets - large
+@media (max-width: 990px){
+    
+}
+
+// tablets - breakpoint
+@media (max-width: 890px){
+    .urls-header{
+        display: none;
+    }
+    .logo-header-container{
+        margin-top: 25px;
+    }
+    .full-logo > img{
+        width: 400px;
+        padding: 10px;
+    }
+    main{
+        margin-top: 100px;
+    }
+    .navbar-toggler{
+        display: block;
+    }
+    .header-container{
+        height: 100px;
+        padding: 0 25px 25px;
+    }
+    .hover-link{
+        width: 60px;
+        height: 60px;
+    }
+    .hover-link > a > .img{
+        height: 60px !important;
+        min-height: 50px !important;
+        background-size: auto !important;
+    }
+    .hovers-header{
+        height: 60px;
+    }
+    .hover-link:hover{
+        height: 85px !important;
+    }
+}
+
+// logo breakpoint
+@media (max-width: 650px){
+
+}
+
+// tablets - regular
+@media (max-width: 625px){
+    .full-logo{
+        display: none;
+    }
+    .mobile-logo{
+        display: block;
+    }
+    .logo-header-container{
+        margin-top: 20px;
+    }
+}
+
+
+// mobile
+@media (max-width: 460px){
+
+}
+
+// mobile - small
+@media (max-width: 380px){
+    
 }

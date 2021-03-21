@@ -6,8 +6,11 @@
     <div class="left-header">
 
         <div class="logo-header-container">
-            <a href="/">
+            <a href="/" class="full-logo">
                 <img src="{{asset('/customer_page_images/header/Bamboo Logo.svg')}}" width="550px" height="82px">
+            </a>
+            <a href="/" class="mobile-logo">
+                <img src="{{asset('/images/logo_mobile.svg')}}">
             </a>
         </div>
 
@@ -28,43 +31,18 @@
             </div>
             @endif
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span style="color:#000;" class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
-        </div>
-
-        <div class="urls-header navbar-collapse collapse">
-
-            {{-- <div class="url-header-container" id="start-shopping">
-                <a href="/shop">Start Shopping</a>
-            </div> --}}
-            <div class="url-header-container" id="start-selling">
-                <a href="/sell">Start Selling</a>
-            </div>
-            <div class="url-header-container">
-                <a href="/setpage/how">How it works</a>
-            </div>
-            <div class="url-header-container">
-                <a href="/setpage/about">About</a>
-            </div>
-            {{--<div class="url-header-container">
-                <a href="/setpage/news">News & Blog</a>
-            </div>--}}
-            <div class="url-header-container">
-                <a href="/setpage/support">Support & Service</a>
-            </div>
-            <div class="url-header-container">
-                <a href="/setpage/contact">Contact</a>
-            </div>
-        
+            {{-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span style="color:#000;" class="navbar-toggler-icon"></span>
+            </button> --}}
         </div>
 
     </div>
 
-
-
 </div>
 
-<div class="urls-header navbar-collapse collapse" id="navbarSupportedContent">
+<div class="urls-header">
 
     {{-- <div class="url-header-container" id="start-shopping">
         <a href="/shop">Start Shopping</a>
@@ -85,6 +63,32 @@
         <a href="/setpage/support">Support & Service</a>
     </div>
     <div class="url-header-container">
+        <a href="/setpage/contact">Contact</a>
+    </div>
+
+</div>
+
+<div class="urls-header-mobile navbar-collapse collapse" id="navbarSupportedContent">
+
+    {{-- <div class="url-header-container" id="start-shopping">
+        <a href="/shop">Start Shopping</a>
+    </div> --}}
+    <div class="url-header-container mobile-orange" id="start-selling">
+        <a href="/sell">Start Selling</a>
+    </div>
+    <div class="url-header-container mobile">
+        <a href="/setpage/how">How it works</a>
+    </div>
+    <div class="url-header-container mobile">
+        <a href="/setpage/about">About</a>
+    </div>
+    {{--<div class="url-header-container">
+        <a href="/setpage/news">News & Blog</a>
+    </div>--}}
+    <div class="url-header-container mobile">
+        <a href="/setpage/support">Support & Service</a>
+    </div>
+    <div class="url-header-container mobile lastitem">
         <a href="/setpage/contact">Contact</a>
     </div>
 
