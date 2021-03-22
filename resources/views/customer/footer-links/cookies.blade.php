@@ -27,9 +27,12 @@
             <div class="app">
                 <div class="slavery-title-container">
                     <div class="center-title-container">
-                        <p>COOKIE POLICY</p>
+                        <p>Cookie Policy</p>
                     </div>
                 </div>
+                <a class="back-to-home-footer mt-3" href="/">
+                    <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to home</p>
+                </a>
 
                 <div class="container">
 
@@ -170,7 +173,7 @@
                 </div>
             </div>
         </main>
-        <footer>@include('customer.layouts.footer')</footer>
+        <footer>@include('customer.layouts.footer', ['showGetstarted' => true])</footer>
 
         <script>
 

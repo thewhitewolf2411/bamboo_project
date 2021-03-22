@@ -33,7 +33,7 @@
                 @yield('content')
             
             </main>
-        <footer>@include('customer.layouts.footer')</footer>
+        <footer>@include('customer.layouts.footer', ['showGetstarted' => true])</footer>
 
         @if(Session::has('regerror'))
         <script>

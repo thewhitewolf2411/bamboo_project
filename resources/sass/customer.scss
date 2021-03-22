@@ -46,6 +46,24 @@ main p, a, span{
     text-shadow: 0px 3px 20px rgba(0,0,0,0.20);
 }
 
+.back-to-home-footer{
+    width: 90%;
+    display: flex;
+    justify-content: start;
+    margin: auto;
+}
+
+.back-home-text{
+    font-size: 18px;
+    font-family: Sharp Sans No1 Book;
+    margin: 0;
+}
+
+.back-home-icon{
+    width: 40px;
+    height: 40px;
+}
+
 .start-buttons-container{
     display: flex;
     flex-direction: row;
@@ -795,9 +813,12 @@ main p, a, span{
 
 .how-first-element .grading-video-container{
     margin-top: 0;
-    background-color: #A375BC;
-    width: 600px;
-    height: 300px;
+    max-width: 600px;
+    height: 400px;
+}
+
+.grading-video-container > video {
+    border-radius: 10px;
 }
 
 .toggle-elements-btn{
@@ -1322,8 +1343,11 @@ main p, a, span{
 }
 
 .slavery-title-container{
-    background-color: #e9e6e4;
-    height: 250px;
+    background: url("../../public/customer_page_images/body/blue_purple_cover.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1331,7 +1355,11 @@ main p, a, span{
 }
 
 .slavery-title-container p{
-    color: #666666
+    font-size: 4rem;
+    font-weight: 600;
+    color: #fff;
+    font-family: Sharp Sans No1 Semibold;
+    text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
 }
 
 .environment-first-element{
@@ -1754,5 +1782,8 @@ main p, a, span{
 
 // mobile - small
 @media (max-width: 380px){
+    .home-title-container{
+        background-position: -580px;
+    }
     
 }

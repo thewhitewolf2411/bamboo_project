@@ -463,7 +463,7 @@
             </div>
         </main>
 
-        <footer>@include('customer.layouts.footer')</footer>
+        <footer>@include('customer.layouts.footer', ['showGetstarted' => true])</footer>
         <script>
 
             function showRegistrationForm(){

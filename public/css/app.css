@@ -10188,6 +10188,24 @@ main p, a, span {
   text-shadow: 0px 3px 20px rgba(0, 0, 0, 0.2);
 }
 
+.back-to-home-footer {
+  width: 90%;
+  display: flex;
+  justify-content: start;
+  margin: auto;
+}
+
+.back-home-text {
+  font-size: 18px;
+  font-family: Sharp Sans No1 Book;
+  margin: 0;
+}
+
+.back-home-icon {
+  width: 40px;
+  height: 40px;
+}
+
 .start-buttons-container {
   display: flex;
   flex-direction: row;
@@ -10931,9 +10949,12 @@ main p, a, span {
 
 .how-first-element .grading-video-container {
   margin-top: 0;
-  background-color: #A375BC;
-  width: 600px;
-  height: 300px;
+  max-width: 600px;
+  height: 400px;
+}
+
+.grading-video-container > video {
+  border-radius: 10px;
 }
 
 .toggle-elements-btn {
@@ -11453,8 +11474,11 @@ main p, a, span {
 }
 
 .slavery-title-container {
-  background-color: #e9e6e4;
-  height: 250px;
+  background: url(/images/blue_purple_cover.svg?d2d6212bfef5fd07e4bce6f5403736c9);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11462,7 +11486,11 @@ main p, a, span {
 }
 
 .slavery-title-container p {
-  color: #666666;
+  font-size: 4rem;
+  font-weight: 600;
+  color: #fff;
+  font-family: Sharp Sans No1 Semibold;
+  text-shadow: 0px 3px 20px rgba(0, 0, 0, 0.2);
 }
 
 .environment-first-element {
@@ -11839,6 +11867,11 @@ main p, a, span {
 
   .image-button {
     margin-top: 10%;
+  }
+}
+@media (max-width: 380px) {
+  .home-title-container {
+    background-position: -580px;
   }
 }
 .top-text-shadow {
@@ -14927,6 +14960,36 @@ h3, h4, h5 {
   margin-bottom: 40px;
 }
 
+.back-results-sell {
+  display: flex;
+  flex-direction: row;
+  width: 120px;
+  cursor: pointer;
+}
+
+.results-back {
+  font-family: Sharp Sans No1 Bold;
+  font-size: 22px;
+  margin: 0;
+  margin-left: 20px;
+  padding-top: 4px;
+}
+
+.results-upper {
+  font-family: Sharp Sans No1 Bold;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+
+.results-found {
+  font-family: Sharp Sans No1 Bold;
+  font-size: 30px;
+}
+
+.results-info {
+  font-size: 16px;
+}
+
 .products {
   display: flex;
   flex-wrap: wrap;
@@ -14937,10 +15000,7 @@ h3, h4, h5 {
 .product {
   display: flex;
   padding: 20px;
-  width: 250px;
-  height: 350px;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  text-align: center;
   flex-grow: 1;
   transition: transform 0.2s;
   flex-direction: column;
@@ -14949,7 +15009,7 @@ h3, h4, h5 {
 }
 
 .products a {
-  margin: 10px 0 0 1%;
+  flex: 1 0 21%;
 }
 
 .product:hover {
@@ -14957,13 +15017,25 @@ h3, h4, h5 {
 }
 
 .selling-product-image-container {
-  width: 200px;
-  height: 250px;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
 }
 
 .selling-product-image-container img {
   width: 100%;
   height: 100%;
+}
+
+.next-icon-results, .back-icon-results {
+  width: 40px;
+  height: 40px;
+  display: block;
+  cursor: pointer;
+}
+
+.next-icon-results {
+  margin: auto;
 }
 
 .page-number-active {
@@ -14977,6 +15049,21 @@ h3, h4, h5 {
   justify-content: center;
   font-size: 14pt;
   font-weight: 600;
+}
+
+.see-more-sell-devices {
+  cursor: pointer;
+  width: 160px;
+  margin: auto;
+}
+
+.see-more-sell-devices > a {
+  font-size: 18px;
+}
+
+.see-more-sell-devices:hover > a {
+  color: black;
+  text-decoration: underline;
 }
 
 .page-number {
@@ -15114,6 +15201,17 @@ h3, h4, h5 {
   text-transform: uppercase;
 }
 
+.sell-subtitle-regular {
+  font-size: 18px;
+  font-family: Sharp Sans No1 Book;
+  text-align: center;
+}
+
+.sell-icon-covered {
+  width: 40px;
+  height: 40px;
+}
+
 .search-column-wrap {
   display: flex;
   flex-direction: column;
@@ -15151,6 +15249,7 @@ h3, h4, h5 {
 
 .search-sell-btn {
   margin-bottom: 0 !important;
+  cursor: pointer;
   background: #F28E33;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -15283,6 +15382,8 @@ h3, h4, h5 {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  max-width: 1100px;
+  margin: auto;
 }
 
 .device-brand {

@@ -32,7 +32,11 @@
                     </div>
                 </div>
 
-                <div class="environment-first-element">
+                <a class="back-to-home-footer mt-3" href="/">
+                    <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to home</p>
+                </a>
+
+                <div class="environment-first-element pt-0">
                     <div class="center-title-container p50-0">
                         <p>Environment sub-heading</p>
                     </div>
@@ -161,7 +165,7 @@
                 </div>
             </div>
         </main>
-        <footer>@include('customer.layouts.footer')</footer>
+        <footer>@include('customer.layouts.footer', ['showGetstarted' => true])</footer>
 
         <script>
 

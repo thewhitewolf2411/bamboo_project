@@ -33,10 +33,11 @@
                 <div class="sell-search-container">
                     <div class="search-bar">
                         <form id="search-form" class="search-column-wrap" action="/sell/searchproducts" method="POST">
+                            <input type="hidden" name="topresults" value="true">
                             @csrf
                             <div class="sell-searchfield">
                                 <input class="search-sell-input" id="searchSellDevices" type="text" name="search_argument" placeholder="Enter the make or model of your device">
-                                <div class="search-sell-btn"><img class="sell-search-icon" src="{{asset('/images/front-end-icons/search_icon.svg')}}"></div>
+                                <div class="search-sell-btn" onclick="hitSearch()"><img class="sell-search-icon" src="{{asset('/images/front-end-icons/search_icon.svg')}}"></div>
                             </div>
                             <div id="selling-search-results" class="nomatches">
                                 {{-- <div class="selling-single-result"><p>Iphone X</p></div>
@@ -58,7 +59,7 @@
 
             <div class="col">
                 <p class="sell-subtitle mt-4">OR</p>
-                <p class="sell-subtitle mb-2 mt-4">Step 1: Select your device below</p>
+                <p class="sell-subtitle mb-5 mt-4">Step 1: Select your device below</p>
             </div>
 
             <div class="sell-categories-container">
@@ -110,6 +111,11 @@
                 </div>
             </div>
 
+            <div id="device-make-results-title" class="hidden">
+                <p class="sell-subtitle mb-2 mt-5">Step 3: Select your model</p>
+                <p class="sell-subtitle-regular mb-5 mt-1">Not sure what model your device is? Don't worry, we got your covered <img class="sell-icon-covered ml-2" src="{{asset('images/front-end-icons/black_arrow_next.svg')}}"></p>
+            </div>
+            
             <div id="device-makes-results" class="hidden">
             </div>
 
@@ -124,7 +130,7 @@
                 </div>
                 <div class="selling-info-item">
                     <img class="selling-info-img" src="{{asset('/sell_images/image-3.svg')}}">
-                    <p class="selling-info-bold-text mt-4">DATE IS ALWAYS PROTECTED</p>
+                    <p class="selling-info-bold-text mt-4">DATA IS ALWAYS PROTECTED</p>
                 </div>
                 <div class="selling-info-item">
                     <img class="selling-info-img" src="{{asset('/sell_images/image-4.svg')}}">
@@ -316,7 +322,7 @@
             </div>
         </main>
 
-        <footer>@include('customer.layouts.footer')</footer>
+        <footer>@include('customer.layouts.footer', ['showGetstarted' => false])</footer>
         <script>
 
             function showRegistrationForm(){
@@ -325,6 +331,12 @@
                 }
             }
 
+            function hitSearch(){
+                let searchterm = document.getElementById('searchSellDevices').value;
+                if(searchterm){
+                    document.getElementById('search-form').submit();
+                }
+            }
 
             document.getElementById('searchSellDevices').addEventListener('keyup', function(e){
                 //setTimeout(() => {
@@ -367,7 +379,7 @@
                                             devicename.innerHTML = singleresult.product_name;
                                             singledevice.appendChild(devicename);
                                             singledevice.onclick = function(){
-                                                window.location = '/sell/shop/item/'+singleresult.id;
+                                                window.location = '/sell/sellitem/'+singleresult.id;
                                             }
 
                                             resultsdiv.appendChild(singledevice);
@@ -490,8 +502,13 @@
                 $('.device-make-result').remove();
 
                 let devicemakeresults = document.getElementById("device-makes-results");
+                let devicemakeresultstitle = document.getElementById("device-make-results-title");
+
                 if(devicemakeresults.classList.contains('hidden')){
                     devicemakeresults.classList.remove('hidden');
+                }
+                if(devicemakeresultstitle.classList.contains('hidden')){
+                    devicemakeresultstitle.classList.remove('hidden');
                 }
 
                 $.ajax({
@@ -509,7 +526,11 @@
 
                                     let deviceimg = document.createElement('img');
                                     deviceimg.classList.add('device-make-result-image');
-                                    deviceimg.src = 'http://127.0.0.1:8000/images/placeholder_phone_image.png';
+                                    if(singleresult.product_image === 'default_image'){
+                                        deviceimg.src = 'http://127.0.0.1:8000/images/placeholder_phone_image.png';
+                                    } else {
+                                        deviceimg.src = singleresult.product_image;
+                                    }
 
                                     let devicename = document.createElement('p');
                                     devicename.classList.add('device-make-result-name');
@@ -525,7 +546,7 @@
                                     infotext.innerHTML = 'Select this model';
 
                                     singledeviceresult.onclick = function(){
-                                        window.location = '/sell/shop/item/'+singleresult.id;
+                                        window.location = '/sell/sellitem/'+singleresult.id;
                                     }
 
                                     singledeviceresult.appendChild(deviceimg);
@@ -545,6 +566,7 @@
                     },
                 });
             }
+
         </script>
     </body>
 </html>

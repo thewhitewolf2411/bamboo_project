@@ -51,7 +51,7 @@
             
             </div>
 
-        <footer>@include('customer.layouts.footer')</footer>
+        <footer>@include('customer.layouts.footer', ['showGetstarted' => true])</footer>
 
     <script>
         function changeTotalPrice(price_new, price_working, price_faulty){

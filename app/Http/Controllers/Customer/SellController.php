@@ -62,8 +62,15 @@ class SellController extends Controller
     }
 
 
-    public function showSellShop(Request $request, $parameter){
-        
+    public function showSellShop(Request $request, $parameter, $resultstype){
+
+        $onlyTopResults = false;
+        if($resultstype === 'topresults'){
+            $onlyTopResults = true;
+        }
+        if($resultstype === 'all'){
+            $onlyTopResults = false;
+        }
         #dd($request->all(), $parameter);
 
         $brands = Brand::all();
@@ -89,13 +96,18 @@ class SellController extends Controller
 
         $products = "";
         $numberofproducts = 0;
+        $canSeeMore = false;
 
         $message = "";
 
         switch($parameter){
             case "mobile":
                 if(isset($request->brand)){
-                    $products = SellingProduct::where('category_id', 1)->where('brand_id', $request->brand)->get();
+                    if($onlyTopResults){
+                        $products = SellingProduct::where('category_id', 1)->where('brand_id', $request->brand)->take(16)->get();
+                    } else {
+                        $products = SellingProduct::where('category_id', 1)->where('brand_id', $request->brand)->get();
+                    }
                     $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
                     break;
                 }else{
@@ -105,7 +117,11 @@ class SellController extends Controller
                 }
             case "tablets":
                 if(isset($request->brand)){
-                    $products = SellingProduct::where('category_id', 2)->where('brand_id', $request->brand)->get();
+                    if($onlyTopResults){
+                        $products = SellingProduct::where('category_id', 2)->where('brand_id', $request->brand)->take(16)->get();
+                    } else {
+                        $products = SellingProduct::where('category_id', 2)->where('brand_id', $request->brand)->get();
+                    }
                     $numberofproducts = count(SellingProduct::where('category_id', 2)->get());
                     break;
                 }else{
@@ -116,7 +132,11 @@ class SellController extends Controller
             break;
             case "watches":
                 if(isset($request->brand)){
-                    $products = SellingProduct::where('category_id', 3)->where('brand_id', $request->brand)->get();
+                    if($onlyTopResults){
+                        $products = SellingProduct::where('category_id', 3)->where('brand_id', $request->brand)->take(16)->get();
+                    } else {
+                        $products = SellingProduct::where('category_id', 3)->where('brand_id', $request->brand)->get();
+                    }
                     $numberofproducts = count(SellingProduct::where('category_id', 3)->get());
                     break;
                 }else{
@@ -126,7 +146,15 @@ class SellController extends Controller
                 }
             break;
             default:
-                $products = SellingProduct::where('product_name', 'LIKE', '%'.$parameter.'%')->get();
+                if($onlyTopResults){
+                    $total = SellingProduct::where('product_name', 'LIKE', '%'.$parameter.'%')->get()->count();
+                    if($total > 16){
+                        $canSeeMore = true;
+                    }
+                    $products = SellingProduct::where('product_name', 'LIKE', '%'.$parameter.'%')->take(16)->get();
+                } else {
+                    $products = SellingProduct::where('product_name', 'LIKE', '%'.$parameter.'%')->get();
+                }
                 $numberofproducts = count($products);
                 break;
         }
@@ -149,8 +177,19 @@ class SellController extends Controller
         for($i = 1; $i<=$numberofpages; $i++){
             array_push($pages, $i);
         }
-
-        return view('sell.shop', ['products' => $products, 'pages'=>$pages, 'currentpage'=>$page, 'category'=>$parameter, 'recycleBasket'=>true, 'brands'=>$brands]);
+        
+        return view('sell.shop', [
+                'products' => $products, 
+                'pages'=>$pages, 
+                'currentpage'=>$page, 
+                'category'=>$parameter, 
+                'recycleBasket'=>true, 
+                'brands'=>$brands,
+                'parameter' => $parameter,
+                'topResults' => $onlyTopResults,
+                'canSeeMore' => $canSeeMore
+            ]
+        );
     }
 
     public function showSellItem($id){
@@ -166,10 +205,17 @@ class SellController extends Controller
     }
     
     public function searchAvalibleProducts(Request $request){
-
         $searchParameter = $request->search_argument;
-        
-        return redirect('/sell/shop/' . $searchParameter);
+
+        if(isset($request->topresults)){
+            $topresults = ($request->topresults === "true") ? true : false;
+            if($topresults){
+                return redirect('/sell/shop/' . $searchParameter . '/topresults');
+            } 
+            return redirect('/sell/shop/' . $searchParameter . '/all');
+        } else {
+            return redirect('/sell/shop/' . $searchParameter . '/all');
+        }
     }
 
 

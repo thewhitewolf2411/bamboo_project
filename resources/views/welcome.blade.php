@@ -57,7 +57,7 @@
                         @break
                 @endswitch
             @else
-                @include('customer.home')
+            @include('customer.home')
             @endif
 
             @if(session('showLogin') || $errors->all())
@@ -136,7 +136,7 @@
                 </div>
             </div>
         </main>
-        <footer>@include('customer.layouts.footer')</footer>
+        <footer>@include('customer.layouts.footer', ['showGetstarted' => true])</footer>
 
         @if(Session::has('regerror'))
         <script>

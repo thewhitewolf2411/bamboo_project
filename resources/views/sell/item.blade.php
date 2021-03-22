@@ -30,7 +30,11 @@
             <div class="single-product-container">
 
                 <div class="product-image-container">
-                    <img src="{{asset('/storage/product_images').'/'.$product->product_image}}">
+                    @if($product->product_image === 'default_image')
+                        <img src="{{asset('/images/placeholder_phone_image.png')}}">
+                    @else
+                        <img src="{{asset('/storage/product_images').'/'.$product->product_image}}">
+                    @endif
                 </div>
                 <div class="product-data">
                     <div class="product-selected product-name-container">
@@ -145,8 +149,8 @@
                     @endif
                 </div>
             </div>
-
-            <div class="assurance-container">
+            
+            {{-- <div class="assurance-container">
                 <div class="assurance-element">
                     <img src="{{asset('/customer_page_images/body/Assurance-image-1.svg')}}">
                     <p>FREE NEXT DAY NATIONWIDE DELIVERY</p>
@@ -200,7 +204,7 @@
                     </div>
                 </form>
         
-            </div>
+            </div> --}}
 
             @if(session('showLogin') || $errors->all())
                 <script>
@@ -294,7 +298,7 @@
 
         </main>
 
-        <footer>@include('customer.layouts.footer')</footer>
+        <footer>@include('customer.layouts.footer', ['showGetstarted' => true])</footer>
 
     <script>
 

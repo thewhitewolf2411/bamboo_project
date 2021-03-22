@@ -455,6 +455,23 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
+
+    public function subscribeToNewsletter($email){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Newsletter Subscription',
+                'customer_properties' => array(
+                    '$email' => $email,
+                ),
+                'properties' => array(
+                    'Subscribed' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+
     public function sendEmail($event){
         $this->client->publicAPI->track( $event );  
     }

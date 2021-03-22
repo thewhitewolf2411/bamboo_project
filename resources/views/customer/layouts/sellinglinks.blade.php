@@ -1,16 +1,16 @@
 <div class="header-selling-links">
     <div class="top-upper-elements-container">
-        <a href="/sell/shop/mobile">
+        <a href="/sell/shop/mobile/all">
             <div class="top-element-container">
                 <p>Sell Mobile Phones</p>
             </div>
         </a>
-        <a href="/sell/shop/tablets">
+        <a href="/sell/shop/tablets/all">
             <div class="top-element-container">
                 <p>Sell Tablets</p>
             </div>
         </a>
-        <a href="/sell/shop/watches">
+        <a href="/sell/shop/watches/all">
             <div class="top-element-container">
                 <p>Sell Watches</p>
             </div>

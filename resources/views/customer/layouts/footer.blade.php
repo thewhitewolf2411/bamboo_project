@@ -2,6 +2,7 @@
 
     <div class="footer-row" id="footer-row-1">
 
+        @if($showGetstarted)
         <div class="footer-row-2">
             <span>Get Started</span>
             <div class="footer-button-container">
@@ -13,6 +14,7 @@
                 </div>
             </div>
         </div>
+        @endif
 
         <div class="footer-row-2">
             <span>Follow our adventures</span>
@@ -53,7 +55,7 @@
         <div class="footer-row-6">
             <span>RESPONSIBILITIES</span>
             <a href="/environment">Environment</a>
-            <a href="/charity">Charity Partners</a>
+            {{-- <a href="/charity">Charity Partners</a> --}}
         </div>
         <div class="footer-row-6">
             <span>NEWS & BLOG</span>

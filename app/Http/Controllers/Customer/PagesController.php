@@ -10,7 +10,7 @@ use App\Eloquent\PortalUsers;
 use App\Eloquent\Order;
 use App\Eloquent\BuyingProduct;
 use App\Eloquent\SellingProduct;
-
+use App\Services\KlaviyoEmail;
 
 class PagesController extends Controller
 {
@@ -147,6 +147,19 @@ class PagesController extends Controller
         
         return view('auth.passwords.reset');
 
+    }
+
+    /**
+     * Sing up to the newsletter.
+     */
+    public function singUpNewsletter(Request $request){
+        if(isset($request->email)){
+            $email = $request->email;
+            $klaviyo = new KlaviyoEmail();
+            $klaviyo->subscribeToNewsletter($email);
+
+            return redirect()->back();
+        }
     }
 
 }

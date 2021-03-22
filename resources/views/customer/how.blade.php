@@ -10,7 +10,8 @@
 
             <div class="p-5 d-flex flex-column justify-content-between">
                 <div class="center-title-container">
-                    <p>Shop and sell easily <br> with just a few clicks</p>
+                    {{-- <p>Shop and sell easily <br> with just a few clicks</p> --}}
+                    <p>Sell easily <br> with just a few clicks</p>
                 </div>
                 <p>We pride ourselves in offering a smart simple way to shop and sell mobile devices. With Boo, all it takes is just a few clicks to buy and sell the devices of your choice. In just several a few simple steps you can either trade in or trade up your mobile tech for unbeatable prices, while doing your bit for the environment.   
 Watch our quick video that explains how our meticulous grading system works. We guarantee you’ll be pleasantly surprised at just how thorough and exhaustive our grading system is. 
@@ -18,15 +19,12 @@ Watch our quick video that explains how our meticulous grading system works. We 
             </div>
             <div class="p-5 d-flex flex-wrap flex-column justify-content-between align-items-center mx-auto">
                 <div class="grading-video-container">
-                    <a onclick="showgradingvideo()">
-                        <div class="video-image-container">
-                            <div class="play-container">
-                                <i class="fa fa-play" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                    </a>
+                    <video id="howvideoid" width="100%" controls>
+                        <source src="{{ asset('/video/Bamboo How To With Boo v1.mp4') }}" type="video/mp4">
+                        Your browser does not support HTML video.
+                    </video>
                 </div>
-                <p>Watch our quick video explaining just how thorough our grading system is. Trust us, you will be shocked.</p>
+                <p class="mt-2">Watch our quick video explaining just how thorough our grading system is. Trust us, you will be shocked.</p>
             </div>
         </div>
     </div>
@@ -267,31 +265,3 @@ Watch our quick video that explains how our meticulous grading system works. We 
 
 </div>
 
-
-<div class="modal fade" id="howvideomodal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title">How To With Boo </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <div class="modal-body">
-                <video id="howvideoid" width="100%" controls>
-                    <source src="{{ asset('/video/Bamboo How To With Boo v1.mp4') }}" type="video/mp4">
-                    Your browser does not support HTML video.
-                </video>
-            </div>
-            <div class="modal-footer">
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    $('#howvideomodal').on('hidden.bs.modal', function () {
-        $('#howvideoid').trigger('pause'); 
-    });
-</script>

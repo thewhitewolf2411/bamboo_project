@@ -26,7 +26,7 @@
         <header>@include('customer.layouts.header')</header>
         <main>
             @include('customer.layouts.sellinglinks')
-            <div class="assurance-container">
+            {{-- <div class="assurance-container">
                 <div class="assurance-element">
                     <img src="{{asset('/customer_page_images/body/Assurance-image-1.svg')}}">
                     <p>FREE NEXT DAY NATIONWIDE DELIVERY</p>
@@ -43,11 +43,34 @@
                     <img src="{{asset('/customer_page_images/body/Assurance-image-4.svg')}}">
                     <p>12 MONTH GUARANTEE</p>
                 </div>
+            </div> --}}
+            <div class="col text-center mt-5">
+                <a class="back-results-sell ml-5" href="/sell">
+                    <img class="back-icon-results" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
+                    <p class="results-back">Back</p>
+                </a>
+                @if($topResults)
+                    <p class="results-upper mb-2">search results</p>
+                    <p class="results-found mb-3">Matching devices found</p>
+                    <p class="results-info mb-2">Click on one to see how much it is worth</p>
+                @else
+                    @if(!in_array($parameter, ['mobile', 'tablets', 'watches']))
+                        <p class="results-upper mb-3">search results for "{!!$parameter!!}"</p>
+                    @else
+                        @if($parameter === 'mobile')
+                            <p class="results-found mb-3">Mobile phones</p>
+                        @else
+                            <p class="results-found mb-3">{!!ucfirst($parameter)!!}</p>
+                        @endif
+                    @endif
+                @endif
+               
             </div>
 
             <div class="d-flex p-5">
+                
 
-                <div class="sidebar w-25">
+                {{-- <div class="sidebar w-25">
 
                     <div class="sidebar-element d-flex">
                         <p>View:</p>
@@ -75,19 +98,27 @@
 
                     </div>
 
-                </div>
+                </div> --}}
 
-                <div class="products d-flex flex-wrap w-75">
+                <div class="products d-flex flex-wrap w-100">
                     @foreach($products as $product)
 
-                        <a href="/sell/shop/item/{{$product->id}}">
+                        {{-- <a href="/sell/shop/item/{{$product->id}}"> --}}
+                        <a href="{{route('showSellItem', ['parameter' => $product->id])}}">
 
                             <div class="product">
                                 <div class="selling-product-image-container">
-                                    <img src="{{asset('/storage/product_images').'/'.$product->product_image}}">
+                                    @if($product->product_image === 'default_image')
+                                        <img src="{{asset('/images/placeholder_phone_image.png')}}">
+                                    @else
+                                        <img src="{{asset('/storage/product_images').'/'.$product->product_image}}">
+                                    @endif
                                 </div>
                                 <div class="product-data-container">
                                     <h5>{{$product->product_name}}</h5>
+                                </div>
+                                <div class="go-to-selldevice mt-4">
+                                    <img class="next-icon-results" src="{{asset('/images/front-end-icons/purple_arrow_next.svg')}}">
                                 </div>
 
                             </div>
@@ -99,35 +130,45 @@
 
             </div>
 
-            <div class="pages d-flex justify-content-end w-100 p-5">
-                <div class="d-flex">
-                    @foreach($pages as $page)
-                        <div class="d-flex px-3">
-                            <a href="?page={{$page}}">
-                                @if($currentpage == $page)
-                                <div class="page-number-active">
-                                    {{$page}}
-                                </div>
-                                @else
-                                <div class="page-number">
-                                    {{$page}}
-                                </div>
-                                @endif
-                            </a>
-                        </div>
-                    @endforeach
+            @if($topResults)
+                @if($canSeeMore)
+                    <div class="see-more-sell-devices mb-5">
+                        <a class="" href="/sell/shop/{{$parameter}}/all">
+                            See more devices
+                        </a>
+                    </div>
+                @endif
+            @else
+                <div class="pages d-flex justify-content-end w-100 p-5">
+                    <div class="d-flex">
+                        @foreach($pages as $page)
+                            <div class="d-flex px-3">
+                                <a href="?page={{$page}}">
+                                    @if($currentpage == $page)
+                                    <div class="page-number-active">
+                                        {{$page}}
+                                    </div>
+                                    @else
+                                    <div class="page-number">
+                                        {{$page}}
+                                    </div>
+                                    @endif
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>                
                 </div>
-            </div>
 
-            <form id="search-parameters" method="GET" action="/sell/shop/mobile">
+                <form id="search-parameters" method="GET" action="/sell/shop/mobile">
 
-                <input type="hidden" name="page" value="{{$currentpage}}">
-                <input type="hidden" name="number">
-    
-            </form>
+                    <input type="hidden" name="page" value="{{$currentpage}}">
+                    <input type="hidden" name="number">
+        
+                </form>
+            @endif
 
 
-            <div class="let-footer">
+            {{-- <div class="let-footer">
                 <div class="contact-footer-image">
                     <img src="{{asset('/shop_images/letboo/035.svg')}}">
                 </div>
@@ -138,9 +179,9 @@
                 <div class="contact-footer-arrow">
                     <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="shop-by-category">
+            {{-- <div class="shop-by-category">
                 <div class="center-title-container">
                     <p>Shop by category</p>
                 </div>
@@ -174,9 +215,9 @@
                     </a>
 
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="home-element sign-up">
+            {{-- <div class="home-element sign-up">
         
                 <div class="center-title-container">
                     <p>Sign up to our newsletter!</p>
@@ -198,7 +239,7 @@
                     </div>
                 </form>
         
-            </div>
+            </div> --}}
 
             @if(session('showLogin') || $errors->all())
                 <script>
@@ -270,7 +311,7 @@
             </div>
         </main>
 
-        <footer>@include('customer.layouts.footer')</footer>
+        <footer>@include('customer.layouts.footer', ['showGetstarted' => true])</footer>
 
         <script>
 
