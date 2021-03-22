@@ -465,3 +465,32 @@
     max-width: 227px;
     margin-top: 15px;
 }
+
+
+
+
+// general
+@media (max-width: 992px){
+    .sections-row{
+        width: 100%;
+        padding: 15px;
+    }
+    .sale-status-purple-line{
+        width: 100px;
+    }
+    .sale-status-grey-line{
+        width: 100px;
+    }
+}
+
+// tablets
+@media (max-width: 992px) and (min-width:740px){
+    
+}
+
+// mobile
+@media (max-width: 740px){
+    .sections-menu{
+        display: none;
+    }
+}
