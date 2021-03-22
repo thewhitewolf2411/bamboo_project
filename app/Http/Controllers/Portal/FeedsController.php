@@ -25,6 +25,7 @@ use App\Eloquent\BuyingProductColours;
 use App\Eloquent\BuyingProductInformation;
 use App\Eloquent\BuyingProductNetworks;
 use App\Eloquent\Feed;
+use Exception;
 
 class FeedsController extends Controller
 {
@@ -415,6 +416,7 @@ class FeedsController extends Controller
             // messages to display after failed/skipped imports
             $export_log = [];
 
+
             foreach($importeddata as $key=>$row){
                 if($row[1] !== null){
                     $valid_product = false;
@@ -471,7 +473,14 @@ class FeedsController extends Controller
                         $sellingProductInformation->poor_working = $importeddata[$key][8];
                         $sellingProductInformation->damaged_working = $importeddata[$key][9];
                         $sellingProductInformation->faulty = $importeddata[$key][10];
-                        $sellingProductInformation->save();
+
+                        try{
+                            $sellingProductInformation->save();
+                        }
+                        catch(Exception $e){
+                            array_push($export_log, $e->getMessage());
+                        }
+                        
                     } else {
                         $missing = [];
                         if(!isset($row[5])) { array_push($missing, $file_header[5]); }
@@ -527,6 +536,8 @@ class FeedsController extends Controller
 
 
             }
+
+
 
             if(!empty($export_log)){
                 array_push($export_log, 'You have succesfully imported products.');

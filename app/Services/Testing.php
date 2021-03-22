@@ -422,13 +422,14 @@ class Testing{
             case '11i':
                 $notificationService->sendTestingFailed(
                     $tradein,
-                    'Device does not meet the following requirements. FAULTS: '. implode(", ", $tradein->getTestingFaults()) . '.'
+                    'Device does not meet the following requirements. Reason: Downgrade.'
                 );
                 break;
             case '15i':
+
                 $notificationService->sendTestingFailed(
                     $tradein,
-                    'Device does not meet the following requirements. FAULTS: '. implode(", ", $tradein->getTestingFaults()) . '.'
+                    'Device does not meet the following requirements. Reason: Downgrade.'
                 );
                 break;
 

@@ -179,6 +179,19 @@ class Tradein extends Model
         $trayid = TrayContent::where('trade_in_id', $id)->first();
 
         if($trayid !== null && TrayContent::where('trade_in_id', $id)->first()->tray_id !== 0){
+            if($trayid->pseudo_tray_id !== null){
+                $trayid = $trayid->pseudo_tray_id;
+                $tray = Tray::where('id', $trayid)->first();
+                if($tray->trolley_id !== null){
+                    $trolley = Trolley::where('id', $tray->trolley_id)->first();
+                    if($trolley->trolley_type === "B"){
+                        return $trolley->trolley_name;
+                    }
+                }
+                $trayname = $tray->tray_name;
+
+                return $trayname;
+            }
             $trayid = $trayid->tray_id;
             $tray = Tray::where('id', $trayid)->first();
 
@@ -1019,5 +1032,25 @@ class Tradein extends Model
             return true;
         }
         return false;
+    }
+
+    public function getDeviceBambooGrade(){
+        switch($this->cosmetic_condition){
+            case 'A':
+                return 'Grade A';
+                break;
+            case 'B+':
+                return 'Grade B+';
+                break;
+            case 'B':
+                return 'Grade B';
+                break;
+            case 'C':
+                return 'Grade C';
+                break;
+            default:
+                return $this->cosmetic_condition;
+                break;
+        }
     }
 }

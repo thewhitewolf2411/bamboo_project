@@ -122,7 +122,11 @@ $(document).ready(function(){
             $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
         } );    
     
-        var tradepacktable = $('#trade-pack-table').DataTable();
+        var tradepacktable = $('#trade-pack-table').DataTable({
+            "oLanguage" : {
+                "sInfo" : "Showing _START_ to _END_",
+             },
+        });
     
         // Apply the search
         tradepacktable.columns().every( function () {
@@ -150,7 +154,11 @@ $(document).ready(function(){
             $(this).html( '' );
         } );    
 
-        var tradeintable = $('#trade-in-table').DataTable();
+        var tradeintable = $('#trade-in-table').DataTable({
+            "oLanguage" : {
+                "sInfo" : "Showing _START_ to _END_",
+             },
+        });
     
         // Apply the search
         tradeintable.columns().every( function () {
@@ -183,7 +191,11 @@ $(document).ready(function(){
             $(this).html( '' );
         } ); 
 
-        var ordermanagementtable = $('#order-management-table').DataTable();
+        var ordermanagementtable = $('#order-management-table').DataTable({
+            "oLanguage" : {
+                "sInfo" : "Showing _START_ to _END_",
+             },
+        });
     
         // Apply the search
         ordermanagementtable.columns().every( function () {

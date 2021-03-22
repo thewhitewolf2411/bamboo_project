@@ -17,11 +17,11 @@ class CreateProductInformationTable extends Migration
             $table->id();
             $table->integer('product_id');
             $table->string('memory');
-            $table->integer('excellent_working');
-            $table->integer('good_working');
-            $table->integer('poor_working');
-            $table->integer('damaged_working');
-            $table->integer('faulty');
+            $table->float('excellent_working');
+            $table->float('good_working');
+            $table->float('poor_working');
+            $table->float('damaged_working');
+            $table->float('faulty');
             $table->timestamps();
         });
     }

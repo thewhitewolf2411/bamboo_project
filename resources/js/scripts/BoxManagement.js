@@ -11,7 +11,11 @@ $(document).ready(function(){
         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
     } );    
 
-    var boxinprogresstable = $('#box-in-progress-table').DataTable();
+    var boxinprogresstable = $('#box-in-progress-table').DataTable({
+        "oLanguage" : {
+            "sInfo" : "Showing _START_ to _END_",
+         },
+    });
 
     // Apply the search
     boxinprogresstable.columns().every( function () {
@@ -31,7 +35,11 @@ $(document).ready(function(){
         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
     } );    
 
-    var boxeddevicetable = $('#boxed-devices-table').DataTable();
+    var boxeddevicetable = $('#boxed-devices-table').DataTable({
+        "oLanguage" : {
+            "sInfo" : "Showing _START_ to _END_",
+         },
+    });
 
     // Apply the search
     boxeddevicetable.columns().every( function () {
@@ -51,7 +59,11 @@ $(document).ready(function(){
         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
     } );    
 
-    var boxsummarytable = $('#box-summary-table').DataTable();
+    var boxsummarytable = $('#box-summary-table').DataTable({
+        "oLanguage" : {
+            "sInfo" : "Showing _START_ to _END_",
+         },
+    });
 
     // Apply the search
     boxsummarytable.columns().every( function () {

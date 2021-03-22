@@ -1,3 +1,5 @@
+const { each } = require("jquery");
+
 $('.tagfordespatch').on('change', function(){
 
     if($('.tagfordespatch:checked').length>0){
@@ -5,6 +7,40 @@ $('.tagfordespatch').on('change', function(){
     }
     else{
         $('#despatchpickingsaleslot').prop('disabled', true);
+    }
+});
+
+$('.saleslotpicking').on('click', function(){
+
+    if($(this).hasClass('saleslot-active')){
+        $(this).removeClass('saleslot-active');
+    }
+    else{
+        $('.saleslotpicking').each(function(){
+            $(this).stop(false, false);
+            $(this).removeClass('saleslot-active');
+        });
+        $(this).toggleClass('saleslot-active');
+    }
+
+    if($(this).hasClass('saleslot-active')){
+        $('#starttopicklot').prop('disabled', false);
+    }
+    else{
+        $('#starttopicklot').prop('disabled', true);
+    }
+});
+
+$('#starttopicklot').on('click', function(){
+
+    var status = $('.saleslot-active').data('status');
+    var id = $('.saleslot-active').prop('id');
+
+    if(status === 1 || status === 6){
+        window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');
+    }
+    else{
+        alert("This lot cannot be picked yet.");
     }
 
 });
@@ -21,6 +57,7 @@ $('#despatchpickingsaleslot').on('click', function(){
         $('.tagfordespatch:checked').each(function(){
 
             var salelotid = $(this).data('value');
+
             salesLotIds.push(salelotid);
 
         });
@@ -49,7 +86,11 @@ $(document).ready(function(){
         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
     } );    
 
-    var quarantineTable = $('#pick-sales-lot-boxes').DataTable();
+    var quarantineTable = $('#pick-sales-lot-boxes').DataTable({
+        "oLanguage" : {
+            "sInfo" : "Showing _START_ to _END_",
+         },
+    });
 
     quarantineTable.columns().every( function () {
     
@@ -68,7 +109,11 @@ $(document).ready(function(){
         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
     } );    
 
-    var quarantineTable = $('#pick-sales-lot-devices').DataTable();
+    var quarantineTable = $('#pick-sales-lot-devices').DataTable({
+        "oLanguage" : {
+            "sInfo" : "Showing _START_ to _END_",
+         },
+    });
 
     quarantineTable.columns().every( function () {
     

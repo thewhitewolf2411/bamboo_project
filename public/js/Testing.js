@@ -112,13 +112,23 @@ function testingElementChanged(){
     
             if(deviceFullyFunctional == "false"){
                 $('#device-fully-functional-options').removeClass('form-group-hidden');
-                options = {
-                    '':'',
-                    'WSI':'WSI',
-                    'WSD':'WSD',
-                    'NWSI':'NWSI',
-                    'NWSD':'NWSD',
-                    'Catastrophic':'Catastrophic'
+                if($('#no_power').is(':checked')){
+                    options = {
+                        '':'',
+                        'NWSI':'NWSI',
+                        'NWSD':'NWSD',
+                        'Catastrophic':'Catastrophic'
+                    }
+                }
+                else{
+                    options = {
+                        '':'',
+                        'WSI':'WSI',
+                        'WSD':'WSD',
+                        'NWSI':'NWSI',
+                        'NWSD':'NWSD',
+                        'Catastrophic':'Catastrophic'
+                    }
                 }
             }
             else{
