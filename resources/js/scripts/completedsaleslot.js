@@ -82,7 +82,11 @@ $(document).ready(function(){
         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
     } );    
 
-    var boxsummarytable = $('#boxedtradeinstable').DataTable();
+    var boxsummarytable = $('#boxedtradeinstable').DataTable({
+        "oLanguage" : {
+            "sInfo" : "Showing _START_ to _END_",
+         },
+    });
     
     // Apply the search
     boxsummarytable.columns().every( function () {

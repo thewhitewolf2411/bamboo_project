@@ -379,7 +379,11 @@ $(document).ready(function(){
         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
     } );    
 
-    var quarantineTable = $('#quarantine-overview-table').DataTable();
+    var quarantineTable = $('#quarantine-overview-table').DataTable({
+        "oLanguage" : {
+            "sInfo" : "Showing _START_ to _END_",
+         },
+    });
     
     // Apply the search
     quarantineTable.columns().every( function () {

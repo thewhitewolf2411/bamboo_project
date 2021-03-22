@@ -54863,7 +54863,11 @@ $(document).ready(function () {
     var title = $(this).text();
     $(this).html('<input type="text" placeholder="Search ' + title + '" />');
   });
-  var boxinprogresstable = $('#box-in-progress-table').DataTable(); // Apply the search
+  var boxinprogresstable = $('#box-in-progress-table').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    }
+  }); // Apply the search
 
   boxinprogresstable.columns().every(function () {
     var that = this;
@@ -54877,7 +54881,11 @@ $(document).ready(function () {
     var title = $(this).text();
     $(this).html('<input type="text" placeholder="Search ' + title + '" />');
   });
-  var boxeddevicetable = $('#boxed-devices-table').DataTable(); // Apply the search
+  var boxeddevicetable = $('#boxed-devices-table').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    }
+  }); // Apply the search
 
   boxeddevicetable.columns().every(function () {
     var that = this;
@@ -54891,7 +54899,11 @@ $(document).ready(function () {
     var title = $(this).text();
     $(this).html('<input type="text" placeholder="Search ' + title + '" />');
   });
-  var boxsummarytable = $('#box-summary-table').DataTable(); // Apply the search
+  var boxsummarytable = $('#box-summary-table').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    }
+  }); // Apply the search
 
   boxsummarytable.columns().every(function () {
     var that = this;
@@ -55065,7 +55077,11 @@ $(document).ready(function () {
       var title = $(this).text();
       $(this).html('<input type="text" placeholder="Search ' + title + '" />');
     });
-    var tradepacktable = $('#trade-pack-table').DataTable(); // Apply the search
+    var tradepacktable = $('#trade-pack-table').DataTable({
+      "oLanguage": {
+        "sInfo": "Showing _START_ to _END_"
+      }
+    }); // Apply the search
 
     tradepacktable.columns().every(function () {
       var that = this;
@@ -55085,7 +55101,11 @@ $(document).ready(function () {
     $('#trade-in-table tfoot td:last-child').each(function () {
       $(this).html('');
     });
-    var tradeintable = $('#trade-in-table').DataTable(); // Apply the search
+    var tradeintable = $('#trade-in-table').DataTable({
+      "oLanguage": {
+        "sInfo": "Showing _START_ to _END_"
+      }
+    }); // Apply the search
 
     tradeintable.columns().every(function () {
       var that = this;
@@ -55111,7 +55131,11 @@ $(document).ready(function () {
     $('#order-management-table tfoot td:nth-child(13)').each(function () {
       $(this).html('');
     });
-    var ordermanagementtable = $('#order-management-table').DataTable(); // Apply the search
+    var ordermanagementtable = $('#order-management-table').DataTable({
+      "oLanguage": {
+        "sInfo": "Showing _START_ to _END_"
+      }
+    }); // Apply the search
 
     ordermanagementtable.columns().every(function () {
       var that = this;
@@ -55164,13 +55188,43 @@ $('#generate-recycle-report-btn').on('click', function () {
   !*** ./resources/js/scripts/SalesLotDespatch.js ***!
   \**************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
+
+var _require = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"),
+    each = _require.each;
 
 $('.tagfordespatch').on('change', function () {
   if ($('.tagfordespatch:checked').length > 0) {
     $('#despatchpickingsaleslot').prop('disabled', false);
   } else {
     $('#despatchpickingsaleslot').prop('disabled', true);
+  }
+});
+$('.saleslotpicking').on('click', function () {
+  if ($(this).hasClass('saleslot-active')) {
+    $(this).removeClass('saleslot-active');
+  } else {
+    $('.saleslotpicking').each(function () {
+      $(this).stop(false, false);
+      $(this).removeClass('saleslot-active');
+    });
+    $(this).toggleClass('saleslot-active');
+  }
+
+  if ($(this).hasClass('saleslot-active')) {
+    $('#starttopicklot').prop('disabled', false);
+  } else {
+    $('#starttopicklot').prop('disabled', true);
+  }
+});
+$('#starttopicklot').on('click', function () {
+  var status = $('.saleslot-active').data('status');
+  var id = $('.saleslot-active').prop('id');
+
+  if (status === 1 || status === 6) {
+    window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');
+  } else {
+    alert("This lot cannot be picked yet.");
   }
 });
 $('#despatchpickingsaleslot').on('click', function () {
@@ -55202,7 +55256,11 @@ $(document).ready(function () {
     var title = $(this).text();
     $(this).html('<input type="text" placeholder="Search ' + title + '" />');
   });
-  var quarantineTable = $('#pick-sales-lot-boxes').DataTable();
+  var quarantineTable = $('#pick-sales-lot-boxes').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    }
+  });
   quarantineTable.columns().every(function () {
     var that = this;
     $('input', this.footer()).on('keyup change', function () {
@@ -55215,7 +55273,11 @@ $(document).ready(function () {
     var title = $(this).text();
     $(this).html('<input type="text" placeholder="Search ' + title + '" />');
   });
-  var quarantineTable = $('#pick-sales-lot-devices').DataTable();
+  var quarantineTable = $('#pick-sales-lot-devices').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    }
+  });
   quarantineTable.columns().every(function () {
     var that = this;
     $('input', this.footer()).on('keyup change', function () {
@@ -55537,7 +55599,11 @@ $(document).ready(function () {
     var title = $(this).text();
     $(this).html('<input type="text" placeholder="Search ' + title + '" />');
   });
-  var boxsummarytable = $('#boxedtradeinstable').DataTable(); // Apply the search
+  var boxsummarytable = $('#boxedtradeinstable').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    }
+  }); // Apply the search
 
   boxsummarytable.columns().every(function () {
     var that = this;
@@ -55922,7 +55988,11 @@ $(document).ready(function () {
     var title = $(this).text();
     $(this).html('<input type="text" placeholder="Search ' + title + '" />');
   });
-  var quarantineTable = $('#quarantine-overview-table').DataTable(); // Apply the search
+  var quarantineTable = $('#quarantine-overview-table').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    }
+  }); // Apply the search
 
   quarantineTable.columns().every(function () {
     var that = this;
@@ -56239,8 +56309,8 @@ $('#completelot').on('click', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

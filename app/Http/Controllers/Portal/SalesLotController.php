@@ -35,13 +35,19 @@ class SalesLotController extends Controller
         $tradeins = array();
 
         #$sli = SalesLotContent::all();
-        foreach($boxes as $box){
-            $boxcontent = TrayContent::where('tray_id', $box->id)->get();
-            #dd($boxcontent);
-            foreach($boxcontent as $bc){
-                if(SalesLotContent::where('device_id', $bc->trade_in_id)->first() === null){
-                    $tradein = Tradein::where('id', $bc->trade_in_id)->first();
-                    array_push($tradeins, $tradein);
+        foreach($boxes as $key=>$box){
+            $salesLotBoxes = SalesLotContent::where('box_id', $box->id)->get();
+            if(count($salesLotBoxes) === $box->number_of_devices){
+                unset($boxes[$key]);
+            }
+            else{
+                $boxcontent = TrayContent::where('tray_id', $box->id)->get();
+                #dd($boxcontent);
+                foreach($boxcontent as $bc){
+                    if(SalesLotContent::where('device_id', $bc->trade_in_id)->first() === null){
+                        $tradein = Tradein::where('id', $bc->trade_in_id)->first();
+                        array_push($tradeins, $tradein);
+                    }
                 }
             }
         }

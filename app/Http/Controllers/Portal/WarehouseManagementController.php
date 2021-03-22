@@ -49,7 +49,7 @@ class WarehouseManagementController extends Controller
         $boxedTradeIns = array();
 
         foreach($boxes as $box){
-            $boxContent = TrayContent::where('tray_id', $box->id)->get();
+            $boxContent = TrayContent::where('tray_id', $box->id)->orWhere('pseudo_tray_id', $box->id)->get();
             foreach($boxContent as $bC){
                 $tradein = Tradein::where('id', $bC->trade_in_id)->first();
                 $tradein->model = $tradein->getProductName($tradein->product_id);
@@ -185,6 +185,7 @@ class WarehouseManagementController extends Controller
             array_push($tradeins, $tradein);
         }
 
+        #dd($tradeins);
 
         $filename = public_path() . "/pdf/boxlabels/box-" . $currentBox->id . ".pdf";
         if(file_exists($filename)){

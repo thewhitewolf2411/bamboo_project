@@ -84,7 +84,11 @@
                         <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
                         <td><div class="table-element">{{$tradein->barcode}}</div></td>
                         <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                        @if($tradein->imei_number !== null)
                         <td><div class="table-element">{{$tradein->imei_number}}</div></td>
+                        @else
+                        <td><div class="table-element">{{$tradein->serial_number}}</div></td>
+                        @endif
                         <td><div class="table-element">{{$tradein->getBambooStatus()}}</div></td>
                         <td><div class="table-element">
                             @if($tradein->job_state === '7')
@@ -115,7 +119,7 @@
                         <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
                         <td><div class="table-element">{{$tradein->created_at}}</div></td>
                         <td><div class="table-element">{{$tradein->quarantine_date}}</div></td>
-                        <td><div class="table-element">{{$tradein->cosmetic_condition}}</div></td>
+                        <td><div class="table-element">{{$tradein->getDeviceBambooGrade()}}</div></td>
                         <td><div class="table-element"><input onclick="enablebtn()" class="exportbtn" type="checkbox" name="tradein-{{$tradein->id}}"></div></td>
                     </tr>
 
@@ -258,7 +262,7 @@
                                 <td><div class="table-element">{{$tradein->barcode}}</div></td>
                                 <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                                 <td><div class="table-element">{{$tradein->imei_number}}</div></td>
-                                <td><div class="table-element">{{$tradein->cosmetic_condition}}</div></td>
+                                <td><div class="table-element">{{$tradein->getDeviceBambooGrade()}}</div></td>
                                 <td><div class="table-element"><select id="newtray" name="newtray-{{$tradein->id}}" class="form-control" ><option value="" selected disabled>Select new tray</option>@foreach(Session::get('trays') as $tray) <option value="{{$tray->id}}">{{$tray->tray_name}}</option> @endforeach</select></div></td>
                             </tr>
                         @endforeach
