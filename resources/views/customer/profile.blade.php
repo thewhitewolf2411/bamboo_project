@@ -227,7 +227,7 @@
 
                                                         <div class="col p-0 mr-3">
                                                             <label for="birth_date" class="personal-info-label">Date of Birth</label>
-                                                            <input type="date" name="birth_date" id="birth_date" class="personal-info-text-input date" value="1987-02-19"/>
+                                                            <input type="date" name="birth_date" id="birth_date" required class="personal-info-text-input date" value="1987-02-19"/>
                                                         </div>
 
                                                         <div class="col p-0">
@@ -239,7 +239,7 @@
                                                     <div class="personal-info-row">
                                                         <div class="col p-0 mr-3">
                                                             <label for="firstname" class="personal-info-label">Delivery Address</label>
-                                                            <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" placeholder="Enter postcode" >
+                                                            <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" placeholder="Enter postcode" required>
                                                             
                                                             <div class="enter-manually mb-2 user-select-none" onclick="toggleManualAddress('delivery')"><p>Enter Address Manually <i id="manual-delivery-arrow" class="arrow down ml-2"></i></p></div>
 
