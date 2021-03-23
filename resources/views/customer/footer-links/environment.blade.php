@@ -38,7 +38,7 @@
 
                 <div class="environment-first-element pt-0">
                     <div class="center-title-container p50-0">
-                        <p>Environment sub-heading</p>
+                        <p>Environment</p>
                     </div>
                     <div class="text-center border-bottom p50-0">
                         <p>It’s no secret that the mobile device industry is a major contributor to climate change. Curbing the detrimental effects of the manufacturing and distribution of mobile phones is at the heart of Bamboo Mobile’s ethics and operations. </p>

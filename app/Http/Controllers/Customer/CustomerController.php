@@ -298,7 +298,7 @@ class CustomerController extends Controller
     public function updatePersonalInfo(Request $request){
         // validate data
         $validation_error_msg = [];
-        $required = ['first_name', 'last_name', 'birth_day', 'birth_month', 'birth_year', 'contact_number', 'delivery_address', 'billing_address', 'current_phone', 'preffered_os'];
+        $required = ['first_name', 'last_name', 'birth_day', 'birth_month', 'birth_year', 'contact_number', 'delivery_address', 'billing_address', 'preffered_os'];
         foreach($required as $field){
             if(!isset($request->all()[$field])){
                 array_push($validation_error_msg, 'Field ' . str_replace('_', ' ', ucfirst($field)) . " can't be empty. ");

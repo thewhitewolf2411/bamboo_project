@@ -282,6 +282,7 @@
                                                         <div class="col p-0 mr-3">
                                                             <label for="current_phone" class="personal-info-label personal-info-dropdown">Current Phone</label>
                                                             <select class="form-control" id="currentPhone" name="current_phone">
+                                                                @if(Auth::user()->getCurrentPhone() === null) <option value="" selected disabled>Select your device</option> @endif
                                                                 @foreach($devices as $device)
                                                                     @if(Auth::user()->current_phone == $device->id)
                                                                         <option value="{{$device->id}}" selected>{{$device->product_name}}</option>
@@ -289,7 +290,7 @@
                                                                         <option value="{{$device->id}}">{{$device->product_name}}</option>
                                                                     @endif
                                                                 @endforeach
-                                                              </select>                                                        
+                                                              </select>                                                
                                                         </div>
 
                                                         <div class="col p-0">

@@ -19,9 +19,15 @@
     <div class="right-header">
         
         <div class="hovers-header">
+            @if(Auth::user())
             <div class="hover-link" id="user-hover-link">
                 <a href="/setpage/account"><div class="img"></div><p class="showhover">Account</p></a>
             </div>
+            @else
+            <div class="hover-link" id="user-hover-link">
+                <a role="button" data-toggle="modal" data-target="#loginModal"><div class="img"></div><p class="showhover">Account</p></a>
+            </div>
+            @endif
             {{--<div class="hover-link" id="wishlist-hover-link">
                 <a href="/userprofile/show/wishlist"><div class="img"></div><p class="showhover">Wishlist</p></a>
             </div>--}}
