@@ -75,7 +75,7 @@
                         </div>
                     </div>
 
-                    <div class="product-selected product-grade-container">
+                    <div class="product-selected product-grade-container selling-item-grades-container">
                         <p>Select Grade:</p>
 
                         <div class="">
@@ -89,7 +89,7 @@
                             </div>
                         </div>
                     
-                        <div class="d-flex selling-item-grades-container">
+                        <div class="d-flex">
                             <input id="grade-1" name="grade" type="radio" value="1" onchange="gradeChanged(this @if($networks->isEmpty()), true @endif) ">
                             <input id="grade-2" name="grade" type="radio" value="2" onchange="gradeChanged(this @if($networks->isEmpty()), true @endif) ">
                             <input id="grade-3" name="grade" type="radio" value="3" onchange="gradeChanged(this @if($networks->isEmpty()), true @endif) ">
