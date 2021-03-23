@@ -217,29 +217,29 @@
                                                     <div class="personal-info-row">
                                                         <div class="col p-0 mr-3">
                                                             <label for="firstname" class="personal-info-label">First Name</label>
-                                                            <input type="text" name="first_name" id="first_name" required class="personal-info-text-input" value="{!!Auth::user()->first_name!!}"/>
+                                                            <input type="text" name="first_name" id="first_name" class="personal-info-text-input" value="{!!Auth::user()->first_name!!}"/>
                                                         </div>
 
                                                         <div class="col p-0 mr-3">
                                                             <label for="last_name" class="personal-info-label">Last Name</label>
-                                                            <input type="text" name="last_name" id="last_name" required class="personal-info-text-input" value="{!!Auth::user()->last_name!!}"/>
+                                                            <input type="text" name="last_name" id="last_name" class="personal-info-text-input" value="{!!Auth::user()->last_name!!}"/>
                                                         </div>
 
                                                         <div class="col p-0 mr-3">
                                                             <label for="birth_date" class="personal-info-label">Date of Birth</label>
-                                                            <input type="date" name="birth_date" id="birth_date" required class="personal-info-text-input date" value="1987-02-19"/>
+                                                            <input type="date" name="birth_date" id="birth_date" class="personal-info-text-input date" value="1987-02-19"/>
                                                         </div>
 
                                                         <div class="col p-0">
                                                             <label for="contact_number" class="personal-info-label">Contact Number</label>
-                                                            <input type="text" name="contact_number" id="contact_number" required class="personal-info-text-input" value="{!!Auth::user()->contact_number!!}"/>
+                                                            <input type="text" name="contact_number" id="contact_number" class="personal-info-text-input" value="{!!Auth::user()->contact_number!!}"/>
                                                         </div>
                                                     </div>
 
                                                     <div class="personal-info-row">
                                                         <div class="col p-0 mr-3">
                                                             <label for="firstname" class="personal-info-label">Delivery Address</label>
-                                                            <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" placeholder="Enter postcode" required>
+                                                            <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" placeholder="Enter postcode" >
                                                             
                                                             <div class="enter-manually mb-2 user-select-none" onclick="toggleManualAddress('delivery')"><p>Enter Address Manually <i id="manual-delivery-arrow" class="arrow down ml-2"></i></p></div>
 
@@ -537,6 +537,9 @@
                                                 <img class="tick-img" id="no-newsletter" src="/customer_page_images/body/Icon-Tick-Selected-clear.svg">
                                             @endif
                                         </div>
+                                    </div>
+                                    <div class="row m-0 mt-3 mb-3 justify-content-center">
+                                        <div id="message"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1134,6 +1137,8 @@
                 newsletter: selected_newsletter,
             },
             success: function(data, textStatus, xhr) {
+                $('#message').html('<div class="alert alert-success" role="alert">You have succesfully updated your data.</div>');
+                $('#message').show();
             }
 
         });

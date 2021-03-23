@@ -27,53 +27,86 @@
                     </div>
                 </div>
 
-                <table class="portal-table table-visible" id="boxedtradeinstable">
-                    <tr>
-                        <td><div class="table-element">Trade in Barcode numbers</div></td>
-                        <td><div class="table-element">Box number</div></td>
-                        <td><div class="table-element">Customer Grade</div></td>
-                        <td><div class="table-element">Bamboo Grade</div></td>
-                        <td><div class="table-element">Model/Manufacturer</div></td>
-                        <td><div class="table-element">GB Size</div></td>
-                        <td><div class="table-element">Network</div></td>
-                        <td><div class="table-element">Colour</div></td>
-                        <td><div class="table-element">Cost</div></td>
-                        <td><div class="table-element"><input type="checkbox" id="boxedtradeinstable-selectall"></div></td>
-                    </tr>
-                    @foreach ($tradeins as $key=>$tradein)
-                    <tr id="{{$tradein->id}}">
-                        <td><div class="table-element">{{$tradein->barcode}}</div></td>
-                        <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
-                        <td><div class="table-element">{{$tradein->customer_grade}}</div></td>
-                        <td><div class="table-element">{{$tradein->bamboo_grade}}</div></td>
-                        <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
-                        <td><div class="table-element">{{$tradein->correct_memory}}</div></td>
-                        <td><div class="table-element">{{$tradein->correct_network}}</div></td>
-                        <td><div class="table-element"></div></td>
-                        <td><div class="table-element"></div></td>
-                        <td><div class="table-element"><input type="checkbox" class="tradein-sales-lot" data-value="{{$tradein->id}}"></div></td>
-                    </tr>
-                    @endforeach
+                <table class="portal-table" id="boxedtradeinstable">
+                    <thead>
+                        <tr>
+                            <td><div class="table-element">Trade in Barcode numbers</div></td>
+                            <td><div class="table-element">Box number</div></td>
+                            <td><div class="table-element">Customer Grade</div></td>
+                            <td><div class="table-element">Bamboo Grade</div></td>
+                            <td><div class="table-element">Model/Manufacturer</div></td>
+                            <td><div class="table-element">GB Size</div></td>
+                            <td><div class="table-element">Network</div></td>
+                            <td><div class="table-element">Colour</div></td>
+                            <td><div class="table-element">Cost</div></td>
+                            <td><div class="table-element"><input type="checkbox" id="boxedtradeinstable-selectall"></div></td>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td><div class="table-element">Trade in Barcode numbers</div></td>
+                            <td><div class="table-element">Box number</div></td>
+                            <td><div class="table-element">Customer Grade</div></td>
+                            <td><div class="table-element">Bamboo Grade</div></td>
+                            <td><div class="table-element">Model/Manufacturer</div></td>
+                            <td><div class="table-element">GB Size</div></td>
+                            <td><div class="table-element">Network</div></td>
+                            <td><div class="table-element">Colour</div></td>
+                            <td><div class="table-element">Cost</div></td>
+                            <td><div class="table-element"></div></td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach ($tradeins as $key=>$tradein)
+                        <tr id="{{$tradein->id}}">
+                            <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                            <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
+                            <td><div class="table-element">{{$tradein->customer_grade}}</div></td>
+                            <td><div class="table-element">{{$tradein->bamboo_grade}}</div></td>
+                            <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                            <td><div class="table-element">{{$tradein->correct_memory}}</div></td>
+                            <td><div class="table-element">{{$tradein->correct_network}}</div></td>
+                            <td><div class="table-element"></div></td>
+                            <td><div class="table-element"></div></td>
+                            <td><div class="table-element"><input type="checkbox" class="tradein-sales-lot" data-value="{{$tradein->id}}"></div></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
                 </table>
-                <table class="portal-table table-invisible" id="closedboxtable">
-                    <tr>
-                        <td><div class="table-element">Box number</div></td>
-                        <td><div class="table-element">Bamboo Grade</div></td>
-                        <td><div class="table-element">Network</div></td>
-                        <td><div class="table-element">Total QTY</div></td>
-                        <td><div class="table-element">Total Cost</div></td>
-                        <td><div class="table-element"><input type="checkbox" id="closedboxtable-selectall"> </div></td>
-                    </tr>
-                    @foreach ($boxes as $box)
-                    <tr id="{{$box->id}}">
-                        <td><div class="table-element">{{$box->tray_name}}</div></td>
-                        <td><div class="table-element">{{$box->tray_grade}}</div></td>
-                        <td><div class="table-element">{{$box->tray_network}}</div></td>
-                        <td><div class="table-element">{{$box->number_of_devices}}</div></td>
-                        <td><div class="table-element"></div></td>
-                        <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="{{$box->id}}"></div></td>
-                    </tr>
-                    @endforeach
+                <table class="portal-table" id="closedboxtable">
+                    <thead>
+                        <tr>
+                            <td><div class="table-element">Box number</div></td>
+                            <td><div class="table-element">Bamboo Grade</div></td>
+                            <td><div class="table-element">Network</div></td>
+                            <td><div class="table-element">Total QTY</div></td>
+                            <td><div class="table-element">Total Cost</div></td>
+                            <td><div class="table-element"><input type="checkbox" id="closedboxtable-selectall"> </div></td>
+    
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td><div class="table-element">Box number</div></td>
+                            <td><div class="table-element">Bamboo Grade</div></td>
+                            <td><div class="table-element">Network</div></td>
+                            <td><div class="table-element">Total QTY</div></td>
+                            <td><div class="table-element">Total Cost</div></td>
+                            <td><div class="table-element"></div></td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach ($boxes as $box)
+                        <tr id="{{$box->id}}">
+                            <td><div class="table-element">{{$box->tray_name}}</div></td>
+                            <td><div class="table-element">{{$box->tray_grade}}</div></td>
+                            <td><div class="table-element">{{$box->tray_network}}</div></td>
+                            <td><div class="table-element">{{$box->number_of_devices}}</div></td>
+                            <td><div class="table-element">£{{$box->getBoxPrice()}}</div></td>
+                            <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="{{$box->id}}"></div></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
 

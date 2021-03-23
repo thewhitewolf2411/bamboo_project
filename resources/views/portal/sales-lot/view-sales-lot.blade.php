@@ -15,12 +15,14 @@
             <a href="/portal/sales-lot/completed-sales-lots/">
                 <div class="btn btn-primary">Back</div>
             </a>
-            <button class="btn btn-primary" id="view-sales-lot-btn">Export XLS</button>
+            <button class="btn btn-primary" id="ism-pre-alert">Export XLS</button>
         </div>
     </div>
 
+    <input type="hidden" class="saleslot-active" id="{{$salesLots->id}}">
+
     <div class="portal-table-container">
-        <table class="portal-table sortable table-visible" id="boxedtradeinstable">
+        <table class="portal-table table-visible" id="boxedtradeinstable">
             <tr>
                 <td><div class="table-element">Trade in Barcode numbers</div></td>
                 <td><div class="table-element">Box number</div></td>
@@ -37,7 +39,7 @@
                 <td><div class="table-element">{{$tradein->barcode}}</div></td>
                 <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
                 <td><div class="table-element">{{$tradein->customer_grade}}</div></td>
-                <td><div class="table-element">{{$tradein->cosmetic_condition}}</div></td>
+                <td><div class="table-element">{{$tradein->getDeviceBambooGrade()}}</div></td>
                 <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                 <td><div class="table-element">{{$tradein->correct_memory}}</div></td>
                 <td><div class="table-element">{{$tradein->correct_network}}</div></td>

@@ -101,4 +101,32 @@ $(document).ready(function(){
         } );
     });
 
+    $('#closedboxtable tfoot td').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );    
+
+    var closedboxtable = $('#closedboxtable').DataTable({
+        "oLanguage" : {
+            "sInfo" : "Showing _START_ to _END_",
+         },
+    });
+    
+    // Apply the search
+    closedboxtable.columns().every( function () {
+    
+        var that = this;
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    });
+
+
+    $('#boxedtradeinstable_wrapper').addClass('table-visible');
+    $('#closedboxtable_wrapper').addClass('table-invisible');
+
 });

@@ -132,7 +132,7 @@
                                 <input type="hidden" name="memory" id="memory"></input>
                                 <input type="hidden" name="price" id="price"></input>
                                 <input type="hidden" name="type" value="tradein"></input>
-                                <button id="addToCart" type="submit" class="btn btn-primary btn-orange" disabled>Add to cart</button>
+                                <button id="addToCart" type="submit" class="btn btn-primary btn-orange" disabled>Sell my device</button>
                             </div>
                         </form>
 
@@ -143,7 +143,7 @@
                     @else
                     <div class="add-to-container">
                         <div class="add-to-cart-container">
-                            <button type="submit" class="btn btn-primary btn-orange" onclick="showModal()">Add to cart</button>
+                            <button type="submit" class="btn btn-primary btn-orange" onclick="showModal()">Sell my device</button>
                         </div>
                     </div>
                     @endif
