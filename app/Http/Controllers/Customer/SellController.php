@@ -192,6 +192,99 @@ class SellController extends Controller
         );
     }
 
+    /**
+     * Show all devices by category and brand.
+     */
+    public function showBrandCategoryResults(Request $request, $category, $brand){
+        $number = 0;
+        $page = 1;
+        $start = null;
+
+        if(isset($request->number)){
+            $number = $request->number;
+        }
+        else{
+            $number = 24;
+        }
+        if(isset($request->page)){
+            $page = $request->page;
+        }
+        else{
+            $page = 1;
+        }
+
+        $start = ($page * $number) - $number;
+
+        $products = "";
+        $numberofproducts = 0;
+        $canSeeMore = false;
+
+        $message = "";
+        $brandName = Brand::find($brand)->brand_name;
+
+        switch($category){
+            case "mobile":
+                if(isset($request->brand)){
+                    $products = SellingProduct::where('category_id', 1)->where('brand_id', $brand)->get();
+                    $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
+                    break;
+                }else{
+                    $products = SellingProduct::where('category_id', 1)->get();
+                    $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
+                    break;
+                }
+            case "tablets":
+                if(isset($request->brand)){
+                    $products = SellingProduct::where('category_id', 2)->where('brand_id', $brand)->get();
+                    $numberofproducts = count(SellingProduct::where('category_id', 2)->get());
+                    break;
+                }else{
+                    $products = SellingProduct::where('category_id', 2)->get();
+                    $numberofproducts = count(SellingProduct::where('category_id', 2)->get());
+                    break;
+                }
+            break;
+            case "watches":
+                if(isset($request->brand)){
+                    $products = SellingProduct::where('category_id', 3)->where('brand_id', $brand)->get();
+                    $numberofproducts = count(SellingProduct::where('category_id', 3)->get());
+                    break;
+                }else{
+                    $products = SellingProduct::where('category_id', 3)->get();
+                    $numberofproducts = count(SellingProduct::where('category_id', 3)->get());
+                    break;
+                }
+            break;
+            default:
+                break;
+        }
+
+        foreach($products as $key=>$product){
+            if($key<$start || $key>=$start+$number){
+                $products->forget($key);
+            }
+        }
+
+        $numberofpages = $numberofproducts/$number;
+        $numberofpages = ceil($numberofpages);
+        $pages = array();
+
+        for($i = 1; $i<=$numberofpages; $i++){
+            array_push($pages, $i);
+        }
+        
+        return view('sell.alldevicesbrand', [
+                'products' => $products, 
+                'pages'=>$pages, 
+                'currentpage'=>$page, 
+                'recycleBasket'=>true, 
+                'brand'=>$brand,
+                'brandname'=>$brandName,
+                'category'=>$category,
+            ]
+        );
+    }
+
     public function showSellItem($id){
         
         $product = SellingProduct::where('id', $id)->first();

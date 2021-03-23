@@ -49,22 +49,13 @@
                     <img class="back-icon-results" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
                     <p class="results-back">Back</p>
                 </a>
-                @if($topResults)
-                    <p class="results-upper mb-2">search results</p>
-                    <p class="results-found mb-3">Matching devices found</p>
-                    <p class="results-info mb-2">Click on one to see how much it is worth</p>
+
+                @if($category === 'mobile')
+                    <p class="results-upper mb-3">{!!$brandname!!} {!!$category!!} phones</p>
                 @else
-                    @if(!in_array($parameter, ['mobile', 'tablets', 'watches']))
-                        <p class="results-upper mb-3">search results for "{!!$parameter!!}"</p>
-                    @else
-                        @if($parameter === 'mobile')
-                            <p class="results-found mb-3">Mobile phones</p>
-                        @else
-                            <p class="results-found mb-3">{!!ucfirst($parameter)!!}</p>
-                        @endif
-                    @endif
+                    <p class="results-upper mb-3">{!!$brandname!!} {!!$category!!}</p>
                 @endif
-               
+
             </div>
 
             <div class="d-flex p-5">
@@ -103,7 +94,6 @@
                 <div class="products d-flex flex-wrap w-100">
                     @foreach($products as $product)
 
-                        {{-- <a href="/sell/shop/item/{{$product->id}}"> --}}
                         <a href="{{route('showSellItem', ['parameter' => $product->id])}}">
 
                             <div class="product">
@@ -130,42 +120,32 @@
 
             </div>
 
-            @if($topResults)
-                @if($canSeeMore)
-                    <div class="see-more-sell-devices mb-5">
-                        <a class="" href="/sell/shop/{{$parameter}}/all">
-                            See more devices
-                        </a>
-                    </div>
-                @endif
-            @else
-                <div class="pages d-flex justify-content-end w-100 p-5">
-                    <div class="d-flex">
-                        @foreach($pages as $page)
-                            <div class="d-flex px-3">
-                                <a href="?page={{$page}}">
-                                    @if($currentpage == $page)
-                                    <div class="page-number-active">
-                                        {{$page}}
-                                    </div>
-                                    @else
-                                    <div class="page-number">
-                                        {{$page}}
-                                    </div>
-                                    @endif
-                                </a>
-                            </div>
-                        @endforeach
-                    </div>                
-                </div>
+            <div class="pages d-flex justify-content-end w-100 p-5">
+                <div class="d-flex">
+                    @foreach($pages as $page)
+                        <div class="d-flex px-3">
+                            <a href="?page={{$page}}">
+                                @if($currentpage == $page)
+                                <div class="page-number-active">
+                                    {{$page}}
+                                </div>
+                                @else
+                                <div class="page-number">
+                                    {{$page}}
+                                </div>
+                                @endif
+                            </a>
+                        </div>
+                    @endforeach
+                </div>                
+            </div>
 
-                <form id="search-parameters" method="GET" action="/sell/shop/mobile">
+            <form id="search-parameters" method="GET" action="/sell/shop/mobile">
 
-                    <input type="hidden" name="page" value="{{$currentpage}}">
-                    <input type="hidden" name="number">
-        
-                </form>
-            @endif
+                <input type="hidden" name="page" value="{{$currentpage}}">
+                <input type="hidden" name="number">
+    
+            </form>
 
 
             {{-- <div class="let-footer">

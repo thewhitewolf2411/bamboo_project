@@ -23,6 +23,11 @@
     </div>
 
     <div class="form-group">
+        <label for="first-name">Birth date</label>
+        @include('partial.birthdate')
+    </div>
+
+    <div class="form-group">
         <label for="delivery_address">Delivery Address</label>
         <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" placeholder="Example delivery address" required autofocus>
     </div>
@@ -103,7 +108,7 @@
     <div class="form-group mb-0 d-flex justify-content-between" style="padding: 50px 0 50px 0;">
         <div class="terms-container">
             <input type="checkbox" class="mx-3" id="terms" name="terms" required>
-            <label for="terms">I agree to Bamboo Mobile <a href="/terms">Terms and Conditions</a></label>
+            <label for="terms">I agree to Bamboo Mobile <a href="/terms" target="_blank">Terms and Conditions</a></label>
         </div>
 
         <button type="submit" class="btn btn-primary">

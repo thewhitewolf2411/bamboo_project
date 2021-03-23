@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->smallInteger('type_of_user')->default(0);
             $table->boolean('account_disabled')->default(false);
+            $table->string('birth_date');
             $table->rememberToken();
             $table->timestamps();
         });

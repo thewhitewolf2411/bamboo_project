@@ -28,7 +28,7 @@
 
 
             <div class="single-product-container">
-
+                {{-- {!!dd($product)!!} --}}
                 <div class="product-image-container">
                     @if($product->product_image === 'default_image')
                         <img src="{{asset('/images/placeholder_phone_image.png')}}">
@@ -89,7 +89,7 @@
                             </div>
                         </div>
                     
-                        <div class="d-flex">
+                        <div class="d-flex selling-item-grades-container">
                             <input id="grade-1" name="grade" type="radio" value="1" onchange="gradeChanged(this @if($networks->isEmpty()), true @endif) ">
                             <input id="grade-2" name="grade" type="radio" value="2" onchange="gradeChanged(this @if($networks->isEmpty()), true @endif) ">
                             <input id="grade-3" name="grade" type="radio" value="3" onchange="gradeChanged(this @if($networks->isEmpty()), true @endif) ">
@@ -99,13 +99,23 @@
                     </div>
 
                     <div class="d-flex">
-                    
+                        <div class="d-flex flex-column mb-1">
+                            <p>You don't need to send your charger, accessories or the original box!</p>
+                        </div>
+                    </div>
+
+                    @if(str_contains(strtolower($product->product_name), 'samsung galaxy note'))
+                        <div class="d-flex flex-column mb-2 samsung-note-alert">
+                            Please remember to include your stylus with the Note
+                        </div>
+                    @endif
+
+                    {{-- <div class="d-flex">
                         <div class="d-flex flex-column">
                             <p>Do you have a smartphone to trade in? You could save up to £320*</p>
                             <a href="" class="my-auto mx-0"><label class="ml-0 mr-3 my-auto"><img src="{{asset('/customer_page_images/body/Icon-Information.png')}}" class="mr-3">How does this work?</label></a>
                         </div>
-                    
-                    </div>
+                    </div> --}}
 
 
                     <div class="">
@@ -132,7 +142,7 @@
                                 <input type="hidden" name="memory" id="memory"></input>
                                 <input type="hidden" name="price" id="price"></input>
                                 <input type="hidden" name="type" value="tradein"></input>
-                                <button id="addToCart" type="submit" class="btn btn-primary btn-orange" disabled>Add to cart</button>
+                                <button id="addToCart" type="submit" class="btn btn-primary btn-orange" disabled>Sell my device</button>
                             </div>
                         </form>
 
@@ -143,7 +153,7 @@
                     @else
                     <div class="add-to-container">
                         <div class="add-to-cart-container">
-                            <button type="submit" class="btn btn-primary btn-orange" onclick="showModal()">Add to cart</button>
+                            <button type="submit" class="btn btn-primary btn-orange" onclick="showModal()">Sell my device</button>
                         </div>
                     </div>
                     @endif

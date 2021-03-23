@@ -143,7 +143,7 @@
                                         </div>
                                         <div class="personal-info-item">
                                             <p class="info-item-label">Date of Birth</p>
-                                            <p class="info-item-val">19/02/87</p>
+                                            <p class="info-item-val">{{Auth::user()->getBirthDate()}}</p>
                                         </div>
                                         <div class="personal-info-item">
                                             <p class="info-item-label">Contact Number</p>
@@ -188,8 +188,11 @@
 
                                                         <div class="col p-0">
                                                             <label for="email" class="verify-label">Enter Password*</label>
-                                                            <input type="password" name="password" id="verify_pass" required class="verification-input"/>
-                                                            <a href="#" class="forgotpass-link">Forgot password?</a>
+                                                            <div class="row m-0">
+                                                                <input type="password" name="password" id="verify_pass" required class="verification-input"/>
+                                                                <img class="profile-pass-visibility" id="pass-visibility-toggle" onclick="togglePassVisiblility()" src="{{asset('/images/front-end-icons/pass_invisible.svg')}}">
+                                                            </div>
+                                                            <a href="/password/reset" class="forgotpass-link">Forgot password?</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -217,29 +220,29 @@
                                                     <div class="personal-info-row">
                                                         <div class="col p-0 mr-3">
                                                             <label for="firstname" class="personal-info-label">First Name</label>
-                                                            <input type="text" name="first_name" id="first_name" class="personal-info-text-input" value="{!!Auth::user()->first_name!!}"/>
+                                                            <input type="text" name="first_name" id="first_name" required class="personal-info-text-input" value="{!!Auth::user()->first_name!!}"/>
                                                         </div>
 
                                                         <div class="col p-0 mr-3">
                                                             <label for="last_name" class="personal-info-label">Last Name</label>
-                                                            <input type="text" name="last_name" id="last_name" class="personal-info-text-input" value="{!!Auth::user()->last_name!!}"/>
+                                                            <input type="text" name="last_name" id="last_name" required class="personal-info-text-input" value="{!!Auth::user()->last_name!!}"/>
                                                         </div>
 
                                                         <div class="col p-0 mr-3">
                                                             <label for="birth_date" class="personal-info-label">Date of Birth</label>
-                                                            <input type="date" name="birth_date" id="birth_date" required class="personal-info-text-input date" value="1987-02-19"/>
+                                                            @include('partial.birthdate')                                                        
                                                         </div>
 
                                                         <div class="col p-0">
                                                             <label for="contact_number" class="personal-info-label">Contact Number</label>
-                                                            <input type="text" name="contact_number" id="contact_number" class="personal-info-text-input" value="{!!Auth::user()->contact_number!!}"/>
+                                                            <input type="text" name="contact_number" id="contact_number" required class="personal-info-text-input" value="{!!Auth::user()->contact_number!!}"/>
                                                         </div>
                                                     </div>
 
                                                     <div class="personal-info-row">
                                                         <div class="col p-0 mr-3">
                                                             <label for="firstname" class="personal-info-label">Delivery Address</label>
-                                                            <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" placeholder="Enter postcode" required>
+                                                            <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" value="{!!Auth::user()->delivery_address!!}" placeholder="Enter postcode" required>
                                                             
                                                             <div class="enter-manually mb-2 user-select-none" onclick="toggleManualAddress('delivery')"><p>Enter Address Manually <i id="manual-delivery-arrow" class="arrow down ml-2"></i></p></div>
 
@@ -258,7 +261,7 @@
 
                                                         <div class="col p-0 mr-3">
                                                             <label for="last_name" class="personal-info-label">Billing Address</label>
-                                                            <input class="form-control js-typeahead" type="text" id="billing_address" name="billing_address" placeholder="Enter postcode" required>
+                                                            <input class="form-control js-typeahead" type="text" id="billing_address" name="billing_address" value="{!!Auth::user()->billing_address!!}" placeholder="Enter postcode" required>
 
                                                             <div class="enter-manually mb-2 user-select-none" onclick="toggleManualAddress('billing')"><p>Enter Address Manually <i id="manual-billing-arrow" class="arrow down ml-2"></i></p></div>
 
@@ -377,7 +380,10 @@
 
                                                     <div class="col p-0">
                                                         <label for="old_pass" class="verify-label">Current Password</label>
-                                                        <input type="password" name="old_pass" id="old_pass" required class="verification-input"/>
+                                                        <div class="row m-0">
+                                                            <input type="password" name="old_pass" id="old_pass" required class="verification-input"/>
+                                                            <img class="profile-pass-visibility old" id="old-pass-visibility-toggle" onclick="toggleOldNewPassVisibility('old')" src="{{asset('/images/front-end-icons/pass_invisible.svg')}}">
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="account-info-row">
@@ -390,7 +396,10 @@
 
                                                     <div class="col p-0">
                                                         <label for="new_pass" class="verify-label">New Password</label>
-                                                        <input type="text" name="new_pass" id="new_pass" required class="verification-input"/>
+                                                        <div class="row m-0">
+                                                            <input type="password" name="new_pass" id="new_pass" required class="verification-input"/>
+                                                            <img class="profile-pass-visibility new" id="new-pass-visibility-toggle" onclick="toggleOldNewPassVisibility('new')" src="{{asset('/images/front-end-icons/pass_invisible.svg')}}">
+                                                        </div>
                                                         <div id="pass-check-info" class="pass-strength hidden">
                                                             <div class="row m-0">
                                                                 <div id="progress">
@@ -401,7 +410,7 @@
                                                             <div class="row m-0 mt-2">
                                                                 <div class="row m-0 mb-2" id="pass-min-length">
                                                                     <div class="blue-dot"></div>
-                                                                    <p class="pass-info-text">Your password must be at least 10 characters long.</p>
+                                                                    <p class="pass-info-text">Your password must be at least 8 characters long.</p>
                                                                 </div>
                                                                 <div class="row m-0 mb-2" id="pass-number">
                                                                     <div class="blue-dot"></div>
@@ -424,7 +433,7 @@
                                                 Bad credentials.
                                             </div> --}}
                                             <div class="modal-footer border-0 p-0 padded mt-4">
-                                                <button type="button" class="btn btn-secondary disabled ml-auto w-25" id="savepass" onclick="saveChanges()">Save Changes</button>
+                                                <button type="button" class="btn btn-secondary disabled ml-auto w-25" id="savepass" onclick="savePass()">Save Changes</button>
                                             </div>
                                         </div>
                                     </div>
@@ -537,9 +546,6 @@
                                                 <img class="tick-img" id="no-newsletter" src="/customer_page_images/body/Icon-Tick-Selected-clear.svg">
                                             @endif
                                         </div>
-                                    </div>
-                                    <div class="row m-0 mt-3 mb-3 justify-content-center">
-                                        <div id="message"></div>
                                     </div>
                                 </div>
                             </div>
@@ -875,7 +881,7 @@
             let upperinfo = document.getElementById("pass-uppercase");
             
             // check length
-            if(pass.length < 10){
+            if(pass.length < 8){
                 has_ten_characters = false;
                 if(lengthinfo.classList.contains('hidden')){
                     lengthinfo.classList.remove('hidden');
@@ -1018,7 +1024,7 @@
         }
     }
 
-    function saveChanges(){
+    function savePass(){
         let email = document.getElementById("acc_email");
         let old_pass = document.getElementById("old_pass");
         let new_pass = document.getElementById("new_pass");
@@ -1137,8 +1143,6 @@
                 newsletter: selected_newsletter,
             },
             success: function(data, textStatus, xhr) {
-                $('#message').html('<div class="alert alert-success" role="alert">You have succesfully updated your data.</div>');
-                $('#message').show();
             }
 
         });
@@ -1318,7 +1322,9 @@
     function saveChanges(){
         let firstname = document.getElementById('first_name');
         let lastname = document.getElementById('last_name');
-        let birthdate = document.getElementById('birth_date');
+        let birth_day = document.getElementById('birth_day');
+        let birth_month = document.getElementById('birth_month');
+        let birth_year = document.getElementById('birth_year');
         let contact_number = document.getElementById('contact_number');
         let delivery_address = document.getElementById('delivery_address');
         let billing_address = document.getElementById('billing_address');
@@ -1327,7 +1333,10 @@
 
         let firstnameval = firstname.value.trim();
         let lastnameval = lastname.value.trim();
-        let birthdateval = birthdate.value.trim();
+        let birthdayval = birth_day.value.trim();
+        let birthmonthval = birth_month.value.trim();
+        let birthyearval = birth_year.value.trim();
+
         let contact_numberval = contact_number.value.trim();
         let billing_val = billing_address.value.trim();
         let delivery_val = delivery_address.value.trim();
@@ -1343,7 +1352,9 @@
             data: {
                 first_name: firstnameval,
                 last_name: lastnameval,
-                birth_date: birthdateval,
+                birth_day: birthdayval,
+                birth_month: birthmonthval,
+                birth_year: birthyearval,
                 contact_number: contact_numberval,
                 delivery_address: delivery_val,
                 billing_address: billing_val,
@@ -1385,4 +1396,52 @@
         });
     }
 
+    function togglePassVisiblility(){
+        let img = document.getElementById('pass-visibility-toggle');
+        let input = document.getElementById('verify_pass');
+
+        if (input.type === "password") {
+            input.type = "text";
+            img.src = '/images/front-end-icons/pass_visible.svg';
+            img.style.bottom = '34px';
+            img.style.right = '7px';
+        } else {
+            img.src = '/images/front-end-icons/pass_invisible.svg';
+            input.type = "password";
+            img.style.bottom = '31px';
+            img.style.right = '5px';
+        }
+    }
+    
+    function toggleOldNewPassVisibility(field){
+        var img;
+        var pass;
+        if(field === 'old'){
+            img = document.getElementById('old-pass-visibility-toggle');
+            pass = document.getElementById('old_pass');
+        } else {
+            img = document.getElementById('new-pass-visibility-toggle');
+            pass = document.getElementById('new_pass');
+        }
+        
+        if (pass.type === "password") {
+            pass.type = "text";
+            img.src = '/images/front-end-icons/pass_visible.svg';
+            if(field === 'old'){
+                img.style.bottom = '9px';
+            } else {
+                img.style.top = '39px';
+            }
+            img.style.right = '7px';
+        } else {
+            img.src = '/images/front-end-icons/pass_invisible.svg';
+            pass.type = "password";
+            if(field === 'old'){
+                img.style.bottom = '7px';
+            } else {
+                img.style.top = '37px';
+            }
+            img.style.right = '5px';
+        }
+    }
 </script>

@@ -70,7 +70,7 @@
                         <img src="{{asset('/shop_images/category-image-1.png')}}">
                     </div>
                     <div class="selected-category" id="selected-mobile">
-                        <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}">
+                        <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}" id="1">
                         <p class="mt-1">Selected</p>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                         <img src="{{asset('/shop_images/category-image-2.png')}}">
                     </div>
                     <div class="selected-category" id="selected-tablets">
-                        <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}">
+                        <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}" id="2">
                         <p class="mt-1">Selected</p>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                         <img src="{{asset('/shop_images/category-image-3.png')}}">
                     </div>
                     <div class="selected-category" id="selected-watches">
-                        <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}">
+                        <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}" id="3">
                         <p class="mt-1">Selected</p>
                     </div>
                 </div>
@@ -117,6 +117,24 @@
             </div>
             
             <div id="device-makes-results" class="hidden">
+            </div>
+
+            <div id="sell-this" class="col mb-4 hidden">
+                <div class="see-more-sell-devices mb-5">
+                    <div class="text-center" onclick="seeAll()">
+                        See all devices
+                    </div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div id="select-sell-this" class="btn btn-light disabled" onclick="sellThis()">
+                        Sell this device
+                    </div>
+                </div>
+            </div>
+
+            <div id="no-results-brand" class="text-center mb-5 hidden">
+                No results matching this category/brand.
             </div>
 
             <div class="selling-info-items-container">
@@ -429,6 +447,7 @@
                 switch (category) {
                     case 'mobile':
                         mobile.classList.add('selected-category');
+                        mobile.classList.add('selected-category');
                         tablets.classList.remove('selected-category');
                         watches.classList.remove('selected-category');
 
@@ -493,16 +512,18 @@
 
                 $('.device-brand').removeClass('selected');
                 $('.device-brand').css('filter', 'opacity(0.3)');
+                $('.device-brand').removeClass('selected');
                 let brand = document.getElementById('brand-'+id);
                 brand.classList.add('selected');
                 brand.style = 'filter: opacity(1)';
 
-                $('.device-brand').removeClass('selected');
 
                 $('.device-make-result').remove();
 
                 let devicemakeresults = document.getElementById("device-makes-results");
                 let devicemakeresultstitle = document.getElementById("device-make-results-title");
+                document.getElementById('sell-this').classList.add('hidden');
+                document.getElementById('no-results-brand').classList.add('hidden');
 
                 if(devicemakeresults.classList.contains('hidden')){
                     devicemakeresults.classList.remove('hidden');
@@ -537,6 +558,7 @@
                                     devicename.innerHTML = singleresult.product_name;
 
                                     let selecttoggle = document.createElement('img');
+                                    selecttoggle.id = 'checkbox-device-'+singleresult.id;
                                     selecttoggle.src = '/images/front-end-icons/purple_circle.svg';
                                     selecttoggle.classList.add('select-make-result-device');
                                     selecttoggle.classList.add('mt-4');
@@ -546,7 +568,7 @@
                                     infotext.innerHTML = 'Select this model';
 
                                     singledeviceresult.onclick = function(){
-                                        window.location = '/sell/sellitem/'+singleresult.id;
+                                        toggleSelectDevice(singleresult.id);
                                     }
 
                                     singledeviceresult.appendChild(deviceimg);
@@ -556,15 +578,78 @@
 
                                     devicemakeresults.appendChild(singledeviceresult);
                                 }
+
+                                // show see all and sell
+                                document.getElementById('sell-this').classList.remove('hidden');
                             } else {
-                                // if(noresults.classList.contains('hidden')){
-                                //     noresults.classList.remove('hidden');
-                                // }
+                                // show no results
+                                document.getElementById('no-results-brand').classList.remove('hidden');
                             }
 
                         } else {}
                     },
                 });
+            }
+
+            function toggleSelectDevice(id){
+                let element = document.getElementById('checkbox-device-'+id);
+                let devices = $('.select-make-result-device');
+
+                devices.removeClass('selected-device');
+                for (let index = 0; index < devices.length; index++) {
+                    devices[index].src = 'images/front-end-icons/purple_circle.svg';
+                }
+
+                if(!element.classList.contains('selected-device')){
+                    element.src = '/images/front-end-icons/purple_tick_selected.svg';
+                    element.classList.add('selected-device');
+                } 
+               
+
+
+                //window.location = ;
+
+                checkCanSell();
+            }
+
+            function checkCanSell(){
+                let selected = $('.select-make-result-device.selected-device');
+                let btn = document.getElementById('select-sell-this');
+                console.log(selected);
+                if(selected.length === 1){
+                    btn.classList.remove('btn-light');
+                    btn.classList.remove('disabled');
+                    btn.classList.add('btn-orange');
+                } else {
+                    btn.classList.remove('btn-orange');
+                    btn.classList.add('btn-light');
+                    btn.classList.add('disabled');
+                }
+            }
+
+
+            function seeAll(){
+                let category = null;
+                let brand = null;
+                let selected_category = $('.selected-category')[0];
+                let selected_brand = $('.device-brand.selected')[0];
+
+                let splitted_category = selected_category.id.split('-');
+                category = splitted_category[1];
+
+                let splitted_brand = selected_brand.id.split('-');
+                brand = splitted_brand[1];
+
+                window.location = '/sell/devices/'+category+'/'+brand;
+            }
+
+            function sellThis(){
+                let selected = $('.select-make-result-device.selected-device');
+                if(selected.length === 1){
+                    let splitted = selected[0].id.split('-');
+                    let id = splitted[2];
+                    window.location = '/sell/sellitem/'+id;
+                }
             }
 
         </script>

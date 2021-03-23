@@ -4,6 +4,7 @@ namespace App;
 
 use App\Eloquent\Payment\UserBankDetails;
 use App\Eloquent\SellingProduct;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -29,7 +30,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'first_name', 'last_name', 'email','password','current_phone','preffered_os','sub','delivery_address','billing_address','contact_number','bamboo_credit',
-        'username','worker_email'
+        'username','worker_email','birth_date'
     ];
 
     public function fullName(){
@@ -134,5 +135,24 @@ class User extends Authenticatable
 
     public function profileBillingAddress(){
         return str_replace(',', '<br>', $this->billing_address);
+    }
+
+    public function getBirthDate(){
+        return Carbon::parse($this->birth_date)->format('d/m/y');
+    }
+
+    public function getBirthDay(){
+        $exploded = explode('.', $this->birth_date);
+        return $exploded[0];
+    }
+
+    public function getBirthMonth(){
+        $exploded = explode('.', $this->birth_date);
+        return $exploded[1];
+    }
+
+    public function getBirthYear(){
+        $exploded = explode('.', $this->birth_date);
+        return $exploded[2];
     }
 }

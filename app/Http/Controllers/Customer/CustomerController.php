@@ -24,6 +24,7 @@ use Carbon\Carbon;
 use Crypt;
 use Illuminate\Support\Facades\Hash;
 use DNS1D;
+use Exception;
 use PDF;
 
 class CustomerController extends Controller
@@ -297,7 +298,7 @@ class CustomerController extends Controller
     public function updatePersonalInfo(Request $request){
         // validate data
         $validation_error_msg = [];
-        $required = ['first_name', 'last_name', 'birth_date', 'contact_number', 'delivery_address', 'billing_address', 'current_phone', 'preffered_os'];
+        $required = ['first_name', 'last_name', 'birth_day', 'birth_month', 'birth_year', 'contact_number', 'delivery_address', 'billing_address', 'current_phone', 'preffered_os'];
         foreach($required as $field){
             if(!isset($request->all()[$field])){
                 array_push($validation_error_msg, 'Field ' . str_replace('_', ' ', ucfirst($field)) . " can't be empty. ");
@@ -306,6 +307,12 @@ class CustomerController extends Controller
         if(!empty($validation_error_msg)){
             return response(['status' => 'error', 'msg' => $validation_error_msg]);
         }
+        try {
+            $birth_date = Carbon::parse($request->birth_day.'.'.$request->birth_month.'.'.$request->birth_year);
+        } catch (Exception $e) {
+            return response(['status' => 'error', 'msg' => "Invalid birth date."]);
+        }
+        
         $user = User::find(Auth::user()->id);
         $user->update([
             'first_name' => $request->first_name,
@@ -314,7 +321,8 @@ class CustomerController extends Controller
             'delivery_address' => $request->delivery_address,
             'billing_address' => $request->billing_address,
             'current_phone' => $request->current_phone,
-            'preffered_os' => $request->preffered_os
+            'preffered_os' => $request->preffered_os,
+            'birth_date' => $birth_date
         ]);
         return response(['status' => 'success', 'msg' => 'Personal info successfully updated.']);
     }

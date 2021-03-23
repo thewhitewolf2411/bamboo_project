@@ -1,3 +1,8 @@
+.birth-date-row-register{
+    display: flex;
+    flex-direction: row;
+}
+
 .top-text-shadow{
     text-shadow: 0px 1px #798080;
     font-size: 64px;
@@ -266,6 +271,21 @@
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     font-family:Sharp Sans No1 Bold;
+}
+
+.profile-pass-visibility{
+    position: absolute;
+    right: 5px;
+    bottom: 31px;
+    cursor: pointer;
+}
+
+.profile-pass-visibility.old{
+    bottom: 7px;
+}
+
+.profile-pass-visibility.new{
+    top: 37px;
 }
 
 .forgotpass-link{
