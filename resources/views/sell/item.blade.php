@@ -25,7 +25,12 @@
     <body>
         <header>@include('customer.layouts.header')</header>
         <main>
-
+            <div class="col text-center sell-item">
+                <a class="back-results-sell sell-item-back  ml-5" href="/sell">
+                    <img class="back-icon-results" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
+                    <p class="results-back">Back to Search</p>
+                </a>
+            </div>
 
             <div class="single-product-container">
                 {{-- {!!dd($product)!!} --}}
@@ -75,17 +80,19 @@
                         </div>
                     </div>
 
-                    <div class="product-selected product-grade-container">
+                    <div class="product-selected product-grade-container selling-item-grades-container">
                         <p>Select Grade:</p>
 
                         <div class="">
-                            <div class="d-flex">
+                            <div class="d-flex grade-options-container">
                                 <label class="elem-grade-container ml-0 mr-2" for="grade-1">Excellent Working</label>
                                 <label class="elem-grade-container ml-0 mr-2" for="grade-2">Good Working</label>
                                 <label class="elem-grade-container ml-0 mr-2" for="grade-3">Poor Working</label>
                                 <label class="elem-grade-container ml-0 mr-2" for="grade-4">Damaged Working</label>
                                 <label class="elem-grade-container ml-0 mr-2" for="grade-5">Faulty</label>
-                                <a role="button" class="my-auto" data-toggle="modal" data-target="#gradesModal"><label class="ml-0 mr-3 my-auto"><img src="{{asset('/customer_page_images/body/Icon-Information.png')}}" class="mx-3">What do these grades mean?</label></a>
+                            </div>
+                            <div class="row m-0 mt-2">
+                                <a role="button" class="my-auto" data-toggle="modal" data-target="#gradesModal"><label class="d-flex ml-0 mr-3 my-auto"><img src="{{asset('/customer_page_images/body/Icon-Information.png')}}" class="mx-3"><p class="pt-2">What do these grades mean?</p></label></a>
                             </div>
                         </div>
                     
