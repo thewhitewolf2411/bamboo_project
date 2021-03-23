@@ -113,7 +113,7 @@ class SalesLotController extends Controller
 
         foreach($allItems as $key=>$item){
             $box = Tray::where('id', $key)->first();
-            $box->total_cost = 0;
+            $box->total_cost = '£' . $box->getBoxPrice();
             $box->total_qty = count($allItems[$key]);
             array_push($boxes, $box);
         }
@@ -228,7 +228,7 @@ class SalesLotController extends Controller
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
         $clients = Clients::all();
 
-        $salesLots = SalesLot::all();
+        $salesLots = SalesLot::all()->sortDesc();
 
         return view('portal.sales-lot.completed-sales-lot', ['portalUser'=>$portalUser, 'salesLots'=>$salesLots, 'clients'=>$clients]);
     }
@@ -353,7 +353,10 @@ class SalesLotController extends Controller
 
         foreach($grouped as $device_id => $devices){
 
-            $brand = Brand::find($device_id)->brand_name;
+            $dev = Tradein::find($device_id);
+            $product = SellingProduct::find($dev->product_id);
+
+            $brand = Brand::find($product->brand_id)->brand_name;
             $product = SellingProduct::find($device_id);
             $model = $product->product_name;
 
@@ -453,8 +456,8 @@ class SalesLotController extends Controller
         $tradeins = Tradein::whereIn('id', $deviceIds)->get();
         
         // header just in case
-        //$data = array(["Ext Job Ref ID", "Manufacturer", "Model Number", "GB", "COLOUR", "IMEI", "Grade", "Network", "FMIP", "Cost"]);
-        $data = array();
+        $data = array(["Ext Job Ref ID", "Manufacturer", "Model Number", "GB", "COLOUR", "IMEI", "Grade", "Network", "FMIP", "Cost"]);
+        #$data = array();
 
         foreach($tradeins as $tradein){
             if($tradein->correct_product_id !== null){
@@ -466,7 +469,7 @@ class SalesLotController extends Controller
             $productInfo = ProductInformation::where('product_id', $product->id)->first();
             $additionalCost = AdditionalCosts::first();
 
-            $cost = $tradein->bamboo_price + $additionalCost->administration_costs + (2 * $additionalCost->carriage_costs);
+            $cost = $tradein->bamboo_price + $tradein->admin_cost + (2 * $tradein->carriage_costs);
             // price = bamboo_price + administration costs + 2 * carriage cost per device
             $isFimpLocked = $tradein->isFimpLocked() ? 'Yes' : 'No';
 

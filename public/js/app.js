@@ -55430,12 +55430,13 @@ $.ajaxSetup({
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
   }
 });
+$(document).ready(function () {});
 $('#changetoviewtradeins').on('click', function () {
-  if (!$('#boxedtradeinstable').hasClass('table-visible')) {
-    $('#boxedtradeinstable').addClass('table-visible');
-    $('#closedboxtable').addClass('table-invisible');
-    $('#boxedtradeinstable').removeClass('table-invisible');
-    $('#closedboxtable').removeClass('table-visible');
+  if (!$('#boxedtradeinstable_wrapper').hasClass('table-visible')) {
+    $('#boxedtradeinstable_wrapper').addClass('table-visible');
+    $('#closedboxtable_wrapper').addClass('table-invisible');
+    $('#boxedtradeinstable_wrapper').removeClass('table-invisible');
+    $('#closedboxtable_wrapper').removeClass('table-visible');
     $('#changetoviewtradeins div').removeClass('btn-primary-nonactive');
     $('#changetoviewtradeins div').addClass('btn-primary-active');
     $('#changetoviewboxes div').addClass('btn-primary-nonactive');
@@ -55443,11 +55444,11 @@ $('#changetoviewtradeins').on('click', function () {
   }
 });
 $('#changetoviewboxes').on('click', function () {
-  if (!$('#closedboxtable').hasClass('table-visible')) {
-    $('#closedboxtable').addClass('table-visible');
-    $('#boxedtradeinstable').addClass('table-invisible');
-    $('#closedboxtable').removeClass('table-invisible');
-    $('#boxedtradeinstable').removeClass('table-visible');
+  if (!$('#closedboxtable_wrapper').hasClass('table-visible')) {
+    $('#closedboxtable_wrapper').addClass('table-visible');
+    $('#boxedtradeinstable_wrapper').addClass('table-invisible');
+    $('#closedboxtable_wrapper').removeClass('table-invisible');
+    $('#boxedtradeinstable_wrapper').removeClass('table-visible');
     $('#changetoviewboxes div').removeClass('btn-primary-nonactive');
     $('#changetoviewboxes div').addClass('btn-primary-active');
     $('#changetoviewtradeins div').addClass('btn-primary-nonactive');
@@ -55613,6 +55614,26 @@ $(document).ready(function () {
       }
     });
   });
+  $('#closedboxtable tfoot td').each(function () {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+  var closedboxtable = $('#closedboxtable').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    }
+  }); // Apply the search
+
+  closedboxtable.columns().every(function () {
+    var that = this;
+    $('input', this.footer()).on('keyup change', function () {
+      if (that.search() !== this.value) {
+        that.search(this.value).draw();
+      }
+    });
+  });
+  $('#boxedtradeinstable_wrapper').addClass('table-visible');
+  $('#closedboxtable_wrapper').addClass('table-invisible');
 });
 
 /***/ }),
@@ -56309,8 +56330,8 @@ $('#completelot').on('click', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

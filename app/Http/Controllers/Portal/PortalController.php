@@ -151,6 +151,7 @@ class PortalController extends Controller
                     $tradein->customer_network = $productNetwork[$net]->getNetWorkName($productNetwork[$net]->network_id);
                     #dd($productInformation[$inf]);
                     $tradein->customer_memory=$productInformation[$inf]->memory;
+                    $tradein->expiry_date = \Carbon\Carbon::parse("31-03-2021 00:00");
 
                     $tradein->save();
                 }

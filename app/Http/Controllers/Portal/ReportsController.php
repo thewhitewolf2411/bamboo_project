@@ -267,10 +267,9 @@ class ReportsController extends Controller
         $sheet->setCellValue('G1', 'Carriage');
         $sheet->setCellValue('H1', 'Total Cost');
         $sheet->setCellValue('I1', 'Date in');
-        $sheet->setCellValue('J1', 'Date passed');
-        $sheet->setCellValue('K1', 'Time passed');
-        $sheet->setCellValue('L1', 'Date Paid');
-        $sheet->setCellValue('M1', 'Location');
+        $sheet->setCellValue('J1', 'Status');
+        $sheet->setCellValue('K1', 'Time in status');
+        $sheet->setCellValue('L1', 'Location');
 
         $index = 2;
 
@@ -279,16 +278,15 @@ class ReportsController extends Controller
             $sheet->setCellValue('A'.$index, $tradein->barcode);
             $sheet->setCellValue('B'.$index, $tradein->getBrandName($tradein->product_id));
             $sheet->setCellValue('C'.$index, $tradein->getProductName($tradein->product_id));
-            $sheet->setCellValue('D'.$index, $tradein->cosmetic_condition);
+            $sheet->setCellValue('D'.$index, $tradein->getDeviceBambooGrade());
             $sheet->setCellValue('E'.$index, $tradein->imei);
             $sheet->setCellValue('F'.$index, $tradein->bamboo_price);
             $sheet->setCellValue('G'.$index, $tradein->carriage_cost);
             $sheet->setCellValue('H'.$index, $tradein->bamboo_price + $tradein->carriage_cost);
             $sheet->setCellValue('I'.$index, $tradein->created_at);
-            $sheet->setCellValue('J'.$index, 'Date passed');
-            $sheet->setCellValue('K'.$index, 'Time passed');
-            $sheet->setCellValue('L'.$index, 'Date Paid');
-            $sheet->setCellValue('M'.$index, $tradein->getTrayName($tradein->id));
+            $sheet->setCellValue('J'.$index, $tradein->getBambooStatus());
+            $sheet->setCellValue('K'.$index, $tradein->getTimeIn());
+            $sheet->setCellValue('L'.$index, $tradein->getTrayName($tradein->id));
 
             $index++;
         }

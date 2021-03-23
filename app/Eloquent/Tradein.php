@@ -1053,4 +1053,14 @@ class Tradein extends Model
                 break;
         }
     }
+
+    public function getTimeIn(){
+        $auditTrailLatest = \Carbon\Carbon::parse($this->created_at);
+        $auditTrailSecond = \Carbon\Carbon::now();
+
+        $difference = $auditTrailSecond->diffForHumans($auditTrailLatest);
+       #dd($difference);
+
+        return $difference;
+    }
 }

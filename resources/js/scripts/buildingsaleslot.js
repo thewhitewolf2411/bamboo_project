@@ -6,13 +6,19 @@ $.ajaxSetup({
     }
 });
 
-$('#changetoviewtradeins').on('click', function(){
-    if(!($('#boxedtradeinstable').hasClass('table-visible'))){
-        $('#boxedtradeinstable').addClass('table-visible');
-        $('#closedboxtable').addClass('table-invisible');
+$(document).ready(function(){
 
-        $('#boxedtradeinstable').removeClass('table-invisible');
-        $('#closedboxtable').removeClass('table-visible');
+    
+
+});
+
+$('#changetoviewtradeins').on('click', function(){
+    if(!($('#boxedtradeinstable_wrapper').hasClass('table-visible'))){
+        $('#boxedtradeinstable_wrapper').addClass('table-visible');
+        $('#closedboxtable_wrapper').addClass('table-invisible');
+
+        $('#boxedtradeinstable_wrapper').removeClass('table-invisible');
+        $('#closedboxtable_wrapper').removeClass('table-visible');
 
         $('#changetoviewtradeins div').removeClass('btn-primary-nonactive');
         $('#changetoviewtradeins div').addClass('btn-primary-active');
@@ -23,12 +29,12 @@ $('#changetoviewtradeins').on('click', function(){
 });
 
 $('#changetoviewboxes').on('click', function(){
-    if(!($('#closedboxtable').hasClass('table-visible'))){
-        $('#closedboxtable').addClass('table-visible');
-        $('#boxedtradeinstable').addClass('table-invisible');
+    if(!($('#closedboxtable_wrapper').hasClass('table-visible'))){
+        $('#closedboxtable_wrapper').addClass('table-visible');
+        $('#boxedtradeinstable_wrapper').addClass('table-invisible');
 
-        $('#closedboxtable').removeClass('table-invisible');
-        $('#boxedtradeinstable').removeClass('table-visible');
+        $('#closedboxtable_wrapper').removeClass('table-invisible');
+        $('#boxedtradeinstable_wrapper').removeClass('table-visible');
 
         $('#changetoviewboxes div').removeClass('btn-primary-nonactive');
         $('#changetoviewboxes div').addClass('btn-primary-active');
