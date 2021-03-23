@@ -34,66 +34,70 @@
                     <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to home</p>
                 </a>
 
-                <div class="container">
+                <div class="container footer-legal">
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
-                            <p>What Are Cookies</p>
+                            <p class="text-left footer-text-title">What Are Cookies</p>
                         </div>
-                        <p>
+                        <p class="footer-text-small">
                             As is common practice with almost all professional websites this site uses cookies, which are tiny files that are downloaded to your computer, to improve your experience. This page describes what information they gather, how we use it and why we sometimes need to store these cookies. We will also share how you can prevent these cookies from being stored however this may downgrade or ‘break’ certain elements of the site’s functionality.
 
                             For more general information on cookies, please refer to the Information Commissioner’s Office  and search ‘Cookies’
                         </p>
                     </div>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
-                            <p>How We Use Cookies</p>
+                            <p class="text-left footer-text-title">How We Use Cookies</p>
                         </div>
-                        <p>
+                        <p class="footer-text-small">
                             We use cookies for a variety of reasons detailed below. Unfortunately, in most cases there are no industry standard options for disabling cookies without completely disabling the functionality and features they add to this site. It is recommended that you leave on all cookies if you are not sure whether you need them or not in case, they are used to provide a service that you use.
                         </p>
                     </div>
-
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
-                            <p>Disabling Cookies</p>
+                            <p class="text-left footer-text-title">Disabling Cookies</p>
                         </div>
-                        <p>
+                        <p class="footer-text-small">
                             You can prevent the setting of cookies by adjusting the settings on your browser (see your browser Help for how to do this). Be aware that disabling cookies will affect the functionality of this and many other websites that you visit. Disabling cookies will usually result in also disabling certain functionality and features of this site. Therefore, it is recommended that you do not disable cookies.
                         </p>
                     </div>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
-                            <p>The Cookies We Set</p>
+                            <p class="text-left footer-text-title">The Cookies We Set</p>
                         </div>
-                        <p>
+                        <p class="footer-text-small">
                             This site offers newsletter or email subscription services and cookies may be used to remember if you are already registered and whether to show certain notifications which might only be valid to subscribed/unsubscribed users.<br><br>
 
                             When you submit data to through a form such as those found on contact pages or comment forms, cookies may be set to remember your user details for future correspondence.
                         </p>
                     </div>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
-                            <p>Third Party Cookies</p>
+                            <p class="text-left footer-text-title">Third Party Cookies</p>
                         </div>
-                        <p>
+                        <p class="footer-text-small">
                             In some special cases we also use cookies provided by trusted third parties. The following section details which third party cookies you might encounter through this site.
                             This site uses Google Analytics which is one of the most widely used and trusted analytics solutions on the web, for helping us to understand how you use the site and ways that we can improve your experience. These cookies may track things such as how long you spend on the site and the pages that you visit which will enable us to continue to produce engaging content.<br>
                             For more information on Google Analytics cookies, see the official Google Analytics page.<br><br>
                             We also use social media buttons and/or plugins on this site that allow you to connect with your social network in various ways. For these to work the following social media sites including; Facebook, Twitter, LinkedIn, Google Plus, will set cookies through our site which may be used to enhance your profile on their site or contribute to the data they hold for various purposes outlined in their respective privacy policies.
                         </p>
                     </div>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
-                            <p>More Information</p>
+                            <p class="text-left footer-text-title">More Information</p>
                         </div>
-                        <p>
+                        <p class="footer-text-small">
                             Hopefully we have provided relevant information regarding cookies, however if there is something that you aren’t sure whether you need or not, it’s usually sounder to leave cookies enabled in case it does interact with one of the features you use on our site. However, if you are still looking for more information then you can contact us through one of our preferred contact methods.<br>
                             Email: info@bamboomobile.co.uk<br>
                             Phone: +44 (0)345 582 0511<br>

@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             'contact_number'=>'061172442',
             'type_of_user'=>3,
             'account_disabled'=>false,
+            'birth_date' => '2020-01-10 00:00:00'
         ]);
 
         DB::table('users')->insert([
@@ -48,6 +49,7 @@ class DatabaseSeeder extends Seeder
             'contact_number'=>'061172442',
             'type_of_user'=>0,
             'account_disabled'=>false,
+            'birth_date' => '2020-01-10 00:00:00'
         ]);
 
         DB::table('portal_users')->insert([

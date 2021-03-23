@@ -12,7 +12,9 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Services\KlaviyoEmail;
 use App\Services\NotificationService;
+use Carbon\Carbon;
 use Crypt;
+use Exception;
 
 class RegisterController extends Controller
 {
@@ -61,8 +63,23 @@ class RegisterController extends Controller
 
     }
 
+    /**
+     * Check if birth date is valid.
+     */
+    protected function checkBirthDate($data){
+        try{
+            $date = Carbon::parse($data['birth_day'].'.'.$data['birth_month'].'.'.$data['birth_year']);
+            return true;
+        } catch(Exception $e){
+            return false;
+        }
+    }
+
     public function register(Request $request)
     {
+        if(!$this->checkBirthDate($request->all())){
+            return redirect('/')->with('regerror','Invalid birth date');
+        }
         $validator = $this->validator($request->all());
         if ($validator->fails()) {
             return redirect('/')->with('regerror','This email is already registered');
@@ -92,6 +109,7 @@ class RegisterController extends Controller
         $user->last_name = $data['last-name'];
         $user->email = $data['email'];
         $user->password = Crypt::encrypt($data['password']);
+        $user->birth_date = Carbon::parse($data['birth_day'].'.'.$data['birth_month'].'.'.$data['birth_year']);
 
         $user->delivery_address = $data['delivery_address'];
         $user->billing_address = $data['billing_address'];

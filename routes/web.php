@@ -36,7 +36,7 @@ Route::get('/map', 'Customer\PagesController@showMapPage');
 Route::get('/cookies', 'Customer\PagesController@showCookiesPage');
 Route::get('/slavery', 'Customer\PagesController@showSlaveryPage');
 Route::get('/corporate', 'Customer\PagesController@showCorporatePage');
-Route::get('/returnpolicy', 'Customer\PagesController@showReturnPolicyPage');
+Route::get('/recyclepolicy', 'Customer\PagesController@showReturnPolicyPage');
 Route::post('/newslettersingup', 'Customer\PagesController@singUpNewsletter');
 
 
@@ -83,6 +83,8 @@ Route::post('/getproductdata', 'Customer\ShopController@getProductData');
 Route::get('/sell', 'Customer\SellController@showSellView');
 Route::get('/sell/why','Customer\SellController@showSellWhy');
 Route::get('/sell/shop/{parameter}/{resultstype}', 'Customer\SellController@showSellShop');
+Route::get('/sell/devices/{category}/{brand}', 'Customer\SellController@showBrandCategoryResults');
+
 Route::get('/sell/sellitem/{parameter}', 'Customer\SellController@showSellItem')->name('showSellItem');
 Route::post('/sell/searchdevices', 'Customer\SellController@searchAllSellDevices')->name('searchSellDevices');
 Route::get('/sell/getdevicebybrand/{brand_id}/{category_id}', 'Customer\SellController@getDevicesByBrand')->name('getDevicesByBrand');

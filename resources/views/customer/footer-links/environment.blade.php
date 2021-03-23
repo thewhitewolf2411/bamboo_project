@@ -88,7 +88,7 @@
             
                         <div class="terms-container">
                             <input type="checkbox" class="mx-3" id="terms" name="terms" required>
-                            <label for="terms">I agree to Bamboo Mobile <a href="/terms">Terms and Conditions</a></label>
+                            <label for="terms">I agree to Bamboo Mobile <a href="/terms" target="_blank">Terms and Conditions</a></label>
                         </div>
                     </form>
             

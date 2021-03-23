@@ -27,15 +27,18 @@
             <div class="app">
                 <div class="slavery-title-container">
                     <div class="center-title-container">
-                        <p>RETURN POLICY</p>
+                        <p>Recycle Policy</p>
                     </div>
                 </div>
+                <a class="back-to-home-footer mt-3" href="/">
+                    <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to home</p>
+                </a>
 
-                <div class="container">
+                <div class="container footer-legal">
 
                     <div class="col-md-12">
 
-                        <ul>
+                        <ul class="footer-text-small">
                             <li>If a phone/device fails to meet our terms and conditions, we will offer you an adjusted price. If you choose to decline our new offer within 7 days of the adjusted price offer, we are happy to return the phone to you. </li>
                             <br>
                             <li>The phone/device will be returned to you by our chosen courier company at no additional cost.  Please note that we may not be able to return with the packaging or accessories received with your phone/device in the case of a rejected offer. </li>
