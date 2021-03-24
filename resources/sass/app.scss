@@ -25,3 +25,11 @@
 //auth css
 @import './auth/login.scss';
 @import './auth/register.scss';
+
+// disable dragging images
+img{
+    -ms-user-drag: none;
+    -moz-user-drag: none;
+    -webkit-user-drag: none;
+    // user-drag: none;
+}

@@ -179,6 +179,9 @@ class CustomerController extends Controller
 
     }
 
+    /**
+     * Show basket
+     */
     public function showCart(){
 
         if(Auth::user()){
@@ -193,6 +196,7 @@ class CustomerController extends Controller
             $products = SellingProduct::all();
 
             $price = 0;
+            $sellPrice = 0;
 
             $hasTradeIn = false;
             $hasTradeOut = false;
@@ -205,6 +209,7 @@ class CustomerController extends Controller
                     }
                     if($items->type === "tradein"){
                         $hasTradeIn = true;
+                        $sellPrice += $items->price;
                     }
                 }
             }
@@ -213,6 +218,7 @@ class CustomerController extends Controller
                     'cart'=>$cartItems,
                     'products'=>$products,
                     'fullprice'=>$price,
+                    'sellPrice'=>$sellPrice,
                     'hasTradeIn'=>$hasTradeIn,
                     'hasTradeOut'=>$hasTradeOut,
             ]);
@@ -224,6 +230,59 @@ class CustomerController extends Controller
 
     }
 
+    /**
+     * Show cart details.
+     */
+    public function showCartDetails(){
+        if(Auth::user()){
+
+            $olderCartItems = Cart::where('user_id', Auth::user()->id)->where('created_at', '<',\Carbon\Carbon::parse('-24 hours'))->get();
+            foreach($olderCartItems as $oCI){
+                $oCI->delete();
+            }
+
+            $cartItems = Cart::where('user_id', Auth::user()->id)->get();
+
+            $products = SellingProduct::all();
+
+            $price = 0;
+            $sellPrice = 0;
+
+            $hasTradeIn = false;
+            $hasTradeOut = false;
+
+            if($cartItems !== null){
+                foreach($cartItems as $items){
+                    if($items->type === "tradeout"){
+                        $price += $items->price;
+                        $hasTradeOut = true;
+                    }
+                    if($items->type === "tradein"){
+                        $hasTradeIn = true;
+                        $sellPrice += $items->price;
+                    }
+                }
+            }
+
+            return view('customer.cartdetails')->with([
+                    'cart'=>$cartItems,
+                    'products'=>$products,
+                    'fullprice'=>$price,
+                    'sellPrice'=>$sellPrice,
+                    'hasTradeIn'=>$hasTradeIn,
+                    'hasTradeOut'=>$hasTradeOut,
+            ]);
+
+        }
+        else{
+            return \redirect()->back()->with('showLogin', true);
+        }
+    }
+
+
+    /**
+     * Add product to wishlist.
+     */
     public function addProductToWishList(Request $request){
 
 

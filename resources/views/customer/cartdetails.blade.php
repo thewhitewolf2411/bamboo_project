@@ -33,7 +33,7 @@
                 <div class="center-title-container">
                     <div class="let-top-container">
                         <div class="center-title-container">
-                            <p> Basket </p>
+                            <p> Your details </p>
                         </div>
                     </div>
                 </div>
@@ -42,8 +42,8 @@
             <div class="cart-breadcrumbs p-3 ml-5">
                 <p class="black-cart-info-text m-0 mr-2">Basket</p>
                 <img class="mr-2 ml-2" src="{{asset('/images/front-end-icons/arrow_right_black.svg')}}">
-                <p class="grey-cart-info-text m-0 ml-2 mr-2">Your details</p>
-                <img class="mr-2 ml-2" src="{{asset('/images/front-end-icons/arrow_right_grey.svg')}}">
+                <p class="black-cart-info-text m-0 ml-2 mr-2">Your details</p>
+                <img class="mr-2 ml-2" src="{{asset('/images/front-end-icons/arrow_right_black.svg')}}">
                 <p class="grey-cart-info-text m-0 ml-2">Confirmation</p>
             </div>
 
@@ -80,195 +80,94 @@
 
                 @endif
 
-                @if(isset($cart) && count($cart)>0)
 
-                    @if($cart->count() < 2)
-                        @include('partial.sellsearch', ['title' => 'More devices to sell', 'info' => 'Use the search bar below to find your specific device'])
-                    @endif
+                <div class="d-flex p-5 ml-5">
 
-                    <div class="d-flex p-5">
+                    <div class="d-flex flex-column w-75">
+                        <h3>Your details</h3>
 
-                        <div class="d-flex flex-column w-75">
+                        <div class="trade-pack-type w-75">
+                            <div class="col m-0 p-4">
+                                <p class="title-trade-pack-type-large">How would you like to send your device?</p>
+                                <p class="title-trade-pack-type">Please select how you would like to send your device(s) to us</p>
 
-                            @if($hasTradeOut)
-                                <div class="left-title-container">
-                                    <img src="{{asset('/shop_images/Icon-Shop.svg')}}">
-                                    <p class="mx-3 mt-3">Basket</p>
+                                <div class="select-pack-type mt-4">
+
+                                    <div class="order-label-print-type m-2" id="bamboo-print-selected" onclick="selectType('bamboo')">
+                                        <div class="col p-0">
+                                            <img class="order-label-print-svg" src="{{asset('/customer_page_images/body/free_bamboo_trade_pack.svg')}}">
+                                            <p class="order-label-print-text">FREE bamboo <br>Trade Pack</p>
+                                            <img class="order-label-select-svg" id="bamboo-print-selected-tick" src="{{asset('/customer_page_images/body/orange_deselected.svg')}}">
+                                        </div>
+                                    </div>
+
+                                    <div class="order-label-print-type m-2" id="own-print-selected" onclick="selectType('own')">
+                                        <div class="col p-0">
+                                            <img class="order-label-print-svg" src="{{asset('/customer_page_images/body/free_print_own_label.svg')}}">
+                                            <p class="order-label-print-text">FREE print your <br>own label</p>
+                                            <img class="order-label-select-svg" id="own-print-selected-tick" src="{{asset('/customer_page_images/body/orange_deselected.svg')}}">
+                                        </div>
+                                    </div>
+                                    
                                 </div>
-                            @endif
-
-                            {{-- <div class="d-flex flex-column w-100"> --}}
-
-                                @foreach($cart as $key=>$cartitem)
-                                    @if($cartitem->type === 'tradeout')
-                                        <div class="cart-product row justify-content-between mt-3">
-                                            <div class="cart-product-image w-25">
-                                                <img src="{{asset('/storage/product_images').'/' . $cartitem->getProductImage($cartitem->id)}}">
-                                            </div>
-                                            <div class="d-flex flex-column w-25">
-                                                <h6 class="m-0 mb-3 font-weight-bold">{{$cartitem->getProductName($cartitem->id)}}</h6>
-                                                <p class="m-0">Network: {{$cartitem->network}}</p>
-                                                <p class="m-0">Memory: {{$cartitem->memory}}</p>
-                                                <p class="m-0">Grade: {{$cartitem->grade}}</p>
-                                            </div>
-                                            <div class="d-flex flex-column w-25">
-                                                <h6 class="m-0 mb-3 font-weight-bold">Item price</h6>
-                                                <p class="m-0">Offered Price: £{{$cartitem->price}}</p>
-                                            </div>
-                                            <div class="d-flex flex-column w-25">
-                                                <h6 class="m-0 mb-3 font-weight-bold">Total Price</h6>
-                                                <p class="m-0 font-weight-bold">Total Price: £{{$cartitem->price}}</p>
-                                            </div>
-
-                                        </div>
-                                        <div class="row">
-                                            <div class="w-50"></div>
-                                            <a href="/removefromcart/{{$key}}" class="w-25 m-0">
-                                                <div class="">
-                                                    <p class="m-0" style="">REMOVE</p>
-                                                </div>
-                                            </a>
-                                            <a href="" class="w-25 m-0">
-                                                <div class="">
-                                                    <p class="m-0" style="">Move to wishlist</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    @endif
-                                @endforeach
-
-                            {{-- </div> --}}
-
-                            @if($hasTradeIn)
-                                <div class="left-title-container">
-                                    <img src="{{asset('/shop_images/Icon-Sell.svg')}}">
-                                    <p class="mx-3 mt-3">Basket - Trade in</p>
-                                </div>
-                            @endif
-
-                            {{-- <div class="d-flex flex-column w-100"> --}}
-
-                            @foreach($cart as $key=>$cartitem)
-                                @if($cartitem->type === 'tradein')
-
-                                    <div class="cart-product d-flex justify-content-between mt-3">
-                                        {{-- <div class="cart-product-image w-25">
-                                            <img src="{{asset('/storage/product_images').'/' . $cartitem->getProductImage($cartitem->id)}}" width="80%">
-                                        </div> --}}
-                                        <div class="d-flex flex-column w-25">
-                                            <h6 class="m-0 mb-3 cart-text-bold">{{$cartitem->getProductName($cartitem->id)}}</h6>
-                                            <p class="m-0">Network: {{$cartitem->network}}</p>
-                                            <p class="m-0">Memory: {{$cartitem->memory}}</p>
-                                            <p class="m-0">Grade: {{$cartitem->grade}}</p>
-                                        </div>
-                                        <div class="d-flex flex-column w-25">
-                                            <h6 class="m-0 mb-3 cart-text-bold">Item price</h6>
-                                            <p class="m-0">Offered Price: £{{$cartitem->price}}</p>
-                                        </div>
-                                        <div class="d-flex flex-column w-25">
-                                            <h6 class="m-0 mb-3 cart-text-bold">Total Price</h6>
-                                            <p class="m-0 font-weight-bold">Total Price: £{{$cartitem->price}}</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex justify-content-between">
-                                        <div class="w-25"></div>
-                                        <a href="/removefromcart/{{$key}}" class="w-25 m-0">
-                                            <div class="">
-                                                <p class="m-0 ml-5 pl-2 text-center">REMOVE</p>
-                                            </div>
-                                        </a>
-                                        <div class="w-25"></div>
-                                        <div class="w-25"></div>
-                                    </div>
-
-                                @endif
-
-                            @endforeach
-
-                            {{-- </div> --}}
-
-                        </div>
-
-                        <div class="d-flex flex-column w-25 p-3">
-                            <div class="order-summary-cart flex-column">
-                                <p class="order-summary-bold w-100">Order Summary</p>
-
-                                @if($hasTradeOut)
-                                <p style="display: flex; align-items: center;">Price to pay: £{{$fullprice}}</p>
-                                @endif
-                                
-                                @if($hasTradeIn)
-                                    <div class="summary-cart">
-                                        <p class="summary-cart-text">Subtotal</p>
-                                        <p class="summary-cart-text">£{{$sellPrice}}</p>
-                                    </div>
-                                    <div class="summary-cart">
-                                        <p class="summary-cart-text-bold">TOTAL</p>
-                                        <p class="summary-cart-text-bold">£{{$sellPrice}}</p>
-                                    </div>
-                                    {{-- <select class="form-control my-3" onchange="changelabelstatus(this)">
-                                        <option value="1" selected>Make an order without printing label</option>
-                                        <option value="2">Print and send trade label yourself</option>
-                                    </select> --}}
-                                @endif   
-                            </div>
-                            {{-- <p style="text-align: center;">Before submitting your order, be sure to read <br> <a style="color:blue;" href="/terms" target="_blank"> our terms and conditions </a>.</p> --}}
-
-                            @if($hasTradeOut)
-                            <div class="form-container">
-
-                                <form onsubmit="return showPaymentDetails()" action="/cart/sell" method="POST">
-                                    @csrf
-                                    <button type="submit" class="btn btn-primary btn-blue w-100">Checkout</button>
-                
-                                </form>
-                
-                                <script>
-                                    function changelabelstatus(value){
-                                        document.getElementById('label_status').value = value.value;
-                                    }
-                                </script>
-
                             </div>
 
-                            @endif
-
-                            @if($hasTradeIn)
-                            <div class="form-container">
-
-                                {{-- <form action="/cart/sell" method="POST"> --}}
-                                    {{-- @csrf --}}
-                        
-                                    {{-- <input type="hidden" id="label_status" name="label_status" value="1"> --}}
-
-                                    <a href="/cart/details" class="btn btn-primary w-100 mt-2">Sell my device</a>
-
-                                    @if($cart->count() < 2)
-                                        <a class="btn btn-purple w-100 mt-2 sell-more-devices-ordersummary" href="/sell" class="btn btn-purple">More devices to sell?</a>
-                                    @endif
-                
-                                {{-- </form> --}}
-                
-                                <script>
-                                    function changelabelstatus(value){
-                                        document.getElementById('label_status').value = value.value;
-                                    }
-                                </script>
-
-                            </div>
-
-                            @endif
-
+                            
                         </div>
 
                     </div>
 
-                @else
+                    <div class="d-flex flex-column w-25 pb-3 ml-2">
+                        <div class="order-summary-cart flex-column">
+                            <p class="order-summary-bold w-100">Order Summary</p>
 
-                    @include('partial.sellsearch', ['title' => 'More devices to sell', 'info' => 'Use the search bar below to find your specific device'])
+                            @if($hasTradeOut)
+                            <p style="display: flex; align-items: center;">Price to pay: £{{$fullprice}}</p>
+                            @endif
+                            
+                            @if($hasTradeIn)
+                                <div class="summary-cart">
+                                    <p class="summary-cart-text">Subtotal</p>
+                                    <p class="summary-cart-text">£{{$sellPrice}}</p>
+                                </div>
+                                <div class="summary-cart">
+                                    <p class="summary-cart-text-bold">TOTAL</p>
+                                    <p class="summary-cart-text-bold">£{{$sellPrice}}</p>
+                                </div>
+                                {{-- <select class="form-control my-3" onchange="changelabelstatus(this)">
+                                    <option value="1" selected>Make an order without printing label</option>
+                                    <option value="2">Print and send trade label yourself</option>
+                                </select> --}}
+                            @endif   
+                        </div>
 
-                @endif
+                        @if($hasTradeIn)
+                        <div class="form-container">
+
+                            <form action="/cart/sell" method="POST">
+                                @csrf
+                    
+                                <input type="hidden" id="label_status" name="label_status" value="1">
+
+                                <button type="submit" id="submit-sell" disabled class="btn btn-orange w-100 mt-2">Sell my device</button>
+            
+                            </form>
+            
+                            <script>
+                                function changelabelstatus(value){
+                                    document.getElementById('label_status').value = value.value;
+                                }
+                            </script>
+
+                        </div>
+
+                        @endif
+
+                    </div>
+
+                </div>
+
+                
 
             @if(session('showLogin') || $errors->all())
                 <script>
@@ -417,6 +316,30 @@
         <footer>@include('customer.layouts.footer', ['showGetstarted' => false])</footer>    
     </body>
     <script>
+
+        function selectType(type){
+            let owndiv = document.getElementById('own-print-selected');
+            let owntick = document.getElementById('own-print-selected-tick');
+            let bamboodiv = document.getElementById('bamboo-print-selected');
+            let bambootick = document.getElementById('bamboo-print-selected-tick');
+            let ordertype = document.getElementById('label_status');
+
+            if(type === 'own'){
+                owndiv.classList.add('selected');
+                bamboodiv.classList.remove('selected');
+                owntick.src = '/customer_page_images/body/orange_selected.svg';
+                bambootick.src = '/customer_page_images/body/orange_deselected.svg';
+                ordertype.value = 2;
+            }
+            if(type === 'bamboo'){
+                bamboodiv.classList.add('selected');
+                owndiv.classList.remove('selected');
+                owntick.src = '/customer_page_images/body/orange_deselected.svg';
+                bambootick.src = '/customer_page_images/body/orange_selected.svg';
+                ordertype.value = 1;
+            }
+            document.getElementById('submit-sell').disabled = false;
+        }
 
         var rand = Math.floor(10000000 + Math.random() * 900000);
         document.getElementById('order_code').value = rand;

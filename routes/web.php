@@ -92,6 +92,7 @@ Route::get('/sell/getdevicebybrand/{brand_id}/{category_id}', 'Customer\SellCont
 
 Route::post('/sell/shop/item/addtocart','Customer\SellController@addSellItemToCart');
 
+Route::get('/cart/details', 'Customer\CustomerController@showCartDetails');
 Route::post('/cart/sell', 'Customer\SellController@sellItems');
 Route::post('/cart/buy', 'Customer\SellController@buyItems');
 
