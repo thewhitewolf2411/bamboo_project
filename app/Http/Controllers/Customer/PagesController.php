@@ -9,8 +9,10 @@ use Auth;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Order;
 use App\Eloquent\BuyingProduct;
+use App\Eloquent\Message;
 use App\Eloquent\SellingProduct;
 use App\Services\KlaviyoEmail;
+use Illuminate\Support\Facades\Mail;
 
 class PagesController extends Controller
 {
@@ -50,12 +52,49 @@ class PagesController extends Controller
         $sellingProducts = SellingProduct::all();
 
         $products = $buyingProducts->merge($sellingProducts);
-        return view('welcome')->with('products', $products);
+        return view('customer.home')->with('products', $products);
     }
 
-    public function showProfile(){
-        
+    public function showHowitWorksPage(){
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
+        return view('customer.how')->with('products', $products);
     }
+
+    public function showAboutPage(){
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
+        return view('customer.about')->with('products', $products);
+    }
+
+    public function showSupportAndServicePage(){
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
+        return view('customer.support')->with('products', $products);
+    }
+
+    public function showSellingSupportPage(){
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
+        return view('customer.supportselling')->with('products', $products);
+    }
+
+    public function showContactPage(){
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
+        return view('customer.contact')->with('products', $products);
+    }
+
 
     public function admin(){
         if(Auth::User() || Auth::User()->type_of_user == 2 || Auth::User()->type_of_user == 3){
@@ -160,6 +199,26 @@ class PagesController extends Controller
 
             return redirect()->back();
         }
+    }
+
+    public function sendMessage(Request $request){
+        $firstName = $request->firstname;
+        $lastname = $request->lastname;
+        $email = $request->emailadress;
+        $telephone = $request->telephone;
+        $ordernumber = $request->ordernumber;
+        $message = $request->yourmessage;
+
+        $newMessage = Message::create([
+            'first_name'=>$firstName,
+            'last_name'=>$lastname,
+            'email'=>$email,
+            'telephone'=>$telephone,
+            'order_number'=>$ordernumber,
+            'message'=>$message
+        ]);
+
+        return redirect()->back()->with(['message_success'=>'Your message has been sent.']);
     }
 
 }

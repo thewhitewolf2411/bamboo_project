@@ -184,7 +184,7 @@
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="no_power">No Power</label>
-                                <input type="checkbox" class="single-checkbox" name="no_power" id="no_power" value="true">
+                                <input type="checkbox" onchange="testingElementChanged()" class="single-checkbox" name="no_power" id="no_power" value="true">
                                 </div>
                                 <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
                                 <label for="fake_missing_parts">Fake or missing parts</label>

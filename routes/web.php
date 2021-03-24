@@ -20,10 +20,17 @@ Route::get('/login', '\App\Http\Controllers\Auth\LoginController@login')->name('
 
 //User get Route
 Route::get('/', 'Customer\PagesController@index')->name('index');
-Route::get('/setpage/{parameter}', [
+Route::get('/how', 'Customer\PagesController@showHowitWorksPage');
+Route::get('/about', 'Customer\PagesController@showAboutPage');
+Route::get('/support', 'Customer\PagesController@showSupportAndServicePage');
+Route::get('/support/selling', 'Customer\PagesController@showSellingSupportPage');
+Route::get('/contact', 'Customer\PagesController@showContactPage');
+/*Route::get('/setpage/{parameter}', [
     'as'=>'setpage',
     'uses'=>'Customer\CustomerController@setPage'
-]);
+]);*/
+
+Route::post('/sendMessage', 'Customer\PagesController@sendMessage');
 
 //Route::get('/password/reset', 'PagesController@showPaswordResetPage')->name('password.request');
 
@@ -147,6 +154,8 @@ Route::get('/portal/customer-care/seller/delete/{id}', 'Portal\CustomerCareContr
 Route::get('/portal/customer-care/createorder', 'Portal\CustomerCareController@createOrder');
 Route::get('/portal/customer-care/trade-pack/markforreprint/{id}', 'Portal\CustomerCareController@markForReprint');
 Route::get('/portal/customer-care/order-managment/{search?}', 'Portal\CustomerCareController@showOrderManagment');
+Route::get('/portal/customer-care/messages', 'Portal\CustomerCareController@showMessagesPage');
+Route::get('/portal/customer-care/seemessage', 'Portal\CustomerCareController@showMessageContent');
 Route::post('/portal/customer-care/printdevicelabel', 'Portal\CustomerCareController@printDeviceLabel');
 Route::post('/portal/customer-care/sendtodespatch', 'Portal\CustomerCareController@sendToDespatch')->name('sendToDespatch');
 

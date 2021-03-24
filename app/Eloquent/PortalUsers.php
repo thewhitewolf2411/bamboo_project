@@ -35,6 +35,7 @@ class PortalUsers extends Model
             'order_management',
             'create_order',
             'customer_accounts',
+            'messages',
         'administration',
             'salvage_models',
             'sales_models',

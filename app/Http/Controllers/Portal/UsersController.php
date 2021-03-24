@@ -138,6 +138,9 @@ class UsersController extends Controller
         if($request->customer_accounts == "on"){
             $portalUser->customer_accounts = true;
         }
+        if($request->messages == "on"){
+            $portalUser->messages = true;
+        }
         if($request->administration == "on"){
             $portalUser->administration = true;
         }

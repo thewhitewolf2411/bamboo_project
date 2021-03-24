@@ -20,7 +20,7 @@ require('./scripts/BoxManagement');
 //require('./scripts/SearchTable');
 require('./scripts/Settings');
 require('./scripts/SalesLotDespatch');
-
+require('./scripts/Messages');
 
 "use strict";
 

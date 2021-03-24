@@ -350,7 +350,7 @@
                     </div>
             
                     <div class="home-links-element">
-                        <a href="#">
+                        <a href="/support">
                             <div class="home-link-container" id="service">
                                 <p>Service & Support</p>
                                 <img src="{{asset('/customer_page_images/body/home-link-images/home-links-2.svg')}}">
@@ -359,7 +359,7 @@
                     </div>
             
                     <div class="home-links-element">
-                        <a href="#">
+                        <a href="/contact">
                             <div class="home-link-container" id="contact">
                                 <p>Contact us</p>
                                 <img src="{{asset('/customer_page_images/body/home-link-images/home-links-3.svg')}}">

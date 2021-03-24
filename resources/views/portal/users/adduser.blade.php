@@ -130,6 +130,10 @@
                                     <input type="checkbox" class="form-check-input" name="customer_accounts" id="customer_accounts" @if(isset($userdata) && $thisportalUser->customer_accounts) checked @endif>
                                     <label class="form-check-label" for="customer_accounts">Customer Accounts</label>
                                 </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="messages" id="messages" @if(isset($userdata) && $thisportalUser->messages) checked @endif>
+                                    <label class="form-check-label" for="messages">Messages</label>
+                                </div>
                             </div>
 
                             <div class="form-group p20 w-25">

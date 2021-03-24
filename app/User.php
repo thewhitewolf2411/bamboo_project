@@ -10,6 +10,10 @@ use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Crypt;
+use App\Notification\CustomPasswordReset;
+use Illuminate\Support\Facades\Request;
+use Klaviyo\Klaviyo as Klaviyo;
+use Klaviyo\Model\EventModel as KlaviyoEvent;
 
 class User extends Authenticatable
 {
@@ -154,5 +158,31 @@ class User extends Authenticatable
     public function getBirthYear(){
         $exploded = explode('.', $this->birth_date);
         return $exploded[2];
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $url = '/password/reset/'. $token;
+        #dd($_SERVER['SERVER_NAME'] . $url);
+
+        $client = new Klaviyo( 'pk_2e5bcbccdd80e1f439913ffa3da9932778', 'UGFHr6' );
+        $event = new KlaviyoEvent(
+
+            array(
+                'event'=>'Reset Password',
+                'customer_properties'=>array(
+                  '$email'=>$_REQUEST['email'],
+                  '$PasswordResetLink'=>$_SERVER['SERVER_NAME'] . $url,
+                ),
+                'properties'=>array(
+                  '$event_id'=>'1234',
+                  '$PasswordResetLink'=>$_SERVER['SERVER_NAME'] . $url,
+                ),
+                'time'=>\Carbon\Carbon::now()
+            )
+        );
+
+        $client->publicAPI->track($event);
+
     }
 }

@@ -1,3 +1,7 @@
+@extends('customer.layouts.layout')
+
+@section('content')
+
 <div class="app">
 
     <div class="contact-page contact-title-container">
@@ -68,24 +72,24 @@
                 <div class="row w-100">
                     <div class="form-group col-md-6">
                         <label for="firstname">First Name*</label>
-                        <input id="firstname" name="firstname" type="text" class="form-control" required>
+                        <input id="firstname" name="firstname" type="text" class="form-control" @if(Auth::user()) value="{{Auth::user()->first_name}}" @endif required>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label for="lastname">Last Name*</label>
-                        <input id="lastname" name="lastname" type="text" class="form-control" required>
+                        <input id="lastname" name="lastname" type="text" class="form-control"  @if(Auth::user()) value="{{Auth::user()->last_name}}" @endif required>
                     </div>
                 </div>
 
                 <div class="row w-100">
                     <div class="form-group col-md-6">
                         <label for="emailadress">Email address*</label>
-                        <input id="emailadress" name="emailadress" type="email" class="form-control" required>
+                        <input id="emailadress" name="emailadress" type="email" class="form-control"  @if(Auth::user()) value="{{Auth::user()->email}}" @endif required>
                     </div>
 
                     <div class="form-group col-md-6">
                         <label for="telephone">Telephone</label>
-                        <input id="telephone" name="telephone" type="number" class="form-control">
+                        <input id="telephone" name="telephone" type="number" class="form-control"  @if(Auth::user()) value="{{Auth::user()->contact_number}}" @endif>
                     </div>
                 </div>
 
@@ -172,18 +176,21 @@
         </div>
     </div>
 
-    <div class="contact-footer">
-        <div class="contact-footer-image">
-            <img src="{{asset('/customer_page_images/body/Icon-Trust.svg')}}">
+    <a href="/support">
+        <div class="contact-footer">
+            
+            <div class="contact-footer-image">
+                <img src="{{asset('/customer_page_images/body/Icon-Trust.svg')}}">
+            </div>
+            <div class="contact-footer-text">
+                <p class="service-header-1" >Service & Support</p>
+                <p class="service-header-2">A lot of our queries can be found within our Service & Support section</p>
+            </div>
+            <div class="contact-footer-arrow">
+                <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+            </div>
         </div>
-        <div class="contact-footer-text">
-            <p class="service-header-1" >Service & Support</p>
-            <p class="service-header-2">A lot of our queries can be found within our Service & Support section</p>
-        </div>
-        <div class="contact-footer-arrow">
-            <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-        </div>
-    </div>
+    </a>
 
 </div>
 
@@ -220,3 +227,15 @@
     }
 
 </script>
+
+@if(Session::has('message_success'))
+
+<script>
+
+    alert('Your message has been sent.');
+
+</script>
+
+@endif
+
+@endsection

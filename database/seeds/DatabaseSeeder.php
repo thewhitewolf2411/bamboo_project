@@ -74,6 +74,7 @@ class DatabaseSeeder extends Seeder
             'order_management'=>true,
             'create_order'=>true,
             'customer_accounts'=>true,
+            'messages'=>true,
             'administration'=>true,
             'salvage_models'=>true,
             'sales_models'=>true,

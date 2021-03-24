@@ -1,3 +1,7 @@
+@extends('customer.layouts.layout')
+
+@section('content')
+
 <div class="app">
     <div class="how-page how-title-container">
         <div class="center-title-container">
@@ -20,7 +24,7 @@ Watch our quick video that explains how our meticulous grading system works. We 
             <div class="p-5 d-flex flex-wrap flex-column justify-content-between align-items-center mx-auto">
                 <div class="grading-video-container">
                     <video id="howvideoid" width="100%" controls>
-                        <source src="{{ asset('/video/Bamboo How To With Boo v1.mp4') }}" type="video/mp4">
+                        <source src="{{ asset('/video/Bamboo Selling v4.mp4') }}" type="video/mp4">
                         Your browser does not support HTML video.
                     </video>
                 </div>
@@ -112,7 +116,7 @@ Watch our quick video that explains how our meticulous grading system works. We 
             </div>
 
             <div class="url-footer-container mb-5" id="start-selling">
-                <a href="#">Start Selling</a>
+                <a href="/sell">Start Selling</a>
             </div>
 
         </div>
@@ -155,7 +159,7 @@ Watch our quick video that explains how our meticulous grading system works. We 
         </div>
 
         <div class="home-links-element">
-            <a href="#">
+            <a href="/support">
                 <div class="home-link-container" id="service">
                     <p>Service & Support</p>
                     <img src="{{asset('/customer_page_images/body/home-link-images/home-links-2.svg')}}">
@@ -164,7 +168,7 @@ Watch our quick video that explains how our meticulous grading system works. We 
         </div>
 
         <div class="home-links-element">
-            <a href="#">
+            <a href="/contact">
                 <div class="home-link-container" id="contact">
                     <p>Contact us</p>
                     <img src="{{asset('/customer_page_images/body/home-link-images/home-links-3.svg')}}">
@@ -265,3 +269,4 @@ Watch our quick video that explains how our meticulous grading system works. We 
 
 </div>
 
+@endsection

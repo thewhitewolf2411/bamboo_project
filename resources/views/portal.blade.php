@@ -205,6 +205,16 @@
                 </a>
 
                 @endif
+
+                @if($portalUser->messages)
+
+                <a href="/portal/customer-care/messages" class="col-2 my-2">
+                    <div class="portal-content-element">
+                        <p>Messages </p>
+                    </div>
+                </a>
+
+                @endif
             </div>
 
         </div>

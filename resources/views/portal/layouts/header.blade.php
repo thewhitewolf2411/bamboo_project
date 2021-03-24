@@ -51,6 +51,7 @@
                     @if($portalUser->trade_pack_despatch)<a class="dropdown-item" href="/portal/customer-care/order-managment">Order Management</a>@endif
                     @if($portalUser->order_management)<a class="dropdown-item" href="/portal/customer-care/createorder">Create Order</a>@endif
                     @if($portalUser->create_order)<a class="dropdown-item" href="/portal/customer-care/seller">Customer Accounts</a>@endif
+                    @if($portalUser->messages)<a class="dropdown-item" href="/portal/customer-care/messages">Messages</a>@endif
                 </div>
             </div>
             @endif

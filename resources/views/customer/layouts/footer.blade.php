@@ -35,22 +35,22 @@
     <div class="footer-row" id="footer-row-2">
         <div class="footer-row-6">
             <span>ABOUT US</span>
-            <a href="/setpage/about">About Bamboo</a>
+            <a href="/about">About Bamboo</a>
         </div>
         <div class="footer-row-6">
             <span>HOW IT WORKS</span>
             {{-- <a href="/setpage/how">Shopping</a> --}}
-            <a href="/setpage/how">Selling</a>
+            <a href="/how">Selling</a>
         </div>
         <div class="footer-row-6">
             <span>SERVICE & SUPPORT</span>
             {{-- <a href="/setpage/support">Buying a device</a> --}}
-            <a href="/setpage/support">Selling a device</a>
-            <a href="/setpage/support">Tech</a>
-            <a href="/setpage/support">Delivery</a>
-            <a href="/setpage/support">Your Order</a>
-            <a href="/setpage/support">Your Account</a>
-            <a href="/setpage/support">General Questions</a>
+            <a href="/support">Selling a device</a>
+            <a href="/support">Tech</a>
+            <a href="/support">Delivery</a>
+            <a href="/support">Your Order</a>
+            <a href="/support">Your Account</a>
+            <a href="/support">General Questions</a>
         </div>
         <div class="footer-row-6">
             <span>RESPONSIBILITIES</span>
@@ -59,8 +59,8 @@
         </div>
         <div class="footer-row-6">
             <span>NEWS & BLOG</span>
-            <a href="/setpage/news">News</a>
-            <a href="/setpage/news">Blog</a>
+            <a href="/news">News</a>
+            <a href="/news">Blog</a>
         </div>
         <div class="footer-row-6">
             <span>LEGAL</span>

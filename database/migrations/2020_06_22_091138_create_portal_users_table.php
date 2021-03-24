@@ -36,6 +36,7 @@ class CreatePortalUsersTable extends Migration
             $table->boolean('order_management')->default(false);
             $table->boolean('create_order')->default(false);
             $table->boolean('customer_accounts')->default(false);
+            $table->boolean('messages')->default(false);
             $table->boolean('administration')->default(false);
             $table->boolean('salvage_models')->default(false);
             $table->boolean('sales_models')->default(false);

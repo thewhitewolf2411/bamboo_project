@@ -1,3 +1,7 @@
+@extends('customer.layouts.layout')
+
+@section('content')
+
 <div class="app">
     <div class="how-page support-title-container">
         <div class="center-title-container">
@@ -31,7 +35,7 @@
                     <p>Buying a device</p>
                 </div>
             </a> --}}
-            <a href="">
+            <a href="/support/selling">
                 <div class="btn btn-primary btn-orange btn-font-white">
                     <p>Selling a device</p>
                 </div>
@@ -184,6 +188,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
+
+@endsection

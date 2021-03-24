@@ -59,3 +59,16 @@ function changename(){
 
 
 }
+
+function showAnswer(id){
+
+    $('.answer').each(function(){
+        $(this).hide();
+    });
+
+    $('#question-' + id).show();
+
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $('#question-' + id).offset().top
+    }, 2000);
+}

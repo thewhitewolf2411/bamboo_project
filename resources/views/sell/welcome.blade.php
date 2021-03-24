@@ -162,9 +162,9 @@
                         <div class="center-title-container">
                             <p>About bamboo</p>
                         </div>
-                        <p class="about-bamboo-text">Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent non est id leo viverra porttitor. Vivamus iaculis nisl non hend.</p>
+                        <p class="about-bamboo-text">Hello and welcome to Bamboo Mobile – aka ‘Boo’. In a nutshell, Bamboo Mobile offers a smart way for you to Shop and sell mobile phones and/or devices. With the help of Bamboo Mobile, you can trade in and trade up your mobile, quickly, safely, and simply – not to mention for a great price!</p>
                         <div class="grading-show-more-container">
-                            <a href="#"><div class="grading-show-more-btn">
+                            <a href="/about"><div class="grading-show-more-btn">
                                 <p>Read More</p>
                             </div></a>
                         </div>    
@@ -193,7 +193,7 @@
                         </div>
                         <p class="about-bamboo-text">Sustainability is at the heart of Bamboo Mobile and everything we do. Like our parent company, Bamboo Distribution, the protection of the environment is central to our ethics and business strategy. </p>
                         <div class="grading-show-more-container">
-                            <a href="#"><div class="grading-show-more-btn">
+                            <a href="/about"><div class="grading-show-more-btn">
                                 <p>Read More</p>
                             </div></a>
                         </div>   
@@ -226,7 +226,7 @@
                 </div>
         
                 <div class="home-links-element">
-                    <a href="#">
+                    <a href="/support">
                         <div class="home-link-container" id="service">
                             <p>Service & Support</p>
                             <img src="{{asset('/customer_page_images/body/home-link-images/home-links-2.svg')}}">
@@ -235,7 +235,7 @@
                 </div>
         
                 <div class="home-links-element">
-                    <a href="#">
+                    <a href="/contact">
                         <div class="home-link-container" id="contact">
                             <p>Contact us</p>
                             <img src="{{asset('/customer_page_images/body/home-link-images/home-links-3.svg')}}">

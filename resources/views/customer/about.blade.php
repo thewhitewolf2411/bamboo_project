@@ -1,3 +1,7 @@
+@extends('customer.layouts.layout')
+
+@section('content')
+
 <div class="app">
 
     <div class="about-page about-title-container">
@@ -152,3 +156,5 @@
     </div>
 
 </div>
+
+@endsection

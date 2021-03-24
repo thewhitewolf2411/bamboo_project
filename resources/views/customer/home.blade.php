@@ -1,3 +1,7 @@
+@extends('customer.layouts.layout')
+
+@section('content')
+
 <div class="app">
 
     <div class="home-element home-title-container">
@@ -27,61 +31,10 @@
         </div>
 
         <div class="how-buttons-container">
-            {{-- <div class="how-button-container active" id="shopping-btn" onclick="changeHowState('shopping')">
-                <p>Shopping</p>
-            </div> --}}
             <div class="how-button-container active" id="selling-btn" onclick="changeHowState('selling')">
                 <p>Selling</p>
             </div>
         </div>
-
-        {{-- <div class="shopping-content-container">
-
-            <div class="how-first-text-container">
-                <div class="how-text-element">
-                    <div class="how-text-title-container">
-                        <p>1. YOU SEARCH FOR A NEW DEVICE</p>
-                    </div>
-                    <div class="how-text-container">
-                        <p>Simply select your new device or accessory that is the Right Device, Right Price, Right Quality. Rest assured with Boo Approved products!</p>
-                    </div>
-                </div>
-                <div class="how-text-element">
-                    <div class="how-text-title-container">
-                        <p>3. YOU HAVE A SHINY NEW DEVICE</p>
-                    </div>
-                    <div class="how-text-container">
-                        <p>Enjoy your new device with a 12 month warranty</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="how-images-container">
-                <div class="back-line-container"></div>
-                <div class="how-image-container">
-                    <img src="{{asset('/customer_page_images/body/How-Icon-1.svg')}}">
-                </div>
-                <div class="how-image-container">
-                    <img src="{{asset('/customer_page_images/body/How-Icon-2.svg')}}">
-                </div>
-                <div class="how-image-container">
-                    <img src="{{asset('/customer_page_images/body/How-Icon-3.svg')}}">
-                </div>
-                <div class="url-footer-container" id="start-shopping">
-                    <a href="/shop">Start Shopping</a>
-                </div>
-            </div>
-
-            <div class="how-second-text-container">
-                <div class="how-text-title-container">
-                    <p>2. FREE NEXT DAY DELIVERY</p>
-                </div>
-                <div class="how-text-container">
-                    <p>Contact less delivery straight to your door.</p>
-                </div>
-            </div>
-
-        </div> --}}
 
         <div class="selling-content-container active">
             <div class="how-second-text-container">
@@ -298,7 +251,7 @@
                     A professional work ethic and dedicated management team with over 50 years combined experience in the mobile industry, has seen the company become an established entity and trusted partner in the marketplace.<br>
                     Working with High Street Retailers, Authorised Distributors and Repairers, Insurance Companies, Independent Retails and Exporters, Bamboo assist their key partners and add value throughout the supply chain, delivering product solutions to individuals and companies.</p>
                 <div class="grading-show-more-container">
-                    <a href="/setpage/about"><div class="grading-show-more-btn">
+                    <a href="/about"><div class="grading-show-more-btn">
                         <p>Read More</p>
                     </div></a>
                 </div>    
@@ -333,7 +286,7 @@
                 Oh, we almost forgot… your stunning new device will come with a 12-month warranty – you can’t say fairer than that! 
                 </p>
                 <div class="grading-show-more-container">
-                    <a href="/setpage/about"><div class="grading-show-more-btn">
+                    <a href="/about"><div class="grading-show-more-btn">
                         <p>Read More</p>
                     </div></a>
                 </div>   
@@ -344,7 +297,7 @@
     <div class="home-element home-links-container">
         
         <div class="home-links-element">
-            <a href="/setpage/news">
+            <a href="/news">
                 <div class="home-link-container" id="news">
                     <p>News & Blog</p>
                     <img src="{{asset('/customer_page_images/body/home-link-images/home-links-1.svg')}}">
@@ -353,7 +306,7 @@
         </div>
 
         <div class="home-links-element">
-            <a href="/setpage/support">
+            <a href="/support">
                 <div class="home-link-container" id="service">
                     <p>Service & Support</p>
                     <img src="{{asset('/customer_page_images/body/home-link-images/home-links-2.svg')}}">
@@ -362,7 +315,7 @@
         </div>
 
         <div class="home-links-element">
-            <a href="/setpage/contact">
+            <a href="/contact">
                 <div class="home-link-container" id="contact">
                     <p>Contact us</p>
                     <img src="{{asset('/customer_page_images/body/home-link-images/home-links-3.svg')}}">
@@ -431,3 +384,5 @@
         }
     </script>
 </div>
+
+@endsection

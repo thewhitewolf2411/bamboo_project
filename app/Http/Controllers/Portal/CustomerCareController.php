@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Portal;
 
 use App\Audits\TradeinAudit;
 use App\Audits\TradeinAuditNote;
+use App\Eloquent\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Eloquent\PortalUsers;
@@ -554,6 +555,24 @@ class CustomerCareController extends Controller
         }
 
         return view('portal.customer-care.order-management')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Order Management')->with('search', $request->search);
+    }
+
+    public function showMessagesPage(){
+        $messages = Message::all();
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        return view('portal.customer-care.messages', ['messages'=>$messages, 'portalUser'=>$portalUser]);
+    }
+
+    public function showMessageContent(Request $request){
+        #dd($request->all());
+
+        $message = Message::find($request->messageid);
+        $message->seen = true;
+        $message->save();
+
+        return response(['from_name'=>$message->first_name . " " . $message->last_name, 'from_email'=>$message->email, 'message'=>$message->message], 200);
     }
 
     /**
