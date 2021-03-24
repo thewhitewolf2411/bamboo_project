@@ -372,6 +372,7 @@ route::post('/portal/settings/clients/delete', 'Portal\SettingsController@delete
 
 //cms
 Route::get('/portal/cms', 'Portal\CmsController@showCmsPage');
+Route::post('/portal/cms/addItem', 'Portal\CmsController@addItem');
 
 //Trays
 Route::get('/portal/trays', 'Portal\TraysController@showTraysPage');

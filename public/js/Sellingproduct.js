@@ -14,6 +14,6 @@ function cancelNewMemoryPoint(){
     }
 }
 
-function addNewMemoryPoint(){
-    
+function addNewNetwork(){
+    alert("radi");
 }

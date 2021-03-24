@@ -220,8 +220,8 @@ class CustomerCareController extends Controller
             array_push($tradeins, $tradein);
         }
 
-        if(count($tradeins)>50){
-            return \redirect()->back()->with('error', 'You can\'t print more than 50 tradeins in one go.');
+        if(count($tradeins)>30){
+            return \redirect()->back()->with('error', 'You can\'t print more than 30 tradeins in one go.');
         }
 
         foreach($barcodes as $barcode){
@@ -239,7 +239,7 @@ class CustomerCareController extends Controller
 
         $labels = array();
 
-        ini_set('max_execution_time', 120);
+        ini_set('max_execution_time', 180);
 
         foreach($tradeins as $tradein){
 
