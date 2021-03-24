@@ -7,6 +7,22 @@ memoryValue = null;
 
 HAS_NETWORKS = true;
 
+document.addEventListener("DOMContentLoaded", function(e) {
+    let memory_available = document.getElementsByClassName('device-memory');
+    if(memory_available.length === 1){
+        // preselect it
+        memory_available[0].childNodes[0].click();
+    }
+
+    let network_available = document.getElementsByClassName('device-network');
+    if(network_available.length === 1){
+        // preselect it
+        network_available[0].click();
+    }
+});
+
+
+
 function networkChanged(element){
 
     var label = $("label[for='" + $(element).attr('id') + "']");
@@ -21,6 +37,8 @@ function networkChanged(element){
     network = element.value;
 
     networkName = label.attr("id");
+    
+    $('#selected-network').html(networkName);
 
     getPrice();
 
@@ -40,6 +58,7 @@ function gradeChanged(element, no_networks = false){
     label.removeClass('elem-grade-container-deselected');
 
     grade = element.value;
+    $('#selected-grade').html($('#grade-'+grade+'-text').html());
 
     getPrice();
 }
@@ -57,10 +76,14 @@ function memoryChanged(element){
     basePrices = JSON.parse(element.value);
     memoryValue = label.attr("id");
 
+    $('#selected-gb').html(memoryValue);
+
     getPrice();
 }
 
 function getPrice(){
+
+    // handle negative val samsung galaxy a10 test feed 02 32gb faulty
 
     var basePrice = 0;
     
@@ -72,7 +95,7 @@ function getPrice(){
     
             $('#product-price').text('£' + basePrice);
     
-            console.log(grade);
+            //console.log(grade);
     
             if(grade == 1){
                 $('#grade').val('Excellent Working');
@@ -103,6 +126,7 @@ function getPrice(){
         if(basePrices != null && grade != null && network != null){
         
             basePrice = Object.values(basePrices)[grade-1] - network;
+            basePrice = Math.round((basePrice + Number.EPSILON) * 100) / 100
     
             $('#product-price').text('£' + basePrice);
     
