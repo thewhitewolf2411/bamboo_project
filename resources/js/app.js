@@ -21,6 +21,7 @@ require('./scripts/BoxManagement');
 require('./scripts/Settings');
 require('./scripts/SalesLotDespatch');
 require('./scripts/Messages');
+require('./scripts/Blogs');
 
 "use strict";
 

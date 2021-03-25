@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use Auth;
 use App\Eloquent\PortalUsers;
+use App\Eloquent\Blog;
 use App\Eloquent\Order;
 use App\Eloquent\BuyingProduct;
 use App\Eloquent\Message;
@@ -69,6 +70,28 @@ class PagesController extends Controller
 
         $products = $buyingProducts->merge($sellingProducts);
         return view('customer.about')->with('products', $products);
+    }
+
+    public function showNewsPage(){
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
+
+        $blogs = Blog::all()->sortByDesc('id');
+
+        return view('customer.news', ['products'=>$products, 'blogs'=>$blogs]);
+    }
+
+    public function showSingleNews($id){
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+
+        $products = $buyingProducts->merge($sellingProducts);
+
+        $blog = Blog::where('id', $id)->first();
+
+        return view('customer.news', ['products'=>$products, 'blog'=>$blog]);
     }
 
     public function showSupportAndServicePage(){

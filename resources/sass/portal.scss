@@ -673,3 +673,11 @@ input[type=number] {
     content: "*";
     color: red;
 }
+
+#blogModal>.modal-dialog{
+    max-width: 1200px;
+}
+
+.cms-blog{
+    cursor: pointer;
+}

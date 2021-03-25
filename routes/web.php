@@ -22,6 +22,8 @@ Route::get('/login', '\App\Http\Controllers\Auth\LoginController@login')->name('
 Route::get('/', 'Customer\PagesController@index')->name('index');
 Route::get('/how', 'Customer\PagesController@showHowitWorksPage');
 Route::get('/about', 'Customer\PagesController@showAboutPage');
+Route::get('/news', 'Customer\PagesController@showNewsPage');
+Route::get('/news/{id}', 'Customer\PagesController@showSingleNews');
 Route::get('/support', 'Customer\PagesController@showSupportAndServicePage');
 Route::get('/support/selling', 'Customer\PagesController@showSellingSupportPage');
 Route::get('/contact', 'Customer\PagesController@showContactPage');
@@ -372,7 +374,13 @@ route::post('/portal/settings/clients/delete', 'Portal\SettingsController@delete
 
 //cms
 Route::get('/portal/cms', 'Portal\CmsController@showCmsPage');
-Route::post('/portal/cms/addItem', 'Portal\CmsController@addItem');
+Route::get('/portal/addcms', 'Portal\CmsController@showAddCmsPage');
+Route::get('/portal/view', 'Portal\CmsController@showViewCmsPage');
+Route::get('/portal/edit/{id}', 'Portal\CmsController@showEditCmsPage');
+Route::post('/portal/addcmspost', 'Portal\CmsController@addItem');
+Route::post('/portal/editcmspost', 'Portal\CmsController@editCmsPost');
+Route::get('/portal/getblogcontent', 'Portal\CmsController@getBlogContent');
+Route::post('/portal/cms/delete', 'Portal\CmsController@deleteBlog');
 
 //Trays
 Route::get('/portal/trays', 'Portal\TraysController@showTraysPage');
