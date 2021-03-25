@@ -83,23 +83,23 @@
                 @if(isset($cart) && count($cart)>0)
 
                     @if($cart->count() < 2)
-                        @include('partial.sellsearch', ['title' => 'More devices to sell', 'info' => 'Use the search bar below to find your specific device'])
+                        @include('partial.sellsearch', ['title' => 'More devices to sell?', 'info' => 'Use the search bar below to find your specific device'])
                     @endif
 
-                    <div class="d-flex p-5">
+                    <div class="d-flex p-5 basket-details-container">
 
-                        <div class="d-flex flex-column w-75">
+                        <div class="d-flex flex-column w-75 basket-device-details">
 
-                            @if($hasTradeOut)
+                            {{-- @if($hasTradeOut)
                                 <div class="left-title-container">
                                     <img src="{{asset('/shop_images/Icon-Shop.svg')}}">
                                     <p class="mx-3 mt-3">Basket</p>
                                 </div>
-                            @endif
+                            @endif --}}
 
                             {{-- <div class="d-flex flex-column w-100"> --}}
 
-                                @foreach($cart as $key=>$cartitem)
+                                {{-- @foreach($cart as $key=>$cartitem)
                                     @if($cartitem->type === 'tradeout')
                                         <div class="cart-product row justify-content-between mt-3">
                                             <div class="cart-product-image w-25">
@@ -135,7 +135,7 @@
                                             </a>
                                         </div>
                                     @endif
-                                @endforeach
+                                @endforeach --}}
 
                             {{-- </div> --}}
 
@@ -155,17 +155,21 @@
                                         {{-- <div class="cart-product-image w-25">
                                             <img src="{{asset('/storage/product_images').'/' . $cartitem->getProductImage($cartitem->id)}}" width="80%">
                                         </div> --}}
-                                        <div class="d-flex flex-column w-25">
+                                        <div class="d-flex flex-column w-25 cart-product-single-column">
                                             <h6 class="m-0 mb-3 cart-text-bold">{{$cartitem->getProductName($cartitem->id)}}</h6>
                                             <p class="m-0">Network: {{$cartitem->network}}</p>
                                             <p class="m-0">Memory: {{$cartitem->memory}}</p>
                                             <p class="m-0">Grade: {{$cartitem->grade}}</p>
                                         </div>
-                                        <div class="d-flex flex-column w-25">
+                                        <div class="d-flex flex-column w-25 cart-product-single-column">
                                             <h6 class="m-0 mb-3 cart-text-bold">Item price</h6>
                                             <p class="m-0">Offered Price: £{{$cartitem->price}}</p>
                                         </div>
-                                        <div class="d-flex flex-column w-25">
+                                        <div class="d-flex flex-column w-25 cart-product-single-column">
+                                            <h6 class="m-0 mb-3 cart-text-bold">Quantity</h6>
+                                            <p class="m-0 cart-text-bold">1</p>
+                                        </div>
+                                        <div class="d-flex flex-column w-25 cart-product-single-column">
                                             <h6 class="m-0 mb-3 cart-text-bold">Total Price</h6>
                                             <p class="m-0 font-weight-bold">Total Price: £{{$cartitem->price}}</p>
                                         </div>
@@ -175,10 +179,10 @@
                                         <div class="w-25"></div>
                                         <a href="/removefromcart/{{$key}}" class="w-25 m-0">
                                             <div class="">
-                                                <p class="m-0 ml-5 pl-2 text-center">REMOVE</p>
+                                                <p class="m-0 pl-2">REMOVE</p>
                                             </div>
                                         </a>
-                                        <div class="w-25"></div>
+                                        <div class="w-25 remove-from-cart-tohide"></div>
                                         <div class="w-25"></div>
                                     </div>
 
@@ -190,7 +194,7 @@
 
                         </div>
 
-                        <div class="d-flex flex-column w-25 p-3">
+                        <div class="d-flex flex-column w-25 p-3 basket-summary">
                             <div class="order-summary-cart flex-column">
                                 <p class="order-summary-bold w-100">Order Summary</p>
 
@@ -265,8 +269,8 @@
                     </div>
 
                 @else
-
-                    @include('partial.sellsearch', ['title' => 'More devices to sell', 'info' => 'Use the search bar below to find your specific device'])
+                    <h4 class="text-center">No devices in basket.</h4>
+                    @include('partial.sellsearch', ['title' => 'More devices to sell?', 'info' => 'Use the search bar below to find your specific device'])
 
                 @endif
 

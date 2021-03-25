@@ -63,7 +63,6 @@ class SellController extends Controller
 
 
     public function showSellShop(Request $request, $parameter, $resultstype){
-
         $onlyTopResults = false;
         if($resultstype === 'topresults'){
             $onlyTopResults = true;
@@ -400,7 +399,11 @@ class SellController extends Controller
                     $tradein->product_id = $item->product_id;
                     $tradein->order_price = $item->price;
                     $tradein->job_state = 1;
-                    $tradein->trade_pack_send_by_customer = false;
+                    if($labelstatus === '2'){
+                        $tradein->trade_pack_send_by_customer = true;
+                    } else {
+                        $tradein->trade_pack_send_by_customer = false;
+                    }
                     $tradein->expiry_date = $eD;
 
                     $name = $item->getProductName($item->id);
@@ -446,14 +449,15 @@ class SellController extends Controller
 
             if($labelstatus == "2"){
 
-                return redirect()->back()->with(['success'=>'Your sell has been completed. Please print this tradepack and follow the instrunctions.', 'barcode'=>$barcode, 'tradein'=>$tradein]);
+                return view('customer.confirmation')->with(['success'=>'Your sell has been completed. Please print this tradepack and follow the instrunctions.', 'barcode'=>$barcode, 'tradein'=>$tradein]);
+                //return redirect()->back()->with(['success'=>'Your sell has been completed. Please print this tradepack and follow the instrunctions.', 'barcode'=>$barcode, 'tradein'=>$tradein]);
 
                 $user = Auth::user();
                 $barcode = DNS1D::getBarcodeHTML($tradeinbarcode, 'C128');
                 $this->generateTradeInHTML($barcode, $user, null, $tradeinexp);
             }
-            
-            return redirect()->back()->with('success', 'Your sell has been completed.');
+            return view('customer.confirmation')->with(['success' => 'Your sell has been completed.', 'tradein' => $tradein]);
+            //return redirect()->back()->with('success', 'Your sell has been completed.');
         }
         else{
             $showLogin = true;

@@ -34,6 +34,14 @@
             @if(isset($recycleBasket) && $recycleBasket)
             <div class="hover-link" id="card-hover-link">
                 <a href="/cart"><div class="img"></div><p class="showhover">Basket</p></a>
+                @if(App\Helpers\CartHelper::cartItems() !== null)
+                    @if(App\Helpers\CartHelper::cartItems() > 0)
+                        <div class="basket-items-count">
+                            <img src="{{asset('/images/front-end-icons/basket_count.svg')}}">
+                            <p>{!!App\Helpers\CartHelper::cartItems()!!}</p>
+                        </div>
+                    @endif
+                @endif
             </div>
             @endif
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

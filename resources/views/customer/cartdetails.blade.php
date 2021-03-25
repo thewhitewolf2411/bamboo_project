@@ -81,12 +81,12 @@
                 @endif
 
 
-                <div class="d-flex p-5 ml-5">
+                <div class="d-flex p-5 ml-5 cartdetails-container">
 
-                    <div class="d-flex flex-column w-75">
+                    <div class="d-flex flex-column w-75 cartdetails-type">
                         <h3>Your details</h3>
 
-                        <div class="trade-pack-type w-75">
+                        <div class="trade-pack-type w-75 cartdetails-type-subcontainer">
                             <div class="col m-0 p-4">
                                 <p class="title-trade-pack-type-large">How would you like to send your device?</p>
                                 <p class="title-trade-pack-type">Please select how you would like to send your device(s) to us</p>
@@ -117,7 +117,7 @@
 
                     </div>
 
-                    <div class="d-flex flex-column w-25 pb-3 ml-2">
+                    <div class="d-flex flex-column w-25 pb-3 ml-2 cartdetails-summary">
                         <div class="order-summary-cart flex-column">
                             <p class="order-summary-bold w-100">Order Summary</p>
 

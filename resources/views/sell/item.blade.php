@@ -53,9 +53,9 @@
                                 <div id="selected-network"></div>
                             </div>
 
-                            <div class="d-flex">
+                            <div class="networks-container">
                             @foreach($networks as $network)
-                                <div><label class="network-container mr-3" id="{{$network->getNetWorkName($network->network_id)}}" for="network-{{$network->id}}"><img src="{{$network->getNetWorkImage($network->network_id)}}"></label></div>
+                                <div class="mb-2"><label class="network-container mr-3" id="{{$network->getNetWorkName($network->network_id)}}" for="network-{{$network->id}}"><img src="{{$network->getNetWorkImage($network->network_id)}}"></label></div>
                             @endforeach
                             </div>
 
@@ -64,6 +64,14 @@
                                 <input class="device-network" id="network-{{$network->id}}" name="network" value="{{$network->knockoff_price}}" onchange="networkChanged(this)" type="radio">
                             @endforeach
                             </div>
+                        </div>
+                    @else
+                        <div class="row m-0">
+                            <p class="select-shopping-option-title m-0 mb-1">Network:</p>
+                            <div id="selected-network">This device has no network.</div>
+                        </div>
+                        <div class="d-flex">
+                            <img class="no-network" src="{{asset('/images/front-end-icons/non_cellular.png')}}">
                         </div>
                     @endif
                     
@@ -160,7 +168,11 @@
                                 <input type="hidden" name="memory" id="memory"></input>
                                 <input type="hidden" name="price" id="price"></input>
                                 <input type="hidden" name="type" value="tradein"></input>
-                                <button id="addToCart" type="submit" class="btn btn-primary btn-orange" disabled>Sell my device</button>
+                                @if(App\Helpers\CartHelper::cartItems() === 2)
+                                    <div class="btn btn-primary btn-orange" data-toggle="modal" data-target="#newOrderModal">Sell my device</div>
+                                @else
+                                    <button id="addToCart" type="submit" class="btn btn-primary btn-orange" disabled>Sell my device</button>
+                                @endif
                             </div>
                         </form>
 
@@ -310,9 +322,7 @@
                             <p class="grades-info-header-text">Select condition</p>
                             <div class="close-grades-box">
                                 <button type="button" class="close close-grades-modal-button" data-dismiss="modal" aria-label="Close">
-                                    {{-- <span aria-hidden="true"> --}}
-                                        <img class="close-grades-img" src="{{ url('/images/front-end-icons/close_modal_orange.svg') }}">
-                                    {{-- </span> --}}
+                                    <img class="close-grades-img" src="{{ url('/images/front-end-icons/close_modal_orange.svg') }}">
                                 </button>
                             </div>
                         </div>
@@ -402,11 +412,30 @@
                                     </div>
                                 </div>
 
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="newOrderModal" tabindex="-1" role="dialog" aria-labelledby="newOrderModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    {{-- <div class="modal-header">
+                      <h5 class="modal-title" id="newOrderModalLabel">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div> --}}
+                    <div class="modal-body">
+                        <p class="newOrderText">Maximum number of devices per order reached. Please create a new order.</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
         </main>
 
