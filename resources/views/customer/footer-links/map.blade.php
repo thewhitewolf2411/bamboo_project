@@ -25,6 +25,120 @@
         <header>@include('customer.layouts.header')</header>
         <main>
 
+            <div class="container">
+
+                <div class="row map-row">
+                    <div class="col">
+                        <h2>How it works</h2>
+                        <p>Shopping</p>
+                        <p>Selling</p>
+                    </div>
+                    <div class="col">
+                        <h2>About Us</h2>
+                        <p>How it works</p>
+                    </div>
+                    <div class="col">
+                        <h2>Service & Support</h2>
+                        <p>Selling a device</p>
+                        <p>Tech</p>
+                        <p>Delivery</p>
+                        <p>Your Order</p>
+                        <p>Your Account</p>
+                        <p>General Questions</p>
+                    </div>
+                    <div class="col">
+                        <h2>Contact</h2>
+                    </div>
+                    <div class="col">
+                        <h2>My Bamboo</h2>
+                    </div>
+                    <div class="col">
+                        <h2>Responsibilities</h2>
+                        <p>Environment</p>
+                    </div>
+                    <div class="col">
+                        <h2>Legal</h2>
+                        <p>Privacy Policy</p>
+                        <p>Terms & Condition</p>
+                        <p>Site map</p>
+                        <p>Cookies</p>
+                        <p>Modern Slavery Statement</p>
+                        <p>Corporate Site</p>
+                    </div>
+                </div>
+
+                <div class="row border-top my-5">
+                    <h1>
+                        <strong>Shopping</strong>
+                    </h1>
+                </div>
+
+                <div class="row map-row">
+
+                    <div class="col">
+                        <h2>Latest Offers</h2>
+                    </div>
+                    <div class="col">
+                        <h2>Shop Mobile Phones</h2>
+                        <p>Shop All Mobile Phones</p>
+                        <p>By Grade</p>
+                        <p>Apple iPhone</p>
+                        <p>Samsung Galaxy</p>
+                    </div>
+                    <div class="col">
+                        <h2>Shop Tablets</h2>
+                        <p>Shop All Tablets</p>
+                        <p>By Grade</p>
+                        <p>Apple iPhone</p>
+                        <p>Samsung Galaxy</p>
+                    </div>
+                    <div class="col">
+                        <h2>Shop Watches</h2>
+                        <p>Shop All Watches</p>
+                        <p>By Grade</p>
+                        <p>Apple iPhone</p>
+                        <p>Samsung Galaxy</p>
+                    </div>
+                    <div class="col">
+                        <h2>Compare Models</h2>
+                    </div>
+                    <div class="col">
+                        <h2>Why Shop With Us</h2>
+                    </div>
+                    <div class="col">
+                        <h2>Let Boo do it, for you</h2>
+                    </div>
+                </div>
+
+                <div class="row border-top my-5">
+                    <h1>
+                        <strong>Selling</strong>
+                    </h1>
+                </div>
+
+                <div class="row map-row">
+
+                    <div class="col">
+                        <h2>Sell Mobile Phones</h2>
+                        <p>Apple iPhone</p>
+                        <p>Samsung Galaxy</p>
+                    </div>
+                    <div class="col">
+                        <h2>Sell Tablets</h2>
+                        <p>Apple iPhone</p>
+                        <p>Samsung Galaxy</p>
+                    </div>
+                    <div class="col">
+                        <h2>Sell Watches</h2>
+                        <p>Apple iPhone</p>
+                        <p>Samsung Galaxy</p>
+                    </div>
+                    <div class="col">
+                        <h2>Why Sell With Us</h2>
+                    </div>
+                </div>
+
+            </div>
 
             @if(session('showLogin') || $errors->all())
                 <script>

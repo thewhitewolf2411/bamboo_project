@@ -11644,6 +11644,10 @@ main p, a, span {
   display: none;
 }
 
+.map-row .col {
+  min-width: auto !important;
+}
+
 @media screen and (max-width: 740px) and (min-width: 325px) {
   main {
     margin-top: 100px !important;

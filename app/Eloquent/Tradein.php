@@ -499,7 +499,6 @@ class Tradein extends Model
             /*27*/  ['Closed','Paid'],
             /*28*/  ['Part of sales lot', 'Paid'],
             /*29*/  ['Picked for sales lot', 'Paid'],
-
         ];
 
         switch($this->job_state){

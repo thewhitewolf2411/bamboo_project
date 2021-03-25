@@ -652,6 +652,10 @@ class CustomerCareController extends Controller
             $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $tray->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
         }*/
 
+        if(isset($request->ajax) && $tradein->getDeviceLabel()){
+            return response('pdf/devicelabel-'. $tradein->barcode .'.pdf', 200);
+        }
+
         if($tradein->getDeviceLabel()){
             return redirect()->back()->with(['success'=>'pdf/devicelabel-'. $tradein->barcode .'.pdf']);
         }
