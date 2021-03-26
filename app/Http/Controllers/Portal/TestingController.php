@@ -94,19 +94,27 @@ class TestingController extends Controller
 
     public function getDeviceData(Request $request){
         $device_id = $request->deviceid;
+        $tradein = Tradein::where('id', $request->tradeinid)->first();
 
         $networks = Network::all();
         $sellingProduct = SellingProduct::where('id', $device_id)->first();
         $productinformation = ProductInformation::where('product_id', $device_id)->get();
         $productnetworks = ProductNetworks::where('product_id', $device_id)->get();
+        $hassamenetwork = false;
         
+        foreach($productinformation as $productInfo){
+            if($tradein->customer_memory === $productInfo->memory){
+                $hassamenetwork = true;
+            }
+        }
 
         $response = [
 
             'networks'=>$networks,
             'sellingProduct'=>$sellingProduct,
             'productinformation'=>$productinformation,
-            'productnetworks'=>$productnetworks
+            'productnetworks'=>$productnetworks,
+            'hassamenetwork'=>$hassamenetwork
 
         ];
 

@@ -95,7 +95,7 @@
 
                 @endif
 
-                @if($portalUser->sales_lot)
+                @if($portalUser->sales_lots)
                     <a href="/portal/sales-lot" class="col-2 my-2">
                         <div class="portal-content-element">
                             <p>Sales Lots </p>

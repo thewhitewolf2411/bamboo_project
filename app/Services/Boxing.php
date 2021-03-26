@@ -51,7 +51,7 @@ class Boxing{
         }
 
         if(substr($box->tray_brand, 0, 1) !== $tradein->getBrandLetter($tradein->product_id)){
-            return ['Manifacturer is wrong.', 404];
+            return ['Manufacturer is wrong.', 404];
         }
         if($box->getBoxBrand() !== $tradein->getBrandId($tradein->product_id)){
             $message = "";

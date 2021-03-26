@@ -372,13 +372,19 @@ class WarehouseManagementController extends Controller
 
         foreach($request->selected as $selectedDevice){
             $trayContent = TrayContent::where('trade_in_id', $selectedDevice)->first();
-
             $tray = Tray::where('id', $trayContent->tray_id)->first();
 
             $tray->number_of_devices = $tray->number_of_devices-1;
             $tray->save();
 
-            $trayContent->delete();
+            if($tray->status !== 3){
+                $trayContent->pseudo_tray_id = null;
+                $trayContent->save();
+            }
+            else{
+                $trayContent->delete();
+            }
+
         }
 
         return 200;
