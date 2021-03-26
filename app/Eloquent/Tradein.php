@@ -184,7 +184,7 @@ class Tradein extends Model
                 $tray = Tray::where('id', $trayid)->first();
                 if($tray->trolley_id !== null){
                     $trolley = Trolley::where('id', $tray->trolley_id)->first();
-                    if($trolley->trolley_type === "B"){
+                    if($trolley->trolley_type === "B" || $trolley->trolley_type === "Bay"){
                         return $trolley->trolley_name;
                     }
                 }
@@ -197,7 +197,7 @@ class Tradein extends Model
 
             if($tray->trolley_id !== null){
                 $trolley = Trolley::where('id', $tray->trolley_id)->first();
-                if($trolley->trolley_type === "B"){
+                if($trolley->trolley_type === "B" || $trolley->trolley_type === "Bay"){
                     return $trolley->trolley_name;
                 }
             }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Portal;
 
+use App\Audits\TradeinAudit;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -581,14 +582,18 @@ class WarehouseManagementController extends Controller
             }
         }
 
-        $binid = $box->trolley_id;
-        if($binid === null){
-            return redirect()->back()->with(['searcherror'=>'Box has not been allocated to bin yet.']);
+        $binid = $request->bay_id_scan;
+
+        if($box !== null){
+            $binid = $box->trolley_id;
+            if($binid === null){
+                return redirect()->back()->with(['searcherror'=>'Box has not been allocated to bin yet.']);
+            }    
         }
 
-        $bay = Trolley::where('id', $binid)->first();
+        $bay = Trolley::where('id', $binid)->orWhere('trolley_name', $binid)->first();
         if($bay->trolley_type !== "Bay"){
-            return redirect()->back()->with(['searcherror'=>'Something went wrong, please try.']);
+            return redirect()->back()->with(['searcherror'=>'Something went wrong, please try again.']);
         }
 
         $bayBoxes = Tray::where('trolley_id', $bay->id)->get();
@@ -694,6 +699,15 @@ class WarehouseManagementController extends Controller
     
             $bay->number_of_trays = $bay->number_of_trays + 1;
             $bay->save();
+
+            $boxContent = TrayContent::where('tray_id', $box->id)->get();
+            foreach($boxContent as $bC){
+                $tradein = Tradein::where('id', $bC->trade_in_id)->first();
+                $tradein->location_changed_at = now();
+                $tradein->save();
+                #$last_audit = TradeinAudit::where('tradein_id', $tradein->id)->latest()->first();
+                //dd($tradein->getTrayName($tradein->id), $tradein->id, $last_audit);
+            }
         }
 
 
