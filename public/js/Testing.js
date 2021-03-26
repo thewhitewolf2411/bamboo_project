@@ -86,7 +86,9 @@ function testingElementChanged(){
             $('#fake_missing_parts').prop('disabled', false);
             $('#device_fully_functional').prop('disabled', false);
             $('#water_damage').prop('disabled', false);
-            $('#correct_memory').prop('disabled', false);
+            if($('#corrent-memory-value').hasClass('form-group-hidden')){
+                $('#correct_memory').prop('disabled', false);
+            }
             $('#correct_network').prop('disabled', false);
             $('#device_correct').prop('disabled', false);
             $('#cosmetic_condition').prop('disabled', false);
@@ -274,6 +276,7 @@ $(document).on('change', 'input[type="checkbox"]', function() {
 $(document).on('change', '#select_correct_device', function(){
 
     var deviceid = this.value;
+    var tradeinid = $('#tradein_id').val();
 
     $.ajax({
         url: "/portal/testing/getDeviceData",
@@ -281,6 +284,7 @@ $(document).on('change', '#select_correct_device', function(){
         data:{
             _token: document.getElementsByName("_token")[0].value,
             deviceid: deviceid,
+            tradeinid:tradeinid,
 
         },
         success:function(response){
@@ -290,6 +294,19 @@ $(document).on('change', '#select_correct_device', function(){
                 $('#correct_memory_value').append($("<option></option>")
                 .attr("value", value.memory).text(value.memory));
             });
+
+            if(response.hassamenetwork === false){
+                $('#correct_memory>option:eq(1)').attr('selected', true);
+                $('#correct_memory').prop('disabled', true);
+                $('#corrent-memory-value').removeClass('form-group-hidden');
+            }
+            else{
+                $('#correct_memory').prop('disabled', false);
+                $('#correct_memory>option:eq(0)').attr('selected', true);
+                if(!$('#corrent-memory-value').hasClass('form-group-hidden')){
+                    $('#corrent-memory-value').addClass('form-group-hidden');
+                }
+            }
 
             if(response.productnetworks.length != 0){
                 $('#correct_network').prop('disabled', false);
@@ -314,7 +331,6 @@ $(document).on('change', '#select_correct_device', function(){
                             networkName = 'unlocked';
                             break;
                     }
-                    console.log(networkName);
                     $('#correct_network_value').append($("<option></option>")
                     .attr("value", networkName).text(networkName));
                 });

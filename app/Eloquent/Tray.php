@@ -89,5 +89,14 @@ class Tray extends Model
         }
     }
 
+    public function isBoxInSaleLot(){
+        $saleLotContent = SalesLotContent::where('box_id', $this->id)->get();
+        if(count($saleLotContent) === $this->number_of_devices){
+            return true;
+        }
+
+        return false;
+    }
+
 
 }

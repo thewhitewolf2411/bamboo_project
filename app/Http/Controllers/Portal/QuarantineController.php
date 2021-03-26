@@ -83,11 +83,11 @@ class QuarantineController extends Controller
             if($tradein != null){
                 if($tradein->quarantine_status == null){
                     array_push($tradeins, array($tradein->barcode, $tradein->getProductName($tradein->product_id), $tradein->imei_number . "\t", 
-                    $tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0],  $tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0], $tradein->getTrayName($tradein->id), $tradein->bamboo_grade));
+                    $tradein->getBambooStatus(),  $tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0], $tradein->getTrayName($tradein->id), $tradein->getDeviceBambooGrade()));
                 }
                 else{
                     array_push($tradeins, array($tradein->barcode, $tradein->getProductName($tradein->product_id), $tradein->imei_number . "\t", 
-                    $tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0],  $tradein->getQuarantineReason($tradein->id)[0], $tradein->getTrayName($tradein->id), $tradein->bamboo_grade));
+                    $tradein->getDeviceStatus(),  $tradein->getQuarantineReason($tradein->id)[0], $tradein->getTrayName($tradein->id), $tradein->getDeviceBambooGrade()));
                 }
             }
 
@@ -123,8 +123,21 @@ class QuarantineController extends Controller
             if(Session::has('allocateToTrays')){
                 $tradeins = Session::get('allocateToTrays');
             }
+
             $tradein = Tradein::where('barcode', $request->submitscannedid_allocatetotray)->first();
-            array_push($tradeins, $tradein);
+
+            if(count($tradeins)>0){
+                foreach($tradeins as $t){
+                    if($t->barcode != $request->submitscannedid_allocatetotray){
+                        array_push($tradeins, $tradein);
+                    }
+                }
+            }
+            else{
+                array_push($tradeins, $tradein);
+            }
+
+        
         }
         else{
             Session::forget('allocateToTrays');
@@ -428,6 +441,7 @@ class QuarantineController extends Controller
 
         $binservice = new BinService();
 
+        #dd($binservice->handleDeviceBin($tradein, $bintype, $request->binname));
         return $binservice->handleDeviceBin($tradein, $bintype, $request->binname);
     }
 

@@ -478,7 +478,7 @@ class FeedsController extends Controller
                             $sellingProductInformation->save();
                         }
                         catch(Exception $e){
-                            array_push($export_log, $e->getMessage());
+                            //array_push($export_log, $e->getMessage());
                         }
                         
                     } else {

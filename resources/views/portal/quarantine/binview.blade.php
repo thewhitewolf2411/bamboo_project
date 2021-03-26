@@ -93,7 +93,7 @@
                                 <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
                                 <td><div class="table-element">{{$tradein->barcode}}</div></td>
                                 <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
-                                <td><div class="table-element">{{$tradein->imei_number}}</div></td>
+                                <td><div class="table-element">@if($tradein->imei_number === null) {{$tradein->serial_number}} @else {{$tradein->imei_number}} @endif</div></td>
                             </tr>
                             @endforeach
                         </table>
@@ -180,7 +180,6 @@
 
                     },
                     success:function(response){
-
                         if(response.deviceadded == 0){
                             $('#statement').html('<div class="alert alert-warning">' + response.error + '</div>');
                         }
@@ -188,7 +187,12 @@
 
                             if($('#addeddevicestable tr').length > 1){
                                 if($('#addeddevicestable #' + response.order.id).length == 0 ){
-                                    $('#addeddevicestable').append('<tr id="' + response.order.id + '"><td><div class="table-element">' + response.order.barcode + '</div></td><td><div class="table-element">' + response.model + '</div></td><td><div class="table-element">' + response.order.imei_number + '</div></td><td><div class="table-element">' + response.order.bamboo_grade + '</div></td></tr>');
+                                    if(response.order.imei_number === null){
+                                        $('#addeddevicestable').append('<tr id="' + response.order.id + '"><td><div class="table-element">' + response.order.barcode + '</div></td><td><div class="table-element">' + response.model + '</div></td><td><div class="table-element">' + response.order.serial_number + '</div></td><td><div class="table-element">' + response.grade + '</div></td></tr>');
+                                    }
+                                    else{
+                                        $('#addeddevicestable').append('<tr id="' + response.order.id + '"><td><div class="table-element">' + response.order.barcode + '</div></td><td><div class="table-element">' + response.model + '</div></td><td><div class="table-element">' + response.order.imei_number + '</div></td><td><div class="table-element">' + response.grade + '</div></td></tr>');
+                                    }
                                     $('#form-inputs').append('<input type="hidden" name="tradein-'+ response.order.id + '" value="'+ response.order.id +'">');
                                 }
                                 else{
@@ -197,7 +201,13 @@
                                 
                             }
                             else{
-                                $('#addeddevicestable').append('<tr id="' + response.order.id + '"><td><div class="table-element">' + response.order.barcode + '</div></td><td><div class="table-element">' + response.model + '</div></td><td><div class="table-element">' + response.order.imei_number + '</div></td><td><div class="table-element">' + response.order.bamboo_grade + '</div></td></tr>');
+                                if(response.order.imei_number === null){
+                                        $('#addeddevicestable').append('<tr id="' + response.order.id + '"><td><div class="table-element">' + response.order.barcode + '</div></td><td><div class="table-element">' + response.model + '</div></td><td><div class="table-element">' + response.order.serial_number + '</div></td><td><div class="table-element">' + response.grade + '</div></td></tr>');
+                                }
+                                else{
+                                    $('#addeddevicestable').append('<tr id="' + response.order.id + '"><td><div class="table-element">' + response.order.barcode + '</div></td><td><div class="table-element">' + response.model + '</div></td><td><div class="table-element">' + response.order.imei_number + '</div></td><td><div class="table-element">' + response.grade + '</div></td></tr>');
+                                }
+                                //$('#addeddevicestable').append('<tr id="' + response.order.id + '"><td><div class="table-element">' + response.order.barcode + '</div></td><td><div class="table-element">' + response.model + '</div></td><td><div class="table-element">' + response.order.imei_number + '</div></td><td><div class="table-element">' + response.grade + '</div></td></tr>');
                                 $('#form-inputs').append('<input type="hidden" name="tradein-'+ response.order.id + '" value="'+ response.order.id +'">');
                             }
 

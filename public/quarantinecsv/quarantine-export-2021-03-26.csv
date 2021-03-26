@@ -1,0 +1,14 @@
+"Trade-In Barcode",Model,IMEI,"Bamboo Status","Blacklisted Reason","Stock Location","Bamboo Grade"
+90541561,"Apple iPhone 11","123456789012345	",Blacklisted,Lost,RQ01-1,
+90687854,"Apple iPhone 11","123456789012345	",Blacklisted,"Insurance Claim",RQ01-1,
+90134605,"Apple iPhone 11","123456789012345	",Blacklisted,Blocked/FRP,RQ01-1,
+90522436,"Apple iPhone 11","123456789012345	",Blacklisted,Stolen,RQ01-1,
+90520930,"Apple iPhone 11","123456789012345	",Blacklisted,Knox,RQ01-1,
+90597994,"Apple iPhone 11","123456789012345	",Blacklisted,Assetwatch,RQ01-1,
+90543590,"Apple iPhone 11","123456789012345	",Blacklisted,Blacklisted,RQ01-1,
+90196375,"Apple iPhone 11","356080090288068	","Test Complete",Downgrade,TQ01-1,Catastrophic
+90144907,"Apple iPhone 11","356080090288068	","Test Complete",Downgrade,TQ01-1,WSD
+90164489,"Apple iPhone 11","356080090288068	","Test Complete",Downgrade,TQ01-1,"Grade B"
+90188133,"Apple iPhone 11","356080090288068	","Test Complete",Downgrade,TQ01-1,WSI
+90164773,"Apple iPhone 11","356080090288068	","Test Complete","PIN Lock",TQ01-1,WSI
+90169187,"Apple iPad Air WiFi","356080090288068	","Test Complete","Incorrect Model",TQ01-1,"Grade A"
