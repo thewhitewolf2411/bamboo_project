@@ -263,6 +263,12 @@ class WarehouseManagementController extends Controller
                 $bC->tray_id = $request->boxid;
                 $bC->save();
             }
+            $tradeins = $boxContent->pluck('trade_in_id')->toArray();
+            $tradeins = Tradein::whereIn('id', $tradeins)->get();
+            foreach($tradeins as $tradein){
+                $tradein->location_changed_at = now();
+                $tradein->save();
+            }
 
             $request->boxname = $box->tray_name;
 

@@ -54,7 +54,7 @@
 
                 <div class="portal-table-container">
 
-                    <table class="portal-table sortable" id="categories-table">
+                    <table class="portal-table" id="categories-table">
                         <tr>
                             <td>Id</td>
                             <td>Username</td>

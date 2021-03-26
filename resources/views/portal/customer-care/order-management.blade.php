@@ -98,7 +98,7 @@
                                         <i class="fa fa fa-print"></i>
                                     </a>
                                     @else
-                                    <a href="javascript:void(0)" onclick="printDeviceLabel({{$tradein->barcode}})" title="Print device label">
+                                    <a href="javascript:void(0)" onclick="printDeviceLabelOrderManagemet({{$tradein->barcode}})" title="Print device label">
                                         <i class="fa fa fa-print"></i>
                                     </a>
                                     @endif

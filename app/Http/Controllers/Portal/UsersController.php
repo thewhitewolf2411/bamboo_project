@@ -89,6 +89,8 @@ class UsersController extends Controller
         $user->type_of_user = 1;
         $user->account_disabled = 0;
 
+        $user->birth_date = \Carbon\Carbon::now();
+
         $user->save();
 
         $portalUser = new PortalUsers();
@@ -161,6 +163,9 @@ class UsersController extends Controller
         }
         if($request->cms == "on"){
             $portalUser->cms = true;
+        }
+        if($request->categories == "on"){
+            $portalUser->categories = true;
         }
         if($request->settings == "on"){
             $portalUser->settings = true;
@@ -282,11 +287,11 @@ class UsersController extends Controller
             $portalUser->warehouse_management = false;
         }
 
-        if($request->sales_lot == "on"){
-            $portalUser->sales_lot = true;
+        if($request->sales_lots == "on"){
+            $portalUser->sales_lots = true;
         }
         else{
-            $portalUser->sales_lot = false;
+            $portalUser->sales_lots = false;
         }
 
         if($request->despatch == "on"){
@@ -322,6 +327,12 @@ class UsersController extends Controller
         }
         else{
             $portalUser->customer_accounts = false;
+        }
+        if($request->messages == "on"){
+            $portalUser->messages = true;
+        }
+        else{
+            $portalUser->messages = false;
         }
 
         if($request->administration == "on"){
@@ -371,6 +382,13 @@ class UsersController extends Controller
         }
         else{
             $portalUser->cms = false;
+        }
+
+        if($request->categories == "on"){
+            $portalUser->categories = true;
+        }
+        else{
+            $portalUser->categories = false;
         }
 
         if($request->settings == "on"){

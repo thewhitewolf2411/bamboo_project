@@ -267,7 +267,11 @@ class Tradein extends Model
     }
 
     public function isSIMLocked(){
-        return null;
+        if($this->correct_network === "unlocked" || $this->correct_network === null){
+            return false;
+        }
+
+        return true;
     }
 
     public function getMissingImage(){
@@ -499,7 +503,6 @@ class Tradein extends Model
             /*27*/  ['Closed','Paid'],
             /*28*/  ['Part of sales lot', 'Paid'],
             /*29*/  ['Picked for sales lot', 'Paid'],
-
         ];
 
         switch($this->job_state){
@@ -1063,4 +1066,5 @@ class Tradein extends Model
 
         return $difference;
     }
+
 }

@@ -31,6 +31,28 @@ window.printTradePackTradeIn = function(tradein_id){
     $('#print_trade_pack_trade_in_trigger').click();
 }
 
+window.printDeviceLabelOrderManagemet = function(print_device_id){
+
+    $.ajax({
+        url: "/portal/customer-care/printdevicelabel",
+        type:"POST",
+        data:{
+            print_device_id:print_device_id,
+            ajax:true,
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(response){
+            $(document).ready(function(){
+                $('#tradein-iframe').attr('src', '/' + response);
+                $('#label-trade-in-modal').modal('show');
+            });
+            console.log(response);
+        }
+    });
+}
+
 function setNumberOfTradePacks(number_of_trade_packs_to_print){
     $('#number_of_bulk_prints').val(number_of_trade_packs_to_print);
     $('#bulk_label_print_button').prop('disabled', false);

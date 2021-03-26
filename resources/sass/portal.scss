@@ -668,3 +668,16 @@ input[type=number] {
 #saleslot-table a{
     font-size: 16px !important;
 }
+
+.label-required::after{
+    content: "*";
+    color: red;
+}
+
+#blogModal>.modal-dialog{
+    max-width: 1200px;
+}
+
+.cms-blog{
+    cursor: pointer;
+}

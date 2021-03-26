@@ -70,9 +70,9 @@
     <div class="url-header-container">
         <a href="/about">About</a>
     </div>
-    {{--<div class="url-header-container">
-        <a href="/setpage/news">News & Blog</a>
-    </div>--}}
+    <div class="url-header-container">
+        <a href="/news">News & Blog</a>
+    </div>
     <div class="url-header-container">
         <a href="/support">Support & Service</a>
     </div>
@@ -96,9 +96,9 @@
     <div class="url-header-container mobile">
         <a href="/setpage/about">About</a>
     </div>
-    {{--<div class="url-header-container">
-        <a href="/setpage/news">News & Blog</a>
-    </div>--}}
+    <div class="url-header-container">
+        <a href="/news">News & Blog</a>
+    </div>
     <div class="url-header-container mobile">
         <a href="/setpage/support">Support & Service</a>
     </div>

@@ -79,13 +79,13 @@
                                 </a>
 
                                 @if($tradein->job_state == 2)
-                                <a href="javascript:void(0)" onclick = printTradePackTradeIn({{$tradein->barcode}}) title="Reprint tradepack">
-                                    <i class="fa fa fa-print"></i>
+                                <a href="javascript:void(0)" class="print-one-tradein" data-barcode="{{$tradein->barcode}}" title="Print trade-in label">
+                                    <i class="fa fa-print"></i>
                                 </a>
                                 @endif
                                 @if($tradein->job_state == 3)
-                                <a href="/labeltradeout-{{$tradein->barcode}}.pdf" target="_blank" title="Reprint tradepack">
-                                    <i class="fa fa fa-print"></i>
+                                <a href="javascript:void(0)" class="print-one-tradein" data-barcode="{{$tradein->barcode}}" title="Print trade-in label">
+                                    <i class="fa fa-print"></i>
                                 </a>
                                 @endif
 
@@ -130,6 +130,7 @@
     </div>
 
     @if(Session::has('success'))
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
     <script>
 
         $(document).ready(function(){

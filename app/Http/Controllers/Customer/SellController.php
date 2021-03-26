@@ -376,7 +376,7 @@ class SellController extends Controller
             $items = array();
 
             //8
-            $tradeinbarcode = 10000000 + rand(100000, 9000000);
+            $tradeinbarcode = 10000000 + rand(000000, 9000000);
 
             $cart = Cart::where('user_id', Auth::user()->id)->where('type', 'tradein')->get();
 
@@ -386,6 +386,10 @@ class SellController extends Controller
             $price = "";
 
             $barcode = "";
+
+            while(count(Tradein::where('barcode_original', $tradeinbarcode)->get())>0){
+                $tradeinbarcode = 10000000 + rand(000000, 9000000);
+            }
 
             foreach($cart as $item){     
                 if($item->type === 'tradein'){
