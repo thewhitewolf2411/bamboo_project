@@ -17,12 +17,12 @@
 
         <div class="row">
             <div class="col-md-8">
-                <a href="/news/{{$blogs[0]->id}}">
+                <a href="/news/{{$blogs->first()->id}}">
                     <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs[0]->image_1}}')">
-                        <img src="/storage/news_images/{{$blogs[0]->image_1}}" height="100%" style="max-height: 578px; opacity:0">
+                        <img src="/storage/news_images/{{$blogs->first()->image_1}}" height="100%" style="max-height: 578px; opacity:0">
                         <div class="news-1-content-container">
-                            <div @if($blogs[0]->cms_type === 0) class="news-tag" @elseif($blogs[0]->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
-                                <p class="tag-content">@if($blogs[0]->cms_type === 0) NEWS @elseif($blogs[0]->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
+                            <div @if($blogs->first()->cms_type === 0) class="news-tag" @elseif($blogs->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
+                                <p class="tag-content">@if($blogs->first()->cms_type === 0) NEWS @elseif($blogs->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
                             </div>
                             <div class="main-news-title">
                                 <p>{{$blogs[0]->cms_title}}</p>

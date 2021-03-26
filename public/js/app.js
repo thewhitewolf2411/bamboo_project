@@ -54787,6 +54787,10 @@ __webpack_require__(/*! ./scripts/SalesLotDespatch */ "./resources/js/scripts/Sa
 
 __webpack_require__(/*! ./scripts/Messages */ "./resources/js/scripts/Messages.js");
 
+__webpack_require__(/*! ./scripts/Blogs */ "./resources/js/scripts/Blogs.js");
+
+__webpack_require__(/*! ./scripts/AddUser */ "./resources/js/scripts/AddUser.js");
+
 "use strict";
 /*
 window.Vue = require('vue');
@@ -54845,6 +54849,149 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/scripts/AddUser.js":
+/*!*****************************************!*\
+  !*** ./resources/js/scripts/AddUser.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$('#recycle').on('change', function () {
+  if ($(this).is(':checked')) {
+    $('#trade_pack_despatch').prop('checked', true);
+    $('#awaiting_receipt').prop('checked', true);
+    $('#receiving').prop('checked', true);
+    $('#device_testing').prop('checked', true);
+    $('#trolley_managment').prop('checked', true);
+    $('#trays_managment').prop('checked', true);
+    $('#quarantine_managment').prop('checked', true);
+    $('#warehouse_management').prop('checked', true);
+    $('#sales_lots').prop('checked', true);
+    $('#despatch').prop('checked', true);
+  } else {
+    $('#trade_pack_despatch').prop('checked', false);
+    $('#awaiting_receipt').prop('checked', false);
+    $('#receiving').prop('checked', false);
+    $('#device_testing').prop('checked', false);
+    $('#trolley_managment').prop('checked', false);
+    $('#trays_managment').prop('checked', false);
+    $('#quarantine_managment').prop('checked', false);
+    $('#warehouse_management').prop('checked', false);
+    $('#sales_lots').prop('checked', false);
+    $('#despatch').prop('checked', false);
+  }
+});
+$('#customer_care').on('change', function () {
+  if ($(this).is(':checked')) {
+    $('#order_management').prop('checked', true);
+    $('#create_order').prop('checked', true);
+    $('#customer_accounts').prop('checked', true);
+    $('#messages').prop('checked', true);
+  } else {
+    $('#order_management').prop('checked', false);
+    $('#create_order').prop('checked', false);
+    $('#customer_accounts').prop('checked', false);
+    $('#messages').prop('checked', false);
+  }
+});
+$('#administration').on('change', function () {
+  if ($(this).is(':checked')) {
+    $('#salvage_models').prop('checked', true);
+    $('#sales_models').prop('checked', true);
+    $('#feeds').prop('checked', true);
+    $('#users').prop('checked', true);
+    $('#reports').prop('checked', true);
+    $('#cms').prop('checked', true);
+    $('#categories').prop('checked', true);
+    $('#settings').prop('checked', true);
+  } else {
+    $('#salvage_models').prop('checked', false);
+    $('#sales_models').prop('checked', false);
+    $('#feeds').prop('checked', false);
+    $('#users').prop('checked', false);
+    $('#reports').prop('checked', false);
+    $('#cms').prop('checked', false);
+    $('#categories').prop('checked', false);
+    $('#settings').prop('checked', false);
+  }
+});
+$('#payments').on('change', function () {
+  if ($(this).is(':checked')) {
+    $('#awaiting_payments').prop('checked', true);
+    $('#submit_payments').prop('checked', true);
+    $('#payment_confirmations').prop('checked', true);
+    $('#failed_payments').prop('checked', true);
+  } else {
+    $('#awaiting_payments').prop('checked', false);
+    $('#submit_payments').prop('checked', false);
+    $('#payment_confirmations').prop('checked', false);
+    $('#failed_payments').prop('checked', false);
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/scripts/Blogs.js":
+/*!***************************************!*\
+  !*** ./resources/js/scripts/Blogs.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$('.cms-blog').on('click', function () {
+  var blogid = $(this).data('value');
+  $.ajax({
+    url: "/portal/getblogcontent",
+    type: "GET",
+    data: {
+      blogid: blogid
+    },
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(response) {
+      console.log(response);
+      $('#blog_type').html(response.blog_type);
+      $('#blog_author').html(response.author);
+      $('#blog_title').html(response.blog_title);
+      $('#blog_created').html(response.created);
+      $('#blog_modified').html(response.updated);
+      $('#image_1').prop('src', "/storage/news_images/" + response.image_1);
+      $('#image_2').prop('src', "/storage/news_images/" + response.image_2);
+      $('#image_3').prop('src', "/storage/news_images/" + response.image_3);
+      $('#parag_1').html(response.parag_1);
+      $('#parag_2').html(response.parag_2);
+      $('#parag_3').html(response.parag_3);
+      $('#deleteblog').attr('data-value', response.blog_id);
+      $('#editblog').attr('href', '/portal/edit/' + response.blog_id);
+      $('#blogModal').modal('show');
+    }
+  });
+});
+$('#deleteblog').on('click', function () {
+  var blogid = $(this).data('value');
+  var c = confirm('Are you sure you want to remove this CMS Content?');
+
+  if (c) {
+    $.ajax({
+      url: "/portal/cms/delete",
+      type: "POST",
+      data: {
+        blogid: blogid
+      },
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success: function success() {
+        alert('Blog was succesfully deleted');
+        location.reload();
+      }
+    });
+  }
+});
 
 /***/ }),
 
@@ -55037,6 +55184,27 @@ window.printDeviceLabel = function (print_device_id) {
 window.printTradePackTradeIn = function (tradein_id) {
   $('#print_trade_pack_trade_in_id').val(tradein_id);
   $('#print_trade_pack_trade_in_trigger').click();
+};
+
+window.printDeviceLabelOrderManagemet = function (print_device_id) {
+  $.ajax({
+    url: "/portal/customer-care/printdevicelabel",
+    type: "POST",
+    data: {
+      print_device_id: print_device_id,
+      ajax: true
+    },
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(response) {
+      $(document).ready(function () {
+        $('#tradein-iframe').attr('src', '/' + response);
+        $('#label-trade-in-modal').modal('show');
+      });
+      console.log(response);
+    }
+  });
 };
 
 function setNumberOfTradePacks(number_of_trade_packs_to_print) {
