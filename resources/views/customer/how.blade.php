@@ -150,7 +150,7 @@ Watch our quick video that explains how our meticulous grading system works. We 
     <div class="home-element home-links-container">
         
         <div class="home-links-element">
-            <a href="#">
+            <a href="/news">
                 <div class="home-link-container" id="news">
                     <p>News & Blog</p>
                     <img src="{{asset('/customer_page_images/body/home-link-images/home-links-1.svg')}}">
