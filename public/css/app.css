@@ -12214,6 +12214,26 @@ main p, a, span {
   margin-top: 6px;
 }
 
+.address-lookup-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.lookup-address-btn {
+  max-height: 38px;
+  margin-top: 6px;
+  padding-top: 5px;
+  padding-left: 11px;
+  padding-right: 11px;
+  margin-left: 4px;
+}
+
+.lookup-search-icon {
+  width: 20px;
+  height: 20px;
+}
+
 .personal-info-text-input {
   display: flex;
   align-items: center;

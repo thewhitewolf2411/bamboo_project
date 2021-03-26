@@ -242,7 +242,10 @@
                                                     <div class="personal-info-row">
                                                         <div class="col p-0 mr-3">
                                                             <label for="firstname" class="personal-info-label">Delivery Address</label>
-                                                            <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" value="{!!Auth::user()->delivery_address!!}" placeholder="Enter postcode" required>
+                                                            <div class="address-lookup-row">
+                                                                <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" value="{!!Auth::user()->delivery_address!!}" placeholder="Enter postcode" required>
+                                                                <div class="btn btn-purple lookup-address-btn" onclick="focusAddress('delivery')"><img class="lookup-search-icon" src="{{asset('/images/front-end-icons/search_icon.svg')}}"></div>
+                                                            </div>
                                                             
                                                             <div class="enter-manually mb-2 user-select-none" onclick="toggleManualAddress('delivery')"><p>Enter Address Manually <i id="manual-delivery-arrow" class="arrow down ml-2"></i></p></div>
 
@@ -252,16 +255,21 @@
                                                                 <input type="text" class="form-control mb-0" name="manual_delivery_address_details" id="delivery_town" placeholder="Town">
                                                                 <input type="text" class="form-control mb-0" name="manual_delivery_address_details" id="delivery_city" placeholder="City">
                                                                 <input type="text" class="form-control mb-0" name="manual_delivery_address_details" id="delivery_post_code" placeholder="Post code">
-                                                                <div class="btn btn-light disabled mt-2" id="save_manual_delivery" onclick="saveAddress('delivery')">Save address</div>
                                                             </div>
                                                             <p class="personal-info-address" id="current-personal-delivery-address">
                                                                 {!!str_replace(',', '<br>', Auth::user()->delivery_address)!!}
                                                             </p>
+
+                                                            <div class="btn btn-light disabled mt-2" id="save_manual_delivery" onclick="saveAddress('delivery')">Save address</div>
+
                                                         </div>
 
                                                         <div class="col p-0 mr-3">
                                                             <label for="last_name" class="personal-info-label">Billing Address</label>
-                                                            <input class="form-control js-typeahead" type="text" id="billing_address" name="billing_address" value="{!!Auth::user()->billing_address!!}" placeholder="Enter postcode" required>
+                                                            <div class="address-lookup-row">
+                                                                <input class="form-control js-typeahead" type="text" id="billing_address" name="billing_address" value="{!!Auth::user()->billing_address!!}" placeholder="Enter postcode" required>
+                                                                <div class="btn btn-purple lookup-address-btn" onclick="focusAddress('billing')"><img class="lookup-search-icon" src="{{asset('/images/front-end-icons/search_icon.svg')}}"></div>
+                                                            </div>
 
                                                             <div class="enter-manually mb-2 user-select-none" onclick="toggleManualAddress('billing')"><p>Enter Address Manually <i id="manual-billing-arrow" class="arrow down ml-2"></i></p></div>
 
@@ -271,12 +279,14 @@
                                                                 <input type="text" class="form-control mb-0" name="manual_billing_address_details" id="billing_town" placeholder="Town">
                                                                 <input type="text" class="form-control mb-0" name="manual_billing_address_details" id="billing_city" placeholder="City">
                                                                 <input type="text" class="form-control mb-0" name="manual_billing_address_details" id="billing_post_code" placeholder="Post code">
-                                                                <div class="btn btn-light disabled mt-2" id="save_manual_billing" onclick="saveAddress('billing')">Save address</div>
                                                             </div>
 
                                                             <p class="personal-info-address" id="current-personal-billing-address">
                                                                 {!!str_replace(',', '<br>', Auth::user()->billing_address)!!}
                                                             </p>
+
+                                                            <div class="btn btn-light disabled mt-2" id="save_manual_billing" onclick="saveAddress('billing')">Save address</div>
+
                                                         </div>
 
                                                         <div class="col p-0 mr-3">
@@ -309,7 +319,7 @@
 
                                                 </div>
                                                 
-                                                <div class="alert alert-danger hidden" role="alert" id="personal-info-error">
+                                                <div class="alert alert-danger hidden mt-3" role="alert" id="personal-info-error">
                                                 </div>
                                                 <div class="modal-footer border-0 p-0 padded mt-5">
                                                     <button type="button" class="btn btn-orange ml-auto w-25" onclick="saveChanges()">Save changes</button>
@@ -1288,30 +1298,152 @@
         }
     }
 
+    document.getElementById('delivery_address').addEventListener('keyup', function(){
+        old_addr = '{!!Auth::user()->delivery_address!!}';
+        current = document.getElementById('delivery_address').value;
+
+        let manual_open = !document.getElementById('manual-delivery').classList.contains('hidden');
+        let save_btn = document.getElementById('save_manual_delivery');
+        if(!manual_open){
+            if(old_addr !== current){
+                if(save_btn.classList.contains('disabled')){
+                    save_btn.classList.remove('disabled');
+                    save_btn.classList.remove('btn-light');
+                    save_btn.classList.add('btn-green');
+                }
+            } else {
+                if(!save_btn.classList.contains('disabled')){
+                    save_btn.classList.add('disabled');
+                    save_btn.classList.remove('btn-green');
+                    save_btn.classList.add('btn-light');
+                }
+            }
+        }
+    });
+
+    document.getElementById('billing_address').addEventListener('keyup', function(){
+        old_addr = '{!!Auth::user()->billing_address!!}';
+        current = document.getElementById('billing_address').value;
+
+        let manual_open = !document.getElementById('manual-billing').classList.contains('hidden');
+        let save_btn = document.getElementById('save_manual_billing');
+        if(!manual_open){
+            if(old_addr !== current){
+                if(save_btn.classList.contains('disabled')){
+                    save_btn.classList.remove('disabled');
+                    save_btn.classList.remove('btn-light');
+                    save_btn.classList.add('btn-green');
+                }
+            } else {
+                if(!save_btn.classList.contains('disabled')){
+                    save_btn.classList.add('disabled');
+                    save_btn.classList.remove('btn-green');
+                    save_btn.classList.add('btn-light');
+                }
+            }
+        }
+    });
+
     function saveAddress(type){
         switch (type) {
             case 'delivery':
 
-                let housename_delivery = document.getElementById('delivery_house_name').value;
-                let streetname_delivery = document.getElementById('delivery_street_name').value;
-                let town_delivery = document.getElementById('delivery_town').value;
-                let city_delivery = document.getElementById('delivery_city').value;
-                let postcode_delivery = document.getElementById('delivery_post_code').value;
+                let manual_delivery_open = !document.getElementById('manual-delivery').classList.contains('hidden');
+                let address_delivery;
+                if(manual_delivery_open){
+                    let housename_delivery = document.getElementById('delivery_house_name').value;
+                    let streetname_delivery = document.getElementById('delivery_street_name').value;
+                    let town_delivery = document.getElementById('delivery_town').value;
+                    let city_delivery = document.getElementById('delivery_city').value;
+                    let postcode_delivery = document.getElementById('delivery_post_code').value;
 
-                let address_delivery = housename_delivery + ", " + streetname_delivery + ", " + town_delivery + ", " + city_delivery + ", " + postcode_delivery;
+                    address_delivery = housename_delivery + ", " + streetname_delivery + ", " + town_delivery + ", " + city_delivery + ", " + postcode_delivery;
+                } else {
+                    address_delivery = document.getElementById('delivery_address').value;
+                }
 
+                $.ajax({
+                    type: "POST",
+                    url: 'userprofile/updateaddress',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'type': 'delivery',
+                        'address': address_delivery
+                    },
+                    success: function(data, textStatus, xhr) {
+                        let popup = document.getElementById('personal-info-error');
+                        popup.innerHTML = data.msg;
+                        if(popup.classList.contains('alert-danger')){
+                            popup.classList.remove('alert-danger');
+                            popup.classList.add('alert-success');
+                        }
+                        if(popup.classList.contains('hidden')){
+                            popup.classList.remove('hidden');
+                        }
+                        setTimeout(function(){
+                            popup.classList.add('hidden');
+                        }, 3000);
+
+                        document.getElementById('current-personal-delivery-address').innerHTML = address_delivery.split(', ').join('<br>');
+                        if(manual_delivery_open){
+                            toggleManualAddress('delivery');
+                        }
+                    }
+
+                });
                 document.getElementById('delivery_address').value = address_delivery;
 
                 break;
             case 'billing':
+    
+                let manual_billing_open = !document.getElementById('manual-billing').classList.contains('hidden');
+                let address_billing;
 
-                let housename_billing = document.getElementById('billing_house_name').value;
-                let streetname_billing = document.getElementById('billing_street_name').value;
-                let town_billing = document.getElementById('billing_town').value;
-                let city_billing = document.getElementById('billing_city').value;
-                let postcode_billing = document.getElementById('billing_post_code').value;
+                if(manual_billing_open){
+                    let housename_billing = document.getElementById('billing_house_name').value;
+                    let streetname_billing = document.getElementById('billing_street_name').value;
+                    let town_billing = document.getElementById('billing_town').value;
+                    let city_billing = document.getElementById('billing_city').value;
+                    let postcode_billing = document.getElementById('billing_post_code').value;
 
-                let address_billing = housename_billing + ", " + streetname_billing + ", " + town_billing + ", " + city_billing + ", " + postcode_billing;
+                    address_billing = housename_billing + ", " + streetname_billing + ", " + town_billing + ", " + city_billing + ", " + postcode_billing;
+                } else {
+                    address_billing = document.getElementById('billing_address');
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: 'userprofile/updateaddress',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'type': 'billing',
+                        'address': address_billing
+                    },
+                    success: function(data, textStatus, xhr) {
+                        let popup = document.getElementById('personal-info-error');
+                        popup.innerHTML = data.msg;
+                        if(popup.classList.contains('alert-danger')){
+                            popup.classList.remove('alert-danger');
+                            popup.classList.add('alert-success');
+                        }
+                        if(popup.classList.contains('hidden')){
+                            popup.classList.remove('hidden');
+                        }
+                        setTimeout(function(){
+                            popup.classList.add('hidden');
+                        }, 3000);
+
+                        document.getElementById('current-personal-billing-address').innerHTML = address_billing.split(', ').join('<br>');
+                        if(manual_billing_open){
+                            toggleManualAddress('billing');
+                        }
+                    }
+
+                });
 
                 document.getElementById('billing_address').value = address_billing;
                 break;
@@ -1443,6 +1575,19 @@
                 img.style.top = '37px';
             }
             img.style.right = '5px';
+        }
+    }
+
+    function focusAddress(type){
+        switch (type) {
+            case 'delivery':
+                document.getElementById('delivery_address').focus();
+                break;
+            case 'billing':
+                document.getElementById('billing_address').focus();
+                break;
+            default:
+                break;
         }
     }
 </script>

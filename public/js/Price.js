@@ -126,11 +126,11 @@ function getPrice(){
         if(basePrices != null && grade != null && network != null){
         
             basePrice = Object.values(basePrices)[grade-1] - network;
-            basePrice = Math.round((basePrice + Number.EPSILON) * 100) / 100
+            // basePrice = Math.round((basePrice + Number.EPSILON) * 100) / 100
     
             $('#product-price').text('£' + basePrice);
     
-            console.log(grade);
+            //console.log(grade);
     
             if(grade == 1){
                 $('#grade').val('Excellent Working');

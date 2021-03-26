@@ -55,6 +55,8 @@ Route::get('/userprofile/deleteorder/{id}', 'Customer\CustomerController@deleteO
 
 Route::post('/userprofile/verify', 'Customer\CustomerController@verify')->middleware('auth');
 Route::post('/userprofile/updatepersonalinfo', 'Customer\CustomerController@updatePersonalInfo')->middleware('auth');
+Route::post('/userprofile/updateaddress', 'Customer\CustomerController@updateAddress')->middleware('auth');
+
 
 Route::post('/userprofile/changepass', 'Customer\CustomerController@changePass')->middleware('auth');
 Route::post('/userprofile/updatecommunications', 'Customer\CustomerController@updateCommunications')->middleware('auth');

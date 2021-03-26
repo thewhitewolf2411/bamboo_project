@@ -354,9 +354,13 @@ class CustomerController extends Controller
     }
 
 
+    /**
+     * Update user personal information.
+     */
     public function updatePersonalInfo(Request $request){
         // validate data
         $validation_error_msg = [];
+        //$required = ['first_name', 'last_name', 'birth_day', 'birth_month', 'birth_year', 'contact_number', 'delivery_address', 'billing_address', 'preffered_os'];
         $required = ['first_name', 'last_name', 'birth_day', 'birth_month', 'birth_year', 'contact_number', 'delivery_address', 'billing_address', 'preffered_os'];
         foreach($required as $field){
             if(!isset($request->all()[$field])){
@@ -377,14 +381,46 @@ class CustomerController extends Controller
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'contact_number' => $request->contact_number,
-            'delivery_address' => $request->delivery_address,
-            'billing_address' => $request->billing_address,
+            // 'delivery_address' => $request->delivery_address,
+            // 'billing_address' => $request->billing_address,
             'current_phone' => $request->current_phone,
             'preffered_os' => $request->preffered_os,
             'birth_date' => $birth_date
         ]);
         return response(['status' => 'success', 'msg' => 'Personal info successfully updated.']);
     }
+
+
+    /**
+     * Update user delivery/billing address.
+     */
+    public function updateAddress(Request $request){
+        if(isset($request->type)){
+
+            switch ($request->type) {
+                case 'delivery':
+                    $user = User::find(Auth::user()->id);
+                    $user->update([
+                        'delivery_address' => $request->address,
+                    ]);
+                    break;
+
+                case 'billing':
+                    $user = User::find(Auth::user()->id);
+                    $user->update([
+                        'billing_address' => $request->address,
+                    ]);
+                    break;
+
+                default:
+                    # code...
+                    break;
+            }
+            
+            return response(['status' => 'success', 'msg' => ucfirst($request->type).' address successfully updated.']);
+        }
+    }
+
 
     /**
      * Change user password.
