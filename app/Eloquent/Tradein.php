@@ -267,7 +267,11 @@ class Tradein extends Model
     }
 
     public function isSIMLocked(){
-        return null;
+        if($this->correct_network === "unlocked" || $this->correct_network === null){
+            return false;
+        }
+
+        return true;
     }
 
     public function getMissingImage(){
@@ -1062,4 +1066,5 @@ class Tradein extends Model
 
         return $difference;
     }
+
 }

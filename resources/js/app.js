@@ -22,6 +22,7 @@ require('./scripts/Settings');
 require('./scripts/SalesLotDespatch');
 require('./scripts/Messages');
 require('./scripts/Blogs');
+require('./scripts/AddUser');
 
 "use strict";
 

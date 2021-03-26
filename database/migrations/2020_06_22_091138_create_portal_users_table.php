@@ -25,7 +25,7 @@ class CreatePortalUsersTable extends Migration
             $table->boolean('trays_managment')->default(false);
             $table->boolean('quarantine_managment')->default(false);
             $table->boolean('warehouse_management')->default(false);
-            $table->boolean('sales_lot')->default(false);
+            $table->boolean('sales_lots')->default(false);
             $table->boolean('despatch')->default(false);
             $table->boolean('buying')->default(false);
             $table->boolean('ecommerence_orders')->default(false);

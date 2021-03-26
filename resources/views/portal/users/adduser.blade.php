@@ -5,6 +5,7 @@
 <head>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -86,11 +87,11 @@
                                     <label class="form-check-label" for="receiving">Receiving</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="device_testing" id="device_testing" @if(isset($userdata) && $thisportalUser->recdevice_testingycle) checked @endif>
+                                    <input type="checkbox" class="form-check-input" name="device_testing" id="device_testing" @if(isset($userdata) && $thisportalUser->device_testing) checked @endif>
                                     <label class="form-check-label" for="device_testing">Device Testing</label>
                                 </div>
                                 <div class="form-group p20 w-25">
-                                    <input type="checkbox" class="form-check-input" name="trolley_managment" id="trolley_managment" @if(isset($userdata) && $thisportalUser->trolley_managment) checked @endif>
+                                    <input type="checkbox" class="form-check-input" name="trolley_managment" id="trolley_managment" @if(isset($userdata) && $thisportalUser->trolley_management) checked @endif>
                                     <label class="form-check-label" for="trolley_managment">Trolley Management</label>
                                 </div>
                                 <div class="form-group p20 w-25">
@@ -107,7 +108,7 @@
                                 </div>
                                 <div class="form-group p20 w-25">
                                     <input type="checkbox" class="form-check-input" name="sales_lots" id="sales_lots" @if(isset($userdata) && $thisportalUser->sales_lots) checked @endif>
-                                    <label class="form-check-label" for="warehouse_management">Sales Lots</label>
+                                    <label class="form-check-label" for="sales_lots">Sales Lots</label>
                                 </div>
                                 <div class="form-group p20 w-25">
                                     <input type="checkbox" class="form-check-input" name="despatch" id="despatch" @if(isset($userdata) && $thisportalUser->despatch) checked @endif>

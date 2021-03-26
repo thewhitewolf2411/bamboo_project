@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
             'trays_managment'=>true,
             'quarantine_managment'=>true,
             'warehouse_management'=>true,
-            'sales_lot'=>true,
+            'sales_lots'=>true,
             'despatch'=>true,
             'buying'=>true,
             'ecommerence_orders'=>true,
@@ -89,7 +89,6 @@ class DatabaseSeeder extends Seeder
             'submit_payments'=>true,
             'payment_confirmations'=>true,
             'failed_payments'=>true,
-            'sales_lot'=>true,
             'despatch'=>true
         ]);
 
