@@ -8,6 +8,10 @@
         </div>
     </div>
 
+    <a class="back-to-home-footer mt-3" href="/">
+        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to home</p>
+    </a>
+
     <div class="container">
 
         @if(count($blogs) === 0)
@@ -15,79 +19,148 @@
 
         @else
 
-        <div class="row">
-            <div class="col-md-8">
-                <a href="/news/{{$blogs->first()->id}}">
-                    <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs[0]->image_1}}')">
-                        <img src="/storage/news_images/{{$blogs->first()->image_1}}" height="100%" style="max-height: 578px; opacity:0">
-                        <div class="news-1-content-container">
-                            <div @if($blogs->first()->cms_type === 0) class="news-tag" @elseif($blogs->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
-                                <p class="tag-content">@if($blogs->first()->cms_type === 0) NEWS @elseif($blogs->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
+        <div class="news-main-row">
+            {{-- <div class="col-md-8"> --}}
+            <div class="news-primary">
+                <a class="news-main-item" href="/news/{{$blogs->first()->id}}">
+                    {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
+                    <img class="news-image main" src="/storage/news_images/{{$blogs->first()->image_1}}">
+                    <div class="news-content-container">
+                        <div @if($blogs->first()->cms_type === 0) class="news-tag" @elseif($blogs->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
+                            <p class="tag-content">@if($blogs->first()->cms_type === 0) NEWS @elseif($blogs->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
+                        </div>
+                        <div class="news-title main mt-2">
+                            <p>{{$blogs->first()->cms_title}}</p>
+                        </div>
+                        <div class="row m-0 mt-2">
+                            <div class="news-author-row mr-2">
+                                <img class="news-user-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
+                                <p class="author-p">{{$blogs->first()->author}}</p>
                             </div>
-                            <div class="main-news-title">
-                                <p>{{$blogs[0]->cms_title}}</p>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4"><img src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}" width="20px"><p class="author-p">{{$blogs[0]->author}}</p></div>
-                                <div class="col-md-4"><img src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}" width="20px"><p class="created-at-p">{{$blogs[0]->created_at}}</p></div>
-                                
+                            <div class="news-created-at-row ml-4">
+                                <img class="news-created-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                <p class="created-at-p">{{$blogs->first()->created_at->format('F d, Y')}}</p>
                             </div>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="col-md-4">
-                @if(count($blogs)>1)
-                <div class="mb-3">
-                    <a href="/news/{{$blogs[1]->id}}">
-                        <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs[0]->image_1}}')">
-                            <img src="/storage/news_images/{{$blogs[1]->image_1}}" style="max-height: 578px; opacity:0; width:100%">
-                            <div class="news-1-content-container">
-                                <div @if($blogs[0]->cms_type === 0) class="news-tag" @elseif($blogs[0]->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
-                                    <p class="tag-content">@if($blogs[1]->cms_type === 0) NEWS @elseif($blogs[1]->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
+            {{-- <div class="col-md-4"> --}}
+                <div class="news-secondary">
+                    @if($blogs->count() >= 3)
+                        <a class="news-secondary-item first" href="/news/{{$blogs->skip(1)->first()->id}}">
+                            {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
+                            <img class="news-image main" src="/storage/news_images/{{$blogs->skip(1)->first()->image_1}}">
+                            <div class="news-content-container">
+                                <div @if($blogs->skip(1)->first()->cms_type === 0) class="news-tag" @elseif($blogs->skip(1)->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
+                                    <p class="tag-content">@if($blogs->skip(1)->first()->cms_type === 0) NEWS @elseif($blogs->skip(1)->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
                                 </div>
-                                <div class="main-news-title">
-                                    <p>{{$blogs[1]->cms_title}}</p>
+                                <div class="news-title main mt-2">
+                                    <p>{{$blogs->skip(1)->first()->cms_title}}</p>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-4"><img src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}" width="20px"><p class="author-p">{{$blogs[1]->author}}</p></div>
-                                    <div class="col-md-4"><img src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}" width="20px"><p class="created-at-p">{{$blogs[1]->created_at}}</p></div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                @endif
-                @if(count($blogs)>2)
-                <div class="mt-3">
-                    <a href="/news/{{$blogs[2]->id}}">
-                        <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs[2]->image_1}}')">
-                            <img src="/storage/news_images/{{$blogs[2]->image_1}}" style="max-height: 578px; opacity:0; width:100%">
-                            <div class="news-1-content-container">
-                                <div @if($blogs[0]->cms_type === 0) class="news-tag" @elseif($blogs[0]->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
-                                    <p class="tag-content">@if($blogs[2]->cms_type === 0) NEWS @elseif($blogs[2]->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
-                                </div>
-                                <div class="main-news-title">
-                                    <p>{{$blogs[0]->cms_title}}</p>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4"><img src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}" width="20px"><p class="author-p">{{$blogs[2]->author}}</p></div>
-                                    <div class="col-md-4"><img src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}" width="20px"><p class="created-at-p">{{$blogs[2]->created_at}}</p></div>
-                                    
+                                <div class="row m-0 mt-2">
+                                    <div class="news-author-row mr-2">
+                                        <img class="news-user-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
+                                        <p class="author-p">{{$blogs->skip(1)->first()->author}}</p>
+                                    </div>
+                                    <div class="news-created-at-row ml-4">
+                                        <img class="news-created-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                        <p class="created-at-p">{{$blogs->skip(1)->first()->created_at->format('F d, Y')}}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+
+                        <a class="news-secondary-item second" href="/news/{{$blogs->skip(2)->first()->id}}">
+                            {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
+                            <img class="news-image main" src="/storage/news_images/{{$blogs->skip(2)->first()->image_1}}">
+                            <div class="news-content-container">
+                                <div @if($blogs->skip(2)->first()->cms_type === 0) class="news-tag" @elseif($blogs->skip(2)->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
+                                    <p class="tag-content">@if($blogs->skip(2)->first()->cms_type === 0) NEWS @elseif($blogs->skip(2)->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
+                                </div>
+                                <div class="news-title main mt-2">
+                                    <p>{{$blogs->skip(2)->first()->cms_title}}</p>
+                                </div>
+                                <div class="row m-0 mt-2">
+                                    <div class="news-author-row mr-2">
+                                        <img class="news-user-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
+                                        <p class="author-p">{{$blogs->skip(2)->first()->author}}</p>
+                                    </div>
+                                    <div class="news-created-at-row ml-4">
+                                        <img class="news-created-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                        <p class="created-at-p">{{$blogs->skip(2)->first()->created_at->format('F d, Y')}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    @endif
+
+
+                    @if($blogs->count() == 2)
+                        <a class="news-main-item first-full-height" href="/news/{{$blogs->skip(1)->first()->id}}">
+                            {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
+                            <img class="news-image main" src="/storage/news_images/{{$blogs->skip(1)->first()->image_1}}">
+                            <div class="news-content-container">
+                                <div @if($blogs->skip(1)->first()->cms_type === 0) class="news-tag" @elseif($blogs->skip(1)->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
+                                    <p class="tag-content">@if($blogs->skip(1)->first()->cms_type === 0) NEWS @elseif($blogs->skip(1)->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
+                                </div>
+                                <div class="news-title main mt-2">
+                                    <p>{{$blogs->skip(1)->first()->cms_title}}</p>
+                                </div>
+                                <div class="row m-0 mt-2">
+                                    <div class="news-author-row mr-2">
+                                        <img class="news-user-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
+                                        <p class="author-p">{{$blogs->skip(1)->first()->author}}</p>
+                                    </div>
+                                    <div class="news-created-at-row ml-4">
+                                        <img class="news-created-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                        <p class="created-at-p">{{$blogs->skip(1)->first()->created_at->format('F d, Y')}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    @endif
+
                 </div>
-                @endif
-            </div>
+            {{-- </div> --}}
         </div>
 
         @endif
 
-        
+        <div class="latest-news d-flex flex-column mt-5 ml-2 mr-2">
+            <div class="title">Latest News</div>
+    
+            <div class="news-row mt-2">
+                @foreach($all_news as $news)
+                    <a class="all-news-item" href="/news/{{$news->id}}">
+                        {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
+                        <img class="news-image main" src="/storage/news_images/{{$news->image_1}}">
+                        <div class="news-content-container bottom-centered">
+                            <div class="news-tag">
+                                <p class="tag-content">NEWS</p>
+                            </div>
+                            <div class="news-title main mt-2">
+                                <p>{{$news->cms_title}}</p>
+                            </div>
+                            <div class="row m-0 mt-2">
+                                <div class="news-author-row mr-2 mb-2">
+                                    <img class="news-user-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
+                                    <p class="author-p">{{$news->author}}</p>
+                                </div>
+                                <div class="news-created-at-row">
+                                    <img class="news-created-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                    <p class="created-at-p">{{$news->created_at->format('F d, Y')}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+
     </div>
+
+    
 
     <div class="home-element home-links-container">
         
@@ -121,5 +194,54 @@
     </div>
     
 </div>
+
+<script>
+    $(document).ready(function() {
+        $(".news-main-item")
+        .mouseenter(function() {
+            zoomIn(this);
+        })
+        .mouseleave(function() {
+            zoomOut(this)
+        });
+
+        $(".news-secondary-item.first")
+        .mouseenter(function() {
+            zoomIn(this);
+        })
+        .mouseleave(function() {
+            zoomOut(this)
+        });
+
+        $(".news-secondary-item.second")
+        .mouseenter(function() {
+            zoomIn(this);
+        })
+        .mouseleave(function() {
+            zoomOut(this);
+        });
+
+        $(".all-news-item")
+        .mouseenter(function() {
+            zoomIn(this);
+        })
+        .mouseleave(function() {
+            zoomOut(this);
+        });
+    });
+    
+    function zoomIn(aelement){
+        let img = aelement.childNodes[1];
+        if(!img.classList.contains('zoomed')){
+            img.classList.add('zoomed');
+        }
+    }
+    function zoomOut(aelement){
+        let img = aelement.childNodes[1];
+        if(img.classList.contains('zoomed')){
+            img.classList.remove('zoomed');
+        }
+    }
+</script>
 
 @endsection

@@ -79,8 +79,17 @@ class PagesController extends Controller
         $products = $buyingProducts->merge($sellingProducts);
 
         $blogs = Blog::all()->sortByDesc('id');
-
-        return view('customer.news', ['products'=>$products, 'blogs'=>$blogs]);
+        $all_news = Blog::where('cms_type', 0)->get();
+        $all_blogs = Blog::where('cms_type', 1)->get();
+        $all_howto = Blog::where('cms_type', 3)->get();
+        
+        return view('customer.news', [
+            'products'=>$products, 
+            'blogs'=>$blogs, 
+            'all_news' => $all_news, 
+            'all_blogs' => $all_blogs, 
+            'how_to' => $all_howto
+        ]);
     }
 
     public function showSingleNews($id){
