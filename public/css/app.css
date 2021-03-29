@@ -12869,6 +12869,11 @@ header {
   padding: 0 120px 0 120px;
   justify-content: space-between;
   background: #fff;
+  transition: height 0.5s ease;
+}
+
+#full-bamboo-logo {
+  transition: all 0.5s ease;
 }
 
 .mobile-logo {

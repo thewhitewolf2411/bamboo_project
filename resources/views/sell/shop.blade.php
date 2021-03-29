@@ -134,7 +134,7 @@
                 @if($canSeeMore)
                     <div class="see-more-sell-devices mb-5">
                         <a class="" href="/sell/shop/{{$parameter}}/all">
-                            See more devices
+                            See all devices
                         </a>
                     </div>
                 @endif
