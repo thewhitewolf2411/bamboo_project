@@ -1,7 +1,7 @@
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
-  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+  if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
     // reduce header
     let header = document.getElementById('header');
     let img = document.getElementById('full-bamboo-logo');
@@ -25,7 +25,7 @@ function scrollFunction() {
     img.style.width = '550px';
     urls.style.padding = '0 120px 0 120px';
     urls.style.justifyContent = 'flex-end';
-    header.style.padding = '0 60px 60px';
-    logo_container.style = 'margin-top: 35px;'
+    header.style.padding = '0 120px 0 120px';
+    logo_container.style = 'margin-top: 50px;'
   }
 }

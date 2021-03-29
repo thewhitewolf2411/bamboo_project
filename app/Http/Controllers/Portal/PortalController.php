@@ -164,6 +164,17 @@ class PortalController extends Controller
         return redirect()->back();
     }
     
+    public function getKlaviyoLogs(){
+        $portalUser = PortalUsers::where('user_id', Auth::user()->id)->first();
 
+        $file_path = storage_path('logs/klaviyo_logs.log');
+        $data = [];
+
+        if(File::exists($file_path)){
+            $data = File::get($file_path);
+        }
+
+        return view('portal.logs.klaviyologs',['data' => $data, 'portalUser' => $portalUser]);
+    }
 }
 

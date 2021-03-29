@@ -4,6 +4,8 @@ namespace App\Services;
 use App\Eloquent\Tradein;
 use Klaviyo\Klaviyo as Klaviyo;
 use Klaviyo\Model\EventModel as KlaviyoEvent;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 
 class KlaviyoEmail{
 
@@ -473,7 +475,25 @@ class KlaviyoEmail{
     }
 
     public function sendEmail($event){
-        $this->client->publicAPI->track( $event );  
+        $response =  $this->client->publicAPI->track( $event ); 
+
+        $toArray = $event->toArray();
+        $log = [
+            'event' => $toArray['event'],
+            // 'properties' => implode(', ', $toArray['properties']),
+            'email' => $toArray['customer_properties']['email'],
+            'device' => isset($toArray['customer_properties']['$device']) ? $toArray['customer_properties']['$device'] : null,
+            'tradein_id' => isset($toArray['customer_properties']['$tradein_id']) ? $toArray['customer_properties']['$tradein_id'] : null,
+            //'event' => $event->getEvent(),
+            'sent_successfully' => ($response === "1") ? true : false
+        ];
+
+        // classmethods -> jsonSerialize, toArray
+
+        // logging channel name
+        $orderLog = new Logger('klaviyo_logs');
+        $orderLog->pushHandler(new StreamHandler(storage_path('logs/klaviyo_logs.log')), Logger::INFO);
+        $orderLog->info('KlaviyoLog', $log);
     }
 }
 

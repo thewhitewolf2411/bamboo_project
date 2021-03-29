@@ -127,6 +127,8 @@ Route::post('/userprofile/accountdetails', 'Customer\CustomerController@changeAc
 Route::get('/portal', 'Portal\PortalController@portal')->name('portal');
 Route::get('/portal/seeddatapage', 'Portal\PortalController@seedDataPage')->name('seedDataPage');
 Route::post('/portal/seeddata', 'Portal\PortalController@seedData')->name('seedData');
+Route::get('/portal/klaviyologs', 'Portal\PortalController@getKlaviyoLogs');
+
 
 //customer-care
 Route::get('/portal/customer-care', 'Portal\CustomerCareController@showCustomerCare')->name('customerCare');
