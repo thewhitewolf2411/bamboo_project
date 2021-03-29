@@ -158,6 +158,127 @@
             </div>
         </div>
 
+
+        <div class="latest-blogs d-flex flex-column mt-5 ml-2 mr-2">
+            <div class="title">Latest Blogs</div>
+    
+            <div class="blogs-row mt-2">
+                @foreach($all_blogs as $blog)
+                    <a class="all-blogs-item" href="/news/{{$blog->id}}">
+                        {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
+                        <img class="news-image main" src="/storage/news_images/{{$blog->image_1}}">
+                        <div class="news-content-container bottom-centered">
+                            <div class="blog-tag">
+                                <p class="tag-content">BLOG</p>
+                            </div>
+                            <div class="news-title main mt-2">
+                                <p>{{$blog->cms_title}}</p>
+                            </div>
+                            <div class="row m-0 mt-2">
+                                <div class="news-author-row mr-2 mb-2">
+                                    <img class="news-user-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
+                                    <p class="author-p">{{$blog->author}}</p>
+                                </div>
+                                <div class="news-created-at-row">
+                                    <img class="news-created-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                    <p class="created-at-p">{{$blog->created_at->format('F d, Y')}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+
+    </div>
+
+    <div class="latest-howto d-flex flex-column mt-5">
+
+        <div class="howto-top-two">
+            <p>How to with boo</p>
+            <div class="main-howto-row container">
+
+                <a class="main-howto-item" href="/news/{{$all_howto->first()->id}}">
+                    {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
+                    <img class="news-image main" src="/storage/news_images/{{$all_howto->first()->image_1}}">
+                    <div class="news-content-container bottom-centered">
+                        <div class="how-to-tag">
+                            <p class="tag-content">HOW TO, WITH BOO</p>
+                        </div>
+                        <div class="news-title main mt-2">
+                            <p>{{$all_howto->first()->cms_title}}</p>
+                        </div>
+                        <div class="row m-0 mt-2">
+                            <div class="news-author-row mr-2 mb-2">
+                                <img class="news-user-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
+                                <p class="author-p">{{$all_howto->first()->author}}</p>
+                            </div>
+                            <div class="news-created-at-row">
+                                <img class="news-created-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                <p class="created-at-p">{{$all_howto->first()->created_at->format('F d, Y')}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="main-howto-item" href="/news/{{$all_howto->skip(1)->first()->id}}">
+                    {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
+                    <img class="news-image main" src="/storage/news_images/{{$all_howto->skip(1)->first()->image_1}}">
+                    <div class="news-content-container bottom-centered">
+                        <div class="how-to-tag">
+                            <p class="tag-content">HOW TO, WITH BOO</p>
+                        </div>
+                        <div class="news-title main mt-2">
+                            <p>{{$all_howto->skip(1)->first()->cms_title}}</p>
+                        </div>
+                        <div class="row m-0 mt-2">
+                            <div class="news-author-row mr-2 mb-2">
+                                <img class="news-user-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
+                                <p class="author-p">{{$all_howto->skip(1)->first()->author}}</p>
+                            </div>
+                            <div class="news-created-at-row">
+                                <img class="news-created-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                <p class="created-at-p">{{$all_howto->skip(1)->first()->created_at->format('F d, Y')}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="howto-transparent">
+
+        </div>
+
+        <div class="title container">Latest How To With Boo Articles</div>
+
+        <div class="howto-row container">
+            @foreach($all_howto as $howto)
+                <a class="all-howto-item" href="/news/{{$howto->id}}">
+                    {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
+                    <img class="news-image main" src="/storage/news_images/{{$howto->image_1}}">
+                    <div class="news-content-container bottom-centered">
+                        <div class="how-to-tag">
+                            <p class="tag-content">HOW TO, WITH BOO</p>
+                        </div>
+                        <div class="news-title main mt-2">
+                            <p>{{$howto->cms_title}}</p>
+                        </div>
+                        <div class="row m-0 mt-2">
+                            <div class="news-author-row mr-2 mb-2">
+                                <img class="news-user-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
+                                <p class="author-p">{{$howto->author}}</p>
+                            </div>
+                            <div class="news-created-at-row">
+                                <img class="news-created-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                <p class="created-at-p">{{$howto->created_at->format('F d, Y')}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            @endforeach
+        </div>
     </div>
 
     
@@ -222,6 +343,30 @@
         });
 
         $(".all-news-item")
+        .mouseenter(function() {
+            zoomIn(this);
+        })
+        .mouseleave(function() {
+            zoomOut(this);
+        });
+
+        $(".all-blogs-item")
+        .mouseenter(function() {
+            zoomIn(this);
+        })
+        .mouseleave(function() {
+            zoomOut(this);
+        });
+
+        $(".all-howto-item")
+        .mouseenter(function() {
+            zoomIn(this);
+        })
+        .mouseleave(function() {
+            zoomOut(this);
+        });
+
+        $(".main-howto-item")
         .mouseenter(function() {
             zoomIn(this);
         })

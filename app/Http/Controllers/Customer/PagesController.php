@@ -81,14 +81,14 @@ class PagesController extends Controller
         $blogs = Blog::all()->sortByDesc('id');
         $all_news = Blog::where('cms_type', 0)->get();
         $all_blogs = Blog::where('cms_type', 1)->get();
-        $all_howto = Blog::where('cms_type', 3)->get();
+        $all_howto = Blog::where('cms_type', 2)->get();
         
         return view('customer.news', [
             'products'=>$products, 
             'blogs'=>$blogs, 
             'all_news' => $all_news, 
             'all_blogs' => $all_blogs, 
-            'how_to' => $all_howto
+            'all_howto' => $all_howto
         ]);
     }
 
@@ -99,8 +99,10 @@ class PagesController extends Controller
         $products = $buyingProducts->merge($sellingProducts);
 
         $blog = Blog::where('id', $id)->first();
+        $other = Blog::all()->except($id)->take(3);
+        $howto = Blog::where('cms_type',2)->where('id', '!=', $id)->get()->take(2);
 
-        return view('customer.news', ['products'=>$products, 'blog'=>$blog]);
+        return view('customer.newsarticle', ['blog'=>$blog, 'products' => $products, 'blogs' => $other, 'howto' => $howto]);
     }
 
     public function showSupportAndServicePage(){
