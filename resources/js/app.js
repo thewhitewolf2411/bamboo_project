@@ -23,6 +23,7 @@ require('./scripts/SalesLotDespatch');
 require('./scripts/Messages');
 require('./scripts/Blogs');
 require('./scripts/AddUser');
+require('./scripts/PrintLabels');
 
 "use strict";
 

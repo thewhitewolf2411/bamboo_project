@@ -34,14 +34,17 @@
 </style>
 
 <div style="margin: 0 auto">
-
+    
+    <table style="margin-bottom: 30px;">
+        <tr>
+            <td><p>{{$binreason}}</p></td>
+        </tr>
+    </table>
     <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($barcode,'C128') }}" height="25" width="180" />
     <table>
+
         <tr>
             <td><p>{{$barcode}}</p></td>
-        </tr>
-        <tr>
-            <td><p style="font-size: 14pt; text-decoration:underline;">{{$barcode}}</p></td>
         </tr>
     </table>
     

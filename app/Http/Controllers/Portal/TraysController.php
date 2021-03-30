@@ -16,6 +16,7 @@ use App\Eloquent\PortalUsers;
 use App\Eloquent\Tradein;
 use App\Eloquent\Trolley;
 use App\Eloquent\TrolleyContent;
+use App\Services\GetLabel;
 
 class TraysController extends Controller
 {
@@ -115,41 +116,16 @@ class TraysController extends Controller
         return view('portal.trays.tray')->with(['portalUser'=>$portalUser, 'tray'=>$tray, 'trolleys'=>$trolleys, 'trayContetnt'=>$trayContent, 'tradeins'=>$tradeins]);
     }
 
-    public function printTrayLabel($id){
+    public function printTrayLabel(Request $request){
 
-        $traybarcode = $id;
-     
-        $barcode = DNS1D::getBarcodeHTML($traybarcode, 'C128');
+        $trayid = $request->trayid;
 
-        $this->generateTrayLabel($barcode, $traybarcode);
-    }
+        $tray = Tray::where('id', $trayid)->first();
 
-    public function generateTrayLabel($barcode, $id){
+        $getlabel = new GetLabel();
+        $pdf = $getlabel->getTrayLabel($tray);
 
-        $brandLet = substr($id, 1, 1);
-        $brand = "";
-
-        if($brandLet === "A"){
-            $brand = "Apple";
-        }
-        if($brandLet === "S"){
-            $brand = "Samsung";
-        }
-        if($brandLet === "H"){
-            $brand = "Huawei";
-        }
-        if($brandLet === "M"){
-            $brand = "Miscellaneous";
-        }
-        if($brandLet === "Q"){
-            $brand = "Quarantine";
-        }
-
-        $filename = "tray-" . $id . ".pdf";
-        $customPaper = array(0,0,141.90,283.80);
-        PDF::loadView('portal.labels.tray', array('barcode'=>$barcode, 'id'=>$id, 'brand'=>$brand))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
-
-        $this->downloadFile($filename);
+        return response('pdf/traylabel-'.$tray->tray_name, 200);
         
     }
 

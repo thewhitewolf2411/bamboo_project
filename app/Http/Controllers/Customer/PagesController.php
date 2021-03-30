@@ -35,7 +35,7 @@ class PagesController extends Controller
                     $sellingProducts = SellingProduct::all();
             
                     $products = $buyingProducts->merge($sellingProducts);
-                    return view('welcome')->with('products', $products);
+                    return view('customer.home')->with('products', $products);
                     break;
                 case 1:
                     return \redirect('/portal');

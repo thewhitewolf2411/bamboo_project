@@ -11,11 +11,6 @@ class Boxing{
 
     public function checkBoxStatusForDevice(Tradein $tradein, Tray $box, Request $request){
 
-        #dd($tradein, $box, $request);
-
-        if($request->tradeinid === ''){
-            return ['Please input device barcode.', 404];
-        }
 
         $traycontent = TrayContent::where('trade_in_id', $tradein->id)->where('tray_id', $box->id)->first();
         if($traycontent !== null){

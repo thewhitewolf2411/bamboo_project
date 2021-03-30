@@ -47,5 +47,16 @@ class Trolley extends Model
     public function getTrolleyBarcode(){
         return DNS1D::getBarcodeHTML($this->trolley_name, 'C128');
     }
+
+    public function getTrolleyType(){
+        switch($this->trolley_type){
+            case "R":
+                return "Receiving Trolley";
+            break;
+            case "T":
+                return "Testing Trolley";
+            break;
+        }
+    }
 }
 

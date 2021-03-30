@@ -50,8 +50,6 @@ class Tradein extends Model
         if($this->correct_product_id !== null){
             return SellingProduct::where('id', $this->correct_product_id)->first()->product_name;
         }
-        //dd(SellingProduct::where('id', $id)->first(), $this);
-       // return SellingProduct::where('id', $id)->first()->product_name;
        return SellingProduct::where('id', $this->product_id)->first()->product_name;
     }
 
@@ -341,66 +339,6 @@ class Tradein extends Model
         }
 
         return false;
-    }
-
-    public function getDeviceLabel(){
-        $barcodeNumber = $this->barcode;
-        $barcode = DNS1D::getBarcodeHTML($this->barcode, 'C128');
-        $location = $this->getTrayName($this->id);
-
-        $customPaper = array(0,0,141.90,283.80);
-
-        $quarantineReason = $this->getBambooStatus();
-
-        if($this->isInQuarantine()){
-            
-            $pdf = PDF::loadView('portal.labels.devicelabels.quarantinelabel', 
-            array(
-                'barcode_number'=>$barcodeNumber,
-                'manifacturer'=>$this->getBrandName($this->product_id),
-                'model'=>$this->getProductName($this->product_id),
-                'imei'=>$this->imei_number,
-                'location'=>$location,
-                'quarantineReason'=>$quarantineReason,
-                'barcode'=>$barcode,
-                ))
-            ->setPaper($customPaper, 'landscape')
-            ->save('pdf/devicelabel-'. $barcodeNumber .'.pdf');
-
-            return true;
-        }
-        else if($this->job_state === "10"){
-            $pdf = PDF::loadView('portal.labels.devicelabels.testingpassed', 
-            array(
-                'barcode_number'=>$barcodeNumber,
-                'manifacturer'=>$this->getBrandName($this->product_id),
-                'model'=>$this->getProductName($this->product_id),
-                'imei'=>$this->imei_number,
-                'location'=>$location,
-                'bambooGrade'=>$this->cosmetic_condition,
-                'network'=>$this->correct_network,
-                'barcode'=>$barcode,
-                ))
-            ->setPaper($customPaper, 'landscape')
-            ->save('pdf/devicelabel-'. $barcodeNumber .'.pdf');
-
-            return true;
-        }
-        else{
-            $pdf = PDF::loadView('portal.labels.devicelabels.receivingpass', 
-            array(
-                'barcode_number'=>$barcodeNumber,
-                'manifacturer'=>$this->getBrandName($this->product_id),
-                'model'=>$this->getProductName($this->product_id),
-                'imei'=>$this->imei_number,
-                'location'=>$location,
-                'barcode'=>$barcode,
-                ))
-            ->setPaper($customPaper, 'landscape')
-            ->save('pdf/devicelabel-'. $barcodeNumber .'.pdf');
-
-            return true;
-        }
     }
 
     public function isFullyFunctional(){

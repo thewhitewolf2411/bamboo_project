@@ -45,9 +45,11 @@ window.printDeviceLabelOrderManagemet = function(print_device_id){
         },
         success:function(response){
             $(document).ready(function(){
-                $('#tradein-iframe').attr('src', '/' + response);
+                $('#tradein-iframe').attr('src', '/' + response + '.pdf');
                 $('#label-trade-in-modal').modal('show');
             });
+        },
+        error:function(response){
             console.log(response);
         }
     });

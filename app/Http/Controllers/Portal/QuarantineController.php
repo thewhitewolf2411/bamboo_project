@@ -9,9 +9,6 @@ use App\Eloquent\Tradein;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
 use Auth;
-use DNS1D;
-use DNS2D;
-use PDF;
 use File;
 use Session;
 use App\Services\BinService;
@@ -20,6 +17,7 @@ use App\Services\NotificationService;
 use App\Services\MoveToTray;
 use App\Services\Testing;
 use App\User;
+use App\Services\GetLabel;
 
 class QuarantineController extends Controller
 {
@@ -479,23 +477,15 @@ class QuarantineController extends Controller
         
     }
 
-    public function printBinLabel($binname){
-        $traybarcode = $binname;
-     
-        $barcode = DNS1D::getBarcodeHTML($traybarcode, 'C128');
+    public function printBinLabel(Request $request){
+        $binid = $request->binid;
 
-        $this->generateBinLabel($barcode, $traybarcode);
-    }
+        $bin = Tray::where('id', $binid)->first();
 
-    public function generateBinLabel($barcode, $id){
+        $getlabel = new GetLabel();
+        $pdf = $getlabel->getBinLabel($bin);
 
-
-        $filename = "bin-" . $id . ".pdf";
-        $customPaper = array(0,0,141.90,283.80);
-        PDF::loadView('portal.labels.quarantinebin', array('barcode'=>$barcode, 'id'=>$id))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
-
-        $this->downloadFile($filename);
-        
+        return response('pdf/binlabel-'.$bin->tray_name, 200);
     }
 
     public function changeTray($tradeinId, $newTrayId){

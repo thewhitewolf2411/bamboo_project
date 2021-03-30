@@ -20,6 +20,7 @@ use Auth;
 use DNS1D;
 use DNS2D;
 use PDF;
+use App\Services\GetLabel;
 
 class CustomerCareController extends Controller
 {
@@ -637,65 +638,12 @@ class CustomerCareController extends Controller
 
     public function printDeviceLabel(Request $request){
 
+        #dd($request->all());
         $tradein = Tradein::where('barcode', $request->print_device_id)->first();
+        $getLabel = new GetLabel();
+        $pdf = $getLabel->getTradeinLabel($tradein);
+        return response('pdf/devicelabel-'.$request->print_device_id, 200);
 
-        /*$barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
-
-        $trayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
-        if($trayContent !== null){
-            $tray = Tray::where('id', $trayContent->tray_id)->first();
-        }
-        
-        if($tradein->visible_serial !== null){
-            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->serial_number, $tray->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
-        } else {
-            $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $tray->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
-        }*/
-
-        if(isset($request->ajax) && $tradein->getDeviceLabel()){
-            return response('pdf/devicelabel-'. $tradein->barcode .'.pdf', 200);
-        }
-
-        if($tradein->getDeviceLabel()){
-            return redirect()->back()->with(['success'=>'pdf/devicelabel-'. $tradein->barcode .'.pdf']);
-        }
-
-    }
-
-    /**
-     * Generate device label (PDF)
-     */
-    public function generateNewLabel($has_serial, $barcode, $tradein_barcode, $manifacturer, $model, $imei, $location, $cosmetic_condition, $network){
-        $customPaper = array(0,0,141.90,283.80);
-
-        if($has_serial){
-            $pdf = PDF::loadView('portal.labels.devicelabelserial', 
-            array(
-                'barcode'=>$barcode,
-                'tradein_barcode'=>$tradein_barcode,
-                'manifacturer'=>$manifacturer,
-                'model'=>$model,
-                'serial'=>$imei,
-                'location'=>$location,
-                'grade'=>$cosmetic_condition,
-                'network'=>$network))
-            ->setPaper($customPaper, 'landscape')
-            ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
-        } else {
-            $pdf = PDF::loadView('portal.labels.devicelabel', 
-            array(
-                'barcode'=>$barcode,
-                'tradein_barcode'=>$tradein_barcode,
-                'manifacturer'=>$manifacturer,
-                'model'=>$model,
-                'imei'=>$imei,
-                'location'=>$location,
-                'grade'=>$cosmetic_condition,
-                'network'=>$network))
-            ->setPaper($customPaper, 'landscape')
-            ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
-        }
-        
     }
 
 }

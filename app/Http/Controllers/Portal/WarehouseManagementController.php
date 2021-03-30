@@ -23,6 +23,7 @@ use PDF;
 use DNS1D;
 use DNS2D;
 use Session;
+use App\Services\GetLabel;
 
 class WarehouseManagementController extends Controller
 {
@@ -111,16 +112,10 @@ class WarehouseManagementController extends Controller
 
         $brand = $manifacturer;
 
-        $barcode = DNS1D::getBarcodeHTML($trayname, 'C128');
-
         $path = public_path().'/pdf/boxlabels/';
         if(!is_dir($path)){
             mkdir($path, 0777, true);
         }
-
-        $filename = public_path() . "/pdf/boxlabels/box-" . $trayname . ".pdf";
-        $customPaper = array(0,0,141.90,283.80);
-        PDF::loadView('portal.labels.boxlabel', array('barcode'=>$barcode, 'id'=>$trayname, 'brand'=>$brand))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
 
         return redirect('/portal/warehouse-management/box-management/' . $newBox->id)->with(['filename'=>"/pdf/boxlabels/box-" . $trayname . ".pdf"]);
 
@@ -186,15 +181,7 @@ class WarehouseManagementController extends Controller
             array_push($tradeins, $tradein);
         }
 
-        #dd($tradeins);
-
-        $filename = public_path() . "/pdf/boxlabels/box-" . $currentBox->id . ".pdf";
-        if(file_exists($filename)){
-            $showLabel = false;
-        }
-        $customPaper = array(0,0,141.90,283.80);
-        PDF::loadView('portal.labels.boxlabel', array('barcode'=>$barcode, 'id'=>$id, 'brand'=>$brand))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
-
+        
         return view('portal.warehouse.box-management', ['portalUser'=>$portalUser, 'boxes'=>$boxes, 'brands'=>$brands, 'box'=>$currentBox, 'tradeins'=>$tradeins, 'boxedTradeIns'=>$boxedTradeIns, 'showLabel'=>$showLabel]);
     }
 
@@ -419,40 +406,7 @@ class WarehouseManagementController extends Controller
     }
 
     public function printBoxLabel(Request $request){
-        #dd($request->all());
-        $id = $request->boxname;
 
-        $brandLet = substr($id, 1, 1);
-        $brand = "";
-
-        $barcode = DNS1D::getBarcodeHTML($id, 'C128');
-
-        if($brandLet === "A"){
-            $brand = "Apple";
-        }
-        if($brandLet === "S"){
-            $brand = "Samsung";
-        }
-        if($brandLet === "H"){
-            $brand = "Huawei";
-        }
-        if($brandLet === "M"){
-            $brand = "Miscellaneous";
-        }
-        if($brandLet === "Q"){
-            $brand = "Quarantine";
-        }
-
-        $path = public_path().'/pdf/boxlabels/';
-        if(!is_dir($path)){
-            mkdir($path, 0777, true);
-        }
-
-        $filename = public_path() . "/pdf/boxlabels/box-" . $id . ".pdf";
-        $customPaper = array(0,0,141.90,283.80);
-        PDF::loadView('portal.labels.boxlabel', array('barcode'=>$barcode, 'id'=>$id, 'brand'=>$brand))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
-    
-        return response("/pdf/boxlabels/box-" . $id . ".pdf", 200);
     
     }
 
@@ -644,14 +598,15 @@ class WarehouseManagementController extends Controller
 
     public function printBay(Request $request){
 
-        $bay = Trolley::where('trolley_name', $request->bayname)->first();
+        $bayid = $request->bayid;
 
-        $filename = public_path() . "/pdf/baylabels/bay-" . $bay->trolley_name . ".pdf";
-        $customPaper = array(0,0,141.90,283.80);
-        #dd($bay->getTrolleyBarcode());
-        PDF::loadView('portal.labels.baylabel', array('bay'=>$bay))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
-    
-        return response("/pdf/baylabels/bay-" . $bay->trolley_name . ".pdf", 200);
+        $bin = Trolley::where('id', $bayid)->first();
+
+        $getlabel = new GetLabel();
+        $pdf = $getlabel->getBayLabel($bin);
+
+        return response('pdf/baylabel-'.$bin->trolley_name, 200);
+
     }
 
     public function checkAllocateBox(Request $request){
