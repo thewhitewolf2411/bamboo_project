@@ -157,6 +157,7 @@
         </div>
     </div>
 
+    @if(count($howto) > 1)
     <div class="view-blog-howto ml-auto mr-auto mt-5">
         <p class="readmore-view-blog mb-4 ml-2">HOW TO WITH BOO</p>
 
@@ -210,6 +211,7 @@
 
         </div>
     </div>
+    @endif
 
     <div class="home-element home-links-container">
         

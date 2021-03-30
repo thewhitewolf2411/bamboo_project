@@ -256,7 +256,7 @@
 
             <div class="title container">Latest How To With Boo Articles</div>
 
-            <div class="howto-row container">
+            <div class="howto-row transparent-bg container">
                 @foreach($all_howto as $howto)
                     <a class="all-howto-item" href="/news/{{$howto->id}}">
                         {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
