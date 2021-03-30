@@ -58,7 +58,7 @@
       image_padding = '10px';
     }
 
-    if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150 || window.pageYOffset > 150) {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100 || window.pageYOffset > 100) {
       // reduce header
       let header = document.getElementById('header');
       let img = document.getElementById('full-bamboo-logo');
