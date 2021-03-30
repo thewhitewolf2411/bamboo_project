@@ -1,5 +1,4 @@
 @include('cookieConsent::index')
-<script src="{{ asset('js/header.js') }}"></script>
 
 <div id="header" class="header-container navbar-expand-lg navbar-light">
 
@@ -108,3 +107,5 @@
     </div>
 
 </div>
+
+<script type="application/javascript" defer src="{{ asset('js/header.js') }}"></script>

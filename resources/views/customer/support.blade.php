@@ -8,6 +8,9 @@
             <p>Support & Service</p>
         </div>
     </div>
+    <a class="back-to-home-footer mt-3" href="/">
+        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to home</p>
+    </a>
 
     <div class="support-search-element">
         <div class="center-title-container">

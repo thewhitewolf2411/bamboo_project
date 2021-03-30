@@ -558,6 +558,9 @@
                                             @endif
                                         </div>
                                     </div>
+                                    <div class="alert alert-success text-center hidden" id="alert-newsletter">
+                                        Changes saved successfully.
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1154,6 +1157,15 @@
                 newsletter: selected_newsletter,
             },
             success: function(data, textStatus, xhr) {
+                let alert = document.getElementById('alert-newsletter');
+                if(alert.classList.contains('hidden')){
+                    alert.classList.remove('hidden');
+                }
+                setTimeout(() => {
+                    if(!alert.classList.contains('hidden')){
+                        alert.classList.add('hidden');
+                    }
+                }, 3000);
             }
 
         });
@@ -1581,10 +1593,13 @@
     function focusAddress(type){
         switch (type) {
             case 'delivery':
+                console.log('hehe');
                 document.getElementById('delivery_address').focus();
+                document.getElementById('delivery_address').value = '';
                 break;
             case 'billing':
                 document.getElementById('billing_address').focus();
+                document.getElementById('billing_address').value = '';
                 break;
             default:
                 break;
