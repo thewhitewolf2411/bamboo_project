@@ -187,7 +187,11 @@
                         <tr @if($tradein->job_state !== '19') style="background: #fff3cd !important" @else style="background: #d4edda !important" @endif >
                             <td><div class="table-element">{{$tradein->barcode}}</div></td>
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                            @if($tradein->imei_number === null)
+                            <td><div class="table-element">{{$tradein->serial_number}}</div></td>
+                            @else
                             <td><div class="table-element">{{$tradein->imei_number}}</div></td>
+                            @endif
                             <td><div class="table-element">{{$tradein->cosmetic_condition}}</div></td>
                             <td><div class="table-element">Despatch</div></td>
                         </tr>
