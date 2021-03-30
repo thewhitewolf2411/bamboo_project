@@ -12872,6 +12872,25 @@ header {
   transition: height 0.5s ease;
 }
 
+#header.resized {
+  height: 90px;
+  padding: 0 30px 60px;
+}
+
+#full-bamboo-logo.resized {
+  height: 50px;
+  width: auto;
+}
+
+#header-urls.resized {
+  padding: 0 60px 0;
+  justify-content: center;
+}
+
+#full-logo-container.resized {
+  margin-top: 45px;
+}
+
 #full-bamboo-logo {
   transition: all 0.5s ease;
 }
