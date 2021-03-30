@@ -320,7 +320,10 @@
 
 // general
 @media (max-width: 1130px){
-
+    .container.view-blog{
+        width: 90%;
+        margin: auto;
+    }
 }
 
 // tablets - large

@@ -17100,6 +17100,12 @@ input[type=number] {
   background: transparent !important;
 }
 
+@media (max-width: 1130px) {
+  .container.view-blog {
+    width: 90%;
+    margin: auto;
+  }
+}
 .register-elements-container {
   width: 50%;
 }
