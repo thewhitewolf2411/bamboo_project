@@ -181,20 +181,24 @@ function markAsSuccessful(){
         var cansubmit = true;
         items.forEach(element => {
 
-            let cheque_input = document.getElementById('batch-'+element.id+'-cheque');
-            if(cheque_input){
-                if(!cheque_input.value){
-                    cansubmit = false;
-                    to_highlight.push('batch-'+element.id+'-cheque');
+            if(element.checked){
+                let cheque_input = document.getElementById('batch-'+element.id+'-cheque');
+                if(cheque_input){
+                    if(!cheque_input.value){
+                        // cansubmit = false;
+                        to_highlight.push('batch-'+element.id+'-cheque');
+                    } else {
+                        ids.push(element.id);
+                        cheque_numbers[element.id] = cheque_input.value;
+                    }
                 } else {
-                    cheque_numbers[element.id] = cheque_input.value;
+                    ids.push(element.id);
                 }
             }
-
-            if(element.checked){
-                ids.push(element.id);
-            }
         });
+        if(ids.length < 1){
+            cansubmit = false;
+        }
 
         if(!cansubmit){
             // show alert
