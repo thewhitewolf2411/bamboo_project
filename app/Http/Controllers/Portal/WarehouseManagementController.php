@@ -726,7 +726,7 @@ class WarehouseManagementController extends Controller
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
 
-        $salesLots = SalesLot::get();
+        $salesLots = SalesLot::where('sales_lot_status', '>', 1)->get();
 
         return view('portal.warehouse.picking-despatch', ['portalUser'=>$portalUser, 'salesLots'=>$salesLots]);
     }
@@ -738,7 +738,6 @@ class WarehouseManagementController extends Controller
         $saleLot = SalesLot::where('id', $id)->first();
 
         $salesLotContentDevices = SalesLotContent::where('sales_lot_id', $id)->get();
-
         $boxes = array();
         $devices = array();
         /*
