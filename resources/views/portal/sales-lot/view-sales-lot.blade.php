@@ -24,27 +24,29 @@
     <div class="portal-table-container">
         <table class="portal-table table-visible" id="boxedtradeinstable">
             <tr>
-                <td><div class="table-element">Trade in Barcode numbers</div></td>
+                <td><div class="table-element">Trade-in Barcode number</div></td>
                 <td><div class="table-element">Box number</div></td>
-                <td><div class="table-element">Customer Grade</div></td>
                 <td><div class="table-element">Bamboo Grade</div></td>
-                <td><div class="table-element">Model/Manufacturer</div></td>
+                <td><div class="table-element">Manufacturer/Model</div></td>
+                <td><div class="table-element">Category</div></td>
                 <td><div class="table-element">GB Size</div></td>
                 <td><div class="table-element">Network</div></td>
                 <td><div class="table-element">Colour</div></td>
+                <td><div class="table-element">IMEI</div></td>
                 <td><div class="table-element">Cost</div></td>
             </tr>
             @foreach ($tradeins as $key=>$tradein)
             <tr id="{{$tradein->id}}">
-                <td><div class="table-element">{{$tradein->barcode}}</div></td>
-                <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
-                <td><div class="table-element">{{$tradein->customer_grade}}</div></td>
-                <td><div class="table-element">{{$tradein->getDeviceBambooGrade()}}</div></td>
-                <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
-                <td><div class="table-element">{{$tradein->correct_memory}}</div></td>
-                <td><div class="table-element">{{$tradein->correct_network}}</div></td>
-                <td><div class="table-element">{{$tradein->product_colour}}</div></td>
-                <td><div class="table-element">£{{$tradein->bamboo_price}}</div></td>
+                <td><div class="table-element">{{$tradein->barcode ?? null ?: 'N/A'}}</div></td>
+                <td><div class="table-element">{{$tradein->getTrayName($tradein->id) ?? null ?: 'N/A'}}</div></td>
+                <td><div class="table-element">{{$tradein->getDeviceBambooGrade() ?? null ?: 'N/A'}}</div></td>
+                <td><div class="table-element">{{$tradein->getProductName($tradein->product_id) ?? null ?: 'N/A'}}</div></td>
+                <td><div class="table-element">{{$tradein->getCategoryName($tradein->correct_product_id) ?? null ?: 'N/A'}}</div></td>
+                <td><div class="table-element">{{$tradein->correct_memory ?? null ?: 'N/A'}}</div></td>
+                <td><div class="table-element">{{$tradein->correct_network ?? null ?: 'N/A'}}</div></td>
+                <td><div class="table-element">{{$tradein->product_colour ?? null ?: 'N/A'}}</div></td>
+                <td><div class="table-element">{{$tradein->imei_number ?? null ?: $tradein->serial_number}}</div></td>
+                <td><div class="table-element">£{{$tradein->bamboo_price ?? null ?: 'N/A'}}</div></td>
             </tr>
             @endforeach
     </div>

@@ -332,7 +332,7 @@ class CustomerCareController extends Controller
     public function returnToTesting($id){
         $tradein = Tradein::where('id', $id)->first();
 
-        $tradein->job_state = 9;
+        $tradein->job_state = "9a";
         $tradein->save();
 
         return redirect()->back();

@@ -67,7 +67,10 @@
 
                     <div class="form-group">
                         <label for="capacity">Box number:</label>
-                        <input type="number" class="form-control" name="number" id="number" disabled>
+                        @if(isset($box))
+                            <input type="text" class="form-control" disabled value="{{$box->tray_name}}">
+                        @endif
+                        <input type="number" class="form-control" name="number" id="number" disabled @if(isset($box)) style="display: none" @endif>
                     </div>
 
                     <div class="form-group">

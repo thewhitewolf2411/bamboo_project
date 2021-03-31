@@ -36,17 +36,19 @@ class SalesLotController extends Controller
 
         #$sli = SalesLotContent::all();
         foreach($boxes as $key=>$box){
-            $salesLotBoxes = SalesLotContent::where('box_id', $box->id)->get();
-            if(count($salesLotBoxes) === $box->number_of_devices){
-                unset($boxes[$key]);
-            }
-            else{
-                $boxcontent = TrayContent::where('tray_id', $box->id)->get();
-                #dd($boxcontent);
-                foreach($boxcontent as $bc){
-                    if(SalesLotContent::where('device_id', $bc->trade_in_id)->first() === null){
-                        $tradein = Tradein::where('id', $bc->trade_in_id)->first();
-                        array_push($tradeins, $tradein);
+            if($box->isInBay()){
+                $salesLotBoxes = SalesLotContent::where('box_id', $box->id)->get();
+                if(count($salesLotBoxes) === $box->number_of_devices){
+                    unset($boxes[$key]);
+                }
+                else{
+                    $boxcontent = TrayContent::where('tray_id', $box->id)->get();
+                    #dd($boxcontent);
+                    foreach($boxcontent as $bc){
+                        if(SalesLotContent::where('device_id', $bc->trade_in_id)->first() === null){
+                            $tradein = Tradein::where('id', $bc->trade_in_id)->first();
+                            array_push($tradeins, $tradein);
+                        }
                     }
                 }
             }
@@ -314,6 +316,7 @@ class SalesLotController extends Controller
             $salesLot = SalesLot::find($request->lot_id);
             if($salesLot && intval($salesLot->sales_lot_status) === 3){
                 $salesLot->sales_lot_status = 4;
+                $salesLot->payment_date = \Carbon\Carbon::now();
                 $salesLot->save();
                 return response('', 200);
             }

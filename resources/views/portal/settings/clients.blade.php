@@ -90,7 +90,7 @@
                                 <select class="form-control m-0" name="payment_type" id="payment_type">
                                     <option value="Transfer">Transfer</option>
                                     <option value="Credit Account">Credit Account</option>
-                                    <option value="Uprfont">Upfront</option>
+                                    <option value="Upfront">Upfront</option>
                                 </select>
                             </div>
                         </div>

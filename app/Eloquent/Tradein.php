@@ -68,7 +68,7 @@ class Tradein extends Model
         $post_code = explode(',', $address_line);
         return $post_code[count($post_code)-1];
     }
-    
+
     public function location(){
         return  null;
     }
@@ -289,7 +289,7 @@ class Tradein extends Model
 
     public function hasDeviceBeenReceived(){
 
-        $matches = ["1","2","3","4","5"];
+        $matches = ["1","2","3","4","5", "9a"];
 
         if(in_array($this->job_state, $matches)){
             return false;
@@ -399,6 +399,7 @@ class Tradein extends Model
             /*8e*/  ['Knox','Awaiting Response'],
             /*8f*/  ['Assetwatch','Awaiting Response'],
             /*9*/   ['Awaiting Testing','Trade Pack Received'],    // old - ['Awaiting Testing','Awaiting Testing']
+            /*9a*/  ['Awaiting Testing','Trade Pack Received'], 
             /*10*/  ['Test Complete','Testing'],
             /* First Test results */
             /*11*/  ['Quarantine','Awaiting Response'],
@@ -472,86 +473,88 @@ class Tradein extends Model
                 return $states[13];
             case "9":
                 return $states[14];
-            case "10":
+            case "9a":
                 return $states[15];
-            case "11":
+            case "10":
                 return $states[16];
-            case "11a":
+            case "11":
                 return $states[17];
-            case "11b":
+            case "11a":
                 return $states[18];
-            case "11c":
+            case "11b":
                 return $states[19];
-            case "11d":
+            case "11c":
                 return $states[20];
-            case "11e":
+            case "11d":
                 return $states[21];
-            case "11f":
+            case "11e":
                 return $states[22];
-            case "11g":
+            case "11f":
                 return $states[23];
-            case "11h":
+            case "11g":
                 return $states[24];
-            case "11i":
+            case "11h":
                 return $states[25];
-            case "11j":
+            case "11i":
                 return $states[26];
-            case "12":
+            case "11j":
                 return $states[27];
-            case "13":
+            case "12":
                 return $states[28];
-            case "14":
+            case "13":
                 return $states[29];
-            case "15":
+            case "14":
                 return $states[30];
-            case "15a":
+            case "15":
                 return $states[31];
-            case "15b":
+            case "15a":
                 return $states[32];
-            case "15c":
+            case "15b":
                 return $states[33];
-            case "15d":
+            case "15c":
                 return $states[34];
-            case "15e":
+            case "15d":
                 return $states[35];
-            case "15f":
+            case "15e":
                 return $states[36];
-            case "15g":
+            case "15f":
                 return $states[37];
-            case "15h":
+            case "15g":
                 return $states[38];
-            case "15i":
+            case "15h":
                 return $states[39];
-            case "15j":
+            case "15i":
                 return $states[40];
-            case "16":
+            case "15j":
                 return $states[41];
-            case "17":
+            case "16":
                 return $states[42];
-            case "18":
+            case "17":
                 return $states[43];
-            case "19":
+            case "18":
                 return $states[44];
-            case "20":
+            case "19":
                 return $states[45];
-            case "21":
+            case "20":
                 return $states[46];
-            case "22":
+            case "21":
                 return $states[47];
-            case "23":
+            case "22":
                 return $states[48];
-            case "24":
+            case "23":
                 return $states[49];
-            case "25":
+            case "24":
                 return $states[50];
-            case "26":
+            case "25":
                 return $states[51];
-            case "27":
+            case "26":
                 return $states[52];
-            case "28":
+            case "27":
                 return $states[53];
-            case "29":
+            case "28":
                 return $states[54];
+            case "29":
+                return $states[55];
         }
         
     }
@@ -1003,6 +1006,10 @@ class Tradein extends Model
        #dd($difference);
 
         return $difference;
+    }
+
+    public function getDeviceCost(){
+        return $this->getDevicePrice() + $this->carriage_cost + $this->admin_cost + $this->misc_cost;
     }
 
 }

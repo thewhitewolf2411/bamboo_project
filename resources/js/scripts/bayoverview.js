@@ -33,7 +33,7 @@ $('#checkboxsubmit').on('click', function(){
         },
         success:function(response){
             if($('#addedboxestable tr').length > 1){
-                if($('#' + response[0]).length == 0 ){
+                if(document.getElementById(response[0]) === null ){
                     $('#addedboxestable').append('<tr id="' + response[0] + '"><td><div class="table-element">' + response[0] + '</div></td><td><div class="table-element">' + response[1] + '</div></td></tr>');
                     $('#form-inputs').append('<input type="hidden" name="box-'+ response[0] + '" value="'+ response[0] +'">');
                 }
@@ -46,11 +46,24 @@ $('#checkboxsubmit').on('click', function(){
                     $('#addedboxestable').append('<tr id="' + response[0] + '"><td><div class="table-element">' + response[0] + '</div></td><td><div class="table-element">' + response[1] + '</div></td></tr>');
                     $('#form-inputs').append('<input type="hidden" name="box-'+ response[0] + '" value="'+ response[0] +'">');
                 }
+            $('#inputboxid').val('');
         },
         error:function(data, textStatus, xhr){
             $('#statement').html('<div class="alert alert-warning">' + data.responseText + '</div>');
         },
     });
 
+
+});
+
+$('#allocateboxtobaymodal').on('hide.bs.modal', function(){
+
+    if($('#addedboxestable tr').length > 1){
+        $('#addedboxestable tr').each(function(){
+            if($(this).attr('id') != null){
+                $(this).remove();
+            }
+        });
+    }
 
 });

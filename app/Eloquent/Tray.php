@@ -137,4 +137,16 @@ class Tray extends Model
         }
     }
 
+    public function isInBay(){
+        if($this->trolley_id !== null){
+            $trolley = Trolley::where('id', $this->trolley_id)->first();
+
+            if($trolley !== null && $trolley->trolley_type === 'Bay'){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

@@ -137,7 +137,7 @@ class GetLabel{
             $grade = $tradein->cosmetic_condition;
             $network = $tradein->correct_network;
 
-            $pdf = PDF::loadView('portal.labels.testingquarantinelabel', 
+            $pdf = PDF::loadView('portal.labels.devicelabels.testingquarantinelabel', 
             array(
                 'barcode'=>$barcode,
                 'barcodenumber'=>$barcodenumber,
@@ -163,7 +163,7 @@ class GetLabel{
         $bambooGrade = $tradein->cosmetic_condition;
         $network = $tradein->correct_network;
 
-        $pdf = PDF::loadView('portal.labels.testinglabel', 
+        $pdf = PDF::loadView('portal.labels.devicelabels.testinglabel', 
         array(
             'barcode'=>$barcode,
             'barcodenumber'=>$barcodenumber,
