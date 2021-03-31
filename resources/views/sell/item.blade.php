@@ -170,11 +170,7 @@
                                 <input type="hidden" name="memory" id="memory"></input>
                                 <input type="hidden" name="price" id="price"></input>
                                 <input type="hidden" name="type" value="tradein"></input>
-                                @if(App\Helpers\CartHelper::cartItems() === 2)
-                                    <div class="btn btn-primary btn-orange" data-toggle="modal" data-target="#newOrderModal">Sell my device</div>
-                                @else
-                                    <button id="addToCart" type="submit" class="btn btn-primary btn-orange" disabled>Sell my device</button>
-                                @endif
+                                <button id="addToCart" type="submit" class="btn btn-primary btn-orange">Sell my device</button>
                             </div>
                         </form>
 
@@ -419,25 +415,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="modal fade" id="newOrderModal" tabindex="-1" role="dialog" aria-labelledby="newOrderModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    {{-- <div class="modal-header">
-                      <h5 class="modal-title" id="newOrderModalLabel">Modal title</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div> --}}
-                    <div class="modal-body">
-                        <p class="newOrderText">Maximum number of devices per order reached. Please create a new order.</p>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
         </main>
 

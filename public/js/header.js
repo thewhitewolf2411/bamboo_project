@@ -55,7 +55,6 @@
         logo_container.classList.remove('resized');
       }
     }
-    console.log(document.getElementById('header').classList);
   }
 
 })();

@@ -8,7 +8,7 @@
 }
 
 .news-title-container > .center-title-container > p{
-    font-size: 4vw;
+    font-size: 2rem;
     font-weight: 600;
     color: #fff;
     font-family: Sharp Sans No1 Semibold;
@@ -94,9 +94,9 @@
 
 .news-title > p{
     font-family: Sharp Sans No1 Bold;
-    font-size: 40px;
+    font-size: 1.4rem;
     color: white;
-    max-height: 50px;
+    max-height: 30px;
     overflow-y: hidden;
     overflow-x: hidden;
 }
@@ -126,7 +126,7 @@
 
 .latest-news > div.title, .latest-blogs > div.title, .latest-howto > div.title{
     font-family: Sharp Sans No1 Bold;
-    font-size: 2vw;
+    font-size: 2rem;
     //max-height: 45px;
     overflow-y: hidden;
     overflow-x: hidden;
@@ -159,7 +159,7 @@
     text-align: center;
     margin-top: 150px;
     font-family: Sharp Sans No1 Semibold;
-    font-size: 45px;
+    font-size: 2rem;
 }
 
 .main-howto-row{
@@ -203,7 +203,7 @@
 
 .view-blog-title{
     font-family: Sharp Sans No1 Semibold;
-    font-size: 40px;
+    font-size: 2rem;
 }
 
 .info-row-view-blog{
@@ -213,7 +213,7 @@
 
 .view-blog-author, .view-blog-date{
     font-family: Sharp Sans No1 Semibold;
-    font-size: 14px;
+    font-size: 1rem;
 }
 
 .article-image{
@@ -223,12 +223,12 @@
 }
 
 .view-blog-paragraph{
-    font-size: 14px;
+    font-size: 1.2rem;
 }
 
 .view-blog-paragraph.bold{
     font-family: Sharp Sans No1 Semibold;
-    font-size: 16px;
+    font-size: 1.2rem;
 }
 
 .blog-horizontal-line{
@@ -244,7 +244,7 @@
 
 .readmore-view-blog{
     font-family: Sharp Sans No1 Bold;
-    font-size: 2vw;
+    font-size: 2rem;
 }
 
 

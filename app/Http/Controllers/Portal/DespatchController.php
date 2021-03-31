@@ -175,15 +175,27 @@ class DespatchController extends Controller
             $spreadsheet = new Spreadsheet(); 
             $sheet = $spreadsheet->getActiveSheet();
             $sheet->setCellValue('A1', 'Trade-in ID');
-            $sheet->setCellValue('B1', 'Order Identifier');
-            $sheet->setCellValue('C1', 'Order Reference');
-            $sheet->setCellValue('D1', 'Order Date');
+            $sheet->setCellValue('B1', 'Trade-in barcode number');
+            $sheet->setCellValue('C1', 'Model');
+            $sheet->setCellValue('D1', 'Customer Name');
+            $sheet->setCellValue('E1', 'Postcode');
+            $sheet->setCellValue('F1', 'Address Line 1');
+            $sheet->setCellValue('G1', 'Bamboo Status');
+            $sheet->setCellValue('H1', 'Carrier');
+            $sheet->setCellValue('I1', 'Tracking Reference');
+
             $row = 2;
             foreach($devices as $device){
                 $sheet->setCellValue('A'.$row, $device->getTradeinId());
-                $sheet->setCellValue('B'.$row, $device->order_identifier);
-                $sheet->setCellValue('C'.$row, $device->order_reference);
-                $sheet->setCellValue('D'.$row, $device->order_date);
+                $sheet->setCellValue('B'.$row, $device->getTradeinBarcode());
+                $sheet->setCellValue('C'.$row, $device->getModel());
+                $sheet->setCellValue('D'.$row, $device->getCustomer());
+                $sheet->setCellValue('E'.$row, $device->getPostCode());
+                $sheet->setCellValue('F'.$row, $device->getAddressLine());
+                $sheet->setCellValue('G'.$row, $device->getBambooStatus());
+                $sheet->setCellValue('H'.$row, $device->getCarrier());
+                $sheet->setCellValue('I'.$row, $device->getTrackingReference());
+
                 $row++;
             }
 

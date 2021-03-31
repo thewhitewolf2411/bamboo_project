@@ -177,7 +177,7 @@
 
                                     <div class="d-flex justify-content-between">
                                         <div class="w-25"></div>
-                                        <a href="/removefromcart/{{$key}}" class="w-25 m-0">
+                                        <a href="/removefromcart/{{$cartitem->id}}" class="w-25 m-0">
                                             <div class="">
                                                 <p class="m-0 pl-2">REMOVE</p>
                                             </div>
@@ -245,8 +245,11 @@
                                     {{-- @csrf --}}
                         
                                     {{-- <input type="hidden" id="label_status" name="label_status" value="1"> --}}
-
-                                    <a href="/cart/details" class="btn btn-primary w-100 mt-2">Sell my device</a>
+                                    @if(App\Helpers\CartHelper::cartItems() === 2)
+                                        <a href="/cart/details" class="btn btn-primary w-100 mt-2">Sell my device</a>
+                                    @else
+                                        <button id="addToCart" class="btn btn-primary btn-orange w-100 mt-2" data-toggle="modal" data-target="#newOrderModal">Sell my device</button>
+                                    @endif
 
                                     @if($cart->count() < 2)
                                         <a class="btn btn-purple w-100 mt-2 sell-more-devices-ordersummary" href="/sell" class="btn btn-purple">More devices to sell?</a>
@@ -406,6 +409,38 @@
                 </section>
             </section>
         </div>
+
+        <div class="modal fade" id="newOrderModal" tabindex="-1" role="dialog" aria-labelledby="newOrderModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                {{-- <div class="modal-header">
+                  <h5 class="modal-title" id="newOrderModalLabel">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div> --}}
+                <div class="modal-body p-5">
+                    <img class="close-neworder-modal" src="{{ asset('/images/front-end-icons/close_modal_orange.svg') }}" data-dismiss="modal" aria-label="Close">
+                    <div class="new-order-info-row">
+                        <div class="col">
+                            <img class="newOrderPopupImg" src="{{asset('/customer_page_images/body/emoji_confused.svg')}}">
+                            <p class="uhoh-info-neworder">Uh-oh!</p>
+                        </div>
+                        <p class="newOrderText w-75">
+                            We are sorry Boo is only able to process two device at once, if you with you wish to sell more devices, 
+                            please complete this order first and then create a new order.
+                        </p>
+                    </div>
+                </div>
+                {{-- <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                </div> --}}
+              </div>
+            </div>
+          </div>
+        
+
+        </main>
         
 
         </main>
