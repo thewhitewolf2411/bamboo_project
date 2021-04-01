@@ -323,7 +323,7 @@ class PaymentsController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
         $submited_batches = PaymentBatch::where(function($query){
-            $query->where('batch_type', 1)->orWhere('batch_type', 2);
+            $query->where('batch_type', 1)->orWhere('batch_type', 2)->orWhere('batch_type', 3);
         })->where('exported', 0)->get();
 
         return view('portal.payments.submit', [
@@ -478,7 +478,8 @@ class PaymentsController extends Controller
 
         } else {
             $payment_batches = PaymentBatch::where(function($query){
-                $query->where("exported", true)->orWhere('batch_type', 3);
+                //$query->where("exported", true)->orWhere('batch_type', 3);
+                $query->where("exported", true);
             })->get();
 
             foreach($payment_batches as $batch){
