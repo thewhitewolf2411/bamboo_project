@@ -216,16 +216,18 @@ class PaymentsController extends Controller
                     break;
 
                 case 'barcode':
-                    $tradeins_results = Tradein::where('barcode', $searchterm)
-                        ->where(function($query){
-                            $query->where('job_state','=','10')->orWhere('job_state', '=', '12')->orWhere('job_state', '=', '16');
-                        })->get();
+                    $tradeins_results = Tradein::where('barcode', $searchterm)->get();
+                        // ->where(function($query){
+                        //     $query->where('job_state','=','10')->orWhere('job_state', '=', '12')->orWhere('job_state', '=', '16');
+                        // })->get();
+                    
+                    $allowed_job_states = ['10', '12', '16'];
 
                     $error_msg = [];
                     $tradeins = collect();
                     if($tradeins_results->count() > 0){
                         foreach($tradeins_results as $tradein){
-                            if(!$tradein->isInQuarantine()){
+                            if(in_array($tradein->job_state, $allowed_job_states)){
                                 $tradein->product = $tradein->getProductName($tradein->id);
                                 $tradein->stock_location = $tradein->getTrayName($tradein->id);
                                 $tradein->order_date = $tradein->getOrderDate();
@@ -233,8 +235,13 @@ class PaymentsController extends Controller
                                 $tradein->stock_location = $tradein->getTrayName($tradein->id);
                                 $tradeins->push($tradein);
                             } else {
-                                array_push($error_msg, 'This device cannot be marked for payment. Reason: Device in Quarantine.');
+                                if(!$tradein->isInQuarantine()){
+                                    array_push($error_msg, 'This device cannot be marked for payment. Reason: Device hasn’t passed testing.');
+                                } else {
+                                    array_push($error_msg, 'This device cannot be marked for payment. Reason: Device in Quarantine.');
+                                }
                             }
+                            
                         }
                     } else {
                         array_push($error_msg, 'No matching devices for scanned tradein barcode.');
