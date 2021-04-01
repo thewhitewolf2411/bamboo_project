@@ -53,7 +53,7 @@
                         </tr>
                         @foreach($devices as $batch_device)
 
-                            <tr id="batch-{{$batch_device->id}}" class="@if(!$batch_device->canCreateFPBatch())nofp @endif">
+                            <tr id="batch-{{$batch_device->id}}" class="@if(!$batch_device->canCreateFPBatch())nofp @endif @if(!$batch_device->canCreateFCBatch())nofc @endif">
                                 <td><div class="table-element">{!!$batch_device->batchReference()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->tradeinBarcode()!!}</div></td>
                                 <td><div class="table-element">{!!$batch_device->tradeinId()!!}</div></td>
@@ -67,12 +67,11 @@
                                     <input type="checkbox" onchange="checkBatchDevices()" id="{{$batch_device->id}}" name="selected_devices" value="{{$batch_device->id}}" class="table-element m-0 w-auto"/>
                                 </div></td>
                             </tr>
+                            
                         @endforeach
                     </table>
 
-                    <div id="alert_message" class="alert alert-danger w-75 m-4 ml-auto mr-auto text-center hidden" role="alert">
-                        This is a danger alert—check it out!
-                    </div>
+                    <div id="alert_message" class="alert alert-danger w-75 m-4 ml-auto mr-auto text-center hidden" role="alert"></div>
 
                     <div class="m-auto w-75">
                         <div class="mt-4 mb-4 row">
@@ -201,7 +200,7 @@ function toggleFpBatch(){
                     let actualid = element.id.split('-');
                     ignored_devices.push(actualid[1]);
 
-                    let barcode = element.childNodes[3].childNodes[0].innerHTML;
+                    let barcode = element.childNodes[5].childNodes[0].innerHTML;
 
                     alertmsg.innerHTML += "Notice - Device with barcode [" + barcode + "] not in FP batch. The user has not updated their bank account information. <br>";
                     if(alertmsg.classList.contains('hidden')){
@@ -239,7 +238,11 @@ function toggleFpBatch(){
             if(!submit.classList.contains('disabled')){
                 submit.classList.add('disabled');
             }
+            if(!fpbtn.classList.contains('disabled')){
+                fpbtn.classList.add('disabled');
+            }
         }
+
     }
 }
 
@@ -251,29 +254,33 @@ function toggleFcBatch(){
     if(ANY_SELECTED){
 
         let items = document.getElementsByName('selected_devices');
-        var device_ids = [];
+        var selectedids = [];
         for (let index = 0; index < items.length; index++) {
 
             let element = document.getElementById('batch-'+items[index].id);
 
-            if(element.classList.contains('nofc')){
+            let input = document.getElementById(items[index].id);
+            if(input.tagName === "INPUT" && input.checked){
+                if(element.classList.contains('nofc')){
 
-                var alertmsg =  document.getElementById('alert_message');
-                let barcode = element.childNodes[3].childNodes[0].innerHTML;
+                    var alertmsg =  document.getElementById('alert_message');
+                    let barcode = element.childNodes[5].childNodes[0].innerHTML;
 
-                alertmsg.innerHTML = "Can't create FC batch. Highlighted device ( Barcode: " + barcode + " ) hasn't received 3rd email yet.";
-                if(alertmsg.classList.contains('hidden')){
-                    alertmsg.classList.remove('hidden');
+                    alertmsg.innerHTML = "Can't create FC batch. Highlighted device ( Barcode: " + barcode + " ) hasn't received 3rd email yet.";
+                    if(alertmsg.classList.contains('hidden')){
+                        alertmsg.classList.remove('hidden');
+                    }
+                    element.style = 'border: 2px solid #ff6f60';
+
+                    if(!fcbtn.classList.contains('disabled')){
+                        fcbtn.classList.add('disabled');
+                    }
+                    BATCH_TYPE = null;
+                } else {
+                    selectedids.push(items[index].id);
                 }
-                element.style = 'border: 2px solid #ff6f60';
-
-                if(!fcbtn.classList.contains('disabled')){
-                    fcbtn.classList.add('disabled');
-                }
-                BATCH_TYPE = null;
-
-                return;
             }
+           
         }
 
         if(fpbtn.classList.contains('btn-orange')){
@@ -297,6 +304,12 @@ function toggleFcBatch(){
             }
             BATCH_TYPE = null;
         }
+
+        if(selectedids.length === 0){
+            if(!submit.classList.contains('disabled')){
+                submit.classList.add('disabled');
+            }
+        }
     }
 }
 
@@ -310,8 +323,12 @@ function submitBatch(){
                 if(!elem.classList.contains('nofp')){
                     device_ids.push(items[index].id);
                 }
-            } else {
-                device_ids.push(items[index].id);
+            }
+            if(BATCH_TYPE === 'FC'){
+                let elem = document.getElementById('batch-'+items[index].id);
+                if(!elem.classList.contains('nofc')){
+                    device_ids.push(items[index].id);
+                }
             }
         }
         
