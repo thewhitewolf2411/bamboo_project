@@ -82,10 +82,23 @@ class Tray extends Model
                 return 1;
             case "Samsung":
                 return 2;
-            case "Huawei":
+            case "Huaweii":
                 return 3;
             default:
                 return 4;
+        }
+    }
+
+    public function getTrayDevices(){
+        switch($this->tray_brand){
+            case "A":
+                return "Apple";
+            case "S":
+                return "Samsung";
+            case "H":
+                return "Huaweii";
+            default:
+                return "Miscellaneous";
         }
     }
 
@@ -98,5 +111,42 @@ class Tray extends Model
         return false;
     }
 
+    public function getBinReason(){
+        switch($this->tray_grade){
+            case 'FIMP':
+                return "FMIP Lock";
+                break;
+            case 'GOCK':
+                return "Google Lock";
+                break;
+            case 'WRPH':
+                return "Wrong Device";
+                break;
+            case 'DEMI':
+                return "DEMI";
+                break;
+            case 'BLCK':
+                return "Blacklisted";
+                break;
+            case 'PIN':
+                return "Pin locked";
+                break;
+            case 'DOWN':
+                return "Downgraded";
+                break;
+        }
+    }
+
+    public function isInBay(){
+        if($this->trolley_id !== null){
+            $trolley = Trolley::where('id', $this->trolley_id)->first();
+
+            if($trolley !== null && $trolley->trolley_type === 'Bay'){
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 }

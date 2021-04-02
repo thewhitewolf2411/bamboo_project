@@ -11,11 +11,6 @@ class Boxing{
 
     public function checkBoxStatusForDevice(Tradein $tradein, Tray $box, Request $request){
 
-        #dd($tradein, $box, $request);
-
-        if($request->tradeinid === ''){
-            return ['Please input device barcode.', 404];
-        }
 
         $traycontent = TrayContent::where('trade_in_id', $tradein->id)->where('tray_id', $box->id)->first();
         if($traycontent !== null){
@@ -50,10 +45,10 @@ class Boxing{
             
         }
 
-        if(substr($box->tray_brand, 0, 1) !== $tradein->getBrandLetter($tradein->product_id)){
+        if(substr($box->tray_brand, 0, 1) !== $tradein->getBrandLetter($tradein->correct_product_id)){
             return ['Manufacturer is wrong.', 404];
         }
-        if($box->getBoxBrand() !== $tradein->getBrandId($tradein->product_id)){
+        if($box->getBoxBrand() !== $tradein->getBrandId($tradein->correct_product_id)){
             $message = "";
             switch($box->box_devices){
                 case 1:

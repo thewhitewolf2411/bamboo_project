@@ -232,7 +232,10 @@
 
 <script>
 
-    alert('Your message has been sent.');
+    $(document).ready(function(){
+        alert('Your message has been sent.');
+    });
+    
 
 </script>
 

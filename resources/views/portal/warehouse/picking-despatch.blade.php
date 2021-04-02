@@ -23,6 +23,9 @@
             <div class="col-md-3">
                 <button type="submit" id="despatchpickingsaleslot" class="btn btn-primary btn-blue mx-auto w-100" disabled>Despatch</button>
             </div>
+            <div class="col-md-3">
+                <button type="submit" id="printpicknote" class="btn btn-primary btn-blue mx-auto w-100" disabled>Print Pick Note</button>
+            </div>
         </div>
         
         <table class="portal-table" id="saleslot-table">

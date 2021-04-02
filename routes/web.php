@@ -215,7 +215,7 @@ Route::get('/portal/quarantine/quarantine-overview', 'Portal\QuarantineControlle
 Route::get('/portal/quarantine/quarantine-bins', 'Portal\QuarantineController@showQuarantineBinsPage');
 Route::get('/portal/quarantine/quarantine-bins/create', 'Portal\QuarantineController@addNewQuarantineBin');
 Route::get('/portal/quarantine/quarantine-bins/bin/', 'Portal\QuarantineController@showBinView');
-Route::get('/portal/quarantine-bins/printlabel/{id}', 'Portal\QuarantineController@printBinLabel');
+Route::post('/portal/quarantine-bins/printlabel', 'Portal\QuarantineController@printBinLabel');
 
 Route::post('/portal/quarantine/export-csv', 'Portal\QuarantineController@exportCsv');
 Route::post('/portal/quarantine/check-allocation', 'Portal\QuarantineController@checkScannedDevices');
@@ -392,7 +392,7 @@ Route::get('/portal/trays/create', 'Portal\TraysController@showAddTrayPage');
 Route::post('/portal/trays/createtray', 'Portal\TraysController@addTray');
 
 Route::get('/portal/trays/tray/', 'Portal\TraysController@showTrayPage');
-Route::get('/portal/trays/tray/printlabel/{id}', 'Portal\TraysController@printTrayLabel');
+Route::post('/portal/trays/tray/printlabel', 'Portal\TraysController@printTrayLabel');
 
 Route::get('/portal/trays/delete/{id}', 'Portal\TraysController@deleteTray');
 
@@ -404,7 +404,7 @@ Route::get('/portal/trolleys/create', 'Portal\TrolleyController@showAddTrolleyPa
 Route::post('/portal/trolleys/createtrolley', 'Portal\TrolleyController@addTrolley');
 
 Route::get('/portal/trolleys/trolley/', 'Portal\TrolleyController@showTrolleyPage');
-Route::get('/portal/trolleys/trolley/printlabel/{id}', 'Portal\TrolleyController@printTrolleyLabel');
+Route::post('/portal/trolleys/trolley/printlabel', 'Portal\TrolleyController@printTrolleyLabel');
 
 Route::get('/portal/trolleys/delete/{id}', 'Portal\TrolleyController@deleteTrolley');
 

@@ -15,6 +15,8 @@ $(document).ready(function(){
         "oLanguage" : {
             "sInfo" : "Showing _START_ to _END_",
          },
+         "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+         "pageLength":100,
     });
 
     // Apply the search
@@ -39,6 +41,8 @@ $(document).ready(function(){
         "oLanguage" : {
             "sInfo" : "Showing _START_ to _END_",
          },
+         "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+         "pageLength":100,
     });
 
     // Apply the search
@@ -63,6 +67,8 @@ $(document).ready(function(){
         "oLanguage" : {
             "sInfo" : "Showing _START_ to _END_",
          },
+         "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+         "pageLength":100,
     });
 
     // Apply the search

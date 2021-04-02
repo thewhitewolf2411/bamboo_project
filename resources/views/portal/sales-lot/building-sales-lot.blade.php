@@ -59,15 +59,15 @@
                     <tbody>
                         @foreach ($tradeins as $key=>$tradein)
                         <tr id="{{$tradein->id}}">
-                            <td><div class="table-element">{{$tradein->barcode}}</div></td>
-                            <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
-                            <td><div class="table-element">{{$tradein->customer_grade}}</div></td>
-                            <td><div class="table-element">{{$tradein->bamboo_grade}}</div></td>
-                            <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
-                            <td><div class="table-element">{{$tradein->correct_memory}}</div></td>
-                            <td><div class="table-element">{{$tradein->correct_network}}</div></td>
-                            <td><div class="table-element"></div></td>
-                            <td><div class="table-element"></div></td>
+                            <td><div class="table-element">{{$tradein->barcode ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">{{$tradein->getTrayName($tradein->id) ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">{{$tradein->customer_grade ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">{{$tradein->getDeviceBambooGrade() ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">{{$tradein->getProductName($tradein->product_id) ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">{{$tradein->correct_memory ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">{{$tradein->correct_network ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">{{$tradein->product_colour ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">{{$tradein->getDeviceCost() ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element"><input type="checkbox" class="tradein-sales-lot" data-value="{{$tradein->id}}"></div></td>
                         </tr>
                         @endforeach
@@ -97,14 +97,16 @@
                     </tfoot>
                     <tbody>
                         @foreach ($boxes as $box)
+                        @if($box->isInBay())
                         <tr id="{{$box->id}}">
-                            <td><div class="table-element">{{$box->tray_name}}</div></td>
-                            <td><div class="table-element">{{$box->tray_grade}}</div></td>
-                            <td><div class="table-element">{{$box->tray_network}}</div></td>
-                            <td><div class="table-element">{{$box->number_of_devices}}</div></td>
-                            <td><div class="table-element">£{{$box->getBoxPrice()}}</div></td>
+                            <td><div class="table-element">{{$box->tray_name ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">{{$box->tray_grade ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">{{$box->tray_network ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">{{$box->number_of_devices ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">£{{$box->getBoxPrice() ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="{{$box->id}}"></div></td>
                         </tr>
+                        @endif
                         @endforeach
                     </tbody>
                 </table>
@@ -125,7 +127,7 @@
                 <table class="portal-table" id="saleslotboxes">
                     <tr>
                         <td><div class="table-element">Box number</div></td>
-                        <td><div class="table-element">Grade</div></td>
+                        <td><div class="table-element">Bamboo Grade</div></td>
                         <td><div class="table-element">Network</div></td>
                         <td><div class="table-element">Total QTY</div></td>
                         <td><div class="table-element">Total Cost</div></td>

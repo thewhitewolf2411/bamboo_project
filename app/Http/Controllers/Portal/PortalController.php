@@ -68,18 +68,6 @@ class PortalController extends Controller
 
     function generateNewLabel($barcode, $tradein_barcode, $manifacturer, $model, $imei, $location){
 
-        $customPaper = array(0,0,141.90,283.80);
-
-        $pdf = PDF::loadView('portal.labels.devicelabel', 
-        array(
-            'barcode'=>$barcode,
-            'tradein_barcode'=>$tradein_barcode,
-            'manifacturer'=>$manifacturer,
-            'model'=>$model,
-            'imei'=>$imei,
-            'location'=>$location))
-        ->setPaper($customPaper, 'landscape')
-        ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
     
     }
 

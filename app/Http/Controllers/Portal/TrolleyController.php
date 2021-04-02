@@ -15,6 +15,7 @@ use App\Eloquent\TrayContent;
 use App\Eloquent\PortalUsers;
 use App\Eloquent\Trolley;
 use App\Eloquent\TrolleyContent;
+use App\Services\GetLabel;
 
 class TrolleyController extends Controller
 {
@@ -58,21 +59,16 @@ class TrolleyController extends Controller
         return view('portal.trolleys.trolley')->with(['portalUser'=>$portalUser, 'trolley'=>$trolley, 'trolleyTrays'=>$trolleyTrays]);
     }
 
-    public function printTrolleyLabel($id){
+    public function printTrolleyLabel(Request $request){
 
-        $barcode = DNS1D::getBarcodeHTML($id, 'C128');
+        $trolleyid = $request->trolleyid;
 
-        $this->generateTrolleyLabel($barcode, $id);
-    }
+        $trolley = Trolley::where('id', $trolleyid)->first();
 
-    public function generateTrolleyLabel($barcode, $id){
-        
+        $getlabel = new GetLabel();
+        $pdf = $getlabel->getTrolleyLabel($trolley);
 
-        $filename = "labeltrolley-" . $id . ".pdf";
-        $customPaper = array(0,0,141.90,283.80);
-        PDF::loadView('portal.labels.trolley', array('barcode'=>$barcode, 'id'=>$id))->setPaper($customPaper, 'landscape')->setWarnings(false)->save($filename);
-
-        $this->downloadFile($filename);
+        return response('pdf/trolleylabel-'.$trolley->trolley_name, 200);
         
     }
 

@@ -127,7 +127,7 @@ class Testing{
         else{
             $tradein->correct_product_id = $tradein->product_id;
         }
-        if($request->correct_memory === "false"){
+        if($request->correct_memory === "false" || !isset($request->correct_memory)){
             $tradein->correct_memory = $request->correct_memory_value;
         }
         else{
@@ -140,8 +140,8 @@ class Testing{
             $tradein->correct_network = $tradein->customer_network;
         }
 
+
         if(!($tradein->isInQuarantine())){
-            
             $bambooprice = $this->generateDevicePrice($tradein->correct_product_id, $tradein->correct_memory, $tradein->correct_network, $bambogradeval);
 
             if($bambooprice >= $tradein->order_price){
@@ -209,7 +209,7 @@ class Testing{
                         }
                         break;
                 }
-                if($tradein->job_state === "9"){
+                if($tradein->job_state === "9" || $tradein->job_state === "9a"){
                     $tradein->job_state = "10";
                 }
                 if($tradein->job_state === "14"){

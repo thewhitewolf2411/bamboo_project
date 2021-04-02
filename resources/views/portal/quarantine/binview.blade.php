@@ -1,108 +1,77 @@
-<!DOCTYPE html>
+@extends('portal.layouts.portal')
 
-<html>
+@section('content')
+    <div class="portal-app-container">
+        <div class="portal-title-container">
+            <div class="portal-title">
+                <p>Bin {{$bin->tray_name}}</p>
+            </div>
+        </div>
 
-<head>
+        @if(Session::has('success'))
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+            <div class="alert alert-success" role="alert">
+                {{Session::get('success')}}
+            </div>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+        @endif
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <!-- jQuery -->
-    <script
-			  src="https://code.jquery.com/jquery-3.5.1.js"
-			  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-			  crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+        @if(Session::has('error'))
+            <div class="alert alert-danger" role="alert">
+                {{Session::get('error')}}
+            </div>
+        @endif
+        <form method="post" action="/portal/quarantine-bins/{{$bin->tray_name}}/allocatedevice">
+            @csrf
+            <div class="row mb-3">
+                <!-- Check security issues later -->
+                <div class="col-md-2">
+                    <input id="export_csv" type="submit" class="custombtn btn-green" value="Allocate devices">
+                </div>
+            </div>
+            <div class="portal-table-container">
+                <table class="portal-table sortable" id="categories-table">
+                    <tr>
+                        <td><div class="table-element">Bin Location</div></td>
+                        <td><div class="table-element">Device Quantity</div></td>
+                        <td><div class="table-element">Maximum number of devices</div></td>
+                        <td><div class="table-element">Print Label</div></td>
+                    </tr>
+                    <tr>
+                        <td><div class="table-element">{{$bin->tray_name}}</div></td>
+                        <td><div class="table-element">{{$bin->number_of_devices}}</div></td>
+                        <td><div class="table-element">{{$bin->max_number_of_devices}}</div></td>
+                        <td><div class="table-element"><a class="printbinlabel" data-value="{{$bin->id}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print Bin Label</p></div></a></div></td>
+                    </tr>
+                </table>
 
-   <!-- Sortable -->
-   <script src="{{ asset('js/Sort.js') }}"></script>
-
-    <title>Bamboo Recycle::Bin</title>
-</head>
-
-<body class="portal-body">
-
-    <header>@include('portal.layouts.header')</header>
-
-    <main class="portal-main">
-        <div class="app">
-            <div class="portal-app-container">
                 <div class="portal-title-container">
                     <div class="portal-title">
-                        <p>Bin {{$bin->tray_name}}</p>
+                        <p>Bin {{$bin->tray_name}} Content</p>
                     </div>
                 </div>
 
-                @if(Session::has('success'))
-
-                    <div class="alert alert-success" role="alert">
-                        {{Session::get('success')}}
-                    </div>
-
-                @endif
-
-                @if(Session::has('error'))
-                    <div class="alert alert-danger" role="alert">
-                        {{Session::get('error')}}
-                    </div>
-                @endif
-                <form method="post" action="/portal/quarantine-bins/{{$bin->tray_name}}/allocatedevice">
-                    @csrf
-                    <div class="row mb-3">
-                        <!-- Check security issues later -->
-                        <div class="col-md-2">
-                            <input id="export_csv" type="submit" class="custombtn btn-green" value="Allocate devices">
-                        </div>
-                    </div>
-                    <div class="portal-table-container">
-                        <table class="portal-table sortable" id="categories-table">
-                            <tr>
-                                <td><div class="table-element">Bin Location</div></td>
-                                <td><div class="table-element">Device Quantity</div></td>
-                                <td><div class="table-element">Maximum number of devices</div></td>
-                                <td><div class="table-element">Print Label</div></td>
-                            </tr>
-                            <tr>
-                                <td><div class="table-element">{{$bin->tray_name}}</div></td>
-                                <td><div class="table-element">{{$bin->number_of_devices}}</div></td>
-                                <td><div class="table-element">{{$bin->max_number_of_devices}}</div></td>
-                                <td><div class="table-element"><a href="/portal/quarantine-bins/printlabel/{{$bin->tray_name}}"><div class="btn btn-primary btn-red"><p style="color: #fff;">Print Bin Label</p></div></a></div></td>
-                            </tr>
-                        </table>
-
-                        <div class="portal-title-container">
-                            <div class="portal-title">
-                                <p>Bin {{$bin->bin_name}} Content</p>
-                            </div>
-                        </div>
-
-                        <table class="portal-table sortable" id="categories-table">
-                            <tr>
-                                <td><div class="table-element">Trade-in ID</div></td>
-                                <td><div class="table-element">Tradein Barcode</div></td>
-                                <td><div class="table-element">Product name</div></td>
-                                <td><div class="table-element">IMEI Number</div></td>
-                            </tr>
-                            @foreach($quarantineBinContent as $tradein)
-                            <tr>
-                                <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
-                                <td><div class="table-element">{{$tradein->barcode}}</div></td>
-                                <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
-                                <td><div class="table-element">@if($tradein->imei_number === null) {{$tradein->serial_number}} @else {{$tradein->imei_number}} @endif</div></td>
-                            </tr>
-                            @endforeach
-                        </table>
-                    </div>
-                </form>
-
+                <table class="portal-table sortable" id="categories-table">
+                    <tr>
+                        <td><div class="table-element">Trade-in ID</div></td>
+                        <td><div class="table-element">Tradein Barcode</div></td>
+                        <td><div class="table-element">Product name</div></td>
+                        <td><div class="table-element">IMEI Number</div></td>
+                    </tr>
+                    @foreach($quarantineBinContent as $tradein)
+                    <tr>
+                        <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
+                        <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                        <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                        <td><div class="table-element">@if($tradein->imei_number === null) {{$tradein->serial_number}} @else {{$tradein->imei_number}} @endif</div></td>
+                    </tr>
+                    @endforeach
+                </table>
             </div>
-        </div>
-    </main>
+        </form>
+
+    </div>
+
 
     @if(Session::has('adddevices') && Session::get('adddevices'))
 
@@ -155,7 +124,7 @@
         </div>
     </div>
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script>
 
         $(document).ready(function(){
@@ -225,7 +194,19 @@
     </script>
     @endif
 
-
-</body>
-
-</html>
+    <div id="label-trade-in-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Trade in label</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe id="tradein-iframe"></iframe>
+            </div>
+            </div>
+        </div>
+    </div>
+@endsection

@@ -41,7 +41,7 @@
                     <tr>
                         <td><div class="table-element">{{$bay->trolley_name}}</div></td>
                         <td><div class="table-element">{{$bay->number_of_trays}}</div></td>
-                        <td><div class="table-element"><div class="btn btn-primary bayprint" id="{{$bay->trolley_name}}"><p style="color: #fff;">Print label</p></div></div></td>
+                        <td><div class="table-element"><div class="btn btn-primary printbaylabel" data-value="{{$bay->id}}"><p style="color: #fff;">Print label</p></div></div></td>
                     </tr>
                 </table>
             </div>
@@ -113,6 +113,20 @@
     </div>
 </div>
 
-
+<div id="label-trade-in-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Trade in label</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <iframe id="tradein-iframe"></iframe>
+        </div>
+        </div>
+    </div>
+</div>
 
 @endsection

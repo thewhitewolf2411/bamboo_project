@@ -28,7 +28,7 @@ use App\Services\KlaviyoEmail;
 use App\Services\NotificationService;
 use App\Services\Testing;
 use App\Eloquent\AdditionalCosts;
-
+use App\Services\GetLabel;
 
 class TestingController extends Controller
 {
@@ -72,7 +72,7 @@ class TestingController extends Controller
         if($tradein == null){
             return redirect()->back()->with('error', 'There is no such device');
         }
-        if($tradein->job_state === "9" || $tradein->job_state === "10" || $tradein->job_state === "13" || $tradein->job_state === "14"){
+        if($tradein->job_state === "9" || $tradein->job_state === "9a" || $tradein->job_state === "10" || $tradein->job_state === "13" || $tradein->job_state === "14"){
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
             $product_networks = ProductNetworks::where('product_id', $tradein->product_id)->get()->pluck('network_id');
@@ -209,7 +209,7 @@ class TestingController extends Controller
             }
 
             $checkPrice = new Testing();
-            $deviceCurrentPrice = $checkPrice->generateDevicePrice($tradein->product_id, $tradein->customer_memory, $tradein->customer_network, $bamboogradeval);
+            $deviceCurrentPrice = $checkPrice->generateDevicePrice($tradein->correct_product_id, $tradein->customer_memory, $tradein->customer_network, $bamboogradeval);
 
             if($deviceCurrentPrice < $tradein->order_price){
                 $tradein->job_state = "11j";
@@ -325,7 +325,7 @@ class TestingController extends Controller
                 $newPrice = "";
 
                 $testing = new Testing();
-                $newPrice = $testing->generateDevicePrice($tradein->product_id, $tradein->customer_memory, $tradein->customer_network, 1);
+                $newPrice = $testing->generateDevicePrice($tradein->correct_product_id, $tradein->customer_memory, $tradein->customer_network, 1);
                 
                 $tradein->bamboo_price = $newPrice;
 
@@ -513,24 +513,20 @@ class TestingController extends Controller
         #dd($request->all());
 
         $testing = new Testing();
-        // $quarantineName = $testing->testDevice($request)['tray_name'];
-        // $quarantineTrays = $testing->testDevice($request)['tray'];
         $testingResult =  $testing->testDevice($request);
         $quarantineName = $testingResult['tray_name'];
         $quarantineTrays = $testingResult['tray'];
         $tradein = Tradein::where('id', $request->tradein_id)->first();
         
-        $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
+        $getLabel = new GetLabel();
+        $pdf = $getLabel->getTradeinLabel($tradein);
 
-        if($tradein->serial_number !== null && $tradein->imei_number === null){
-            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->correct_product_id), $tradein->getProductName($tradein->correct_product_id), $tradein->serial_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
-        } else {
-            $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->correct_product_id), $tradein->getProductName($tradein->correct_product_id), $tradein->imei_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
-        }
+        #dd($pdf);
+        
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal.testing.totray')->with(['tray_name'=>$quarantineName, 'portalUser'=>$portalUser, 'testing'=>true, 'tradein'=>$tradein]);
+        return view('portal.testing.totray')->with(['tray_name'=>$quarantineName, 'pdf'=>$pdf, 'portalUser'=>$portalUser, 'testing'=>true, 'tradein'=>$tradein]);
         
     }
 
@@ -568,22 +564,17 @@ class TestingController extends Controller
             $tradein->barcode = $newBarcode;
         }
         
-        #dd($tradein->barcode);
-
-        // $tradein->save();
         $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
         if($tradein->isInQuarantine()){
-            #$quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand', 'Q')->where('number_of_devices', "<" ,100)->first();
             $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand', 'Q')->where('number_of_devices', "<" ,100)->get()->sortBy('tray_name');
             $quarantineTrays = $quarantineTrays->first();
             $quarantineName = $quarantineTrays->tray_name;
         }
         else{
-            #$quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->first();
             $quarantineTrays = Tray::where('tray_type', 'R')->where('tray_brand',$tradein->getBrandLetter($tradein->product_id))->where('number_of_devices', "<" ,100)->get()->sortBy('tray_name');
             $quarantineTrays = $quarantineTrays->first();
             $quarantineName = $quarantineTrays->tray_name;
@@ -609,18 +600,15 @@ class TestingController extends Controller
         $traycontent->save();
 
 
-        if($tradein->serial_number !== null && $tradein->imei_number === null){
-            $response = $this->generateNewLabel(true, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->serial_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
-        } else {
-            $response = $this->generateNewLabel(false, $barcode, $tradein->barcode, $tradein->getBrandName($tradein->product_id), $tradein->getProductName($tradein->product_id), $tradein->imei_number, $quarantineTrays->tray_name, $tradein->bamboo_grade, $tradein->correct_network);
-        }
+        $getLabel = new GetLabel();
+        $pdf = $getLabel->getTradeinLabel($tradein);
 
         $klaviyoemail = new KlaviyoEmail();
         $klaviyoemail->receiptOfDevice(User::where('id', $tradein->user_id)->first(), $tradein);
 
         $tradein->save();
 
-        return view('portal.testing.totray')->with(['tray_name'=>$quarantineName,'response'=>$response,'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein,'testing'=>false, 'mti'=>$mti]);
+        return view('portal.testing.totray')->with(['tray_name'=>$quarantineName,'pdf'=>$pdf,'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein,'testing'=>false, 'mti'=>$mti]);
 
     }
 
@@ -688,81 +676,6 @@ class TestingController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
         return view('portal.testing.totray')->with(['tray_name'=>$tray->tray_name, 'portalUser'=>$portalUser,'testing'=>true, 'mti'=>$mti]);
-    }
-
-
-
-    /**
-     * Generate device label (PDF)
-     */
-    public function generateNewLabel($has_serial, $barcode, $tradein_barcode, $manifacturer, $model, $imei, $location, $cosmetic_condition, $network){
-        $customPaper = array(0,0,141.90,283.80);
-
-        
-
-        #dd($cosmetic_condition);
-        if($has_serial){
-            if($cosmetic_condition !== null){
-                $pdf = PDF::loadView('portal.labels.devicelabelserial', 
-                array(
-                    'barcode'=>$barcode,
-                    'tradein_barcode'=>$tradein_barcode,
-                    'manifacturer'=>$manifacturer,
-                    'model'=>$model,
-                    'serial'=>$imei,
-                    'location'=>$location,
-                    'grade'=>$cosmetic_condition,
-                    'network'=>$network))
-                ->setPaper($customPaper, 'landscape')
-                ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
-            }
-            else{
-                $pdf = PDF::loadView('portal.labels.devicelabels.receivingpass', 
-                array(
-                    'barcode'=>$barcode,
-                    'tradein_barcode'=>$tradein_barcode,
-                    'manifacturer'=>$manifacturer,
-                    'model'=>$model,
-                    'serial'=>$imei,
-                    'location'=>$location,
-                    'grade'=>$cosmetic_condition,
-                    'network'=>$network))
-                ->setPaper($customPaper, 'landscape')
-                ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
-            }
-
-        } else {
-            if($cosmetic_condition !== null){
-                $pdf = PDF::loadView('portal.labels.devicelabel', 
-                array(
-                    'barcode'=>$barcode,
-                    'tradein_barcode'=>$tradein_barcode,
-                    'manifacturer'=>$manifacturer,
-                    'model'=>$model,
-                    'imei'=>$imei,
-                    'location'=>$location,
-                    'grade'=>$cosmetic_condition,
-                    'network'=>$network))
-                ->setPaper($customPaper, 'landscape')
-                ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
-            }
-            else{
-                $pdf = PDF::loadView('portal.labels.devicelabels.receivingpass', 
-                array(
-                    'barcode'=>$barcode,
-                    'tradein_barcode'=>$tradein_barcode,
-                    'manifacturer'=>$manifacturer,
-                    'model'=>$model,
-                    'imei'=>$imei,
-                    'location'=>$location,
-                    'grade'=>$cosmetic_condition,
-                    'network'=>$network))
-                ->setPaper($customPaper, 'landscape')
-                ->save('pdf/devicelabel-'. $tradein_barcode .'.pdf');
-            }
-
-        }
-        
     }
 
     public function downloadSingleFile(Request $request){

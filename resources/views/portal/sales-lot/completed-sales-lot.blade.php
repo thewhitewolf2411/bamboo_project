@@ -35,7 +35,7 @@
             </div>
 
             <div class="col-md-12">
-                <table class="portal-table sortable table-visible" id="boxedtradeinstable">
+                <table class="portal-table table-visible" id="boxedtradeinstable">
                     <thead>
                         <tr>
                             <td><div class="table-element">Lot no.</div></td>
@@ -46,6 +46,7 @@
                             <td><div class="table-element">Status</div></td>
                             <td><div class="table-element">Date sold</div></td>
                             <td><div class="table-element">Payment date</div></td>
+                            <td><div class="table-element">Customer</div></td>
                         </tr>
                     </thead>
                     <tfoot>
@@ -58,6 +59,7 @@
                             <td><div class="table-element">Status</div></td>
                             <td><div class="table-element">Date sold</div></td>
                             <td><div class="table-element">Payment date</div></td>
+                            <td><div class="table-element">Customer</div></td>
                         </tr>
                     </tfoot>
                     @foreach ($salesLots as $saleLot)
@@ -66,10 +68,19 @@
                         <td><div class="table-element">{{$saleLot->created_at}}</div></td>
                         <td><div class="table-element">{{$saleLot->getSalesLotQuantity()}}</div></td>
                         <td><div class="table-element">£{{$saleLot->getSalesLotPrice()}}</div></td>
+                        @if($saleLot->sold_value === null)
+                        <td><div class="table-element">N/A</div></td>
+                        @else
                         <td><div class="table-element">£{{$saleLot->sold_value}}</div></td>
+                        @endif
                         <td><div class="table-element">{{$saleLot->getStatus($saleLot->sales_lot_status)}}</div></td>
-                        <td><div class="table-element">{{$saleLot->date_sold}}</div></td>
-                        <td><div class="table-element">{{$saleLot->payment_date}}</div></td>
+                        <td><div class="table-element">{{$saleLot->date_sold ?? null ?: 'N/A'}}</div></td>
+                        <td><div class="table-element">{{$saleLot->payment_date ?? null ?: 'N/A'}}</div></td>
+                        @if($saleLot->sold_to === null)
+                        <td><div class="table-element">N/A</div></td>
+                        @else
+                        <td><div class="table-element">{{$saleLot->getCustomerName()}}</div></td>
+                        @endif
                     </tr>
                     @endforeach
                 </table>

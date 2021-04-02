@@ -67,10 +67,6 @@ class SalesLot extends Model
                 $tradein = Tradein::where('id', $sLC->device_id)->first();
                 $price += $tradein->bamboo_price;
             }
-            if($sLC->box_id !== null){
-                $box = Tray::where('id', $sLC->box_id)->first();
-                $price += $box->getBoxPrice();
-            }
         }
 
         return $price;

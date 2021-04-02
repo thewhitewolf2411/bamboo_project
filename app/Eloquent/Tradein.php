@@ -50,8 +50,6 @@ class Tradein extends Model
         if($this->correct_product_id !== null){
             return SellingProduct::where('id', $this->correct_product_id)->first()->product_name;
         }
-        //dd(SellingProduct::where('id', $id)->first(), $this);
-       // return SellingProduct::where('id', $id)->first()->product_name;
        return SellingProduct::where('id', $this->product_id)->first()->product_name;
     }
 
@@ -70,7 +68,7 @@ class Tradein extends Model
         $post_code = explode(',', $address_line);
         return $post_code[count($post_code)-1];
     }
-    
+
     public function location(){
         return  null;
     }
@@ -291,7 +289,7 @@ class Tradein extends Model
 
     public function hasDeviceBeenReceived(){
 
-        $matches = ["1","2","3","4","5"];
+        $matches = ["1","2","3","4","5", "9a"];
 
         if(in_array($this->job_state, $matches)){
             return false;
@@ -341,66 +339,6 @@ class Tradein extends Model
         }
 
         return false;
-    }
-
-    public function getDeviceLabel(){
-        $barcodeNumber = $this->barcode;
-        $barcode = DNS1D::getBarcodeHTML($this->barcode, 'C128');
-        $location = $this->getTrayName($this->id);
-
-        $customPaper = array(0,0,141.90,283.80);
-
-        $quarantineReason = $this->getBambooStatus();
-
-        if($this->isInQuarantine()){
-            
-            $pdf = PDF::loadView('portal.labels.devicelabels.quarantinelabel', 
-            array(
-                'barcode_number'=>$barcodeNumber,
-                'manifacturer'=>$this->getBrandName($this->product_id),
-                'model'=>$this->getProductName($this->product_id),
-                'imei'=>$this->imei_number,
-                'location'=>$location,
-                'quarantineReason'=>$quarantineReason,
-                'barcode'=>$barcode,
-                ))
-            ->setPaper($customPaper, 'landscape')
-            ->save('pdf/devicelabel-'. $barcodeNumber .'.pdf');
-
-            return true;
-        }
-        else if($this->job_state === "10"){
-            $pdf = PDF::loadView('portal.labels.devicelabels.testingpassed', 
-            array(
-                'barcode_number'=>$barcodeNumber,
-                'manifacturer'=>$this->getBrandName($this->product_id),
-                'model'=>$this->getProductName($this->product_id),
-                'imei'=>$this->imei_number,
-                'location'=>$location,
-                'bambooGrade'=>$this->cosmetic_condition,
-                'network'=>$this->correct_network,
-                'barcode'=>$barcode,
-                ))
-            ->setPaper($customPaper, 'landscape')
-            ->save('pdf/devicelabel-'. $barcodeNumber .'.pdf');
-
-            return true;
-        }
-        else{
-            $pdf = PDF::loadView('portal.labels.devicelabels.receivingpass', 
-            array(
-                'barcode_number'=>$barcodeNumber,
-                'manifacturer'=>$this->getBrandName($this->product_id),
-                'model'=>$this->getProductName($this->product_id),
-                'imei'=>$this->imei_number,
-                'location'=>$location,
-                'barcode'=>$barcode,
-                ))
-            ->setPaper($customPaper, 'landscape')
-            ->save('pdf/devicelabel-'. $barcodeNumber .'.pdf');
-
-            return true;
-        }
     }
 
     public function isFullyFunctional(){
@@ -461,6 +399,7 @@ class Tradein extends Model
             /*8e*/  ['Knox','Awaiting Response'],
             /*8f*/  ['Assetwatch','Awaiting Response'],
             /*9*/   ['Awaiting Testing','Trade Pack Received'],    // old - ['Awaiting Testing','Awaiting Testing']
+            /*9a*/  ['Awaiting Testing','Trade Pack Received'], 
             /*10*/  ['Test Complete','Testing'],
             /* First Test results */
             /*11*/  ['Quarantine','Awaiting Response'],
@@ -534,86 +473,88 @@ class Tradein extends Model
                 return $states[13];
             case "9":
                 return $states[14];
-            case "10":
+            case "9a":
                 return $states[15];
-            case "11":
+            case "10":
                 return $states[16];
-            case "11a":
+            case "11":
                 return $states[17];
-            case "11b":
+            case "11a":
                 return $states[18];
-            case "11c":
+            case "11b":
                 return $states[19];
-            case "11d":
+            case "11c":
                 return $states[20];
-            case "11e":
+            case "11d":
                 return $states[21];
-            case "11f":
+            case "11e":
                 return $states[22];
-            case "11g":
+            case "11f":
                 return $states[23];
-            case "11h":
+            case "11g":
                 return $states[24];
-            case "11i":
+            case "11h":
                 return $states[25];
-            case "11j":
+            case "11i":
                 return $states[26];
-            case "12":
+            case "11j":
                 return $states[27];
-            case "13":
+            case "12":
                 return $states[28];
-            case "14":
+            case "13":
                 return $states[29];
-            case "15":
+            case "14":
                 return $states[30];
-            case "15a":
+            case "15":
                 return $states[31];
-            case "15b":
+            case "15a":
                 return $states[32];
-            case "15c":
+            case "15b":
                 return $states[33];
-            case "15d":
+            case "15c":
                 return $states[34];
-            case "15e":
+            case "15d":
                 return $states[35];
-            case "15f":
+            case "15e":
                 return $states[36];
-            case "15g":
+            case "15f":
                 return $states[37];
-            case "15h":
+            case "15g":
                 return $states[38];
-            case "15i":
+            case "15h":
                 return $states[39];
-            case "15j":
+            case "15i":
                 return $states[40];
-            case "16":
+            case "15j":
                 return $states[41];
-            case "17":
+            case "16":
                 return $states[42];
-            case "18":
+            case "17":
                 return $states[43];
-            case "19":
+            case "18":
                 return $states[44];
-            case "20":
+            case "19":
                 return $states[45];
-            case "21":
+            case "20":
                 return $states[46];
-            case "22":
+            case "21":
                 return $states[47];
-            case "23":
+            case "22":
                 return $states[48];
-            case "24":
+            case "23":
                 return $states[49];
-            case "25":
+            case "24":
                 return $states[50];
-            case "26":
+            case "25":
                 return $states[51];
-            case "27":
+            case "26":
                 return $states[52];
-            case "28":
+            case "27":
                 return $states[53];
-            case "29":
+            case "28":
                 return $states[54];
+            case "29":
+                return $states[55];
         }
         
     }
@@ -1065,6 +1006,37 @@ class Tradein extends Model
        #dd($difference);
 
         return $difference;
+    }
+
+    public function getDeviceCost(){
+        return $this->getDevicePrice() + $this->carriage_cost + $this->admin_cost + $this->misc_cost;
+    }
+
+    public function getDatePassed(){
+        $paymentBatchDevice = PaymentBatchDevice::where('tradein_id', $this->id)->first();
+
+        $datework = Carbon::parse($paymentBatchDevice->updated_at);
+        $now = Carbon::now();
+
+        return $datework->diffForHumans($now);
+    }
+
+    public function getTimePassed(){
+        $paymentBatchDevice = PaymentBatchDevice::where('tradein_id', $this->id)->first();
+
+        $datework = Carbon::parse($paymentBatchDevice->updated_at);
+        $now = Carbon::now();
+
+        return $datework->diffInDays($now);
+    }
+
+    public function getDatePaid(){
+        $paymentBatchDevice = PaymentBatchDevice::where('tradein_id', $this->id)->first();
+
+        if($paymentBatchDevice->payment_state === 1){
+            return $paymentBatchDevice->updated_at;
+        }
+        return null;
     }
 
 }
