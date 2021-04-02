@@ -191,13 +191,13 @@ class ReportsController extends Controller
 
 
         if(!is_dir(public_path() . '/reports/purchased')){
-            mkdir(public_path() . '/reports/purchased', 0777, true);
+            //mkdir(public_path() . '/reports/purchased', 0777, true);
         }
         
         $filename = 'purchased_report_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
-        $writer->save(public_path() . '/reports/purchased/' . $filename);
+        //$writer->save(public_path() . '/reports/purchased/' . $filename);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
         header('Cache-Control: max-age=0');
@@ -293,13 +293,13 @@ class ReportsController extends Controller
 
 
         if(!is_dir(public_path() . '/reports/current')){
-            mkdir(public_path() . '/reports/current', 0777, true);
+            //mkdir(public_path() . '/reports/current', 0777, true);
         }
         
         $filename = 'current_report_[' . $request->bamboo_status . ']';
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
-        $writer->save(public_path() . '/reports/current/' . $filename);
+        //$writer->save(public_path() . '/reports/current/' . $filename);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
         header('Cache-Control: max-age=0');

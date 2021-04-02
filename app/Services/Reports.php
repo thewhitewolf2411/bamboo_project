@@ -190,13 +190,13 @@ class Reports{
         }
 
         if(!is_dir(public_path() . '/reports/overview')){
-           mkdir(public_path() . '/reports/overview', 0777, true);
+           //mkdir(public_path() . '/reports/overview', 0777, true);
         } 
 
         $filename = 'overview_report_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
-        $writer->save(public_path() . '/reports/overview/' . $filename);
+        //$writer->save(public_path() . '/reports/overview/' . $filename);
 
         #return '/reports/overview/' . $filename;
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -356,7 +356,7 @@ class Reports{
         }
 
         if(!is_dir(public_path() . '/reports/stock')){
-            mkdir(public_path() . '/reports/stock', 0777, true);
+            //mkdir(public_path() . '/reports/stock', 0777, true);
         }
 
         $filename = 'stock_report_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
@@ -507,7 +507,7 @@ class Reports{
         }
 
         if(!is_dir(public_path() . '/reports/receiving')){
-            mkdir(public_path() . '/reports/receiving', 0777, true);
+            //mkdir(public_path() . '/reports/receiving', 0777, true);
         }
 
         $filename = 'receiving_report_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
@@ -708,7 +708,7 @@ class Reports{
         }
 
         if(!is_dir(public_path() . '/reports/testing')){
-            mkdir(public_path() . '/reports/testing', 0777, true);
+            //mkdir(public_path() . '/reports/testing', 0777, true);
         }
 
         $filename = 'testing_report_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
@@ -841,7 +841,7 @@ class Reports{
         
 
         if(!is_dir(public_path() . '/exports/recycle_customer_returns_')){
-            mkdir(public_path() . '/exports/recycle_customer_returns_', 0777, true);
+            //mkdir(public_path() . '/exports/recycle_customer_returns_', 0777, true);
         }
 
         $filename = 'recycle_customer_returns_report_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
