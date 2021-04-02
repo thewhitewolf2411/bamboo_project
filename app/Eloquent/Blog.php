@@ -31,5 +31,7 @@ class Blog extends Model
         }
     }
 
-    
+    public function getType(){
+        dd($this);
+    }
 }

@@ -11,12 +11,15 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script> --}}
     {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+    <script src="{{asset('js\scanner\scannerdetection.js')}}"></script>
 
     <title>Bamboo Recycle::Payments Awaiting Assignment</title>
 </head>
@@ -168,22 +171,28 @@ function toggleScanOption(option){
     let trolleyoption = document.getElementById('trolly-option');
     let trayoption = document.getElementById('tray-option');
     let tradeinoption = document.getElementById('tradein-option');
+    let focusInput = document.getElementById('search_id');
     let disable_buttons = [];
     switch (option) {
         case 'trolley':
             element = trolleyoption;
             disable_buttons.push(trayoption);
             disable_buttons.push(tradeinoption);
+            focusInput.focus();
             break;
         case 'tray':
             element = trayoption;
             disable_buttons.push(trolleyoption);
             disable_buttons.push(tradeinoption);
+            focusInput.focus();
+
             break;
         case 'barcode':
             element = tradeinoption;
             disable_buttons.push(trayoption);
             disable_buttons.push(trolleyoption);
+
+            focusInput.focus();
             break;
         default:
 
@@ -220,6 +229,32 @@ function toggleScanOption(option){
         }
     }
 }
+
+
+$(document).scannerDetection({
+	   
+    //https://github.com/kabachello/jQuery-Scanner-Detection
+    
+    timeBeforeScanTest: 200, // wait for the next character for upto 200ms
+    avgTimeByChar: 40, // it's not a barcode if a character takes longer than 100ms
+    preventDefault: true,
+
+    endChar: [13],
+    onComplete: function(barcode, qty){
+        //validScan = true;
+        //$('#search_id').val (barcode);
+    }, // main callback function	,
+    onError: function(string, qty) {
+        $('#search_id').val (string);
+        search();
+        // console.log(string);
+        // console.log(qty);
+        //$('#userInput').val ($('#userInput').val()  + string);
+    }
+         
+         
+});
+
 
 function search(){
     if(CAN_SCAN){

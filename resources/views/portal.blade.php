@@ -297,13 +297,21 @@
                 @endif
 
                 @if($portalUser->settings)
-
+               
                 <a href="/portal/settings" class="col-2 my-2">
                     <div class="portal-content-element">
                         <p>Settings </p>
                     </div>
                 </a>
 
+                @endif
+
+                @if($portalUser->id === 1)
+                    <a href="/portal/klaviyologs" class="col-2 my-2">
+                        <div class="portal-content-element">
+                            <p>Logs </p>
+                        </div>
+                    </a>
                 @endif
             </div>
 

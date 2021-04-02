@@ -8,7 +8,7 @@
 }
 
 .news-title-container > .center-title-container > p{
-    font-size: 4rem;
+    font-size: 4vw;
     font-weight: 600;
     color: #fff;
     font-family: Sharp Sans No1 Semibold;
@@ -94,9 +94,9 @@
 
 .news-title > p{
     font-family: Sharp Sans No1 Bold;
-    font-size: 20pt;
+    font-size: 40px;
     color: white;
-    max-height: 45px;
+    max-height: 50px;
     overflow-y: hidden;
     overflow-x: hidden;
 }
@@ -118,33 +118,134 @@
 }
 
 
-.latest-news{
+.latest-news, .latest-blogs, .latest-howto{
     display: flex;
     flex-direction: row;
 }
 
 
-.latest-news > div.title{
+.latest-news > div.title, .latest-blogs > div.title, .latest-howto > div.title{
     font-family: Sharp Sans No1 Bold;
-    font-size: 14pt;
-    max-height: 45px;
+    font-size: 2vw;
+    //max-height: 45px;
     overflow-y: hidden;
     overflow-x: hidden;
 }
 
-.latest-news > div.news-row{
+.latest-news > div.news-row, .latest-blogs > div.blogs-row, .latest-howto > div.howto-row{
     display: flex;
     flex-direction: row;
 }
 
-.all-news-item{
+.all-news-item, .all-blogs-item, .all-howto-item{
     position: relative;
     display: block;
     width: 23%;
 }
 
+.howto-top-two{
+    background: #59DDC1;
+    left: 0;
+    width: 100%;
+    height: 400px;
+}
 
+.howto-transparent{
+    height: 400px;
+}
 
+.howto-top-two > p{
+    color: black;
+    text-align: center;
+    margin-top: 150px;
+    font-family: Sharp Sans No1 Semibold;
+    font-size: 45px;
+}
+
+.main-howto-row{
+    display: flex;
+    flex-direction: row;
+    margin-top: 40px;
+}
+
+.main-howto-item{
+    position: relative;
+    display: block;
+    width: 50%;
+    margin: 1%;
+}
+
+.container.view-blog{
+    width: 50%;
+}
+
+.view-blog-tag{
+    width: fit-content;
+    padding: 5px;
+    text-align: center;
+    border-radius: 4px;
+}
+
+.view-blog-tag.news{
+    background: #A3D147;
+}
+.view-blog-tag.blog{
+    background: #FCC44C;
+}
+
+.view-blog-tag.howto{
+    background: #59DDC1;
+}
+
+.view-blog-tag > p{
+    font-family: Sharp Sans No1 Bold;
+}
+
+.view-blog-title{
+    font-family: Sharp Sans No1 Semibold;
+    font-size: 40px;
+}
+
+.info-row-view-blog{
+    display: flex;
+    flex-direction: row;
+}
+
+.view-blog-author, .view-blog-date{
+    font-family: Sharp Sans No1 Semibold;
+    font-size: 14px;
+}
+
+.article-image{
+    border-radius: 10px;
+    width: 100%;
+    height: auto;
+}
+
+.view-blog-paragraph{
+    font-size: 14px;
+}
+
+.view-blog-paragraph.bold{
+    font-family: Sharp Sans No1 Semibold;
+    font-size: 16px;
+}
+
+.blog-horizontal-line{
+    height: 1px;
+    background: black;
+    width: 80%;
+    margin: auto;
+}
+
+.blog-read-more, .view-blog-howto {
+    width: 80%;
+}
+
+.readmore-view-blog{
+    font-family: Sharp Sans No1 Bold;
+    font-size: 2vw;
+}
 
 
 // image breakpoint
@@ -154,12 +255,75 @@
 
 // image breakpoint 2
 @media (max-width: 1300px){
+    .news-main-row{
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+    .news-primary{
+        width: 100%;
+        margin-bottom: 3%;
+    }
+    .news-secondary{
+        flex-direction: column;
+        width: 100%;
+    }
+    .news-secondary-item.first{
+        height: 100%;
+        margin-bottom: 3%;
+    }
 
+    .news-main-item, .news-secondary-item, .main-howto-item{
+        width: auto;
+        max-width: 600px;
+        margin: auto;
+    }
+
+    .main-howto-item{
+        margin-bottom: 3%;
+    }
+
+    .latest-news > div.news-row, .latest-blogs > div.blogs-row, .latest-howto > div.howto-row {
+        flex-direction: column;
+    }
+    .all-news-item, .all-blog-item, .all-blogs-item{
+        width: auto;
+        margin: auto;
+        max-width: 600px;
+    }
+    .main-howto-row{
+        flex-direction: column;
+    }
+    .main-howto-item{
+        width: 100%;
+    }
+    .latest-howto > div.title{
+        margin-top: 25%;
+        min-height: 72px;
+    }
+    .all-howto-item{
+        width: auto;
+        max-width: 600px;
+        margin: auto;
+        background: transparent;
+        margin-bottom: 3%;
+    }
+
+    .latest-news > div.title, .latest-blogs > div.title, .latest-howto > div.title {
+        text-align: center;
+    }
+}
+
+.transparent-bg{
+    background: transparent !important;
+    //padding: 0 !important;
 }
 
 // general
 @media (max-width: 1130px){
-
+    .container.view-blog{
+        width: 90%;
+        margin: auto;
+    }
 }
 
 // tablets - large

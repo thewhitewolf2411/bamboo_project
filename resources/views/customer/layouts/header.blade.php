@@ -1,16 +1,16 @@
 @include('cookieConsent::index')
 
-<div class="header-container navbar-expand-lg navbar-light">
+<div id="header" class="header-container navbar-expand-lg navbar-light">
 
 
     <div class="left-header">
 
-        <div class="logo-header-container">
+        <div class="logo-header-container" id="full-logo-container">
             <a href="/" class="full-logo">
-                <img src="{{asset('/customer_page_images/header/Bamboo Logo.svg')}}" width="550px" height="82px">
+                <img id="full-bamboo-logo" src="{{asset('/customer_page_images/header/Bamboo Logo.svg')}}" width="550px" height="82px">
             </a>
             <a href="/" class="mobile-logo">
-                <img src="{{asset('/images/logo_mobile.svg')}}">
+                <img id="mobile-bamboo-logo" src="{{asset('/images/logo_mobile.svg')}}">
             </a>
         </div>
 
@@ -56,7 +56,7 @@
 
 </div>
 
-<div class="urls-header">
+<div class="urls-header" id="header-urls">
 
     {{-- <div class="url-header-container" id="start-shopping">
         <a href="/shop">Start Shopping</a>
@@ -107,3 +107,5 @@
     </div>
 
 </div>
+
+<script type="application/javascript" defer src="{{ asset('js/header.js') }}"></script>

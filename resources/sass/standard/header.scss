@@ -13,6 +13,29 @@ header{
     padding: 0 120px 0 120px;
     justify-content: space-between;
     background: #fff;
+    transition: height 0.5s ease;
+}
+
+#header.resized{
+    height: 90px;
+    padding: 0 30px 60px;
+}
+#full-bamboo-logo.resized{
+    height: 50px;
+    width: auto;
+}
+
+#header-urls.resized{
+    padding: 0 60px 0;
+    justify-content: center;
+}
+
+#full-logo-container.resized{
+    margin-top: 45px;
+}
+
+#full-bamboo-logo{
+    transition: all 0.5s ease;
 }
 
 .mobile-logo{
@@ -33,7 +56,7 @@ header{
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
+    //margin-top: 50px;
 }
 
 .right-header{
@@ -439,9 +462,6 @@ header{
 
 // general
 @media (max-width: 1130px){
-    .logo-header-container{
-        //margin-top: 5px;
-    }
     .header-container{
         padding: 0 60px 60px;
     }
