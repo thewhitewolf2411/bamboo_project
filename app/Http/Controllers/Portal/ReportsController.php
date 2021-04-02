@@ -149,7 +149,7 @@ class ReportsController extends Controller
 
         $toDate = $toDate->addDay();
 
-        $tradeins = Tradein::whereBetween('created_at', [$fromDate, $toDate])->get();
+        $tradeins = Tradein::whereBetween('created_at', [$fromDate, $toDate])->whereIn('job_state', ['25', '26', '27', '28', '29'])->get();
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -183,9 +183,9 @@ class ReportsController extends Controller
             $sheet->setCellValue('G'.$index, $tradein->carriage_cost);
             $sheet->setCellValue('H'.$index, $tradein->bamboo_price + $tradein->carriage_cost);
             $sheet->setCellValue('I'.$index, $tradein->created_at);
-            $sheet->setCellValue('J'.$index, 'Date passed');
-            $sheet->setCellValue('K'.$index, 'Time passed');
-            $sheet->setCellValue('L'.$index, 'Date Paid');
+            $sheet->setCellValue('J'.$index, $tradein->getDatePassed());
+            $sheet->setCellValue('K'.$index, $tradein->getTimePassed());
+            $sheet->setCellValue('L'.$index, $tradein->getDatePaid());
             $sheet->setCellValue('M'.$index, $tradein->getTrayName($tradein->id));
         }
 

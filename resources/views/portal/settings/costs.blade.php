@@ -112,9 +112,9 @@
                         </tr>
                         @foreach($miscalaniousCosts as $mC)
                         <tr>
-                            <td>{{$mC->miscellaneous_costs}}</td>
-                            <td>{{$mC->per_job_deduction}}</td>
-                            <td>{{$mC->miscellaneous_costs - ($mC->applied_to * $mC->per_job_deduction)}}</td>
+                            <td>£{{$mC->miscellaneous_costs}}</td>
+                            <td>£{{$mC->per_job_deduction}}</td>
+                            <td>£{{$mC->miscellaneous_costs - ($mC->applied_to * $mC->per_job_deduction)}}</td>
                             <td>{{$mC->cost_description}}</td>
                             <td>{{$mC->applied_to}}</td>
                             <td><input type="checkbox" data-value="{{$mC->id}}"></td>

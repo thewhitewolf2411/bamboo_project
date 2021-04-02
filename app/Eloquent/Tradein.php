@@ -1012,4 +1012,31 @@ class Tradein extends Model
         return $this->getDevicePrice() + $this->carriage_cost + $this->admin_cost + $this->misc_cost;
     }
 
+    public function getDatePassed(){
+        $paymentBatchDevice = PaymentBatchDevice::where('tradein_id', $this->id)->first();
+
+        $datework = Carbon::parse($paymentBatchDevice->updated_at);
+        $now = Carbon::now();
+
+        return $datework->diffForHumans($now);
+    }
+
+    public function getTimePassed(){
+        $paymentBatchDevice = PaymentBatchDevice::where('tradein_id', $this->id)->first();
+
+        $datework = Carbon::parse($paymentBatchDevice->updated_at);
+        $now = Carbon::now();
+
+        return $datework->diffInDays($now);
+    }
+
+    public function getDatePaid(){
+        $paymentBatchDevice = PaymentBatchDevice::where('tradein_id', $this->id)->first();
+
+        if($paymentBatchDevice->payment_state === 1){
+            return $paymentBatchDevice->updated_at;
+        }
+        return null;
+    }
+
 }

@@ -587,12 +587,12 @@ class CustomerCareController extends Controller
                 if(!$tradeIn->hasDeviceBeenReceived()){
                     $tradeins = Tradein::where('barcode', $tradeIn->barcode)->get();
                     foreach($tradeins as $ti){
-                        $ti->job_state = '21';
+                        $ti->job_state = '20';
                         $ti->save();
                     }
                     return response(200);
                 }
-                $tradeIn->job_state = '21';
+                $tradeIn->job_state = '20';
                 $tradeIn->save();
                 // send notification - marked for return
                 $notificationService->sendMarkedToReturn($tradeIn->id);

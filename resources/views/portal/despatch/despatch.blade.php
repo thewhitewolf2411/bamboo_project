@@ -9,12 +9,12 @@
             <div class="row justify-content-around">
                 <p class="pt-2 text-center">Despatch devices</p>
 
-                <form class="d-flex align-items-center mx-5 text-center" action="/portal/despatch/despatchdevices" method="GET">              
+                {{--<form class="d-flex align-items-center mx-5 text-center" action="/portal/despatch/despatchdevices" method="GET">              
                     <label for="searchtradeins">Search by Trade-in barcode:</label>
                     <input type="text" minlength="7" name="search" class="form-control mx-3 my-0" @if(isset(request()->search)) value="{{request()->search}}" @endif required>
                     <button type="submit" class="btn btn-primary btn-blue">Search</button>
                     @if(isset(request()->search)) <a class="btn" href="/portal/despatch/despatchdevices">Cancel</a> @endif
-                </form>
+                </form>--}}
             </div>
         </div>
     </div>
@@ -64,33 +64,53 @@
             @endif
         @endif
 
-        <table class="portal-table sortable" id="despatch-devices-table">
-            <tr>
-                <td><div class="table-element">Trade-in ID</div></td>
-                <td class="text-center"><div class="table-element">Trade-in barcode number</div></td>
-                <td class="text-center"><div class="table-element">Model</div></td>
-                <td class="text-center"><div class="table-element">Customer Name</div></td>
-                <td class="text-center"><div class="table-element">Postcode</div></td>
-                <td class="text-center"><div class="table-element">Address Line 1</div></td>
-                <td class="text-center"><div class="table-element">Bamboo Status</div></td>
-                <td class="text-center"><div class="table-element">Carrier</div></td>
-                <td class="text-center"><div class="table-element">Tracking Reference</div></td>
-                <td class="text-center p-3 sorttable_nosort"><div class="table-element"><input type="checkbox" id="selectAllDespatch" class="form-check-input m-0 w-auto" onclick="selectAllDespatch()"></div></td>
-            </tr>
-            @foreach($tradeins as $tradein)
-                <tr id="tradein-{{$tradein->id}}" @if($tradein->isManifested()) class="can_confirm" @endif>
-                    <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
-                    <td><div class="table-element">{{$tradein->barcode}}</div></td>
-                    <td><div class="table-element">{{$tradein->getProductName($tradein->id)}}</div></td>
-                    <td><div class="table-element">{{$tradein->customerName()}}</div></td>
-                    <td><div class="table-element">{{$tradein->postCode()}}</div></td>
-                    <td><div class="table-element">{{$tradein->addressLine()}}</div></td>
-                    <td class="text-center"><div class="table-element">{{$tradein->getBambooStatus()}}</div></td>
-                    <td class="text-center"><div class="table-element">Royal Mail</div></td>
-                    <td><div class="table-element">{{$tradein->tracking_reference}}</div></td>
-                    <td><div class="table-element"><input type="checkbox" name="selected_despatch_devices" class="form-check-input m-0 w-auto" value="{!!$tradein->id!!}"></div></td>
+        <table class="portal-table" id="despatch-devices-table">
+            <thead>
+                <tr>
+                    <td><div class="table-element">Trade-in ID</div></td>
+                    <td class="text-center"><div class="table-element">Trade-in barcode number</div></td>
+                    <td class="text-center"><div class="table-element">Model</div></td>
+                    <td class="text-center"><div class="table-element">Customer Name</div></td>
+                    <td class="text-center"><div class="table-element">Postcode</div></td>
+                    <td class="text-center"><div class="table-element">Address Line 1</div></td>
+                    <td class="text-center"><div class="table-element">Bamboo Status</div></td>
+                    <td class="text-center"><div class="table-element">Carrier</div></td>
+                    <td class="text-center"><div class="table-element">Tracking Reference</div></td>
+                    <td class="text-center p-3 sorttable_nosort"><div class="table-element"><input type="checkbox" id="selectAllDespatch" class="form-check-input m-0 w-auto" onclick="selectAllDespatch()"></div></td>
                 </tr>
-            @endforeach
+            </thead>
+            <tfoot>
+                <tr>
+                    <td><div class="table-element">Trade-in ID</div></td>
+                    <td class="text-center"><div class="table-element">Trade-in barcode number</div></td>
+                    <td class="text-center"><div class="table-element">Model</div></td>
+                    <td class="text-center"><div class="table-element">Customer Name</div></td>
+                    <td class="text-center"><div class="table-element">Postcode</div></td>
+                    <td class="text-center"><div class="table-element">Address Line 1</div></td>
+                    <td class="text-center"><div class="table-element">Bamboo Status</div></td>
+                    <td class="text-center"><div class="table-element">Carrier</div></td>
+                    <td class="text-center"><div class="table-element">Tracking Reference</div></td>
+                    <td class="text-center p-3 sorttable_nosort"><div class="table-element"><input type="checkbox" id="selectAllDespatch" class="form-check-input m-0 w-auto" onclick="selectAllDespatch()"></div></td>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach($tradeins as $tradein)
+                    <tr id="tradein-{{$tradein->id}}" @if($tradein->isManifested()) class="can_confirm" @endif>
+                        <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
+                        <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                        <td><div class="table-element">{{$tradein->getProductName($tradein->id)}}</div></td>
+                        <td><div class="table-element">{{$tradein->customerName()}}</div></td>
+                        <td><div class="table-element">{{$tradein->postCode()}}</div></td>
+                        <td><div class="table-element">{{$tradein->addressLine()}}</div></td>
+                        <td class="text-center"><div class="table-element">{{$tradein->getBambooStatus()}}</div></td>
+                        <td class="text-center"><div class="table-element">Royal Mail</div></td>
+                        <td><div class="table-element">{{$tradein->tracking_reference}}</div></td>
+                        <td><div class="table-element"><input type="checkbox" name="selected_despatch_devices" class="form-check-input m-0 w-auto" value="{!!$tradein->id!!}"></div></td>
+                    </tr>
+                @endforeach
+            </tbody>
+
+
         </table>
     </div>
 

@@ -38,6 +38,13 @@
                         </ul>
                     </div>
                 @endif
+                @if(Session::has('success'))
+                    <div class="alert alert-success">
+                        <ul>
+                            <li>{{Session::get('success')}}</li>
+                        </ul>
+                    </div>
+                @endif
                 <div class="register-form-container">
                     <form method="POST" @if(isset($userdata)) action="/portal/user/edituser" @else action="/portal/user/adduser" @endif>
                         @csrf

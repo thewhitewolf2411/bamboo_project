@@ -24,6 +24,7 @@ require('./scripts/Messages');
 require('./scripts/Blogs');
 require('./scripts/AddUser');
 require('./scripts/PrintLabels');
+require('./scripts/DespatchDevices');
 
 "use strict";
 
