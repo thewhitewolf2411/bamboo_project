@@ -29,6 +29,7 @@ use App\Eloquent\Network;
 use App\Eloquent\ProductNetworks;
 use App\Eloquent\Memory;
 use App\Eloquent\ImeiResult;
+use App\Eloquent\Message;
 use App\Eloquent\TestingFaults;
 use App\User;
 use Auth;
@@ -62,7 +63,9 @@ class PortalController extends Controller
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        return view('portal')->with('portalUser', $portalUser);
+        $newMessages = count(Message::where('seen', false)->get());
+
+        return view('portal', ['portalUser'=>$portalUser, 'newMessages'=>$newMessages]);
     }
 
 

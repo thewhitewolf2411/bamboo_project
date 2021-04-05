@@ -17,7 +17,7 @@
                     <div class="selling-single-result"><p>Iphone Z</p></div> --}}
                     <div id="no-results-sorry" class="noresults">
                         <img class="sorry-result-img" src="{{asset('/customer_page_images/body/emoji_confused.svg')}}">
-                        <p class="sorry-result-text">We are sorry Boo is unable to find this make/model, please contact Customer Support on <a href="mailto:customersupport@bamboomobile.co.uk">customersupport@bamboomobile.co.uk</a></p>
+                        <p class="sorry-result-text">We are sorry Boo is unable to find this make/model, please contact Customer Support on <a href="/contact#CustomerDeviceNotAvaliable">customersupport@bamboomobile.co.uk</a></p>
                     </div>
                 </div>
             </form>

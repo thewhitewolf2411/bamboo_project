@@ -236,11 +236,14 @@ class PagesController extends Controller
     }
 
     public function sendMessage(Request $request){
+
+        #dd($request->all());
+
         $firstName = $request->firstname;
         $lastname = $request->lastname;
         $email = $request->emailadress;
         $telephone = $request->telephone;
-        $ordernumber = $request->ordernumber;
+        $ordernumber = $request->title;
         $message = $request->yourmessage;
 
         $newMessage = Message::create([
