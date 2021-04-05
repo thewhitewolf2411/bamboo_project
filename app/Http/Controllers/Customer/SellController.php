@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Eloquent\AbandonedCart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -343,29 +344,57 @@ class SellController extends Controller
         return response($devices, 200);
     }
 
+
+    /**
+     * Add item to cart / abandoned basked
+     * @param Request $request
+     */
     public function addSellItemToCart(Request $request){
 
-        $userid = Auth::user()->id;
-        $productid = $request->productid;
-        $grade = $request->grade;
-        $network = $request->network;
-        $memory = $request->memory;
-        $price = $request->price;
-        $type = $request->type;
+        if(Auth::user()){
+            $userid = Auth::user()->id;
+            $productid = $request->productid;
+            $grade = $request->grade;
+            $network = $request->network;
+            $memory = $request->memory;
+            $price = $request->price;
+            $type = $request->type;
+    
+            $cart = new Cart();
+    
+            $cart->user_id = $userid;
+            $cart->price = $price;
+            $cart->product_id = $productid;
+            $cart->type = $type;
+            $cart->network = $network;
+            $cart->memory = $memory;
+            $cart->grade = $grade;
+            $cart->save();
 
-        $cart = new Cart();
+            return redirect()->back()->with('productaddedtocart', true);
+        } else {
+            if($request->has('email')){
 
-        $cart->user_id = $userid;
-        $cart->price = $price;
-        $cart->product_id = $productid;
-        $cart->type = $type;
-        $cart->network = $network;
-        $cart->memory = $memory;
-        $cart->grade = $grade;
-        $cart->save();
+                $abandoned_cart = new AbandonedCart([
+                    'user_email'    => $request->email,
+                    'price'         => $request->price,
+                    'product_id'    => $request->productid,
+                    'type'          => $request->type,
+                    'memory'        => $request->memory,
+                    'grade'         => $request->grade,
+                ]);
+
+                if(!$request->session()->has('session_email')){
+                    $request->session()->put('session_email', $request->email);
+                }
+
+                $abandoned_cart->save();
+                return redirect()->back()->with('productaddedtocart', true);
+            }
+        }
+        
         
 
-        return redirect()->back()->with('productaddedtocart', true);
 
     }
 

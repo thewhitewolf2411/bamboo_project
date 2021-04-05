@@ -115,7 +115,9 @@ Route::post('/sell/searchproducts','Customer\SellController@searchAvalibleProduc
 //User post Route
 Route::post('/addtocart', 'Customer\CustomerController@addProductToCart')->name('addproducttocart');
 Route::get('/removefromcart/{parameter}', 'Customer\CustomerController@removeFromCart')->name('removefromcart');
+Route::get('/removefromabandoned/{id}', 'Customer\CustomerController@removeFromAbandonedCart');
 Route::post('/checkoutcart', 'Customer\CustomerController@sheckoutcart')->name('sheckoutcart');
+Route::post('/completeregistration', 'Customer\CustomerController@completeRegistration')->name('completeRegistration');
 
 Route::post('/addtowishlist', 'Customer\CustomerController@addProductToWishList')->name('addproducttowishlist');
 Route::post('/removefromwislist', 'Customer\CustomerController@removeFromWishList')->name('removeproductfromwishlist');

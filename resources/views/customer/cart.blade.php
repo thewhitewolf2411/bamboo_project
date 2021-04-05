@@ -49,9 +49,9 @@
 
             @if(Session::has('success'))
 
-            <div class="alert alert-success" role="alert">
-                {{Session::get('success')}}
-            </div>
+                <div class="alert alert-success w-50 m-auto text-center" role="alert">
+                    {{Session::get('success')}}
+                </div>
 
             @endif
 
@@ -177,11 +177,21 @@
 
                                     <div class="d-flex justify-content-between">
                                         <div class="w-25"></div>
-                                        <a href="/removefromcart/{{$cartitem->id}}" class="w-25 m-0">
-                                            <div class="">
-                                                <p class="m-0 pl-2">REMOVE</p>
-                                            </div>
-                                        </a>
+
+                                        @if(Auth::user())
+                                            <a href="/removefromcart/{{$cartitem->id}}" class="w-25 m-0">
+                                                <div class="">
+                                                    <p class="m-0 pl-2">REMOVE</p>
+                                                </div>
+                                            </a>
+                                        @else
+                                            <a href="/removefromabandoned/{{$cartitem->id}}" class="w-25 m-0">
+                                                <div class="">
+                                                    <p class="m-0 pl-2">REMOVE</p>
+                                                </div>
+                                            </a>
+                                        @endif
+
                                         <div class="w-25 remove-from-cart-tohide"></div>
                                         <div class="w-25"></div>
                                     </div>
@@ -364,7 +374,7 @@
 		</div>
 
         
-        <div class="modal fade" tabindex="-1" role="dialog" id="payment-container">
+        {{-- <div class="modal fade" tabindex="-1" role="dialog" id="payment-container">
             <section class="modal-dialog" role="document">
                 <section class="modal-content">
                     <div class="modal-header">
@@ -407,7 +417,7 @@
 
                 </section>
             </section>
-        </div>
+        </div> --}}
 
         <div class="modal fade" id="newOrderModal" tabindex="-1" role="dialog" aria-labelledby="newOrderModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -445,13 +455,13 @@
         </main>
 
 
-        @if(session('showLogin'))
+        {{-- @if(session('showLogin'))
             <script>
                 $(window).on('load',function(){
                     $('#loginModal').modal('show');
                 });
             </script>
-        @endif
+        @endif --}}
         <footer>@include('customer.layouts.footer', ['showGetstarted' => false])</footer>    
     </body>
     <script>

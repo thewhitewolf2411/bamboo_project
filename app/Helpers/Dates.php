@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use Carbon\Carbon;
+use Exception;
 
 class Dates{
 
@@ -44,5 +45,17 @@ class Dates{
         return $years;
     }
 
+
+    /**
+     * Check if birth date is valid.
+     */
+    public static function checkBirthDate($data){
+        try{
+            $date = Carbon::parse($data['birth_day'].'.'.$data['birth_month'].'.'.$data['birth_year']);
+            return true;
+        } catch(Exception $e){
+            return false;
+        }
+    }
 
 }
