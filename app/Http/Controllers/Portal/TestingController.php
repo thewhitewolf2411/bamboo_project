@@ -169,6 +169,7 @@ class TestingController extends Controller
         $miscCost = AdditionalCosts::where('id', '!=', 1)->first();
         if($miscCost !== null){
             $miscCost->miscellaneous_costs = $miscCost->miscellaneous_costs - $miscCost->per_job_deduction;
+            $miscCost->applied_to += 1;
             $miscCost->save();
 
             $tradein->misc_cost = $miscCost->per_job_deduction;
