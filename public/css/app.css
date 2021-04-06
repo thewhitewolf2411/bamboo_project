@@ -15498,6 +15498,136 @@ h3, h4, h5 {
   font-size: 12px;
 }
 
+.welcome-user-container {
+  background: #FCC44C;
+  padding: 25px 45px;
+}
+
+.welcome-bold {
+  font-size: 40px;
+  font-family: Sharp Sans No1 Bold;
+}
+
+.welcome-small {
+  font-size: 28px;
+  margin-left: 35px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.welcome-img {
+  display: block;
+  width: 160px;
+}
+
+.bank-account-details {
+  background-color: #ffefcc;
+  padding: 25px 45px;
+}
+
+.bank-details-large {
+  font-family: Sharp Sans No1 Bold;
+  font-size: 28px;
+}
+
+.bank-details-small {
+  font-size: 18px;
+}
+
+.width-60px {
+  width: 60px;
+}
+
+.checkbox-input {
+  width: 20px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+.newsletter-small-sell {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.small-input {
+  max-width: 260px;
+}
+
+.delivery-details-basket > h3 {
+  padding: 20px 35px 20px 35px;
+}
+
+.delivery-details-basket > p {
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+.delivery-address-container {
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+.delivery-address-lookup {
+  display: flex;
+  flex-direction: row;
+  margin-left: 35px;
+  margin-right: 35px;
+  padding-bottom: 20px;
+}
+
+.search-button-basket-delivery {
+  background: #F28E33;
+  width: 57px;
+  height: 47px;
+  text-align: center;
+  border-radius: 5px;
+  margin-left: 16px;
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+.search-button-basket-delivery > img {
+  display: block;
+  width: 23px;
+  height: 23px;
+  margin: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lookup-delivery-basket {
+  height: 47px;
+  border: 0 !important;
+  box-shadow: none;
+  margin: 0;
+}
+
+.enter-manually-basket {
+  font-family: Sharp Sans No1 Semibold;
+  color: #F28E33;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+input.lookup-delivery-basket::-moz-placeholder {
+  background-color: transparent !important;
+}
+
+input.lookup-delivery-basket:-ms-input-placeholder {
+  background-color: transparent !important;
+}
+
+input.lookup-delivery-basket::-ms-input-placeholder {
+  background-color: transparent !important;
+}
+
+input.lookup-delivery-basket::placeholder {
+  background-color: transparent !important;
+}
+
 .single-product-container input[type=radio] {
   display: none;
 }

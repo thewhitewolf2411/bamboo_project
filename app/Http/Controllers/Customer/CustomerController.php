@@ -382,7 +382,7 @@ class CustomerController extends Controller
 
         $data = $request->all();
 
-        dd('create user done, move items to real cart, call route for cart details with cart items to complete sale.');
+        //dd('create user done, move items to real cart, call route for cart details with cart items to complete sale.');
         
         // create user
         $sub = 0;
@@ -429,6 +429,25 @@ class CustomerController extends Controller
             $notificationService->send($user, 1);
         }
         Auth::login($user);
+
+        // move items from abandoned basket
+        $abandoned_cart_devices = AbandonedCart::where('user_email', $user->email)->get();
+        foreach($abandoned_cart_devices as $device){
+
+            Cart::create([
+                'user_id'       => $user->id,
+                'price'         => $device->price,
+                'product_id'    => $device->product_id,
+                'type'          => $device->type,
+                'network'       => $device->network,
+                'memory'        => $device->memory,
+                'grade'         => $device->grade,
+            ]);
+
+            $device->delete();
+        }
+        
+        request()->session()->forget('session_email');
 
         return redirect()->back()->with('success', 'Account successfully created. Enter remaining details to complete your sale.');
     }

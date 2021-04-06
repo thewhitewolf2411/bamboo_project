@@ -28,7 +28,9 @@ use PDF;
 use App\Services\KlaviyoEmail;
 use App\Services\ExpiryDate;
 use App\Eloquent\AdditionalCosts;
+use App\Eloquent\Payment\UserBankDetails;
 use App\Services\NotificationService;
+use Illuminate\Support\Facades\Crypt;
 
 class SellController extends Controller
 {
@@ -401,19 +403,59 @@ class SellController extends Controller
     public function sellItems(Request $request){
 
         if(Auth::user()){
+            // get label status
             $labelstatus = $request->label_status;
-            $items = array();
+
+            // if bank details present, store them
+            if(isset($request->account_name) && isset($request->account_number) && isset($request->sort_code_1) && isset($request->sort_code_2) && isset($request->sort_code_3)){
+                
+                $bank_details = UserBankDetails::where('user_id', Auth::user()->id)->get();
+
+                $data = $request->except('token');
+                $validation_fails = [];
+                if(strlen($data['account_name']) < 5){
+                    array_push($validation_fails, 'Please enter valid account name.');
+                }
+                if(!is_numeric($data['account_number'])){
+                    array_push($validation_fails, 'Account number must be numeric.');
+        
+                    if(strlen($data['account_number']) !== 8){
+                        array_push($validation_fails, 'Account number must be 8 digits.');
+                    }
+                }
+        
+                if(!is_numeric($data['sort_code_1']) || !is_numeric($data['sort_code_2']) || !is_numeric($data['sort_code_3'])){
+                    array_push($validation_fails, 'Sort code must be a number.');
+                } else {
+                    if((strlen($data['sort_code_1']) !== 2) || (strlen($data['sort_code_2']) !== 2) || (strlen($data['sort_code_3']) !== 2)){
+                        array_push($validation_fails, 'Sort code must be 6 digits, 2 per field.');
+                    }
+                }
+                
+                if(empty($validation_fails)){
+                    if($bank_details->isEmpty()){
+        
+                        // create new
+                        UserBankDetails::create([
+                            'user_id' => Auth::user()->id,
+                            'account_name' => Crypt::encrypt($request->account_name),
+                            'card_number' => Crypt::encrypt($request->account_number),
+                            'sort_code' => Crypt::encrypt($request->sort_code_1 . $request->sort_code_2 . $request->sort_code_3)
+                        ]);
+                    }
+                } else {
+                    return redirect()->back()->with('bank_details_error', $validation_fails);
+                }
+            }
 
             //8
+            // generate tradein barcode
             $tradeinbarcode = 10000000 + rand(000000, 9000000);
 
             $cart = Cart::where('user_id', Auth::user()->id)->where('type', 'tradein')->get();
-
             $tradeinexp = null;
-
             $name = "";
             $price = "";
-
             $barcode = "";
 
             while(count(Tradein::where('barcode_original', $tradeinbarcode)->get())>0){
