@@ -76,7 +76,9 @@
                                     <p class="confirmation-info-text mt-2">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. 
                                     </p>
-                                    <a class="btn btn-purple mt-4 ml-0" onclick="printPostageLabel()">Print Postage Label <img class="ml-2" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+                                    <!-- labels and delivery notes popup -->
+                                    @include('partial.labeldeliverynotes', ['tradein' => $tradein, 'btn_text' => 'Print Your Own Trade Pack & Label'])
+                                    {{-- <a class="btn btn-purple mt-4 ml-0" onclick="printPostageLabel()">Print Postage Label <img class="ml-2" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a> --}}
 
                                 </div>
                             @endif
