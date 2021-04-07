@@ -13,6 +13,36 @@
     box-shadow: 0 4px 6px rgba(0,0,0, 0.16);
 }
 
+.top-down-elements-container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: absolute;
+    left: 150px;
+}
+
+.hover-element{
+    background: #fff;
+    min-width: 400.75px;
+    position: absolute;
+    top: 0px;
+    display: none;
+
+    z-index: 100000;
+}
+
+#sellmobilephones-header-hover{
+    left: 0;
+} 
+
+#selltablets-header-hover{
+    left: 400.75px;
+}
+
+#sellwatches-header-hover{
+    left: calc(400.75px + 400.75px);
+}
+
 .top-upper-elements-container a{
     margin: 0;
     height: 100%;
@@ -30,6 +60,26 @@
     justify-content: center;
     align-items: center;
     transition: 0.2s linear;
+    cursor:pointer;
+}
+
+.top-element-container a{
+    color: #000;
+    padding: 20px;
+    transform: 0.2s linear;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.top-element-container a>p{
+    color: #000;
+}
+
+.top-element-container a:hover{
+    color: #F28E33;
+    padding: 20px;
+    transform: 0.2s linear;
 }
 
 .top-element-container:hover{
