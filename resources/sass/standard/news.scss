@@ -27,6 +27,11 @@
     height: 100%;
 }
 
+.news-main-item, .news-secondary-item, .all-blog-item, .all-blogs-item, .all-news-item, .all-howto-item{
+    overflow: hidden;
+    border-radius: 10px;
+}
+
 .news-primary{
     width: 66%;
 }
@@ -45,15 +50,19 @@
 }
 
 .news-image, .news-image .main{
-    height: 100%;
-    width: 100%;
+    // height: 100%;
+    // width: 100%;
     border-radius: 10px;
     transition: transform .2s; /* Animation */
+    vertical-align: top;
+    max-width: 100%;
 }
 
 .news-image.zoomed{
-    transform: scale(1.05);
-
+    //transform: scale(1.05);
+    -moz-transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+	transform: scale(1.1);
 }
 
 .news-content-container{
