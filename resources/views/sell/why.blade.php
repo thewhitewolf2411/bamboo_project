@@ -42,7 +42,7 @@
                     </div>
                     <div class="p-5 d-flex flex-column justify-content-between">
                         <div class="selling-video-container">
-                            <p>Selling With Us</p>
+                            {{-- <p>Selling With Us</p>
                             <a onclick="showgradingvideo()">
                                 <div class="video-image-container">
                                     <div class="play-container">
@@ -50,9 +50,12 @@
                                     </div>
                                 </div>
                             </a>
-                            <p>Explained</p>
+                            <p>Explained</p> --}}
+                            <video class="selling-video" controls>
+                                <source src="{{asset('/video/selling_to_bamboo.mp4')}}" type="video/mp4">
+                            </video>
                         </div>
-                        <p>Watch our quick video explaining just how thorough our grading system is. Trust us, you will be shocked.</p>
+                        <p>Watch our quick video explaining the benefits you'll receive when selling your next device with Bamboo Mobile</p>
                     </div>
                 </div>
             </div>
@@ -68,7 +71,7 @@
                             <img src="{{asset('/sell_images/why_images/image-1.svg')}}">
                         </div>
                         <div class="selling-text-container">
-                            <p class="title-orange">Same day paymet</p>
+                            <p class="title-orange">Same day payment</p>
                             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper.</p>
                         </div>
                     </div>

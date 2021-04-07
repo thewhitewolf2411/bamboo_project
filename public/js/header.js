@@ -1,4 +1,12 @@
 (function() {
+  window.onload = function (){
+    if(window.innerWidth <= 625){
+      let logo_mobile = document.getElementById('mobile-logo-img');
+      if(logo_mobile.classList.contains('hidden')){
+        logo_mobile.classList.remove('hidden');
+      }
+    }
+  }
 
   window.onscroll = function() {scrollFunction()};
 

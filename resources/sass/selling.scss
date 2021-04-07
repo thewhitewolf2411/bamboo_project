@@ -180,21 +180,31 @@
 }
 
 .selling-video-container{
-    margin-top: 0;
-    background-color: #F28E33;
-    width: 600px;
-    height: 300px;
+    // margin-top: 0;
+    // background-color: #F28E33;
+    // width: 600px;
+    // height: 300px;
 
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+    // border-radius: 15px;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: space-around;
+    // align-items: center;
 }
 
 .selling-video-container p{
     font-size: 32px;
     color: #fff;
+}
+
+.selling-video{
+    width: 600px;
+    height: 300px;
+    border: none;
+}
+
+.selling-video:focus, .selling-video:hover{
+    outline: none;
 }
 
 .border-down{
