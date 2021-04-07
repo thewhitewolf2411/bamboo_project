@@ -440,7 +440,9 @@
                                                 </div>
                                             </div>
                                             <div class="sale-detail-col">
-                                                <div class="btn-purple sale-detail-btn" onclick="print('{{$tradein->id}}')"><p>Download as PDF</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White.svg')}}"></div>
+                                                <!-- labels and delivery notes popup -->
+                                                @include('partial.labeldeliverynotes', ['tradein' => $tradein, 'btn_text' => 'Reprint Trade Pack & Label'])
+
                                                 <a class="btn-purple sale-detail-btn" href="#"><p>Email me a copy</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
                                                 <a class="btn-blue sale-detail-btn" href="/contact" target="_blank"><p>Get in touch</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
                                                 @if(!$tradein->hasDeviceBeenReceived())
@@ -473,7 +475,7 @@
                                                         <img class="label-select-svg" id="bamboo-print-selected" src="{{asset('/customer_page_images/body/orange_selected.svg')}}">
                                                     </div>
 
-                                                    <div class="btn-purple sale-detail-btn mt-4" id="call-print-bamboo" onclick="print('{{$tradein->id}}')"><p>Re-Print Label</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></div>
+                                                    <div class="btn-purple sale-detail-btn auto-width mt-4" id="call-print-bamboo" onclick="print('{{$tradein->id}}')"><p>Re-Print Label</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></div>
                                                 </div>
                                             @endif
 
@@ -485,7 +487,7 @@
                                                         <img class="label-select-svg" id="own-print-selected" src="{{asset('/customer_page_images/body/orange_selected.svg')}}">
                                                     </div>
 
-                                                    <div class="btn-purple sale-detail-btn mt-4" onclick="print('{{$tradein->id}}')" id="call-print-own" ><p>Re-Print Label</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></div>
+                                                    <div class="btn-purple sale-detail-btn auto-width mt-4" onclick="print('{{$tradein->id}}')" id="call-print-own" ><p>Re-Print Label</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></div>
                                                 </div>
                                             @endif
 
@@ -938,6 +940,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="modal-body">
+
                                                                                     <div id="select-lock-option">
                                                                                         <div id="select-pattern-lock">
                                                                                             <img class="pattern-lock-img" src="{{asset('/customer_page_images/body/pattern_lock.svg')}}">
@@ -983,13 +986,12 @@
                                                                                             </div>
                                                                                         </form>
                                                                                     </div>
-
-                                                                                    
+    
                                                                                 </div>
                                                                                 
                                                                             </div>
                                                                     </div>
-                                                                    </div>
+                                                                </div>
                                                                 <a href="#" class="btn btn-orange testing-action-btn mt-1">
                                                                     <p>Accept Faulty Offer</p>
                                                                     <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
@@ -1254,7 +1256,7 @@
                                             <div class="modal-dialog modal-dialog-centered " role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLongTitle">PAYMENT DETAILS</h5>
+                                                        <h5 class="modal-title" id="exampleModalCenterTitle">PAYMENT DETAILS</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true" style="color: black;">&times;</span>
                                                         </button>

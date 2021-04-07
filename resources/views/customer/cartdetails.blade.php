@@ -52,7 +52,7 @@
             </div>
 
             @if(Session::has('success'))
-                <div class="alert alert-success w-75 m-auto text-center" role="alert">
+                <div class="alert alert-success w-75 ml-auto mr-auto mb-4 text-center" role="alert">
                     {{Session::get('success')}}
                 </div>
             @endif
@@ -609,26 +609,28 @@
             document.getElementById('submit-sell').disabled = false;
         }
 
-        document.getElementById('manual-delivery-basket-toggle').addEventListener('click', function(){
-            // let manual_container = document.getElementById('manual_delivery_address_basket');
-            if($('#manual_delivery_address_basket').hasClass('show')){
-                $('#manual_delivery_address_basket').collapse('hide');
-                $('#delivery_address').attr('readonly', false);
-                $('#house_name').attr('required', false);
-                $('#street_name').attr('required', false);
-                $('#town').attr('required', false);
-                $('#country').attr('required', false);
-                $('#post_code').attr('required', false);
-            } else {
-                $('#manual_delivery_address_basket').collapse('show');
-                $('#delivery_address').attr('readonly', true);
-                $('#house_name').attr('required', true);
-                $('#street_name').attr('required', true);
-                $('#town').attr('required', true);
-                $('#country').attr('required', true);
-                $('#post_code').attr('required', true);
-            }
-        })
+        if('{!!Auth::user()!!}'){
+            document.getElementById('manual-delivery-basket-toggle').addEventListener('click', function(){
+                // let manual_container = document.getElementById('manual_delivery_address_basket');
+                if($('#manual_delivery_address_basket').hasClass('show')){
+                    $('#manual_delivery_address_basket').collapse('hide');
+                    $('#delivery_address').attr('readonly', false);
+                    $('#house_name').attr('required', false);
+                    $('#street_name').attr('required', false);
+                    $('#town').attr('required', false);
+                    $('#country').attr('required', false);
+                    $('#post_code').attr('required', false);
+                } else {
+                    $('#manual_delivery_address_basket').collapse('show');
+                    $('#delivery_address').attr('readonly', true);
+                    $('#house_name').attr('required', true);
+                    $('#street_name').attr('required', true);
+                    $('#town').attr('required', true);
+                    $('#country').attr('required', true);
+                    $('#post_code').attr('required', true);
+                }
+            })
+        }
 
         if(!'{!!Auth::user()!!}'){
             document.getElementById("password").addEventListener('keyup',  function(){

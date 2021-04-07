@@ -474,6 +474,23 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
+    public function sendAbandonedBasketMail($email){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Abandoned Basket Email',
+                'customer_properties' => array(
+                    '$email' => $email
+                ),
+                'properties' => array(
+                    'device_image' => 'https://www.pctipsbox.com/wp-content/uploads/2018/12/windows-xp.jpg'
+                ),
+                
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+
     public function sendEmail($event){
         $response =  $this->client->publicAPI->track( $event ); 
 

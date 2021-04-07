@@ -12527,7 +12527,7 @@ main p, a, span {
 }
 
 .sale-detail-btn {
-  width: 160px;
+  width: 230px;
   color: white;
   padding: 5px;
   border-radius: 5px;
@@ -12536,6 +12536,10 @@ main p, a, span {
   flex-wrap: nowrap;
   justify-content: space-between;
   margin-bottom: 5px;
+}
+
+.sale-detail-btn.auto-width {
+  width: auto;
 }
 
 .sale-detail-btn > p {
@@ -12873,7 +12877,7 @@ header {
 }
 
 #header.resized {
-  height: 90px;
+  height: 100px;
   padding: 0 30px 60px;
 }
 
@@ -12888,7 +12892,8 @@ header {
 }
 
 #full-logo-container.resized {
-  margin-top: 45px;
+  margin-top: 65px;
+  margin-left: 45px;
 }
 
 #full-bamboo-logo {
@@ -12896,7 +12901,7 @@ header {
 }
 
 .mobile-logo {
-  display: none;
+  display: block;
 }
 
 .mobile-logo > img {
@@ -13317,15 +13322,21 @@ header {
 @media (max-width: 1400px) {
   .logo-header-container {
     margin-top: 35px;
+    margin-left: 35px;
   }
 
   .header-container {
-    padding: 0 60px 60px;
+    padding: 0 60px;
   }
 }
 @media (max-width: 1130px) {
   .header-container {
     padding: 0 60px 60px;
+  }
+
+  #full-logo-container.resized {
+    margin-left: 10px;
+    margin-top: 45px;
   }
 }
 @media (max-width: 890px) {
@@ -13380,11 +13391,19 @@ header {
   }
 
   .mobile-logo {
-    display: block;
+    display: block !important;
   }
 
   .logo-header-container {
     margin-top: 20px;
+  }
+
+  .logo-header-container {
+    margin-left: 0;
+  }
+
+  #full-logo-container.resized {
+    margin-left: 0;
   }
 }
 footer {
@@ -13890,6 +13909,47 @@ h3, h4, h5 {
 
 #accept-cookies:hover {
   color: #A3D147;
+}
+
+.modal-title.bold-uppercase {
+  text-transform: uppercase;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.steps-container-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.steps-container-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.single-step-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.single-step-column {
+  display: flex;
+  flex-direction: row;
+}
+
+.column-item {
+  width: auto;
+  width: 290px;
+  border: 4px solid #DDDDDD;
+  border-radius: 5px;
+}
+
+.step-image {
+  width: 90px;
+  height: 90px;
+  margin: auto;
 }
 
 @media (max-width: 1130px) {
