@@ -338,8 +338,36 @@
         <form action="/newslettersingup" method="POST">
             @csrf
 
-            <input class="email-input" name="email" type="email" placeholder="Enter email address here">
-            <input class="email-submit" type="submit" value="Sign me up!">
+            <div class="row w-100">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input class="email-input" name="first_name" type="text" placeholder="First Name">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input class="email-input" name="last_name" type="text" placeholder="Last Name">
+                    </div>
+                </div>
+            </div>
+            <div class="row w-100">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <select class="email-input" name="age_range">
+                            <option value="16" default selected>0-16</option>
+                            <option value="24" default selected>16-24</option>
+                            <option value="48" default selected>24-48</option>
+                            <option value="62" default selected>48-62</option>
+                            <option value="62+" default selected>62+</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <input class="email-input" name="email_address" type="email" placeholder="Email address">
+                    </div>
+                </div>
+            </div>
 
             <div class="terms-container">
                 <input type="checkbox" class="mx-3" id="newsletter_terms" name="newsletter_terms" required>
