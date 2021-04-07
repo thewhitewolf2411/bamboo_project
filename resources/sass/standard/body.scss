@@ -281,6 +281,49 @@ h3, h4, h5{
     color: #A3D147;
 }
 
+
+// label delivery notes popup styles
+.modal-title.bold-uppercase{
+    text-transform: uppercase;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.steps-container-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.steps-container-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.single-step-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.single-step-column{
+    display: flex;
+    flex-direction: row;
+}
+
+.column-item{
+    width: auto;
+    width: 290px;
+    border: 4px solid #DDDDDD;
+    border-radius: 5px;
+}
+
+.step-image{
+    width: 90px;
+    height: 90px;
+    margin: auto;
+}
+
 // general
 @media (max-width: 1130px){
     #cookie-container{

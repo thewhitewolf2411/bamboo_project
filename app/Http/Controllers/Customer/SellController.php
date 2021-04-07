@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Eloquent\AbandonedCart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -27,7 +28,9 @@ use PDF;
 use App\Services\KlaviyoEmail;
 use App\Services\ExpiryDate;
 use App\Eloquent\AdditionalCosts;
+use App\Eloquent\Payment\UserBankDetails;
 use App\Services\NotificationService;
+use Illuminate\Support\Facades\Crypt;
 
 class SellController extends Controller
 {
@@ -343,48 +346,116 @@ class SellController extends Controller
         return response($devices, 200);
     }
 
+
+    /**
+     * Add item to cart / abandoned basked
+     * @param Request $request
+     */
     public function addSellItemToCart(Request $request){
 
-        $userid = Auth::user()->id;
-        $productid = $request->productid;
-        $grade = $request->grade;
-        $network = $request->network;
-        $memory = $request->memory;
-        $price = $request->price;
-        $type = $request->type;
+        if(Auth::user()){
+            $userid = Auth::user()->id;
+            $productid = $request->productid;
+            $grade = $request->grade;
+            $network = $request->network;
+            $memory = $request->memory;
+            $price = $request->price;
+            $type = $request->type;
+    
+            $cart = new Cart();
+    
+            $cart->user_id = $userid;
+            $cart->price = $price;
+            $cart->product_id = $productid;
+            $cart->type = $type;
+            $cart->network = $network;
+            $cart->memory = $memory;
+            $cart->grade = $grade;
+            $cart->save();
 
-        $cart = new Cart();
+            return redirect()->back()->with('productaddedtocart', true);
+        } else {
+            if($request->has('email')){
 
-        $cart->user_id = $userid;
-        $cart->price = $price;
-        $cart->product_id = $productid;
-        $cart->type = $type;
-        $cart->network = $network;
-        $cart->memory = $memory;
-        $cart->grade = $grade;
-        $cart->save();
+                $abandoned_cart = new AbandonedCart([
+                    'user_email'    => $request->email,
+                    'price'         => $request->price,
+                    'product_id'    => $request->productid,
+                    'type'          => $request->type,
+                    'memory'        => $request->memory,
+                    'grade'         => $request->grade,
+                ]);
+
+                if(!$request->session()->has('session_email')){
+                    $request->session()->put('session_email', $request->email);
+                }
+
+                $abandoned_cart->save();
+                return redirect()->back()->with('productaddedtocart', true);
+            }
+        }
+        
         
 
-        return redirect()->back()->with('productaddedtocart', true);
 
     }
 
     public function sellItems(Request $request){
 
         if(Auth::user()){
+            // get label status
             $labelstatus = $request->label_status;
-            $items = array();
+
+            // if bank details present, store them
+            if(isset($request->account_name) && isset($request->account_number) && isset($request->sort_code_1) && isset($request->sort_code_2) && isset($request->sort_code_3)){
+                
+                $bank_details = UserBankDetails::where('user_id', Auth::user()->id)->get();
+
+                $data = $request->except('token');
+                $validation_fails = [];
+                if(strlen($data['account_name']) < 5){
+                    array_push($validation_fails, 'Please enter valid account name.');
+                }
+                if(!is_numeric($data['account_number'])){
+                    array_push($validation_fails, 'Account number must be numeric.');
+        
+                    if(strlen($data['account_number']) !== 8){
+                        array_push($validation_fails, 'Account number must be 8 digits.');
+                    }
+                }
+        
+                if(!is_numeric($data['sort_code_1']) || !is_numeric($data['sort_code_2']) || !is_numeric($data['sort_code_3'])){
+                    array_push($validation_fails, 'Sort code must be a number.');
+                } else {
+                    if((strlen($data['sort_code_1']) !== 2) || (strlen($data['sort_code_2']) !== 2) || (strlen($data['sort_code_3']) !== 2)){
+                        array_push($validation_fails, 'Sort code must be 6 digits, 2 per field.');
+                    }
+                }
+                
+                if(empty($validation_fails)){
+                    if($bank_details->isEmpty()){
+        
+                        // create new
+                        UserBankDetails::create([
+                            'user_id' => Auth::user()->id,
+                            'account_name' => Crypt::encrypt($request->account_name),
+                            'card_number' => Crypt::encrypt($request->account_number),
+                            'sort_code' => Crypt::encrypt($request->sort_code_1 . $request->sort_code_2 . $request->sort_code_3)
+                        ]);
+                    }
+                } else {
+                    return redirect()->back()->with('bank_details_error', $validation_fails);
+                }
+            }
 
             //8
+            // generate tradein barcode
             $tradeinbarcode = 10000000 + rand(000000, 9000000);
 
             $cart = Cart::where('user_id', Auth::user()->id)->where('type', 'tradein')->get();
-
             $tradeinexp = null;
-
             $name = "";
             $price = "";
-
             $barcode = "";
 
             while(count(Tradein::where('barcode_original', $tradeinbarcode)->get())>0){

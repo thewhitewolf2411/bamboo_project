@@ -170,20 +170,51 @@
                                 <input type="hidden" name="memory" id="memory"></input>
                                 <input type="hidden" name="price" id="price"></input>
                                 <input type="hidden" name="type" value="tradein"></input>
-                                <button id="addToCart" type="submit" class="btn btn-primary btn-orange">Sell my device</button>
+                                <button id="addToCart" type="submit" disabled class="btn btn-primary btn-orange">Sell my device</button>
                             </div>
                         </form>
 
-                        @if(Session::has('productaddedtocart'))
-                            <p>Product has been added to basket. </p>
-                        @endif
                     </div>
+                    
+                    @if(Session::has('productaddedtocart'))
+                        <p class="green-success mt-4">Product has been added to basket. </p>
+                    @endif
+
                     @else
                     <div class="add-to-container">
-                        <div class="add-to-cart-container">
-                            <button type="submit" class="btn btn-primary btn-orange" onclick="showModal()">Sell my device</button>
-                        </div>
+                        <form action="/sell/shop/item/addtocart" method="POST">
+
+                            <div class="add-to-cart-container">
+                                @csrf
+                                <input type="hidden" name="productid" value="{{$product->id}}">
+                                <input type="hidden" name="grade" id="grade"></input>
+                                <input type="hidden" name="network" id="network"></input>
+                                <input type="hidden" name="memory" id="memory"></input>
+                                <input type="hidden" name="price" id="price"></input>
+                                <input type="hidden" name="type" value="tradein"></input>
+
+                                <div class="row m-0">
+                                    <div class="col mt-3 p-0">
+                                        <label for="email_address">Email address*</label>
+                                        @if(Session::has('session_email'))
+                                            <input type="email" class="mb-0 sell-email-input" value="{!!Session::get('session_email')!!}" required name="email"/>
+                                        @else
+                                            <input type="email" class="mb-0 sell-email-input" required name="email"/>
+                                        @endif
+                                    </div>
+                                    <button id="addToCart" type="submit" disabled class="btn btn-primary btn-orange h-25 mt-auto mb-0 ml-2">Sell my device</button>
+                                </div>
+                                
+                            </div>
+
+                        </form>
+
                     </div>
+
+                    @if(Session::has('productaddedtocart'))
+                        <p class="green-success mt-4">Product has been added to basket. </p>
+                    @endif
+
                     @endif
                 </div>
             </div>

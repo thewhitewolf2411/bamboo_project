@@ -17,7 +17,7 @@ header{
 }
 
 #header.resized{
-    height: 90px;
+    height: 100px;
     padding: 0 30px 60px;
 }
 #full-bamboo-logo.resized{
@@ -31,7 +31,8 @@ header{
 }
 
 #full-logo-container.resized{
-    margin-top: 45px;
+    margin-top: 65px;
+    margin-left: 45px;
 }
 
 #full-bamboo-logo{
@@ -39,7 +40,8 @@ header{
 }
 
 .mobile-logo{
-    display: none;
+    display: block;
+    //display: none;
 }
 
 .mobile-logo > img{
@@ -493,9 +495,10 @@ header{
 @media (max-width: 1400px){
     .logo-header-container{
         margin-top: 35px;
+        margin-left: 35px;
     }
     .header-container{
-        padding: 0 60px 60px;
+        padding: 0 60px;
     }
 }
 
@@ -503,6 +506,10 @@ header{
 @media (max-width: 1130px){
     .header-container{
         padding: 0 60px 60px;
+    }
+    #full-logo-container.resized{
+        margin-left: 10px;
+        margin-top: 45px;
     }
 }
 
@@ -561,10 +568,16 @@ header{
         display: none;
     }
     .mobile-logo{
-        display: block;
+        display: block !important;
     }
     .logo-header-container{
         margin-top: 20px;
+    }
+    .logo-header-container{
+        margin-left: 0;
+    }
+    #full-logo-container.resized{
+        margin-left: 0;
     }
 }
 

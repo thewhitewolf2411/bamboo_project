@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
+use App\Eloquent\AbandonedCart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -18,6 +19,8 @@ use App\Eloquent\SellingProduct;
 use App\Eloquent\Tradein;
 use App\Eloquent\Tradeout;
 use App\Eloquent\Wishlist;
+use App\Helpers\Dates;
+use App\Services\KlaviyoEmail;
 use App\Services\NotificationService;
 use Auth;
 use Carbon\Carbon;
@@ -169,14 +172,24 @@ class CustomerController extends Controller
         
     }
 
+    /**
+     * Remove item from cart.
+     * @param string $parameter
+     */
     public function removeFromCart($parameter){
-
         $cart = Cart::where('id', $parameter)->first();
-
         $cart->delete();
+        return redirect('/cart')->with('success', 'Item removed from cart succesfully.');
+    }
 
-        return redirect('/cart');
-
+    /**
+     * Delete item from abandoned cart.
+     * @param string $id
+     */
+    public function removeFromAbandonedCart($id){
+        $abandoned_cart = AbandonedCart::where('id', $id)->first();
+        $abandoned_cart->delete();
+        return redirect('/cart')->with('success', 'Item removed from cart succesfully.');
     }
 
     /**
@@ -225,7 +238,44 @@ class CustomerController extends Controller
 
         }
         else{
-            return \redirect()->back()->with('showLogin', true);
+            // show abandoned cart items
+            $email = request()->session()->get('session_email', null);
+            if($email){
+                $abandoned_cart_items = AbandonedCart::where('user_email', $email)->get();
+        
+                $products = SellingProduct::all();
+    
+                $price = 0;
+                $sellPrice = 0;
+    
+                $hasTradeIn = false;
+                $hasTradeOut = false;
+    
+                if($abandoned_cart_items !== null){
+                    foreach($abandoned_cart_items as $items){
+                        if($items->type === "tradeout"){
+                            $price += $items->price;
+                            $hasTradeOut = true;
+                        }
+                        if($items->type === "tradein"){
+                            $hasTradeIn = true;
+                            $sellPrice += $items->price;
+                        }
+                    }
+                }
+    
+                return view('customer.cart')->with([
+                        'cart'=>$abandoned_cart_items,
+                        'products'=>$products,
+                        'fullprice'=>$price,
+                        'sellPrice'=>$sellPrice,
+                        'hasTradeIn'=>$hasTradeIn,
+                        'hasTradeOut'=>$hasTradeOut,
+                ]);
+            }
+            
+
+            //return \redirect()->back()->with('showLogin', true);
         }
 
     }
@@ -275,8 +325,131 @@ class CustomerController extends Controller
 
         }
         else{
+            // show abandoned cart items
+            $email = request()->session()->get('session_email', null);
+            if($email){
+                $abandoned_cart_items = AbandonedCart::where('user_email', $email)->get();
+                $products = SellingProduct::all();
+
+                $price = 0;
+                $sellPrice = 0;
+
+                $hasTradeIn = false;
+                $hasTradeOut = false;
+
+                if($abandoned_cart_items !== null){
+                    foreach($abandoned_cart_items as $items){
+                        if($items->type === "tradeout"){
+                            $price += $items->price;
+                            $hasTradeOut = true;
+                        }
+                        if($items->type === "tradein"){
+                            $hasTradeIn = true;
+                            $sellPrice += $items->price;
+                        }
+                    }
+                }
+
+                return view('customer.cartdetails')->with([
+                        'cart'=>$abandoned_cart_items,
+                        'products'=>$products,
+                        'fullprice'=>$price,
+                        'sellPrice'=>$sellPrice,
+                        'hasTradeIn'=>$hasTradeIn,
+                        'hasTradeOut'=>$hasTradeOut,
+                ]);
+            }
             return \redirect()->back()->with('showLogin', true);
         }
+    }
+
+
+    /**
+     * Complete registration using abandoned cart.
+     */
+    public function completeRegistration(Request $request){
+        // validate email
+        $this->validate($request, 
+            [
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users']
+            ]
+        );
+        // check birth date validity
+        $valid_date = Dates::checkBirthDate($request->all());
+        if(!$valid_date){
+            return redirect()->back()->with('regerror','Invalid birth date');
+        }
+
+        $data = $request->all();
+
+        //dd('create user done, move items to real cart, call route for cart details with cart items to complete sale.');
+        
+        // create user
+        $sub = 0;
+        if(isset($data['sub'])){
+            if($data['sub'] === 'true'){
+                $sub = true;
+            }
+        }
+
+        $user = new User();
+
+        $user->first_name = $data['first_name'];
+        $user->last_name = $data['last_name'];
+        $user->email = $data['email'];
+        $user->password = Crypt::encrypt($data['password']);
+        $user->birth_date = Carbon::parse($data['birth_day'].'.'.$data['birth_month'].'.'.$data['birth_year']);
+
+        $user->delivery_address = $data['delivery_address'];
+        $user->billing_address = $data['billing_address'];
+        // $user->contact_number = $data['contact_number'];
+
+        if(isset($data['preferred-os'])){
+            $user->preffered_os = $data['preferred-os'];
+        }
+        else{
+            $user->preffered_os = null;
+        }
+        if(isset($data['current-phone'])){
+            $user->current_phone = $data['current-phone'];
+        }
+        else{
+            $user->current_phone = null;
+        }
+        $user->sub = $sub;
+
+        $user->save();
+
+        $klaviyoEmail = new KlaviyoEmail();
+        $klaviyoEmail->AccountCreated($user);
+
+        // send notification (register)
+        if($user->sub){
+            $notificationService = new NotificationService();
+            $notificationService->send($user, 1);
+        }
+        Auth::login($user);
+
+        // move items from abandoned basket
+        $abandoned_cart_devices = AbandonedCart::where('user_email', $user->email)->get();
+        foreach($abandoned_cart_devices as $device){
+
+            Cart::create([
+                'user_id'       => $user->id,
+                'price'         => $device->price,
+                'product_id'    => $device->product_id,
+                'type'          => $device->type,
+                'network'       => $device->network,
+                'memory'        => $device->memory,
+                'grade'         => $device->grade,
+            ]);
+
+            $device->delete();
+        }
+        
+        request()->session()->forget('session_email');
+
+        return redirect()->back()->with('success', 'Account successfully created. Enter remaining details to complete your sale.');
     }
 
 
