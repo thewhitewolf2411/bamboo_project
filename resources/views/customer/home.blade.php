@@ -354,11 +354,12 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <select class="email-input w-100" name="age_range" id="age_range">
-                            <option value="16" default selected>0-16</option>
-                            <option value="24" default selected>16-24</option>
-                            <option value="48" default selected>24-48</option>
-                            <option value="62" default selected>48-62</option>
-                            <option value="62+" default selected>62+</option>
+                            <option value="" default selected disabled>Age Range</option>
+                            <option value="16">0-16</option>
+                            <option value="24">16-24</option>
+                            <option value="48">24-48</option>
+                            <option value="62">48-62</option>
+                            <option value="62+">62+</option>
                         </select>
                     </div>
                 </div>
@@ -370,8 +371,16 @@
             </div>
 
             <div class="terms-container">
-                <input type="checkbox" class="mx-3" id="newsletter_terms" name="newsletter_terms" required>
-                <label for="terms">In addition to receiving an instant email when you open your account with Bamboo, I agree to Bamboo sending me a regular newsletter, carrying out market research, keeping me informed with personalised news, offers, products and promotions it believes would be of interest to me through my preferred channel. </label>
+                <input type="checkbox" class="newsletter_checkbox mx-3" id="newsletter_terms" name="newsletter_terms" required>
+                <label class="newsletter_checkbox" id="newsletter_terms_label" for="newsletter_terms">
+                    <p style="margin-left: 40px">In addition to receiving an instant email when you open your account with Bamboo, I agree to Bamboo sending me a regular newsletter, carrying out market research, keeping me informed with personalised news, offers, products and promotions it believes would be of interest to me through my preferred channel. </p>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3 mt-3 mx-auto">
+                    <input type="submit" class="btn btn-purple" value="Sign me up!">
+                </div>
             </div>
         </form>
 

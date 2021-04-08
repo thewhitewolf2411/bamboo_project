@@ -586,6 +586,33 @@ main p, a, span{
     opacity: 0.3;
 }
 
+#age_range {
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+    background-image: url('/images/svg.svg');
+    background-repeat: no-repeat;
+    background-position-x: 100%;
+    background-position-y: center;
+    cursor: pointer;
+}
+
+.terms-container input[type="checkbox"] {
+	display:none;
+}
+
+.terms-container input + label {
+	display: inline-block;	
+	cursor: pointer;	
+	background-image: url('/images/front-end-icons/black_circle.svg');
+    background-repeat: no-repeat;
+    background-position-y: center;
+}
+
+.terms-container input[type="checkbox"]:checked + label {
+	background-image: url('/images/front-end-icons/black_tick_selected.svg')
+}
+
 .email-submit{
     width: 180px;
     height: 56px;
