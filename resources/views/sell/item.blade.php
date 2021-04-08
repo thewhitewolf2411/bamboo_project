@@ -22,6 +22,7 @@
 
         <script src="{{asset('js/Price.js')}}"></script>
         <script src="{{ asset('js/Addressian.js') }}"></script>
+        <script src="{{asset('/js/SellingPage.js')}}"></script>
     </head>
 
     <body>

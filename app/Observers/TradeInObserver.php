@@ -62,7 +62,7 @@ class TradeInObserver
             'bamboo_status' => $tradein->getBambooStatus(),
             'customer_grade' => $tradein->customer_grade,
             // 'bamboo_grade' => $tradein->bamboo_grade,
-            'bamboo_grade' => $tradein->cosmetic_condition,
+            'bamboo_grade' => $tradein->getDeviceBambooGrade(),
             'value' => ($tradein->bamboo_price !== null) ? (string)$tradein->bamboo_price : (string)$tradein->order_price,
             'stock_location' => $tradein->getTrayName($tradein->id),
             'cheque_number' => $tradein->cheque_number,

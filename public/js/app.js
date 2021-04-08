@@ -55188,6 +55188,7 @@ $('.message').on('click', function () {
       $('#message-from-name p').html(response.from_name);
       $('#message-from-email p').html(response.from_email);
       $('#message-content p').html(response.message);
+      $('#reply-btn').prop('href', 'mailto:' + response.from_email);
       $('#messageModal').modal('show');
     }
   });
@@ -56561,33 +56562,7 @@ $('#addtolot').on('click', function () {
       selectedBoxes: selectedBoxes
     },
     success: function success(response) {
-      for (var i = 0; i < response[0].length; i++) {
-        $('#boxedtradeinstable #' + response[0][i].trade_in_id).remove();
-      }
-
-      for (var i = 0; i < response[2].length; i++) {
-        if ($("#saleslotboxes tr[data-value='" + response[2][i].id + "']").length > 0) {
-          var num = $('#saleslotboxes tr[data-value="' + response[2][i].id + '"] td:nth-child(4)').text().split('/')[0];
-
-          for (var j = 0; j < response[0].length; j++) {
-            if (response[0][j].tray_id === response[2][i].id) {
-              num++;
-            }
-          }
-
-          $('#saleslotboxes tr[data-value="' + response[2][i].id + '"] td:nth-child(4)').html('<div class="table-element">' + num + '/' + response[2][i].number_of_devices + '</div>');
-        } else {
-          $('#saleslotboxes').append('<tr class="saleslotbox" data-value="' + response[2][i].id + '"><td><div class="table-element">' + response[2][i].tray_name + '</div></td><td><div class="table-element">' + response[2][i].tray_grade + '</div></td><td><div class="table-element">' + response[2][i].tray_network + '</div></td><td><div class="table-element">' + response[2][i].total_qty + '/' + response[2][i].number_of_devices + '</div></td><td><div class="table-element">' + response[2][i].total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="remove-from-lot" data-value="' + response[2][i].id + '"></div></td></tr>');
-        }
-
-        $('#closedboxtable #' + response[2][i].id).remove();
-
-        if ($('#saleslotboxes tr').length > 1) {
-          $('#completelot').prop('disabled', false);
-        } else {
-          $('#completelot').prop('disabled', true);
-        }
-      }
+      console.log(response);
     }
   });
 });
@@ -56675,8 +56650,8 @@ $('#completelot').on('click', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

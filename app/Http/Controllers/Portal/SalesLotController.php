@@ -66,88 +66,31 @@ class SalesLotController extends Controller
         $selectedBoxes = $request->selectedBoxes;
         $selectedTradeins = $request->selectedTradeIns;
 
-        $boxcontent = "";
-        if(!empty($selectedTradeins)){
-            $boxcontent = TrayContent::whereIn('trade_in_id', $selectedTradeins)->get()->groupBy('tray_id');
-            foreach($boxcontent as $key=>$bc){
-                if(is_array($selectedBoxes) && in_array($key, $selectedBoxes)){
-                    $pos = array_search($key, $selectedBoxes);
-                    unset($selectedBoxes[$pos]);
+        $tradeins = [];
+
+        if(isset($selectedBoxes)){
+            foreach($selectedBoxes as $selectedBox){
+                $boxContent = TrayContent::where('tray_id', $selectedBox)->get();
+    
+                foreach($boxContent as $tradeinid){
+                    array_push($tradeins, $tradeinid->trade_in_id);
                 }
+    
             }
-        }
-        else{
-            $boxcontent = array();
-        }
-        $boxcontent2 = "";
-        if(!empty($selectedBoxes)){
-            $boxcontent2 = TrayContent::whereIn('tray_id', $selectedBoxes)->get();
-        }
-        else{
-            $boxcontent2 = array();
-        }
-        $boxcontent = "";
-        if(!empty($selectedTradeins)){
-            $boxcontent = TrayContent::whereIn('trade_in_id', $selectedTradeins)->get();
-        }
-        else{
-            $boxcontent = array();
         }
 
-        if(empty($boxcontent) || empty($boxcontent2)){
-            if(empty($boxcontent)){
-                $allItems = $boxcontent2;
-                $allItems = $allItems->groupBy('tray_id');
+        if(isset($selectedTradeins)){
+            foreach($selectedTradeins as $selectedTradein){
+                array_push($tradeins, intval($selectedTradein));
             }
-            if(empty($boxcontent2)){
-                $allItems = $boxcontent;
-                $allItems = $allItems->groupBy('tray_id');
-            }
-        }
-        else{
-            $allItems = $boxcontent->merge($boxcontent2);
-            $allItems = $allItems->groupBy('tray_id');
         }
 
+        $tradeins = array_unique($tradeins);
+
+        $tradeins = Tradein::whereIn('id', $tradeins)->get();
         
 
-        $boxes = array();
-
-        foreach($allItems as $key=>$item){
-            $box = Tray::where('id', $key)->first();
-            $box->total_cost = '£' . $box->getBoxPrice();
-            $box->total_qty = count($allItems[$key]);
-            array_push($boxes, $box);
-        }
-
-        $boxcontent2 = "";
-        if(!empty($selectedBoxes)){
-            $boxcontent2 = TrayContent::whereIn('tray_id', $selectedBoxes)->get();
-            $boxcontent2 = $boxcontent2->toArray();
-        }
-        else{
-            $boxcontent2 = array();
-        }
-        $boxcontent = "";
-        if(!empty($selectedTradeins)){
-            $boxcontent = TrayContent::whereIn('trade_in_id', $selectedTradeins)->get();
-            $boxcontent = $boxcontent->toArray();
-        }
-        else{
-            $boxcontent = array();
-        }
-
-        $allTradeins = array_merge($boxcontent, $boxcontent2);
-        $allCurrentTradeins = $allTradeins;
-        #dd($allCurrentTradeins);
-
-        if(Session::has('allTradeins')){
-            $allTradeins = array_unique(array_merge($allTradeins, Session::get('allTradeins')), SORT_REGULAR);
-        }
-
-        Session::put(['allTradeins'=>$allTradeins]);
-
-        return response([$allCurrentTradeins, $allItems, $boxes], 200);
+        return response($tradeins, 200);
         
     }
 

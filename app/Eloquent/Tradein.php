@@ -308,7 +308,7 @@ class Tradein extends Model
     }
 
     public function deviceInPaymentProcess(){
-        $matches = ["22", "23", "25"];
+        $matches = ["22", "23", "24", "25"];
 
         if(in_array($this->job_state, $matches)){
             return true;

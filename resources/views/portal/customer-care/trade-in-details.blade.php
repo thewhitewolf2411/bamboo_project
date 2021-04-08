@@ -410,11 +410,11 @@
                                 <label class="lock-status-title">Google Lock/FMIP:</label>
                                 @if($tradeins[0]->isGoogleLocked() !== null)
                                     <div class="radio-lock-status">
-                                        <input class="lock-status-checkbox" type="checkbox" @if($tradeins[0]->isGoogleLocked()) checked @endif  onclick="return false;"/>
+                                        <input class="lock-status-checkbox" type="checkbox" @if($tradeins[0]->isGoogleLocked() || $tradeins[0]->isFimpLocked()) checked @endif  onclick="return false;"/>
                                         <label class="radio-lock-status-label">Yes</label>
                                     </div>
                                     <div class="radio-lock-status">
-                                        <input class="lock-status-checkbox" type="checkbox" @if(!$tradeins[0]->isGoogleLocked()) checked @endif onclick="return false;"/>
+                                        <input class="lock-status-checkbox" type="checkbox" @if(!($tradeins[0]->isGoogleLocked() || $tradeins[0]->isFimpLocked())) checked @endif onclick="return false;"/>
                                         <label class="radio-lock-status-label">No</label>
                                     </div>
                                 @else

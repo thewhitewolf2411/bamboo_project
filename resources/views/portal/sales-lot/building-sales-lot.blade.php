@@ -67,7 +67,7 @@
                             <td><div class="table-element">{{$tradein->correct_memory ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element">{{$tradein->correct_network ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element">{{$tradein->product_colour ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">{{$tradein->getDeviceCost() ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">£{{$tradein->getDeviceCost() ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element"><input type="checkbox" class="tradein-sales-lot" data-value="{{$tradein->id}}"></div></td>
                         </tr>
                         @endforeach

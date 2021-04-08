@@ -10,6 +10,10 @@
         </div>
     </div>
 
+    <a class="back-to-home-footer mt-3" href="/">
+        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to home</p>
+    </a>
+
 
     <div class="contact-ways-container">
         <div class="center-title-container">
@@ -95,8 +99,8 @@
 
                 <div class="row w-100">
                     <div class="form-group col-md-6">
-                        <label for="ordernumber">Order number</label>
-                        <input id="ordernumber" name="ordernumber" type="number" class="form-control">
+                        <label for="title">Title</label>
+                        <input id="title" name="title" type="text" class="form-control">
                     </div>
                 </div>
 
@@ -195,6 +199,25 @@
 </div>
 
 <script>
+
+    $(document).ready(function(){
+
+        //alert(location.hash);
+
+        if(location.hash === '#CustomerDeviceNotAvaliable'){
+            showContactForm('message');
+
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#message-form-container").offset().top
+            }, 1000);
+
+            $('#title').val('Customer device not available');
+        }
+
+
+
+    });
+
 
     function showContactForm(contact){
 

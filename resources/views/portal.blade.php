@@ -211,6 +211,9 @@
                 <a href="/portal/customer-care/messages" class="col-2 my-2">
                     <div class="portal-content-element">
                         <p>Messages </p>
+                        @if($newMessages > 0)
+                            <span class="badge badge-info">{{$newMessages}}</span>
+                        @endif
                     </div>
                 </a>
 

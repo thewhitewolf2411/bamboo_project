@@ -4,7 +4,7 @@
 <div class="portal-app-container">
     <div class="portal-title-container">
         <div class="portal-title">
-            <p></p>
+            <p>Messages</p>
         </div>
     </div>
 
@@ -15,7 +15,7 @@
                 <td><div class="table-element">Message from</div></td>
                 <td><div class="table-element">Email</div></td>
                 <td><div class="table-element">Phone number</div></td>
-                <td><div class="table-element">Ref Number</div></td>
+                <td><div class="table-element">Title</div></td>
                 <td><div class="table-element">Seen</div></td>
             </tr>
             @foreach ($messages as $message)
@@ -41,7 +41,7 @@
             <span style="color: black;" aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body p-2 text-center">
+        <div class="modal-body p-2">
 
             <div class="row">
                 <div class="col-md-2"><p>From:</p></div>
@@ -56,8 +56,8 @@
 
         </div>
         <div class="modal-footer">
-          {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button> --}}
+            <a href="" id="reply-btn" class="btn btn-primary btn-blue">Reply</a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>

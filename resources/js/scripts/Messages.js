@@ -17,6 +17,7 @@ $('.message').on('click', function(){
             $('#message-from-name p').html(response.from_name);
             $('#message-from-email p').html(response.from_email);
             $('#message-content p').html(response.message);
+            $('#reply-btn').prop('href', 'mailto:' + response.from_email);
 
             $('#messageModal').modal('show');
         }
