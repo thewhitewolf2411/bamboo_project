@@ -28,7 +28,11 @@
         <header>@include('customer.layouts.header')</header>
         <main>
             <div class="col text-center sell-item">
-                <a class="back-results-sell sell-item-back  ml-5" href="/sell">
+                @if(Session::get('_previous') !== null)
+                    <a class="back-results-sell sell-item-back  ml-5" href="{{Session::get('_previous')['url']}}">
+                @else
+                    <a class="back-results-sell sell-item-back  ml-5" href="/sell">
+                @endif
                     <img class="back-icon-results" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
                     <p class="results-back selling">Back to Search</p>
                 </a>

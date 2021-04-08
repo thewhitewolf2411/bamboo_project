@@ -185,6 +185,9 @@ class UsersController extends Controller
         if($request->failed_payments == "on"){
             $portalUser->failed_payments = true;
         }
+        if($request->recycle_offers == 'on'){
+            $portalUser->recycle_offers = true;
+        }
 
 
         $portalUser->save();
@@ -431,6 +434,12 @@ class UsersController extends Controller
         }
         else{
             $portalUser->failed_payments = false;
+        }
+
+        if($request->recycle_offers == 'on'){
+            $portalUser->recycle_offers = true;
+        } else {
+            $portalUser->recycle_offers = false;
         }
 
 

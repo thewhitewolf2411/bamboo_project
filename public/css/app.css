@@ -14029,6 +14029,41 @@ h3, h4, h5 {
   margin-bottom: auto;
 }
 
+.offer-device-bold {
+  font-size: 4rem;
+  font-weight: 600;
+  color: #fff;
+  font-family: Sharp Sans No1 Semibold;
+  text-shadow: 0px 3px 20px rgba(0, 0, 0, 0.2);
+}
+
+.offer-top-bold {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #fff;
+  font-family: Sharp Sans No1 Bold;
+  text-shadow: 0px 3px 20px rgba(0, 0, 0, 0.2);
+}
+
+.offer-title-bold, .offer-description-bold {
+  font-weight: 600;
+  color: #fff;
+  font-family: Sharp Sans No1 Semibold;
+  text-shadow: 0px 3px 20px rgba(0, 0, 0, 0.2);
+}
+
+.offer-title-bold {
+  font-size: 1.3rem;
+}
+
+.offer-description-bold {
+  font-size: 1.5rem;
+}
+
+.offer-misc-small {
+  color: #fff;
+}
+
 @media (max-width: 1130px) {
   #cookie-container {
     height: 60px;
@@ -14162,6 +14197,42 @@ h3, h4, h5 {
   width: 100%;
   height: 100%;
   min-height: 400px;
+}
+
+.add-recycle-offer-btn {
+  height: 40px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.pound-sign-newoffer {
+  margin: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  font-family: Sharp Sans No1 Bold !important;
+  font-size: 22px;
+  margin-right: 4px;
+}
+
+.edit-offer {
+  color: black;
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.offer-banner-preview {
+  max-width: 800px;
+  height: auto;
+  margin: 20px auto;
+}
+
+.no-border-lr {
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
 }
 
 .shop-top-header {

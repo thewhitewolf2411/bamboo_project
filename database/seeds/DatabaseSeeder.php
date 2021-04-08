@@ -89,6 +89,7 @@ class DatabaseSeeder extends Seeder
             'submit_payments'=>true,
             'payment_confirmations'=>true,
             'failed_payments'=>true,
+            'recycle_offers'=>true,
             'despatch'=>true
         ]);
 

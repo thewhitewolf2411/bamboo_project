@@ -179,6 +179,10 @@
                                     <input type="checkbox" class="form-check-input" name="settings" id="settings" @if(isset($userdata) && $thisportalUser->settings) checked @endif>
                                     <label class="form-check-label" for="settings">Settings</label>
                                 </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="recycle_offers" id="recycle_offers" @if(isset($userdata) && $thisportalUser->recycle_offers) checked @endif>
+                                    <label class="form-check-label" for="recycle_offers">Recycle Offers</label>
+                                </div>
                             </div>
 
                             <div class="form-group p20 w-25">

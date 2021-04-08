@@ -491,3 +491,14 @@ Route::group(['prefix' => 'portal/despatch'], function(){
 
     Route::get('/exportarchive', 'Portal\DespatchController@exportArchive');
 });
+
+Route::group(['prefix' => 'portal/recycleoffers'], function(){
+
+    Route::get('/', 'Portal\RecycleOffersController@index');
+    Route::get('/new', 'Portal\RecycleOffersController@showCreateOffer')->name('showCreateRecycleOffer');
+    Route::post('/createoffer', 'Portal\RecycleOffersController@createOffer')->name('createOffer');
+
+    Route::get('/offer/edit/{id}', 'Portal\RecycleOffersController@showOffer')->name('editRecycleOffer');
+    Route::post('/updateoffer', 'Portal\RecycleOffersController@updateRecycleOffer')->name('updateRecycleOffer');
+    Route::get('/offer/delete/{id}', 'Portal\RecycleOffersController@deleteOffer')->name('deleteRecycleOffer');
+});

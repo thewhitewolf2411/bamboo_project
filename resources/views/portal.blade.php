@@ -313,6 +313,14 @@
                         </div>
                     </a>
                 @endif
+
+                @if($portalUser->recycle_offers)
+                    <a href="/portal/recycleoffers" class="col-2 my-2">
+                        <div class="portal-content-element">
+                            Recycle Offers
+                        </div>
+                    </a>
+                @endif
             </div>
 
         </div>

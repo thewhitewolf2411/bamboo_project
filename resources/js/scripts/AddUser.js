@@ -55,6 +55,7 @@ $('#administration').on('change', function(){
         $('#cms').prop('checked', true);
         $('#categories').prop('checked', true);
         $('#settings').prop('checked', true);
+        $('#recycle_offers').prop('checked', false);
     }
     else{
         $('#salvage_models').prop('checked', false);
@@ -65,6 +66,7 @@ $('#administration').on('change', function(){
         $('#cms').prop('checked', false);
         $('#categories').prop('checked', false);
         $('#settings').prop('checked', false);
+        $('#recycle_offers').prop('checked', false);
     }
 
 });

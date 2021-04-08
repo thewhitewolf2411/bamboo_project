@@ -397,6 +397,41 @@ h3, h4, h5{
 }
 
 
+// offer styles
+.offer-device-bold{
+    font-size: 4rem;
+    font-weight: 600;
+    color: #fff;
+    font-family: Sharp Sans No1 Semibold;
+    text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
+}
+
+.offer-top-bold{
+    font-size: 2rem;
+    font-weight: 600;
+    color: #fff;
+    font-family: Sharp Sans No1 Bold;
+    text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
+}
+
+.offer-title-bold, .offer-description-bold{
+    font-weight: 600;
+    color: #fff;
+    font-family: Sharp Sans No1 Semibold;
+    text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
+}
+
+.offer-title-bold{
+    font-size: 1.3rem;
+}
+
+.offer-description-bold{
+    font-size: 1.5rem;
+}
+
+.offer-misc-small{
+    color: #fff;
+}
 
 
 // general

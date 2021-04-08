@@ -4,12 +4,20 @@
 
 <div class="app">
 
-    <div class="home-element home-title-container">
+    <div class="home-element home-title-container" id="main-home-image">
         <div class="left-container">
-            <div class="title-container">
+            <div class="title-container" id="regular-title">
                 <p>Pay less for your next mobile with bamboo</p>
             </div>
-            <div class="start-buttons-container">
+            <div class="offer-texts-container hidden" id="offers-texts">
+                <p class="offer-top-bold">LATEST RECYCLE OFFER</p>
+                <p class="offer-device-bold" id="offer-device"></p>
+                <p class="offer-title-bold" id="offer-title"></p>
+                <p class="offer-description-bold" id="offer-description"></p>
+                <a class="btn btn-light w-25 mt-2 mb-2" id="offer-link">Sell now</a>
+                <p class="offer-misc-small mt-5" id="offer-misc"></p>
+            </div>
+            <div class="start-buttons-container" id="startbuttons">
                 {{-- <div class="url-footer-container" id="start-shopping">
                     <a href="#">Start Shopping</a>
                 </div> --}}
@@ -350,6 +358,22 @@
     </div>
 
     <script>
+         (function() {
+            let offerbanner = "{!!App\Helpers\RecycleOffers::check()!!}";
+            if(offerbanner){
+                document.getElementById('offers-texts').classList.remove('hidden');
+                document.getElementById('regular-title').classList.add('hidden');
+                document.getElementById('startbuttons').classList.add('hidden');
+                document.getElementById("offer-device").innerHTML = "{!!App\Helpers\RecycleOffers::getDevice()!!}"
+                document.getElementById("offer-title").innerHTML = "{!!App\Helpers\RecycleOffers::getTitle()!!}"
+                document.getElementById("offer-description").innerHTML = "{!!App\Helpers\RecycleOffers::getDescription()!!}"
+                document.getElementById("offer-link").href = "{!!App\Helpers\RecycleOffers::getLink()!!}"
+                document.getElementById("offer-misc").innerHTML = "{!!App\Helpers\RecycleOffers::getMisc()!!}"
+                document.getElementById("main-home-image").style.backgroundImage = "url('"+offerbanner+"')";
+            }
+
+        })();
+
         function changeHowState(btn){
             var shoppingBtn = document.getElementsByClassName('how-button-container')[0];
             var sellingBtn  = document.getElementsByClassName('how-button-container')[1];
@@ -382,6 +406,7 @@
         function showgradingvideo(){
             console.log('Play video');
         }
+
     </script>
 </div>
 

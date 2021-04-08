@@ -70,6 +70,7 @@
                     @if($portalUser->cms)<a class="dropdown-item" href="/portal/cms">CMS</a>@endif
                     @if($portalUser->categories)<a class="dropdown-item" href="/portal/categories">Categories</a>@endif
                     @if($portalUser->settings)<a class="dropdown-item" href="/portal/settings">Settings</a>@endif
+                    @if($portalUser->recycle_offers)<a class="dropdown-item" href="/portal/recycleoffers">Recycle Offers</a>@endif
                 </div>
             </div>
             @endif
