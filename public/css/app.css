@@ -15194,7 +15194,7 @@ h3, h4, h5 {
 
 .selling-video-container {
   margin-top: 0;
-  background-color: #F28E33;
+  background-color: #fff;
   width: 600px;
   height: 300px;
   border-radius: 15px;
@@ -15206,7 +15206,8 @@ h3, h4, h5 {
 
 .selling-video-container p {
   font-size: 32px;
-  color: #fff;
+  color: #BCBCBC;
+  font-family: Sharp Sans No1 Bold;
 }
 
 .border-down {

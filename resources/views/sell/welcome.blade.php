@@ -133,19 +133,27 @@
                 <div class="about-top-container">
                     <div class="about-element-container">
                         <div class="center-title-container">
-                            <p>About bamboo</p>
+                            <p>Why Sell with us</p>
                         </div>
                         <p class="about-bamboo-text">Hello and welcome to Bamboo Mobile – aka ‘Boo’. In a nutshell, Bamboo Mobile offers a smart way for you to Shop and sell mobile phones and/or devices. With the help of Bamboo Mobile, you can trade in and trade up your mobile, quickly, safely, and simply – not to mention for a great price!</p>
                         <div class="grading-show-more-container">
-                            <a href="/about"><div class="grading-show-more-btn">
+                            <a href="/sell/why"><div class="grading-show-more-btn">
                                 <p>Read More</p>
                             </div></a>
                         </div>    
                     </div>
             
                     <div class="about-image-container">
-                        <div class="about-image">
-                            <img src="{{asset('/images/bamboo-laughing.gif')}}">
+                        <div class="selling-video-container">
+                            <p>Selling With Us</p>
+                            <a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#sellingvideomodal">
+                                <div class="video-image-container">
+                                    <div class="play-container">
+                                        <i class="fa fa-play" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <p>Explained</p>
                         </div>
                     </div>
                 </div>
@@ -344,6 +352,21 @@
                                     @include('auth.register')
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="sellingvideomodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><img src="{{ url('/customer_page_images/body/modal-close.svg') }}"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            
                         </div>
                     </div>
                 </div>
