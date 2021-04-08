@@ -10686,6 +10686,7 @@ main p, a, span {
 .text-center-container p {
   font-size: 18px;
   text-transform: uppercase;
+  font-family: Sharp Sans No1 Bold;
 }
 
 .sign-up form {

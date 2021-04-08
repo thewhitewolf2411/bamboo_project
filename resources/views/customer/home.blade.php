@@ -371,7 +371,7 @@
             </div>
 
             <div class="terms-container">
-                <input type="checkbox" class="newsletter_checkbox mx-3" id="newsletter_terms" name="newsletter_terms" required>
+                <input type="checkbox" class="newsletter_checkbox mx-3" id="newsletter_terms" name="newsletter_terms">
                 <label class="newsletter_checkbox" id="newsletter_terms_label" for="newsletter_terms">
                     <p style="margin-left: 40px">In addition to receiving an instant email when you open your account with Bamboo, I agree to Bamboo sending me a regular newsletter, carrying out market research, keeping me informed with personalised news, offers, products and promotions it believes would be of interest to me through my preferred channel. </p>
                 </label>
