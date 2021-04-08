@@ -133,19 +133,27 @@
                 <div class="about-top-container">
                     <div class="about-element-container">
                         <div class="center-title-container">
-                            <p>About bamboo</p>
+                            <p>Why Sell with us</p>
                         </div>
                         <p class="about-bamboo-text">Hello and welcome to Bamboo Mobile – aka ‘Boo’. In a nutshell, Bamboo Mobile offers a smart way for you to Shop and sell mobile phones and/or devices. With the help of Bamboo Mobile, you can trade in and trade up your mobile, quickly, safely, and simply – not to mention for a great price!</p>
                         <div class="grading-show-more-container">
-                            <a href="/about"><div class="grading-show-more-btn">
+                            <a href="/sell/why"><div class="grading-show-more-btn">
                                 <p>Read More</p>
                             </div></a>
                         </div>    
                     </div>
             
                     <div class="about-image-container">
-                        <div class="about-image">
-                            <img src="{{asset('/images/bamboo-laughing.gif')}}">
+                        <div class="selling-video-container">
+                            <p>Selling With Us</p>
+                            <a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#sellingvideomodal">
+                                <div class="video-image-container">
+                                    <div class="play-container">
+                                        <i class="fa fa-play" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </a>
+                            <p>Explained</p>
                         </div>
                     </div>
                 </div>
@@ -228,15 +236,52 @@
                     <p>amazing offers, hints and tips and just awesome-ness</p>
                 </div>
         
-                <form action="/" method="POST">
+                <form action="/newslettersingup" method="POST">
                     @csrf
         
-                    <input class="email-input" type="email" placeholder="Enter email address here">
-                    <input class="email-submit" type="submit" value="Sign me up!">
+                    <div class="row w-100">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input class="email-input mt-0" name="first_name" type="text" placeholder="First Name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input class="email-input mt-0" name="last_name" type="text" placeholder="Last Name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row w-100">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <select class="email-input w-100" name="age_range" id="age_range">
+                                    <option value="" default selected disabled>Age Range</option>
+                                    <option value="16">0-16</option>
+                                    <option value="24">16-24</option>
+                                    <option value="48">24-48</option>
+                                    <option value="62">48-62</option>
+                                    <option value="62+">62+</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <input class="email-input mt-0" name="email_address" type="email" placeholder="Email address">
+                            </div>
+                        </div>
+                    </div>
         
                     <div class="terms-container">
-                        <input type="checkbox" class="mx-3" id="terms" name="terms" required>
-                        <label for="terms">I agree to Bamboo Mobile <a href="/terms">Terms and Conditions</a></label>
+                        <input type="checkbox" class="newsletter_checkbox mx-3" id="newsletter_terms" name="newsletter_terms">
+                        <label class="newsletter_checkbox" id="newsletter_terms_label" for="newsletter_terms">
+                            <p style="margin-left: 40px">In addition to receiving an instant email when you open your account with Bamboo, I agree to Bamboo sending me a regular newsletter, carrying out market research, keeping me informed with personalised news, offers, products and promotions it believes would be of interest to me through my preferred channel. </p>
+                        </label>
+                    </div>
+        
+                    <div class="form-group">
+                        <div class="col-md-3 mt-3 mx-auto">
+                            <input type="submit" class="btn btn-purple" value="Sign me up!">
+                        </div>
                     </div>
                 </form>
         
@@ -307,6 +352,21 @@
                                     @include('auth.register')
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="sellingvideomodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"><img src="{{ url('/customer_page_images/body/modal-close.svg') }}"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            
                         </div>
                     </div>
                 </div>
