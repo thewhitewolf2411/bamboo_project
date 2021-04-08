@@ -30,6 +30,7 @@ use App\Services\ExpiryDate;
 use App\Eloquent\AdditionalCosts;
 use App\Eloquent\Payment\UserBankDetails;
 use App\Services\NotificationService;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Crypt;
 
 class SellController extends Controller
@@ -77,16 +78,6 @@ class SellController extends Controller
 
         $brands = Brand::all();
 
-        $number = 0;
-        $page = 1;
-        $start = null;
-
-        if(isset($request->number)){
-            $number = $request->number;
-        }
-        else{
-            $number = 24;
-        }
         if(isset($request->page)){
             $page = $request->page;
         }
@@ -94,13 +85,8 @@ class SellController extends Controller
             $page = 1;
         }
 
-        $start = ($page * $number) - $number;
-
         $products = "";
-        $numberofproducts = 0;
         $canSeeMore = false;
-
-        $message = "";
 
         switch($parameter){
             case "mobile":
@@ -161,28 +147,28 @@ class SellController extends Controller
                 break;
         }
 
-        #dd($products->take($number));
+        $page = isset($request->page) ? $request->page : 1;
+        $perPage = 24;
 
-        foreach($products as $key=>$product){
-            #dd($start, $start+$number);
-            if($key<$start || $key>=$start+$number){
-                $products->forget($key);
-            }
+        $path = url('/sell/shop/'.$parameter);
+        if(!$onlyTopResults && !$canSeeMore){
+            $path = null;
+        } else {
+            $path = null;
+            //dd($onlyTopResults, $canSeeMore);
         }
 
-        #dd($products);
-
-        $numberofpages = $numberofproducts/$number;
-        $numberofpages = ceil($numberofpages);
-        $pages = array();
-
-        for($i = 1; $i<=$numberofpages; $i++){
-            array_push($pages, $i);
-        }
+        $paginated = new LengthAwarePaginator(
+            $products->forPage($page, $perPage),
+            $products->count(),
+            $perPage,
+            $page,
+            ['path' => $path]
+        );
         
         return view('sell.shop', [
-                'products' => $products, 
-                'pages'=>$pages, 
+                'products' => $paginated, 
+                //'pages'=>$pages, 
                 'currentpage'=>$page, 
                 'category'=>$parameter, 
                 'recycleBasket'=>true, 
@@ -261,25 +247,21 @@ class SellController extends Controller
                 break;
         }
 
-        foreach($products as $key=>$product){
-            if($key<$start || $key>=$start+$number){
-                $products->forget($key);
-            }
-        }
+        $page = isset($request->page) ? $request->page : 1;
+        $perPage = 24;
 
-        $numberofpages = $numberofproducts/$number;
-        $numberofpages = ceil($numberofpages);
-        $pages = array();
-
-        for($i = 1; $i<=$numberofpages; $i++){
-            array_push($pages, $i);
-        }
+        $paginated = new LengthAwarePaginator(
+            $products->forPage($page, $perPage),
+            $products->count(),
+            $perPage,
+            $page,
+            ['path' => url('/sell/devices/mobile/'.$brand)]
+        );
         
         return view('sell.alldevicesbrand', [
-                'products' => $products, 
-                'pages'=>$pages, 
+                'products' => $paginated, 
                 'currentpage'=>$page, 
-                'recycleBasket'=>true, 
+                'recycleBasket'=>true,
                 'brand'=>$brand,
                 'brandname'=>$brandName,
                 'category'=>$category,

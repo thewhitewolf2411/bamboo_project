@@ -121,7 +121,7 @@
             </div>
 
             <div class="pages d-flex justify-content-end w-100 p-5">
-                <div class="d-flex">
+                {{-- <div class="d-flex">
                     @foreach($pages as $page)
                         <div class="d-flex px-3">
                             <a href="?page={{$page}}">
@@ -137,15 +137,16 @@
                             </a>
                         </div>
                     @endforeach
-                </div>                
+                </div>                 --}}
+                {{ $products->links('vendor.pagination.selling') }}
             </div>
 
-            <form id="search-parameters" method="GET" action="/sell/shop/mobile">
+            {{-- <form id="search-parameters" method="GET" action="/sell/shop/mobile">
 
                 <input type="hidden" name="page" value="{{$currentpage}}">
                 <input type="hidden" name="number">
     
-            </form>
+            </form> --}}
 
 
             {{-- <div class="let-footer">
