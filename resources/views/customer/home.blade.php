@@ -341,19 +341,19 @@
             <div class="row w-100">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input class="email-input" name="first_name" type="text" placeholder="First Name">
+                        <input class="email-input mt-0" name="first_name" type="text" placeholder="First Name">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input class="email-input" name="last_name" type="text" placeholder="Last Name">
+                        <input class="email-input mt-0" name="last_name" type="text" placeholder="Last Name">
                     </div>
                 </div>
             </div>
             <div class="row w-100">
                 <div class="col-md-3">
                     <div class="form-group">
-                        <select class="email-input" name="age_range">
+                        <select class="email-input w-100" name="age_range" id="age_range">
                             <option value="16" default selected>0-16</option>
                             <option value="24" default selected>16-24</option>
                             <option value="48" default selected>24-48</option>
@@ -364,14 +364,14 @@
                 </div>
                 <div class="col-md-9">
                     <div class="form-group">
-                        <input class="email-input" name="email_address" type="email" placeholder="Email address">
+                        <input class="email-input mt-0" name="email_address" type="email" placeholder="Email address">
                     </div>
                 </div>
             </div>
 
             <div class="terms-container">
                 <input type="checkbox" class="mx-3" id="newsletter_terms" name="newsletter_terms" required>
-                <label for="terms">I agree to Bamboo Mobile <a href="/terms" target="_blank">Terms and Conditions</a></label>
+                <label for="terms">In addition to receiving an instant email when you open your account with Bamboo, I agree to Bamboo sending me a regular newsletter, carrying out market research, keeping me informed with personalised news, offers, products and promotions it believes would be of interest to me through my preferred channel. </label>
             </div>
         </form>
 
