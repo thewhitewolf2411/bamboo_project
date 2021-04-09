@@ -54,4 +54,13 @@ class RecycleOffers{
         }
         return null;
     }
+
+
+    public static function getSellBanner(){
+        $offer = RecycleOffer::where('status', 1)->first();
+        if($offer){
+            return $offer->getSellingBanner();
+        }
+        return null;
+    }
 }

@@ -39,9 +39,12 @@
 
                 <div class="single-sell-category" onclick="selectCategory('mobile')" id="mobile-category">
                     <p class="sell-category-title">Mobile Phones</p>
-                    <div class="rounded-background-image" id="rounded-mobile">
-                        <img src="{{asset('/shop_images/category-image-1.png')}}">
+
+                    <div class="sell-category-wrapper">
+                        <div class="sell-category-device-background" id="rounded-mobile"></div>
+                        <img class="sell-category-device-image mobile" src="{{asset('/shop_images/category-image-1.png')}}">
                     </div>
+
                     <div class="selected-category" id="selected-mobile">
                         <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}" id="1">
                         <p class="mt-1">Selected</p>
@@ -50,9 +53,12 @@
 
                 <div class="single-sell-category" onclick="selectCategory('tablets')" id="tablets-category">
                     <p class="sell-category-title">Tablets</p>
-                    <div class="rounded-background-image" id="rounded-tablets">
-                        <img src="{{asset('/shop_images/category-image-2.png')}}">
+
+                    <div class="sell-category-wrapper">
+                        <div class="sell-category-device-background" id="rounded-tablets"></div>
+                        <img class="sell-category-device-image tablet" src="{{asset('/shop_images/category-image-2.png')}}">
                     </div>
+
                     <div class="selected-category" id="selected-tablets">
                         <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}" id="2">
                         <p class="mt-1">Selected</p>
@@ -61,9 +67,15 @@
 
                 <div class="single-sell-category" onclick="selectCategory('watches')" id="watches-category">
                     <p class="sell-category-title">Watches</p>
-                    <div class="rounded-background-image" id="rounded-watches">
-                        <img src="{{asset('/shop_images/category-image-3.png')}}">
+
+                    <div class="sell-category-wrapper">
+                        <div class="sell-category-device-background" id="rounded-watches"></div>
+                        <img class="sell-category-device-image watch" src="{{asset('/shop_images/category-image-3.png')}}">
                     </div>
+                    
+                    {{-- <div class="rounded-background-image" id="rounded-watches">
+                        <img src="{{asset('/shop_images/category-image-3.png')}}">
+                    </div> --}}
                     <div class="selected-category" id="selected-watches">
                         <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}" id="3">
                         <p class="mt-1">Selected</p>
@@ -109,6 +121,10 @@
             <div id="no-results-brand" class="text-center mb-5 hidden">
                 No results matching this category/brand.
             </div>
+
+            @if(App\Helpers\RecycleOffers::getSellBanner() !== null)
+                <a href="{{App\Helpers\RecycleOffers::getLink()}}"><img src="{!!App\Helpers\RecycleOffers::getSellBanner()!!}"></a>
+            @endif
 
             <div class="selling-info-items-container">
                 <div class="selling-info-item">
@@ -375,6 +391,31 @@
 
         <footer>@include('customer.layouts.footer', ['showGetstarted' => false])</footer>
         <script>
+
+            // var categories = document.getElementsByClassName('sell-category-device-image');
+            // for (let index = 0; index < categories.length; index++) {
+            //     console.log(categories[index]);
+            // }
+            $(".sell-category-wrapper")
+            .mouseenter(function() {
+                console.log(this.childNodes);
+                // background - 1
+                let bg = this.childNodes[1];
+                bg.classList.add('small');
+                // image - 3
+                let img = this.childNodes[3];
+                img.classList.add('enlarged');
+            })
+            .mouseleave(function() {
+                //unfocusCategory(this);
+                console.log(this.childNodes);
+                // background - 1
+                let bg = this.childNodes[1];
+                bg.classList.remove('small');
+                // image - 3
+                let img = this.childNodes[3];
+                img.classList.remove('enlarged');
+            });
 
             function showRegistrationForm(){
                 if(!document.getElementsByClassName('modal-second-element')[0].classList.contains('modal-second-element-active')){

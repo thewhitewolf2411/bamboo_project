@@ -21,7 +21,7 @@ class RecycleOffer extends Model
      * @var array
      */
     protected $fillable = [
-        'device_id', 'offer_banner', 'offer_title', 'offer_description', 'offer_additional_info', 'offer_start_date', 'offer_end_date', 'offer_price', 'status'
+        'device_id', 'offer_banner', 'offer_selling_banner', 'offer_title', 'offer_description', 'offer_additional_info', 'offer_start_date', 'offer_end_date', 'offer_price', 'status'
     ];
 
     public function getDevice(){
@@ -41,6 +41,10 @@ class RecycleOffer extends Model
 
     public function getImage(){
         return Storage::url('public/recycle_offers_images/'.$this->offer_banner);
+    }
+
+    public function getSellingBanner(){
+        return Storage::url('public/recycle_offers_images/'.$this->offer_selling_banner);
     }
 
     public function getInputStartDate(){

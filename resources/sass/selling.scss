@@ -1057,8 +1057,78 @@ input.lookup-delivery-basket::placeholder{
     margin-bottom: 50px;
 }
 
+.sell-category-wrapper{
+    position: relative;
+}
+
+.sell-category-device-image{
+    position: absolute;
+    right: auto;
+    width: auto;
+    height: auto;
+    max-width: 400px;
+    transition: all 0.3s ease;
+}
+
+.sell-category-device-image.enlarged{
+    transform: scale(1.1);
+}
+
+.sell-category-device-image.mobile{
+    top: -75px;
+    left: 0;
+}
+
+.sell-category-device-image.tablet{
+    top: 10px;
+    left: 0;
+}
+
+.sell-category-device-image.watch{
+    top: -20px;
+    left: 18px;
+}
+
+
+.sell-category-device-background{
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.sell-category-device-background.small{
+    transform: scale(0.8);
+    // width: 200px;
+    // height: 200px;
+}
+
+
+#rounded-mobile{
+    background: transparent linear-gradient(151deg, #FD7F8E 0%, #569CCE 100%) 0% 0% no-repeat padding-box;
+}
+
+#rounded-tablets{
+    background: transparent linear-gradient(151deg, #57D591 0%, #A3D047 100%) 0% 0% no-repeat padding-box;
+}
+
+#rounded-watches{
+    background: transparent linear-gradient(151deg, #57D591 0%, #A670AF 100%) 0% 0% no-repeat padding-box;
+}
+
+#rounded-accesories{
+    background: transparent linear-gradient(151deg, #569CCE 0%, #FBC24F 100%) 0% 0% no-repeat padding-box;
+}
+
+
 .single-sell-category{
-    width: 300px;
+    width: 400px;
     cursor: pointer;
 }
 
