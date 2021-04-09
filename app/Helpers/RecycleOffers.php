@@ -8,79 +8,49 @@ use Carbon\Carbon;
 class RecycleOffers{    
 
     public static function check(){
-        $offers = RecycleOffer::all();
-        foreach($offers as $offer){
-            $now = Carbon::now();
-            $start_date = Carbon::parse($offer->offer_start_date);
-            $end_date = Carbon::parse($offer->offer_end_date);
-            if($now->between($start_date, $end_date)){
-                return $offer->getImage();
-            }
+        $offer = RecycleOffer::where('status', 1)->first();
+        if($offer){
+            return $offer->getImage();
         }
         return null;
     }
 
     public static function getDevice(){
-        $offers = RecycleOffer::all();
-        foreach($offers as $offer){
-            $now = Carbon::now();
-            $start_date = Carbon::parse($offer->offer_start_date);
-            $end_date = Carbon::parse($offer->offer_end_date);
-            if($now->between($start_date, $end_date)){
-                return $offer->getDevice();
-            }
+        $offer = RecycleOffer::where('status', 1)->first();
+        if($offer){
+            return $offer->getDevice();
         }
         return null;
     }
 
     public static function getTitle(){
-        $offers = RecycleOffer::all();
-        foreach($offers as $offer){
-            $now = Carbon::now();
-            $start_date = Carbon::parse($offer->offer_start_date);
-            $end_date = Carbon::parse($offer->offer_end_date);
-            if($now->between($start_date, $end_date)){
-                return $offer->offer_title;
-            }
+        $offer = RecycleOffer::where('status', 1)->first();
+        if($offer){
+            return $offer->offer_title;
         }
         return null;
     }
 
     public static function getDescription(){
-        $offers = RecycleOffer::all();
-        foreach($offers as $offer){
-            $now = Carbon::now();
-            $start_date = Carbon::parse($offer->offer_start_date);
-            $end_date = Carbon::parse($offer->offer_end_date);
-            if($now->between($start_date, $end_date)){
-                return $offer->offer_description;
-            }
+        $offer = RecycleOffer::where('status', 1)->first();
+        if($offer){
+            return $offer->offer_description;
         }
         return null;
     }
 
     public static function getLink(){
-        $offers = RecycleOffer::all();
-        foreach($offers as $offer){
-            $now = Carbon::now();
-            $start_date = Carbon::parse($offer->offer_start_date);
-            $end_date = Carbon::parse($offer->offer_end_date);
-            if($now->between($start_date, $end_date)){
-                return $offer->getDeviceLink();
-            }
+        $offer = RecycleOffer::where('status', 1)->first();
+        if($offer){
+            return $offer->getDeviceLink();
         }
         return null;
     }
 
     public static function getMisc(){
-        $offers = RecycleOffer::all();
-        foreach($offers as $offer){
-            $now = Carbon::now();
-            $start_date = Carbon::parse($offer->offer_start_date);
-            $end_date = Carbon::parse($offer->offer_end_date);
-            if($now->between($start_date, $end_date)){
-                return $offer->offer_additional_info;
-            }
+        $offer = RecycleOffer::where('status', 1)->first();
+        if($offer){
+            return $offer->offer_additional_info;
         }
         return null;
     }

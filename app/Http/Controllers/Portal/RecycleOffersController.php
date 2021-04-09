@@ -146,7 +146,12 @@ class RecycleOffersController extends Controller
 
     public function activateRecycleOffer($id){
         $recycleOffer = RecycleOffer::findOrFail($id);
+        $activeOffers = RecycleOffer::where('status', 1)->get();
 
+        foreach($activeOffers as $activeOffer){
+            $activeOffer->status = false;
+            $activeOffer->save();
+        }
         $action = null;
         if(!$recycleOffer->status){
             $action = 'enabled';

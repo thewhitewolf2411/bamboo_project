@@ -15346,9 +15346,17 @@ h3, h4, h5 {
   color: #fff;
 }
 
+.selling-video-container {
+  margin-top: 0;
+  background-color: #fff;
+  width: 600px;
+  height: 300px;
+}
+
 .selling-video-container p {
   font-size: 32px;
-  color: #fff;
+  color: #BCBCBC;
+  font-family: Sharp Sans No1 Bold;
 }
 
 .selling-video {
