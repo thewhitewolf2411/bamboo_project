@@ -144,6 +144,22 @@ class RecycleOffersController extends Controller
         return redirect('/portal/recycleoffers')->with('success', 'Recycle offer updated successfully.');
     }
 
+    public function activateRecycleOffer($id){
+        $recycleOffer = RecycleOffer::findOrFail($id);
+
+        $action = null;
+        if(!$recycleOffer->status){
+            $action = 'enabled';
+            $recycleOffer->status = true;
+        } else {
+            $action = 'disabled';
+            $recycleOffer->status = false;
+        }
+        $recycleOffer->save();
+
+        return redirect('/portal/recycleoffers')->with('info', 'Recycle offer for '.$recycleOffer->getDevice(). ' ' . $action .  '.');
+    }
+
     public function deleteOffer($id){
         $recycleOffer = RecycleOffer::findOrFail($id);
         $recycleOffer->delete();

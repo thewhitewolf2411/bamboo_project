@@ -398,6 +398,11 @@ h3, h4, h5{
 
 
 // offer styles
+.offer-texts-container{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 .offer-device-bold{
     font-size: 4rem;
     font-weight: 600;
@@ -422,15 +427,16 @@ h3, h4, h5{
 }
 
 .offer-title-bold{
-    font-size: 1.3rem;
+    font-size: 2rem;
 }
 
 .offer-description-bold{
-    font-size: 1.5rem;
+    font-size: 2.5rem;
 }
 
 .offer-misc-small{
     color: #fff;
+    font-size: 17px;
 }
 
 

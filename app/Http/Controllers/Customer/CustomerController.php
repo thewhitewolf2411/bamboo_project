@@ -240,16 +240,15 @@ class CustomerController extends Controller
         else{
             // show abandoned cart items
             $email = request()->session()->get('session_email', null);
+            $abandoned_cart_items = null;
+            $products = SellingProduct::all();
+            $price = 0;
+            $sellPrice = 0;
+            $hasTradeIn = false;
+            $hasTradeOut = false;
+
             if($email){
                 $abandoned_cart_items = AbandonedCart::where('user_email', $email)->get();
-        
-                $products = SellingProduct::all();
-    
-                $price = 0;
-                $sellPrice = 0;
-    
-                $hasTradeIn = false;
-                $hasTradeOut = false;
     
                 if($abandoned_cart_items !== null){
                     foreach($abandoned_cart_items as $items){
@@ -264,15 +263,17 @@ class CustomerController extends Controller
                     }
                 }
     
-                return view('customer.cart')->with([
-                        'cart'=>$abandoned_cart_items,
-                        'products'=>$products,
-                        'fullprice'=>$price,
-                        'sellPrice'=>$sellPrice,
-                        'hasTradeIn'=>$hasTradeIn,
-                        'hasTradeOut'=>$hasTradeOut,
-                ]);
+                
             }
+
+            return view('customer.cart')->with([
+                'cart'=>$abandoned_cart_items,
+                'products'=>$products,
+                'fullprice'=>$price,
+                'sellPrice'=>$sellPrice,
+                'hasTradeIn'=>$hasTradeIn,
+                'hasTradeOut'=>$hasTradeOut,
+            ]);
             
 
             //return \redirect()->back()->with('showLogin', true);

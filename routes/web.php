@@ -499,6 +499,7 @@ Route::group(['prefix' => 'portal/recycleoffers'], function(){
     Route::post('/createoffer', 'Portal\RecycleOffersController@createOffer')->name('createOffer');
 
     Route::get('/offer/edit/{id}', 'Portal\RecycleOffersController@showOffer')->name('editRecycleOffer');
+    Route::get('/activate/{id}', 'Portal\RecycleOffersController@activateRecycleOffer')->name('activateRecycleOffer');
     Route::post('/updateoffer', 'Portal\RecycleOffersController@updateRecycleOffer')->name('updateRecycleOffer');
     Route::get('/offer/delete/{id}', 'Portal\RecycleOffersController@deleteOffer')->name('deleteRecycleOffer');
 });

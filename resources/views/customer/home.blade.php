@@ -5,7 +5,7 @@
 <div class="app">
 
     <div class="home-element home-title-container" id="main-home-image">
-        <div class="left-container">
+        <div class="left-container" id="home-left-container">
             <div class="title-container" id="regular-title">
                 <p>Pay less for your next mobile with bamboo</p>
             </div>
@@ -361,6 +361,7 @@
          (function() {
             let offerbanner = "{!!App\Helpers\RecycleOffers::check()!!}";
             if(offerbanner){
+                document.getElementById('home-left-container').classList.add('w-50');
                 document.getElementById('offers-texts').classList.remove('hidden');
                 document.getElementById('regular-title').classList.add('hidden');
                 document.getElementById('startbuttons').classList.add('hidden');
@@ -370,6 +371,7 @@
                 document.getElementById("offer-link").href = "{!!App\Helpers\RecycleOffers::getLink()!!}"
                 document.getElementById("offer-misc").innerHTML = "{!!App\Helpers\RecycleOffers::getMisc()!!}"
                 document.getElementById("main-home-image").style.backgroundImage = "url('"+offerbanner+"')";
+                document.getElementById("main-home-image").style.padding = '30px 150px'; 
             }
 
         })();

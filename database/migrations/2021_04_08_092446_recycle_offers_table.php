@@ -23,6 +23,7 @@ class RecycleOffersTable extends Migration
             $table->dateTime('offer_start_date');
             $table->dateTime('offer_end_date');
             $table->string('offer_price');
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
