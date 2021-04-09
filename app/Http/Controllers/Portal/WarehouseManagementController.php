@@ -45,7 +45,7 @@ class WarehouseManagementController extends Controller
     public function showBoxManagementPage(){
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
-        $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->where('status', '!=', 1)->get();
+        $boxes = Tray::where('tray_type', 'Bo')->where('status', '!=', 1)->get();
         $brands = Brand::whereIn('id', [1,2,3])->get();
 
         $boxedTradeIns = array();
@@ -126,7 +126,7 @@ class WarehouseManagementController extends Controller
         $currentBox = Tray::where('id', $id)->first();
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
-        $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->where('status', '!=', 1)->get();
+        $boxes = Tray::where('tray_type', 'Bo')->where('status', '!=', 1)->get();
         $brands = Brand::whereIn('id', [1,2,3])->get();
 
         $id = $currentBox->tray_name;
@@ -141,27 +141,6 @@ class WarehouseManagementController extends Controller
                 $tradein->product_id = $tradein->getBrandName($tradein->product_id);
                 array_push($boxedTradeIns, $tradein);
             }
-        }
-
-        $brandLet = substr($id, 1, 1);
-        $brand = "";
-
-        $barcode = DNS1D::getBarcodeHTML($id, 'C128');
-
-        if($brandLet === "A"){
-            $brand = "Apple";
-        }
-        if($brandLet === "S"){
-            $brand = "Samsung";
-        }
-        if($brandLet === "H"){
-            $brand = "Huawei";
-        }
-        if($brandLet === "M"){
-            $brand = "Miscellaneous";
-        }
-        if($brandLet === "Q"){
-            $brand = "Quarantine";
         }
 
         $path = public_path().'/pdf/boxlabels/';

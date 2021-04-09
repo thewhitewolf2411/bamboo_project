@@ -236,12 +236,25 @@
                             </tr>
                         </tfoot>
                         <tbody>
+                            
                             @foreach ($boxes as $test)
                                 <tr>
                                     <td><div class="table-element">{{$test->tray_name}}</div></td>
                                     <td><div class="table-element">{{$test->number_of_devices}}</div></td>
                                     <td><div class="table-element">{{$test->getBoxStatus()}}</div></td>
-                                    <td><div class="table-element"><a role="button" class="printboxlabel" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Label</a> / <a role="button" class="printboxmanifest" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Manifest</a> / <a role="button" class="printboxsummary" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Summary</a> / @if(!$test->isBoxInSaleLot()) <a href="/portal/warehouse-management/box-management/{{$test->id}}" id="{{$test->tray_name}}">Re-open Box</a> @else <a href="" >Box part of sales lot </a>@endif</div></td>
+                                    <td><div class="table-element">
+                                        <a role="button" class="printboxlabel" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Label</a> / 
+                                        <a role="button" class="printboxmanifest" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Manifest</a> / 
+                                        <a role="button" class="printboxsummary" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Summary</a> / 
+                                        @if(!$test->isBoxInSaleLot() && $test->trolley_id === null) <a href="/portal/warehouse-management/box-management/{{$test->id}}" id="{{$test->tray_name}}">Re-open Box</a> 
+                                        @else 
+                                            @if($test->trolley_id !== null)
+                                            <a href="/portal/warehouse-management/bay-overview/bay/?bay_id_scan={{$test->getTrolleyName($test->trolley_id)}}" target="_blank">Box in a bay. </a>
+                                            @else
+                                            <a href="" >Box part of sales lot </a>
+                                            @endif
+                                        @endif
+                                    </div></td>
                                 </tr>
                             @endforeach
                         </tbody>

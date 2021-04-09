@@ -54,8 +54,12 @@ class SalesLotController extends Controller
             }
         }
 
-        if(Session::has('allTradeins')){
-            Session::forget('allTradeins');
+        if(Session::has('tradeins')){
+            Session::forget('tradeins');
+        }
+
+        if(Session::has('boxes')){
+            Session::forget('boxes');
         }
 
         return view('portal.sales-lot.building-sales-lot', ['portalUser'=>$portalUser, 'tradeins'=>$tradeins, 'boxes'=>$boxes]);
@@ -66,6 +70,7 @@ class SalesLotController extends Controller
         $selectedBoxes = $request->selectedBoxes;
         $selectedTradeins = $request->selectedTradeIns;
 
+
         $tradeins = [];
 
         if(isset($selectedBoxes)){
@@ -75,7 +80,6 @@ class SalesLotController extends Controller
                 foreach($boxContent as $tradeinid){
                     array_push($tradeins, $tradeinid->trade_in_id);
                 }
-    
             }
         }
 
@@ -85,13 +89,69 @@ class SalesLotController extends Controller
             }
         }
 
-        $tradeins = array_unique($tradeins);
+        $tradeinsids = array_unique($tradeins);
 
-        $tradeins = Tradein::whereIn('id', $tradeins)->get();
-        
+        $tradeins = [];
+        if(Session::has('tradeins')){
+            $tradeins = Session::get('tradeins');
+        }
 
-        return response($tradeins, 200);
+        $tradeins = Tradein::whereIn('id', $tradeinsids)->get();
+
+        $boxContent = "";
+
+        $sessionBoxesIds = [];
+        if(Session::has('boxes')){
+            foreach(Session::get('boxes') as $sessionBox){
+                array_push($sessionBoxesIds, $sessionBox->id);
+            }
+        }
+
+        $boxContent = "";
+        if(Session::has('boxes')){
+            $boxContent = TrayContent::whereIn('trade_in_id', $tradeinsids)->whereNotIn('tray_id', $sessionBoxesIds)->get();
+        }
+        else{
+            $boxContent = TrayContent::whereIn('trade_in_id', $tradeinsids)->get();
+        }
         
+        $boxContent = $boxContent->groupBy('tray_id');
+
+        $selectedBoxes = [];
+        if(Session::has('boxes')){
+            $selectedBoxes = Session::get('boxes');
+        }
+
+        foreach($boxContent as $boxid=>$box){
+            if(isset($selectedBoxes[$boxid])){
+                $box = $selectedBoxes[$boxid];
+                $box->number_of_devices = $box->number_of_devices - count($boxContent[$boxid]);
+                $selectedBoxes[$boxid] = $box;
+            }
+            else{
+                $box = Tray::where('id', $boxid)->first();
+                $box->number_of_devices = $box->number_of_devices - count($boxContent[$boxid]);
+                $selectedBoxes[$boxid] = $box;
+            }
+        }
+        //dd();
+
+        
+        //$boxes = array_unique($selectedBoxes);
+        $boxes = $selectedBoxes;
+
+        Session::put('tradeins', $tradeins);
+        Session::put('boxes', $boxes);
+
+        return response(['tradeins'=>$tradeins, 'boxes'=>$boxes], 200);
+        
+    }
+
+    public function checkHasData(Request $request){
+        if(Session::has('tradeins')){
+            return true;
+        }
+        return false;
     }
 
     public function getBoxName($id){

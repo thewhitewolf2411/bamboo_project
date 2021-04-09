@@ -187,7 +187,7 @@
 }
 
 .portal-table{
-    width: 100%;
+    width: 100% !important;
 }
 
 .portal-table i{
@@ -585,6 +585,10 @@ input[type=number] {
 }
 
 #boxedtradeinstable_filter{
+    display: none;
+}
+
+#closedboxtable_filter{
     display: none;
 }
 

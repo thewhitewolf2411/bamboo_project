@@ -42,6 +42,9 @@ class Tray extends Model
             case 2:
                 return 'Suspended';
             case 3:
+                if($this->trolley_id !== null){
+                    return 'In Bay ' . $this->getTrolleyName($this->trolley_id);
+                }
                 return 'Complete';
             case 4:
                 return 'Box in sale lot';

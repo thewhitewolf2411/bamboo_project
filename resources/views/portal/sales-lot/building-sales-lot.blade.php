@@ -12,7 +12,7 @@
 
         <div class="row">
 
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="d-flex">
                     <div class="button-box col-lg-8 my-3 d-flex" id="changeview-container" data-toggle="buttons">
                         <label class="btn btn-secondary active" style="display: flex; align-items:center; justify-content:center; max-width:310px;margin:0;">
@@ -102,7 +102,7 @@
                             <td><div class="table-element">{{$box->tray_name ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element">{{$box->tray_grade ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element">{{$box->tray_network ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">{{$box->number_of_devices ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">{{$box->number_of_devices}} / {{$box->max_number_of_devices ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element">£{{$box->getBoxPrice() ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="{{$box->id}}"></div></td>
                         </tr>
@@ -113,11 +113,12 @@
             </div>
 
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="d-flex">
                     <div class="button-box col-lg-8 my-3 d-flex" data-toggle="buttons">
-                        <button id="removefromlot" class="btn btn-danger" role="button" disabled>Remove from Lot</button>
-                        <button id="completelot" class="btn btn-success" role="button" disabled>Lot complete</button>
+                        <button id="removefromlot" class="btn btn-danger mx-2" role="button" disabled>Remove from Lot</button>
+                        <button id="completelot" class="btn btn-success mx-2" role="button" disabled>Lot complete</button>
+                        <button id="exportxls" class="btn btn-success mx-2" role="button" disabled>Export XLS</button>
                     </div>
                     <div class="col-lg-4 d-flex align-items-center justify-content-center">
                         <a href="/portal/sales-lot/completed-sales-lots" class="btn btn-warning">Completed Sales Lots</a>
@@ -128,8 +129,8 @@
                     <tr>
                         <td><div class="table-element">Box number</div></td>
                         <td><div class="table-element">Bamboo Grade</div></td>
-                        <td><div class="table-element">Network</div></td>
-                        <td><div class="table-element">Total QTY</div></td>
+                        <td><div class="table-element">Manufacturer/Model</div></td>
+                        <td><div class="table-element">GB Size</div></td>
                         <td><div class="table-element">Total Cost</div></td>
                         <td><div class="table-element"><input type="checkbox" id="saleslotboxes-selectall"></div></td>
                     </tr>
@@ -170,6 +171,19 @@
         </div>
     </div>
 </div>
+
+
+<script>
+
+    let tradeins = '{!!Session::get("tradeins")!!}';
+
+    if(tradeins){
+        window.addEventListener("beforeunload", function(e){
+            e.preventDefault();
+        });
+    }
+
+</script>
 
 
 @endsection
