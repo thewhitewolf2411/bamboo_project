@@ -100,7 +100,7 @@
 }
 
 .sell-title-container{
-    padding: 50px;
+    //padding: 50px;
 }
 
 .sell-title-container div{
@@ -916,7 +916,7 @@ input.lookup-delivery-basket::placeholder{
     flex-direction: column;
     flex-wrap: nowrap;
     width: 100%;
-    max-width: 800px;
+    //max-width: 800px;
     position: relative;
 }
 
@@ -924,8 +924,11 @@ input.lookup-delivery-basket::placeholder{
     display: flex;
     flex-direction: row;
     width: 100%;
+    max-width: 800px;
     justify-content: center;
     margin-bottom: 0 !important;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .search-sell-input{
@@ -962,19 +965,34 @@ input.lookup-delivery-basket::placeholder{
     padding: 18px;
 }
 
+#selling-search-results-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);
+    max-height: 405px;
+    position: absolute;
+    top: 72px;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
 #selling-search-results{
-    width: calc(100% - 87px);
+    // width: calc(100% - 87px);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
     display: flex;
     flex-direction: column;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     max-height: 405px;
-    position: absolute;
-    top: 72px;
+    position: relative;
     background: white;
     overflow-y: scroll;
     overflow-x: hidden;
     z-index: 1;
 }
+
 
 #selling-search-results.nomatches{
     height: 0;

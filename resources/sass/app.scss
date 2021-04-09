@@ -35,3 +35,9 @@ img{
     -webkit-user-drag: none;
     // user-drag: none;
 }
+
+// prevent scrolling of element
+.noscroll{
+    height: 100vh;
+    overflow-y: hidden;
+}
