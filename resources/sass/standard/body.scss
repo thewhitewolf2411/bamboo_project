@@ -440,6 +440,98 @@ h3, h4, h5{
 }
 
 
+
+
+.how-text-element.move-bottom{
+    margin-top: 260px;
+}
+
+.how-first-text-container{
+    width: 30%;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.how-text-title-container p{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.how-second-text-container{
+    width: 30%;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.how-images-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 650px;
+}
+
+.how-image-container img{
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.back-line-container{
+    position: absolute;
+    width: 4px;
+    background: black;
+    height: 600px;
+    z-index: -50;
+}
+
+.large-bold-text{
+    font-size: 4rem;
+    font-family: Sharp Sans No1 Semibold;
+    //text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
+}
+
+.semilarge-bold-text{
+    font-size: 2.5rem !important;
+    font-family: Sharp Sans No1 Bold;
+}
+
+.regular-bold-text{
+    font-size: 1.5em !important;
+    font-family: Sharp Sans No1 Bold;
+}
+
+.regular-text{
+    font-size: 1em !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // general
 @media (max-width: 1130px){
     #cookie-container{
