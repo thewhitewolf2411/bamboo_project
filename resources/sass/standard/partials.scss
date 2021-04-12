@@ -1,0 +1,231 @@
+// what happens next styles
+.whathappensnext-container{
+    background: #EDEDED;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+}
+
+.what-title{
+    font-size: 3em;
+    font-family: Sharp Sans No1 Bold;
+    text-align: center;
+}
+
+.what-subtitle{
+    font-size: 1em;
+    font-family: Sharp Sans No1 Semibold;
+    text-align: center;
+}
+
+.whathappens-wrapper{
+    position: relative;
+    width: auto;
+    max-width: 900px;
+    margin-top: 35px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+.whathappens-video{
+    position: relative;
+    width: 100% !important;
+    border-radius: 5px;
+    box-shadow: 0 5px 6px rgb(0 0 0 / 16%);
+}
+
+.whathappens-video:focus{
+    outline: none;
+    border: none;
+}
+
+.playvideo-whathappens{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    transition: all 0.2s ease;
+}
+
+.playvideo-whathappens.invisible{
+    opacity: 0;
+}
+
+.playvideo-whathappens:hover{
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+.image-whathappens-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.image-whathappens-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 450px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.whathappens-img{
+    width: 250px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hr-whathappens{
+    height: 1px;
+    background-color: #000000;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    margin-bottom: 120px;
+}
+
+.whathappens-large{
+    font-size: 2rem;
+    margin-top: 50px;
+}
+
+.whathappens-small{
+    font-size: 1rem;
+    margin-top: 15px;
+}
+
+
+
+// sustainability styles
+
+.sustainability-container{
+    background: #59DDC1;
+    padding: 200px 140px 100px 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.sustainability-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.sustainability-container.gradient{
+    background: linear-gradient(#A3D147, #59DDC1);
+}
+
+.text-buttons-sustainability{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin-top: auto;
+    margin-bottom: auto;
+    max-width: 450px;
+    text-align: left;
+}
+
+.sustainability-large{
+    font-size: 3rem;
+    font-family: Sharp Sans No1 Bold;
+}
+
+.sustainability-small{
+    font-size: 1rem;
+}
+
+.sustainability-images-overlay{
+    position: relative;
+    width: 500px;
+    height: auto;
+    margin-top: 120px;
+}
+
+.sustainability-img{
+    width: 400px;
+    height: 400px;
+}
+
+.sustainability-img.one{
+    position: relative;
+}
+
+.sustainability-img.two{
+    position: absolute;
+    right: -25px;
+    top: -250px;
+}
+
+.sustainability-whysell{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 300px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.sustainability-whysell-col{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.sustainability-whysell-col.text{
+    max-width: 500px;
+}
+
+.sustainability-whysell-videowrapper{
+    position: relative;
+    width: auto;
+    max-width: 600px;
+    margin-top: 35px;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+.sustainability-whysell-video{
+    position: relative;
+    width: 100% !important;
+    border-radius: 5px;
+    box-shadow: 0 5px 6px rgb(0 0 0 / 16%);
+}
+
+.sustainability-whysell-video:focus{
+    outline: none;
+    border: none;
+}
+
+
+
+.sustainability-about-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-bottom: 250px;
+}
+
+.sustainability-about-col{
+    display: flex;
+    flex-direction: column;
+}
+
+.sustainability-about-col.text{
+    max-width: 500px;
+}
+
+.laughing-gif{
+    width: 350px;
+    height: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+}

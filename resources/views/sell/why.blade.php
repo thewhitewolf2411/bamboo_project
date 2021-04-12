@@ -54,7 +54,7 @@
                             </a>
                             <p>Explained</p> --}}
                             <video class="selling-video" controls>
-                                <source src="{{asset('/video/selling_to_bamboo.mp4')}}" type="video/mp4">
+                                <source src="{{asset('/video/old/selling_to_bamboo.mp4')}}" type="video/mp4">
                             </video>
                         </div>
                         <p>Watch our quick video explaining the benefits you'll receive when selling your next device with Bamboo Mobile</p>
@@ -131,7 +131,9 @@
                 </div>
             </div>
 
-            <div class="about-sustainability">
+            @include('partial.sustainability', ['whySell' => false, 'about' => false])
+
+            {{-- <div class="about-sustainability">
                 <div class="about-images-container">
                     <div class="about-images" id="top-image">
                         <img src="{{asset('/images/ss-img-1.svg')}}">
@@ -152,7 +154,7 @@
                         </div></a>
                     </div>   
                 </div>
-            </div>
+            </div> --}}
 
             <div class="shop-categories-container w-1000">
                 <a href="#">

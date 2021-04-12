@@ -248,7 +248,9 @@
         </div>
     </div>
 
-    <div class="home-element about-container">
+    @include('partial.sustainability', ['whySell' => false, 'about' => true])
+
+    {{-- <div class="home-element about-container">
         <div class="about-top-container">
             <div class="about-element-container">
                 <div class="center-title-container">
@@ -300,7 +302,7 @@
                 </div>   
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="home-element home-links-container">
         
