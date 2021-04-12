@@ -55560,7 +55560,7 @@ $('#starttopicklot').on('click', function () {
   var status = $('.saleslot-active').data('status');
   var id = $('.saleslot-active').prop('id');
 
-  if (status === 1 || status === 6) {
+  if (status === 2 || status === 6) {
     window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');
   } else {
     alert("This lot cannot be picked yet.");
@@ -56438,7 +56438,7 @@ $('.printboxlabel').on('click', function () {
       boxname: boxname
     },
     success: function success(data, textStatus, xhr) {
-      window.open(data);
+      window.open(data.filename);
     },
     error: function error(data, textStatus, xhr) {
       alert('Something went wrong. Please try again.');
@@ -56574,7 +56574,6 @@ $('#addtolot').on('click', function () {
       selectedBoxes: selectedBoxes
     },
     success: function success(response) {
-      console.log(response);
       handleShownData(response);
       window.addEventListener("beforeunload", function (e) {
         e.preventDefault();
@@ -56607,10 +56606,29 @@ function handleShownData(data) {
           _item = _Object$entries2$_i[1];
 
       $('#boxedtradeinstable tbody tr#' + _item.id).hide();
+      $('#saleslotboxes tbody').append('<tr id="' + _item.id + '"> <td><div class="table-element">' + _item.box_name + '</div></td><td><div class="table-element">' + _item.bamboo_grade + '</div></td><td><div class="table-element">' + _item.model + '</div></td><td><div class="table-element">' + _item.correct_memory + '</div></td><td><div class="table-element">£' + _item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class=""></div></td> </tr>');
+      $('#exportxls').prop('disabled', false);
+      $('#completelot').prop('disabled', false);
     }
   }
 }
 
+$('#exportxls').on('click', function () {
+  window.open('/portal/sales-lot/building-sales-lot/build-lot/generate-xls', '_blank');
+  /*$.ajax({
+      url: "/portal/sales-lot/building-sales-lot/build-lot/generate-xls",
+      type:"POST",
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success:function(response){
+          window.open('/portal/sales-lot/building-sales-lot/build-lot/generate-xls')
+      },
+      error:function(data){
+          alert("Something went wrong. Please try again");
+      }
+  });*/
+});
 $('#saleslotboxes').on('click', '.saleslotbox', function () {
   var boxid = $(this).attr('data-value');
   $('.appended-tradeins').remove();

@@ -60,7 +60,6 @@ $('#addtolot').on('click', function(){
             selectedBoxes:selectedBoxes,
         },
         success:function(response){
-            console.log(response);
             handleShownData(response);
             window.addEventListener("beforeunload", function(e){
                 e.preventDefault();
@@ -82,10 +81,34 @@ function handleShownData(data){
 
     if(data.tradeins){
         for(const [key, item] of Object.entries(data.tradeins)){
-            $('#boxedtradeinstable tbody tr#'+item.id).hide();      
+            $('#boxedtradeinstable tbody tr#'+item.id).hide();
+
+            $('#saleslotboxes tbody').append('<tr id="' + item.id + '"> <td><div class="table-element">' + item.box_name + '</div></td><td><div class="table-element">' + item.bamboo_grade + '</div></td><td><div class="table-element">' + item.model + '</div></td><td><div class="table-element">' + item.correct_memory + '</div></td><td><div class="table-element">£' + item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class=""></div></td> </tr>');
+            $('#exportxls').prop('disabled', false);
+            $('#completelot').prop('disabled', false);
         }
     }
 }
+
+$('#exportxls').on('click', function(){
+
+    window.open('/portal/sales-lot/building-sales-lot/build-lot/generate-xls', '_blank');
+
+    /*$.ajax({
+        url: "/portal/sales-lot/building-sales-lot/build-lot/generate-xls",
+        type:"POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(response){
+            window.open('/portal/sales-lot/building-sales-lot/build-lot/generate-xls')
+        },
+        error:function(data){
+            alert("Something went wrong. Please try again");
+        }
+    });*/
+
+});
 
 
 $('#saleslotboxes').on('click','.saleslotbox' ,function(){

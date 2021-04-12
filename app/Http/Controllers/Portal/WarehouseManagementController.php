@@ -110,14 +110,12 @@ class WarehouseManagementController extends Controller
 
         ]);
 
+        $pdf = new GetLabel();
+        $pdf->getBoxLabel($newBox);
+
         $brand = $manifacturer;
 
-        $path = public_path().'/pdf/boxlabels/';
-        if(!is_dir($path)){
-            mkdir($path, 0777, true);
-        }
-
-        return redirect('/portal/warehouse-management/box-management/' . $newBox->id)->with(['filename'=>"/pdf/boxlabels/box-" . $trayname . ".pdf"]);
+        return redirect('/portal/warehouse-management/box-management/' . $newBox->id)->with(['filename'=>"/pdf/boxlabel-" . $trayname . ".pdf"]);
 
     }
 
@@ -385,8 +383,15 @@ class WarehouseManagementController extends Controller
     }
 
     public function printBoxLabel(Request $request){
+       
+        $boxname = $request->boxname;
 
-    
+        $box = Tray::where('tray_name', $boxname)->first();
+        $pdf = new GetLabel();
+        $pdf->getBoxLabel($box);
+
+        return response(['filename'=>"/pdf/boxlabel-" . $boxname . ".pdf"], 200);
+
     }
 
     public function printBoxSummary(Request $request){

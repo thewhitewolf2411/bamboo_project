@@ -94,11 +94,11 @@ class Tray extends Model
 
     public function getTrayDevices(){
         switch($this->tray_brand){
-            case "A":
+            case "Apple":
                 return "Apple";
-            case "S":
+            case "Samsung":
                 return "Samsung";
-            case "H":
+            case "Huaweii":
                 return "Huaweii";
             default:
                 return "Miscellaneous";

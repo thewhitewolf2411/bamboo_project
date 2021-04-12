@@ -14,11 +14,11 @@
 
             <div class="col-md-6">
                 <div class="d-flex">
-                    <div class="button-box col-lg-8 my-3 d-flex" id="changeview-container" data-toggle="buttons">
-                        <label class="btn btn-secondary active" style="display: flex; align-items:center; justify-content:center; max-width:310px;margin:0;">
+                    <div class="button-box my-3 d-flex" id="changeview-container" data-toggle="buttons">
+                        <label class="btn btn-secondary active" style="display: flex; align-items:center; justify-content:center; max-width:310px;margin:0; margin-right:10px;">
                             <input type="radio" name="changeview" id="changetoviewtradeins" autocomplete="off" checked style="opacity: 0; height:0 !important; width:0 !important; margin:0 !important;"> View by Trade-in Barcode number
                         </label>
-                        <label class="btn btn-secondary" style="display: flex; align-items:center; justify-content:center; max-width:310px;margin:0;">
+                        <label class="btn btn-secondary" style="display: flex; align-items:center; justify-content:center; max-width:310px;margin:0; margin-left:10px;">
                             <input type="radio" name="changeview" id="changetoviewboxes" autocomplete="off" style="opacity: 0; height:0 !important; width:0 !important; margin:0 !important;"> View by box number
                         </label>
                     </div>

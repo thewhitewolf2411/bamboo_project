@@ -123,19 +123,29 @@
             
             
             <div class="col-md-8" id="boxtabledevices">
-                <div class="row my-3">
+                <div class="row my-3 align-items-center">
                     <div class="button-box col-lg-4">
                         <button id="box-in-progress" class="btn btn-info" role="button" @if(!isset($box)) disabled @endif>In progress</button>
                         <button id="boxed-devices" class="btn btn-info" role="button">Boxed</button>
                         <button id="boxes-summary" class="btn btn-info" role="button">Summary</button>
                     </div>
-                    <div class="button-box col-lg-4">
+                    <div class="button-box col-lg-6 d-flex align-items-center">
+
                         @if(isset($box))
-                        <p style="color: red"><b>Boxed device: {{$box->number_of_devices}} / {{$box->max_number_of_devices}}</b></p>
-                        <p style="color: red"><b>Devices left to scan: {{$box->max_number_of_devices - $box->number_of_devices}}</b></p>
+
+                        <div class="d-flex align-items-center mr-3 p-3 border">
+                            <span style="color: #000">Box Reference:</span>
+                            <span style="color: red"><b>{{$box->tray_name}}</b></span>
+                        </div>
+
+                        <div class="d-flex flex-column ml-3">
+                            <p style="color: red"><b>Boxed device: {{$box->number_of_devices}} / {{$box->max_number_of_devices}}</b></p>
+                            <p style="color: red"><b>Devices left to scan: {{$box->max_number_of_devices - $box->number_of_devices}}</b></p>
+                        </div>
+
                         @endif
                     </div>
-                    <div class="button-box col-lg-4">
+                    <div class="button-box col-lg-2">
                         @if(isset($box))
                         <button id="remove-device-from-box" class="btn btn-info" role="button" disabled>Remove devices</button>
                         @endif

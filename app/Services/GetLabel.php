@@ -237,7 +237,7 @@ class GetLabel{
         array(
             'barcode'=>$box->tray_name,
             'barcodenumber'=>$box->tray_name,
-            'models'=>$box->getBoxBrand() . " devices",
+            'models'=>$box->getTrayDevices() . " devices",
             ))
         ->setPaper($this->customPaper, 'landscape')
         ->save('pdf/boxlabel-'.$box->tray_name.'.pdf');
