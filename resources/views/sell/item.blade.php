@@ -28,6 +28,7 @@
     <body>
         <header>@include('customer.layouts.header')</header>
         <main>
+            @include('customer.layouts.sellinglinks')
             <div class="col text-center sell-item">
                 @if(Session::get('_previous') !== null)
                     <a class="back-results-sell sell-item-back  ml-5" href="{{Session::get('_previous')['url']}}">
