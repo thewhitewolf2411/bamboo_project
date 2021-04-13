@@ -137,7 +137,7 @@
         </div>
     </div>
 
-    <div class="home-element grading-container">
+    {{-- <div class="home-element grading-container">
         <div class="center-title-container">
             <p>Grading System Explained</p>
         </div>
@@ -209,7 +209,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
+    @include('partial.deliveryqualitybanner')
 
     <div class="home-element popular-devices">
         <div class="center-title-container">

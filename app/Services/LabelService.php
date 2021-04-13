@@ -72,40 +72,45 @@ class LabelService{
     }
 
     public function printSpecialDeliveryLabel(){
-        $html = "";
-        $html .= "<style>html{width:120px;height: 100px;}p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
-        $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg' width='120px' height='40px' style='display:block; margin-left:auto; margin-right:auto;'>";
-        $html .= "<p style='margin-top: 60px;'>FREEPOST 555880PR</p>";
-        $html .= "<p<Bamboo Recycle (9100)</p>";
-        $html .= "<p>C/O Bamboo Distribution Ltd</p>";
-        $html .= "<p>Unit 1, I.O Centre</p>";
-        $html .= "<p>Lea Road</p>";
-        $html .= "<p>Waltham Abbey</p>";
-        $html .= "<p>Hertfordshire</p>";
-        $html .= "<p>EN9 1AS</p>";
+        // $html = "";
+        // $html .= "<style>html{width:120px;height: 100px;}p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
+        // $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg' width='120px' height='40px' style='display:block; margin-left:auto; margin-right:auto;'>";
+        // $html .= "<p style='margin-top: 60px;'>FREEPOST 555880PR</p>";
+        // $html .= "<p<Bamboo Recycle (9100)</p>";
+        // $html .= "<p>C/O Bamboo Distribution Ltd</p>";
+        // $html .= "<p>Unit 1, I.O Centre</p>";
+        // $html .= "<p>Lea Road</p>";
+        // $html .= "<p>Waltham Abbey</p>";
+        // $html .= "<p>Hertfordshire</p>";
+        // $html .= "<p>EN9 1AS</p>";
 
         $filename = "special_delivery_label.pdf";
-        PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
+        $custom_paper = array(0,0,283.465,425.197);
+
+        PDF::loadView('portal.labels.specialdeliverylabel')->setPaper($custom_paper, 'portrait')->setWarnings(false)->save($filename);
         return response(['code'=>200, 'filename'=>$filename]);
     }
 
 
     public function downloadSDLabel(){
-        $html = "";
-        $html .= "<style>html{width:120px;height: 100px;}p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
-        $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg' width='120px' height='40px' style='display:block; margin-left:auto; margin-right:auto;'>";
-        $html .= "<p style='margin-top: 60px;'>FREEPOST 555880PR</p>";
-        $html .= "<p<Bamboo Recycle (9100)</p>";
-        $html .= "<p>C/O Bamboo Distribution Ltd</p>";
-        $html .= "<p>Unit 1, I.O Centre</p>";
-        $html .= "<p>Lea Road</p>";
-        $html .= "<p>Waltham Abbey</p>";
-        $html .= "<p>Hertfordshire</p>";
-        $html .= "<p>EN9 1AS</p>";
+        // $html = "";
+        // $html .= "<style>html{width:120px;height: 100px;}p{margin:0; font-size:9pt;} li{font-size:9pt;} #barcode-container div{margin: auto;}</style>";
+        // $html .= "<img src='http://portal.dev.bamboorecycle.com/template/design/images/site_logo.jpg' width='120px' height='40px' style='display:block; margin-left:auto; margin-right:auto;'>";
+        // $html .= "<p style='margin-top: 60px;'>FREEPOST 555880PR</p>";
+        // $html .= "<p<Bamboo Recycle (9100)</p>";
+        // $html .= "<p>C/O Bamboo Distribution Ltd</p>";
+        // $html .= "<p>Unit 1, I.O Centre</p>";
+        // $html .= "<p>Lea Road</p>";
+        // $html .= "<p>Waltham Abbey</p>";
+        // $html .= "<p>Hertfordshire</p>";
+        // $html .= "<p>EN9 1AS</p>";
 
         $filename = "special_delivery_label.pdf";
+        // 100 - 150 cm to pt approx
+        $custom_paper = array(0,0,283.465,425.197);
+        //$custom_paper = array(0,0,323.465,425.197);
 
-        PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
+        PDF::loadView('portal.labels.specialdeliverylabel')->setPaper($custom_paper, 'portrait')->setWarnings(false)->save($filename);
 
         return response()->file($filename, [
             'Content-Type' => 'application/pdf',
