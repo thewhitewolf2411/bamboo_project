@@ -18,7 +18,7 @@ Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/login', '\App\Http\Controllers\Auth\LoginController@login')->name('login');
 
-Route::get('/specialdeliverylabel', 'Customer\PagesController@downloadSDLabel')->middleware('auth');
+Route::get('/specialdeliverylabel', 'Customer\PagesController@downloadSDLabel');
 
 //User get Route
 Route::get('/', 'Customer\PagesController@index')->name('index');
