@@ -329,7 +329,7 @@ h3, h4, h5{
 
 
 .how-text-element.move-bottom{
-    margin-top: 260px;
+    margin-top: 280px;
 }
 
 .how-first-text-container{
@@ -338,11 +338,6 @@ h3, h4, h5{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
-.how-text-title-container p{
-    font-size: 16px;
-    font-weight: 600;
 }
 
 .how-second-text-container{
@@ -378,9 +373,13 @@ h3, h4, h5{
     z-index: -50;
 }
 
+.how-title-text{
+    font-size: 28px;
+}
+
 .large-bold-text{
     font-size: 4rem;
-    font-family: Sharp Sans No1 Semibold;
+    font-family: Sharp Sans No1 Bold;
     //text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
 }
 
@@ -398,8 +397,76 @@ h3, h4, h5{
     font-size: 1em !important;
 }
 
+.bebas-neue{
+    font-family: Bebas Neue, Helvetica, sans-serif;
+}
 
 
+.popular-devices-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.popular-product{
+    display: flex;
+    padding: 20px;
+    text-align: center;
+    flex-grow: 1;
+    transition: transform 0.2s;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    max-width: 400px;
+    position: relative;
+    cursor: pointer;
+}
+
+.popular-product-wrapper{
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.popular-product-wrapper.faded{
+    opacity: 0.5;
+}
+
+.popular-product-image-container{
+    width: 100%;
+    height: auto;
+}
+
+.popular-product-image-container > img{
+    width: 100%;
+    max-width: 250px;
+    height: 100%;
+}
+
+.popular-product-name-model{
+    max-width: 225px;
+}
+
+.popular-product-brand{
+    font-size: 18px;
+    font-family: Sharp Sans No1 Bold;
+}
+
+.popular-product-name{
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.product-buttons{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.semibold-text{
+    font-family: Sharp Sans No1 Bold;
+}
 
 
 

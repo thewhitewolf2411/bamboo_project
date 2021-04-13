@@ -4,7 +4,7 @@
 
         @if($showGetstarted)
         <div class="footer-row-2">
-            <span>Get Started</span>
+            <span class="semibold-text">Get Started</span>
             <div class="footer-button-container">
                 {{-- <div class="url-footer-container" id="start-shopping">
                     <a href="/shop">Start Shopping</a>
@@ -17,7 +17,7 @@
         @endif
 
         <div class="footer-row-2">
-            <span>Follow our adventures</span>
+            <span class="semibold-text">Follow our adventures</span>
             <div class="footer-social-icons-container">
                 <a href="http://www.facebook.com/BambooMobileTech/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                 {{--<a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a>--}}
@@ -79,7 +79,7 @@
             <p class="copyright">©Bamboo 2020. All rights reserved</p>
         </div>
         <div class="footer-row-2 return-top-container">
-            <a href="#"><p>RETURN TO TOP</p> <i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+            <a onclick="window.scrollTo({top: 0, behavior: 'smooth'});"><p>RETURN TO TOP</p> <i class="fa fa-arrow-up" aria-hidden="true"></i></a>
         </div>
     </div>
 

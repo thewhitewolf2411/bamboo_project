@@ -48,7 +48,7 @@
             <div class="how-second-text-container">
                 <div class="how-text-element">
                     <div class="how-text-title-container">
-                        <p class="regular-bold-text">2. FREE DELIVERY OPTIONS</p>
+                        <p class="how-title-text bebas-neue">2. FREE DELIVERY OPTIONS</p>
                     </div>
                     <div class="how-text-container">
                         <p class="regular-text">Once you have completed your sales order, you simply request for a free sales pack or print your own labels to send in your device.</p>
@@ -75,7 +75,8 @@
             <div class="how-first-text-container">
                 <div class="how-text-element">
                     <div class="how-text-title-container">
-                        <p class="regular-bold-text">1. REGISTER YOUR DEVICE TO SELL</p>
+                        {{-- <p class="regular-bold-text">1. REGISTER YOUR DEVICE TO SELL</p> --}}
+                        <p class="how-title-text bebas-neue">1. YOU SEARCH FOR YOUR DEVICE</p>
                     </div>
                     <div class="how-text-container">
                         <p  class="regular-text">Find your old device and how much it's worth. Choose your preferred payment option with all your details.</p>
@@ -83,7 +84,7 @@
                 </div>
                 <div class="how-text-element move-bottom">
                     <div class="how-text-title-container">
-                        <p class="regular-bold-text">3. FAST SAME DAY PAYMENT</p>
+                        <p class="how-title-text bebas-neue">3. FAST SAME DAY PAYMENT</p>
                     </div>
                     <div class="how-text-container">
                         <p class="regular-text">When we receive your device, we will check  it against your order. If it is all correct, payment will be made on the same day of receipt. Woohoo!</p>
@@ -212,42 +213,76 @@
     </div> --}}
     @include('partial.deliveryqualitybanner')
 
-    <div class="home-element popular-devices">
-        <div class="center-title-container">
-            <p>Popular devices</p>
-        </div>
+    @if(!empty($popular)))
+        <div class="home-element popular-devices">
+            <div class="text-center mb-5">
+                <p class="large-bold-text">Popular devices</p>
+            </div>
 
-        <div class="devices-container">
-            <div class="device-container">
-                <img src="{{asset('/customer_page_images/body/mobile-images/Image 3.png')}}">
-                <div class="category-text">
-                    <p class="category-title">Apple</p>
-                    <p class="model-title">iPhone X</p>
-                </div>
+            <div class="popular-devices-container">
+                @foreach($popular as $device)
+                
+                    {{-- <a href="{{route('showSellItem', ['parameter' => $device->id])}}"> --}}
+
+                        <div class="popular-product">
+                            <div class="popular-product-wrapper">
+                                <div class="popular-product-image-container">
+                                    @if($device->product_image === 'default_image')
+                                        <img src="{{asset('/images/placeholder_phone_image.png')}}">
+                                    @else
+                                        <img src="{{asset('/storage/product_images').'/'.$device->product_image}}">
+                                    @endif
+                                </div>
+                                <div class="popular-product-name-model mt-2">
+                                    <p class="popular-product-brand">{!!$device->getBrand()!!}</p>
+                                    <p class="popular-product-name">{{$device->product_name}}</p>
+                                </div>
+                            </div>
+                            {{-- <div class="go-to-selldevice mt-4">
+                                <img class="next-icon-results" src="{{asset('/images/front-end-icons/purple_arrow_next.svg')}}">
+                            </div> --}}
+                            <div class="product-buttons hidden">
+                                <a class="btn btn-orange" href="{{route('showSellItem', ['parameter' => $device->id])}}">Start Selling</a>
+                            </div>
+                        </div>
+
+                    {{-- </a> --}}
+
+                @endforeach
             </div>
-            <div class="device-container">
-                <img src="{{asset('/customer_page_images/body/mobile-images/Image 4.png')}}">
-                <div class="category-text">
-                    <p class="category-title">Apple</p>
-                    <p class="model-title">iPad Pro 11 inch 2020</p>
+
+            {{-- <div class="devices-container">
+                <div class="device-container">
+                    <img src="{{asset('/customer_page_images/body/mobile-images/Image 3.png')}}">
+                    <div class="category-text">
+                        <p class="category-title">Apple</p>
+                        <p class="model-title">iPhone X</p>
+                    </div>
                 </div>
-            </div>
-            <div class="device-container">
-                <img src="{{asset('/customer_page_images/body/mobile-images/Image 5.png')}}">
-                <div class="category-text">
-                    <p class="category-title">Samsung</p>
-                    <p class="model-title">Galaxy A10</p>
+                <div class="device-container">
+                    <img src="{{asset('/customer_page_images/body/mobile-images/Image 4.png')}}">
+                    <div class="category-text">
+                        <p class="category-title">Apple</p>
+                        <p class="model-title">iPad Pro 11 inch 2020</p>
+                    </div>
                 </div>
-            </div>
-            <div class="device-container">
-                <img src="{{asset('/customer_page_images/body/mobile-images/Image 6.png')}}">
-                <div class="category-text">
-                    <p class="category-title">Apple</p>
-                    <p class="model-title">Watch Series 5 44mm</p>
+                <div class="device-container">
+                    <img src="{{asset('/customer_page_images/body/mobile-images/Image 5.png')}}">
+                    <div class="category-text">
+                        <p class="category-title">Samsung</p>
+                        <p class="model-title">Galaxy A10</p>
+                    </div>
                 </div>
-            </div>
+                <div class="device-container">
+                    <img src="{{asset('/customer_page_images/body/mobile-images/Image 6.png')}}">
+                    <div class="category-text">
+                        <p class="category-title">Apple</p>
+                        <p class="model-title">Watch Series 5 44mm</p>
+                    </div>
+                </div>
+            </div> --}}
         </div>
-    </div>
+    @endif
 
     @include('partial.sustainability', ['whySell' => false, 'about' => true])
 
@@ -305,7 +340,9 @@
         </div>
     </div> --}}
 
-    <div class="home-element home-links-container">
+    @include('partial.newscontactsupport')
+
+    {{-- <div class="home-element home-links-container">
         
         <div class="home-links-element">
             <a href="/news">
@@ -334,7 +371,7 @@
             </a>
         </div>
 
-    </div>
+    </div> --}}
 
     <div class="home-element sign-up">
         
@@ -448,6 +485,22 @@
         function showgradingvideo(){
             console.log('Play video');
         }
+
+        $(".popular-product")
+        .mouseenter(function() {
+            let element = this;
+            let wrapper = element.childNodes[1];
+            let buttons = element.childNodes[3];
+            wrapper.classList.add('faded');
+            buttons.classList.remove('hidden');
+        })
+        .mouseleave(function() {
+            let element = this;
+            let wrapper = element.childNodes[1];
+            let buttons = element.childNodes[3];
+            wrapper.classList.remove('faded');
+            buttons.classList.add('hidden');
+        });
 
     </script>
 </div>

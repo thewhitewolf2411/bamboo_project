@@ -33,10 +33,14 @@ class PagesController extends Controller
             switch ($role) {
                 case 0:
                     $buyingProducts = BuyingProduct::all();
-                    $sellingProducts = SellingProduct::all();
-            
+                    $sellingProducts = SellingProduct::all();            
                     $products = $buyingProducts->merge($sellingProducts);
-                    return view('customer.home')->with('products', $products);
+                    $popular = collect();
+                    if(!empty($products)){
+                        $popular = $products->take(4);
+                    }
+
+                    return view('customer.home', ['products' => $products, 'popular' => $popular]);
                     break;
                 case 1:
                     return \redirect('/portal');
@@ -52,9 +56,14 @@ class PagesController extends Controller
 
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
-
         $products = $buyingProducts->merge($sellingProducts);
-        return view('customer.home')->with('products', $products);
+        $popular = collect();
+        if(!empty($products)){
+            $popular = $products->take(4);
+        }
+        
+
+        return view('customer.home', ['products' => $products, 'popular' => $popular]);
     }
 
     public function showHowitWorksPage(){
