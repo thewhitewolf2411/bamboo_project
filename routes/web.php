@@ -18,6 +18,8 @@ Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/login', '\App\Http\Controllers\Auth\LoginController@login')->name('login');
 
+Route::get('/specialdeliverylabel', 'Customer\PagesController@downloadSDLabel')->middleware('auth');
+
 //User get Route
 Route::get('/', 'Customer\PagesController@index')->name('index');
 Route::get('/how', 'Customer\PagesController@showHowitWorksPage');
@@ -111,6 +113,8 @@ Route::post('/cart/printtradein', 'Customer\SellController@generateTradeInHTML')
 
 Route::post('/sell/searchproducts','Customer\SellController@searchAvalibleProducts');
 
+// delivery/special delivery label
+Route::post('/printdeliverylabel/{type}', 'Customer\CustomerController@getLabel')->middleware('auth');
 
 //User post Route
 Route::post('/addtocart', 'Customer\CustomerController@addProductToCart')->name('addproducttocart');

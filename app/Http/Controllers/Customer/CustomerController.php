@@ -21,6 +21,7 @@ use App\Eloquent\Tradeout;
 use App\Eloquent\Wishlist;
 use App\Helpers\Dates;
 use App\Services\KlaviyoEmail;
+use App\Services\LabelService;
 use App\Services\NotificationService;
 use Auth;
 use Carbon\Carbon;
@@ -1084,5 +1085,27 @@ class CustomerController extends Controller
         PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
 
         return response(['code'=>200, 'filename'=>$filename]);
+    }
+
+
+    public function getLabel($type){
+        if(isset(request()->tradein)){
+            $tradein = Tradein::find(request()->tradein);
+            $labelService = new LabelService();
+
+            switch ($type) {
+                case 'free':
+                    return $labelService->printFreePostageLabel($tradein);
+                    # code...
+                    break;
+                case 'special':
+                    return $labelService->printSpecialDeliveryLabel($tradein);
+                    # code...
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+        }
     }
 }
