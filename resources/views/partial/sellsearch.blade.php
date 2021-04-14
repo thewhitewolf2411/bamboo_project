@@ -1,4 +1,4 @@
-<div class="sell-title-container">
+<div class="sell-title-container mt-5">
     <p class="sell-title">{{$title}}</p>
     <p class="sell-subtitle mb-5 mt-4">{{$info}}</p>
 
@@ -11,13 +11,12 @@
                     <input class="search-sell-input" id="searchSellDevices" type="text" name="search_argument" placeholder="Enter the make or model of your device">
                     <div class="search-sell-btn" onclick="hitSearch()"><img class="sell-search-icon" src="{{asset('/images/front-end-icons/search_icon.svg')}}"></div>
                 </div>
-                <div id="selling-search-results" class="nomatches">
-                    {{-- <div class="selling-single-result"><p>Iphone X</p></div>
-                    <div class="selling-single-result"><p>Iphone S</p></div>
-                    <div class="selling-single-result"><p>Iphone Z</p></div> --}}
-                    <div id="no-results-sorry" class="noresults">
-                        <img class="sorry-result-img" src="{{asset('/customer_page_images/body/emoji_confused.svg')}}">
-                        <p class="sorry-result-text">We are sorry Boo is unable to find this make/model, please contact Customer Support on <a href="/contact#CustomerDeviceNotAvaliable">customersupport@bamboomobile.co.uk</a></p>
+                <div id="selling-search-results-wrapper">
+                    <div id="selling-search-results" class="nomatches">
+                        <div id="no-results-sorry" class="noresults">
+                            <img class="sorry-result-img" src="{{asset('/customer_page_images/body/emoji_confused.svg')}}">
+                            <p class="sorry-result-text">We are sorry Boo is unable to find this make/model, please contact Customer Support on <a href="/contact#CustomerDeviceNotAvaliable">customersupport@bamboomobile.co.uk</a></p>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -49,10 +48,19 @@
                 if(e.target.id === 'searchSellDevices' ){
                     return;
                 }
+                document.body.classList.remove('noscroll');
                 results.style.height = '0';
             }
+        } else {
+            document.body.classList.remove('noscroll');
         }
     });
+
+    // disable scroll when focused
+    document.getElementById('searchSellDevices').addEventListener('click', function(e){
+        document.body.classList.add('noscroll');
+    });
+
 
     document.getElementById('searchSellDevices').addEventListener('keyup', function(e){
         //setTimeout(() => {
@@ -114,12 +122,19 @@
                                 noresults.classList.add('hidden');
                             }
                         }
+                        document.body.classList.add('noscroll');
                     },
                 });
             } else {
+                var elements = document.getElementsByClassName('selling-single-result');
+                while(elements.length > 0){
+                    elements[0].parentNode.removeChild(elements[0]);
+                }
+
                 if(!resultsdiv.classList.contains('nomatches')){
                     resultsdiv.classList.add('nomatches');
                 }
+                document.body.classList.remove('noscroll');
             }
             
         //}, 500);

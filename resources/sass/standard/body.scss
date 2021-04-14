@@ -282,122 +282,13 @@ h3, h4, h5{
 }
 
 
-// label delivery notes popup styles
-.modal-title.bold-uppercase{
-    text-transform: uppercase;
-}
-
-.cursor-pointer{
-    cursor: pointer;
-}
-
-.steps-container-row{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.steps-container-column{
-    display: flex;
-    flex-direction: column;
-}
-
-.single-step-row{
-    display: flex;
-    flex-direction: row;
-    border: 4px solid #DDDDDD;
-    border-radius: 5px;
-    padding: 25px;
-}
-
-.single-step-column{
-    display: flex;
-    flex-direction: column;
-}
-
-.column-item{
-    width: auto;
-    height: 100%;
-    width: 290px;
-    border: 4px solid #DDDDDD;
-    border-radius: 5px;
-    text-align: center;
-    padding: 25px;
-    margin-right: 15px;
-    display: flex;
-    flex-direction: column;
-}
-
-.step-image{
-    width: 90px;
-    height: 90px;
-    margin: auto;
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-top: 25px;
-}
-
-.step-image.row{
-    margin-left: 50px;
-    margin-right: 0;
-    margin-top: 0;
-}
-
-.step-title-info{
-    margin-left: 4px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    font-family: Sharp Sans No1 Bold;
-}
-
-.step-info-bold{
-    font-size: 24px;
-    font-family: Sharp Sans No1 Bold;
-    margin-top: 15px;
-}
-
-.step-info-bold.row{
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 10px;
-    margin-right: 80px;
-    max-width: 300px;
-}
-
-.close-modal-labeldelivery{
-    position: absolute;
-    right: 13px;
-    top: 13px;
-    width: 40px;
-    height: 40px;
-}
-
-.step-or{
-    display: flex;
-    flex-direction: row;
-    margin: 5px;
-    justify-content: center;
-}
-
-.step-or > p{
-    margin-left: 15px;
-    margin-right: 15px;
-    margin-top: auto;
-    margin-bottom: auto;
-    font-size: 14px;
-}
-
-.grey-step-line{
-    background-color: #DDDDDD;
-    height: 2px;
-    width: 150px;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
 
 // offer styles
+.offer-texts-container{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 .offer-device-bold{
     font-size: 4rem;
     font-weight: 600;
@@ -422,16 +313,109 @@ h3, h4, h5{
 }
 
 .offer-title-bold{
-    font-size: 1.3rem;
+    font-size: 2rem;
 }
 
 .offer-description-bold{
-    font-size: 1.5rem;
+    font-size: 2.5rem;
 }
 
 .offer-misc-small{
     color: #fff;
+    font-size: 17px;
 }
+
+
+
+
+.how-text-element.move-bottom{
+    margin-top: 260px;
+}
+
+.how-first-text-container{
+    width: 30%;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.how-text-title-container p{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.how-second-text-container{
+    width: 30%;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.how-images-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 650px;
+}
+
+.how-image-container img{
+    width: 150px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.back-line-container{
+    position: absolute;
+    width: 4px;
+    background: black;
+    height: 600px;
+    z-index: -50;
+}
+
+.large-bold-text{
+    font-size: 4rem;
+    font-family: Sharp Sans No1 Semibold;
+    //text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
+}
+
+.semilarge-bold-text{
+    font-size: 2.5rem !important;
+    font-family: Sharp Sans No1 Bold;
+}
+
+.regular-bold-text{
+    font-size: 1.5em !important;
+    font-family: Sharp Sans No1 Bold;
+}
+
+.regular-text{
+    font-size: 1em !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // general

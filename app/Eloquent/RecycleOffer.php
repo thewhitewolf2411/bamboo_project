@@ -21,7 +21,7 @@ class RecycleOffer extends Model
      * @var array
      */
     protected $fillable = [
-        'device_id', 'offer_banner', 'offer_title', 'offer_description', 'offer_additional_info', 'offer_start_date', 'offer_end_date', 'offer_price'
+        'device_id', 'offer_banner', 'offer_selling_banner', 'offer_title', 'offer_description', 'offer_additional_info', 'offer_start_date', 'offer_end_date', 'offer_price', 'status'
     ];
 
     public function getDevice(){
@@ -37,18 +37,14 @@ class RecycleOffer extends Model
     }
 
     public function getStatus(){
-        $now = Carbon::now();
-        $start_date = Carbon::parse($this->offer_start_date);
-        $end_date = Carbon::parse($this->offer_end_date);
-        if($now->between($start_date, $end_date)){
-            return 'Active';
-        } else {
-            return 'Inactive';
-        }
     }
 
     public function getImage(){
         return Storage::url('public/recycle_offers_images/'.$this->offer_banner);
+    }
+
+    public function getSellingBanner(){
+        return Storage::url('public/recycle_offers_images/'.$this->offer_selling_banner);
     }
 
     public function getInputStartDate(){

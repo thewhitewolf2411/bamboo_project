@@ -39,9 +39,12 @@
 
                 <div class="single-sell-category" onclick="selectCategory('mobile')" id="mobile-category">
                     <p class="sell-category-title">Mobile Phones</p>
-                    <div class="rounded-background-image" id="rounded-mobile">
-                        <img src="{{asset('/shop_images/category-image-1.png')}}">
+
+                    <div class="sell-category-wrapper">
+                        <div class="sell-category-device-background" id="rounded-mobile"></div>
+                        <img class="sell-category-device-image mobile" src="{{asset('/shop_images/category-image-1.png')}}">
                     </div>
+
                     <div class="selected-category" id="selected-mobile">
                         <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}" id="1">
                         <p class="mt-1">Selected</p>
@@ -50,9 +53,12 @@
 
                 <div class="single-sell-category" onclick="selectCategory('tablets')" id="tablets-category">
                     <p class="sell-category-title">Tablets</p>
-                    <div class="rounded-background-image" id="rounded-tablets">
-                        <img src="{{asset('/shop_images/category-image-2.png')}}">
+
+                    <div class="sell-category-wrapper">
+                        <div class="sell-category-device-background" id="rounded-tablets"></div>
+                        <img class="sell-category-device-image tablet" src="{{asset('/shop_images/category-image-2.png')}}">
                     </div>
+
                     <div class="selected-category" id="selected-tablets">
                         <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}" id="2">
                         <p class="mt-1">Selected</p>
@@ -61,9 +67,15 @@
 
                 <div class="single-sell-category" onclick="selectCategory('watches')" id="watches-category">
                     <p class="sell-category-title">Watches</p>
-                    <div class="rounded-background-image" id="rounded-watches">
-                        <img src="{{asset('/shop_images/category-image-3.png')}}">
+
+                    <div class="sell-category-wrapper">
+                        <div class="sell-category-device-background" id="rounded-watches"></div>
+                        <img class="sell-category-device-image watch" src="{{asset('/shop_images/category-image-3.png')}}">
                     </div>
+                    
+                    {{-- <div class="rounded-background-image" id="rounded-watches">
+                        <img src="{{asset('/shop_images/category-image-3.png')}}">
+                    </div> --}}
                     <div class="selected-category" id="selected-watches">
                         <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}" id="3">
                         <p class="mt-1">Selected</p>
@@ -110,6 +122,10 @@
                 No results matching this category/brand.
             </div>
 
+            @if(App\Helpers\RecycleOffers::getSellBanner() !== null)
+                <a href="{{App\Helpers\RecycleOffers::getLink()}}"><img src="{!!App\Helpers\RecycleOffers::getSellBanner()!!}"></a>
+            @endif
+
             <div class="selling-info-items-container">
                 <div class="selling-info-item">
                     <img class="selling-info-img" src="{{asset('/sell_images/image-1.svg')}}">
@@ -129,7 +145,7 @@
                 </div>
             </div>
 
-            <div class="home-element about-container">
+            {{-- <div class="home-element about-container">
                 <div class="about-top-container">
                     <div class="about-element-container">
                         <div class="center-title-container">
@@ -180,7 +196,9 @@
                         </div>   
                     </div>
                 </div>
-            </div>
+            </div> --}}
+
+            @include('partial.sustainability', ['whySell' => true, 'about' => false])
 
             {{--<div class="selling-service-container">
                 <div class="selling-service-container-image">
@@ -195,38 +213,10 @@
                 </div>
             </div>--}}
 
-            <div class="home-element home-links-container">
-        
-                <div class="home-links-element">
-                    <a href="/news">
-                        <div class="home-link-container" id="news">
-                            <p>News & Blog</p>
-                            <img src="{{asset('/customer_page_images/body/home-link-images/home-links-1.svg')}}">
-                        </div>
-                    </a>
-                </div>
-        
-                <div class="home-links-element">
-                    <a href="/support">
-                        <div class="home-link-container" id="service">
-                            <p>Service & Support</p>
-                            <img src="{{asset('/customer_page_images/body/home-link-images/home-links-2.svg')}}">
-                        </div>
-                    </a>
-                </div>
-        
-                <div class="home-links-element">
-                    <a href="/contact">
-                        <div class="home-link-container" id="contact">
-                            <p>Contact us</p>
-                            <img src="{{asset('/customer_page_images/body/home-link-images/home-links-3.svg')}}">
-                        </div>
-                    </a>
-                </div>
-        
-            </div>
+            @include('partial.newscontactsupport')
 
-            <div class="home-element sign-up">
+            @include('partial.newsletter')
+            {{-- <div class="home-element sign-up">
         
                 <div class="center-title-container">
                     <p>Sign up to our newsletter!</p>
@@ -285,8 +275,7 @@
                     </div>
                 </form>
         
-            </div>
-
+            </div> --}}
 
             @if(session('showLogin') || $errors->all())
                 <script>
@@ -375,6 +364,29 @@
 
         <footer>@include('customer.layouts.footer', ['showGetstarted' => false])</footer>
         <script>
+
+            // var categories = document.getElementsByClassName('sell-category-device-image');
+            // for (let index = 0; index < categories.length; index++) {
+            //     console.log(categories[index]);
+            // }
+            $(".sell-category-wrapper")
+            .mouseenter(function() {
+                // background - 1
+                let bg = this.childNodes[1];
+                bg.classList.add('small');
+                // image - 3
+                let img = this.childNodes[3];
+                img.classList.add('enlarged');
+            })
+            .mouseleave(function() {
+                //unfocusCategory(this);
+                // background - 1
+                let bg = this.childNodes[1];
+                bg.classList.remove('small');
+                // image - 3
+                let img = this.childNodes[3];
+                img.classList.remove('enlarged');
+            });
 
             function showRegistrationForm(){
                 if(!document.getElementsByClassName('modal-second-element')[0].classList.contains('modal-second-element-active')){

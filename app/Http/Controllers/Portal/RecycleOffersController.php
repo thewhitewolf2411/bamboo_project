@@ -38,11 +38,12 @@ class RecycleOffersController extends Controller
 
     public function createOffer(Request $request){
         // image upload
-        if($request->file('offer_image')->isValid()) {
+        if($request->file('offer_image')->isValid() && $request->file('offer_selling_banner_image')->isValid()) {
 
             // validation
             $validated = $request->validate([
                 'offer_image' => 'required|mimes:jpeg,png,svg|max:10000',
+                'offer_selling_banner_image' => 'required|mimes:jpeg,png,svg|max:10000',
                 'device' => 'required',
                 'offer_title' => 'required',
                 'offer_description' => 'required',
@@ -52,16 +53,20 @@ class RecycleOffersController extends Controller
                 'offer_end_date' => 'required',
             ]);
 
-            $filename_withext = $validated['offer_image']->getClientOriginalName();
-            $filename = explode('.', $filename_withext)[0];
-            $extension = $request->offer_image->extension();
-            Storage::put('public/recycle_offers_images/'.$filename.".".$extension, file_get_contents($request->offer_image));
+            $image_filename_withext = $validated['offer_image']->getClientOriginalName();
+            $image_filename = explode('.', $image_filename_withext)[0];
+            $image_extension = $request->offer_image->extension();
+            Storage::put('public/recycle_offers_images/'.$image_filename.".".$image_extension, file_get_contents($request->offer_image));
 
-            $request->offer_banner = $filename.".".$extension;
+            $banner_filename_withext = $validated['offer_selling_banner_image']->getClientOriginalName();
+            $banner_filename = explode('.', $banner_filename_withext)[0];
+            $banner_extension = $request->offer_selling_banner_image->extension();
+            Storage::put('public/recycle_offers_images/'.$banner_filename.".".$banner_extension, file_get_contents($request->offer_selling_banner_image));
 
             RecycleOffer::create([
                 'device_id' => $request->device,
-                'offer_banner' => $filename.".".$extension,
+                'offer_banner' => $image_filename.".".$image_extension,
+                'offer_selling_banner' => $banner_filename.".".$banner_extension,
                 'offer_title' => $request->offer_title,
                 'offer_description' => $request->offer_description,
                 'offer_additional_info' => $request->offer_additional_info,
@@ -142,6 +147,27 @@ class RecycleOffersController extends Controller
         }
 
         return redirect('/portal/recycleoffers')->with('success', 'Recycle offer updated successfully.');
+    }
+
+    public function activateRecycleOffer($id){
+        $recycleOffer = RecycleOffer::findOrFail($id);
+        $activeOffers = RecycleOffer::where('status', 1)->get();
+
+        foreach($activeOffers as $activeOffer){
+            $activeOffer->status = false;
+            $activeOffer->save();
+        }
+        $action = null;
+        if(!$recycleOffer->status){
+            $action = 'enabled';
+            $recycleOffer->status = true;
+        } else {
+            $action = 'disabled';
+            $recycleOffer->status = false;
+        }
+        $recycleOffer->save();
+
+        return redirect('/portal/recycleoffers')->with('info', 'Recycle offer for '.$recycleOffer->getDevice(). ' ' . $action .  '.');
     }
 
     public function deleteOffer($id){

@@ -5,7 +5,7 @@
 <div class="app">
 
     <div class="home-element home-title-container" id="main-home-image">
-        <div class="left-container">
+        <div class="left-container" id="home-left-container">
             <div class="title-container" id="regular-title">
                 <p>Pay less for your next mobile with bamboo</p>
             </div>
@@ -34,13 +34,13 @@
     </div>
 
     <div class="home-element how-container">
-        <div class="center-title-container">
-            <p>Sounds great, but, <br> how does it actually work?</p>
+        <div class="text-center">
+            <p class="large-bold-text">Sounds great, but, <br> how does it actually work?</p>
         </div>
 
-        <div class="how-buttons-container">
+        <div class="how-buttons-container mt-5">
             <div class="how-button-container active" id="selling-btn" onclick="changeHowState('selling')">
-                <p>Selling</p>
+                <p class="semilarge-bold-text">Selling</p>
             </div>
         </div>
 
@@ -48,10 +48,10 @@
             <div class="how-second-text-container">
                 <div class="how-text-element">
                     <div class="how-text-title-container">
-                        <p>2. FREE DELIVERY OPTIONS</p>
+                        <p class="regular-bold-text">2. FREE DELIVERY OPTIONS</p>
                     </div>
                     <div class="how-text-container">
-                        <p>Once you have completed your sales order, you simply request for a free sales pack or print your own labels to send in your device.</p>
+                        <p class="regular-text">Once you have completed your sales order, you simply request for a free sales pack or print your own labels to send in your device.</p>
                     </div>
                 </div>
             </div>
@@ -75,18 +75,18 @@
             <div class="how-first-text-container">
                 <div class="how-text-element">
                     <div class="how-text-title-container">
-                        <p>1. REGISTER YOUR DEVICE TO SELL</p>
+                        <p class="regular-bold-text">1. REGISTER YOUR DEVICE TO SELL</p>
                     </div>
                     <div class="how-text-container">
-                        <p>Find your old device and how much it's worth. Choose your preferred payment option with all your details.</p>
+                        <p  class="regular-text">Find your old device and how much it's worth. Choose your preferred payment option with all your details.</p>
                     </div>
                 </div>
-                <div class="how-text-element">
+                <div class="how-text-element move-bottom">
                     <div class="how-text-title-container">
-                        <p>3. FAST SAME DAY PAYMENT</p>
+                        <p class="regular-bold-text">3. FAST SAME DAY PAYMENT</p>
                     </div>
                     <div class="how-text-container">
-                        <p>When we receive your device, we will check  it against your order. If it is all correct, payment will be made on the same day of receipt. Woohoo!</p>
+                        <p class="regular-text">When we receive your device, we will check  it against your order. If it is all correct, payment will be made on the same day of receipt. Woohoo!</p>
                     </div>
                 </div>
             </div>
@@ -137,7 +137,7 @@
         </div>
     </div>
 
-    <div class="home-element grading-container">
+    {{-- <div class="home-element grading-container">
         <div class="center-title-container">
             <p>Grading System Explained</p>
         </div>
@@ -209,7 +209,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
+    @include('partial.deliveryqualitybanner')
 
     <div class="home-element popular-devices">
         <div class="center-title-container">
@@ -248,7 +249,9 @@
         </div>
     </div>
 
-    <div class="home-element about-container">
+    @include('partial.sustainability', ['whySell' => false, 'about' => true])
+
+    {{-- <div class="home-element about-container">
         <div class="about-top-container">
             <div class="about-element-container">
                 <div class="center-title-container">
@@ -300,7 +303,7 @@
                 </div>   
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="home-element home-links-container">
         
@@ -398,6 +401,7 @@
          (function() {
             let offerbanner = "{!!App\Helpers\RecycleOffers::check()!!}";
             if(offerbanner){
+                document.getElementById('home-left-container').classList.add('w-50');
                 document.getElementById('offers-texts').classList.remove('hidden');
                 document.getElementById('regular-title').classList.add('hidden');
                 document.getElementById('startbuttons').classList.add('hidden');
@@ -407,6 +411,7 @@
                 document.getElementById("offer-link").href = "{!!App\Helpers\RecycleOffers::getLink()!!}"
                 document.getElementById("offer-misc").innerHTML = "{!!App\Helpers\RecycleOffers::getMisc()!!}"
                 document.getElementById("main-home-image").style.backgroundImage = "url('"+offerbanner+"')";
+                document.getElementById("main-home-image").style.padding = '30px 150px'; 
             }
 
         })();

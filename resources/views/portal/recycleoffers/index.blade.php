@@ -16,6 +16,12 @@
             </div>
         @endif
 
+        @if(Session::has('info'))
+            <div class="alert alert-info w-50 text-center ml-auto mr-auto" role="alert">
+                {!!Session::get('info')!!}
+            </div>
+        @endif
+
 
         <table class="table">
             <thead class="thead-dark">
@@ -23,9 +29,9 @@
                 <th scope="col">Device</th>
                 <th scope="col">Offer title</th>
                 <th scope="col">Offer price</th>
-                <th scope="col">Starts</th>
-                <th scope="col">Ends</th>
-                <th scope="col" class="no-border-lr">Status</th>
+                <th scope="col">Period</th>
+                <th scope="col">Status</th>
+                <th scope="col" class="no-border-lr"></th>
                 <th scope="col" class="no-border-lr"></th>
                 <th scope="col" class="no-border-lr"></th>
               </tr>
@@ -36,9 +42,11 @@
                         <td>{!!$recycleOffer->getDevice()!!}</td>
                         <td>{!!$recycleOffer->offer_title!!}</td>
                         <td>£ {!!$recycleOffer->offer_price!!}</td>
-                        <td>{!!$recycleOffer->getStartDate()!!}</td>
-                        <td>{!!$recycleOffer->getEndDate()!!}</td>
-                        <td>{!!$recycleOffer->getStatus()!!}</td>
+                        <td>{!!$recycleOffer->getStartDate()!!} - {!!$recycleOffer->getEndDate()!!}</td>
+                        <td>@if($recycleOffer->status) Active @else Inactive @endif</td>
+                        <td><a href="{{route("activateRecycleOffer", ['id' => $recycleOffer->id])}}">
+                            <i class="fa @if($recycleOffer->status) fa-toggle-on @else fa-toggle-off @endif edit-offer" style="color: black;"></i></a>
+                        </td>
                         <td><a href="{{route("editRecycleOffer", ['id' => $recycleOffer->id])}}"><i class="fa fa-edit edit-offer" style="color: black;"></i></a></td>
                         <td><a class="delete-offer" href="{{route("deleteRecycleOffer", ['id' => $recycleOffer->id])}}"><i class="fa fa-trash edit-offer" style="color: black;"></i></a></td>
                     </tr>

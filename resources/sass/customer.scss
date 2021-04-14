@@ -148,49 +148,6 @@ main p, a, span{
     height: 0;
 }
 
-.how-first-text-container{
-    width: 30%;
-    height: 350px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.how-text-title-container p{
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.how-second-text-container{
-    width: 30%;
-    height: 350px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.how-images-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    height: 450px;
-}
-
-.how-image-container img{
-    width: 100px;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.back-line-container{
-    position: absolute;
-    border: 1px solid;
-    height: 400px;
-    z-index: -50;
-}
 
 .selling-content-container {
     display: flex;

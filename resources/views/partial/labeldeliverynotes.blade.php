@@ -33,26 +33,95 @@
                 </div>
                 <div class="single-step-column">
                     <p class="step-title-info">Step 3</p>
-                    <div class="single-step-row">
+                    <div class="single-step-row link" onclick="printFreeLabel({!!$tradein->id!!})">
                         <img class="step-image row" src="{{asset('/customer_page_images/body/postage_label.svg')}}">
                         <p class="step-info-bold row">Print FREE Postage Label</p>
+                        <div id="free-label-loader" class="hidden ml-auto">
+                            <div class="loader"></div>
+                        </div>
                     </div>
                     <div class="step-or">
                         <div class="grey-step-line"></div><p>or</p><div class="grey-step-line"></div>
                     </div>
-                    <div class="single-step-row">
+                    <div class="single-step-row link" onclick="printSpecialLabel({!!$tradein->id!!})">
                         <img class="step-image row" src="{{asset('/customer_page_images/body/delivery_address_label.svg')}}">
                         <p class="step-info-bold row">Print Special Delivery Return Address Label</p>
+                        <div id="special-label-loader" class="hidden mr-auto">
+                            <div class="loader"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        {{-- <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div> --}}
       </div>
     </div>
 </div>
 
-<script></script>
+<div id="labels-print-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Print label</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span style="color: black;" aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <iframe id="labels-iframe" class="w-100 vh-100"></iframe>
+        </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function printFreeLabel(id){
+        $('#free-label-loader').removeClass('hidden');
+
+        $.ajax({
+            url: "/printdeliverylabel/free",
+            method:"POST",
+                data:{
+                    _token: "{!! csrf_token() !!}",
+                    tradein: id,
+                },
+            success:function(response){
+                if(response['code'] == 200){
+                    $('#free-label-loader').addClass('hidden');
+                    $('#labelDeliveryModal').modal('hide');
+
+                    $('#labels-iframe').attr('src', '/' + response['filename']);
+                    $('#labels-print-modal').modal('show');
+                }
+            },
+            // error:function(response){
+            //     alert(response.responseText);
+            // }
+        });
+    
+    }
+
+    function printSpecialLabel(id){
+        $('#special-label-loader').removeClass('hidden');
+
+        $.ajax({
+            url: "/printdeliverylabel/special",
+            method:"POST",
+                data:{
+                    _token: "{!! csrf_token() !!}",
+                    tradein: id,
+                },
+            success:function(response){
+                if(response['code'] == 200){
+                    $('#special-label-loader').addClass('hidden');
+                    $('#labelDeliveryModal').modal('hide');
+
+                    $('#labels-iframe').attr('src', '/' + response['filename']);
+                    $('#labels-print-modal').modal('show');
+                }
+            },
+            // error:function(response){
+            //     alert(response.responseText);
+            // }
+        });
+    }
+</script>

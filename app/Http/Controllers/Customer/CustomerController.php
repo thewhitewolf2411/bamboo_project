@@ -21,6 +21,7 @@ use App\Eloquent\Tradeout;
 use App\Eloquent\Wishlist;
 use App\Helpers\Dates;
 use App\Services\KlaviyoEmail;
+use App\Services\LabelService;
 use App\Services\NotificationService;
 use Auth;
 use Carbon\Carbon;
@@ -240,16 +241,15 @@ class CustomerController extends Controller
         else{
             // show abandoned cart items
             $email = request()->session()->get('session_email', null);
+            $abandoned_cart_items = null;
+            $products = SellingProduct::all();
+            $price = 0;
+            $sellPrice = 0;
+            $hasTradeIn = false;
+            $hasTradeOut = false;
+
             if($email){
                 $abandoned_cart_items = AbandonedCart::where('user_email', $email)->get();
-        
-                $products = SellingProduct::all();
-    
-                $price = 0;
-                $sellPrice = 0;
-    
-                $hasTradeIn = false;
-                $hasTradeOut = false;
     
                 if($abandoned_cart_items !== null){
                     foreach($abandoned_cart_items as $items){
@@ -264,15 +264,17 @@ class CustomerController extends Controller
                     }
                 }
     
-                return view('customer.cart')->with([
-                        'cart'=>$abandoned_cart_items,
-                        'products'=>$products,
-                        'fullprice'=>$price,
-                        'sellPrice'=>$sellPrice,
-                        'hasTradeIn'=>$hasTradeIn,
-                        'hasTradeOut'=>$hasTradeOut,
-                ]);
+                
             }
+
+            return view('customer.cart')->with([
+                'cart'=>$abandoned_cart_items,
+                'products'=>$products,
+                'fullprice'=>$price,
+                'sellPrice'=>$sellPrice,
+                'hasTradeIn'=>$hasTradeIn,
+                'hasTradeOut'=>$hasTradeOut,
+            ]);
             
 
             //return \redirect()->back()->with('showLogin', true);
@@ -1083,5 +1085,27 @@ class CustomerController extends Controller
         PDF::loadHTML($html)->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
 
         return response(['code'=>200, 'filename'=>$filename]);
+    }
+
+
+    public function getLabel($type){
+        if(isset(request()->tradein)){
+            $tradein = Tradein::find(request()->tradein);
+            $labelService = new LabelService();
+
+            switch ($type) {
+                case 'free':
+                    return $labelService->printFreePostageLabel($tradein);
+                    # code...
+                    break;
+                case 'special':
+                    return $labelService->printSpecialDeliveryLabel($tradein);
+                    # code...
+                    break;
+                default:
+                    # code...
+                    break;
+            }
+        }
     }
 }

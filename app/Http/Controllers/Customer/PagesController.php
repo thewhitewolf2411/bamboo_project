@@ -13,6 +13,7 @@ use App\Eloquent\BuyingProduct;
 use App\Eloquent\Message;
 use App\Eloquent\SellingProduct;
 use App\Services\KlaviyoEmail;
+use App\Services\LabelService;
 use Illuminate\Support\Facades\Mail;
 
 class PagesController extends Controller
@@ -258,4 +259,9 @@ class PagesController extends Controller
         return redirect()->back()->with(['message_success'=>'Your message has been sent.']);
     }
 
+
+    public function downloadSDLabel(){
+        $labelService = new LabelService();
+        return $labelService->downloadSDLabel();
+    }
 }
