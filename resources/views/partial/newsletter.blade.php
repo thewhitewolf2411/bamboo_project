@@ -1,11 +1,11 @@
 <div class="home-element sign-up">
         
-    <div class="center-title-container">
-        <p>Sign up to our newsletter!</p>
+    <div class="text-center">
+        <p class="newsletter-large-text">Sign up to our newsletter!</p>
     </div>
 
-    <div class="text-center-container">
-        <p>amazing offers, hints and tips and just awesome-ness</p>
+    <div class="text-center">
+        <p class="newsletter-small-text">amazing offers, hints and tips and just awesome-ness</p>
     </div>
 
     <form action="/newslettersingup" method="POST">

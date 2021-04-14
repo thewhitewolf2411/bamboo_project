@@ -24,7 +24,7 @@
 
     <div class="form-group">
         <label for="first-name">Birth date</label>
-        @include('partial.birthdate')
+        @include('partial.birthdate', ['required' => false])                                                        
     </div>
 
     <div class="form-group">

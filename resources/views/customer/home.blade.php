@@ -373,7 +373,8 @@
 
     </div> --}}
 
-    <div class="home-element sign-up">
+    @include('partial.newsletter')
+    {{-- <div class="home-element sign-up">
         
         <div class="center-title-container">
             <p>Sign up to our newsletter!</p>
@@ -432,7 +433,7 @@
             </div>
         </form>
 
-    </div>
+    </div> --}}
 
     <script>
          (function() {
