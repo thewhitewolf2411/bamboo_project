@@ -41,7 +41,6 @@
             @endforeach
             <tr>
                 <th></th>
-                <th></th>
                 <th><strong>Total</strong><br>{{$box->number_of_devices}}</th>
             </tr>
 

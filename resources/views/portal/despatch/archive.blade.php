@@ -23,16 +23,26 @@
         <table class="portal-table sortable" id="despatch-devices-table">
             <tr>
                 <td class="text-center"><div class="table-element">Trade-in ID</div></td>
-                <td class="text-center"><div class="table-element">Order identifier</div></td>
-                <td class="text-center"><div class="table-element">Order reference</div></td>
-                <td class="text-center"><div class="table-element">Order Date</div></td>
+                <td class="text-center"><div class="table-element">Trade-in barcode number</div></td>
+                <td class="text-center"><div class="table-element">Manufacturer/Model</div></td>
+                <td class="text-center"><div class="table-element">Customer name</div></td>
+                <td class="text-center"><div class="table-element">Postcode</div></td>
+                <td class="text-center"><div class="table-element">Address</div></td>
+                <td class="text-center"><div class="table-element">Bamboo Status</div></td>
+                <td class="text-center"><div class="table-element">Carrier</div></td>
+                <td class="text-center"><div class="table-element">Tracking Reference</div></td>
             </tr>
             @foreach($despatched as $device)
                 <tr>
                     <td><div class="table-element">{{$device->getTradeinId()}}</div></td>
-                    <td><div class="table-element">{{$device->order_identifier}}</div></td>
-                    <td><div class="table-element">{{$device->order_reference}}</div></td>
-                    <td><div class="table-element">{{$device->order_date}}</div></td>
+                    <td><div class="table-element">{{$device->getTradeinBarcode()}}</div></td>
+                    <td><div class="table-element">{{$device->getModel()}}</div></td>
+                    <td><div class="table-element">{{$device->getCustomer()}}</div></td>
+                    <td><div class="table-element">{{$device->getPostCode()}}</div></td>
+                    <td><div class="table-element">{{$device->getAddressLine()}}</div></td>
+                    <td><div class="table-element">{{$device->getBambooStatus()}}</div></td>
+                    <td><div class="table-element">{{$device->getCarrier()}}</div></td>
+                    <td><div class="table-element">{{$device->getTrackingReference()}}</div></td>
                 </tr>
             @endforeach
         </table>

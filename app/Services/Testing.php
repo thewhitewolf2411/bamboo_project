@@ -19,6 +19,7 @@ class Testing{
         #dd($request->cosmetic_condition === 'Catastrophic');
 
         $tradein = Tradein::where('id', $request->tradein_id)->first();
+        $tradein->product_colour = $request->device_color;
 
         if($request->cosmetic_condition === 'Catastrophic'){
             if($tradein->customer_grade !== 'Faulty'){

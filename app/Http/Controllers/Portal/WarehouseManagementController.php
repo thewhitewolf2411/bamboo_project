@@ -67,6 +67,7 @@ class WarehouseManagementController extends Controller
 
         #dd($request->all());
         $manifacturer = "";
+        $brand = "";
 
         if($request->manifacturer === "M"){
             $manifacturer = "Miscellaneous";
@@ -76,14 +77,13 @@ class WarehouseManagementController extends Controller
             $manifacturer = $brand->getBrandFirstName();
         }
 
-        $boxnumber = count(Tray::where('tray_type', 'Bo')->where('tray_grade', strtoupper($request->reference))->get())+1;
+        $boxnumber = count(Tray::where('tray_type', 'Bo')->where('tray_brand', $manifacturer)->where('tray_grade', strtoupper($request->reference))->get()) + 1;
 
         if($boxnumber<10){
             $boxnumber = '0' . $boxnumber;
         }elseif($boxnumber>=10 && $boxnumber<100){
             $boxnumber = $boxnumber;
         }
-
 
         $locked = null;
         if($request->network === 'l'){

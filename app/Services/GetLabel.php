@@ -10,7 +10,7 @@ use App\Eloquent\Trolley;
 
 class GetLabel{
 
-    private $customPaper = array(0,0,100.033,140.986);
+    private $customPaper = array(0,0,141.90,283.80);
 
     public function getTradeinLabel(Tradein $tradein){
         //post receiving label
