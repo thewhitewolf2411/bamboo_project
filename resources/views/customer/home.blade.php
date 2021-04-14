@@ -82,7 +82,7 @@
                         <p  class="regular-text">Find your old device and how much it's worth. Choose your preferred payment option with all your details.</p>
                     </div>
                 </div>
-                <div class="how-text-element move-bottom">
+                <div class="how-text-element last-element">
                     <div class="how-text-title-container">
                         <p class="how-title-text bebas-neue">3. FAST SAME DAY PAYMENT</p>
                     </div>
@@ -97,26 +97,26 @@
             <div class="how-first-text-container">
                 <div class="how-text-element">
                     <div class="how-text-title-container">
-                        <p>1. REGISTER YOUR DEVICE TO SELL</p>
+                        <p class="how-title-text bebas-neue">1. REGISTER YOUR DEVICE TO SELL</p>
                     </div>
                     <div class="how-text-container">
-                        <p>Find your old device and how much it's worth. Choose your preferred payment option with all your details.</p>
+                        <p class="regular-text">Find your old device and how much it's worth. Choose your preferred payment option with all your details.</p>
                     </div>
                 </div>
                 <div class="how-text-element">
                     <div class="how-text-title-container">
-                        <p>2. FREE DELIVERY OPTIONS</p>
+                        <p class="how-title-text bebas-neue">2. FREE DELIVERY OPTIONS</p>
                     </div>
                     <div class="how-text-container">
-                        <p>Once you have completed your sales order, you simply request for a free sales pack or print your own labels to send in your device.</p>
+                        <p class="regular-text">Once you have completed your sales order, you simply request for a free sales pack or print your own labels to send in your device.</p>
                     </div>
                 </div>
                 <div class="how-text-element">
                     <div class="how-text-title-container">
-                        <p>3. FAST SAME DAY PAYMENT</p>
+                        <p class="how-title-text bebas-neue">3. FAST SAME DAY PAYMENT</p>
                     </div>
                     <div class="how-text-container">
-                        <p>When we receive your device, we will check  it against your order. If it is all correct, payment will be made on the same day of receipt. Woohoo!</p>
+                        <p class="regular-text">When we receive your device, we will check  it against your order. If it is all correct, payment will be made on the same day of receipt. Woohoo!</p>
                     </div>
                 </div>
             </div>

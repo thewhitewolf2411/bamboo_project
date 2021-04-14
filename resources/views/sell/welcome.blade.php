@@ -42,7 +42,7 @@
 
                     <div class="sell-category-wrapper">
                         <div class="sell-category-device-background" id="rounded-mobile"></div>
-                        <img class="sell-category-device-image mobile" src="{{asset('/shop_images/category-image-1.png')}}">
+                        <img class="sell-category-device-image mobile" src="{{asset('/images/devices/phones.png')}}">
 
                         <img class="device-shadow mobile" src="{{asset('/images/device_shadow.svg')}}">
                     </div>
@@ -59,7 +59,7 @@
 
                     <div class="sell-category-wrapper">
                         <div class="sell-category-device-background" id="rounded-tablets"></div>
-                        <img class="sell-category-device-image tablet" src="{{asset('/shop_images/category-image-2.png')}}">
+                        <img class="sell-category-device-image tablet" src="{{asset('/images/devices/tablets.png')}}">
 
                         <img class="device-shadow" src="{{asset('/images/device_shadow.svg')}}">
                     </div>
@@ -76,7 +76,7 @@
 
                     <div class="sell-category-wrapper">
                         <div class="sell-category-device-background" id="rounded-watches"></div>
-                        <img class="sell-category-device-image watch" src="{{asset('/shop_images/category-image-3.png')}}">
+                        <img class="sell-category-device-image watch" src="{{asset('/images/devices/watches.png')}}">
                         
                         <img class="device-shadow" src="{{asset('/images/device_shadow.svg')}}">
                     </div>
