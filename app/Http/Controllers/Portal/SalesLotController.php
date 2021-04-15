@@ -260,9 +260,12 @@ class SalesLotController extends Controller
             $sli->box_id = $tradein->getTrayId();
             $sli->device_id = $tradein->id;
             $sli->save();
+
+            $tradein->location_changed_at = now();
+            $tradein->save();
         }
 
-        Sesson::unset('tradeins');
+        Session::forget('tradeins');
 
         return response(200);
     }

@@ -112,8 +112,10 @@ class RegisterController extends Controller
         $user->last_name = $data['last-name'];
         $user->email = $data['email'];
         $user->password = Crypt::encrypt($data['password']);
-        $user->birth_date = Carbon::parse($data['birth_day'].'.'.$data['birth_month'].'.'.$data['birth_year']);
-
+        if(isset($data['birth_day']) && isset($data['birth_month']) && isset($data['birth_year'])){
+            $user->birth_date = Carbon::parse($data['birth_day'].'.'.$data['birth_month'].'.'.$data['birth_year']);
+        }
+        
         $user->delivery_address = $data['delivery_address'];
         $user->billing_address = $data['billing_address'];
         $user->contact_number = $data['contact_number'];

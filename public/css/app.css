@@ -15362,6 +15362,11 @@ h3, h4, h5 {
   background-color: #fff;
   width: 600px;
   height: 300px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .selling-video-container p {
@@ -16932,7 +16937,7 @@ input.lookup-delivery-basket::placeholder {
 }
 
 .portal-table {
-  width: 100%;
+  width: 100% !important;
 }
 
 .portal-table i {
@@ -17325,6 +17330,18 @@ input[type=number] {
 }
 
 #boxedtradeinstable_filter {
+  display: none;
+}
+
+#boxedtradeinstable_length {
+  display: none;
+}
+
+#closedboxtable_filter {
+  display: none;
+}
+
+#closedboxtable_length {
   display: none;
 }
 
@@ -18409,6 +18426,18 @@ input[type=number] {
 .terms-container input {
   width: auto;
   margin: 0em;
+}
+
+.terms-label {
+  height: 40px;
+  padding-left: 45px;
+  padding-top: 10px;
+  width: 100%;
+  margin-left: 10px;
+}
+
+.news-label-content > p {
+  color: black !important;
 }
 
 /* Style all input fields */
