@@ -54,8 +54,12 @@ class SalesLotController extends Controller
             }
         }
 
-        if(Session::has('allTradeins')){
-            Session::forget('allTradeins');
+        if(Session::has('tradeins')){
+            Session::forget('tradeins');
+        }
+
+        if(Session::has('boxes')){
+            Session::forget('boxes');
         }
 
         return view('portal.sales-lot.building-sales-lot', ['portalUser'=>$portalUser, 'tradeins'=>$tradeins, 'boxes'=>$boxes]);
@@ -66,6 +70,7 @@ class SalesLotController extends Controller
         $selectedBoxes = $request->selectedBoxes;
         $selectedTradeins = $request->selectedTradeIns;
 
+
         $tradeins = [];
 
         if(isset($selectedBoxes)){
@@ -75,7 +80,6 @@ class SalesLotController extends Controller
                 foreach($boxContent as $tradeinid){
                     array_push($tradeins, $tradeinid->trade_in_id);
                 }
-    
             }
         }
 
@@ -85,13 +89,113 @@ class SalesLotController extends Controller
             }
         }
 
-        $tradeins = array_unique($tradeins);
+        $tradeinsids = array_unique($tradeins);
 
-        $tradeins = Tradein::whereIn('id', $tradeins)->get();
-        
+        $tradeins = [];
+        if(Session::has('tradeins')){
+            $tradeins = Session::get('tradeins');
+            foreach($tradeinsids as $key=>$tradeinid){
+                $tradeins[count($tradeins) + $key] = Tradein::where('id', $tradeinid)->first();;
+            }
+        }
+        else{
+            $tradeins = Tradein::whereIn('id', $tradeinsids)->get();
+        }
 
-        return response($tradeins, 200);
+        $boxes=[];
+
+        $countTradeins = $tradeins = Tradein::whereIn('id', $tradeinsids)->get();
+        foreach($countTradeins as $tradein){
+            $boxContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+
+            $box = Tray::where('id', $boxContent->tray_id)->first();
+
+            if(isset($boxes[$box->id])){
+                $box = $boxes[$box->id];
+            }
+
+            $box->number_of_devices = $box->number_of_devices - 1;
+            $boxes[$box->id] = $box;
+        }
+
+        foreach($tradeins as $tr){
+            $tr->box_name = $tr->getTrayName($tr->id);
+            $tr->bamboo_grade = $tr->getDeviceBambooGrade();
+            $tr->model = $tr->getProductName(0);
+            $tr->total_cost = $tr->getDeviceCost();
+        }
+
+        Session::put('tradeins', $tradeins);
+        Session::put('boxes', $boxes);
+
+        return response(['tradeins'=>$tradeins, 'boxes'=>$boxes], 200);
         
+    }
+
+    public function checkHasData(Request $request){
+        if(Session::has('tradeins')){
+            return true;
+        }
+        return false;
+    }
+
+    public function generateXlsReport(Request $request){
+        
+        if(Session::has('tradeins')){
+            $tradeins = Session::get('tradeins');
+        
+            // header just in case
+            $data = array(["Ext Job Ref ID", "Manufacturer", "Model Number", "GB", "COLOUR", "IMEI", "Grade", "Network", "FMIP", "Cost"]);
+            #$data = array();
+    
+            foreach($tradeins as $tradein){
+                if($tradein->correct_product_id !== null){
+                    $product = SellingProduct::find($tradein->correct_product_id);
+                } else {
+                    $product = SellingProduct::find($tradein->product_id);
+                }
+                $brand = Brand::find($product->brand_id)->brand_name;
+                $productInfo = ProductInformation::where('product_id', $product->id)->first();
+                $additionalCost = AdditionalCosts::first();
+    
+                $cost = $tradein->bamboo_price + $tradein->admin_cost + (2 * $tradein->carriage_costs);
+                // price = bamboo_price + administration costs + 2 * carriage cost per device
+                $isFimpLocked = $tradein->isFimpLocked() ? 'Yes' : 'No';
+    
+                $tradein_info = [
+                    $tradein->barcode, 
+                    $brand,
+                    $product->product_name,
+                    $tradein->correct_memory,
+                    $tradein->product_colour,
+                    $tradein->imei_number,
+                    $tradein->cosmetic_condition,
+                    $tradein->correct_network,
+                    $isFimpLocked,
+                    utf8_decode('£' . $cost)
+                ];
+                array_push($data, $tradein_info);
+            }
+            
+            $csv = fopen("php://output", 'w');        
+            foreach ($data as $fields) {
+                fputcsv($csv, $fields);
+            }
+            fclose($csv);
+    
+            $filename = 'PreAlert_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.csv';
+            echo "\xef\xbb\xbf";
+            header("Content-type: text/csv");
+            header("Content-Disposition: attachment; filename=".$filename);
+            header("Pragma: no-cache");
+            header("Expires: 0");
+        }
+
+        else{
+            return response("", 404);
+        }
+
+
     }
 
     public function getBoxName($id){
@@ -99,10 +203,6 @@ class SalesLotController extends Controller
     }
 
     public function getBoxData(Request $request){
-        #dd(Session::get('allItems'), $request->all());
-
-        #dd(Session::get('allTradeins'), $request->all());
-
         $tradeins = array();
         foreach(Session::get('allTradeins') as $item){
             //dd($item['tray_id']);
@@ -145,8 +245,7 @@ class SalesLotController extends Controller
 
     public function createNewLot(Request $request){
 
-        $salesLotItems = Session::get('allTradeins');
-        #dd($salesLotItems);
+        $salesLotItems = Session::get('tradeins');
 
         $saleLot = SalesLot::create([
             'sales_lot_status'=>1,
@@ -154,7 +253,7 @@ class SalesLotController extends Controller
 
         foreach($salesLotItems as $salesLotItem){
 
-            $tradein = Tradein::where('id', $salesLotItem['trade_in_id'])->first();
+            $tradein = Tradein::where('id', $salesLotItem->id)->first();
 
             $sli = new SalesLotContent();
             $sli->sales_lot_id = $saleLot->id;
@@ -163,7 +262,7 @@ class SalesLotController extends Controller
             $sli->save();
         }
 
-        #Sesson::forget();
+        Sesson::unset('tradeins');
 
         return response(200);
     }
@@ -264,8 +363,14 @@ class SalesLotController extends Controller
                 return response('', 200);
             }
             else{
-                if(intval($salesLot->sales_lot_status) !== 3){
-                    return response('Lot not picked.', 404);
+                if($salesLot && intval($salesLot->sales_lot_status) === 1){
+                    return response('Sales lot not sold yet.', 500);
+                }
+                if($salesLot && intval($salesLot->sales_lot_status) === 2){
+                    return response('Sales Lot not picked yet.', 500);
+                }
+                if($salesLot && intval($salesLot->sales_lot_status) === 5){
+                    return response('Dispatched.', 500);
                 }
             }
         }
@@ -429,7 +534,7 @@ class SalesLotController extends Controller
                 $tradein->cosmetic_condition,
                 $tradein->correct_network,
                 $isFimpLocked,
-                $cost
+                utf8_decode('£' . $cost)
             ];
             array_push($data, $tradein_info);
         }

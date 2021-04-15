@@ -42,6 +42,9 @@ class Tray extends Model
             case 2:
                 return 'Suspended';
             case 3:
+                if($this->trolley_id !== null){
+                    return 'In Bay ' . $this->getTrolleyName($this->trolley_id);
+                }
                 return 'Complete';
             case 4:
                 return 'Box in sale lot';
@@ -91,11 +94,11 @@ class Tray extends Model
 
     public function getTrayDevices(){
         switch($this->tray_brand){
-            case "A":
+            case "Apple":
                 return "Apple";
-            case "S":
+            case "Samsung":
                 return "Samsung";
-            case "H":
+            case "Huaweii":
                 return "Huaweii";
             default:
                 return "Miscellaneous";

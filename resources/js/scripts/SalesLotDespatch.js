@@ -36,7 +36,7 @@ $('#starttopicklot').on('click', function(){
     var status = $('.saleslot-active').data('status');
     var id = $('.saleslot-active').prop('id');
 
-    if(status === 1 || status === 6){
+    if(status === 2 || status === 6){
         window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');
     }
     else{

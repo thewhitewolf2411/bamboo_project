@@ -481,7 +481,7 @@ $('.printboxlabel').on('click', function(){
             boxname:boxname,
         },
         success:function(data, textStatus, xhr){
-            window.open(data);
+            window.open(data.filename);
         },
         error:function(data, textStatus, xhr){
             alert('Something went wrong. Please try again.');

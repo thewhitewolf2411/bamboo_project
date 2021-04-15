@@ -45,7 +45,7 @@ class WarehouseManagementController extends Controller
     public function showBoxManagementPage(){
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
-        $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->where('status', '!=', 1)->get();
+        $boxes = Tray::where('tray_type', 'Bo')->where('status', '!=', 1)->get();
         $brands = Brand::whereIn('id', [1,2,3])->get();
 
         $boxedTradeIns = array();
@@ -110,14 +110,12 @@ class WarehouseManagementController extends Controller
 
         ]);
 
+        $pdf = new GetLabel();
+        $pdf->getBoxLabel($newBox);
+
         $brand = $manifacturer;
 
-        $path = public_path().'/pdf/boxlabels/';
-        if(!is_dir($path)){
-            mkdir($path, 0777, true);
-        }
-
-        return redirect('/portal/warehouse-management/box-management/' . $newBox->id)->with(['filename'=>"/pdf/boxlabels/box-" . $trayname . ".pdf"]);
+        return redirect('/portal/warehouse-management/box-management/' . $newBox->id)->with(['filename'=>"/pdf/boxlabel-" . $trayname . ".pdf"]);
 
     }
 
@@ -126,7 +124,7 @@ class WarehouseManagementController extends Controller
         $currentBox = Tray::where('id', $id)->first();
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
-        $boxes = Tray::where('tray_type', 'Bo')->where('trolley_id', null)->where('status', '!=', 1)->get();
+        $boxes = Tray::where('tray_type', 'Bo')->where('status', '!=', 1)->get();
         $brands = Brand::whereIn('id', [1,2,3])->get();
 
         $id = $currentBox->tray_name;
@@ -141,27 +139,6 @@ class WarehouseManagementController extends Controller
                 $tradein->product_id = $tradein->getBrandName($tradein->product_id);
                 array_push($boxedTradeIns, $tradein);
             }
-        }
-
-        $brandLet = substr($id, 1, 1);
-        $brand = "";
-
-        $barcode = DNS1D::getBarcodeHTML($id, 'C128');
-
-        if($brandLet === "A"){
-            $brand = "Apple";
-        }
-        if($brandLet === "S"){
-            $brand = "Samsung";
-        }
-        if($brandLet === "H"){
-            $brand = "Huawei";
-        }
-        if($brandLet === "M"){
-            $brand = "Miscellaneous";
-        }
-        if($brandLet === "Q"){
-            $brand = "Quarantine";
         }
 
         $path = public_path().'/pdf/boxlabels/';
@@ -406,8 +383,15 @@ class WarehouseManagementController extends Controller
     }
 
     public function printBoxLabel(Request $request){
+       
+        $boxname = $request->boxname;
 
-    
+        $box = Tray::where('tray_name', $boxname)->first();
+        $pdf = new GetLabel();
+        $pdf->getBoxLabel($box);
+
+        return response(['filename'=>"/pdf/boxlabel-" . $boxname . ".pdf"], 200);
+
     }
 
     public function printBoxSummary(Request $request){

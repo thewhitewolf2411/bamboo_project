@@ -25,12 +25,12 @@
             
             <div class="col-md-12" style="display: flex;">
                 <div class="button-box my-3 d-flex" id="saleslot-option-buttons">
-                    <button class="btn btn-primary" id="view-sales-lot-btn" disabled>View Sales Lot</button>
-                    <button class="btn btn-primary" id="edit-lot-btn" disabled>Edit Lot</button>
-                    <button class="btn btn-primary" id="sell-lot-btn" disabled>Sell Lot</button>
-                    <button class="btn btn-primary" id="payment-received-btn" disabled>Payment Received</button>
-                    <button class="btn btn-primary" id="sales-export-btn" disabled>Client Sales Export</button>
-                    <button class="btn btn-primary" id="ism-pre-alert" disabled>ISM Pre-alert</button>
+                    <button class="btn btn-primary mr-3" id="view-sales-lot-btn" disabled>View Sales Lot</button>
+                    <button class="btn btn-primary mx-3" id="edit-lot-btn" disabled>Edit Lot</button>
+                    <button class="btn btn-primary mx-3" id="sell-lot-btn" disabled>Sell Lot</button>
+                    <button class="btn btn-primary mx-3" id="payment-received-btn" disabled>Payment Received</button>
+                    <button class="btn btn-primary mx-3" id="sales-export-btn" disabled>Client Sales Export</button>
+                    <button class="btn btn-primary mx-3" id="ism-pre-alert" disabled>ISM Pre-alert</button>
                 </div>
             </div>
 

@@ -31,6 +31,8 @@ $(document).on('change', function(){
 
 });
 
+
+
 $('#addtolot').on('click', function(){
 
     var tradeins = $('.tradein-sales-lot:checked');
@@ -58,10 +60,54 @@ $('#addtolot').on('click', function(){
             selectedBoxes:selectedBoxes,
         },
         success:function(response){
-            console.log(response);
+            handleShownData(response);
+            window.addEventListener("beforeunload", function(e){
+                e.preventDefault();
+            });
         },
     });
-    
+});
+
+function handleShownData(data){
+    console.log(data);
+    if(data.boxes){
+        for(const [key, item] of Object.entries(data.boxes)){
+            $('#closedboxtable tbody tr#'+item.id).hide();  
+            if(item.number_of_devices !== 0){
+                $('#closedboxtable tbody').append('<tr id="' + item.id + '"> <td><div class="table-element"> ' + item.tray_name + ' </div></td><td><div class="table-element">' + item.tray_grade + '</div></td> <td><div class="table-element">' + item.tray_network + '</div></td><td><div class="table-element"> ' + item.number_of_devices + ' / ' + item.max_number_of_devices + '</div></td> <td><div class="table-element">Calculating</div></td> <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="' + item.id + '"></div></td> </tr>');
+            }          
+        }
+    }
+
+    if(data.tradeins){
+        for(const [key, item] of Object.entries(data.tradeins)){
+            $('#boxedtradeinstable tbody tr#'+item.id).hide();
+
+            $('#saleslotboxes tbody').append('<tr id="' + item.id + '"> <td><div class="table-element">' + item.box_name + '</div></td><td><div class="table-element">' + item.bamboo_grade + '</div></td><td><div class="table-element">' + item.model + '</div></td><td><div class="table-element">' + item.correct_memory + '</div></td><td><div class="table-element">£' + item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class=""></div></td> </tr>');
+            $('#exportxls').prop('disabled', false);
+            $('#completelot').prop('disabled', false);
+        }
+    }
+}
+
+$('#exportxls').on('click', function(){
+
+    window.open('/portal/sales-lot/building-sales-lot/build-lot/generate-xls', '_blank');
+
+    /*$.ajax({
+        url: "/portal/sales-lot/building-sales-lot/build-lot/generate-xls",
+        type:"POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(response){
+            window.open('/portal/sales-lot/building-sales-lot/build-lot/generate-xls')
+        },
+        error:function(data){
+            alert("Something went wrong. Please try again");
+        }
+    });*/
+
 });
 
 

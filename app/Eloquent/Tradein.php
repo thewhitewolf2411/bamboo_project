@@ -183,7 +183,7 @@ class Tradein extends Model
                 if($tray->trolley_id !== null){
                     $trolley = Trolley::where('id', $tray->trolley_id)->first();
                     if($trolley->trolley_type === "B" || $trolley->trolley_type === "Bay"){
-                        return $trolley->trolley_name;
+                        return $trolley->trolley_name . " / " . $tray->tray_name;
                     }
                 }
                 $trayname = $tray->tray_name;
