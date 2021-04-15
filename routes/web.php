@@ -198,7 +198,8 @@ Route::post('/portal/brands/addbrabnd','Portal\ProductController@addBrand');
 //products
 Route::get('/portal/product', 'Portal\ProductController@showProductsPage');
 Route::get('/portal/product/selling-products', 'Portal\ProductController@showSellingProductsPage');
-Route::get('/portal/product/removesellingproductoption/{id}', 'Portal\ProductController@showSellingProductOption');
+Route::get('/portal/product/removesellingproductoption/{id}', 'Portal\ProductController@deleteSellingProductOption');
+Route::get('/portal/product/removesellingproductnetwork/{id}', 'Portal\ProductController@deleteSellingProductNetwork');
 Route::get('/portal/product/buying-products', 'Portal\ProductController@showBuyingProductsPage');
 
 Route::get('/portal/product/addbuyingproduct', 'Portal\ProductController@showAddBuyingProductPage');
@@ -465,12 +466,12 @@ Route::group(['prefix'=>'portal/sales-lot'], function(){
 
     Route::get('/', 'Portal\SalesLotController@showSalesLotPage');
 
-    Route::get('/building-sales-lot', 'Portal\SalesLotController@showBuildingSalesLotPage');
+    Route::get('/building-sales-lot/{id?}', 'Portal\SalesLotController@showBuildingSalesLotPage');
     Route::post('/building-sales-lot/build-lot', 'Portal\SalesLotController@buildSalesLot');
     Route::post('/building-sales-lot/build-lot/has-data', 'Portal\SalesLotController@checkHasData');
     Route::get('/building-sales-lot/build-lot/generate-xls', 'Portal\SalesLotController@generateXlsReport');
     Route::post('/building-sales-lot/build-lot/getboxdata', 'Portal\SalesLotController@getBoxData');
-    Route::post('//building-sales-lot/build-lot/getboxdata/remove', 'Portal\SalesLotController@removeFromBox');
+    Route::post('/building-sales-lot/build-lot/remove', 'Portal\SalesLotController@removeFromSaleLot');
     Route::post('/building-sales-lot/create-lot', 'Portal\SalesLotController@createNewLot');
 
     

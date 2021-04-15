@@ -27,7 +27,7 @@ class SalesLotController extends Controller
         return view('portal.sales-lot.sales-lot', ['portalUser'=>$portalUser]);
     }
 
-    public function showBuildingSalesLotPage(){
+    public function showBuildingSalesLotPage($id = null){
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
 
@@ -62,7 +62,26 @@ class SalesLotController extends Controller
             Session::forget('boxes');
         }
 
-        return view('portal.sales-lot.building-sales-lot', ['portalUser'=>$portalUser, 'tradeins'=>$tradeins, 'boxes'=>$boxes]);
+        $completedTradeins = array();
+
+        if($id){
+            $salesLotContent = SalesLotContent::where('sales_lot_id', $id)->get();
+            foreach($salesLotContent as $saleLotDevice){
+                $completedTradein = Tradein::where('id', $saleLotDevice->device_id)->first();
+                
+                $completedTradein->box_name = $completedTradein->getTrayName($completedTradein->id);
+                $completedTradein->bamboo_grade = $completedTradein->getDeviceBambooGrade();
+                $completedTradein->model = $completedTradein->getProductName(0);
+                $completedTradein->total_cost = $completedTradein->getDeviceCost();
+                array_push($completedTradeins, $completedTradein);
+            }
+        }
+
+        if(count($completedTradeins)>0){
+            Session::put('tradeins', $completedTradeins);
+        }
+
+        return view('portal.sales-lot.building-sales-lot', ['portalUser'=>$portalUser, 'tradeins'=>$tradeins, 'boxes'=>$boxes, 'completedTradeins'=>$completedTradeins]);
     }
 
     public function buildSalesLot(Request $request){
@@ -217,52 +236,64 @@ class SalesLotController extends Controller
         return response($tradeins, 200);
     }
 
-    public function removeFromBox(Request $request){
+    public function removeFromSaleLot(Request $request){
         #dd($request->all());
 
-        $selectedTradeins = $request->selectedTradeIns;
-        $sessionItems = Session::get('allTradeins');
-
-        $tradeins = array();
-
-        foreach($selectedTradeins as $selectedTradein){
-            foreach($sessionItems as $key=>$sessionItem){
-                if($sessionItem['trade_in_id'] === intval($selectedTradein)){
-                    $tradein = Tradein::where('id', $sessionItem['trade_in_id'])->first();
-                    $tradein->box_location = $tradein->getTrayName($tradein->id);
-                    $tradein->product_name = $tradein->getProductName($tradein->product_id);
-                    array_push($tradeins, $tradein);
-                    unset($sessionItems[$key]);
-                }
+        foreach(Session::get('tradeins') as $key=>$sessionTradein){
+            if(in_array($sessionTradein['id'], $request->removedTradeins)){
+                Session::forget(('tradeins')[$key]);
             }
         }
-        #dd($sessionItems);
 
-        Session::put(['allTradeins'=>$sessionItems]);
+        return response($request->removedTradeins, 200);
 
-        return response($tradeins, 200);
     }
 
     public function createNewLot(Request $request){
 
-        $salesLotItems = Session::get('tradeins');
+        #dd($request->all());
 
-        $saleLot = SalesLot::create([
-            'sales_lot_status'=>1,
-        ]);
+        if(isset($request->url) && SalesLot::where('id', $request->url)->first()){
 
-        foreach($salesLotItems as $salesLotItem){
+            $sessionItems = Session::get('tradeins')->toArray();
 
-            $tradein = Tradein::where('id', $salesLotItem->id)->first();
+            $currentSalesLot = SalesLot::where('id', $request->url)->first();
+            $currentSalesLotContent = SalesLotContent::where('sales_lot_id', $currentSalesLot->id)->get();
+            foreach($currentSalesLotContent as $currentSalesLotDevice){
+                $tradein = Tradein::where('id', $currentSalesLotDevice->device_id)->first();
+                array_push($sessionItems, $tradein);
+                $currentSalesLotDevice->delete();
+            }
+            foreach($sessionItems as $t){
+                $tradein = Tradein::where('id', $t['id'])->first();
+                $sli = new SalesLotContent();
+                $sli->sales_lot_id = $currentSalesLot->id;
+                $sli->box_id = $tradein->getTrayId();
+                $sli->device_id = $tradein->id;
+                $sli->save();
+            }
 
-            $sli = new SalesLotContent();
-            $sli->sales_lot_id = $saleLot->id;
-            $sli->box_id = $tradein->getTrayId();
-            $sli->device_id = $tradein->id;
-            $sli->save();
+            return response(201);
         }
+        else{
+            $salesLotItems = Session::get('tradeins');
 
-        Sesson::unset('tradeins');
+            $saleLot = SalesLot::create([
+                'sales_lot_status'=>1,
+            ]);
+    
+            foreach($salesLotItems as $salesLotItem){
+                $tradein = Tradein::where('id', $salesLotItem->id)->first();
+    
+                $sli = new SalesLotContent();
+                $sli->sales_lot_id = $saleLot->id;
+                $sli->box_id = $tradein->getTrayId();
+                $sli->device_id = $tradein->id;
+                $sli->save();
+            }
+
+            return response(200);
+        }
 
         return response(200);
     }

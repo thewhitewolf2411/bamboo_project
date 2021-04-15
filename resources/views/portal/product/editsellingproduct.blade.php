@@ -154,20 +154,47 @@
                                             @foreach($productnetworks as $network)
                                             <td><div class="table-element"><img style="max-width:50px; width:50px" src="{{$network->getNetWorkImage($network->network_id)}}"></div></td>
                                             @endforeach
-                                            <td><div class="table-element">                                                
-                                                <a onclick="addNewNetwork()">
-                                                    <div class="btn btn-primary">
-                                                        Add new network
-                                                    </div>
-                                                </a>
+                                            <td id="add_new_network_container"><div class="table-element" >
+                                                <select class="form-control" name="add_new_network_id">
+                                                    <option value="" selected disabled>Select new network</option>
+                                                    @foreach($newNetworks as $newNetwork)
+                                                    <option value="{{$newNetwork->id}}">{{$newNetwork->network_name}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div></td>
                                         </tr>
                                         <tr>
                                             @foreach($productnetworks as $network)
                                             <td><div class="table-element"><input class="table-element" type="number" name="network_{{$network->id}}" value="{{$network->knockoff_price}}" required></div></td>
                                             @endforeach
+                                            @if(count($productnetworks) !== 5)
+                                            <td id="add_new_network_price_container">
+                                                <div class="table-element">
+                                                    <input class="table-element" type="number" name="add_new_network_knockoffprice" placeholder="Knockoff price">
+                                                </div>
+                                            </td>
+                                            @endif
+                                        </tr>
+                                        <tr>
+                                            @foreach($productnetworks as $network)
+                                            <td><div class="table-element"><a title="Remove Network" onclick="return confirm('Are you sure? This will delete this product option from customer view!')" href="/portal/product/removesellingproductnetwork/{{$network->id}}"><i class="fa fa-times remove"></i></a></div></td>
+                                            @endforeach
                                         </tr>
                                     </table>
+                                    @if(count($productnetworks) !== 5)
+                                    <div class="table-element mt-5">                                                
+                                        <a onclick="addNewNetwork()">
+                                            <div class="btn btn-primary" id="add_new_network_btn">
+                                                Add new network
+                                            </div>
+                                        </a>
+                                    </div>
+                                    @else
+                                    <div class="table-element">                                                
+                                        Unable to add new network
+                                    </div>
+                                    @endif
+
                                     <div class="portal-title-container">
                                         <div class="portal-title">
                                             <p>Available product colours</p>

@@ -27,6 +27,14 @@ $('#view-sales-lot-btn').on('click', function () {
 
 });
 
+$('#edit-lot-btn').on('click', function(){
+
+    var selectedid = $('.saleslot-active').attr('id');
+
+    window.open('/portal/sales-lot/building-sales-lot/' + selectedid, '_self');
+
+});
+
 $('#sell-lot-btn').on('click', function () {
 
     $('#salelot-action').modal('show');

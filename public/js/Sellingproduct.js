@@ -14,6 +14,27 @@ function cancelNewMemoryPoint(){
     }
 }
 
+$(document).ready(function(){
+
+    $('#add_new_network_container').hide();
+    $('#add_new_network_price_container').hide();
+
+});
+
+
 function addNewNetwork(){
-    alert("radi");
+    if($('#add_new_network_container').is(':hidden')){
+        $('#add_new_network_container').show();
+        $('#add_new_network_price_container').show();
+
+        $('#add_new_network_id').prop('required', true);
+        $('#add_new_network_knockoffprice').prop('required', true);
+    }
+    else{
+        $('#add_new_network_container').hide();
+        $('#add_new_network_price_container').hide();
+
+        $('#add_new_network_id').prop('required', false);
+        $('#add_new_network_knockoffprice').prop('required', false);
+    }
 }

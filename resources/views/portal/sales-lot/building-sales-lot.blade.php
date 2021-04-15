@@ -134,6 +134,18 @@
                         <td><div class="table-element">Total Cost</div></td>
                         <td><div class="table-element"><input type="checkbox" id="saleslotboxes-selectall"></div></td>
                     </tr>
+                    @if($completedTradeins)
+                        @foreach($completedTradeins as $completedTradein)
+                            <tr id="{{$completedTradein->id}}">
+                                <td><div class="table-element">{{$completedTradein->box_name}}</div></td>
+                                <td><div class="table-element">{{$completedTradein->bamboo_grade}}</div></td>
+                                <td><div class="table-element">{{$completedTradein->model}}</div></td>
+                                <td><div class="table-element">{{$completedTradein->correct_memory}}</div></td>
+                                <td><div class="table-element">£{{$completedTradein->total_cost}}</div></td>
+                                <td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="{{$completedTradein->id}}"></div></td>
+                            </tr>
+                        @endforeach
+                    @endif
                 </table>
             </div>
 
@@ -173,17 +185,14 @@
 </div>
 
 
+@if(Session::has('tradeins'))
 <script>
 
-    let tradeins = '{!!Session::get("tradeins")!!}';
-
-    if(tradeins){
-        window.addEventListener("beforeunload", function(e){
-            e.preventDefault();
-        });
-    }
-
+    window.addEventListener("beforeunload", function(e){
+        e.preventDefault();
+    });
+    
 </script>
-
+@endif
 
 @endsection

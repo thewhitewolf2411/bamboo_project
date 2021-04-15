@@ -391,17 +391,27 @@ class ProductController extends Controller
         $productNetworks = ProductNetworks::where('product_id', $id)->get();
         $colors = Colour::where('product_id', $id)->get();
         #dd($productNetworks);
+        $avaliableNetworks = $productNetworks->pluck('network_id')->toArray();
+        $newNetworks = Network::whereNotIn('id', $avaliableNetworks)->get();
 
-        return view('portal.product.editsellingproduct')->with(['product'=>$product, 'portalUser'=>$portalUser, 'categories'=>$categories, 'brands'=>$brands, 'productinformation'=>$sellingProductInformation, 'productnetworks'=>$productNetworks, 'colors'=>$colors]);
+        return view('portal.product.editsellingproduct', ['product'=>$product, 'portalUser'=>$portalUser, 'categories'=>$categories, 'brands'=>$brands, 'productinformation'=>$sellingProductInformation, 'productnetworks'=>$productNetworks, 'colors'=>$colors, 'newNetworks'=>$newNetworks]);
     }
 
-    public function showSellingProductOption($id){
+    public function deleteSellingProductOption($id){
         $sellingProductInformation = ProductInformation::where('id', $id)->first();
         $sellingProductInformation->delete();
         return redirect()->back()->with('product_option_deleted', 'Product option deleted succesfully');
     }
 
+    public function deleteSellingProductNetwork($id){
+        $sellingProductNetwork = ProductNetworks::where('id', $id)->first();
+        $sellingProductNetwork->delete();
+        return redirect()->back()->with('product_option_deleted', 'Product network deleted succesfully');
+    }
+
     public function saveEditedSellingProduct(Request $request){
+
+        #dd($request->all());
 
         if(isset($request->color_new)){
             Colour::create([
@@ -481,9 +491,18 @@ class ProductController extends Controller
                 #dd($network);
                 if($request->{"network_".$network->id} != $network->knockoff_price){
                     $network->knockoff_price = $request->{"network_".$network->id};
+                    dd($request->{"network_".$network->id});
                     $network->save();
                 }
             }
+        }
+
+        if(isset($request->add_new_network_id)){
+            ProductNetworks::create([
+                'network_id'=>$request->add_new_network_id,
+                'product_id'=>$request->product_id,
+                'knockoff_price'=>$request->add_new_network_knockoffprice
+            ]);
         }
 
         return redirect()->back()->with('product_edited', 'Product Was succesfully edited.');

@@ -55892,6 +55892,10 @@ $('#view-sales-lot-btn').on('click', function () {
   var selectedid = $('.saleslot-active').attr('id');
   window.open('/portal/sales-lot/completed-sales-lot/view-lot/' + selectedid, '_self');
 });
+$('#edit-lot-btn').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+  window.open('/portal/sales-lot/building-sales-lot/' + selectedid, '_self');
+});
 $('#sell-lot-btn').on('click', function () {
   $('#salelot-action').modal('show');
   var selectedid = $('.saleslot-active').attr('id');
@@ -56546,10 +56550,10 @@ $(document).on('change', function () {
     $('#completelot').prop('disabled', true);
   }
 
-  if ($('#saleslotboxes-content-table .selecteddevicesforremoval:checked').length > 0) {
-    $('.modal #removefromlot').prop('disabled', false);
+  if ($('.buildingsaleslot-remove-checkbox:checked').length > 0) {
+    $('#removefromlot').prop('disabled', false);
   } else {
-    $('.modal #removefromlot').prop('disabled', true);
+    $('#removefromlot').prop('disabled', true);
   }
 });
 $('#addtolot').on('click', function () {
@@ -56583,8 +56587,6 @@ $('#addtolot').on('click', function () {
 });
 
 function handleShownData(data) {
-  console.log(data);
-
   if (data.boxes) {
     for (var _i = 0, _Object$entries = Object.entries(data.boxes); _i < _Object$entries.length; _i++) {
       var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
@@ -56606,7 +56608,11 @@ function handleShownData(data) {
           _item = _Object$entries2$_i[1];
 
       $('#boxedtradeinstable tbody tr#' + _item.id).hide();
-      $('#saleslotboxes tbody').append('<tr id="' + _item.id + '"> <td><div class="table-element">' + _item.box_name + '</div></td><td><div class="table-element">' + _item.bamboo_grade + '</div></td><td><div class="table-element">' + _item.model + '</div></td><td><div class="table-element">' + _item.correct_memory + '</div></td><td><div class="table-element">£' + _item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class=""></div></td> </tr>');
+      $('.tradein-sales-lot').is(':checked').each(function () {
+        console.log($(this));
+        $(this).prop('checked', false);
+      });
+      $('#saleslotboxes tbody').append('<tr id="' + _item.id + '"> <td><div class="table-element">' + _item.box_name + '</div></td><td><div class="table-element">' + _item.bamboo_grade + '</div></td><td><div class="table-element">' + _item.model + '</div></td><td><div class="table-element">' + _item.correct_memory + '</div></td><td><div class="table-element">£' + _item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + _item.id + '"></div></td> </tr>');
       $('#exportxls').prop('disabled', false);
       $('#completelot').prop('disabled', false);
     }
@@ -56652,31 +56658,10 @@ $('#saleslotboxes').on('click', '.saleslotbox', function () {
   $('#saleslotboxes-content .modal-header').append($(this).attr('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><img src="{{ url(' + "/customer_page_images/body/modal-close.svg" + ') }}"></span></button>'));
   $('#saleslotboxes-content').modal('show');
 });
-$('.modal #removefromlot').on('click', function () {
-  var selectedTradeIns = [];
-  $('#saleslotboxes-content-table .selecteddevicesforremoval:checked').each(function () {
-    selectedTradeIns.push($(this).parent().parent().parent().attr('id'));
-  });
-  $.ajax({
-    url: "/portal/sales-lot/building-sales-lot/build-lot/getboxdata/remove",
-    type: "POST",
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    data: {
-      selectedTradeIns: selectedTradeIns
-    },
-    success: function success(response) {
-      var i = 0;
-      $('#saleslotboxes-content-table .selecteddevicesforremoval:checked').each(function () {
-        $('#boxedtradeinstable').append('<tr id="' + response[i].id + '"><td><div class="table-element">' + response[i].barcode + '</div></td><td><div class="table-element">' + response[i].box_location + '</div></td><td><div class="table-element">' + response[i].customer_grade + '</div></td><td><div class="table-element">' + response[i].bamboo_grade + '</div></td><td><div class="table-element">' + response[i].product_name + '</div></td><td><div class="table-element">' + response[i].correct_memory + '</div></td><td><div class="table-element">' + response[i].correct_network + '</div></td><td><div class="table-element">Colour</div></td><td><div class="table-element">£' + response[i].bamboo_price + '</div></td><td><div class="table-element"><input type="checkbox" class="tradein-sales-lot"></div></td></tr>');
-        $(this).parent().parent().parent().remove();
-        i++;
-      });
-    }
-  });
-});
 $('#completelot').on('click', function () {
+  var url = $(location).attr('href');
+  var rest = url.substring(0, url.lastIndexOf("/") + 1);
+  var last = url.substring(url.lastIndexOf("/") + 1, url.length);
   var c = confirm('Are you sure you want to build a lot using selected items?');
 
   if (c) {
@@ -56686,11 +56671,40 @@ $('#completelot').on('click', function () {
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
+      data: {
+        url: last
+      },
       success: function success(response) {
-        location.reload();
+        if (response === "201") {
+          window.location = '/portal/sales-lot/completed-sales-lots';
+        } else {
+          location.reload();
+        }
       }
     });
   }
+});
+$('#removefromlot').on('click', function () {
+  var removedTradeins = [];
+  $('.buildingsaleslot-remove-checkbox:checked').each(function () {
+    removedTradeins.push($(this).data('value'));
+  });
+  $.ajax({
+    url: "/portal/sales-lot/building-sales-lot/build-lot/remove",
+    type: "POST",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+      removedTradeins: removedTradeins
+    },
+    success: function success(response) {
+      for (var i = 0; i < response.length; i++) {
+        $('#boxedtradeinstable tbody tr#' + response[i]).show();
+        $('#saleslotboxes tr#' + response[i]).hide();
+      }
+    }
+  });
 });
 
 /***/ }),
