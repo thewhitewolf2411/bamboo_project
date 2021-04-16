@@ -68,6 +68,10 @@ $('#addtolot').on('click', function(){
 });
 
 function handleShownData(data){
+
+    var total_price = 0;
+    var total_quantity = 0;
+
     if(data.boxes){
         for(const [key, item] of Object.entries(data.boxes)){
             $('#closedboxtable tbody tr#'+item.id).hide();  
@@ -80,16 +84,21 @@ function handleShownData(data){
     if(data.tradeins){
         for(const [key, item] of Object.entries(data.tradeins)){
             $('#boxedtradeinstable tbody tr#'+item.id).hide();
-            $('.tradein-sales-lot').is(':checked').each(function(){
-                console.log($(this));
+            $('.tradein-sales-lot:checkbox:checked').each(function(){
                 $(this).prop('checked', false);
             });
 
-            $('#saleslotboxes tbody').append('<tr id="' + item.id + '"> <td><div class="table-element">' + item.box_name + '</div></td><td><div class="table-element">' + item.bamboo_grade + '</div></td><td><div class="table-element">' + item.model + '</div></td><td><div class="table-element">' + item.correct_memory + '</div></td><td><div class="table-element">£' + item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + item.id + '"></div></td> </tr>');
+            total_price += item.total_cost;
+            total_quantity++;
+
+            $('#saleslotboxes tbody').append('<tr id="' + item.id + '"> <td><div class="table-element">' + item.box_name + '</div></td><td><div class="table-element">' + item.bamboo_grade + '</div></td><td><div class="table-element">' + item.model + '</div></td><td><div class="table-element">' + item.correct_memory + '</div></td><td><div class="table-element" >£' + item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + item.id + '"></div></td> </tr>');
             $('#exportxls').prop('disabled', false);
             $('#completelot').prop('disabled', false);
         }
     }
+
+    $('#total_qty').html(total_quantity);
+    $('#total_cost').html('£' + total_price);
 }
 
 $('#exportxls').on('click', function(){
@@ -181,7 +190,7 @@ $('#removefromlot').on('click', function(){
 
     var removedTradeins = [];
 
-    $('.buildingsaleslot-remove-checkbox:checked').each(function(){
+    $('.buildingsaleslot-remove-checkbox:checkbox:checked').each(function(){
 
         removedTradeins.push($(this).data('value'));
 

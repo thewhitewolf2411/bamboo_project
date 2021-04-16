@@ -13,6 +13,22 @@
         <div class="row">
 
             <div class="col-md-6">
+                <div class="d-flex flex-column">
+
+                    <div class="row">
+                        <div class="col-md-6">Lot No.</div>
+                        <div class="col-md-6">{{$totalSalesLots}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">Total Qty.</div>
+                        <div class="col-md-6" id="total_qty">0</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">Total Cost</div>
+                        <div class="col-md-6" id="total_cost">0</div>
+                    </div>
+
+                </div>
                 <div class="d-flex">
                     <div class="button-box my-3 d-flex" id="changeview-container" data-toggle="buttons">
                         <label class="btn btn-secondary active" style="display: flex; align-items:center; justify-content:center; max-width:310px;margin:0; margin-right:10px;">
@@ -22,10 +38,13 @@
                             <input type="radio" name="changeview" id="changetoviewboxes" autocomplete="off" style="opacity: 0; height:0 !important; width:0 !important; margin:0 !important;"> View by box number
                         </label>
                     </div>
-                    <div class="col-lg-4 d-flex align-items-center justify-content-center">
+                    <div class="col-lg-4 d-flex align-items-center justify-content-between">
                         <button id="addtolot" class="btn btn-info" role="button" disabled>Add to Lot</button>
                     </div>
+
                 </div>
+
+
 
                 <table class="portal-table" id="boxedtradeinstable">
                     <thead>

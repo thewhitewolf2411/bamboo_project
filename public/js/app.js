@@ -56587,6 +56587,9 @@ $('#addtolot').on('click', function () {
 });
 
 function handleShownData(data) {
+  var total_price = 0;
+  var total_quantity = 0;
+
   if (data.boxes) {
     for (var _i = 0, _Object$entries = Object.entries(data.boxes); _i < _Object$entries.length; _i++) {
       var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
@@ -56608,15 +56611,19 @@ function handleShownData(data) {
           _item = _Object$entries2$_i[1];
 
       $('#boxedtradeinstable tbody tr#' + _item.id).hide();
-      $('.tradein-sales-lot').is(':checked').each(function () {
-        console.log($(this));
+      $('.tradein-sales-lot:checkbox:checked').each(function () {
         $(this).prop('checked', false);
       });
-      $('#saleslotboxes tbody').append('<tr id="' + _item.id + '"> <td><div class="table-element">' + _item.box_name + '</div></td><td><div class="table-element">' + _item.bamboo_grade + '</div></td><td><div class="table-element">' + _item.model + '</div></td><td><div class="table-element">' + _item.correct_memory + '</div></td><td><div class="table-element">£' + _item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + _item.id + '"></div></td> </tr>');
+      total_price += _item.total_cost;
+      total_quantity++;
+      $('#saleslotboxes tbody').append('<tr id="' + _item.id + '"> <td><div class="table-element">' + _item.box_name + '</div></td><td><div class="table-element">' + _item.bamboo_grade + '</div></td><td><div class="table-element">' + _item.model + '</div></td><td><div class="table-element">' + _item.correct_memory + '</div></td><td><div class="table-element" >£' + _item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + _item.id + '"></div></td> </tr>');
       $('#exportxls').prop('disabled', false);
       $('#completelot').prop('disabled', false);
     }
   }
+
+  $('#total_qty').html(total_quantity);
+  $('#total_cost').html('£' + total_price);
 }
 
 $('#exportxls').on('click', function () {
@@ -56686,7 +56693,7 @@ $('#completelot').on('click', function () {
 });
 $('#removefromlot').on('click', function () {
   var removedTradeins = [];
-  $('.buildingsaleslot-remove-checkbox:checked').each(function () {
+  $('.buildingsaleslot-remove-checkbox:checkbox:checked').each(function () {
     removedTradeins.push($(this).data('value'));
   });
   $.ajax({

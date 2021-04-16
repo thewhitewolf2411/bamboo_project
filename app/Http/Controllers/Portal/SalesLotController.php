@@ -81,7 +81,9 @@ class SalesLotController extends Controller
             Session::put('tradeins', $completedTradeins);
         }
 
-        return view('portal.sales-lot.building-sales-lot', ['portalUser'=>$portalUser, 'tradeins'=>$tradeins, 'boxes'=>$boxes, 'completedTradeins'=>$completedTradeins]);
+        $totalSalesLots = count(SalesLot::all());
+
+        return view('portal.sales-lot.building-sales-lot', ['portalUser'=>$portalUser, 'tradeins'=>$tradeins, 'boxes'=>$boxes, 'completedTradeins'=>$completedTradeins, 'totalSalesLots'=>$totalSalesLots]);
     }
 
     public function buildSalesLot(Request $request){
