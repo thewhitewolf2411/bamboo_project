@@ -400,6 +400,7 @@
     flex-direction: column;
     width: 100%;
     max-width: 250px;
+    margin-bottom: 25px;
 }
 
 .deliveryqualitybanner-img{
@@ -415,4 +416,83 @@
     text-align: center;
     text-transform: uppercase;
     font-family: Bebas Neue, Helvetica, sans-serif;
+    line-height: 1;
+}
+
+
+
+
+// newsletter styles
+.newsletter-large-text{
+    font-size: 4rem;
+    text-align: center;
+    font-family: Sharp Sans No1 Bold;
+}
+
+.newsletter-small-text{
+    font-size: 1.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: Bebas Neue, Helvetica, sans-serif;
+}
+
+
+
+// newsletter contact support styles
+.newscontactsupport-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 100px 0 100px 0;
+}
+
+.newscontactsupport-item{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: auto;
+    max-width: 400px;
+    height: auto;
+    padding: 30px;
+    border-radius: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+    border: 2px solid #fff;
+    transition: 0.2s linear;
+}
+
+.newscontactsupport-item:hover{
+    border: 2px solid black;
+}
+
+.newscontactsupport-item > p {
+    font-family: Sharp Sans No1 Bold;
+    font-size: 38px;
+    width: 400px;
+}
+
+.newscontactsupport-item > img {
+    max-width: 170px;
+    margin-left: auto;
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+.newscontactsupport-item > img.news {
+    max-width: 200px;
+    margin-left: auto;
+}
+
+.newscontactsupport-item.news{
+    background: #59DDC1;
+}
+
+.newscontactsupport-item.service{
+    background: #A375BC;
+}
+
+.newscontactsupport-item.support{
+    background: #A3D147;
 }

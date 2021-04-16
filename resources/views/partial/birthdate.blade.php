@@ -1,5 +1,6 @@
 <div class="birth-date-row-register m-0">
-    <select name="birth_day" id="birth_day" class="form-control mr-2" required autofocus>
+    <select name="birth_day" id="birth_day" class="form-control mr-2" @if($required) required @endif autofocus>
+        <option value="" selected disabled hidden></option>
         @foreach((App\Helpers\Dates::getDays()) as $day)
             @if(Auth::user())
                 @if($day === Auth::user()->getBirthDay())
@@ -12,7 +13,8 @@
             @endif
         @endforeach
     </select>
-    <select name="birth_month" id="birth_month" class="form-control ml-2" required autofocus>
+    <select name="birth_month" id="birth_month" class="form-control ml-2" @if($required) required @endif autofocus>
+        <option value="" selected disabled hidden></option>
         @foreach((App\Helpers\Dates::getMonths()) as $val => $month)
             @if(Auth::user())
                 @if($val === Auth::user()->getBirthDay())
@@ -25,7 +27,8 @@
             @endif
         @endforeach
     </select>
-    <select name="birth_year" id="birth_year" class="form-control ml-2" required autofocus>
+    <select name="birth_year" id="birth_year" class="form-control ml-2" @if($required) required @endif autofocus>
+        <option value="" selected disabled hidden></option>
         @foreach((App\Helpers\Dates::getYears()) as $val)
             @if(Auth::user())
                 @if($val === Auth::user()->getBirthDay())

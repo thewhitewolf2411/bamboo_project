@@ -274,7 +274,7 @@
                                 <div class="row m-0">
                                     <div class="col-4 p-0 mb-4">
                                         <label>Date of Birth</label>
-                                        @include('partial.birthdate')
+                                        @include('partial.birthdate', ['required' => false])                                                        
                                     </div>
                                 </div>
                                 <div class="row m-0">

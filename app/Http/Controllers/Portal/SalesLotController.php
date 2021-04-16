@@ -276,6 +276,14 @@ class SalesLotController extends Controller
             }
 
             return response(201);
+            $sli = new SalesLotContent();
+            $sli->sales_lot_id = $saleLot->id;
+            $sli->box_id = $tradein->getTrayId();
+            $sli->device_id = $tradein->id;
+            $sli->save();
+
+            $tradein->location_changed_at = now();
+            $tradein->save();
         }
         else{
             $salesLotItems = Session::get('tradeins');

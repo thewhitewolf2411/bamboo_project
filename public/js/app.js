@@ -55555,6 +55555,12 @@ $('.saleslotpicking').on('click', function () {
   } else {
     $('#starttopicklot').prop('disabled', true);
   }
+
+  if ($(this).hasClass('saleslot-active')) {
+    $('#printpicknote').prop('disabled', false);
+  } else {
+    $('#starttopicklot').prop('disabled', true);
+  }
 });
 $('#starttopicklot').on('click', function () {
   var status = $('.saleslot-active').data('status');
@@ -55589,6 +55595,11 @@ $('#despatchpickingsaleslot').on('click', function () {
       }
     });
   }
+});
+$('#printpicknote').on('click', function () {
+  var id = $('.saleslot-active').prop('id');
+  console.log(id);
+  window.open('/portal/warehouse-management/picking-despatch/print-pick-note/' + id, '_blank');
 });
 $(document).ready(function () {
   $('#pick-sales-lot-boxes tfoot td').each(function () {
@@ -56734,8 +56745,8 @@ $('#removefromlot').on('click', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

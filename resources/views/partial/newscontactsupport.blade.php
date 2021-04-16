@@ -1,30 +1,18 @@
-<div class="home-element home-links-container">
-        
-    <div class="home-links-element">
-        <a href="/news">
-            <div class="home-link-container" id="news">
-                <p>News & Blog</p>
-                <img src="{{asset('/customer_page_images/body/home-link-images/home-links-1.svg')}}">
-            </div>
-        </a>
-    </div>
+<div class="newscontactsupport-container">
 
-    <div class="home-links-element">
-        <a href="/support">
-            <div class="home-link-container" id="service">
-                <p>Service & Support</p>
-                <img src="{{asset('/customer_page_images/body/home-link-images/home-links-2.svg')}}">
-            </div>
-        </a>
-    </div>
+    <a class="newscontactsupport-item news" href="/news">
+        <p>News & Blog</p>
+        <img class="news" src="{{asset('/customer_page_images/body/home-link-images/home-links-1.svg')}}">
+    </a>
 
-    <div class="home-links-element">
-        <a href="/contact">
-            <div class="home-link-container" id="contact">
-                <p>Contact us</p>
-                <img src="{{asset('/customer_page_images/body/home-link-images/home-links-3.svg')}}">
-            </div>
-        </a>
-    </div>
+    <a class="newscontactsupport-item service" href="/support">
+        <p>Service & Support</p>
+        <img src="{{asset('/customer_page_images/body/home-link-images/home-links-2.svg')}}">
+    </a>
 
+    <a class="newscontactsupport-item support" href="/contact">
+        <p>Contact Us</p>
+        <img src="{{asset('/customer_page_images/body/home-link-images/home-links-3.svg')}}">
+    </a>
+    
 </div>

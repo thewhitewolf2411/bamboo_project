@@ -23,10 +23,7 @@
             <div class="sustainability-about-col text">
                 <p class="sustainability-large ml-0 mt-auto">About bamboo</p>
                 <p class="sustainability-small ml-0 mt-4">
-                    Bamboo Mobile is a recognised international, independent mobile phone distributor, and recycler which has been operating for over 10 years by a management team of industry professionals.<br>
-                    Adding value to products, Bamboo purchased all types of mobile handsets which then customises, with a multitude of services ranging from refurbishing, language flashing, and reworking to prepare for distribution.<br>
-                    A professional work ethic and dedicated management team with over 50 years combined experience in the mobile industry, has seen the company become an established entity and trusted partner in the marketplace.<br>
-                    Working with High Street Retailers, Authorised Distributors and Repairers, Insurance Companies, Independent Retails and Exporters, Bamboo assist their key partners and add value throughout the supply chain, delivering product solutions to individuals and companies.
+                    bamboo mobile’s parent company is Bamboo Distribution which is a recognised international, independent phone distributor, and recycler which has been operating for over 10 years...
                 </p>
                 <a href="/about" class="btn btn-light ml-0 mt-4 w-25 mb-auto">Read More</a>
             </div>
@@ -45,7 +42,7 @@
         <div class="text-buttons-sustainability">
             <p class="sustainability-large ml-0">Sustainability</p>
             <p class="sustainability-small ml-0 mt-4">
-                Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent non est id leo viverra porttitor. Vivamus iaculis nisl non hend.
+                Sustainability is at the heart of bamboo mobile and everything we do. Like our parent company, Bamboo Distribution, the protection of the environment is central to our ethics and business strategy.
             </p>
             <a href="#" class="btn btn-light ml-0 mt-4 w-25">Read More</a>
         </div>

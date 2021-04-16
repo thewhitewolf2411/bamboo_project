@@ -272,12 +272,11 @@ class Testing{
             $tradein->cosmetic_condition = $request->cosmetic_condition;
         }
 
-        $tradein->save();
-
         $traycontent = new TrayContent();
         $traycontent->tray_id = $quarantineTrays->id;
         $traycontent->trade_in_id = $tradein->id;
         $traycontent->save();
+        $tradein->save();
 
         $quarantineName = $quarantineTrays->tray_name;
 

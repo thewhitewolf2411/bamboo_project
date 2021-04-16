@@ -42,8 +42,11 @@
 
                     <div class="sell-category-wrapper">
                         <div class="sell-category-device-background" id="rounded-mobile"></div>
-                        <img class="sell-category-device-image mobile" src="{{asset('/shop_images/category-image-1.png')}}">
+                        <img class="sell-category-device-image mobile" src="{{asset('/images/devices/phones.png')}}">
+
+                        <img class="device-shadow mobile" src="{{asset('/images/device_shadow.svg')}}">
                     </div>
+
 
                     <div class="selected-category" id="selected-mobile">
                         <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}" id="1">
@@ -56,8 +59,11 @@
 
                     <div class="sell-category-wrapper">
                         <div class="sell-category-device-background" id="rounded-tablets"></div>
-                        <img class="sell-category-device-image tablet" src="{{asset('/shop_images/category-image-2.png')}}">
+                        <img class="sell-category-device-image tablet" src="{{asset('/images/devices/tablets.png')}}">
+
+                        <img class="device-shadow" src="{{asset('/images/device_shadow.svg')}}">
                     </div>
+
 
                     <div class="selected-category" id="selected-tablets">
                         <img class="selected-category-img" src="{{asset('/images/front-end-icons/purple_tick_selected.svg')}}" id="2">
@@ -70,9 +76,12 @@
 
                     <div class="sell-category-wrapper">
                         <div class="sell-category-device-background" id="rounded-watches"></div>
-                        <img class="sell-category-device-image watch" src="{{asset('/shop_images/category-image-3.png')}}">
+                        <img class="sell-category-device-image watch" src="{{asset('/images/devices/watches.png')}}">
+                        
+                        <img class="device-shadow" src="{{asset('/images/device_shadow.svg')}}">
                     </div>
-                    
+
+
                     {{-- <div class="rounded-background-image" id="rounded-watches">
                         <img src="{{asset('/shop_images/category-image-3.png')}}">
                     </div> --}}
@@ -137,11 +146,11 @@
                 </div>
                 <div class="selling-info-item">
                     <img class="selling-info-img" src="{{asset('/sell_images/image-3.svg')}}">
-                    <p class="selling-info-bold-text mt-4">DATA IS ALWAYS PROTECTED</p>
+                    <p class="selling-info-bold-text mt-4">DATA IS ALWAYS<br> PROTECTED</p>
                 </div>
                 <div class="selling-info-item">
                     <img class="selling-info-img" src="{{asset('/sell_images/image-4.svg')}}">
-                    <p class="selling-info-bold-text mt-4">BAMBOO PRICE OR YOUR DEVICE BACK FREE</p>
+                    <p class="selling-info-bold-text mt-4">BAMBOO PRICE OR YOUR<br> DEVICE BACK FREE</p>
                 </div>
             </div>
 
@@ -377,6 +386,9 @@
                 // image - 3
                 let img = this.childNodes[3];
                 img.classList.add('enlarged');
+                // shadow - 5
+                let shadow = this.childNodes[5];
+                shadow.classList.add('zoomed');
             })
             .mouseleave(function() {
                 //unfocusCategory(this);
@@ -386,6 +398,9 @@
                 // image - 3
                 let img = this.childNodes[3];
                 img.classList.remove('enlarged');
+                // shadow - 5
+                let shadow = this.childNodes[5];
+                shadow.classList.remove('zoomed');
             });
 
             function showRegistrationForm(){

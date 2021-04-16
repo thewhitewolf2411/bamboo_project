@@ -230,7 +230,7 @@
 
                                                         <div class="col p-0 mr-3">
                                                             <label for="birth_date" class="personal-info-label">Date of Birth</label>
-                                                            @include('partial.birthdate')                                                        
+                                                            @include('partial.birthdate', ['required' => false])                                                        
                                                         </div>
 
                                                         <div class="col p-0">

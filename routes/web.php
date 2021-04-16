@@ -459,6 +459,7 @@ Route::group(['prefix'=>'portal/warehouse-management'], function(){
     Route::post('/picking-despatch/pick-lot/suspend-picking', 'Portal\WarehouseManagementController@suspendPickingLot');
     Route::post('/picking-despatch/pick-lot/complete-picking', 'Portal\WarehouseManagementController@completePickingLot');
     Route::post('/picking-despatch/pick-lot/despatch-picking', 'Portal\WarehouseManagementController@despatchPickingLot');
+    Route::get('/picking-despatch/print-pick-note/{saleslotid}', 'Portal\WarehouseManagementController@printPickNote');
 
 });
 

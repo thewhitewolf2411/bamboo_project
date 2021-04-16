@@ -22,8 +22,8 @@ class SellingProduct extends Model
         'product_name','product_image','category_id','brand_id', 'avaliable_for_sell'
     ];
 
-    public function getBrand($brand_id){
-        $brandName = Brand::where('id', $brand_id)->first();
+    public function getBrand(){
+        $brandName = Brand::where('id', $this->brand_id)->first();
         #dd($brandName[0]->brand_name);
         if($brandName == null){
             return "Unknown";

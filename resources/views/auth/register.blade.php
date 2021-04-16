@@ -24,7 +24,7 @@
 
     <div class="form-group">
         <label for="first-name">Birth date</label>
-        @include('partial.birthdate')
+        @include('partial.birthdate', ['required' => false])                                                        
     </div>
 
     <div class="form-group">
@@ -105,10 +105,10 @@
           </label>
     </div>
 
-    <div class="form-group mb-0 d-flex justify-content-between" style="padding: 50px 0 50px 0;">
+    <div class="form-group mb-0 d-flex justify-content-between" style="padding: 25px 0 25px 0;">
         <div class="terms-container">
             <input type="checkbox" class="mx-3" id="terms" name="terms" required>
-            <label for="terms">I agree to Bamboo Mobile <a href="/terms" target="_blank">Terms and Conditions</a></label>
+            <label for="terms" class="terms-label">I agree to Bamboo Mobile <a href="/terms" target="_blank">Terms and Conditions</a></label>
         </div>
 
         <button type="submit" class="btn btn-primary">

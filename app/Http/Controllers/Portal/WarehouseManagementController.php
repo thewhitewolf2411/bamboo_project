@@ -24,6 +24,7 @@ use DNS1D;
 use DNS2D;
 use Session;
 use App\Services\GetLabel;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
 class WarehouseManagementController extends Controller
 {
@@ -241,6 +242,8 @@ class WarehouseManagementController extends Controller
         }
 
         $box->save();
+        $tradein->location_changed_at = now();
+        $tradein->save();
 
         return redirect()->back()->with(['success', 'You have added device ' . $request->tradeinid . ' to this box.', 'addedtobox'=>$request->boxid, 'boxstatus'=>$box->status, 'response'=>$response]);
     }
@@ -340,6 +343,10 @@ class WarehouseManagementController extends Controller
 
             $tray->number_of_devices = $tray->number_of_devices-1;
             $tray->save();
+
+            $tradein = Tradein::find($selectedDevice);
+            $tradein->location_changed_at = now();
+            $tradein->save();
 
             if($tray->status !== 3){
                 $trayContent->pseudo_tray_id = null;
@@ -707,41 +714,69 @@ class WarehouseManagementController extends Controller
     }
 
     public function printPickNote(Request $request){
-        $salesLotContentBoxes = SalesLotContent::where('sales_lot_id', $request->saleslotid)->where('device_id', null)->get();
-        $salesLotContentDevices = SalesLotContent::where('sales_lot_id', $request->saleslotid)->where('box_id', null)->get();
+        // $salesLotContentBoxes = SalesLotContent::where('sales_lot_id', $request->saleslotid)->where('device_id', null)->get();
+        // $salesLotContentDevices = SalesLotContent::where('sales_lot_id', $request->saleslotid)->where('box_id', null)->get();
 
-        $boxes = array();
-        $devices = array();
+        // $boxes = array();
+        // $devices = array();
 
-        foreach($salesLotContentBoxes as $sLCB){
-            $box = Tray::where('id', $sLCB->box_id)->first();
+        // foreach($salesLotContentBoxes as $sLCB){
+        //     $box = Tray::where('id', $sLCB->box_id)->first();
 
-            if($box->trolley_id == null){
-                $box->trolley_id = 'Box not placed in a bay.';
-            }
-            else{
-                $box->trolley_id = $box->getTrolleyName($box->trolley_id);
-            }
-            array_push($boxes, $box);
-        }
+        //     if($box->trolley_id == null){
+        //         $box->trolley_id = 'Box not placed in a bay.';
+        //     }
+        //     else{
+        //         $box->trolley_id = $box->getTrolleyName($box->trolley_id);
+        //     }
+        //     array_push($boxes, $box);
+        // }
 
-        foreach($salesLotContentDevices as $sLCD){
-            $device = Tradein::where('id', $sLCD->device_id)->first();
+        // foreach($salesLotContentDevices as $sLCD){
+        //     $device = Tradein::where('id', $sLCD->device_id)->first();
+        //     $device->product_name = $device->getProductName($device->product_id);
+        //     $device->box_location = $device->getTrayName($device->id);
+        //     $device->bay_location = $device->getBayName();
+        //     array_push($devices, $device);
+        // }
+
+        $salesLotDevices = SalesLotContent::where('sales_lot_id', $request->saleslotid)->get();
+        $device_ids = $salesLotDevices->pluck('device_id')->toArray();
+        $tradeins = Tradein::whereIn('id', $device_ids)->get();
+
+        foreach($tradeins as $device){
             $device->product_name = $device->getProductName($device->product_id);
             $device->box_location = $device->getTrayName($device->id);
             $device->bay_location = $device->getBayName();
-            array_push($devices, $device);
         }
 
-        $path = public_path()."/pdf/picklot";
-        if(!is_dir($path)){
-            mkdir($path, 0777, true);
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'Trade in barcode');
+        $sheet->setCellValue('B1', 'Model');
+        $sheet->setCellValue('C1', 'IMEI');
+        $sheet->setCellValue('D1', 'Bay Location');
+        $sheet->setCellValue('E1', 'Box Name');
+
+        $pos = 2;
+        foreach($tradeins as $key=>$tradein){
+            $sheet->setCellValue('A'.$pos, $tradein->barcode);
+            $sheet->setCellValue('B'.$pos, $tradein->product_name);
+            $sheet->setCellValueExplicit('C'.$pos, (string)$tradein->imei_number, DataType::TYPE_STRING);
+            $sheet->setCellValue('D'.$pos, $tradein->bay_location);
+            $sheet->setCellValue('E'.$pos, $tradein->box_location);
+            $pos++;
         }
 
-        $filename = public_path() . "/pdf/picklot/lot_no-" . $request->saleslotid . ".pdf";
-        PDF::loadView('portal.labels.picknote', array('boxes'=>$boxes, 'devices'=>$devices))->setPaper('a4', 'portrait')->setWarnings(false)->save($filename);
-    
-        return response("/pdf/picklot/lot_no-" . $request->saleslotid . ".pdf", 200);
+        
+        $filename = 'pick_note_'.$request->saleslotid.'_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
+
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
     }
 
     public function checkBoxStatusOfLot(Request $request){

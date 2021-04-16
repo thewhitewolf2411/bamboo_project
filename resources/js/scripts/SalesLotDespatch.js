@@ -29,6 +29,12 @@ $('.saleslotpicking').on('click', function(){
     else{
         $('#starttopicklot').prop('disabled', true);
     }
+
+    if ($(this).hasClass('saleslot-active')) {
+        $('#printpicknote').prop('disabled', false);
+    } else {
+        $('#starttopicklot').prop('disabled', true);
+    }
 });
 
 $('#starttopicklot').on('click', function(){
@@ -77,6 +83,13 @@ $('#despatchpickingsaleslot').on('click', function(){
         });
     }
 
+});
+
+
+$('#printpicknote').on('click', function(){
+    var id = $('.saleslot-active').prop('id');
+    console.log(id);
+    window.open('/portal/warehouse-management/picking-despatch/print-pick-note/' + id, '_blank');
 });
 
 $(document).ready(function(){

@@ -1088,7 +1088,7 @@ input.lookup-delivery-basket::placeholder{
     right: auto;
     width: auto;
     height: auto;
-    max-width: 400px;
+    max-width: 300px;
     transition: all 0.3s ease;
 }
 
@@ -1098,17 +1098,37 @@ input.lookup-delivery-basket::placeholder{
 
 .sell-category-device-image.mobile{
     top: -75px;
-    left: 0;
+    left: 45px;
 }
 
 .sell-category-device-image.tablet{
     top: 10px;
-    left: 0;
+    left: 50px;
 }
 
 .sell-category-device-image.watch{
-    top: -20px;
-    left: 18px;
+    top: -25px;
+    left: 65px;
+    max-width: 260px;
+}
+
+.device-shadow{
+    position: relative;
+    display: block;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
+    filter: blur(2px);
+    transition: all 0.3s ease;
+}
+
+.device-shadow.mobile{
+    width: 100px;
+}
+
+.device-shadow.zoomed{
+    transform: scale(1.5);
 }
 
 
@@ -1116,8 +1136,8 @@ input.lookup-delivery-basket::placeholder{
     margin-top: 100px;
     margin-left: auto;
     margin-right: auto;
-    width: 360px;
-    height: 360px;
+    width: 260px;
+    height: 260px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -1281,8 +1301,9 @@ input.lookup-delivery-basket::placeholder{
 }
 
 .selling-info-bold-text{
-    font-family: Sharp Sans No1 Bold;
-    font-size: 20px;
+    font-family: Bebas Neue;
+    font-size: 1.5em;
+    line-height: 1;
     margin-top: auto;
 }
 
