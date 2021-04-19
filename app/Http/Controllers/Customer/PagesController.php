@@ -236,8 +236,8 @@ class PagesController extends Controller
      * Sing up to the newsletter.
      */
     public function singUpNewsletter(Request $request){
-        if(isset($request->email)){
-            $email = $request->email;
+        if(isset($request->email_address)){
+            $email = $request->email_address;
             $klaviyo = new KlaviyoEmail();
             $klaviyo->subscribeToNewsletter($email);
 

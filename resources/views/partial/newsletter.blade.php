@@ -38,7 +38,7 @@
             </div>
             <div class="col-md-9">
                 <div class="form-group">
-                    <input class="email-input mt-0" name="email_address" type="email" placeholder="Email address">
+                    <input class="email-input mt-0" name="email_address" type="email" required placeholder="Email address">
                 </div>
             </div>
         </div>
