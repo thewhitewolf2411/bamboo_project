@@ -76,12 +76,13 @@ function handleShownData(data){
         for(const [key, item] of Object.entries(data.boxes)){
             $('#closedboxtable tbody tr#'+item.id).hide();  
             if(item.number_of_devices !== 0){
-                $('#closedboxtable tbody').append('<tr id="' + item.id + '"> <td><div class="table-element"> ' + item.tray_name + ' </div></td><td><div class="table-element">' + item.tray_grade + '</div></td> <td><div class="table-element">' + item.tray_network + '</div></td><td><div class="table-element"> ' + item.number_of_devices + ' / ' + item.max_number_of_devices + '</div></td> <td><div class="table-element">Calculating</div></td> <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="' + item.id + '"></div></td> </tr>');
+                $('#closedboxtable tbody').append('<tr id="' + item.id + '"> <td><div class="table-element"> ' + item.tray_name + ' </div></td><td><div class="table-element">' + item.tray_grade + '</div></td> <td><div class="table-element">' + item.tray_network + '</div></td><td><div class="table-element"> ' + item.number_of_devices + ' / ' + item.max_number_of_devices + '</div></td> <td><div class="table-element">£' + item.total_cost + '</div></td> <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="' + item.id + '"></div></td> </tr>');
             }          
         }
     }
 
     if(data.tradeins){
+        $('#saleslotboxes tbody').empty();
         for(const [key, item] of Object.entries(data.tradeins)){
             $('#boxedtradeinstable tbody tr#'+item.id).hide();
             $('.tradein-sales-lot:checkbox:checked').each(function(){

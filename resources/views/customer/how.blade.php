@@ -24,7 +24,7 @@ Watch our quick video that explains how our meticulous grading system works. We 
             <div class="p-5 d-flex flex-wrap flex-column justify-content-between align-items-center mx-auto">
                 <div class="grading-video-container">
                     <video id="howvideoid" width="100%" controls>
-                        <source src="{{ asset('/video/Bamboo Selling v4.mp4') }}" type="video/mp4">
+                        <source src="{{ asset('/video/old/Bamboo Selling v4.mp4') }}" type="video/mp4">
                         Your browser does not support HTML video.
                     </video>
                 </div>

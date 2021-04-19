@@ -157,3 +157,18 @@ $('#boxes-summary').on('click', function(){
     $('#boxed-devices-table-container').removeClass('box-table-show');
 
 });
+
+//saleslot-table
+
+$('#saleslot-table tfoot td').each( function () {
+    var title = $(this).text();
+    $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+} );    
+
+var boxsummarytable = $('#saleslot-table').DataTable({
+    "oLanguage" : {
+        "sInfo" : "Showing _START_ to _END_",
+     },
+     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+     "pageLength":100,
+});

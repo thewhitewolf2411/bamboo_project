@@ -91,32 +91,30 @@ class SalesLotController extends Controller
         $selectedBoxes = $request->selectedBoxes;
         $selectedTradeins = $request->selectedTradeIns;
 
-
-        $tradeins = [];
+        $tradeinsids = [];
 
         if(isset($selectedBoxes)){
             foreach($selectedBoxes as $selectedBox){
                 $boxContent = TrayContent::where('tray_id', $selectedBox)->get();
     
                 foreach($boxContent as $tradeinid){
-                    array_push($tradeins, $tradeinid->trade_in_id);
+                    array_push($tradeinsids, $tradeinid->trade_in_id);
                 }
             }
         }
 
         if(isset($selectedTradeins)){
             foreach($selectedTradeins as $selectedTradein){
-                array_push($tradeins, intval($selectedTradein));
+                array_push($tradeinsids, intval($selectedTradein));
             }
         }
 
-        $tradeinsids = array_unique($tradeins);
+        $tradeinsids = array_unique($tradeinsids);
 
-        $tradeins = [];
         if(Session::has('tradeins')){
             $tradeins = Session::get('tradeins');
             foreach($tradeinsids as $key=>$tradeinid){
-                $tradeins[count($tradeins) + $key] = Tradein::where('id', $tradeinid)->first();;
+                $tradeins[$key] = Tradein::where('id', $tradeinid)->first();
             }
         }
         else{
@@ -125,7 +123,7 @@ class SalesLotController extends Controller
 
         $boxes=[];
 
-        $countTradeins = $tradeins = Tradein::whereIn('id', $tradeinsids)->get();
+        $countTradeins = Tradein::whereIn('id', $tradeinsids)->get();
         foreach($countTradeins as $tradein){
             $boxContent = TrayContent::where('trade_in_id', $tradein->id)->first();
 
@@ -136,6 +134,7 @@ class SalesLotController extends Controller
             }
 
             $box->number_of_devices = $box->number_of_devices - 1;
+            $box->total_cost = $box->getBoxPrice();
             $boxes[$box->id] = $box;
         }
 
@@ -243,7 +242,7 @@ class SalesLotController extends Controller
 
         foreach(Session::get('tradeins') as $key=>$sessionTradein){
             if(in_array($sessionTradein['id'], $request->removedTradeins)){
-                Session::forget(('tradeins')[$key]);
+                unset(Session::get('tradeins')[$key]);
             }
         }
 

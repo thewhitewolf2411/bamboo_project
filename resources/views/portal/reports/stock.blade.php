@@ -27,7 +27,7 @@
                     </div>
                 </div>
         
-                <input type="submit" class="btn btn-primary btn-blue" value="Generate Receiving Report">
+                <input type="submit" class="btn btn-primary btn-blue" value="Generate Stock Report">
     
             </form>
         </div>

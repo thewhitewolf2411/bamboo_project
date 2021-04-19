@@ -336,8 +336,8 @@ class Reports{
                 $sheet->setCellValue('G'.$i, $tradein->product_colour);
                 $sheet->setCellValue('H'.$i, $tradein->customer_grade);
                 $sheet->setCellValue('I'.$i, $tradein->bamboo_grade);
-                $sheet->setCellValue('J'.$i, $tradein->customer_grade);
-                $sheet->setCellValue('K'.$i, $tradein->cosmetic_condition);
+                $sheet->setCellValue('J'.$i, $tradein->getDeviceBambooGrade());
+                $sheet->setCellValue('K'.$i, $tradein->getCustomerStatus());
                 $sheet->setCellValue('L'.$i, $tradein->getBambooStatus());
                 $sheet->setCellValue('M'.$i, $fullyFunctional);
                 $sheet->setCellValue('N'.$i, $tradein->created_at);
@@ -748,7 +748,7 @@ class Reports{
             $tradeinauditReceived = TradeinAudit::where('tradein_id', $tradein->id)->where('stock_location', '!=' ,'Not received yet.')->first();
             $tradeinauditTested = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Device has passed testing')->first();
             $tradeinauditBoxed = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Awaiting Box build')->first();
-            $tradeinauditReturned = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Device Marked to return to customer')->first();
+            $tradeinauditReturned = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Return to customer')->first();
             if($tradeinauditTPDespatched === null){
                 $tradeinauditTPDespatched = '';
             }

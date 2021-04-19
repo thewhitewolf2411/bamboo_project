@@ -13,10 +13,14 @@ class Boxing{
 
 
         $traycontent = TrayContent::where('trade_in_id', $tradein->id)->first();
-        $tray = Tray::where('id', $traycontent->tray_id)->first();
 
-        if($tray->tray_type === 'Bo'){
-            return ['This device is already in the box ' . $tray->tray_name . '.', 404];
+        if($traycontent !== null){
+            $tray = Tray::where('id', $traycontent->tray_id)->first();
+
+
+            if($tray->tray_type === 'Bo'){
+                return ['This device is already in the box ' . $tray->tray_name . '.', 404];
+            }
         }
 
         if($box->number_of_devices === $box->max_number_of_devices){
@@ -50,7 +54,7 @@ class Boxing{
         }
 
         if(substr($box->tray_brand, 0, 1) !== $tradein->getBrandLetter($tradein->correct_product_id)){
-            return ['Device can be added to this box.', 404];
+            return ['Device can\'t be added to this box.', 404];
         }
 
         if($box->getBoxBrand() !== $tradein->getBrandId($tradein->correct_product_id)){

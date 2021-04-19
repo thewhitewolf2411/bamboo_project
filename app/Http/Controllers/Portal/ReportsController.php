@@ -178,7 +178,7 @@ class ReportsController extends Controller
             $sheet->setCellValue('B'.$index, $tradein->getBrandName($tradein->product_id));
             $sheet->setCellValue('C'.$index, $tradein->getProductName($tradein->product_id));
             $sheet->setCellValue('D'.$index, $tradein->cosmetic_condition);
-            $sheet->setCellValue('E'.$index, $tradein->imei);
+            $sheet->setCellValue('E'.$index, ($tradein->imei_number === null) ? $tradein->serial_number : $tradein->imei_number);
             $sheet->setCellValue('F'.$index, $tradein->bamboo_price);
             $sheet->setCellValue('G'.$index, $tradein->carriage_cost);
             $sheet->setCellValue('H'.$index, $tradein->bamboo_price + $tradein->carriage_cost);
@@ -279,7 +279,7 @@ class ReportsController extends Controller
             $sheet->setCellValue('B'.$index, $tradein->getBrandName($tradein->product_id));
             $sheet->setCellValue('C'.$index, $tradein->getProductName($tradein->product_id));
             $sheet->setCellValue('D'.$index, $tradein->getDeviceBambooGrade());
-            $sheet->setCellValue('E'.$index, $tradein->imei);
+            $sheet->setCellValue('E'.$index, ($tradein->imei_number === null) ? $tradein->serial_number : $tradein->imei_number);
             $sheet->setCellValue('F'.$index, $tradein->bamboo_price);
             $sheet->setCellValue('G'.$index, $tradein->carriage_cost);
             $sheet->setCellValue('H'.$index, $tradein->bamboo_price + $tradein->carriage_cost);

@@ -210,7 +210,7 @@ class TestingController extends Controller
             }
 
             $checkPrice = new Testing();
-            $deviceCurrentPrice = $checkPrice->generateDevicePrice($tradein->correct_product_id, $tradein->customer_memory, $tradein->customer_network, $bamboogradeval);
+            $deviceCurrentPrice = $checkPrice->generateDevicePrice($tradein->product_id, $tradein->customer_memory, $tradein->customer_network, $bamboogradeval);
 
             if($deviceCurrentPrice < $tradein->order_price){
                 $tradein->job_state = "11j";
@@ -326,7 +326,7 @@ class TestingController extends Controller
                 $newPrice = "";
 
                 $testing = new Testing();
-                $newPrice = $testing->generateDevicePrice($tradein->correct_product_id, $tradein->customer_memory, $tradein->customer_network, 1);
+                $newPrice = $testing->generateDevicePrice($tradein->product_id, $tradein->customer_memory, $tradein->customer_network, 1);
                 
                 $tradein->bamboo_price = $newPrice;
 

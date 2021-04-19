@@ -51,9 +51,10 @@
                         <tr>
                             <td><div class="table-element">Trade in Barcode numbers</div></td>
                             <td><div class="table-element">Box number</div></td>
-                            <td><div class="table-element">Customer Grade</div></td>
+                            {{--<td><div class="table-element">Customer Grade</div></td>--}}
                             <td><div class="table-element">Bamboo Grade</div></td>
                             <td><div class="table-element">Model/Manufacturer</div></td>
+                            <td><div class="table-element">Category</div></td>
                             <td><div class="table-element">GB Size</div></td>
                             <td><div class="table-element">Network</div></td>
                             <td><div class="table-element">Colour</div></td>
@@ -80,9 +81,10 @@
                         <tr id="{{$tradein->id}}">
                             <td><div class="table-element">{{$tradein->barcode ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element">{{$tradein->getTrayName($tradein->id) ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">{{$tradein->customer_grade ?? null ?: 'N/A'}}</div></td>
+                            {{--<td><div class="table-element">{{$tradein->customer_grade ?? null ?: 'N/A'}}</div></td>--}}
                             <td><div class="table-element">{{$tradein->getDeviceBambooGrade() ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id) ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">{{$tradein->getCategoryName($tradein->product_id) ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element">{{$tradein->correct_memory ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element">{{$tradein->correct_network ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element">{{$tradein->product_colour ?? null ?: 'N/A'}}</div></td>
@@ -145,26 +147,31 @@
                 </div>
 
                 <table class="portal-table" id="saleslotboxes">
-                    <tr>
-                        <td><div class="table-element">Box number</div></td>
-                        <td><div class="table-element">Bamboo Grade</div></td>
-                        <td><div class="table-element">Manufacturer/Model</div></td>
-                        <td><div class="table-element">GB Size</div></td>
-                        <td><div class="table-element">Total Cost</div></td>
-                        <td><div class="table-element"><input type="checkbox" id="saleslotboxes-selectall"></div></td>
-                    </tr>
-                    @if($completedTradeins)
-                        @foreach($completedTradeins as $completedTradein)
-                            <tr id="{{$completedTradein->id}}">
-                                <td><div class="table-element">{{$completedTradein->box_name}}</div></td>
-                                <td><div class="table-element">{{$completedTradein->bamboo_grade}}</div></td>
-                                <td><div class="table-element">{{$completedTradein->model}}</div></td>
-                                <td><div class="table-element">{{$completedTradein->correct_memory}}</div></td>
-                                <td><div class="table-element">£{{$completedTradein->total_cost}}</div></td>
-                                <td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="{{$completedTradein->id}}"></div></td>
-                            </tr>
-                        @endforeach
-                    @endif
+                    <thead>
+                        <tr>
+                            <td><div class="table-element">Box number</div></td>
+                            <td><div class="table-element">Bamboo Grade</div></td>
+                            <td><div class="table-element">Manufacturer/Model</div></td>
+                            <td><div class="table-element">GB Size</div></td>
+                            <td><div class="table-element">Total Cost</div></td>
+                            <td><div class="table-element"><input type="checkbox" id="saleslotboxes-selectall"></div></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if($completedTradeins)
+                            @foreach($completedTradeins as $completedTradein)
+                                <tr id="{{$completedTradein->id}}">
+                                    <td><div class="table-element">{{$completedTradein->box_name}}</div></td>
+                                    <td><div class="table-element">{{$completedTradein->bamboo_grade}}</div></td>
+                                    <td><div class="table-element">{{$completedTradein->model}}</div></td>
+                                    <td><div class="table-element">{{$completedTradein->correct_memory}}</div></td>
+                                    <td><div class="table-element">£{{$completedTradein->total_cost}}</div></td>
+                                    <td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="{{$completedTradein->id}}"></div></td>
+                                </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+
                 </table>
             </div>
 
