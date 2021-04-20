@@ -533,6 +533,18 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="sections-row-mobile">
+                        <div class="sections-menu-mobile">
+                            <div class="change-page-mobile mobile-menu-item link-active" id="mobile-menu-overview">Account overview</div>
+                            <div class="change-page-mobile mobile-menu-item" id="mobile-menu-notifications">Notifications</div>
+                            <div class="change-page-mobile mobile-menu-item" id="mobile-menu-personal">Personal Information</div>
+                            <div class="change-page-mobile mobile-menu-item" id="mobile-menu-account">Account Information</div>
+                            <div class="change-page-mobile mobile-menu-item" id="mobile-menu-sales">My Sales</div>
+                            <div class="change-page-mobile mobile-menu-item" id="mobile-menu-communications">Communications</div>
+                            <div class="mobile-menu-item" data-toggle="modal" data-target="#logoutModal"><img class="mr-3" src="{{asset('/images/logout-black.svg')}}">Log Out</div>
+                        </div>
+                    </div>
                 </div>
 
 

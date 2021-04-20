@@ -12124,6 +12124,32 @@ main p, a, span {
   flex-direction: row;
 }
 
+.sections-row-mobile {
+  display: none;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 22px;
+}
+
+.mobile-menu-item {
+  height: 60px;
+  line-height: 3.6;
+  padding-left: 20px;
+  min-width: 220px;
+  font-family: Sharp Sans No1 Bold;
+  margin-bottom: 2px;
+  cursor: pointer;
+}
+
+@media (max-width: 625px) {
+  .sections-row {
+    display: none;
+  }
+
+  .sections-row-mobile {
+    display: flex;
+  }
+}
 .sales-item {
   background: white;
   height: 60px;

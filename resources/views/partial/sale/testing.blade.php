@@ -44,36 +44,6 @@
             </p>
         </div>
 
-        {{-- device network incorrect --}}
-        @if($tradein->job_state === '15g')
-            <div class="testing-error-item">
-                <div class="col">
-                    <p class="testing-error-item-label">Condition</p>
-                    <p class="testing-error-item-bold">Device does not meet the following requirements: </p>
-                    <br>
-                    <p class="testing-error-item-bold">Incorrect network</p>
-                </div>
-                <div class="col">
-                    <p class="testing-error-item-label">Action required</p>
-                    <p class="testing-error-item-bold">Accept new offer or request device back.</p>
-                </div>
-                <div class="col-2">
-                    <p class="testing-error-item-label">New Offer</p>
-                    <p class="testing-new-offer-price">£{!!$tradein->bamboo_price!!}</p>
-                </div>
-                <div class="col">
-                    <a href="{{route("acceptFaultyOffer", ['id' => $tradein->id])}}" class="btn btn-orange testing-action-btn">
-                        <p>Accept Offer</p>
-                        <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
-                    </a>
-                    <a href="{{route("returnDevice", ['id' => $tradein->id])}}" class="btn btn-jade testing-action-btn">
-                        <p>Return my Device</p>
-                        <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
-                    </a>
-                </div>
-            </div>
-        @endif
-
         {{-- pin/fmip/google locked --}}
         @if($tradein->lockedFaults() !== null)
             <div class="testing-error-item">
@@ -179,11 +149,11 @@
                                     </div>
                             </div>
                         </div>
-                        <a href="#" class="btn btn-orange testing-action-btn mt-1">
+                        <a href="{{route('acceptFaultyOffer', ['id' => $tradein->id])}}" class="btn btn-orange process-action-btn">
                             <p>Accept Faulty Offer</p>
                             <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
                         </a>
-                        <a href="#" class="btn btn-jade testing-action-btn">
+                        <a href="{{route('returnDevice', ['id' => $tradein->id])}}" class="btn btn-jade process-action-btn">
                             <p>Return my Device</p>
                             <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
                         </a>
@@ -230,29 +200,31 @@
 
         {{-- todo these pls --}}
         @if($tradein->wrongDevice() || $tradein->wrongMemory() || $tradein->wrongNetwork())
-            <div class="testing-error-item">
-                <div class="col">
-                    <p class="testing-error-item-label">Condition</p>
-                    <p class="testing-error-item-bold">Device does not meet the following requirements: </p>
-                    <br>
-                    <p class="testing-error-item-bold">{!!$tradein->getBambooStatus()!!}</p>
+            @if($tradein->getTestingFaults() === null)
+                <div class="testing-error-item">
+                    <div class="col">
+                        <p class="testing-error-item-label">Condition</p>
+                        <p class="testing-error-item-bold">Device does not meet the following requirements: </p>
+                        <br>
+                        <p class="testing-error-item-bold">{!!$tradein->getDeviceStatus()[0]!!}</p>
+                    </div>
+                    <div class="col"></div>
+                    <div class="col">
+                        <p class="testing-error-item-label">New Offer</p>
+                        <p class="testing-new-offer-price">£{!!$tradein->bamboo_price!!}</p>
+                    </div>
+                    <div class="col">
+                        <a href="{{route('acceptFaultyOffer', ['id' => $tradein->id])}}" class="btn btn-orange process-action-btn">
+                            <p>Accept Offer</p>
+                            <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                        </a>
+                        <a href="{{route('returnDevice', ['id' => $tradein->id])}}" class="btn btn-jade process-action-btn">
+                            <p>Return my Device</p>
+                            <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                        </a>
+                    </div>
                 </div>
-                <div class="col"></div>
-                {{-- <div class="col">
-                    <p class="testing-error-item-label">New Offer</p>
-                    <p class="testing-new-offer-price">£ 100</p>
-                </div> --}}
-                <div class="col">
-                    <a href="#" class="btn btn-orange testing-action-btn">
-                        <p>Accept Offer</p>
-                        <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
-                    </a>
-                    <a href="#" class="btn btn-jade testing-action-btn">
-                        <p>Return my Device</p>
-                        <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
-                    </a>
-                </div>
-            </div>
+            @endif
         @else
             @if($tradein->getTestingFaults() !== null)
                 <div class="testing-error-item">
@@ -267,51 +239,24 @@
                     <div class="col"></div>
                     <div class="col">
                         <p class="testing-error-item-label">New Offer</p>
-                        <p class="testing-new-offer-price">£ 100</p>
+                        <p class="testing-new-offer-price">£{!!$tradein->bamboo_price!!}</p>
                     </div>
                     <div class="col">
-                        <a href="#" class="btn btn-orange testing-action-btn">
+                        <a href="{{route('acceptFaultyOffer', ['id' => $tradein->id])}}" class="btn btn-orange testing-action-btn">
                             <p>Accept Offer</p>
                             <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
                         </a>
-                        <a href="#" class="btn btn-jade testing-action-btn">
+                        <a href="{{route('returnDevice', ['id' => $tradein->id])}}" class="btn btn-jade process-action-btn">
                             <p>Return my Device</p>
                             <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
                         </a>
                     </div>
                 </div>
             @else
-                {{-- @if($tradein->isDowngraded())
-                    <div class="testing-error-item">
-                        <div class="col">
-                            <p class="testing-error-item-label">Issue</p>
-                            <p class="testing-error-item-bold">Device grade downgraded</p>
-                        </div>
-                        <div class="col">
-                            <p class="testing-error-item-label">Action required</p>
-                            <p class="testing-error-item-bold">Accept new offer or request device back</p>
-                        </div>
-                        <div class="col"></div>
-                        <div class="col">
-                            <p class="testing-error-item-label">New Offer</p>
-                            <p class="testing-new-offer-price">£ 100</p>
-                        </div>
-                        <div class="col">
-                            <a href="#" class="btn btn-orange testing-action-btn">
-                                <p>Accept Offer</p>
-                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
-                            </a>
-                            <a href="#" class="btn btn-jade testing-action-btn">
-                                <p>Return my Device</p>
-                                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
-                            </a>
-                        </div>
-                    </div>
-                @else
-                    
-                @endif --}}
             @endif
         @endif
+
+
     @endif
 
 @endif
