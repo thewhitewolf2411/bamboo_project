@@ -1,6 +1,9 @@
 <p class="section-item-title-regular">Thanks for your sale! Check out the details below</p>
+<pre class="text-center">
+{!!$tradein->getDeviceStatus()[1]!!} - [{!!$tradein->job_state!!}]
+</pre>
 
-@if($tradein->job_state === '1' || $tradein->job_state === '2' || $tradein->job_state === '3')                                            
+@if(in_array($tradein->job_state, ['1', '2', '3']))                                            
 
     @if($tradein->notReceivedYet())
 
@@ -28,43 +31,45 @@
 
     @else
 
-        <div class="sale-status-row justify-content-center">
-            <div class="sale-status-col">
-                <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
-                <p class="sale-status-text">Order Placed</p>
+        @if($tradein->job_state === '3')
+            <div class="sale-status-row justify-content-center">
+                <div class="sale-status-col">
+                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
+                    <p class="sale-status-text">Trade pack despatched</p>
+                </div>
+                <div class="sale-status-purple-line"></div>
+                <div class="sale-status-col">
+                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
+                    <p class="sale-status-text">Awaiting receipt</p>
+                </div>
+                <div class="sale-status-grey-line"></div>
+                <div class="sale-status-col">
+                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
+                    <p class="sale-status-text">Awaiting response</p>
+                </div>
             </div>
-            <div class="sale-status-purple-line"></div>
-            <div class="sale-status-col">
-                <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-                <p class="sale-status-text">Trade Pack Despatched</p>
-            </div>
-            <div class="sale-status-grey-line"></div>
-            <div class="sale-status-col">
-                <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-                <p class="sale-status-text">Awaiting response</p>
-            </div>
-        </div>
 
-        <p class="sale-status-information text-center mt-4 mb-2">Your order is waiting for despatch.</p>
+            <p class="sale-status-information text-center mt-4 mb-2">Your order is being recieved.</p>
+        @else
+            <div class="sale-status-row justify-content-center">
+                <div class="sale-status-col">
+                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
+                    <p class="sale-status-text">Order Placed</p>
+                </div>
+                <div class="sale-status-purple-line"></div>
+                <div class="sale-status-col">
+                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
+                    <p class="sale-status-text">Trade Pack Despatched</p>
+                </div>
+                <div class="sale-status-grey-line"></div>
+                <div class="sale-status-col">
+                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
+                    <p class="sale-status-text">Awaiting response</p>
+                </div>
+            </div>
 
-        {{-- <div class="sale-status-row justify-content-center">
-            <div class="sale-status-col">
-                <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
-                <p class="sale-status-text">Trade Pack Despatched</p>
-            </div>
-            <div class="sale-status-purple-line"></div>
-            <div class="sale-status-col">
-                <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-                <p class="sale-status-text">Receiving</p>
-            </div>
-            <div class="sale-status-grey-line"></div>
-            <div class="sale-status-col">
-                <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-                <p class="sale-status-text">Testing</p>
-            </div>
-        </div>
-
-        <p class="sale-status-information text-center mt-4 mb-2">Your order is being recieved.</p> --}}
+            <p class="sale-status-information text-center mt-4 mb-2">Your order is waiting for despatch.</p>
+        @endif
 
     @endif
     
