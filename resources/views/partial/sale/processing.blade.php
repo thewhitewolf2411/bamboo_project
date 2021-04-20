@@ -15,23 +15,11 @@
 
 @else
 
-    @if($tradein->job_state === '10')
-        <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
-            <div class="emoji-col">
-                <img class="emoji-img" src="{{asset('/customer_page_images/body/emoji_laughing.svg')}}">
-                <p class="emoji-text">Woohoo!</p>
-            </div>
-            <p class="emoji-info-text">
-                We have received your device and it is currently being
-                processed with our trusty team of bamboo’ers.
-            </p>
-        </div>
-    @endif
-
     @if($tradein->stuckAtProcessing())
 
         {{-- waiting blacklisted reason --}}
         @if($tradein->job_state === '7')
+        
             <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
                 <div class="emoji-col">
                     <img class="emoji-img" src="{{asset('/customer_page_images/body/emoji_winking.svg')}}">

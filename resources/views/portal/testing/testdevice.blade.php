@@ -52,6 +52,7 @@
                             <td><div class="table-element">Product Network</div></td>
                             <td><div class="table-element">{{$tradein->imei_number === null ? 'Product Serial Number' : 'Product IMEI number'}}</div></td>
                             <td><div class="table-element">Customer Grade</div></td>
+                            @if($tradein->pin_pattern_number !== null) <td><div class="table-element">Pattern / PIN number</div></td> @endif
                         </tr>
                         <tr>
                             <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
@@ -62,6 +63,7 @@
                             <td><div class="table-element">{{$tradein->customer_network === null ? 'N/A' : $tradein->customer_network}}</div></td>
                             <td><div class="table-element">{{$tradein->imei_number === null ? $tradein->serial_number : $tradein->imei_number}}</div></td>
                             <td><div class="table-element">{{$tradein->customer_grade}}</div></td>
+                            @if($tradein->pin_pattern_number !== null) <td><div class="table-element">{!!$tradein->pin_pattern_number!!}</div></td> @endif
                         </tr>
 
                     </table>

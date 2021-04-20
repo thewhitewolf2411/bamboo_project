@@ -100,6 +100,23 @@
     margin-left: 10px;
 }
 
+.notification-action{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-left: auto;
+    margin-right: 0;
+    cursor: pointer;
+}
+
+.notification-action:hover{
+    text-decoration: underline;
+}
+
+.notification-action > p{
+    font-size: 18px;
+}
+
 .action-button-right{
     display: flex;
     flex-direction: row;

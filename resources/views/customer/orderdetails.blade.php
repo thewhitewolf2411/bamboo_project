@@ -79,23 +79,7 @@
                                     </div>
                                     <div class="line-bottom"></div>
                                     <div class="collapse" id="collapseNotifications">
-                                        <div class="notifications-list">
-                                            {{-- {!!dd($notifications)!!} --}}
-                                            @foreach($notifications as $notification)
-                                                <div class="notification-card @if($notification->status === 'alert' && $notification->resolved === false) red-border @endif">
-                                                    @if($notification->status === 'alert')
-                                                        @if($notification->resolved === false)
-                                                            <img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
-                                                        @else
-                                                            <img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/green_tick.svg')}}">
-                                                        @endif
-                                                    @endif
-                                                    @if($notification->status === 'info')<img class="notification-green-img mr-4 ml-2" src="{{asset('/customer_page_images/body/green_bell.svg')}}">@endif
-                                                    {{$notification->content}}
-                                                </div>
-                                                <div class="notification-card-border"></div>
-                                            @endforeach
-                                        </div>
+                                        @include('partial.customer.notifications', ['notifications' => $notifications])
                                     </div>
                                 </div>
                             </div>
