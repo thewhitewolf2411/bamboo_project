@@ -44,6 +44,10 @@
                         </div>
                         <div class="section-items">
 
+                            <div class="back-to-sales-mobile">
+                                <div class="sales-item"><img class="go-left-img" src="{{asset('/customer_page_images/body/go-left.svg')}}">My Sales</div>
+                            </div>
+
                             <div id="section-sale-status" class="sale-item-sections mb-2">
                                 <div class="section-item-content">
                                     <div class="section-header">

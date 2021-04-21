@@ -11796,6 +11796,7 @@ main p, a, span {
   padding-right: 35px;
   padding-bottom: 20px;
   background: white;
+  width: 100%;
 }
 
 .section-header {
@@ -12124,7 +12125,7 @@ main p, a, span {
   flex-direction: row;
 }
 
-.sections-row-mobile {
+.sections-menu-mobile {
   display: none;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -12133,21 +12134,98 @@ main p, a, span {
 
 .mobile-menu-item {
   height: 60px;
-  line-height: 3.6;
   padding-left: 20px;
   min-width: 220px;
-  font-family: Sharp Sans No1 Bold;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
   cursor: pointer;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 
-@media (max-width: 625px) {
-  .sections-row {
+.mobile-menu-item > p {
+  font-family: Sharp Sans No1 Bold;
+  font-size: 18px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.mobile-menu-item > p.left {
+  margin-left: 10px;
+}
+
+.mobile-menu-item > p.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mobile-img-logout {
+  display: block;
+  width: 18px;
+  height: auto;
+  margin-left: 0;
+  margin-right: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.mobile-img-arrow-next {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  margin-right: 14px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.mobile-img-arrow-back {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+@media (max-width: 740px) {
+  .sections-menu, .page-sections {
     display: none;
   }
 
-  .sections-row-mobile {
+  .section-items {
+    margin-left: 0;
+  }
+
+  .section-item-content {
+    width: 100%;
+  }
+
+  .verification-row, .personal-info-row, .account-info-row {
+    flex-direction: column;
+  }
+
+  .newsletter-box {
+    margin-bottom: 10px;
+  }
+
+  .page-sections {
+    padding: 22px;
+    padding-top: 0;
+    padding-right: 0;
+    flex-direction: column;
+  }
+
+  .sections-row {
+    flex-direction: column;
+    padding: 0 !important;
+  }
+
+  .sections-menu-mobile {
     display: flex;
+    margin-left: 20px;
   }
 }
 .sales-item {
@@ -12615,6 +12693,11 @@ main p, a, span {
   margin-top: 15px;
 }
 
+.back-to-sales-mobile {
+  display: none;
+  padding: 20px 35px;
+}
+
 @media (max-width: 992px) {
   .sections-row {
     width: 100%;
@@ -12630,8 +12713,8 @@ main p, a, span {
   }
 }
 @media (max-width: 740px) {
-  .sections-menu {
-    display: none;
+  .back-to-sales-mobile {
+    display: block;
   }
 }
 .support-faq-answers .answer {

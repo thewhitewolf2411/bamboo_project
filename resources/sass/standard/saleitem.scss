@@ -474,6 +474,10 @@
     margin-top: 15px;
 }
 
+.back-to-sales-mobile{
+    display: none;
+    padding: 20px 35px;
+}
 
 
 
@@ -498,7 +502,7 @@
 
 // mobile
 @media (max-width: 740px){
-    .sections-menu{
-        display: none;
+    .back-to-sales-mobile{
+        display: block;
     }
 }
