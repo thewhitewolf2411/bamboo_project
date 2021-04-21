@@ -143,25 +143,48 @@
         </div>
 
     @else
+    
+        @if($tradein->paymentFailed())
+            <div class="sale-status-row justify-content-center">
+                <div class="sale-status-col">
+                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
+                    <p class="sale-status-text">Testing</p>
+                </div>
+                <div class="sale-status-purple-line"></div>
+                <div class="sale-status-col">
+                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
+                    <p class="sale-status-text">Awaiting response</p>
+                </div>
+                <div class="sale-status-purple-line"></div>
+                <div class="sale-status-col">
+                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
+                    <p class="sale-status-text">Submitted for payment</p>
+                </div>
+            </div>
+            <p class="sale-status-information text-center mt-4 mb-2">
+                Oh no! It looks like there is something holding up your sale.<br>
+                Please check payment section to help us resolve the issue and speed up your sale.
+            </p>
+        @else
+            <div class="sale-status-row justify-content-center">
+                <div class="sale-status-col">
+                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
+                    <p class="sale-status-text">Submitted for payment</p>
+                </div>
+                <div class="sale-status-purple-line"></div>
+                <div class="sale-status-col">
+                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
+                    <p class="sale-status-text">Payment confirmed</p>
+                </div>
+                <div class="sale-status-grey-line"></div>
+                <div class="sale-status-col">
+                    <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
+                    <p class="sale-status-text">Sale complete</p>
+                </div>
+            </div>
 
-        <div class="sale-status-row justify-content-center">
-            <div class="sale-status-col">
-                <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
-                <p class="sale-status-text">Submitted for payment</p>
-            </div>
-            <div class="sale-status-purple-line"></div>
-            <div class="sale-status-col">
-                <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-                <p class="sale-status-text">Payment confirmed</p>
-            </div>
-            <div class="sale-status-grey-line"></div>
-            <div class="sale-status-col">
-                <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-                <p class="sale-status-text">Sale complete</p>
-            </div>
-        </div>
-
-        <p class="sale-status-information text-center mt-4 mb-2">Your order is being submitted for payment.</p>
+            <p class="sale-status-information text-center mt-4 mb-2">Your order is being submitted for payment.</p>
+        @endif
 
     @endif
     
@@ -234,29 +257,6 @@
     <p class="sale-status-information text-center mt-4 mb-2">
         Oh no! It looks like there is something holding up your sale.<br>
         Please check testing section to help us resolve the issue and speed up your sale.
-    </p>
-@endif
-
-@if($tradein->paymentFailed())
-    <div class="sale-status-row justify-content-center">
-        <div class="sale-status-col">
-            <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
-            <p class="sale-status-text">Testing</p>
-        </div>
-        <div class="sale-status-purple-line"></div>
-        <div class="sale-status-col">
-            <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
-            <p class="sale-status-text">Awaiting response</p>
-        </div>
-        <div class="sale-status-purple-line"></div>
-        <div class="sale-status-col">
-            <img class="sale-status-img" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
-            <p class="sale-status-text">Submitted for payment</p>
-        </div>
-    </div>
-    <p class="sale-status-information text-center mt-4 mb-2">
-        Oh no! It looks like there is something holding up your sale.<br>
-        Please check payment section to help us resolve the issue and speed up your sale.
     </p>
 @endif
 

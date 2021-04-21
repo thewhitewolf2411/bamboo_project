@@ -10177,7 +10177,7 @@ main p, a, span {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: 770px;
+  height: 810px;
 }
 
 .home-title-container .left-container {
@@ -12190,6 +12190,10 @@ main p, a, span {
   margin-bottom: auto;
 }
 
+.modal {
+  overflow-y: auto;
+}
+
 @media (max-width: 740px) {
   .sections-menu, .page-sections {
     display: none;
@@ -12215,6 +12219,7 @@ main p, a, span {
     padding: 22px;
     padding-top: 0;
     padding-right: 0;
+    padding-left: 0;
     flex-direction: column;
   }
 
@@ -12225,7 +12230,10 @@ main p, a, span {
 
   .sections-menu-mobile {
     display: flex;
-    margin-left: 20px;
+  }
+
+  .section-header {
+    flex-wrap: wrap;
   }
 }
 .sales-item {
@@ -12616,6 +12624,8 @@ main p, a, span {
   display: flex;
   flex-direction: row;
   max-height: 40px;
+  width: auto;
+  max-width: 180px;
 }
 
 .payment-pen-icon {
@@ -12698,6 +12708,12 @@ main p, a, span {
   padding: 20px 35px;
 }
 
+.payment-item-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
 @media (max-width: 992px) {
   .sections-row {
     width: 100%;
@@ -12710,6 +12726,14 @@ main p, a, span {
 
   .sale-status-grey-line {
     width: 100px;
+  }
+
+  .sale-row-1, .sale-row-2 {
+    flex-wrap: wrap;
+  }
+
+  .payment-item-info {
+    flex-direction: column;
   }
 }
 @media (max-width: 740px) {
@@ -13878,7 +13902,7 @@ h3, h4, h5 {
 }
 
 .large-bold-text {
-  font-size: 4rem;
+  font-size: 3rem;
   font-family: Sharp Sans No1 Bold;
 }
 
@@ -13981,10 +14005,6 @@ h3, h4, h5 {
 @media screen and (max-width: 740px) and (min-width: 325px) {
   main {
     margin-top: 100px !important;
-  }
-
-  .start-buttons-container #start-shopping, #start-selling, a {
-    color: #fff !important;
   }
 
   .how-buttons-container {
@@ -15261,6 +15281,14 @@ h3, h4, h5 {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.16);
 }
 
+.top-upper-elements-container a {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .top-down-elements-container {
   display: flex;
   justify-content: space-evenly;
@@ -15276,16 +15304,6 @@ h3, h4, h5 {
   top: 0px;
   display: none;
   z-index: 100000;
-}
-
-.top-upper-elements-container a {
-  margin: 0;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 240px;
-  width: 280px;
 }
 
 .top-element-container {
@@ -15335,6 +15353,7 @@ h3, h4, h5 {
   display: flex;
   justify-content: space-between;
   width: 100%;
+  text-align: center;
 }
 
 .top-element-container a:hover {
@@ -16828,10 +16847,6 @@ input.lookup-delivery-basket::placeholder {
     min-height: 50px;
   }
 
-  .top-upper-elements-container a {
-    min-width: 200px;
-  }
-
   .top-element-container p {
     font-size: 12pt;
   }
@@ -16860,11 +16875,11 @@ input.lookup-delivery-basket::placeholder {
 
   .top-upper-elements-container {
     padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
 
   .top-upper-elements-container a {
-    width: 125px !important;
-    min-width: 125px !important;
     text-align: center;
   }
 
@@ -16874,6 +16889,10 @@ input.lookup-delivery-basket::placeholder {
 
   .products a {
     flex: 1 0 100%;
+  }
+
+  .selllinks-sublink {
+    display: none !important;
   }
 }
 @media (max-width: 460px) {
@@ -18331,9 +18350,10 @@ input[type=number] {
 }
 
 .newsletter-large-text {
-  font-size: 4rem;
+  font-size: 3rem;
   text-align: center;
   font-family: Sharp Sans No1 Bold;
+  line-height: 1.1;
 }
 
 .newsletter-small-text {
@@ -18401,6 +18421,27 @@ input[type=number] {
   background: #A3D147;
 }
 
+@media (max-width: 500px) {
+  .sustainability-about-col > img, .sustainability-img {
+    display: none;
+  }
+
+  .sustainability-images-overlay {
+    margin-top: 0;
+  }
+
+  .sustainability-about-row {
+    margin-bottom: 0;
+  }
+
+  .sustainability-about-col > a, .text-buttons-sustainability > a {
+    min-width: 150px;
+  }
+
+  .sustainability-container {
+    padding-top: 100px 140px 100px 100px;
+  }
+}
 .register-elements-container {
   width: 50%;
 }

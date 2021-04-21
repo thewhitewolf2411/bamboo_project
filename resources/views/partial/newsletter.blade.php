@@ -4,7 +4,7 @@
         <p class="newsletter-large-text">Sign up to our newsletter!</p>
     </div>
 
-    <div class="text-center">
+    <div class="text-center mt-4">
         <p class="newsletter-small-text">amazing offers, hints and tips and just awesome-ness</p>
     </div>
 

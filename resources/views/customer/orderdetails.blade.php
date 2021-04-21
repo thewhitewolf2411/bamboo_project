@@ -45,7 +45,7 @@
                         <div class="section-items">
 
                             <div class="back-to-sales-mobile">
-                                <div class="sales-item"><img class="go-left-img" src="{{asset('/customer_page_images/body/go-left.svg')}}">My Sales</div>
+                                <div class="sales-item" id="back-to-sales-mobile"><img class="go-left-img" src="{{asset('/customer_page_images/body/go-left.svg')}}">My Sales</div>
                             </div>
 
                             <div id="section-sale-status" class="sale-item-sections mb-2">
@@ -292,7 +292,7 @@
                                             @endif
     
                                             @if(Auth::user()->hasPaymentDetails())
-                                                <div class="row justify-content-center">
+                                                <div class="payment-item-info">
                                                     <div class="col-3">
                                                         <p class="m-0">Name on account</p>
                                                         <p style="font-size: 20px;">{!!Auth::user()->accountName()!!}</p>
@@ -311,7 +311,7 @@
                                                         <p class="payment-agreed-price">£{!!$tradein->bamboo_price!!}</p>
                                                     </div>
             
-                                                    <button type="button" class="btn btn-purple payment-details-btn" style="color: white;" data-toggle="modal" data-target="#accountDetils">
+                                                    <button type="button" class="btn btn-purple payment-details-btn mt-auto mb-auto " style="color: white;" data-toggle="modal" data-target="#accountDetils">
                                                         Re-enter details <img class="payment-pen-icon" src="{{asset('/images/pen.png')}}">
                                                     </button>
                                                 </div>
@@ -526,6 +526,11 @@
         $('#pin-lock').addClass('hidden');
         $('#pattern-lock').addClass('hidden');
     })
+
+    document.getElementById('back-to-sales-mobile').addEventListener('click', function(){
+        window.localStorage.setItem('backtosales', true);
+        window.location.href =  window.location.href.substring(0, window.location.href.length-1);
+    });
 
 
     function changeSection(id){

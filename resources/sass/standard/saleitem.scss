@@ -396,6 +396,8 @@
     display: flex;
     flex-direction: row;
     max-height: 40px;
+    width: auto;
+    max-width: 180px;
 }
 
 .payment-pen-icon{
@@ -479,6 +481,12 @@
     padding: 20px 35px;
 }
 
+.payment-item-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 
 
 // general
@@ -492,6 +500,13 @@
     }
     .sale-status-grey-line{
         width: 100px;
+    }
+    .sale-row-1, .sale-row-2{
+        flex-wrap: wrap;
+    }
+
+    .payment-item-info{
+        flex-direction: column;
     }
 }
 

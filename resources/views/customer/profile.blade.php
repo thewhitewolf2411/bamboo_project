@@ -953,7 +953,7 @@
 
         $.ajax({
             type: "POST",
-            url: 'userprofile/verify',
+            url: '/userprofile/verify',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },

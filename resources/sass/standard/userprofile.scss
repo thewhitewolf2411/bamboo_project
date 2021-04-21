@@ -573,6 +573,9 @@
     margin-bottom: auto;
 }
 
+.modal {
+    overflow-y:auto;
+}
 
 // image breakpoint
 @media (max-width: 1420px){
@@ -625,6 +628,7 @@
         padding: 22px;
         padding-top: 0;
         padding-right: 0;
+        padding-left: 0;
         flex-direction: column;
     }
 
@@ -635,7 +639,11 @@
 
     .sections-menu-mobile{
         display: flex;
-        margin-left: 20px;
+        //margin-left: 20px;
+    }
+
+    .section-header{
+        flex-wrap: wrap;
     }
 }
 

@@ -35,7 +35,7 @@
 
     <div class="home-element how-container">
         <div class="text-center">
-            <p class="large-bold-text">Sounds great, but, <br> how does it actually work?</p>
+            <p class="large-bold-text">Sounds great, but, how does it actually work?</p>
         </div>
 
         <div class="how-buttons-container mt-5">
