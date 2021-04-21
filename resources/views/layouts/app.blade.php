@@ -44,6 +44,14 @@
         </script>
         @endif
 
+        @if(session('showLogin') || $errors->all())
+            <script>
+                $(window).on('load',function(){
+                    $('#loginModal').modal('show');
+                });
+            </script>
+        @endif
+
         @if(Session::has('nouser'))
         <script>
             $('#loginModal').modal('show');

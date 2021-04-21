@@ -98,7 +98,7 @@
                                 <option value="2">Insurance Claim</option>
                                 <option value="3">Blocked / FRP</option>
                                 <option value="4">Stolen</option>
-                                <option value="5">Knox</option>
+                                <!--<option value="5">Knox</option>-->
                                 <option value="6">Asset Watch</option>
                             </select>
                             @elseif($tradein->getQuarantineReason())

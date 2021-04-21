@@ -112,6 +112,13 @@
         </script>
         @endif
 
+        @if(session('showLogin') || $errors->all())
+            <script>
+                $(window).on('load',function(){
+                    $('#loginModal').modal('show');
+                });
+            </script>
+        @endif
         <script>
 
             function showRegistrationForm(){
