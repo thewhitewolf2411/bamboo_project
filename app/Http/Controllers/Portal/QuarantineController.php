@@ -292,33 +292,18 @@ class QuarantineController extends Controller
         $user = User::where('id', $tradein->user_id)->first();
 
         if($request->val === '8a'){
-            $klaviyoemail = new KlaviyoEmail();
-            $klaviyoemail->blacklisted($user, $tradein);
-
             $tradein->quarantine_reason = "Lost";
         }
         if($request->val === '8b'){
-            $klaviyoemail = new KlaviyoEmail();
-            $klaviyoemail->deviceUnderContract($user, $tradein);
-
             $tradein->quarantine_reason = "Insurance claim";
         }
         if($request->val === '8c'){
-            $klaviyoemail = new KlaviyoEmail();
-            $klaviyoemail->blacklisted($user, $tradein);
-
             $tradein->quarantine_reason = "Blocked/FRP";
         }
         if($request->val === '8d'){
-            $klaviyoemail = new KlaviyoEmail();
-            $klaviyoemail->deviceStolen($user, $tradein);
-
             $tradein->quarantine_reason = "Stolen";
         }
         if($request->val === '8e'){
-            $klaviyoemail = new KlaviyoEmail();
-            $klaviyoemail->blacklisted($user, $tradein);
-
             $testingClass = new Testing();
             $bambooPrice = $testingClass->generateDevicePrice($tradein->product_id, $tradein->customer_memory, $tradein->customer_network, 1);
             $tradein->bamboo_price = $bambooPrice;
@@ -326,9 +311,6 @@ class QuarantineController extends Controller
             $tradein->quarantine_reason = "Knox";
         }
         if($request->val === '8f'){
-            $klaviyoemail = new KlaviyoEmail();
-            $klaviyoemail->deviceUnderContract($user, $tradein);
-
             $tradein->quarantine_reason = "Assetwatch";
         }
 

@@ -6,6 +6,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 use App\Eloquent\Cart;
+use App\Eloquent\JobStateChanged;
 use Klaviyo\Klaviyo as Klaviyo;
 use Klaviyo\Model\EventModel as KlaviyoEvent;
 

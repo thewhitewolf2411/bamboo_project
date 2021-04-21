@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Audits\TradeinAudit;
 use App\Eloquent\Tradein;
+use App\Eloquent\JobStateChanged;
 use Illuminate\Support\Facades\Auth;
 
 class TradeInObserver
@@ -39,6 +40,12 @@ class TradeInObserver
         //     'user_id'       => Auth::user()->id
         // ]);
         // dd('trade created', $tradein);
+
+        JobStateChanged::create([
+            'tradein_id'=>$tradein->id,
+            'job_state'=>$tradein->job_state,
+            'sent'=>false,
+        ]);
     }
 
     /**
@@ -126,6 +133,11 @@ class TradeInObserver
             $audit->save();
         }
 
+        $last_job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
+        if($last_job_state->job_state !== $tradein->job_state){
+            $last_job_state->job_state = $tradein->job_state;
+            $last_job_state->save();
+        }
     }
 
     /**

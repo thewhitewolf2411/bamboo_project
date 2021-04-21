@@ -299,6 +299,9 @@ class PaymentsController extends Controller
                     $tradein->job_state = '23';
                     $tradein->save();
 
+                    $klaviyo = new KlaviyoEmail();
+                    $klaviyo->devicePassedTest(User::find($tradein->user_id), $tradein);
+
                     // create payment batch device
                     $payment_batch_device = new PaymentBatchDevice([
                         'payment_batch_id' => $payment_batch->id,

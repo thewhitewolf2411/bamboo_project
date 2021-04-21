@@ -240,8 +240,8 @@ class TestingController extends Controller
         
             $tradein->save();
 
-            $klaviyoemail = new KlaviyoEmail();
-            $klaviyoemail->missingDevice($user);
+            //$klaviyoemail = new KlaviyoEmail();
+            //$klaviyoemail->missingDevice($user);
 
             $mti = false;
             if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>1){
@@ -330,8 +330,8 @@ class TestingController extends Controller
                 
                 $tradein->bamboo_price = $newPrice;
 
-                $klaviyoemail = new KlaviyoEmail();
-                $klaviyoemail->noImei($user, $tradein);
+                //$klaviyoemail = new KlaviyoEmail();
+                //$klaviyoemail->noImei($user, $tradein);
             }
             else{
                 $tradein->job_state = "9";
@@ -360,8 +360,8 @@ class TestingController extends Controller
             $tradein->job_state = "6";
             $user = User::where('id', $tradein->user_id)->first();
 
-            $klaviyoemail = new KlaviyoEmail();
-            $klaviyoemail->noImei($user, $tradein);
+            //$klaviyoemail = new KlaviyoEmail();
+            //$klaviyoemail->noImei($user, $tradein);
             $tradein->save();
             return redirect('/portal/testing/result/' . $tradein->id);
         }
@@ -462,8 +462,8 @@ class TestingController extends Controller
 
             $user = User::where('id', $tradein->user_id)->first();
 
-            $klaviyomail = new KlaviyoEmail();
-            $klaviyomail->blacklisted($user, $tradein);
+            //$klaviyomail = new KlaviyoEmail();
+            //$klaviyomail->blacklisted($user, $tradein);
         }
 
 

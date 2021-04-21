@@ -90,22 +90,14 @@ class Testing{
             
             $tradein->job_state = "15c";
 
-            $klaviyoemail = new KlaviyoEmail();
-            $klaviyoemail->pinLocked($user, $tradein);
-
         }
         else{
             if($request->fimp_or_google_lock === "true"){
                 if($tradein->getBrandId($tradein->product_id) === 1){
                     $tradein->job_state = "15a";
-
-                    $klaviyoemail = new KlaviyoEmail();
-                    $klaviyoemail->FIMP($user, $tradein);
                 }
                 else{
                     $tradein->job_state = "15b";
-                    $klaviyoemail = new KlaviyoEmail();
-                    $klaviyoemail->googleLocked($user, $tradein);
                 }
             }
         }
@@ -217,8 +209,8 @@ class Testing{
                     $tradein->job_state = "16";
                 }
     
-                $klaviyomail = new KlaviyoEmail();
-                $klaviyomail->devicePassedTest($user, $tradein);
+                //$klaviyomail = new KlaviyoEmail();
+                //$klaviyomail->devicePassedTest($user, $tradein);
             }
             else{
                 if($request->device_correct === "false"){
@@ -327,7 +319,7 @@ class Testing{
             }
         }
 
-        dd($price);
+        #dd($price);
 
         return $price;
     }
