@@ -46,6 +46,8 @@ class CreateTradeinTable extends Migration
             $table->float('misc_cost')->nullable();
             $table->string('pin_pattern_number')->nullable()->default(null);
             $table->boolean('trade_pack_send_by_customer')->nullable();
+            $table->boolean('fmip_gock')->nullable();
+            $table->boolean('pin_locked')->nullable();
             $table->timestamps();
         });
     }

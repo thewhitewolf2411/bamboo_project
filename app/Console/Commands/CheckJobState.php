@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Eloquent\Tradein;
 use App\Eloquent\JobStateChanged;
 use App\Services\KlaviyoEmail;
+use App\Services\NotificationService;
 
 class CheckJobState extends Command
 {
@@ -51,15 +52,20 @@ class CheckJobState extends Command
             $emailTradein = $jobstate->getTradein();
             $emailUser = $jobstate->getUser();
             $klaviyoemail = new KlaviyoEmail();
+            $notificationservice = new NotificationService();
+
             switch($emailTradein->job_state){
                 case "4":
                     $klaviyoemail->missingDevice($emailUser);
+                    $notificationservice->sendMissingDevice($emailTradein);
                     break;
                 case "6":
                     $klaviyoemail->noImei($emailUser, $emailTradein);
+                    $notificationservice->sendNoIMEI($emailTradein);
                     break;
                 case "7":
                     $klaviyoemail->blacklisted($emailUser, $emailTradein);
+                    $notificationservice->sendBlacklisted($emailTradein);
                     break;
                 case "8a":
                     $klaviyoemail->cancellationNoReturn($emailUser);
@@ -77,14 +83,27 @@ class CheckJobState extends Command
                 case "11a":
                 case "15a":
                     $klaviyoemail->FIMP($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Find My iPhone still active.'
+                    );
                     break;
                 case "11b":
                 case "15b":
                     $klaviyoemail->googleLocked($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Google Activation Lock still active.'
+                    );
+                    break;
                     break;
                 case "11c":
                 case "15c":
                     $klaviyoemail->pinLocked($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Pattern/PIN number not provided.'
+                    );
                     break;
                 case "11d":
                 case "15d":

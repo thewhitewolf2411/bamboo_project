@@ -439,7 +439,13 @@ class FeedsController extends Controller
                     if($valid_product){
                         $sellingProduct = new SellingProduct();
                         $sellingProduct->product_name = $row[1];
-                        $sellingProduct->product_image = $row[2];
+                        if($row[2] === null){
+                            $sellingProduct->product_image = 'default_image';
+                            $sellingProduct->avaliable_for_sell = true;
+                        }
+                        else{
+                            $sellingProduct->product_image = $row[2];
+                        }
                         $sellingProduct->category_id = $row[3];
                         $sellingProduct->brand_id = $row[4];
                         $sellingProduct->save();   

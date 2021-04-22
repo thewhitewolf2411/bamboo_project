@@ -301,6 +301,19 @@ class PaymentsController extends Controller
 
                     $klaviyo = new KlaviyoEmail();
                     $klaviyo->devicePassedTest(User::find($tradein->user_id), $tradein);
+                    
+                    $notificationService = new NotificationService();
+                    switch ($tradein->job_state) {
+                        // testing complete
+                        case '10':
+                            $notificationService->testingSuccess($tradein);
+                            break;
+            
+                        // second testing complete
+                        case '12':
+                            $notificationService->secondTestingSuccess($tradein);
+                            break;
+                    }
 
                     // create payment batch device
                     $payment_batch_device = new PaymentBatchDevice([

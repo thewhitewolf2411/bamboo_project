@@ -23,6 +23,7 @@
 
 </style>
 
+<img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($barcodenumber,'C128') }}" height="25" width="180" />
 <table>
     <tr>
         <td>Trade-IN Barcode:</td>
@@ -52,9 +53,7 @@
         <td>Quarantine reason:</td>
         <td>{{$quarantinereason}}</td>
     </tr>
-    <tr>
-        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($barcodenumber,'C128') }}" height="25" width="180" />
-    </tr>
+
 </table>
     
 </div>

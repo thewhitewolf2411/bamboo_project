@@ -120,13 +120,11 @@
             </script>
         @endif
         <script>
-
             function showRegistrationForm(){
                 if(!document.getElementsByClassName('modal-second-element')[0].classList.contains('modal-second-element-active')){
                     document.getElementsByClassName('modal-second-element')[0].classList.add('modal-second-element-active');
                 }
             }
-
         </script>
 
     </body>

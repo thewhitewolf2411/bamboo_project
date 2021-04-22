@@ -106,7 +106,7 @@
                             </td>
                                 
                             <td class="text-center 1 p-0">
-                                @if($tradein->hasDeviceBeenReceived())
+                                @if($tradein->hasDeviceBeenReceived() && !$tradein->deviceInPaymentProcess())
                                     <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
                                         {{-- <i class="fa fa-times" style="color:blue !important;" title="Return device to receiving" ></i> --}}
                                         <img style="width: 15px;" src="{{url('/images/undo.png')}}">
@@ -131,7 +131,7 @@
                             </td>
                                                         
                             <td class="text-center 4 p-0">
-                                @if(!$tradein->deviceInPaymentProcess() && $tradein->job_state !== '21')
+                                @if(!$tradein->deviceInPaymentProcess() && !$tradein->inDespatch())
                                     <a href="#" title="Send to Despatch" onclick="sendToDespatch({{$tradein->id}})"><img style="width: 15px;" src="{{url('/images/undo.png')}}"></a>
                                 @elseif($tradein->job_state === '21')
                                     <div class="alert alert-success mb-0" role="alert">Device was dispatched to customer</div>
@@ -212,7 +212,7 @@
             data: {id: id},
             success: function(response) {
                 if(response == 200){
-                    alert('Trade-in sent to despatch.');
+                    alert('This order has been marked to be returned to customer.');
                     window.location.reload();
                 }
             }

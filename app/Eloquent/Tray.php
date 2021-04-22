@@ -126,7 +126,7 @@ class Tray extends Model
                 return "Wrong Device";
                 break;
             case 'DEMI':
-                return "DEMI";
+                return "Device Missing";
                 break;
             case 'BLCK':
                 return "Blacklisted";

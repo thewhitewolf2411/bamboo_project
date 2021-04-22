@@ -47,7 +47,7 @@ class TradeinAudit extends Model
             //return 'Customer';
             return $user->fullName();
         } else {
-            return $user->fullName();
+            return $user->username;
         }
     }
 

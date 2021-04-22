@@ -135,6 +135,9 @@ class TestingController extends Controller
 
 
         if(count($tradeins)<1){
+            if(count(Tradein::where('barcode', $request->scanid)->whereIn('job_state', ["19","20", "21"])->get())>=1){
+                return redirect()->back()->with('error', 'This order has been marked to be returned to customer.');
+            }
             return redirect()->back()->with('error', 'Trade pack despach has not been sent, or device was already received.');
         }
 
@@ -249,8 +252,8 @@ class TestingController extends Controller
             }
 
             // send notification - missing device
-            $notificationService = new NotificationService();
-            $notificationService->sendMissingDevice($tradein);
+            //$notificationService = new NotificationService();
+            //$notificationService->sendMissingDevice($tradein);
 
             return redirect('/portal/testing/result/' . $tradein->id);
         }
@@ -338,8 +341,8 @@ class TestingController extends Controller
             }
 
             // send notification - no imei
-            $notificationService = new NotificationService();
-            $notificationService->sendNoIMEI($tradein);
+            //$notificationService = new NotificationService();
+            //$notificationService->sendNoIMEI($tradein);
         }
         $tradein->save();
 

@@ -241,7 +241,7 @@ class PagesController extends Controller
             $klaviyo = new KlaviyoEmail();
             $klaviyo->subscribeToNewsletter($email);
 
-            return redirect()->back();
+            return redirect()->back()->with(['sign-up'=>true]);
         }
     }
 

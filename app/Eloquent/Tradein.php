@@ -43,14 +43,17 @@ class Tradein extends Model
         'correct_memory','correct_network', 'product_colour', 'missing_image', 'imei_number', 'serial_number',
         'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 
         'expiry_date', 'location_changed_at', 'trade_pack_send_by_customer', 'carriage_cost', 'admin_cost', 'misc_cost', 'pin_pattern_number',
+        'fmip', 'pin_locked'
     ];
 
 
-    public function getProductName($id){
+    public function getProductName(){
         if($this->correct_product_id !== null){
             return SellingProduct::where('id', $this->correct_product_id)->first()->product_name;
         }
-       return SellingProduct::where('id', $this->product_id)->first()->product_name;
+        #dd(SellingProduct::where('id', $this->product_id)->first());
+        $product = SellingProduct::where('id', $this->product_id)->first();
+        return $product->product_name;
     }
 
     public function getOrderDate(){
@@ -243,14 +246,14 @@ class Tradein extends Model
     }
 
     public function isGoogleLocked(){
-        if($this->job_state === '11b' || $this->job_state === '15b'){
+        if($this->fmip_gock && $this->getBrandId($this->product_id) !== 1){
             return true;
         }
         return false;
     }
 
     public function isPinLocked(){
-        if($this->job_state === '11c' || $this->job_state === '15c'){
+        if($this->pin_locked){
             return true;
         }
         return false;
@@ -316,6 +319,12 @@ class Tradein extends Model
         return false;
     }
 
+    public function inDespatch(){
+        if(in_array($this->job_state, ['19', '20', '21'])){
+            return true;
+        }
+        return false;
+    }
 
     public function deviceLocked(){
         if($this->correct_network === 'unlocked'){
@@ -326,6 +335,10 @@ class Tradein extends Model
 
     public function getIMEIBarcode(){
         return DNS1D::getBarcodeHTML($this->imei_number, 'C128');
+    }
+
+    public function getSNBarcode(){
+        return DNS1D::getBarcodeHTML($this->serial_number, 'C128');
     }
 
     public function isBoxed(){
@@ -351,9 +364,7 @@ class Tradein extends Model
     }
 
     public function isFimpLocked(){
-        $matches = ["11a", "15a"];
-
-        if(in_array($this->job_state, $matches)){
+        if($this->fmip_gock && $this->getBrandId($this->product_id) === 1){
             return true;
         }
         return false;
@@ -571,7 +582,7 @@ class Tradein extends Model
     }
 
     public function getBambooStatus(){
-        $blacklisted = ["8a", "8b", "8c", "8d", "8e", "8f"];
+        $blacklisted = ["7", "8a", "8b", "8c", "8d", "8e", "8f"];
 
         if(in_array($this->job_state, $blacklisted)){
             return "Blacklisted";

@@ -183,11 +183,27 @@ class GetLabel{
 
     public function getTrayLabel(Tray $tray){
 
+        $brand="";
+        switch($tray->tray_brand){
+            case "A":
+                $brand = "Apple";
+                break;
+            case "S":
+                $brand = "Samsung";
+                break;
+            case "H":
+                $brand = "Huaweii";
+                break;
+            default:
+                $brand = "Miscellaneous";
+                break;
+        }
+
         $pdf = PDF::loadView('portal.labels.traylabel', 
         array(
             'barcode'=>$tray->tray_name,
             'barcodenumber'=>$tray->tray_name,
-            'models'=>$tray->getTrayDevices() . " devices",
+            'models'=>$brand . " devices",
             ))
         ->setPaper($this->customPaper, 'landscape')
         ->save('pdf/traylabel-'.$tray->tray_name.'.pdf');

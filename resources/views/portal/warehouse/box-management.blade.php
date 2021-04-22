@@ -176,14 +176,13 @@
                         </tfoot>
                         <tbody>
                             @if(isset($box))
-
                             @foreach ($tradeins as $tradein)
                             <tr>
                                 <td><div class="table-element">{{$box->tray_name}}</div></td>
                                 <td><div class="table-element">{{$tradein->barcode}}</div></td>
                                 <td><div class="table-element">{{$tradein->cosmetic_condition}}</div></td>
                                 <td><div class="table-element">{{$tradein->imei_number}}</div></td>
-                                <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
+                                <td><div class="table-element">{{$tradein->getProductName()}}</div></td>
                                 <td><div class="table-element"><input type="checkbox" class="select-to-remove-from-box" id="{{$tradein->id}}"></div></td>
                             </tr>
                             @endforeach
@@ -220,7 +219,7 @@
                                 <td><div class="table-element">{{$boxedTradein->barcode}}</div></td>
                                 <td><div class="table-element">{{$boxedTradein->cosmetic_condition}}</div></td>
                                 <td><div class="table-element">{{$boxedTradein->imei_number}}</div></td>
-                                <td><div class="table-element">{{$boxedTradein->getProductName($boxedTradein->product_id)}}</div></td>
+                                <td><div class="table-element">{{$boxedTradein->getProductName()}}</div></td>
                             </tr>
                             @endforeach
                         </tbody>

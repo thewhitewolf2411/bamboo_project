@@ -55,8 +55,8 @@ class WarehouseManagementController extends Controller
             $boxContent = TrayContent::where('tray_id', $box->id)->orWhere('pseudo_tray_id', $box->id)->get();
             foreach($boxContent as $bC){
                 $tradein = Tradein::where('id', $bC->trade_in_id)->first();
-                $tradein->model = $tradein->getProductName($tradein->product_id);
-                $tradein->product_id = $tradein->getBrandName($tradein->product_id);
+                $tradein->model = $tradein->getProductName();
+                //$tradein->product_id = $tradein->getBrandName($tradein->product_id);
                 array_push($boxedTradeIns, $tradein);
             }
         }
@@ -136,8 +136,8 @@ class WarehouseManagementController extends Controller
             $boxContent = TrayContent::where('tray_id', $currentBox->id)->get();
             foreach($boxContent as $bC){
                 $tradein = Tradein::where('id', $bC->trade_in_id)->first();
-                $tradein->model = $tradein->getProductName($tradein->product_id);
-                $tradein->product_id = $tradein->getBrandName($tradein->product_id);
+                $tradein->model = $tradein->getProductName();
+                //$tradein->product_id = $tradein->getBrandName($tradein->product_id);
                 array_push($boxedTradeIns, $tradein);
             }
         }
@@ -154,8 +154,8 @@ class WarehouseManagementController extends Controller
 
         foreach($boxContent as $bC){
             $tradein = Tradein::where('id', $bC->trade_in_id)->first();
-            $tradein->model = $tradein->getProductName($tradein->product_id);
-            $tradein->product_id = $tradein->getBrandName($tradein->product_id);
+            $tradein->model = $tradein->getProductName();
+            //$tradein->product_id = $tradein->getBrandName($tradein->product_id);
             array_push($tradeins, $tradein);
         }
 

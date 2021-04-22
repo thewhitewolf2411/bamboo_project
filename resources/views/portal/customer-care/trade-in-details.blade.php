@@ -129,7 +129,7 @@
                         </tr>
                         @foreach($tradeins as $tradein)
                         <tr>
-                            <td><div class="table-element">{{$tradein->barcode}}</div></td>
+                            <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
                             <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                             <td><div class="table-element">{{$tradein->getCustomerStatus()}}</div></td>
                         </tr>

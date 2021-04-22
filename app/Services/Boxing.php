@@ -31,12 +31,31 @@ class Boxing{
             return ['Device is already boxed to other box.', 404];
         }
 
+        if($box->tray_grade == "BL"){
+            $blacklisted = ["7", "8a", "8b", "8c", "8d", "8e", "8f"];
+            if(in_array($tradein->job_state, $blacklisted)){
+                return ['', 200];
+            }
+            else{
+                return ['Device is not blacklisted', 404];
+            }
+        }
+
         if(!($tradein->deviceInPaymentProcess())){
-            return ['Tradein with barcode ' . $request->tradeinid .' is not submitted for payment yet.', 404];
+            return ['Tradein with barcode ' . $tradein->barcode .' is not submitted for payment yet.', 404];
         }
 
         if(($box->tray_grade === 'TAB' && $tradein->getCategoryId($tradein->correct_product_id) === 2) || ($box->tray_grade === 'SW' && $tradein->getCategoryId($tradein->correct_product_id) === 3)){
             return ['', 200];
+        }
+        else{
+            if($box->tray_grade === 'TAB' && $tradein->getCategoryId($tradein->correct_product_id) !== 2){
+                return ['Device is not a tablet.', 404];
+            }
+            if($box->tray_grade === 'SW' && $tradein->getCategoryId($tradein->correct_product_id) !== 3){
+                return ['Device is not a watch.', 404];
+            }
+
         }
 
         if($tradein->cosmetic_condition !== $box->tray_grade){

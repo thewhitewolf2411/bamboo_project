@@ -319,8 +319,8 @@ class QuarantineController extends Controller
         $tradein->save();
 
         // send notification - device blacklisted
-        $notificationService = new NotificationService();
-        $notificationService->sendBlacklisted($tradein);
+        //$notificationService = new NotificationService();
+        //$notificationService->sendBlacklisted($tradein);
 
         return 200;
     }
