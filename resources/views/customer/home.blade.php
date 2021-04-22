@@ -213,7 +213,7 @@
     </div> --}}
     @include('partial.deliveryqualitybanner')
 
-    @if(!empty($popular)))
+    @if(!empty($popular))
         <div class="home-element popular-devices">
             <div class="text-center mb-5">
                 <p class="large-bold-text">Popular devices</p>

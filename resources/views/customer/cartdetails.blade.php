@@ -258,7 +258,7 @@
                         <div class="create-account-yourdetails mr-5 p-4">
                             <p class="create-title mb-4">Create an account</p>
 
-                            <form method="POST" action="{{route('completeRegistration')}}">
+                            <form class="complete-registration-form" method="POST" action="{{route('completeRegistration')}}">
                                 @csrf
 
                                 <div class="row m-0">

@@ -336,6 +336,10 @@
     margin-bottom: 40px;
 }
 
+.back-results-selling{
+    margin-top: 20px;
+}
+
 .back-results-sell{
     display: flex;
     flex-direction: row;
@@ -344,21 +348,21 @@
 }
 
 .results-back{
-    font-family: Sharp Sans No1 Bold;
+    font-family: Sharp Sans No1 Semibold;
     font-size: 18px;
     margin: 0;
     margin-left: 20px;
-    padding-top: 4px;
+    //padding-top: 4px;
 }
 
 .results-upper{
-    font-family: Sharp Sans No1 Bold;
+    font-family: Sharp Sans No1 Semibold;
     font-size: 24px;
     text-transform: uppercase;
 }
 
 .results-found{
-    font-family: Sharp Sans No1 Bold;
+    font-family: Sharp Sans No1 Semibold;
     font-size: 30px;
 }
 
@@ -909,8 +913,11 @@ input.lookup-delivery-basket::placeholder{
 
 // new styles
 .sell-title, .sell-subtitle{
-    font-family: Sharp Sans No1 Bold;
     text-align: center;
+}
+
+.sell-title{
+    font-family: Sharp Sans No1 Bold;
 }
 
 .sell-title{
@@ -918,8 +925,9 @@ input.lookup-delivery-basket::placeholder{
 }
 
 .sell-subtitle{
-    font-size: 20px;
+    font-size: 24px;
     text-transform: uppercase;
+    font-family: Bebas Neue;
 }
 
 .sell-subtitle-regular{
@@ -1226,7 +1234,7 @@ input.lookup-delivery-basket::placeholder{
     flex: 1 0 21%;
     margin: 5px;
     border: 2px solid #707070;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
 }
 
@@ -1252,6 +1260,7 @@ input.lookup-delivery-basket::placeholder{
     display: flex;
     flex-direction: column;
     margin: 25px;
+    margin-top: 0;
 }
 
 .device-make-result > p{
@@ -1261,12 +1270,16 @@ input.lookup-delivery-basket::placeholder{
 .device-make-result-image{
     width: auto;
     max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .device-make-result-name{
     font-family: Sharp Sans No1 Bold;
     font-size: 22px !important;
     text-align: center;
+    width: 240px;
+    height: 75px;
 }
 
 .select-make-result-device{
@@ -1274,6 +1287,7 @@ input.lookup-delivery-basket::placeholder{
     height: 40px;
     display: block;
     margin: auto;
+    margin-top: 0 !important;
     cursor: pointer;
 }
 
@@ -1488,6 +1502,10 @@ input.lookup-delivery-basket::placeholder{
     font-size: 14px;
 }
 
+.confirmation-info-text.padded{
+    padding: 0 40px !important;
+}
+
 .confirmation-grey{
     background: #EDEDED;
     display: flex;
@@ -1542,6 +1560,7 @@ input.lookup-delivery-basket::placeholder{
 
 .create-account-yourdetails > p.create-title{
     font-size: 20px;
+    font-family: Sharp Sans No1 Bold;
 }
 
 .password-input{
@@ -1600,9 +1619,7 @@ input.lookup-delivery-basket::placeholder{
         width: auto;
         margin: auto;
     }
-    .results-back.selling{
-        display: none;
-    }
+
     .back-results-sell{
         margin-left: 20px !important;
     }
@@ -1652,6 +1669,8 @@ input.lookup-delivery-basket::placeholder{
 
     .cartdetails-summary{
         margin-top: 20px;
+        margin-left: 0 !important;
+        padding: 15px;
     }
 
     .select-pack-type{
@@ -1660,6 +1679,10 @@ input.lookup-delivery-basket::placeholder{
     }
 
     .create-account-container{
+        width: 100% !important;
+    }
+
+    .welcome-user-container, .bank-account-details{
         width: 100% !important;
     }
 }
@@ -1705,8 +1728,11 @@ input.lookup-delivery-basket::placeholder{
 
 // tablets - regular
 @media (max-width: 625px){
+    .device-brands-row{
+        padding: 0 15px;
+    }
     .device-brand{
-        flex: 1 0 30%;
+        flex: 1 0 45%;
     }
     .top-upper-elements-container{
         padding: 0;
@@ -1728,6 +1754,74 @@ input.lookup-delivery-basket::placeholder{
     }
     .selllinks-sublink{
         display: none !important;
+    }
+
+    .sell-title, .sell-subtitle{
+        padding: 0 60px;
+    }
+
+    .sell-search-container{
+        padding: 0 40px;
+    }
+
+    .single-sell-category{
+        width: 250px;
+    }
+
+    .sell-category-device-background{
+        width: 200px;
+        height: 200px;
+        margin-top: 40px;
+    }
+
+    .sell-category-device-image{
+        max-width: 220px;
+    }
+
+    .sell-category-device-image.mobile {
+        top: -40px;
+        left: 18px;
+    }
+
+    .sell-category-device-image.tablet {
+        top: 7px;
+        left: 14px;
+    }
+
+    .sell-category-device-image.watch {
+        top: -25px;
+        left: 14px;
+        max-width: 220px;
+    }
+
+    .selected-category{
+        margin-top: 20px;
+    }
+
+    .device-make-result-image{
+        max-width: 150px;
+    }
+
+    .cartdetails-container, .create-account-container, .create-account-yourdetails{
+        padding: 0 !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .create-account-container > h2{
+        padding-left: 25px;
+        margin-bottom: 25px;
+        margin-top: 10px;
+    }
+
+    .complete-registration-form{
+        padding: 20px;
+    }
+
+    .create-title{
+        padding: 20px;
+        padding-bottom: 0;
     }
 }
 

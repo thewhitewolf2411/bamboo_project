@@ -50,11 +50,42 @@
             </label>
         </div>
 
-        <div class="form-group">
+        <div class="form-group" id="newsletter-section-scrollinto">
             <div class="col-md-3 mt-3 mx-auto">
                 <input type="submit" class="btn btn-purple" value="Sign me up!">
             </div>
         </div>
+
+        @if(Session::has('success-newslettersignup') || Session::has('error-newslettersignup'))
+            <script>
+                var duration = 2000;
+                var startingY = 0;
+                var diff = document.getElementById('newsletter-section-scrollinto').getBoundingClientRect().top - startingY;
+                var start;
+
+                window.requestAnimationFrame(function step(timestamp) {
+                    if (!start) start = timestamp;
+                    var time = timestamp - start;
+                    var percent = Math.min(time / duration, 1);
+
+                    window.scrollTo(0, startingY + diff * percent);
+
+                    if (time < duration) {
+                    window.requestAnimationFrame(step);
+                    }
+                })
+            </script>
+            @if(Session::get('success-newslettersignup'))
+                <div class="alert alert-light w-50 text-center m-auto" role="alert">
+                    {!!Session::get('success-newslettersignup')!!}
+                </div>
+            @endif
+            @if(Session::get('error-newslettersignup'))
+                <div class="alert alert-danger w-50 text-center m-auto" role="alert">
+                    {!!Session::get('error-newslettersignup')!!}
+                </div>
+            @endif
+        @endif
     </form>
 
 </div>

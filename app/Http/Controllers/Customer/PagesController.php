@@ -241,8 +241,10 @@ class PagesController extends Controller
             $klaviyo = new KlaviyoEmail();
             $klaviyo->subscribeToNewsletter($email);
 
-            return redirect()->back();
+            return redirect()->back()->with('success-newslettersignup', "Thanks for subscribing to our newsletter!");
         }
+        return redirect()->back()->with('error-newslettersignup', "Email address is required.");
+
     }
 
     public function sendMessage(Request $request){

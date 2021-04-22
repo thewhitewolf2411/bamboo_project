@@ -492,24 +492,26 @@
                                         @foreach($tradeins as $tradein)
                                             <div class="sale-item">
 
-                                                <div class="col">
-                                                    <p class="sale-item-label">Order #</p>
-                                                    <p class="sale-item-bold">Order #{{$tradein->barcode}}</p>
-                                                </div>
+                                                <div class="mobile-col">
+                                                    <div class="col">
+                                                        <p class="sale-item-label">Order #</p>
+                                                        <p class="sale-item-bold">Order #{{$tradein->barcode}}</p>
+                                                    </div>
 
-                                                <div class="col">
-                                                    <p class="sale-item-label">Date of sale</p>
-                                                    <p class="sale-item-bold">{{$tradein->created_at->toFormattedDateString()}}</p>
-                                                </div>
+                                                    <div class="col">
+                                                        <p class="sale-item-label">Date of sale</p>
+                                                        <p class="sale-item-bold">{{$tradein->created_at->toFormattedDateString()}}</p>
+                                                    </div>
 
-                                                <div class="col">
-                                                    <p class="sale-item-label">Device</p>
-                                                    <p class="sale-item-bold">{{$tradein->getProductName($tradein->id)}}</p>
-                                                </div>
+                                                    <div class="col">
+                                                        <p class="sale-item-label">Device</p>
+                                                        <p class="sale-item-bold">{{$tradein->getProductName($tradein->id)}}</p>
+                                                    </div>
 
-                                                <div class="col">
-                                                    <p class="sale-item-label">Status</p>
-                                                    <p class="sale-item-bold">{{$tradein->getCustomerStatus()}}</p>
+                                                    <div class="col">
+                                                        <p class="sale-item-label">Status</p>
+                                                        <p class="sale-item-bold">{{$tradein->getCustomerStatus()}}</p>
+                                                    </div>
                                                 </div>
 
                                                 <div class="col">
