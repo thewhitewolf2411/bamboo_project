@@ -306,7 +306,7 @@ class Testing{
         $quarantineName = $quarantineTrays->tray_name;
 
         // check for testing faults to send notification
-        $this->checkForNotifications($tradein);
+        //$this->checkForNotifications($tradein);
 
         return ['tray_name'=>$quarantineName, 'tray'=>$quarantineTrays];
 
@@ -357,87 +357,19 @@ class Testing{
         return $price;
     }
 
+    /*
     public function checkForNotifications($tradein){
         $notificationService = new NotificationService();
         // dd($tradein, $data);
 
         switch ($tradein->job_state) {
-            // pin lock (okay)
-            case '11c':
-                $notificationService->sendTestingFailed(
-                    $tradein,
-                    'Pattern/PIN number not provided.'
-                );
-                break;
-            case '15c':
-                $notificationService->sendTestingFailed(
-                    $tradein,
-                    'Pattern/PIN number not provided.'
-                );
-                break;
-            // incorrect memory (oke)
-            case '11f':
-                $notificationService->sendTestingFailed(
-                    $tradein,
-                    'Device memory incorrect.'
-                );
-                break;
-            case '15f':
-                $notificationService->sendTestingFailed(
-                    $tradein,
-                    'Device memory incorrect.'
-                );
-                break;
-
-            // incorrect model (oke)
-            case '11d':
-                $notificationService->sendTestingFailed(
-                    $tradein,
-                    'Device model incorrect.'
-                );
-                break;
-            case '15d':
-                $notificationService->sendTestingFailed(
-                    $tradein,
-                    'Device model incorrect.'
-                );
-                break;
-
-
-            // grade downgraded
-            case '11i':
-                $notificationService->sendTestingFailed(
-                    $tradein,
-                    'Device does not meet the following requirements. Reason: Downgrade.'
-                );
-                break;
-            case '15i':
-
-                $notificationService->sendTestingFailed(
-                    $tradein,
-                    'Device does not meet the following requirements. Reason: Downgrade.'
-                );
-                break;
-
-            // incorrect (locked) network
-            case '11g':
-                $notificationService->sendTestingFailed(
-                    $tradein,
-                    'Device network is incorrect.'
-                );
-                break;
-            case '15g':
-                $notificationService->sendTestingFailed(
-                    $tradein,
-                    'Device network is incorrect.'
-                );
-                break;
 
             default:
                 # code...
                 break;
         }
     }
+    */
 }
 
 

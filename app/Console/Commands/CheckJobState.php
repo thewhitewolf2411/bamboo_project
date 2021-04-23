@@ -69,16 +69,20 @@ class CheckJobState extends Command
                     break;
                 case "8a":
                     $klaviyoemail->cancellationNoReturn($emailUser);
+                    $notificationservice->sendBlacklisted($emailTradein);
                     break;
                 case "8b":
                     $klaviyoemail->deviceUnderContract($emailUser, $emailTradein);
+                    $notificationservice->sendBlacklisted($emailTradein);
                     break;
                 case "8d":
                     $klaviyoemail->deviceStolen($emailUser, $emailTradein);
+                    $notificationservice->sendBlacklisted($emailTradein);
                     break;
                 case "8c":
                 case "8e":
                     $klaviyoemail->cancellationNoReturn($emailUser);
+                    $notificationservice->sendBlacklisted($emailTradein);
                     break;
                 case "11a":
                 case "15a":
@@ -108,30 +112,58 @@ class CheckJobState extends Command
                 case "11d":
                 case "15d":
                     $klaviyoemail->wrongDevice($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Device model incorrect.'
+                    );
                     break;
                 case "11e":
                 case "15e":
                     $klaviyoemail->downgraded($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Device does not meet the following requirements. Reason: Downgrade.'
+                    );
                     break;
                 case "11f":
                 case "15f":
                     $klaviyoemail->downgraded($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Device memory incorrect.'
+                    );
                     break;
                 case "11g":
                 case "15g":
                     $klaviyoemail->downgraded($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Device network is incorrect.'
+                    );
                     break;
                 case "11h":
                 case "15h":
                     $klaviyoemail->downgraded($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Device does not meet the following requirements. Reason: Downgrade.'
+                    );
                     break;
                 case "11i":
                 case "15i":
                     $klaviyoemail->downgraded($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Device does not meet the following requirements. Reason: Downgrade.'
+                    );
                     break;
                 case "11j":
                 case "15j":
                     $klaviyoemail->downgraded($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Device does not meet the following requirements. Reason: Downgrade.'
+                    );
                     break;
             }
 
