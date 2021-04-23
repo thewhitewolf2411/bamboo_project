@@ -76,7 +76,7 @@
 
     <div class="footer-row" id="footer-row-3">
         <div class="footer-row-2 copyright-container">
-            <p class="copyright">©Bamboo 2020. All rights reserved</p>
+            <p class="copyright">©Bamboo {!!\Carbon\Carbon::now()->year!!}. All rights reserved</p>
         </div>
         <div class="row m-0 return-top-container">
             <a class="mr-0 ml-auto" onclick="window.scrollTo({top: 0, behavior: 'smooth'});"><p class="return-top-button bebas-neue">RETURN TO TOP</p> <i class="fa fa-arrow-up" aria-hidden="true"></i></a>

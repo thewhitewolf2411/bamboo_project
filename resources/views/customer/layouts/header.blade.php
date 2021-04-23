@@ -91,19 +91,19 @@
         <a href="/sell">Start Selling</a>
     </div>
     <div class="url-header-container mobile">
-        <a href="/setpage/how">How it works</a>
+        <a href="/how">How it works</a>
     </div>
     <div class="url-header-container mobile">
-        <a href="/setpage/about">About</a>
+        <a href="about">About</a>
     </div>
     <div class="url-header-container">
         <a href="/news">News & Blog</a>
     </div>
     <div class="url-header-container mobile">
-        <a href="/setpage/support">Support & Service</a>
+        <a href="/support">Support & Service</a>
     </div>
     <div class="url-header-container mobile lastitem">
-        <a href="/setpage/contact">Contact</a>
+        <a href="/contact">Contact</a>
     </div>
 
 </div>
