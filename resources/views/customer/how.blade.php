@@ -5,7 +5,7 @@
 <div class="app">
     <div class="how-page how-title-container">
         <div class="center-title-container">
-            <p>How it works</p>
+            <p class="large-page-title">How it works</p>
         </div>
     </div>
 

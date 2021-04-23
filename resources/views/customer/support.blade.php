@@ -8,26 +8,39 @@
             <p>Support & Service</p>
         </div>
     </div>
+
+    @if(Session::get('_previous') !== null)
+    <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+    @else
     <a class="back-to-home-footer mt-3" href="/">
-        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to home</p>
+    @endif
+        <p class="back-home-text support"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to previous page</p>
     </a>
 
     <div class="support-search-element">
-        <div class="center-title-container">
-            <p>How can we help?</p>
+        <div class="text-center">
+            <p class="support-subtitle">How can we help?</p>
         </div>
 
-        <div class="support-search-help">
-            <p>USE THE SEARCH BAR BELOW OR SELECT FROM ONE OF THE OPTIONS BELOW</p>
+        <div class="text-center">
+            <p class="support-subtitle-info bebas-neue">USE THE SEARCH BAR BELOW OR SELECT FROM ONE OF THE OPTIONS BELOW</p>
         </div>
 
-        <div class="search-bar">
+        {{-- <div class="search-bar">
             <form class="support-search-form" action="/searchsupport" method="POST">
                 @csrf
-                <input type="text" placeholder="Search...">
+                <input class="support-search" type="text" placeholder="Search...">
                 <button type="submit"><i class="fa fa-search"></i></button>
             </form>
-        </div>
+        </div> --}}
+        <form class="support-search-form" action="/searchsupport" method="POST">
+            <div class="search-wrapper-support">
+                <input class="support-search" type="text" placeholder="Ask a question...">
+                <div class="support-search-btn">
+                    <img src="{{asset('images/front-end-icons/search_icon.svg')}}">
+                </div>
+            </div>
+        </form>
 
     </div>
 
@@ -39,39 +52,39 @@
                 </div>
             </a> --}}
             <a href="/support/selling">
-                <div class="btn btn-primary btn-orange btn-font-white">
-                    <p>Selling a device</p>
+                <div class="support-btn orange">
+                    <p class="support-btn-text">Selling a device</p>
                 </div>
             </a>
         </div>
 
         <div class="row-height-140 support-middle-row pc-15-50">
             <a href="">
-                <div class="btn btn-primary btn-purple btn-font-white">
-                    <p>Tech</p>
+                <div class="support-btn purple">
+                    <p class="support-btn-text">Tech</p>
                 </div>
             </a>
         </div>
 
         <div class="row-height-140 support-bottom-row pc-15-50">
             <a href="">
-                <div class="btn btn-primary btn-green btn-font-white">
-                    <p>Delivery</p>
+                <div class="support-btn green">
+                    <p class="support-btn-text">Delivery</p>
                 </div>
             </a>
             <a href="">
-                <div class="btn btn-primary btn-green btn-font-white">
-                    <p>Your Order</p>
+                <div class="support-btn green">
+                    <p class="support-btn-text">Your Order</p>
                 </div>
             </a>
             <a href="">
-                <div class="btn btn-primary btn-green btn-font-white">
-                    <p>Your Account</p>
+                <div class="support-btn green">
+                    <p class="support-btn-text">Your Account</p>
                 </div>
             </a>
             <a href="">
-                <div class="btn btn-primary btn-green btn-font-white">
-                    <p>General Questions</p>
+                <div class="support-btn green">
+                    <p class="support-btn-text">General Questions</p>
                 </div>
             </a>
         </div>
@@ -81,7 +94,7 @@
     <div class="support-faq">
         <div class="faq-left">
             <div class="faq-title">
-                <p>MOST FREQUENTLY ASKED QUESTIONS</p>
+                <p class="bebas-neue">MOST FREQUENTLY ASKED QUESTIONS</p>
             </div>
 
             <div class="faq-question">
@@ -137,7 +150,7 @@
         </div>
         <div class="faq-right">
             <div class="faq-title">
-                <p>POPULAR HOW TO...ARTICLES</p>
+                <p class="bebas-neue">POPULAR HOW TO...ARTICLES</p>
             </div>
             <div class="faq-question">
                 <a href="">

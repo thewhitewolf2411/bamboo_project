@@ -4,9 +4,17 @@
 
 <div class="app container">
 
+    @if(Session::get('_previous') !== null)
+    <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+    @else
+    <a class="back-to-home-footer mt-3" href="/">
+    @endif
+        <p class="back-home-text support"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to previous page</p>
+    </a>
+
     <div class="support-search-element">
         <div class="center-title-container font-orange bold">
-            <p>Selling a device</p>
+            <p class="no-text-shadow">Selling a device</p>
         </div>
     </div>
 

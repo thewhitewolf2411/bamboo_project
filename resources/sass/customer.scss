@@ -16,6 +16,13 @@ main p, a, span{
     padding: 60px 150px;
 }
 
+.large-page-title{
+    font-size: 4rem !important;
+    //color: #fff;
+    font-family: Sharp Sans No1 Semibold !important;
+    text-shadow: 0px 3px 20px rgb(0 0 0 / 20%) !important;
+}
+
 .home-title-container{
     background: url("../../public/customer_page_images/body/Bamboo_header2.png");
     background-size: cover;
@@ -84,7 +91,7 @@ main p, a, span{
 }
 
 .center-title-container p{
-    font-size: 40px !important;
+    font-size: 40px;
     font-weight: 600;
     text-align: center;
     font-family: Sharp Sans No1 Bold;
@@ -1205,8 +1212,65 @@ main p, a, span{
     align-items: center;
 }
 
+.no-text-shadow{
+    text-shadow: none !important;
+}
+
 .support-title-container .center-title-container p{
     color: #fff !important;
+}
+
+.support-subtitle{
+    font-size: 4rem;
+    font-weight: 600;
+    font-family: Sharp Sans No1 Bold;
+}
+
+.support-subtitle-info{
+    font-size: 28px;
+    margin: 35px 0;
+}
+
+.search-wrapper-support{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 700px;
+    margin: 0 auto;
+}
+
+.support-search{
+    padding: 0;
+    margin: 0;
+    height: 72px;
+    width: 100%;
+    text-align: left;
+    padding-left: 25px;
+    background: #F2F2F2;
+    border: none;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    font-family: Sharp Sans No1 Book;
+}
+
+.support-search:focus{
+    outline: none;
+}
+
+.support-search-btn{
+    margin-bottom: 0 !important;
+    cursor: pointer;
+    background: #A375BC;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.support-search-btn > img {
+    display: block;
+    position: relative;
+    width: 87px;
+    height: 72px;
+    padding: 18px;
 }
 
 .support-search-element{
@@ -1215,20 +1279,6 @@ main p, a, span{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
-.support-search-form{
-    width: 70%;
-    display: flex;
-    align-items: center;
-}
-
-.support-search-form input{
-    height: 72px;
-    margin: 0;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    font-size: 20pt;
 }
 
 .support-search-form button{
@@ -1243,11 +1293,51 @@ main p, a, span{
     border-bottom-right-radius: 8px;
 }
 
-.support-search-help p{
-    font-size: 22px;
-    font-weight: 600;
-    text-align: center;
+.support-btn{
+    color: white;
+    border-radius: 10px;
+    transition: 0.2s linear;
+    max-width: 1000px;
+}
 
+.support-btn:hover{
+    background: white !important;
+    color: black !important;
+}
+
+.support-btn.orange{
+    background: #F28E33;
+    border: 1px solid #F28E33;
+}
+
+.support-btn.orange:hover p{
+    color: #F28E33;
+}
+
+
+.support-btn.purple{
+    background: #A375BC;
+    border: 1px solid #A375BC;
+}
+
+.support-btn.purple:hover p{
+    color: #A375BC;
+}
+
+
+.support-btn.green{
+    background: #A3D147;
+    border: 1px solid #A3D147;
+}
+
+.support-btn.green:hover p{
+    color: #A3D147;
+}
+
+
+.support-btn-text{
+    font-family: Sharp Sans No1 Bold;
+    color: white;
 }
 
 .support-top-row{
@@ -1320,6 +1410,7 @@ main p, a, span{
 
 .support-bottom-row a>div>p{
     font-size: 20px;
+    text-align: center;
 }
 
 .support-faq{
@@ -1346,8 +1437,7 @@ main p, a, span{
 }
 
 .faq-title p{
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 28px;
     margin-bottom: 40px;
 }
 
@@ -1365,7 +1455,23 @@ main p, a, span{
 
 .faq-question-text p{
     font-size: 18px;
+    font-family: Sharp Sans No1 Medium;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-top: 6px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 .enviroment-title-container{
     background: url("/customer_page_images/body/Environmental-Green.png");
@@ -1535,10 +1641,22 @@ main p, a, span{
     .home-title-container{
         background-position: -250px;
     }
+
+    .faq-right{
+        margin-top: 80px;
+    }
+
+    .back-home-text.support{
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 // tablets - breakpoint
 @media (max-width: 890px){
+    .search-wrapper-support{
+        width: auto;
+    }
 }
 
 
