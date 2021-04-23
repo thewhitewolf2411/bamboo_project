@@ -241,6 +241,7 @@ class GetLabel{
             'barcode'=>$bin->tray_name,
             'barcodenumber'=>$bin->tray_name,
             'binreason'=>$bin->getBinReason(),
+            'detailedreason'=>$this->getDetailedBInReason($bin),
             ))
         ->setPaper($this->customPaper, 'landscape')
         ->save('pdf/binlabel-'.$bin->tray_name.'.pdf');
@@ -259,6 +260,13 @@ class GetLabel{
         ->save('pdf/boxlabel-'.$box->tray_name.'.pdf');
 
         return $pdf;
+    }
+
+    public function getDetailedBInReason(Tray $bin){
+        if($bin->tray_grade === 'WRPH'){
+            return "Wrong Model / GB / Network";
+        }
+        return null;
     }
 
 }

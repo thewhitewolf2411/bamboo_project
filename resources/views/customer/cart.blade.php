@@ -254,7 +254,8 @@
                                 {{-- <form action="/cart/sell" method="POST"> --}}
                                     {{-- @csrf --}}
                                     {{-- <input type="hidden" id="label_status" name="label_status" value="1"> --}}
-                                    @if(App\Helpers\CartHelper::cartItems() > 2)
+                                    {{-- Set testing cart to 50 23.04.2021 --}}
+                                    @if(App\Helpers\CartHelper::cartItems() > 50)
                                         <button id="addToCart" class="btn btn-primary btn-orange w-100 mt-2" data-toggle="modal" data-target="#newOrderModal">Sell my device</button>
                                     @else
                                         <a href="/cart/details" class="btn btn-primary w-100 mt-2">Sell my device</a>

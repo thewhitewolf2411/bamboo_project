@@ -495,7 +495,12 @@ class Reports{
                 $sheet->setCellValue('H'.$i, $tradein->created_at);
                 $sheet->setCellValue('I'.$i, $tradeinauditTPDespatched);
                 $sheet->setCellValue('J'.$i, $tradeinauditReceived);
-                $sheet->setCellValue('K'.$i, $tradein->order_price);
+                if($tradein->isBlackListed()){
+                    $sheet->setCellValue('K'.$i, '0');
+                }
+                else{
+                    $sheet->setCellValue('K'.$i, $tradein->order_price);
+                }
                 $sheet->setCellValue('L'.$i, $tradein->admin_cost);
                 $sheet->setCellValue('M'.$i, $tradein->carriage_cost);
                 $sheet->setCellValue('N'.$i, $tradein->quarantine_date);

@@ -35,7 +35,7 @@
 
 <div style="margin: 0 auto">
     
-    <table style="margin-bottom: 30px;">
+    <table style="margin-bottom: 10px;">
         <tr>
             <td><p>{{$binreason}}</p></td>
         </tr>
@@ -46,6 +46,11 @@
         <tr>
             <td><p>{{$barcode}}</p></td>
         </tr>
+        @if($detailedreason !== null)
+        <tr>
+            <td><p>{{$detailedreason}}</p></td>
+        </tr>
+        @endif
     </table>
     
 </div>

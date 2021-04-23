@@ -167,6 +167,8 @@ class CheckJobState extends Command
                     break;
             }
 
+            $jobstate->sent = true;
+            $jobstate->save();
         }
     }
 }
