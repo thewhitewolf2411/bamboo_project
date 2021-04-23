@@ -11,7 +11,7 @@
         <video id="whathappens" class="whathappens-video" onclick="playVideo(true)">
             <source src="{{asset('/video/what_happens_next.mp4')}}" type="video/mp4">
         </video>
-        <img id="play-icon-whathappens" class="playvideo-whathappens" src="{{asset('/video/play_video.svg')}}" onclick="playVideo(false)">
+        <img id="play-icon-whathappens" class="playvideo-whathappens" src="{{asset('/video/play_video.svg')}}"  onclick="playVideo(false)">
     </div>
 
     @if(Auth::user())
@@ -47,6 +47,12 @@
     @endif
 </div>
 <script type="application/javascript">
+
+    // (function() {
+    //     document.getElementById('whathappens').addEventListener('touchstart', playVideo(true), false);
+    //     document.getElementById('play-icon-whathappens').addEventListener('touchstart', playVideo(false), false);
+    // })();
+
     function playVideo(isPlaying){
         let video = document.getElementById("whathappens");
         let icon = document.getElementById("play-icon-whathappens");

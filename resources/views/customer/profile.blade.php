@@ -36,6 +36,7 @@
 
                 <div class="user-sections-container">
                     <div class="sections-row">
+
                         <div class="sections-menu">
                             <div class="change-page menu-item link-active" id="menu-overview">Account overview</div>
                             <div class="change-page menu-item" id="menu-notifications">Notifications</div>
@@ -45,6 +46,40 @@
                             <div class="change-page menu-item" id="menu-communications">Communications</div>
                             <div class="menu-item" data-toggle="modal" data-target="#logoutModal"><img class="mr-3" src="{{asset('/images/logout-black.svg')}}">Log Out</div>
                         </div>
+
+                        <div class="sections-menu-mobile">
+                            <div class="change-page-mobile mobile-menu-item" id="mobile-menu-notifications">
+                                <img class="mobile-img-arrow-back hidden" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
+                                <p class="left">Notifications</p>
+                                <img class="mobile-img-arrow-next" src="{{asset('/images/front-end-icons/black_arrow_next.svg')}}">
+                            </div>
+                            <div class="change-page-mobile mobile-menu-item" id="mobile-menu-personal">
+                                <img class="mobile-img-arrow-back hidden" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
+                                <p class="left">Personal Information</p>
+                                <img class="mobile-img-arrow-next" src="{{asset('/images/front-end-icons/black_arrow_next.svg')}}">
+                            </div>
+                            <div class="change-page-mobile mobile-menu-item" id="mobile-menu-account">
+                                <img class="mobile-img-arrow-back hidden" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
+                                <p class="left">Account Information</p>
+                                <img class="mobile-img-arrow-next" src="{{asset('/images/front-end-icons/black_arrow_next.svg')}}">
+                            </div>
+                            <div class="change-page-mobile mobile-menu-item" id="mobile-menu-sales">
+                                <img class="mobile-img-arrow-back hidden" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
+                                <p class="left">My Sales</p>
+                                <img class="mobile-img-arrow-next" src="{{asset('/images/front-end-icons/black_arrow_next.svg')}}">
+                            </div>
+                            <div class="change-page-mobile mobile-menu-item" id="mobile-menu-communications">
+                                <img class="mobile-img-arrow-back hidden" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
+                                <p class="left">Communications</p>
+                                <img class="mobile-img-arrow-next" src="{{asset('/images/front-end-icons/black_arrow_next.svg')}}">
+                            </div>
+                            <div class="mobile-menu-item" data-toggle="modal" data-target="#logoutModal">
+                                <img class="mobile-img-logout" src="{{asset('/images/logout-black.svg')}}">
+                                <p class="left">Log Out</p>
+                                <img class="mobile-img-arrow-next" src="{{asset('/images/front-end-icons/black_arrow_next.svg')}}">
+                            </div>
+                        </div>
+
                         <div class="section-items">
                             <div id="section-overview" class="page-sections">
                                 <div class="section-item-preview">
@@ -99,24 +134,8 @@
                                         <p class="section-item-title">Notifications</p>
                                     </div>
                                     <div class="line-bottom"></div>
-                                    <div class="notifications-list">
-                                        @foreach($notifications as $notification)
-                                        
-                                            <div class="notification-card @if($notification->status === 'alert' && $notification->resolved === false) red-border @endif">
-                                                @if($notification->status === 'alert')
-                                                    @if($notification->resolved === false)
-                                                        <img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
-                                                    @else
-                                                        <img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/green_tick.svg')}}">
-                                                    @endif
-                                                @endif
-                                                @if($notification->status === 'info')<img class="notification-green-img mr-4 ml-2" src="{{asset('/customer_page_images/body/green_bell.svg')}}">@endif
-                                                {{$notification->content}}
-                                            </div>
-                                            <div class="notification-card-border"></div>
 
-                                        @endforeach
-                                    </div>
+                                    @include('partial.customer.notifications', ['notifications' => $notifications])
                                 </div>
                             </div>
 
@@ -457,25 +476,9 @@
                                         <p class="section-item-title">Notifications</p>
                                     </div>
                                     <div class="line-bottom"></div>
-                                    <div class="notifications-list">
-                                        @foreach($notifications as $notification)
+                                    
+                                    @include('partial.customer.notifications', ['notifications' => $notifications])
 
-                                            <div class="notification-card @if($notification->status === 'alert' && $notification->resolved === false) red-border @endif">
-                                                @if($notification->status === 'alert')
-                                                    @if($notification->resolved === false)
-                                                        <img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
-                                                    @else
-                                                        <img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/green_tick.svg')}}">
-                                                    @endif
-                                                @endif
-                                                @if($notification->status === 'info')<img class="notification-green-img mr-4 ml-2" src="{{asset('/customer_page_images/body/green_bell.svg')}}">@endif
-                                                {{$notification->content}}
-                                                <div class="notification-card-border"></div>
-
-                                            </div>
-
-                                        @endforeach
-                                    </div>
                                 </div>
                                 <div class="section-item-content mt-2">
                                     <div class="section-header">
@@ -489,24 +492,26 @@
                                         @foreach($tradeins as $tradein)
                                             <div class="sale-item">
 
-                                                <div class="col">
-                                                    <p class="sale-item-label">Order #</p>
-                                                    <p class="sale-item-bold">Order #{{$tradein->barcode}}</p>
-                                                </div>
+                                                <div class="mobile-col">
+                                                    <div class="col">
+                                                        <p class="sale-item-label">Order #</p>
+                                                        <p class="sale-item-bold">Order #{{$tradein->barcode}}</p>
+                                                    </div>
 
-                                                <div class="col">
-                                                    <p class="sale-item-label">Date of sale</p>
-                                                    <p class="sale-item-bold">{{$tradein->created_at->toFormattedDateString()}}</p>
-                                                </div>
+                                                    <div class="col">
+                                                        <p class="sale-item-label">Date of sale</p>
+                                                        <p class="sale-item-bold">{{$tradein->created_at->toFormattedDateString()}}</p>
+                                                    </div>
 
-                                                <div class="col">
-                                                    <p class="sale-item-label">Device</p>
-                                                    <p class="sale-item-bold">{{$tradein->getProductName($tradein->id)}}</p>
-                                                </div>
+                                                    <div class="col">
+                                                        <p class="sale-item-label">Device</p>
+                                                        <p class="sale-item-bold">{{$tradein->getProductName($tradein->id)}}</p>
+                                                    </div>
 
-                                                <div class="col">
-                                                    <p class="sale-item-label">Status</p>
-                                                    <p class="sale-item-bold">{{$tradein->getCustomerStatus()}}</p>
+                                                    <div class="col">
+                                                        <p class="sale-item-label">Status</p>
+                                                        <p class="sale-item-bold">{{$tradein->getCustomerStatus()}}</p>
+                                                    </div>
                                                 </div>
 
                                                 <div class="col">
@@ -565,6 +570,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
 
 
@@ -759,9 +765,15 @@
     // });
 
     let buttons = document.getElementsByClassName('change-page');
-    for (let index = 0; index < buttons.length; index++) {
-        let button = buttons[index];
+    for (let i = 0; i < buttons.length; i++) {
+        let button = buttons[i];
         button.onclick = function() {changeSection(button.id)};
+    }
+
+    let buttons_mobile = document.getElementsByClassName('change-page-mobile');
+    for (let j = 0; j < buttons_mobile.length; j++) {
+        let button_mobile = buttons_mobile[j];
+        button_mobile.onclick = function() {changeSectionMobile(button_mobile.id)};
     }
 
     document.getElementById("old_pass").addEventListener('keyup', function(){
@@ -826,6 +838,112 @@
 
     }
 
+    function changeSectionMobile(id){
+        let splitted = id.split('-');
+        let selectedpage = splitted[2];
+
+        let menuitems = document.getElementsByClassName('mobile-menu-item');
+        let sections = document.getElementsByClassName('page-sections');
+
+        let isAnyActive = document.getElementsByClassName('active-menu-item').length > 0;
+        if(isAnyActive){
+            for (let m = 0; m < menuitems.length; m++) {
+                let menuitem = menuitems[m];
+                let menulink_elements = menuitem.childNodes;
+                let backicon = menulink_elements[1];
+                let menu_text = menulink_elements[3];
+                let right_arrow = menulink_elements[5];
+                menuitem.classList.remove('hidden');
+                if(menuitem.classList.contains('active-menu-item')) menuitem.classList.remove('active-menu-item');
+
+                // hide back arrow, center text, and show next arrow
+                if(!backicon.classList.contains('hidden')){
+                    backicon.classList.add('hidden');
+                }
+                if(menu_text.classList.contains('center')){
+                    menu_text.classList.remove('center');
+                }
+                menu_text.classList.add('left');
+                if(right_arrow.classList.contains('hidden')){
+                    right_arrow.classList.remove('hidden');
+                }
+            }
+
+            let sections = document.getElementsByClassName('page-sections');
+            for (let s = 0; s < sections.length; s++) {
+                sections[s].style.display = 'none';
+            }
+            return;
+        }
+
+        for (let i = 0; i < menuitems.length; i++) {
+            let menuitem = menuitems[i];
+            let menulink_elements = menuitem.childNodes;
+            let backicon = menulink_elements[1];
+            let menu_text = menulink_elements[3];
+            let right_arrow = menulink_elements[5];
+
+            if(menuitem.id === 'mobile-menu-'+selectedpage){
+
+                if(!menuitem.classList.contains('hidden')){                    
+                    // show back arrow, center text, and hide right arrow
+                    if(backicon.classList.contains('hidden')){
+                        backicon.classList.remove('hidden');
+                    }
+                    if(menu_text.classList.contains('left')){
+                        menu_text.classList.remove('left');
+                        menu_text.classList.add('center');
+                    }
+                    if(!right_arrow.classList.contains('hidden')){
+                        right_arrow.classList.add('hidden');
+                    }
+                }
+
+                menuitem.classList.add('active-menu-item');
+
+            } else {
+                menuitem.classList.add('hidden');
+
+                if(menuitem.classList.contains('hidden')){
+                    // hide back arrow, center text, and show next arrow
+                    if(!backicon.classList.contains('hidden')){
+                        backicon.classList.add('hidden');
+                    }
+                    if(menu_text.classList.contains('center')){
+                        menu_text.classList.remove('center');
+                    }
+                    menu_text.classList.add('left');
+                    if(right_arrow.classList.contains('hidden')){
+                        right_arrow.classList.remove('hidden');
+                    }
+
+                }
+
+                menuitem.classList.remove('active-menu-item');
+            }
+            
+        }
+
+        for (let j = 0; j < sections.length; j++) {
+            let section = sections[j];
+
+            if(section.id === 'section-'+selectedpage){
+                if(section.classList.contains('hidden')){
+                    section.classList.remove('hidden');
+                }
+                // check if display none
+                let computedStyle = getComputedStyle(section);
+                if(computedStyle.display === 'none'){
+                    section.style.display = 'flex';
+                }
+            } else {
+                if(!section.classList.contains('hidden')){
+                    section.classList.add('hidden');
+                }
+            }
+            
+        }
+    }
 
     function verify(){
         let email = document.getElementById('verify_email').value;
@@ -837,7 +955,7 @@
 
         $.ajax({
             type: "POST",
-            url: 'userprofile/verify',
+            url: '/userprofile/verify',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },

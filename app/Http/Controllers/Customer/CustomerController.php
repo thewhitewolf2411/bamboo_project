@@ -536,7 +536,7 @@ class CustomerController extends Controller
         // validate data
         $validation_error_msg = [];
         //$required = ['first_name', 'last_name', 'birth_day', 'birth_month', 'birth_year', 'contact_number', 'delivery_address', 'billing_address', 'preffered_os'];
-        $required = ['first_name', 'last_name', 'birth_day', 'birth_month', 'birth_year', 'contact_number', 'delivery_address', 'billing_address', 'preffered_os'];
+        $required = ['first_name', 'last_name', 'contact_number', 'delivery_address', 'billing_address', 'preffered_os'];
         foreach($required as $field){
             if(!isset($request->all()[$field])){
                 array_push($validation_error_msg, 'Field ' . str_replace('_', ' ', ucfirst($field)) . " can't be empty. ");
@@ -704,6 +704,20 @@ class CustomerController extends Controller
 
             // glock
             case '15b':
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+
+                // set state to test complete
+                $tradein->job_state = '12';
+                $tradein->save();
+
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                break;
+
+            // downgrade after testing faults
+            case '15e':
+                // set notification as resolved
                 $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
                 $notification->resolved = true;
                 $notification->save();

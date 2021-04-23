@@ -45,7 +45,7 @@
                     <p>12 MONTH GUARANTEE</p>
                 </div>
             </div> --}}
-            <div class="col text-center mt-5">
+            <div class="col text-center back-results-selling">
                 @if(Session::get('_previous') !== null)
                     <a class="back-results-sell ml-5" href="{{Session::get('_previous')['url']}}">
                 @else

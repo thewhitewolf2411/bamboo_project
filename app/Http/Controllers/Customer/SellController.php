@@ -387,6 +387,8 @@ class SellController extends Controller
         if(Auth::user()){
             // get label status
             $labelstatus = $request->label_status;
+            // tradein null by default
+            $tradein = null;
 
             // if bank details present, store them
             if(isset($request->account_name) && isset($request->account_number) && isset($request->sort_code_1) && isset($request->sort_code_2) && isset($request->sort_code_3)){
@@ -503,6 +505,10 @@ class SellController extends Controller
                 }
             }
 
+            // redirect to basket to prevent error
+            if(!$tradein){
+                return redirect()->route('showcart');
+            }
 
             if($labelstatus == "2"){
 

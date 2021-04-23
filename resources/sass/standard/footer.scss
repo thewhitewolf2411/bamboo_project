@@ -7,7 +7,8 @@ footer{
 
 .footer{
     background: #000;
-    width: 100vw;
+    //width: 100vw;
+    width: 100%;
     padding: 100px 60px 0px 60px;
 
     display: flex;
@@ -82,14 +83,19 @@ footer{
     width: 160px;
 }
 
+.footer-row-6 > span{
+    font-size: 24px;
+}
+
 .footer-row-6 a{
     margin: 0;
-    opacity: 0.5;
+    opacity: 1;
     transition: 0.2s linear;
+    font-size: 14px;
 }
 
 .footer-row-6 a:hover{
-    opacity: 1;
+    opacity: 0.5;
     transition: 0.2s linear;
 }
 
@@ -161,12 +167,12 @@ footer{
     justify-content: center;
     align-items: center;
     margin: 0;
-    opacity: 0.5;
+    opacity: 1;
     transition: 0.2s linear;
 }
 
 .return-top-container a:hover{
-    opacity: 1;
+    opacity: 0.5;
     transition: 0.2s linear;
 }
 
@@ -184,6 +190,10 @@ footer{
     font-size: 24px;
 }
 
+.footer-row-6 > a{
+    color: white;
+}
+
 @media screen and (max-width: 600px) and (min-width: 325px){
 
     .footer{
@@ -197,6 +207,7 @@ footer{
 
     .footer-row-2{
         width: 100%;
+        margin-top: 25px;
     }
 
     .footer-row-2 span{
@@ -209,6 +220,13 @@ footer{
 
     .footer-social-icons-container{
         width: 100%;
+        justify-content: center;
+    }
+
+    .footer-social-icons-container > a{
+        margin: 0;
+        margin-left: 15px;
+        margin-right: 15px;
     }
 
     .footer-row-6{
@@ -230,6 +248,10 @@ footer{
 
     #footer-row-3{
         align-items: center;
+    }
+
+    .footer-line{
+        margin-top: 50px;
     }
 
 }

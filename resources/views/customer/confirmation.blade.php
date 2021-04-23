@@ -51,10 +51,10 @@
                     <img class="confirmation-woohoo-img" src="{{asset('/customer_page_images/body/emoji_winking.svg')}}">
                     <p class="confirmation-info-text-bold-large mt-2 mb-2 pl-2 pr-2 text-center">Wohoo! Your device is sold</p>
                     <p class="confirmation-info-text-bold-smaller mb-2 pl-2 pr-2 text-center">Thanks for your sale! Your order number is {!!$tradein->barcode!!}</p>
-                    <p class="confirmation-info-text mt-2 pl-2 pr-2 text-center">
+                    <p class="confirmation-info-text mt-2 pl-2 pr-2 text-center padded">
                         An email order confirmation has been sent which will include all the order details.
                     </p>
-                    <p class="confirmation-info-text mb-4">
+                    <p class="confirmation-info-text mb-4 padded">
                         Check out your Sale Status to see regular up-to-date notifications around your sale.
                     </p>
 
@@ -168,3 +168,79 @@
 
     </script>
 </html>
+
+<script>
+    let partnersimg = document.getElementsByClassName('widget_list_portrait');
+    for(let p = 0; p < partnersimg.length; p++){
+        var a = partnersimg[p];
+
+        switch (a.href) {
+            case 'http://pricesagranice.purplematrixhosting.co.uk/author/josh-nikolaus/':
+                a.href = 'https://www.direkt-portal.com/';
+                a.target = '_black';
+                break;
+
+            case 'http://pricesagranice.purplematrixhosting.co.uk/author/goyette-amira/':
+                a.href = 'https://www.micromreza.com/';
+                a.target = '_black';
+                break;
+        
+            case 'http://pricesagranice.purplematrixhosting.co.uk/author/dayana-wiza/':
+                a.href = 'https://radio-feral.ba/';
+                a.target = '_blank';
+                break;
+
+            case 'http://pricesagranice.purplematrixhosting.co.uk/author/vidal56/':
+                a.href = 'https://radioosvit.com/';
+                a.target = '_blank';
+                break;
+
+            case 'http://pricesagranice.purplematrixhosting.co.uk/author/haylee-mitchell/':
+                a.href = 'https://www.trendradio.ba/';
+                a.target = '_blank';
+                break;
+                
+            default:
+                break;
+        }
+        
+    }
+
+    let partnerstext = document.getElementsByClassName('widget_list_author');
+    for(let t = 0; t < partnerstext.length; t++){
+        var b = partnerstext[t];
+
+        switch (b.href) {
+            case 'http://pricesagranice.purplematrixhosting.co.uk/author/josh-nikolaus/':
+                b.href = 'https://www.direkt-portal.com/';
+                b.target = '_black';
+                break;
+
+            case 'http://pricesagranice.purplematrixhosting.co.uk/author/goyette-amira/':
+                b.href = 'https://www.micromreza.com/';
+                b.target = '_black';
+                break;
+        
+            case 'http://pricesagranice.purplematrixhosting.co.uk/author/dayana-wiza/':
+                b.href = 'https://radio-feral.ba/';
+                b.target = '_blank';
+                break;
+
+            case 'http://pricesagranice.purplematrixhosting.co.uk/author/vidal56/':
+                b.href = 'https://radioosvit.com/';
+                b.target = '_blank';
+                break;
+
+            case 'http://pricesagranice.purplematrixhosting.co.uk/author/haylee-mitchell/':
+                b.href = 'https://www.trendradio.ba/';
+                b.target = '_blank';
+                break;
+                
+            default:
+                break;
+        }
+        
+    }
+
+
+</script>

@@ -42,8 +42,8 @@ Watch our quick video that explains how our meticulous grading system works. We 
                 </a>
             </div> --}}
             <div class="toggle-element-btn selling-toggle" style="width: 100% !important">
-                <a onclick="changeToggleElement('selling')">
-                    <p style="color: #FCC44C;" class="m-0" id="toggle-element-btn-selling">Selling with us</p>
+                <a onclick="changeToggleElement('selling')" class="active">
+                    <p style="color: #F28E33" class="m-0" id="toggle-element-btn-selling">Selling with us</p>
                     <img id="selling-image" class="ml-3 rotate" src="{{ asset('/customer_page_images/body/Group 938.svg') }}">
                 </a>
             </div>
@@ -88,30 +88,30 @@ Watch our quick video that explains how our meticulous grading system works. We 
             <div class="shopping-element container">
                 <div class="shopping-element-text">
                     <p class="left-title-text">1. Search for a new device</p>
-                    <p>Search for your old device and find out how much it’s worth. If you’re happy with the price, simply register the mobile and provide us with your preferred payment option and with your details. </p>
+                    <p class="how-text-desc">Search for your old device and find out how much it’s worth. If you’re happy with the price, simply register the mobile and provide us with your preferred payment option and with your details. </p>
                 </div>
                 <div class="shopping-element-image">
-                    <img src="{{ asset('/customer_page_images/body/How-Icon-4.svg') }}">
+                    <img class="how-image" src="{{ asset('/customer_page_images/body/hearts.svg') }}">
                 </div>
             </div>
 
             <div class="shopping-element container">
                 <div class="shopping-element-text">
                     <p class="left-title-text">2. Free Next Day Delivery</p>
-                    <p>Once your sales order is completed, simply request for a free sales pack. Alternatively, you can print your own labels to send us your device</p>
+                    <p class="how-text-desc">Once your sales order is completed, simply request for a free sales pack. Alternatively, you can print your own labels to send us your device</p>
                 </div>
                 <div class="shopping-element-image">
-                    <img src="{{ asset('/customer_page_images/body/How-Icon-5.svg') }}">
+                    <img class="how-image" src="{{ asset('/customer_page_images/body/free_post_pack.svg') }}">
                 </div>
             </div>
 
             <div class="shopping-element container">
                 <div class="shopping-element-text">
                     <p class="left-title-text">3. You have a shiny new phone to play with</p>
-                    <p>With Boo you won’t be left waiting for your payment. Once we receive your device, our team will check it against your order. If everything is correct, we’ll issue the payment that very same day! It’s that Simple!</p>
+                    <p class="how-text-desc">With Boo you won’t be left waiting for your payment. Once we receive your device, our team will check it against your order. If everything is correct, we’ll issue the payment that very same day! It’s that Simple!</p>
                 </div>
                 <div class="shopping-element-image">
-                    <img src="{{ asset('/customer_page_images/body/How-Icon-6.svg') }}">
+                    <img class="how-image" src="{{ asset('/customer_page_images/body/get_paid.svg') }}">
                 </div>
             </div>
 
@@ -122,32 +122,15 @@ Watch our quick video that explains how our meticulous grading system works. We 
         </div>
     </div>
 
-    <div class="how-sustainability">
-        <div class="about-bottom-container">
-            <div class="about-images-container">
-                <div class="about-images" id="top-image">
-                    <img src="{{asset('/images/ss-img-1.svg')}}">
-                </div>
-                <div class="about-images" id="bottom-image">
-                    <img src="{{asset('/images/ss-img-2.svg')}}">
-                </div>
-            </div>
+    
 
-            <div class="sustainability-element-container">
-                <div class="center-title-container">
-                    <p>Sustainability</p>
-                </div>
-                <p class="about-bamboo-text">Sustainability is at the heart of Bamboo Mobile and everything we do. Like our parent company, Bamboo Distribution, the protection of the environment is central to our ethics and business strategy. </p>
-                <div class="grading-show-more-container">
-                    <a href="#"><div class="grading-show-more-btn">
-                        <p>Read More</p>
-                    </div></a>
-                </div>   
-            </div>
-        </div>
-    </div>
+    @include('partial.sustainability', ['whySell' => false, 'about' => false])
 
-    <div class="home-element home-links-container">
+    @include('partial.newscontactsupport')
+
+    @include('partial.newsletter')
+
+    {{-- <div class="home-element home-links-container">
         
         <div class="home-links-element">
             <a href="/news">
@@ -176,9 +159,9 @@ Watch our quick video that explains how our meticulous grading system works. We 
             </a>
         </div>
 
-    </div>
+    </div> --}}
 
-    <div class="home-element sign-up">
+    {{-- <div class="home-element sign-up">
         
         <div class="center-title-container">
             <p>Sign up to our newsletter!</p>
@@ -237,70 +220,70 @@ Watch our quick video that explains how our meticulous grading system works. We 
             </div>
         </form>
 
-    </div>
+    </div> --}}
 
     <script>
 
-    function showgradingvideo(){
-        $('#howvideomodal').modal('show');
-    }
-
-    function changeToggleElement(elementclicked){
-
-        if(elementclicked == 'shopping'){
-            var shoppingelements = document.getElementsByClassName('shopping-toggle');
-            var sellingelements = document.getElementsByClassName('selling-toggle');
-
-            var shoppingImage = document.getElementById('shopping-image');
-            var sellingImage = document.getElementById('selling-image');
-
-            for(var i=0; i<shoppingelements.length; i++){
-                if(shoppingelements[i].classList.contains('active')){
-                    //do nothing
-                }
-                else{
-                    sellingelements[i].classList.remove('active');
-                    shoppingelements[i].classList.add('active');
-                    document.getElementById('toggle-element-btn-selling').classList.remove('active');
-                    document.getElementById('toggle-element-btn-shopping').classList.add('active');
-
-                    shoppingImage.classList.add('rotate');
-                    shoppingImage.classList.remove('unrotate');
-                    sellingImage.classList.remove('rotate');
-                    sellingImage.classList.add('unrotate');
-
-
-                }
-
-            }
+        function showgradingvideo(){
+            $('#howvideomodal').modal('show');
         }
 
-        if(elementclicked == 'selling'){
-            var shoppingelements = document.getElementsByClassName('shopping-toggle');
-            var sellingelements = document.getElementsByClassName('selling-toggle');
+        function changeToggleElement(elementclicked){
 
-            var shoppingImage = document.getElementById('shopping-image');
-            var sellingImage = document.getElementById('selling-image');
+            if(elementclicked == 'shopping'){
+                var shoppingelements = document.getElementsByClassName('shopping-toggle');
+                var sellingelements = document.getElementsByClassName('selling-toggle');
 
-            for(var i=0; i<shoppingelements.length; i++){
-                if(sellingelements[i].classList.contains('active')){
-                    //do nothing
+                var shoppingImage = document.getElementById('shopping-image');
+                var sellingImage = document.getElementById('selling-image');
+
+                for(var i=0; i<shoppingelements.length; i++){
+                    if(shoppingelements[i].classList.contains('active')){
+                        //do nothing
+                    }
+                    else{
+                        sellingelements[i].classList.remove('active');
+                        shoppingelements[i].classList.add('active');
+                        document.getElementById('toggle-element-btn-selling').classList.remove('active');
+                        document.getElementById('toggle-element-btn-shopping').classList.add('active');
+
+                        shoppingImage.classList.add('rotate');
+                        shoppingImage.classList.remove('unrotate');
+                        sellingImage.classList.remove('rotate');
+                        sellingImage.classList.add('unrotate');
+
+
+                    }
+
                 }
-                else{
-                    sellingelements[i].classList.add('active');
-                    shoppingelements[i].classList.remove('active');
-                    document.getElementById('toggle-element-btn-selling').classList.add('active');
-                    document.getElementById('toggle-element-btn-shopping').classList.remove('active');
+            }
 
-                    shoppingImage.classList.remove('rotate');
-                    shoppingImage.classList.add('unrotate');
-                    sellingImage.classList.add('rotate');
-                    sellingImage.classList.remove('unrotate');
+            if(elementclicked == 'selling'){
+                var shoppingelements = document.getElementsByClassName('shopping-toggle');
+                var sellingelements = document.getElementsByClassName('selling-toggle');
+
+                var shoppingImage = document.getElementById('shopping-image');
+                var sellingImage = document.getElementById('selling-image');
+
+                for(var i=0; i<shoppingelements.length; i++){
+                    if(sellingelements[i].classList.contains('active')){
+                        //do nothing
+                    }
+                    else{
+                        sellingelements[i].classList.add('active');
+                        shoppingelements[i].classList.remove('active');
+                        document.getElementById('toggle-element-btn-selling').classList.add('active');
+                        document.getElementById('toggle-element-btn-shopping').classList.remove('active');
+
+                        shoppingImage.classList.remove('rotate');
+                        shoppingImage.classList.add('unrotate');
+                        sellingImage.classList.add('rotate');
+                        sellingImage.classList.remove('unrotate');
+                    }
+
                 }
-
             }
         }
-    }
 
     </script>
 

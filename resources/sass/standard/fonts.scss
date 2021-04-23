@@ -2,11 +2,14 @@
 
 // @import '../../../public/fonts/bebas_neue';
 
+// Font made from http://www.onlinewebfonts.com, oNline Web Fonts is licensed by CC BY 3.0
+
+
 @font-face {
     font-family: 'Bebas Neue';
     font-style: normal;
     font-weight: 400;
-    // src: url('../../../public/fonts/bebas_neue/bebas-neue-v2-latin-regular.eot'); /* IE9 Compat Modes */
+    //src: url('/css/fonts/bebas_neue/bebas-neue-v2-latin-regular.eot'); /* IE9 Compat Modes */
     src: url('/css/fonts/bebas_neue/bebas-neue-v2-latin-regular.eot');
     src: local(''),
          url('/css/fonts/bebas_neue/bebas-neue-v2-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
@@ -15,3 +18,17 @@
          url('/css/fonts/bebas_neue/bebas-neue-v2-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
          url('/css/fonts/bebas_neue/bebas-neue-v2-latin-regular.svg#BebasNeue') format('svg'); /* Legacy iOS */
   }
+
+@font-face {
+    font-family: "Sharp Sans No1 Medium"; 
+    font-style: normal;
+    font-weight: 400;
+    //src: url('css/fonts/SharpSansMedium/30bb285a0c5e40fc620a793eff494dfd.eot'); /* IE9 Compat Modes */
+    src: url('/css/fonts/bebas_neue/bebas-neue-v2-latin-regular.eot');
+    src: local(''),
+        url('/css/fonts/SharpSansMedium/30bb285a0c5e40fc620a793eff494dfd.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('/css/fonts/SharpSansMedium/30bb285a0c5e40fc620a793eff494dfd.woff2') format('woff2'), /* Super Modern Browsers */
+        url('/css/fonts/SharpSansMedium/30bb285a0c5e40fc620a793eff494dfd.woff') format('woff'), /* Modern Browsers */
+        url('/css/fonts/SharpSansMedium/30bb285a0c5e40fc620a793eff494dfd.ttf') format('truetype'), /* Safari, Android, iOS */
+        url('/css/fonts/SharpSansMedium/30bb285a0c5e40fc620a793eff494dfd.svg#Sharp Sans No1 Medium') format('svg'); /* Legacy iOS */
+}

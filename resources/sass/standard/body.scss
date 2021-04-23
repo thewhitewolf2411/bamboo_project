@@ -376,7 +376,7 @@ h3, h4, h5{
 }
 
 .large-bold-text{
-    font-size: 4rem;
+    font-size: 3rem;
     font-family: Sharp Sans No1 Bold;
     //text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
 }
@@ -523,7 +523,7 @@ h3, h4, h5{
     // }
 
     .start-buttons-container #start-shopping, #start-selling, a{
-        color: #fff !important;
+        //color: #fff !important;
     }
 
     .how-buttons-container{
@@ -547,13 +547,13 @@ h3, h4, h5{
         display: none;
     }
 
-    .about-image-container{
-        display: none;
-    }
+    // .about-image-container{
+    //     display: none;
+    // }
 
-    .about-images-container{
-        display: none;
-    }
+    // .about-images-container{
+    //     display: none;
+    // }
 
     .about-element-container{
         width: 100% !important;
@@ -795,7 +795,7 @@ h3, h4, h5{
 
 // mobile
 @media (max-width: 460px){
-
+    
 }
 
 // mobile - small
@@ -803,4 +803,5 @@ h3, h4, h5{
     #cookie-container {
         height: 120px;
     }
+
 }

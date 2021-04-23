@@ -424,9 +424,10 @@
 
 // newsletter styles
 .newsletter-large-text{
-    font-size: 4rem;
+    font-size: 3rem;
     text-align: center;
     font-family: Sharp Sans No1 Bold;
+    line-height: 1.1;
 }
 
 .newsletter-small-text{
@@ -495,4 +496,41 @@
 
 .newscontactsupport-item.support{
     background: #A3D147;
+}
+
+
+// mobile - xl 
+@media (max-width: 625px){
+    .image-whathappens-col{
+        margin-bottom: 40px;
+    }
+
+    .whathappens-img{
+        width: 150px;
+    }
+
+    .whathappens-large{
+        font-size: 1.5em;
+    }
+}
+
+// mobile
+@media (max-width: 500px){
+    .sustainability-about-col > img, .sustainability-img{
+        display: none;
+    }
+    .sustainability-images-overlay{
+        margin-top: 0;
+    }
+    .sustainability-about-row{
+        margin-bottom: 50px;
+    }
+
+    .sustainability-about-col > a, .text-buttons-sustainability > a{
+        min-width: 150px;
+    }
+
+    .sustainability-container{
+        padding: 40px;
+    }
 }
