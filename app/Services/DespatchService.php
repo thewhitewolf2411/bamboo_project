@@ -290,7 +290,14 @@ class DespatchService {
         $response = json_decode($result,true);
         $success_msg = [];
         $error_msg = [];
-
+        if($response === null){
+            return ['error' => "Could not estabilish connection with RM C&D API. Check your authorization token."];
+            return [
+                'success' => $success_msg,
+                'error' => $error_msg,
+                'info' => $info
+            ];
+        }
         if($response['successCount'] > 0){
             $created_orders = $response['createdOrders'];
             foreach($created_orders as $created_order){
