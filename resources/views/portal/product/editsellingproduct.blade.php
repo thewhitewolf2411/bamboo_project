@@ -74,7 +74,12 @@
                                 <div class="form-group">
                                     <label for="product_image">Product image:</label>
                                     <input name="product_image" type="file" accept="image/x-png,image/gif,image/jpeg" value="{{$product->product_image}}">
+                                    <p>Image name: {{$product->product_image}}</p>
                                 </div>
+                            </div>
+                            <div class="form-group select_brand_button">
+                                <label for="product_avalibility">Product avaliable for sell:</label>
+                                <input name="product_avalibility" id="product_avalibility" type="checkbox" style="width: auto; margin:0;" @if($product->avaliable_for_sell) checked @endif>
                             </div>
                             <div class="form-group select_brand_button">
                                 <div class="form-group">

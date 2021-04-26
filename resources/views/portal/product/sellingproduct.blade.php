@@ -36,6 +36,12 @@
                 </div>
                 <div class="portal-table-container">
 
+                    @if(Session::has('product_edited'))
+                    <div class="alert alert-success" role="alert">
+                        {{Session::get('product_edited')}}
+                    </div>
+                    @endif
+
                     <table class="portal-table sortable" id="categories-table">
                         <tr>
                             <td><div class="table-element">Id</div></td>
@@ -53,7 +59,7 @@
                         @foreach($sellingProducts as $sellingProduct )
                         <tr>
                             <td><div class="table-element">{{$sellingProduct->id}}</td>
-                            <td ><div class="table-element"><img src="{{asset('/storage/product_images').'/'.$sellingProduct->product_image}}" height="50px"></div></td>
+                            <td ><div class="table-element"><img src="{{asset('/storage/product_images').'/'.$sellingProduct->product_image}}" height="50px">{{$sellingProduct->product_image}}</div></td>
                             <td><div class="table-element">{{$sellingProduct->product_name}}</div></td>
                             <td><div class="table-element">{{$sellingProduct->getCategory($sellingProduct->category_id)}}</div></td>
                             <td><div class="table-element">{{$sellingProduct->getBrand($sellingProduct->brand_id)}}</div></td>

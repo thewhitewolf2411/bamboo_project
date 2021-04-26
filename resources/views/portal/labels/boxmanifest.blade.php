@@ -40,7 +40,8 @@
                 <td>{{$tradein->getProductName($tradein->product_id)}}</td>
                 <td>{{$tradein->cosmetic_condition}}</td>
                 @if($tradein->imei_number)<td>{!! $tradein->getIMEIBarcode() !!} <br> {{$tradein->imei_number}}</td>
-                @else<td>{!! $tradein->getSNBarcode() !!} <br> {{$tradein->serial_number}}</td>@endif
+                @elseif($tradein->serial_number)<td>{!! $tradein->getSNBarcode() !!} <br> {{$tradein->serial_number}}</td>
+                @else<td>N/A</td>@endif
             </tr>
             @endforeach
 

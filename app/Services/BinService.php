@@ -22,7 +22,11 @@ class BinService{
             
         }
 
-        return response(['deviceadded'=>1, 'order'=>$tradein, 'grade'=>$tradein->getDeviceBambooGrade() ,'model'=>$tradein->getProductName($tradein->product_id)]);
+        $grade = $tradein->getDeviceBambooGrade() ? $tradein->getDeviceBambooGrade() : 'N/A';
+        $tradein->imei_number = $tradein->imei_number ? $tradein->imei_number : 'N/A';
+        $tradein->serial_number = $tradein->serial_number ? $tradein->serial_number : 'N/A';
+
+        return response(['deviceadded'=>1, 'order'=>$tradein, 'grade'=>$grade ,'model'=>$tradein->getProductName($tradein->product_id)]);
 
 
     }

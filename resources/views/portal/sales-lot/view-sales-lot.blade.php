@@ -15,7 +15,7 @@
             <a href="/portal/sales-lot/completed-sales-lots/">
                 <div class="btn btn-primary">Back</div>
             </a>
-            <button class="btn btn-primary" id="ism-pre-alert">Export XLS</button>
+            <button class="btn btn-primary" id="export-xls-data">Export XLS</button>
         </div>
     </div>
 
@@ -27,6 +27,7 @@
                 <td><div class="table-element">Trade-in Barcode number</div></td>
                 <td><div class="table-element">Box number</div></td>
                 <td><div class="table-element">Bamboo Grade</div></td>
+                <td><div class="table-element">Customer Grade</div></td>
                 <td><div class="table-element">Manufacturer/Model</div></td>
                 <td><div class="table-element">Category</div></td>
                 <td><div class="table-element">GB Size</div></td>
@@ -40,6 +41,7 @@
                 <td><div class="table-element">{{$tradein->barcode ?? null ?: 'N/A'}}</div></td>
                 <td><div class="table-element">{{$tradein->getTrayName($tradein->id) ?? null ?: 'N/A'}}</div></td>
                 <td><div class="table-element">{{$tradein->getDeviceBambooGrade() ?? null ?: 'N/A'}}</div></td>
+                <td><div class="table-element">{{$tradein->customer_grade ?? null ?: 'N/A'}}</div></td>
                 <td><div class="table-element">{{$tradein->getProductName($tradein->product_id) ?? null ?: 'N/A'}}</div></td>
                 <td><div class="table-element">{{$tradein->getCategoryName($tradein->correct_product_id) ?? null ?: 'N/A'}}</div></td>
                 <td><div class="table-element">{{$tradein->correct_memory ?? null ?: 'N/A'}}</div></td>

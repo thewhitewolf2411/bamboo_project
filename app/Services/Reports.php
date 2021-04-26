@@ -237,7 +237,7 @@ class Reports{
         $to = "";
         if(isset($request->from) && isset($request->to)){
             $from = \Carbon\Carbon::parse($request->from);
-            $to = \Carbon\Carbon::parse($request->to);
+            $to = \Carbon\Carbon::parse($request->to)->addDay();
         }
 
         $tradeins = "";
@@ -693,10 +693,10 @@ class Reports{
                 $sheet->setCellValue('F'.$i, $correct_network);
                 $sheet->setCellValue('G'.$i, $tradein->product_colour);
                 $sheet->setCellValue('H'.$i, $tradein->customer_grade);
-                $sheet->setCellValue('I'.$i, $tradein->getCustomerStatus());
+                $sheet->setCellValue('I'.$i, $tradein->getCustomerGradeAfterTesting());
                 $sheet->setCellValue('J'.$i, $tradein->order_price);
                 $sheet->setCellValue('K'.$i, $tradein->bamboo_price);
-                $sheet->setCellValue('L'.$i, $tradein->bamboo_grade);
+                $sheet->setCellValue('L'.$i, $tradein->getDeviceBambooGrade());
                 $sheet->setCellValue('M'.$i, $tradein->getBambooStatus());
                 $sheet->setCellValue('N'.$i, $fully_functional);
                 $sheet->setCellValue('O'.$i, $faults_col);

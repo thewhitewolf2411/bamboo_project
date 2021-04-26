@@ -150,6 +150,7 @@ class ReportsController extends Controller
         $toDate = $toDate->addDay();
 
         $tradeins = Tradein::whereBetween('created_at', [$fromDate, $toDate])->whereIn('job_state', ['25', '26', '27', '28', '29'])->get();
+       # dd($tradeins);
 
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -168,11 +169,9 @@ class ReportsController extends Controller
         $sheet->setCellValue('L1', 'Date Paid');
         $sheet->setCellValue('M1', 'Location');
 
+        $index = 2;
         foreach($tradeins as $key=>$tradein){
-            $index = $key+1;
-            if($index === 1){
-                $index = 2;
-            }
+            
 
             $sheet->setCellValue('A'.$index, $tradein->barcode);
             $sheet->setCellValue('B'.$index, $tradein->getBrandName($tradein->product_id));
@@ -187,6 +186,7 @@ class ReportsController extends Controller
             $sheet->setCellValue('K'.$index, $tradein->getTimePassed());
             $sheet->setCellValue('L'.$index, $tradein->getDatePaid());
             $sheet->setCellValue('M'.$index, $tradein->getTrayName($tradein->id));
+            $index++;
         }
 
 

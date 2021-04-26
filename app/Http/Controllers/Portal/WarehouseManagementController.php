@@ -831,9 +831,11 @@ class WarehouseManagementController extends Controller
 
         $tradein = Tradein::where('barcode', $request->buildssaleslot_scandeviceinput)->first();
 
-        $salesLotContent = SalesLotContent::where('device_id', $tradein->id)->first();
-        $salesLotContent->picked = true;
-        $salesLotContent->save();
+        if($tradein){
+            $salesLotContent = SalesLotContent::where('device_id', $tradein->id)->first();
+            $salesLotContent->picked = true;
+            $salesLotContent->save();
+        }
 
         return redirect()->back();
     }
@@ -847,7 +849,7 @@ class WarehouseManagementController extends Controller
             $sLCD->save();
         }
 
-        return redirect()->back()->with(['success'=>'Picking succesfully canceled']);
+        return redirect('/portal/warehouse-management/picking-despatch')->with(['success'=>'Picking succesfully canceled']);
     }
 
     public function suspendPickingLot(Request $request){
@@ -860,7 +862,7 @@ class WarehouseManagementController extends Controller
         else{
             $salesLot->sales_lot_status = 6;
             $salesLot->save();
-            return redirect()->back()->with(['success'=>'Picking succesfully suspended']);
+            return redirect('/portal/warehouse-management/picking-despatch')->with(['success'=>'Picking succesfully suspended']);
         }
     
         

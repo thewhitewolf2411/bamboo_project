@@ -55917,7 +55917,12 @@ $('#view-sales-lot-btn').on('click', function () {
 });
 $('#edit-lot-btn').on('click', function () {
   var selectedid = $('.saleslot-active').attr('id');
-  window.open('/portal/sales-lot/building-sales-lot/' + selectedid, '_self');
+
+  if ($('.saleslot-active').data('editable') == false) {
+    alert("This lot cannot be edited.");
+  } else {
+    window.open('/portal/sales-lot/building-sales-lot/' + selectedid, '_self');
+  }
 });
 $('#sell-lot-btn').on('click', function () {
   $('#salelot-action').modal('show');
@@ -55961,6 +55966,10 @@ $('#sales-export-btn').on('click', function () {
 $('#ism-pre-alert').on('click', function () {
   var selectedid = $('.saleslot-active').attr('id');
   window.open("/portal/sales-lot/completed-sales-lot/ismprealert/" + selectedid);
+});
+$('#export-xls-data').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+  window.open("/portal/sales-lot/completed-sales-lot/exportxls/" + selectedid);
 });
 $(document).ready(function () {
   $('#boxedtradeinstable tfoot td').each(function () {

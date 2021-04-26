@@ -355,7 +355,7 @@ class Tradein extends Model
     }
 
     public function isFullyFunctional(){
-        $matches = ["11e", "15e"];
+        $matches = ["11e", "15e", "11i", "15i"];
 
         if(in_array($this->job_state, $matches)){
             return false;
@@ -1013,7 +1013,7 @@ class Tradein extends Model
         $auditTrailLatest = \Carbon\Carbon::parse($this->created_at);
         $auditTrailSecond = \Carbon\Carbon::now();
 
-        $difference = $auditTrailSecond->diffForHumans($auditTrailLatest);
+        $difference = $auditTrailLatest->diffForHumans($auditTrailSecond);
        #dd($difference);
 
         return $difference;
@@ -1048,6 +1048,38 @@ class Tradein extends Model
             return $paymentBatchDevice->updated_at;
         }
         return null;
+    }
+
+    public function getCustomerGradeAfterTesting(){
+        switch($this->cosmetic_condition){
+            case "A":
+                return "Excellent Working";
+            break;
+            case "B+":
+                return "Good Working";
+            break;
+            case "B":
+                return "Good Working";
+            break;
+            case "C":
+                return "Poor Working";
+            break;
+            case "WSI":
+                return "Damaged Working";
+            break;
+            case "WSD":
+                return "Faulty";
+            break;
+            case "NWSI":
+                return "Faulty";
+            break;
+            case "NWSD":
+                return "Faulty";
+                break;
+            default:
+                return "N/A";
+                break;
+        }
     }
 
 }

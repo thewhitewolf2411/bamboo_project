@@ -366,7 +366,6 @@ class PaymentsController extends Controller
             $batch_ids = request()->batches;
             $batchService = new PaymentBatchService();
             $batchService->generateCSV($batch_ids);
-
             return response(implode(",",$batch_ids), 200);
         }
     }
@@ -394,11 +393,11 @@ class PaymentsController extends Controller
                 }
                 ob_start();
                 $csvdata = implode('', $items);
-                $file = fopen("export_batches.txt", 'w');
+                $file = fopen($batch->csv_file, 'w');
                 fwrite($file, $csvdata);
                 fclose($file);
                 ob_clean();
-                $file = "export_batches.txt";
+                $file = $batch->csv_file;
                 header('Content-Description: File Transfer');
                 header('Content-Type: text/csv');
                 header('Content-Disposition: attachment; filename='.basename($file));
@@ -411,6 +410,7 @@ class PaymentsController extends Controller
                 unlink($file);
             } else {
                 $payment_batch = PaymentBatch::findOrFail(request()->batch_id);
+                #dd($payment_batch);
                 return response()->download(storage_path().'/app/public/exports/batches/' . $payment_batch->csv_file);
             }
         }

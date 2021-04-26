@@ -63,7 +63,7 @@
                         </tr>
                     </tfoot>
                     @foreach ($salesLots as $saleLot)
-                    <tr class="saleslots" id="{{$saleLot->id}}">
+                    <tr class="saleslots" id="{{$saleLot->id}}" @if($saleLot->sales_lot_status !== 1) data-editable="false" @endif>
                         <td><div class="table-element">{{$saleLot->id}}</div></td>
                         <td><div class="table-element">{{$saleLot->created_at}}</div></td>
                         <td><div class="table-element">{{$saleLot->getSalesLotQuantity()}}</div></td>
