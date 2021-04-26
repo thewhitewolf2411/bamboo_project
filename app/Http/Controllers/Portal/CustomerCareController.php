@@ -554,7 +554,6 @@ class CustomerCareController extends Controller
             }
 
         }
-
         return view('portal.customer-care.order-management')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Order Management')->with('search', $request->search);
     }
 

@@ -626,7 +626,7 @@
 }
 
 // tablets - regular
-@media (max-width: 740px){
+@media screen and (max-width: 740px) {
     .sections-menu, .page-sections{
         display: none;
     }
@@ -670,23 +670,23 @@
     }
 }
 
-// tablets - breakpoint
-@media (max-width: 890px){
-}
+// // tablets - breakpoint
+// @media (max-width: 890px){
+// }
 
-// tablets - regular
-@media (max-width: 625px){
+// // tablets - regular
+// @media (max-width: 625px){
 
-}
+// }
 
 
-// mobile
-@media (max-width: 560px){
+// // mobile
+// @media (max-width: 560px){
 
-}
+// }
 
-// mobile - small
-@media (max-width: 380px){
+// // mobile - small
+// @media (max-width: 380px){
 
     
-}
+// }

@@ -12,10 +12,12 @@
                 {!!$notification->content!!}
 
                 @if(Route::getCurrentRoute()->uri() === 'userprofile')
+                    @if($notification->resolved) @else
                     <a href="/userprofile/{{$notification->tradein_id}}" class="notification-action">
                         <p>Take me there</p>
                         <img class="right-link-img" src="{{asset('/images/front-end-icons/black_arrow_next.svg')}}">
                     </a>
+                    @endif
                 @endif
             @endif
             

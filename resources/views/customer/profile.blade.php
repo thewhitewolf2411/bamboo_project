@@ -4,6 +4,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         {{-- <script src="{{ asset('js/Customer.js') }}"></script> --}}
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <!-- jQuery -->
@@ -530,7 +531,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col">
+                                                <div class="col view-sale-item">
                                                     <p class="sale-item-label">View</p>
                                                     <a href="/userprofile/{{$tradein->id}}"><img class="sale-item-link-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Orange.svg')}}"></a>
                                                 </div>

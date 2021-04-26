@@ -12393,7 +12393,7 @@ main p, a, span {
   margin-right: 1rem;
 }
 
-@media (max-width: 740px) {
+@media screen and (max-width: 740px) {
   .sections-menu, .page-sections {
     display: none;
   }
@@ -12558,6 +12558,14 @@ main p, a, span {
 
 .sale-status-img {
   display: block;
+  width: 35px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+}
+
+.sale-status-img-mobile {
+  display: none;
   width: 35px;
   margin-left: auto;
   margin-right: auto;
@@ -12951,13 +12959,76 @@ main p, a, span {
     top: 40px !important;
   }
 }
-@media (max-width: 740px) {
+@media only screen and (max-width: 740px) {
   .back-to-sales-mobile {
     display: block;
   }
 
   .results-back.selling {
     min-width: 130px;
+  }
+
+  .sale-item > .mobile-col {
+    flex-direction: column;
+  }
+
+  .view-sale-item {
+    margin-top: auto;
+  }
+
+  .view-sale-item > a > img {
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .view-sale-item > p {
+    text-align: right;
+  }
+
+  .sale-item-label {
+    margin-bottom: 0;
+  }
+
+  .sale-row-1, .sale-row-2 {
+    flex-direction: column;
+  }
+
+  .delivery-details-row {
+    flex-direction: column;
+  }
+
+  .label-print-type {
+    margin: auto !important;
+    margin-bottom: 40px !important;
+  }
+
+  .emoji-info-row {
+    flex-direction: column;
+    padding-left: 0 !important;
+  }
+
+  .emoji-col {
+    margin: auto;
+  }
+
+  .emoji-info-text {
+    text-align: center;
+  }
+
+  .sale-status-col.first, .sale-status-col.third {
+    display: none;
+  }
+
+  .sale-status-img {
+    display: none;
+  }
+
+  .sale-status-img-mobile {
+    display: block;
+  }
+
+  .sale-status-purple-line, .sale-status-grey-line {
+    display: none;
   }
 }
 @media (max-width: 625px) {
@@ -16050,11 +16121,16 @@ h3, h4, h5 {
 
 .product-image-container {
   min-width: 200px;
+  height: auto;
   margin: auto;
 }
 
 .product-image-container img {
-  height: 500px;
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-right: 40px;
 }
 
 .select-shopping-option-title {
@@ -17172,7 +17248,7 @@ input.lookup-delivery-basket::placeholder {
     top: 50px;
   }
 }
-@media (max-width: 740px) {
+@media only screen and (max-width: 740px) {
   .products a {
     flex: 1 0 50%;
   }
@@ -17181,7 +17257,7 @@ input.lookup-delivery-basket::placeholder {
     color: black;
   }
 }
-@media (max-width: 625px) {
+@media only screen and (max-width: 625px) {
   .device-brands-row {
     padding: 0 15px;
   }
@@ -17280,7 +17356,7 @@ input.lookup-delivery-basket::placeholder {
     padding-bottom: 0;
   }
 }
-@media (max-width: 460px) {
+@media only screen and (max-width: 460px) {
   .device-brand {
     flex: 1 0 40%;
   }

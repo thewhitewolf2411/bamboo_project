@@ -3,6 +3,7 @@
     <head>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         {{-- <script src="{{ asset('js/Customer.js') }}"></script> --}}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <!-- jQuery -->
@@ -170,7 +171,7 @@
                                     </div>
                                     <div class="line-bottom"></div>
                                     <div class="collapse" id="collapseDeliveryDetails">
-                                        <div class="row p-4">
+                                        <div class="row p-4 delivery-details-row">
 
                                             @if($tradein->trade_pack_send_by_customer === 0)
                                                 <div class="label-print-type selected m-2">

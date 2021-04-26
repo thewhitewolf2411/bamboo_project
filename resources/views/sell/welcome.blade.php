@@ -531,7 +531,7 @@
                                     if(singleresult.product_image === 'default_image'){
                                         deviceimg.src = 'http://127.0.0.1:8000/images/placeholder_phone_image.png';
                                     } else {
-                                        deviceimg.src = singleresult.product_image;
+                                        deviceimg.src = '/storage/product_images/'+singleresult.product_image;
                                     }
 
                                     let devicename = document.createElement('p');
