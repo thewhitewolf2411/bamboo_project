@@ -10,18 +10,18 @@
     </div>
 
     <div class="how-first-element">
-        <div class="d-flex flex-row justify-content-between">
+        <div class="howitworks-container-top">
 
-            <div class="p-5 d-flex flex-column justify-content-between">
+            <div class="howitworks-element-container">
                 <div class="center-title-container">
                     {{-- <p>Shop and sell easily <br> with just a few clicks</p> --}}
-                    <p>Sell easily <br> with just a few clicks</p>
+                    <p class="customer-sections-title">Sell easily <br> with just a few clicks</p>
                 </div>
-                <p>We pride ourselves in offering a smart simple way to shop and sell mobile devices. With Boo, all it takes is just a few clicks to buy and sell the devices of your choice. In just several a few simple steps you can either trade in or trade up your mobile tech for unbeatable prices, while doing your bit for the environment.   
+                <p class="max-450 mt-4">We pride ourselves in offering a smart simple way to shop and sell mobile devices. With Boo, all it takes is just a few clicks to buy and sell the devices of your choice. In just several a few simple steps you can either trade in or trade up your mobile tech for unbeatable prices, while doing your bit for the environment.   
 Watch our quick video that explains how our meticulous grading system works. We guarantee you’ll be pleasantly surprised at just how thorough and exhaustive our grading system is. 
 </p>
             </div>
-            <div class="p-5 d-flex flex-wrap flex-column justify-content-between align-items-center mx-auto">
+            <div class="howitworks-element-container text-center">
                 <div class="grading-video-container">
                     <video id="howvideoid" width="100%" controls>
                         <source src="{{ asset('/video/old/Bamboo Selling v4.mp4') }}" type="video/mp4">

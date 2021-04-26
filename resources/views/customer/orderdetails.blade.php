@@ -32,7 +32,15 @@
                         <div class="sections-menu">
                             <div class="change-sales-page sales-item link-active" id="sales-my"><img class="go-left-img" src="{{asset('/customer_page_images/body/go-left.svg')}}">My Sales</div>
                             <div class="change-sales-page sales-item" id="sales-status">Sale status</div>
-                            <div class="change-sales-page sales-item" id="sales-notifications">Notifications</div>
+                            <div class="change-sales-page sales-item" id="sales-notifications">
+                                Notifications
+                                @if(App\Helpers\NotificationHelper::count() !== null) 
+                                    <div class="notifications-count menu">
+                                        <img src="{{asset('/images/front-end-icons/notification_count.svg')}}">
+                                        <p>{!!App\Helpers\NotificationHelper::count()!!}</p>
+                                    </div>
+                                @endif
+                            </div>
                             <div class="change-sales-page sales-item" id="sales-details">Sale details</div>
                             <div class="change-sales-page sales-item" id="sales-delivery">Delivery details</div>
                             <div class="change-sales-page sales-item" id="sales-processing">Processing</div>
@@ -75,7 +83,13 @@
                             <div id="section-sale-notifications" class="sale-item-sections mb-2">
                                 <div class="section-item-content">
                                     <div class="section-header">
-                                        <p class="section-item-title">Notifications</p>
+                                        @if(App\Helpers\NotificationHelper::count() !== null) 
+                                            <div class="notifications-count collapse-header">
+                                                <img src="{{asset('/images/front-end-icons/notification_count.svg')}}">
+                                                <p>{!!App\Helpers\NotificationHelper::count()!!}</p>
+                                            </div>
+                                        @endif
+                                        <p class="section-item-title @if(App\Helpers\NotificationHelper::count() !== null)mr-auto @endif">Notifications</p>
                                         <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseNotifications" aria-expanded="false" aria-controls="collapseNotifications">
                                             <p id="notifications-collapse-text" class="collapse-title">Expand</p>
                                             <img id="notifications-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
@@ -219,7 +233,10 @@
                             <div id="section-processing" class="sale-item-sections mb-2">
                                 <div class="section-item-content">
                                     <div class="section-header">
-                                        <p class="section-item-title">Processing</p>
+                                        @if(App\Helpers\NotificationHelper::hasProcessingAlerts())
+                                            <img class="sale-details-alert" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
+                                        @endif
+                                        <p class="section-item-title @if(App\Helpers\NotificationHelper::hasProcessingAlerts()) mr-auto @endif">Processing</p>
                                         <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseProcessingDetails" aria-expanded="false" aria-controls="collapseProcessingDetails">
                                             <p id="processing-detail-text" class="collapse-title">Expand</p>
                                             <img id="processing-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
@@ -237,7 +254,10 @@
                             <div id="section-testing" class="sale-item-sections mb-2">
                                 <div class="section-item-content">
                                     <div class="section-header">
-                                        <p class="section-item-title">Testing</p>
+                                        @if(App\Helpers\NotificationHelper::hasTestingAlerts())
+                                            <img class="sale-details-alert" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
+                                        @endif
+                                        <p class="section-item-title @if(App\Helpers\NotificationHelper::hasTestingAlerts()) mr-auto @endif">Testing</p>
                                         <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseTesting" aria-expanded="false" aria-controls="collapseTesting">
                                             <p id="testing-detail-text" class="collapse-title">Expand</p>
                                             <img id="testing-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
@@ -255,7 +275,10 @@
                             <div id="section-payment" class="sale-item-sections mb-xl-5">
                                 <div class="section-item-content">
                                     <div class="section-header">
-                                        <p class="section-item-title">Payment</p>
+                                        @if(App\Helpers\NotificationHelper::hasPaymentAlerts())
+                                            <img class="sale-details-alert" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
+                                        @endif
+                                        <p class="section-item-title @if(App\Helpers\NotificationHelper::hasPaymentAlerts()) mr-auto @endif">Payment</p>
                                         <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapsePayment" aria-expanded="false" aria-controls="collapsePayment">
                                             <p id="payment-detail-text" class="collapse-title">Expand</p>
                                             <img id="payment-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">

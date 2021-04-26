@@ -9,23 +9,23 @@ use App\User;
 class NotificationService {
 
     public $types = [
-        1,  // sign up              - singed up to newsletter
-        // 2,  // sign up           - not singed up to newsletter (disabled)
-        // 3,  // contact us        - contact us form or device valuation (disabled)
-        4,  // checkout             - item sold to bamboo (own label) max 3 sent
-        5,  // checkout             - item sold to bamboo (trade pack)
+        1,  // sign up              - singed up to newsletter                               (info)
+        // 2,  // sign up           - not singed up to newsletter (disabled)                (info)
+        // 3,  // contact us        - contact us form or device valuation (disabled)        (info)
+        4,  // checkout             - item sold to bamboo (own label) max 3 sent            (info)
+        5,  // checkout             - item sold to bamboo (trade pack)                      (info)
 
-        6,  // not received yet
-        7,  // no imei
-        8,  // missing device
-        9,  // imei blacklisted
+        6,  // not received yet                     (alert)[processing]
+        7,  // no imei                              (alert)[processing]
+        8,  // missing device                       (alert)[processing]
+        9,  // imei blacklisted                     (alert)[processing]
         10, // marked to return
-        11, // sent to despatch
-        12, // testing notification
-        13, // unsuccessful payment
-        14, // trade pack received after 14 days
+        11, // sent to despatch 
+        12, // testing notification                 (alert)[testing]
+        13, // unsuccessful payment                 (alert)[payment]
+        14, // trade pack received after 14 days    (alert)[processing]
 
-        15, // order cancelled
+        15, // order cancelled                      (info)
     ];
 
     public $states = [

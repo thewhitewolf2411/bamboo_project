@@ -22,6 +22,12 @@
             @if(Auth::user())
             <div class="hover-link" id="user-hover-link">
                 <a href="/userprofile"><div class="img"></div><p class="showhover" style="color: #fff">Account</p></a>
+                @if(App\Helpers\NotificationHelper::count() !== null)
+                    <div class="notifications-count">
+                        <img src="{{asset('/images/front-end-icons/notification_count.svg')}}">
+                        <p>{!!App\Helpers\NotificationHelper::count()!!}</p>
+                    </div>
+                @endif
             </div>
             @else
             <div class="hover-link" id="user-hover-link">

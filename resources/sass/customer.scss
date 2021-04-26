@@ -23,6 +23,12 @@ main p, a, span{
     text-shadow: 0px 3px 20px rgb(0 0 0 / 20%) !important;
 }
 
+.customer-sections-title{
+    font-size: 48px !important;
+    text-align: left !important;
+    margin-left: 0;
+}
+
 .home-title-container{
     background: url("../../public/customer_page_images/body/Bamboo_header2.png");
     background-size: cover;
@@ -109,6 +115,24 @@ main p, a, span{
     font-weight: 600;
     text-align: left;
     color: #744D26;
+}
+
+.howitworks-container-top{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.max-450{
+    max-width: 450px;
+}
+
+.howitworks-element-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding: 3rem;
 }
 
 .how-buttons-container{
@@ -1297,7 +1321,7 @@ main p, a, span{
     color: white;
     border-radius: 10px;
     transition: 0.2s linear;
-    max-width: 1000px;
+    //max-width: 1000px;
 }
 
 .support-btn:hover{

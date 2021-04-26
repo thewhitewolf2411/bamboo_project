@@ -4,7 +4,7 @@
 <div class="app">
     <div class="news-page news-title-container">
         <div class="center-title-container">
-            <p>News & Blog</p>
+            <p class="large-page-title">News & Blog</p>
         </div>
     </div>
 

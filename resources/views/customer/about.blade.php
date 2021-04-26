@@ -6,7 +6,7 @@
 
     <div class="about-page about-title-container">
         <div class="center-title-container">
-            <p>About</p>
+            <p class="large-page-title">About</p>
         </div>
     </div>
 

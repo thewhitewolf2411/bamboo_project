@@ -5,7 +5,7 @@
 <div class="app">
     <div class="how-page support-title-container">
         <div class="center-title-container">
-            <p>Support & Service</p>
+            <p class="large-page-title">Support & Service</p>
         </div>
     </div>
 

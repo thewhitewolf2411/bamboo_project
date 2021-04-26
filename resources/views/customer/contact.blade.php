@@ -6,7 +6,7 @@
 
     <div class="contact-page contact-title-container">
         <div class="center-title-container">
-            <p>Contact us</p>
+            <p class="large-page-title">Contact us</p>
         </div>
     </div>
 

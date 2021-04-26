@@ -10183,6 +10183,12 @@ main p, a, span {
   text-shadow: 0px 3px 20px rgba(0, 0, 0, 0.2) !important;
 }
 
+.customer-sections-title {
+  font-size: 48px !important;
+  text-align: left !important;
+  margin-left: 0;
+}
+
 .home-title-container {
   background: url(/images/Bamboo_header2.png?35400f645bc747034c96ac9db32c60a5);
   background-size: cover;
@@ -10264,6 +10270,24 @@ main p, a, span {
   font-weight: 600;
   text-align: left;
   color: #744D26;
+}
+
+.howitworks-container-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.max-450 {
+  max-width: 450px;
+}
+
+.howitworks-element-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 3rem;
 }
 
 .how-buttons-container {
@@ -11437,7 +11461,6 @@ main p, a, span {
   color: white;
   border-radius: 10px;
   transition: 0.2s linear;
-  max-width: 1000px;
 }
 
 .support-btn:hover {
@@ -11823,11 +11846,23 @@ main p, a, span {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 
 .menu-item.link-active {
   background: #ebebeb;
   border-left: 4px solid #bfa4ce;
+}
+
+.logout-icon-menu {
+  display: block;
+  width: 18px;
+  height: 18px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 1rem;
 }
 
 .section-items {
@@ -12308,6 +12343,11 @@ main p, a, span {
   margin-left: 10px;
 }
 
+.mobile-menu-item > p.left.norightmargin {
+  margin-left: 10px;
+  margin-right: 0;
+}
+
 .mobile-menu-item > p.center {
   margin-left: auto;
   margin-right: auto;
@@ -12345,6 +12385,12 @@ main p, a, span {
 
 .modal {
   overflow-y: auto;
+}
+
+.sale-details-alert {
+  width: 30px;
+  height: 30px;
+  margin-right: 1rem;
 }
 
 @media (max-width: 740px) {
@@ -12402,6 +12448,9 @@ main p, a, span {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 
 .sales-item.link-active {
@@ -12467,6 +12516,9 @@ main p, a, span {
 
 .go-left-img {
   width: 25px;
+  height: 25px;
+  margin-top: auto;
+  margin-bottom: auto;
   margin-right: 15px;
 }
 
@@ -13048,6 +13100,54 @@ header {
   margin: 0;
   position: absolute;
   top: 4px;
+  left: 10px;
+}
+
+.notifications-count {
+  position: absolute;
+  bottom: -15px;
+}
+
+.notifications-count.menu {
+  position: relative;
+  bottom: unset;
+  margin-top: auto;
+  margin-bottom: 7px;
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
+.notifications-count.menu-mobile {
+  position: relative;
+  bottom: unset;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 1rem;
+  margin-right: 0;
+}
+
+.notifications-count.collapse-header {
+  position: relative;
+  bottom: unset;
+  margin-top: 5px;
+  margin-bottom: auto;
+  margin-left: 0;
+  margin-right: 1rem;
+}
+
+.notifications-count > p {
+  color: white;
+  margin: 0;
+  position: absolute;
+  top: 4px;
+  left: 10px;
+}
+
+.notifications-count.menu > p {
+  color: white;
+  margin: 0;
+  position: absolute;
+  top: 8px;
   left: 10px;
 }
 
