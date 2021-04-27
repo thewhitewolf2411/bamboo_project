@@ -286,6 +286,10 @@ class Testing{
             }
         }
 
+        if($quarantineTrays === null){
+            $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'E')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
+        }
+
         $quarantineTrays->number_of_devices = $quarantineTrays->number_of_devices + 1;
         $quarantineTrays->save();
 
