@@ -26,8 +26,11 @@ class Blog extends Model
         if($this->cms_type === 0){
             return "News";
         }
-        else{
+        if($this->cms_type === 1){
             return "Blog";
+        }
+        if($this->cms_type === 2){
+            return "How to with boo";
         }
     }
 

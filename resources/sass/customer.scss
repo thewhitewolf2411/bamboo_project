@@ -26,7 +26,14 @@ main p, a, span{
 .customer-sections-title{
     font-size: 48px !important;
     text-align: left !important;
+    font-family: Sharp Sans No1 Bold !important;
     margin-left: 0;
+}
+
+.customer-sections-title.center{
+    text-align: center !important;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .home-title-container{
@@ -1605,8 +1612,35 @@ main p, a, span{
     display: none;
 }
 
-.map-row .col{
-    min-width: auto !important;
+.sitemap-title{
+    font-family: Sharp Sans No1 Semibold;
+}
+
+.sitemap-text{
+    font-family: Sharp Sans No1 Book;
+}
+
+.sitemap-title, .sitemap-text{
+    font-size: 16px;
+    text-align: left;
+    margin: 0;
+}
+
+.sitemap-section-title{
+    font-family: Sharp Sans No1 Bold;
+    font-size: 26px;
+}
+
+.map-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.map-col{
+    min-width: 220px;
+    margin-bottom: 20px;
 }
 
 
@@ -1702,6 +1736,13 @@ main p, a, span{
     .image-button{
         margin-top: 10%;
     }
+}
+
+// mobile - text breakpoint
+@media (max-width: 380px){
+    .home-title-container > div.left-container {
+        padding: 0;
+    } 
 }
 
 // mobile - small

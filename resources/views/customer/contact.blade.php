@@ -16,8 +16,9 @@
 
 
     <div class="contact-ways-container">
-        <div class="center-title-container">
-            <p>You can contact Boo’s friendly team of mobile recycling experts by a number of ways. </p>
+        <div class="text-center">
+            {{-- <p>You can contact Boo’s friendly team of mobile recycling experts by a number of ways. </p> --}}
+            <p class="customer-sections-title center mb-5">Ways to get in touch with us</p>
         </div>
 
         <div class="ways-container">

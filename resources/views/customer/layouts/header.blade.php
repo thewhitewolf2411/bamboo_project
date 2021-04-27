@@ -9,7 +9,7 @@
             <a href="/" class="full-logo" id="full-logo-img">
                 <img id="full-bamboo-logo" src="{{asset('/customer_page_images/header/Bamboo Logo.svg')}}" width="550px" height="82px">
             </a>
-            <a href="/" class="mobile-logo hidden" id="mobile-logo-img">
+            <a href="/" class="mobile-logo invisible" id="mobile-logo-img">
                 <img id="mobile-bamboo-logo" src="{{asset('/customer_page_images/body/emoji_emotionless.svg')}}">
             </a>
         </div>

@@ -1,6 +1,8 @@
 (function() {
   window.onload = function (){
 
+    let logo_mobile = document.getElementById('mobile-logo-img');
+
     var isMobile = {
         Android: function() {
             return navigator.userAgent.match(/Android/i);
@@ -22,16 +24,16 @@
         }
     };
 
+    if(window.innerWidth <= 625){
+      if(logo_mobile.classList.contains('invisible')){
+        logo_mobile.classList.remove('invisible');
+      }
+    }
+
     if(isMobile.any()){
       return;
     }
 
-    if(window.innerWidth <= 625){
-      let logo_mobile = document.getElementById('mobile-logo-img');
-      if(logo_mobile.classList.contains('hidden')){
-        logo_mobile.classList.remove('hidden');
-      }
-    }
   }
 
   window.onscroll = function() {scrollFunction()};
@@ -69,8 +71,8 @@
         logo_full.classList.add('hidden');
       }
 
-      if(logo_mobile.classList.contains('hidden')){
-        logo_mobile.classList.remove('hidden');
+      if(logo_mobile.classList.contains('invisible')){
+        logo_mobile.classList.remove('invisible');
       }
 
     } else {
@@ -107,8 +109,8 @@
       }
 
       if(window.innerWidth > 625){
-        if(!logo_mobile.classList.contains('hidden')){
-          logo_mobile.classList.add('hidden');
+        if(!logo_mobile.classList.contains('invisible')){
+          logo_mobile.classList.add('invisible');
         }
       }
     }

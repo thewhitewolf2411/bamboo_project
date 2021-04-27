@@ -41,7 +41,10 @@ header{
 
 .mobile-logo{
     display: block;
-    //display: none;
+}
+
+.mobile-logo.invisible{
+    display: none;
 }
 
 .mobile-logo > img{

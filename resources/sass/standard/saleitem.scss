@@ -506,7 +506,22 @@
     justify-content: center;
 }
 
+.view-sale-item{
+    margin-top: auto;
+}
 
+.view-sale-item > a > img{
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.view-sale-item > p {
+    text-align: right;
+}
+
+.sale-item > .mobile-col{
+    width: 90%;
+}
 
 // general
 @media (max-width: 992px){
