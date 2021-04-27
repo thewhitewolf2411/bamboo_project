@@ -680,7 +680,7 @@
 
                         <div class="row border-bottom pb-5">
                         
-                            <div class="col-md-2"><img src="/storage/product_images/{{ $tradein->getProductImage($tradein->product_id) }}" width="100%"></div>
+                            {{-- <div class="col-md-2"><img src="/storage/product_images/{{ $tradein->getProductImage($tradein->product_id) }}" width="100%"></div> --}}
                             <div class="col-md-4">
                                 <h5 class="modal-title">{{ $tradein->getProductName($tradein->product_id) }}</h5>
                                 <p class="black">Network: {{ $tradein->network }}</p>
