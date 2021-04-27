@@ -168,8 +168,7 @@ function exportBatches(){
             },
             success: function(data, textStatus, xhr) {
                 if(xhr.status === 200){
-                    // alert('Payment batch successfully created.');
-                    // window.location.reload(true);
+                    console.log(data);
                     downloadCsv(data)
                 }
             }

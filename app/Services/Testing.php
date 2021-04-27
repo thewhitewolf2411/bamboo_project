@@ -98,11 +98,11 @@ class Testing{
             }
         }
         else{
-            if($request->water_damage === 'true'){
+            if($request->water_damage === 'true' && $tradein->customer_grade !== 'Faulty'){
                 $tradein->cosmetic_condition = $request->cosmetic_condition;
                 $tradein->job_state = '15h';
             }
-            else if($request->device_fully_functional !== 'true'){
+            else if($request->device_fully_functional !== 'true' && $tradein->customer_grade !== 'Faulty'){
                 $tradein->job_state = '15e';
             }
         }

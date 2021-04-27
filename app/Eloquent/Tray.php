@@ -42,9 +42,9 @@ class Tray extends Model
             case 2:
                 return 'Suspended';
             case 3:
-                if($this->trolley_id !== null){
+                /*if($this->trolley_id !== null){
                     return 'In Bay ' . $this->getTrolleyName($this->trolley_id);
-                }
+                }*/
                 return 'Complete';
             case 4:
                 return 'Box in sale lot';
@@ -73,7 +73,7 @@ class Tray extends Model
         $traycontent = TrayContent::where('tray_id', $this->id)->get();
         foreach($traycontent as $tc){
             $tradein = Tradein::where('id', $tc->trade_in_id)->first();
-            $price += $tradein->bamboo_price;
+            $price += $tradein->bamboo_price + $tradein->carriage_cost + $tradein->admin_cost + $tradein->misc_cost;
         }
 
         return $price;

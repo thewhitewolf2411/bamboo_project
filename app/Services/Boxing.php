@@ -17,9 +17,12 @@ class Boxing{
         if($traycontent !== null){
             $tray = Tray::where('id', $traycontent->tray_id)->first();
 
+            if($traycontent->pseudo_tray_id === $box->id){
+                return ['This device is already in this box', 404];
+            }
 
             if($tray->tray_type === 'Bo'){
-                return ['This device is already in the box ' . $tray->tray_name . '.', 404];
+                return ['This device is already in the box.' . $tray->tray_name . '.', 404];
             }
         }
 

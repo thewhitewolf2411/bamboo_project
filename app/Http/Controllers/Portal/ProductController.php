@@ -432,6 +432,14 @@ class ProductController extends Controller
             $path = $request->file('product_image')->storeAs('public/product_images',$fileNameToStore);
             $product->product_image = $fileNameToStore;
         }
+
+        if(isset($request->product_avalibility) && $request->product_avalibility === "on"){
+            $product->avaliable_for_sell = true;
+        }
+        else{
+            $product->avaliable_for_sell = false;
+        }
+
         $product->save();
 
         $deviceInfo = array();
@@ -505,7 +513,7 @@ class ProductController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('product_edited', 'Product Was succesfully edited.');
+        return redirect('/portal/product/selling-products')->with('product_edited', 'Product' . $product->product_name . 'was succesfully edited.');
     }
 
     public function saveEditedBuyingProduct(Request $request){

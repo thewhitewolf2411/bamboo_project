@@ -157,10 +157,10 @@
                             if($('#addeddevicestable tr').length > 1){
                                 if($('#addeddevicestable #' + response.order.id).length == 0 ){
                                     if(response.order.imei_number === null){
-                                        $('#addeddevicestable').append('<tr id="' + response.order.id + '"><td><div class="table-element">' + response.order.barcode + '</div></td><td><div class="table-element">' + response.model + '</div></td><td><div class="table-element">' + response.order.serial_number + '</div></td><td><div class="table-element">' + response.grade + '</div></td></tr>');
+                                        $('#addeddevicestable').append('<tr id="' + response.order.id + '"><td><div class="table-element">' + response.order.barcode + '</div></td><td><div class="table-element">' + response.model + '</div></td><td><div class="table-element">' + response.order.serial_number + '</div></td><td><div class="table-element">' + grade + '</div></td></tr>');
                                     }
                                     else{
-                                        $('#addeddevicestable').append('<tr id="' + response.order.id + '"><td><div class="table-element">' + response.order.barcode + '</div></td><td><div class="table-element">' + response.model + '</div></td><td><div class="table-element">' + response.order.imei_number + '</div></td><td><div class="table-element">' + response.grade + '</div></td></tr>');
+                                        $('#addeddevicestable').append('<tr id="' + response.order.id + '"><td><div class="table-element">' + response.order.barcode + '</div></td><td><div class="table-element">' + response.model + '</div></td><td><div class="table-element">' + response.order.imei_number + '</div></td><td><div class="table-element">' + grade  + '</div></td></tr>');
                                     }
                                     $('#form-inputs').append('<input type="hidden" name="tradein-'+ response.order.id + '" value="'+ response.order.id +'">');
                                 }

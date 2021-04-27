@@ -178,7 +178,7 @@ class SalesLotController extends Controller
                 $productInfo = ProductInformation::where('product_id', $product->id)->first();
                 $additionalCost = AdditionalCosts::first();
     
-                $cost = $tradein->bamboo_price + $tradein->admin_cost + (2 * $tradein->carriage_costs);
+                $cost = $tradein->bamboo_price + $tradein->admin_cost + (2 * $tradein->carriage_costs) + $tradein->misc_cost;
                 // price = bamboo_price + administration costs + 2 * carriage cost per device
                 $isFimpLocked = $tradein->isFimpLocked() ? 'Yes' : 'No';
     
@@ -361,12 +361,12 @@ class SalesLotController extends Controller
     
             $saleLot->save();
 
-            $salesLotContent = SalesLotContent::where('sales_lot_id', $request->salelot_number)->get();
+            //$salesLotContent = SalesLotContent::where('sales_lot_id', $request->salelot_number)->get();
 
-            foreach($salesLotContent as $sLC){
+            /*foreach($salesLotContent as $sLC){
                 $trayContent = TrayContent::where('trade_in_id', $sLC->device_id)->first();
                 $trayContent->delete();
-            }
+            }*/
     
             return redirect()->back()->with(['success'=>'You succesfully sold the lot.']);
         }
@@ -406,9 +406,9 @@ class SalesLotController extends Controller
                 if($salesLot && intval($salesLot->sales_lot_status) === 1){
                     return response('Sales lot not sold yet.', 500);
                 }
-                if($salesLot && intval($salesLot->sales_lot_status) === 2){
+                /*if($salesLot && intval($salesLot->sales_lot_status) === 2){
                     return response('Sales Lot not picked yet.', 500);
-                }
+                }*/
                 if($salesLot && intval($salesLot->sales_lot_status) === 5){
                     return response('Dispatched.', 500);
                 }
@@ -574,6 +574,58 @@ class SalesLotController extends Controller
                 $tradein->cosmetic_condition,
                 $tradein->correct_network,
                 $isFimpLocked,
+                utf8_decode('£' . $cost)
+            ];
+            array_push($data, $tradein_info);
+        }
+        
+        $csv = fopen("php://output", 'w');        
+        foreach ($data as $fields) {
+            fputcsv($csv, $fields);
+        }
+        fclose($csv);
+
+        $filename = 'PreAlert_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.csv';
+        header("Content-type: text/csv");
+        header("Content-Disposition: attachment; filename=".$filename);
+        header("Pragma: no-cache");
+        header("Expires: 0");
+    }
+
+    public function exportxls($lot_id){
+        $salesLot = SalesLot::findOrFail($lot_id);
+        $deviceIds = SalesLotContent::where('sales_lot_id', $lot_id)->get()->pluck('device_id')->toArray();
+        $tradeins = Tradein::whereIn('id', $deviceIds)->get();
+        
+        // header just in case
+        $data = array(["Trade-in Barcode Number", "Box number", "Bamboo Grade", "Customer Grade", "Manufacturer/Model", "Category", "GB Size", "Network", "Colour", "IMEI/SN", "Cost"]);
+        #$data = array();
+
+        foreach($tradeins as $tradein){
+            if($tradein->correct_product_id !== null){
+                $product = SellingProduct::find($tradein->correct_product_id);
+            } else {
+                $product = SellingProduct::find($tradein->product_id);
+            }
+            $brand = Brand::find($product->brand_id)->brand_name;
+            $productInfo = ProductInformation::where('product_id', $product->id)->first();
+            $additionalCost = AdditionalCosts::first();
+
+            $cost = $tradein->bamboo_price + $tradein->admin_cost + (2 * $tradein->carriage_costs) + $tradein->misc_cost;
+            // price = bamboo_price + administration costs + 2 * carriage cost per device
+            $isFimpLocked = $tradein->isFimpLocked() ? 'Yes' : 'No';
+
+            $tradein_info = [
+                $tradein->barcode, 
+                $tradein->getTrayName($tradein->id),
+                $tradein->getDeviceBambooGrade(),
+                $tradein->customer_grade,
+                $tradein->getProductName($tradein->product_id),
+                $tradein->getCategoryName($tradein->correct_product_id),
+                $tradein->correct_memory,
+                $tradein->correct_network,
+                $tradein->product_colour,
+                $tradein->imei_number ?? null ?: $tradein->serial_number,
                 utf8_decode('£' . $cost)
             ];
             array_push($data, $tradein_info);

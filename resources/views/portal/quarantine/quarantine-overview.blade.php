@@ -46,7 +46,7 @@
                     <input id="return_to_customer" type="submit" class="custombtn btn-green" onclick="javascript: form.action='/portal/quarantine/return-to-customer';" value="Return to Customer">
                 </div>
             </div>
-            <table class="portal-table sortable" id="quarantine-overview-table">
+            <table class="portal-table" id="quarantine-overview-table">
                 <thead>
                     <tr>
                         <td><div class="table-element">Trade-in ID</div></td>
@@ -59,7 +59,7 @@
                         <td><div class="table-element">Order Date</div></td>
                         <td><div class="table-element">Quarantine Date</div></td>
                         <td><div class="table-element">Bamboo Grade</div></td>
-                        <td><div class="table-element">Tag</div></td>
+                        <td><div class="table-element"><input type="checkbox" id="selectAllQuarantineDevices"></div></td>
                     </tr>
                 </thead>
                 <tfoot>
@@ -400,6 +400,10 @@ function enablebtn(){
     }
 
 }
+
+$('#selectAllQuarantineDevices').on('change', function(){
+    $('input:checkbox').not(this).prop('checked', this.checked);
+})
 
 </script>
 @endsection

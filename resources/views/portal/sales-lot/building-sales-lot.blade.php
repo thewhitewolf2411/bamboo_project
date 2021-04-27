@@ -10,7 +10,7 @@
     </div>
     <div class="portal-table-container p-0">
 
-        <div class="row">
+        <div class="row sm-column">
 
             <div class="col-md-6">
                 <div class="d-flex flex-column">

@@ -85,7 +85,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="buildssaleslot-scandeviceinput">Scan or type device barcode:</label>
-                                <input type="text" class="form-control" name="buildssaleslot_scandeviceinput" id="buildssaleslot-scandeviceinput">
+                                <input type="text" class="form-control" name="buildssaleslot_scandeviceinput" id="buildssaleslot-scandeviceinput" >
                             </div>
                             <div id="buildssaleslot-scandeviceinput-message">
 

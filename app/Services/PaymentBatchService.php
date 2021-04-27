@@ -156,21 +156,20 @@ class PaymentBatchService {
             $payment_batch->exported = true;
             $payment_batch->save();
 
-            $path = storage_path().'/app/public/exports/batches';
-            $filename = '/batch_export_'.$payment_batch->reference.'_'.time().'.txt';
+            $path = storage_path().'/app/public/exports/batches/';
+            $filename = \Carbon\Carbon::now()->addDay()->format("Y-M-D_h-i-s") . ".txt";
     
             if(!is_dir($path)){
                 mkdir($path, 0777, true);
             }
                 
             $file_path = $path.$filename;
-    
             $fp = fopen($file_path, 'w');
     
             foreach ($payment_rows as $row) {
                 fwrite($fp, $row."\n");
             }
-            
+
             fclose($fp);
             $payment_batch->csv_file = $filename;
             $payment_batch->save();
