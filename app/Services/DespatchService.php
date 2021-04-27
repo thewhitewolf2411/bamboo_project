@@ -168,7 +168,7 @@ class DespatchService {
                 "recipient" => [
                     "address" => [
                         "fullName" => $fullname,
-                        "companyName" => "Bamboo Mobile",
+                        "companyName" => null,               // was "Bamboo Mobile"
                         "addressLine1" => $address,
                         "addressLine2" => null,
                         "addressLine3" => null,
@@ -183,8 +183,9 @@ class DespatchService {
                 ],
                 "sender" => [
                     "tradingName" => "Bamboo Distribution",
-                    "phoneNumber" => "061061061",
-                    "emailAddress" => "info@bamboodistribution.com",
+                    "phoneNumber" => $customer->contact_number,         // was "061061061" - needs to be customer number             
+                    // No 'PhoneNumber' was provided corresponding to 'SendNotificationsTo' field" - Sender.PhoneNumber
+                    "emailAddress" => $customer->email,                 // was "info@bamboodistribution.com"
                 ],
                 "billing" => [
                     "address" => [
