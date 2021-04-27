@@ -1116,6 +1116,9 @@ class CustomerController extends Controller
                     return $labelService->printSpecialDeliveryLabel($tradein);
                     # code...
                     break;
+                // case 'instructions':
+                //     dd($labelService->printPackagingInstructions());
+                //    break;
                 default:
                     # code...
                     break;

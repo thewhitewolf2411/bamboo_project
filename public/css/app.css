@@ -16128,8 +16128,9 @@ h3, h4, h5 {
 .product-image-container img {
   position: relative;
   display: block;
-  width: 100%;
+  width: auto;
   height: auto;
+  max-height: 500px;
   margin-right: 40px;
 }
 
@@ -18661,6 +18662,15 @@ input[type=number] {
 }
 
 .single-step-row.link:hover {
+  border-color: #A375BC;
+}
+
+.column-link {
+  cursor: pointer;
+  transition: all 1s;
+}
+
+.column-link:hover {
   border-color: #A375BC;
 }
 

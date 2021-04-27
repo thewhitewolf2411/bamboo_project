@@ -272,6 +272,16 @@
     border-color: #A375BC;
 }
 
+.column-link{
+    cursor: pointer;
+    transition: all 1s;
+}
+
+.column-link:hover{
+    border-color: #A375BC;
+
+}
+
 .single-step-column{
     display: flex;
     flex-direction: column;

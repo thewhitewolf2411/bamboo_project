@@ -113,7 +113,7 @@ Route::post('/cart/printtradein', 'Customer\SellController@generateTradeInHTML')
 
 Route::post('/sell/searchproducts','Customer\SellController@searchAvalibleProducts');
 
-// delivery/special delivery label
+// packaging/delivery/special delivery label
 Route::post('/printdeliverylabel/{type}', 'Customer\CustomerController@getLabel')->middleware('auth');
 
 //User post Route
