@@ -132,7 +132,7 @@
             </div>
 
             @if(App\Helpers\RecycleOffers::getSellBanner() !== null)
-                <a href="{{App\Helpers\RecycleOffers::getLink()}}"><img src="{!!App\Helpers\RecycleOffers::getSellBanner()!!}"></a>
+                <a href="{{App\Helpers\RecycleOffers::getLink()}}"><img class="w-100" style="max-height: 320px;" src="{!!App\Helpers\RecycleOffers::getSellBanner()!!}"></a>
             @endif
 
             <div class="selling-info-items-container">

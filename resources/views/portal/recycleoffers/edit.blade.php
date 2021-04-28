@@ -48,6 +48,16 @@
                 </div>
 
                 <div class="d-flex flex-column p-0">
+                    <label class="ml-auto mr-auto mt-2">Current selling banner image:</label>
+                    <img class="offer-banner-preview" src="{{$recycleOffer->getSellingBanner()}}">
+                </div>
+
+                <div class="d-flex flex-column p-0">
+                    <label for="offer_selling_banner_image" class="ml-1 mb-2">Choose new selling banner image:</label>
+                    <input type="file" name="offer_selling_banner_image" accept="image/*" class="form-control">
+                </div>
+
+                {{-- <div class="d-flex flex-column p-0">
                     <label for="offer_title" class="ml-1 mb-2">Offer title:</label>
                     <input type="text" class="form-control" name="offer_title" value="{!!$recycleOffer->offer_title!!}" required>
                 </div>
@@ -79,7 +89,7 @@
                         <div class="pound-sign-newoffer">£</div>
                         <input type="text" class="form-control w-25 mt-auto mb-auto" name="offer_price" value="{!!$recycleOffer->offer_price!!}" required>
                     </div>
-                </div>
+                </div> --}}
 
                 <button type="submit" class="btn btn-primary w-25 ml-auto mr-auto">Save changes</button>
 

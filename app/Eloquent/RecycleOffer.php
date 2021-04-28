@@ -21,7 +21,16 @@ class RecycleOffer extends Model
      * @var array
      */
     protected $fillable = [
-        'device_id', 'offer_banner', 'offer_selling_banner', 'offer_title', 'offer_description', 'offer_additional_info', 'offer_start_date', 'offer_end_date', 'offer_price', 'status'
+        'device_id', 
+        'offer_banner', 
+        'offer_selling_banner', 
+        // 'offer_title', 
+        // 'offer_description', 
+        // 'offer_additional_info', 
+        // 'offer_start_date', 
+        // 'offer_end_date', 
+        // 'offer_price', 
+        'status'
     ];
 
     public function getDevice(){
@@ -40,10 +49,18 @@ class RecycleOffer extends Model
     }
 
     public function getImage(){
+        // for seeded recycle offer
+        if($this->offer_banner === 'recycle_offer_home.svg'){
+            return '/'.$this->offer_banner;
+        }
         return Storage::url('public/recycle_offers_images/'.$this->offer_banner);
     }
 
     public function getSellingBanner(){
+        // for seeded recycle offer
+        if($this->offer_selling_banner === 'recycle_offer_selling_banner.png'){
+            return '/'.$this->offer_selling_banner;
+        }
         return Storage::url('public/recycle_offers_images/'.$this->offer_selling_banner);
     }
 
