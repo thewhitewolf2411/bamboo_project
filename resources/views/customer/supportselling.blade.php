@@ -12,13 +12,13 @@
         <p class="back-home-text support"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to previous page</p>
     </a>
 
-    <div class="support-search-element">
+    <div class="support-search-element height-100">
         <div class="center-title-container font-orange bold">
             <p class="no-text-shadow">Selling a device</p>
         </div>
     </div>
 
-    <div class="support-faq">
+    {{-- <div class="support-faq">
         <div class="faq-left">
 
             <div class="faq-question">
@@ -124,7 +124,7 @@
                 </a>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- <div class="support-faq">
 
@@ -240,11 +240,6 @@
     {{-- <hr>
 
     <div class="support-faq-answers">
-        
-    </div> --}}
-    
-
-    <div class="support-faq-answers">
         <div class="border-top answer" id="question-1">
             <div class="support-title font-orange bold">
                 <p>How do I SELL to Bamboo Mobile?</p>
@@ -354,7 +349,37 @@
                 </p>
             </div>
         </div>
+    </div>--}}
+
+
+    <div class="support-questions-row">
+        @foreach($faq as $question)
+            <div class="support-question">
+                <p class="support-question-title">{!!$question->question!!}</p>
+                <img class="support-question-toggle-icon" src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}" onclick="toggleCollapse({!!$question->id!!})">
+            </div>
+        @endforeach
     </div>
+    
+    <div id="support-question-answers-container">
+        @foreach($faq as $question_answer)
+            <div class="support-question-answers">
+                <div class="support-question-answers-title" id="collapse{!!$question_answer->id!!}">
+                    <button class="btn btn-link collapsed toggle-collapse-answer" data-toggle="collapse" data-target="#{!!$question_answer->id!!}" aria-expanded="false" aria-controls="collapse{!!$question_answer->id!!}">
+                        {!!$question_answer->question!!}
+                    </button>
+                </div>
+                <div id="{!!$question_answer->id!!}" class="collapse" aria-labelledby="heading{!!$question_answer->id!!}" data-parent="#support-question-answers-container">
+                    <div class="card-body">
+                        <p class="answer-text">{!!$question_answer->answer!!}</p>
+                        @if($question_answer->link)<a class="btn mt-4 btn-{!!$question_answer->link_color!!}" href="{!!$question_answer->link!!}">{!!$question_answer->link_text!!}</a>@endif
+                    </div>
+                </div>
+            </div>
+            <div class="answer-separate"></div>
+        @endforeach
+    </div>
+
 
     <div class="support-search-element">
         <div class="text-center">
@@ -432,6 +457,11 @@
 
 
 </div>
-
+<script>
+    function toggleCollapse(id){
+        $('.collapse').collapse('hide');
+        $('#'+id).collapse('show');
+    }
+</script>    
 <script src="{{asset('js/Customer.js')}}"></script>
 @endsection

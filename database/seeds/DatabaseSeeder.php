@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TrolleyTrayBinSeeder::class);
         $this->call(NetworksSeeder::class);
         $this->call(ClientsSeeder::class);
+        $this->call(FAQSeeder::class);
 
         DB::table('additional_costs')->insert([
             'administration_costs'=>0.00,

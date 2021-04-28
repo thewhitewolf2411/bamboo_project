@@ -10,6 +10,7 @@ use App\Eloquent\PortalUsers;
 use App\Eloquent\Blog;
 use App\Eloquent\Order;
 use App\Eloquent\BuyingProduct;
+use App\Eloquent\FAQ;
 use App\Eloquent\Message;
 use App\Eloquent\SellingProduct;
 use App\Services\KlaviyoEmail;
@@ -126,9 +127,10 @@ class PagesController extends Controller
     public function showSellingSupportPage(){
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
+        $faq = FAQ::all();
 
         $products = $buyingProducts->merge($sellingProducts);
-        return view('customer.supportselling')->with('products', $products);
+        return view('customer.supportselling', ['products' => $products, 'faq' => $faq]);
     }
 
     public function showContactPage(){
