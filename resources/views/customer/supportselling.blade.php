@@ -380,33 +380,7 @@
         @endforeach
     </div>
 
-
-    <div class="support-search-element">
-        <div class="text-center">
-            <p class="support-subtitle">How can we help?</p>
-        </div>
-
-        <div class="text-center">
-            <p class="support-subtitle-info bebas-neue">USE THE SEARCH BAR BELOW OR SELECT FROM ONE OF THE OPTIONS BELOW</p>
-        </div>
-
-        {{-- <div class="search-bar">
-            <form class="support-search-form" action="/searchsupport" method="POST">
-                @csrf
-                <input class="support-search" type="text" placeholder="Search...">
-                <button type="submit"><i class="fa fa-search"></i></button>
-            </form>
-        </div> --}}
-        <form class="support-search-form" action="/searchsupport" method="POST">
-            <div class="search-wrapper-support">
-                <input class="support-search" type="text" placeholder="Ask a question...">
-                <div class="support-search-btn">
-                    <img src="{{asset('images/front-end-icons/search_icon.svg')}}">
-                </div>
-            </div>
-        </form>
-
-    </div>
+    @include('partial.supportsearch')
 
     <div class="supprt-titles-container">
         <div class="row-height-140 support-top-row pc-15-50">
@@ -458,9 +432,17 @@
 
 </div>
 <script>
+    (function() {
+        var question_prev = '{!!$question_id!!}';
+        if(question_prev){
+            setTimeout(() => {
+                toggleCollapse(question_prev);
+            }, 500);
+        }
+    })()
     function toggleCollapse(id){
         $('.collapse').collapse('hide');
-        $('#'+id).collapse('show');
+        $('#'+id).collapse('show');  
     }
 </script>    
 <script src="{{asset('js/Customer.js')}}"></script>

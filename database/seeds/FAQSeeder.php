@@ -32,7 +32,7 @@ class FAQSeeder extends Seeder
             tested and inspected your device. If the quote is lower after inspection, you still have the choice not to sell to us, and we will 
             send it back to you free of charge.',
             'link' => '/sell',
-            'link_text' => 'Start Here',
+            'link_text' => 'Find out now',
             'link_color' => 'orange'
         ]);
 
@@ -73,7 +73,10 @@ class FAQSeeder extends Seeder
         FAQ::create([
             'question' => 'What if my device is reported blocked?',
             'answer' => 'If your device is blocked, it is likely it has been reported lost or stolen. It is illegal for us to purchase any blocked devices. If you are the rightful owner of the device, you will 
-            need to contact your service provider, insurance company or CheckMend (www.checkmend.com) to have the device unblocked within 28 days of us notifying you. Once 28 days has elapsed then the device will be destroyed.'
+            need to contact your service provider, insurance company or CheckMend (www.checkmend.com) to have the device unblocked within 28 days of us notifying you. Once 28 days has elapsed then the device will be destroyed.',
+            'link' => 'https://www.checkmend.com',
+            'link_text' => 'Checkmend website',
+            'link_color' => 'info'
         ]);
 
         FAQ::create([

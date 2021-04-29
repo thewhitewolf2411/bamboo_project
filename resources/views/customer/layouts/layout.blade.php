@@ -14,6 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Bamboo Mobile</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="icon" type="image/png" sizes="96x96" href="/customer_page_images/header/favicon-96x96.png">
 

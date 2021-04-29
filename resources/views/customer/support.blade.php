@@ -17,32 +17,7 @@
         <p class="back-home-text support"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to previous page</p>
     </a>
 
-    <div class="support-search-element">
-        <div class="text-center">
-            <p class="support-subtitle">How can we help?</p>
-        </div>
-
-        <div class="text-center">
-            <p class="support-subtitle-info bebas-neue">USE THE SEARCH BAR BELOW OR SELECT FROM ONE OF THE OPTIONS BELOW</p>
-        </div>
-
-        {{-- <div class="search-bar">
-            <form class="support-search-form" action="/searchsupport" method="POST">
-                @csrf
-                <input class="support-search" type="text" placeholder="Search...">
-                <button type="submit"><i class="fa fa-search"></i></button>
-            </form>
-        </div> --}}
-        <form class="support-search-form" action="/searchsupport" method="POST">
-            <div class="search-wrapper-support">
-                <input class="support-search" type="text" placeholder="Ask a question...">
-                <div class="support-search-btn">
-                    <img src="{{asset('images/front-end-icons/search_icon.svg')}}">
-                </div>
-            </div>
-        </form>
-
-    </div>
+    @include('partial.supportsearch')
 
     <div class="supprt-titles-container">
         <div class="row-height-140 support-top-row pc-15-50">

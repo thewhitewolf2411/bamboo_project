@@ -124,13 +124,25 @@ class PagesController extends Controller
         return view('customer.support')->with('products', $products);
     }
 
-    public function showSellingSupportPage(){
+    public function showSellingSupportPage($id = null){
+        $question_id = null;
+        if($id){
+            $question_id = $id;
+        }
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
         $faq = FAQ::all();
 
         $products = $buyingProducts->merge($sellingProducts);
-        return view('customer.supportselling', ['products' => $products, 'faq' => $faq]);
+        return view('customer.supportselling', ['products' => $products, 'faq' => $faq, 'question_id' => $question_id]);
+    }
+
+    public function searchFAQSupport(Request $request){
+        if(isset($request->term)){
+            $searchterm = $request->term;
+            $results = FAQ::where('question', 'LIKE', "%".strtolower($searchterm)."%")->get();
+            return $results;
+        }
     }
 
     public function showContactPage(){

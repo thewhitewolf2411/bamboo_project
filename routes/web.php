@@ -27,7 +27,8 @@ Route::get('/about', 'Customer\PagesController@showAboutPage');
 Route::get('/news', 'Customer\PagesController@showNewsPage');
 Route::get('/news/{id}', 'Customer\PagesController@showSingleNews');
 Route::get('/support', 'Customer\PagesController@showSupportAndServicePage');
-Route::get('/support/selling', 'Customer\PagesController@showSellingSupportPage');
+Route::get('/support/selling/{id?}', 'Customer\PagesController@showSellingSupportPage');
+Route::post('/support/searchfaq', 'Customer\PagesController@searchFAQSupport');
 Route::get('/contact', 'Customer\PagesController@showContactPage');
 /*Route::get('/setpage/{parameter}', [
     'as'=>'setpage',
