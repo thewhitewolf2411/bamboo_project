@@ -7,7 +7,7 @@
     <div class="home-element home-title-container" id="main-home-image">
         <div class="left-container" id="home-left-container">
             <div class="title-container" id="regular-title">
-                <p>Pay less for your next mobile with bamboo</p>
+                <p class="heading-1">Pay less for your next mobile with bamboo</p>
             </div>
             <div class="offer-texts-container hidden" id="offers-texts">
                 {{-- <p class="offer-top-bold">LATEST RECYCLE OFFER</p>
@@ -39,7 +39,8 @@
         </div>
 
         <div class="how-buttons-container mt-5">
-            <div class="how-button-container active" id="selling-btn" onclick="changeHowState('selling')">
+            {{-- <div class="how-button-container active" id="selling-btn" onclick="changeHowState('selling')"> --}}
+            <div class="how-button-container active" id="selling-btn">
                 <p class="semilarge-bold-text">Selling</p>
             </div>
         </div>

@@ -32,7 +32,7 @@ header{
 
 #full-logo-container.resized{
     margin-top: 65px;
-    margin-left: 45px;
+    margin-left: 85px;
 }
 
 #full-bamboo-logo{
@@ -348,6 +348,12 @@ header{
     margin-right: 10px;
 }
 
+.url-header-container.mobile{
+    background: white;
+    padding-left: 15px;
+    margin-left: 0;
+}
+
 .url-header-container a{
     font-size: 14px;
     text-align: center;
@@ -358,6 +364,18 @@ header{
 .url-header-container a:hover{
     color: #A3D147;
     transition: 0.1s linear;
+}
+
+.mobilemenu-bold{
+    font-family: Sharp Sans No1 Bold !important;
+}
+
+.mobilemenu-medium{
+    font-family: Sharp Sans No1 Medium !important;
+}
+
+.mobilemenu-bold.white{
+    color: white;
 }
 
 #start-shopping{
@@ -491,7 +509,7 @@ header{
     }
 
     .url-header-container{
-        background: none !important;
+        //background: none !important;
         width: 100% !important;
         border-radius: 0 !important;
         border-bottom: 1px solid #AAAAAA !important;
@@ -517,7 +535,7 @@ header{
 
     .url-header-container a{
         margin: 0 !important;
-        color: #000 !important;
+        // color: #000 !important;
     }
 
 
@@ -532,7 +550,13 @@ header{
 .urls-header-mobile{
     display: flex;
     justify-content: center;
-    background: white;
+    //background: white;
+}
+
+.mobile-menu-wrapper{
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(#000000, 0.6);
 }
 
 .url-header-container.mobile{
@@ -563,7 +587,7 @@ header{
         padding: 0 60px 60px;
     }
     #full-logo-container.resized{
-        margin-left: 10px;
+        margin-left: 40px;
         margin-top: 45px;
     }
 }
