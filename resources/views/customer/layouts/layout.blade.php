@@ -34,7 +34,6 @@
             @yield('content')
 
         </main>
-        <footer>@include('customer.layouts.footer', ['showGetstarted' => true])</footer>
 
         <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">

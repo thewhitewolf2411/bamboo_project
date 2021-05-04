@@ -10166,7 +10166,7 @@ body {
 main {
   position: relative;
   min-height: 100vh;
-  margin-top: 200px;
+  margin-top: 180px;
 }
 
 main p, a, span {
@@ -13254,7 +13254,7 @@ header {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  height: 150px;
+  height: 130px;
   padding: 0 120px 0 120px;
   justify-content: space-between;
   background: #fff;
@@ -13262,7 +13262,7 @@ header {
 }
 
 #header.resized {
-  height: 100px;
+  height: 80px;
   padding: 0 30px 60px;
 }
 
@@ -13780,8 +13780,8 @@ header {
 
 @media (max-width: 1400px) {
   .logo-header-container {
-    margin-top: -15px;
-    margin-left: 35px;
+    margin-top: -10px;
+    margin-left: 0px;
   }
 
   .header-container {
@@ -13790,7 +13790,7 @@ header {
 }
 @media (max-width: 1130px) {
   .header-container {
-    padding: 0 60px 60px;
+    padding: 0 60px 0px;
   }
 
   #full-logo-container.resized {
@@ -14438,7 +14438,7 @@ h3, h4, h5 {
 
 .back-line-container {
   position: absolute;
-  width: 4px;
+  width: 7px;
   background: black;
   height: 600px;
   z-index: -50;

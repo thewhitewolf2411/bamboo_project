@@ -80,10 +80,10 @@
         <a href="/news">News & Blog</a>
     </div>
     <div class="url-header-container">
-        <a href="/support">Support & Service</a>
+        <a href="/support">Service & Support</a>
     </div>
     <div class="url-header-container">
-        <a href="/contact">Contact</a>
+        <a href="/contact">Contact Us</a>
     </div>
 
 </div>
@@ -106,10 +106,10 @@
             <a href="/news" class="mobilemenu-medium">News & Blog</a>
         </div>
         <div class="url-header-container mobile">
-            <a href="/support" class="mobilemenu-medium">Support & Service</a>
+            <a href="/support" class="mobilemenu-medium">Service & Support</a>
         </div>
         <div class="url-header-container mobile lastitem">
-            <a href="/contact" class="mobilemenu-medium">Contact</a>
+            <a href="/contact" class="mobilemenu-medium">Contact Us</a>
         </div>
     </div>
 </div>

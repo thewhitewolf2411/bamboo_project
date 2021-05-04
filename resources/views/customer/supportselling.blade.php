@@ -429,8 +429,10 @@
 
     </div>
 
-
 </div>
+
+    @include('customer.layouts.footer', ['showGetstarted' => false])
+    
 <script>
     (function() {
         var question_prev = '{!!$question_id!!}';

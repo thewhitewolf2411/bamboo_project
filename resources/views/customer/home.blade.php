@@ -52,7 +52,7 @@
                         <p class="how-title-text bebas-neue">2. FREE DELIVERY OPTIONS</p>
                     </div>
                     <div class="how-text-container">
-                        <p class="regular-text">Once you have completed your sales order, you simply request for a free sales pack or print your own labels to send in your device.</p>
+                        <p class="regular-text">Once you have completed your sales order, you simply request a FREE Trade Pack or print your own labels to send in your device.</p>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                         <p class="how-title-text bebas-neue">1. YOU SEARCH FOR YOUR DEVICE</p>
                     </div>
                     <div class="how-text-container">
-                        <p  class="regular-text">Find your old device and how much it's worth. Choose your preferred payment option with all your details.</p>
+                        <p  class="regular-text">Find your old device and see how much it’s worth. Choose your preferred payment option with all your details.</p>
                     </div>
                 </div>
                 <div class="how-text-element last-element">
@@ -88,7 +88,7 @@
                         <p class="how-title-text bebas-neue">3. FAST SAME DAY PAYMENT</p>
                     </div>
                     <div class="how-text-container">
-                        <p class="regular-text">When we receive your device, we will check  it against your order. If it is all correct, payment will be made on the same day of receipt. Woohoo!</p>
+                        <p class="regular-text">When we receive your device, we will check  it against your order. If it is all correct, payment will be made on the same day we receive it. Woohoo!</p>
                     </div>
                 </div>
             </div>
@@ -435,6 +435,8 @@
         </form>
 
     </div> --}}
+
+    <footer>@include('customer.layouts.footer', ['showGetstarted' => false])</footer>
 
     <script>
          (function() {

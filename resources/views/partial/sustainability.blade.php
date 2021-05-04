@@ -42,9 +42,9 @@
         <div class="text-buttons-sustainability">
             <p class="sustainability-large ml-0">Sustainability</p>
             <p class="sustainability-small ml-0 mt-4">
-                Sustainability is at the heart of bamboo mobile and everything we do. Like our parent company, Bamboo Distribution, the protection of the environment is central to our ethics and business strategy.
+                Sustainability is at the heart of Bamboo Mobile and everything we do. Like our parent company, Bamboo Distribution, the protection of the environment is central to our ethics and business strategy.
             </p>
-            <a href="#" class="btn btn-light ml-0 mt-4 w-25">Read More</a>
+            <a href="/about" class="btn btn-light ml-0 mt-4 w-25">Read More</a>
         </div>
     </div>
 

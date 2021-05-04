@@ -148,9 +148,10 @@ class PagesController extends Controller
     public function showContactPage(){
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
+        $selected = isset(request()->selected) ? request()->selected : null;
 
         $products = $buyingProducts->merge($sellingProducts);
-        return view('customer.contact')->with('products', $products);
+        return view('customer.contact', ['products' => $products, 'selected' => $selected]);
     }
 
 

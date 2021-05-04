@@ -30,6 +30,7 @@ Route::get('/support', 'Customer\PagesController@showSupportAndServicePage');
 Route::get('/support/selling/{id?}', 'Customer\PagesController@showSellingSupportPage');
 Route::post('/support/searchfaq', 'Customer\PagesController@searchFAQSupport');
 Route::get('/contact', 'Customer\PagesController@showContactPage');
+Route::get('/contact/{selected?}', 'Customer\PagesController@showContactPage');
 /*Route::get('/setpage/{parameter}', [
     'as'=>'setpage',
     'uses'=>'Customer\CustomerController@setPage'

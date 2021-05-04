@@ -9,6 +9,14 @@
         </div>
     </div>
 
+    @if(Session::get('_previous') !== null)
+        <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+    @else
+        <a class="back-to-home-footer mt-3" href="/">
+    @endif
+        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
+    </a>
+
     <div class="how-first-element">
         <div class="howitworks-container-top">
 
@@ -28,7 +36,7 @@ Watch our quick video that explains how our meticulous grading system works. We 
                         Your browser does not support HTML video.
                     </video>
                 </div>
-                <p class="mt-2">Watch our quick video explaining just how thorough our grading system is. Trust us, you will be shocked.</p>
+                {{-- <p class="mt-2">Watch our quick video explaining just how thorough our grading system is. Trust us, you will be shocked.</p> --}}
             </div>
         </div>
     </div>
@@ -88,7 +96,10 @@ Watch our quick video that explains how our meticulous grading system works. We 
             <div class="shopping-element container">
                 <div class="shopping-element-text">
                     <p class="left-title-text">1. Search for a new device</p>
-                    <p class="how-text-desc">Search for your old device and find out how much it’s worth. If you’re happy with the price, simply register the mobile and provide us with your preferred payment option and with your details. </p>
+                    <p class="how-text-desc">
+                        {{-- Search for your old device and find out how much it’s worth. If you’re happy with the price, simply register the mobile and provide us with your preferred payment option and with your details.  --}}
+                        Search your old device and find out how much its worth. If you are happy with the price , simply register the device, provide us with your details and we’ll get the ball rolling.
+                    </p>
                 </div>
                 <div class="shopping-element-image">
                     <img class="how-image" src="{{ asset('/customer_page_images/body/hearts.svg') }}">
@@ -221,6 +232,8 @@ Watch our quick video that explains how our meticulous grading system works. We 
         </form>
 
     </div> --}}
+
+    @include('customer.layouts.footer', ['showGetstarted' => false])
 
     <script>
 

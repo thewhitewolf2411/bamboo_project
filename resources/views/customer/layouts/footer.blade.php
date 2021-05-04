@@ -72,6 +72,11 @@
             <a href="/recyclepolicy">Recycle Policy</a>
             <a href="https://www.bamboodistribution.com/" target="_blank">Corporate Site</a>
         </div>
+        <div class="footer-row-6">
+            <span>Contact Us</span>
+            <a href="/contact/message">Message Us</a>
+            <a href="/contact/call">Call Us</a>
+        </div>
     </div>
 
     <div class="footer-row" id="footer-row-3">

@@ -13,7 +13,7 @@
     @else
         <a class="back-to-home-footer mt-3" href="/">
     @endif
-        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to home</p>
+        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
     </a>
 
     <div class="container">
@@ -293,6 +293,8 @@
     
 
     @include('partial.newscontactsupport')
+
+    @include('customer.layouts.footer', ['showGetstarted' => false])
     
 </div>
 

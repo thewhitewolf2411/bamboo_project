@@ -10,8 +10,12 @@
         </div>
     </div>
 
+    @if(Session::get('_previous') !== null)
+    <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+    @else
     <a class="back-to-home-footer mt-3" href="/">
-        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to home</p>
+    @endif
+        <p class="back-home-text support"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
     </a>
 
 
@@ -199,6 +203,8 @@
 
 </div>
 
+@include('customer.layouts.footer', ['showGetstarted' => false])
+
 <script>
 
     $(document).ready(function(){
@@ -215,8 +221,19 @@
             $('#title').val('Customer device not available');
         }
 
-
-
+        let preselected = '{!!$selected!!}';
+        if(preselected){
+            switch (preselected) {
+                case "message":
+                    document.getElementById("contact-message").click();
+                    break;
+                case "call":
+                    document.getElementById("contact-telephone").click();
+                    break;
+                default:
+                    break;
+            }
+        }
     });
 
 

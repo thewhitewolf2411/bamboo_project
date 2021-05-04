@@ -28,6 +28,14 @@
         <main>
             @include('customer.layouts.sellinglinks')
 
+            @if(Session::get('_previous') !== null)
+                <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+            @else
+                <a class="back-to-home-footer mt-3" href="/">
+            @endif
+                <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
+            </a>
+
             @include('partial.sellsearch', ['title' => 'What do you want to sell?', 'info' => 'Please use the search bar below or follow the steps to find your device'])
 
             <div class="col">

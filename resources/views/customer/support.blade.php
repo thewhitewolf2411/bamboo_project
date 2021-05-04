@@ -5,7 +5,7 @@
 <div class="app">
     <div class="how-page support-title-container">
         <div class="center-title-container">
-            <p class="large-page-title">Support & Service</p>
+            <p class="large-page-title">Service & Support</p>
         </div>
     </div>
 
@@ -14,7 +14,7 @@
     @else
     <a class="back-to-home-footer mt-3" href="/">
     @endif
-        <p class="back-home-text support"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to previous page</p>
+        <p class="back-home-text support"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
     </a>
 
     @include('partial.supportsearch')
@@ -179,6 +179,9 @@
             </div>
         </div>
     </div>
+
+    @include('customer.layouts.footer', ['showGetstarted' => false])
+
 </div>
 
 @endsection
