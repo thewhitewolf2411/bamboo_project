@@ -204,8 +204,12 @@ class PagesController extends Controller
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
 
+        $phones = SellingProduct::where('category_id', 1)->get()->take(4);
+        $tablets = SellingProduct::where('category_id', 2)->get()->take(2);
+        $watches = SellingProduct::where('category_id', 3)->get()->take(3);
+
         $products = $buyingProducts->merge($sellingProducts);
-        return view('customer.footer-links.map')->with('products', $products);
+        return view('customer.footer-links.map', ['products' => $products, 'tablets' => $tablets, 'phones' => $phones, 'watches' => $watches]);
     }
 
     public function showCookiesPage(){
@@ -268,12 +272,12 @@ class PagesController extends Controller
 
         $firstName = $request->firstname;
         $lastname = $request->lastname;
-        $email = $request->emailadress;
+        $email = $request->email_address;
         $telephone = $request->telephone;
-        $ordernumber = $request->title;
+        $ordernumber = $request->order_number;
         $message = $request->yourmessage;
 
-        $newMessage = Message::create([
+        Message::create([
             'first_name'=>$firstName,
             'last_name'=>$lastname,
             'email'=>$email,

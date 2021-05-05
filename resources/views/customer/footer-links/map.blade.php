@@ -34,44 +34,50 @@
                 <div class="row m-0 map-row">
                     <div class="map-col">
                         <p class="sitemap-title">How it works</p>
-                        <p class="sitemap-text">Shopping</p>
-                        <p class="sitemap-text">Selling</p>
+                        {{-- <a class="sitemap-text" href="/how">Shopping</a> --}}
+                        <a class="sitemap-text" href="/sell">Selling</a>
                     </div>
                     <div class="map-col">
                         <p class="sitemap-title">About Us</p>
-                        <p class="sitemap-text">How it works</p>
+                        <a class="sitemap-text" href="/how">How it works</a>
+                    </div>
+                    <div class="map-col">
+                        <p class="sitemap-title">News & Blog</p>
+                        <a class="sitemap-text" href="/news">News & Blog</a>
                     </div>
                     <div class="map-col">
                         <p class="sitemap-title">Service & Support</p>
-                        <p class="sitemap-text">Selling a device</p>
-                        <p class="sitemap-text">Tech</p>
-                        <p class="sitemap-text">Delivery</p>
-                        <p class="sitemap-text">Your Order</p>
-                        <p class="sitemap-text">Your Account</p>
-                        <p class="sitemap-text">General Questions</p>
+                        <a class="sitemap-text" href="/support/selling">Selling a device</a>
+                        <a class="sitemap-text" href="/support">Tech</a>
+                        <a class="sitemap-text" href="/support">Delivery</a>
+                        <a class="sitemap-text" href="/support">Your Order</a>
+                        <a class="sitemap-text" href="/support">Your Account</a>
+                        <a class="sitemap-text" href="/support">General Questions</a>
                     </div>
                     <div class="map-col">
-                        <p class="sitemap-title">Contact</p>
+                        <p class="sitemap-title">Contact Us</p>
+                        <a class="sitemap-text" href="/contact/message">Message Us</a>
+                        <a class="sitemap-text" href="/contact/call">Call Us</a>
                     </div>
                     <div class="map-col">
                         <p class="sitemap-title">My Bamboo</p>
                     </div>
                     <div class="map-col">
                         <p class="sitemap-title">Responsibilities</p>
-                        <p class="sitemap-text">Environment</p>
+                        <a class="sitemap-text" href="/environment">Environment</a>
                     </div>
                     <div class="map-col">
                         <p class="sitemap-title">Legal</p>
-                        <p class="sitemap-text">Privacy Policy</p>
-                        <p class="sitemap-text">Terms & Condition</p>
-                        <p class="sitemap-text">Site map</p>
-                        <p class="sitemap-text">Cookies</p>
-                        <p class="sitemap-text">Modern Slavery Statement</p>
-                        <p class="sitemap-text">Corporate Site</p>
+                        <a class="sitemap-text" href="/privacy">Privacy Policy</a>
+                        <a class="sitemap-text" href="/terms">Terms & Condition</a>
+                        <a class="sitemap-text" href="/map">Site map</a>
+                        <a class="sitemap-text" href="/cookies">Cookies</a>
+                        <a class="sitemap-text" href="/slavery">Modern Slavery Statement</a>
+                        <a class="sitemap-text" href="https://www.bamboodistribution.com/">Corporate Site</a>
                     </div>
                 </div>
 
-                <div class="row m-0 border-top my-5">
+                {{-- <div class="row m-0 border-top my-5">
                     <p class="sitemap-section-title ml-1 mt-4">Shopping</p>
                 </div>
 
@@ -82,7 +88,7 @@
                     </div>
                     <div class="map-col">
                         <p class="sitemap-title">Shop Mobile Phones</p>
-                        <p class="sitemap-text">Shop All Mobile Phones</p>
+                        <a class="sitemap-text">Shop All Mobile Phones</a>
                         <p class="sitemap-text">By Grade</p>
                         <p class="sitemap-text">Apple iPhone</p>
                         <p class="sitemap-text">Samsung Galaxy</p>
@@ -110,7 +116,7 @@
                     <div class="map-col">
                         <p class="sitemap-title">Let Boo do it, for you</p>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="row m-0 border-top my-5">
                     <p class="sitemap-section-title ml-1 mt-4">Selling</p>
@@ -120,21 +126,32 @@
 
                     <div class="map-col">
                         <p class="sitemap-title">Sell Mobile Phones</p>
-                        <p class="sitemap-text">Apple iPhone</p>
-                        <p class="sitemap-text">Samsung Galaxy</p>
+                        <a class="sitemap-text" href="/sell/shop/mobile/all">Search All</a>
+                        @foreach($phones as $phone)
+                            <a class="sitemap-text" href="/sell/sellitem/{{$phone->id}}">{{$phone->product_name}}</a>
+                        @endforeach
+                        {{-- <a class="sitemap-text" href="#">Apple iPhone</a>
+                        <a class="sitemap-text" href="#">Samsung Galaxy</a> --}}
                     </div>
                     <div class="map-col">
                         <p class="sitemap-title">Sell Tablets</p>
-                        <p class="sitemap-text">Apple iPhone</p>
-                        <p class="sitemap-text">Samsung Galaxy</p>
+                        @foreach($tablets as $tablet)
+                            <a class="sitemap-text" href="/sell/sellitem/{{$tablet->id}}">{{$tablet->product_name}}</a>
+                        @endforeach
+                        {{-- <a class="sitemap-text" href="#">Apple iPhone</a>
+                        <a class="sitemap-text" href="#">Samsung Galaxy</a> --}}
                     </div>
                     <div class="map-col">
                         <p class="sitemap-title">Sell Watches</p>
-                        <p class="sitemap-text">Apple iPhone</p>
-                        <p class="sitemap-text">Samsung Galaxy</p>
+                        @foreach($watches as $watch)
+                            <a class="sitemap-text" href="/sell/sellitem/{{$watch->id}}">{{$watch->product_name}}</a>
+                        @endforeach
+                        {{-- <a class="sitemap-text" href="#">Apple iPhone</a>
+                        <a class="sitemap-text" href="#">Samsung Galaxy</a> --}}
                     </div>
                     <div class="map-col">
                         <p class="sitemap-title">Why Sell With Us</p>
+                        <a class="sitemap-text" href="/sell/why">Benefits of Selling with Bamboo</a>
                     </div>
                 </div>
 

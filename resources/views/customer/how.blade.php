@@ -233,7 +233,7 @@ Watch our quick video that explains how our meticulous grading system works. We 
 
     </div> --}}
 
-    @include('customer.layouts.footer', ['showGetstarted' => false])
+    @include('customer.layouts.footer', ['showGetstarted' => true])
 
     <script>
 

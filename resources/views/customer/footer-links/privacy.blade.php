@@ -292,12 +292,12 @@
                     </div>
                     <br>
 
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
 
                         <p>Paula Hansson</p>
                         <p>Company Security</p>
 
-                    </div>
+                    </div> --}}
 
                 </div>
 

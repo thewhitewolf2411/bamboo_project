@@ -23,7 +23,7 @@
             <div class="sustainability-about-col text">
                 <p class="sustainability-large ml-0 mt-auto">About bamboo</p>
                 <p class="sustainability-small ml-0 mt-4">
-                    bamboo mobile’s parent company is Bamboo Distribution which is a recognised international, independent phone distributor, and recycler which has been operating for over 10 years...
+                    Bamboo Mobile’s parent company is Bamboo Distribution which is a recognised international, independent phone distributor, and recycler which has been operating for over 10 years...
                 </p>
                 <a href="/about" class="btn btn-light ml-0 mt-4 w-25 mb-auto">Read More</a>
             </div>

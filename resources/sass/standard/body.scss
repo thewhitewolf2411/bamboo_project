@@ -693,14 +693,23 @@ h3, h4, h5{
         padding: 30px !important;
         flex-direction: column;
         margin-top: 20px;
+        height: auto;
+    }
+
+    .service-header-1, .service-header-2{
+        margin: auto;
+        text-align: center;
+        width: 100%;
     }
 
     .contact-footer-image{
-        margin-bottom: 20px;
+        //margin-bottom: 20px;
+        margin: auto;
     }
 
     .contact-footer-text{
         width: 100%;
+        margin-right: 0;
     }
 
     .contact-footer-arrow{

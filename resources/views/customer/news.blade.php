@@ -294,7 +294,7 @@
 
     @include('partial.newscontactsupport')
 
-    @include('customer.layouts.footer', ['showGetstarted' => false])
+    @include('customer.layouts.footer', ['showGetstarted' => true])
     
 </div>
 

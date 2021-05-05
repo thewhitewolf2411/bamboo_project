@@ -120,7 +120,7 @@
 
     @include('partial.newsletter')
 
-    @include('customer.layouts.footer', ['showGetstarted' => false])
+    @include('customer.layouts.footer', ['showGetstarted' => true])
 
 </div>
 
