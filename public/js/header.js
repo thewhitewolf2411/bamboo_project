@@ -40,9 +40,14 @@
 
   function scrollFunction() {
 
+    if(window.innerWidth <= 625){
+      return;
+    }
+
     if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100 || window.pageYOffset > 100) {
       // reduce header
       let header = document.getElementById('header');
+      let header_selling = document.getElementById('selling-subheader-links');
       let img = document.getElementById('full-bamboo-logo');
       let urls = document.getElementById('header-urls');
       let logo_container = document.getElementById('full-logo-container');
@@ -53,6 +58,14 @@
       header.style.background = 'white';
       if(!header.classList.contains('resized')){
         header.classList.add('resized');
+      }
+
+      if(window.innerWidth > 625){
+        if(header_selling){
+          if(!header_selling.classList.contains('resized')){
+            header_selling.classList.add('resized');
+          }
+        }
       }
     
       if(!img.classList.contains('resized')){
@@ -78,6 +91,7 @@
     } else {
       // enlarge header
       let header = document.getElementById('header');
+      let header_selling = document.getElementById('selling-subheader-links');
       let img = document.getElementById('full-bamboo-logo');
       let urls = document.getElementById('header-urls');
       let logo_container = document.getElementById('full-logo-container');
@@ -87,6 +101,12 @@
       if(header.classList.contains('resized')){
         header.classList.remove('resized');
       }
+      if(header_selling){
+        if(header_selling.classList.contains('resized')){
+          header_selling.classList.remove('resized');
+        }
+      }
+      
 
       if(img.classList.contains('resized')){
         img.classList.remove('resized');

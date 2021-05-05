@@ -450,6 +450,15 @@ header{
 
 .header-selling-links{
     background: #F28E33;
+    position: fixed;
+    z-index: 49;
+    width: 100%;
+    top: 180px;
+    transition: all 0.5s ease;
+}
+
+.header-selling-links.resized{
+    top: 130px;
 }
 
 @media screen and (max-width: 740px) and (min-width: 325px){
@@ -639,6 +648,12 @@ header{
     .hover-link:hover{
         height: 85px !important;
     }
+    .header-selling-links{
+        top: 100px;
+    }
+    .header-selling-links.resized{
+        top: 80px;    
+    }
 }
 
 // logo breakpoint
@@ -666,6 +681,12 @@ header{
     }
     #header.resized{
         padding: 0 25px 25px;
+    }
+    .header-selling-links{
+        top: 100px;
+    }
+    .header-selling-links.resized{
+        top: 80px;
     }
 }
 
