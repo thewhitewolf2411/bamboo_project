@@ -444,10 +444,13 @@
     })()
     function toggleCollapse(id){
         $('.collapse').collapse('hide');
-        $('#'+id).collapse('show');  
-        $([document.documentElement, document.body]).animate({
-            scrollTop: $('#' + id).offset().top - 300
+        setTimeout(function(){
+            $('#'+id).collapse('show');  
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $('#' + id).offset().top - 300
+            }, 500);
         }, 500);
+        
     }
 </script>    
 <script src="{{asset('js/Customer.js')}}"></script>
