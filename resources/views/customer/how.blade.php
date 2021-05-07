@@ -25,17 +25,45 @@
                     {{-- <p>Shop and sell easily <br> with just a few clicks</p> --}}
                     <p class="customer-sections-title">Sell easily <br> with just a few clicks</p>
                 </div>
-                <p class="max-450 mt-4">We pride ourselves in offering a smart simple way to shop and sell mobile devices. With Boo, all it takes is just a few clicks to buy and sell the devices of your choice. In just several a few simple steps you can either trade in or trade up your mobile tech for unbeatable prices, while doing your bit for the environment.   
-Watch our quick video that explains how our meticulous grading system works. We guarantee you’ll be pleasantly surprised at just how thorough and exhaustive our grading system is. 
-</p>
+                <p class="max-450 mt-4">
+                    We pride ourselves in offering a smart simple way to shop and sell mobile devices. With Boo, all it takes is just a few clicks to buy and sell the devices of your choice. 
+                    In just several a few simple steps you can either trade in or trade up your mobile tech for unbeatable prices, while doing your bit for the environment.   
+                    Watch our quick video that explains how our meticulous grading system works. We guarantee you’ll be pleasantly surprised at just how thorough and exhaustive our grading system is. 
+                </p>
             </div>
-            <div class="howitworks-element-container text-center">
-                <div class="grading-video-container">
-                    <video id="howvideoid" width="100%" controls>
-                        <source src="{{ asset('/video/old/Bamboo Selling v4.mp4') }}" type="video/mp4">
-                        Your browser does not support HTML video.
-                    </video>
+            <div class="howitworks-element-container text-center p-0">
+                <div class="grading-video-container mt-auto mb-auto">
+                    <div class="howVideoToggle" data-toggle="modal" data-target="#howVideoModal">
+                        <p class="mb-4">Grading System</p>
+                        <img src="{{asset('/video/play_video.svg')}}">
+                        <p class="mt-4">Explained</p>
+                    </div>
                 </div>
+
+                <div class="modal fade" id="howVideoModal" tabindex="-1" role="dialog" aria-labelledby="howVideoLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <h5 class="modal-title howitworks" id="howVideoLabel">How it works</h5>
+                        <div class="modal-content howitworksvideo">
+                            {{-- <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div> --}}
+                            <div class="modal-body">
+                            <video id="howvideoid" width="100%" controls>
+                                <source src="{{ asset('/video/old/Bamboo Selling v4.mp4') }}" type="video/mp4">
+                                Your browser does not support HTML video.
+                            </video>
+                            </div>
+                            <img class="dismiss-howitworks" src="{{asset('images/front-end-icons/close_modal_orange.svg')}}" data-dismiss="modal">
+                            {{-- <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div> --}}
+                      </div>
+                    </div>
+                </div>
+
                 {{-- <p class="mt-2">Watch our quick video explaining just how thorough our grading system is. Trust us, you will be shocked.</p> --}}
             </div>
         </div>
@@ -112,7 +140,8 @@ Watch our quick video that explains how our meticulous grading system works. We 
                     <p class="how-text-desc">Once your sales order is completed, simply request for a free sales pack. Alternatively, you can print your own labels to send us your device</p>
                 </div>
                 <div class="shopping-element-image">
-                    <img class="how-image" src="{{ asset('/customer_page_images/body/free_post_pack.svg') }}">
+                    {{-- <img class="how-image" src="{{ asset('/customer_page_images/body/free_post_pack.svg') }}"> --}}
+                    <img class="how-image" src="{{ asset('/customer_page_images/body/revised_trade_pack.png') }}">
                 </div>
             </div>
 

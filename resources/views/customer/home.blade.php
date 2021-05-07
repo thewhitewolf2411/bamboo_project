@@ -63,7 +63,8 @@
                     <img src="{{asset('/customer_page_images/body/How-Icon-4.svg')}}">
                 </div>
                 <div class="how-image-container">
-                    <img src="{{asset('/customer_page_images/body/How-Icon-5.svg')}}">
+                    {{-- <img src="{{asset('/customer_page_images/body/How-Icon-5.svg')}}"> --}}
+                    <img class="how-image" src="{{ asset('/customer_page_images/body/revised_trade_pack.png') }}">
                 </div>
                 <div class="how-image-container">
                     <img src="{{asset('/customer_page_images/body/How-Icon-6.svg')}}">

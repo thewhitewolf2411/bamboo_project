@@ -57,7 +57,7 @@
         </div>
 
         @if(Session::has('success-newslettersignup') || Session::has('error-newslettersignup'))
-            <script>
+            {{-- <script>
                 var duration = 2000;
                 var startingY = 0;
                 var diff = document.getElementById('newsletter-section-scrollinto').getBoundingClientRect().top - startingY;
@@ -74,7 +74,7 @@
                     window.requestAnimationFrame(step);
                     }
                 })
-            </script>
+            </script> --}}
             @if(Session::get('success-newslettersignup'))
                 <div class="alert alert-light w-50 text-center m-auto" role="alert">
                     {!!Session::get('success-newslettersignup')!!}
