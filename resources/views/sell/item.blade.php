@@ -27,7 +27,7 @@
 
     <body>
         <header>@include('customer.layouts.header')</header>
-        <main>
+        <main class="selling-margin">
             @include('customer.layouts.sellinglinks')
             <div class="col text-center sell-item">
                 @if(Session::get('_previous') !== null)

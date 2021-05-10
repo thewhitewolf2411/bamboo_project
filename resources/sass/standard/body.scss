@@ -499,11 +499,23 @@ h3, h4, h5{
     }
 }
 
+
+// tablets - large
+@media (max-width: 890px){
+    main.selling-margin{
+        margin-top: 150px;
+    }
+}
+
 // global breakpoint 
 @media screen and (max-width: 740px) and (min-width: 325px){
 
     main{
         margin-top: 100px !important;
+    }
+
+    main.selling-margin{
+        margin-top: 170px !important;
     }
 
     // .home-element{

@@ -1,260 +1,214 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+@extends('customer.layouts.layout')
 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@section('content')
 
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        
-        
-        <title>Bamboo Mobile::Recycle</title>
+    <main class="selling-margin">
+        @include('customer.layouts.sellinglinks')
 
-        <link rel="icon" type="image/png" sizes="96x96" href="/customer_page_images/header/favicon-96x96.png">
-        
-        <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-
-        <script src="{{asset('/js/SellingPage.js')}}"></script>
-    </head>
-
-    <body>
-        <header>@include('customer.layouts.header')</header>
-        <main>
-            @include('customer.layouts.sellinglinks')
-
-            <div class="why-page why-title-container">
-                <div class="center-title-container">
-                    <p>Why Sell With Us</p>
-                </div>
+        <div class="why-page why-title-container">
+            <div class="center-title-container">
+                <p class="large-page-title">Why Sell With Us</p>
             </div>
+        </div>
 
-            <div class="how-first-element">
-                <div class="d-flex flex-row justify-content-between border-down">
-        
-                    <div class="p-5 d-flex flex-column justify-content-between">
-                        <div class="center-title-container">
-                            <p>The benefits of selling <br> With Bamboo Mobile</p>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus.</p>
-                    </div>
-                    <div class="p-5 d-flex flex-column justify-content-between">
-                        <div class="selling-video-container">
-                            {{-- <p>Selling With Us</p>
-                            <a onclick="showgradingvideo()">
-                                <div class="video-image-container">
-                                    <div class="play-container">
-                                        <i class="fa fa-play" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-                            </a>
-                            <p>Explained</p> --}}
-                            <video class="selling-video" controls>
-                                <source src="{{asset('/video/old/selling_to_bamboo.mp4')}}" type="video/mp4">
-                            </video>
-                        </div>
-                        <p>Watch our quick video explaining the benefits you'll receive when selling your next device with Bamboo Mobile</p>
-                    </div>
-                </div>
-            </div>
+        <div class="how-first-element">
+            <div class="d-flex flex-row justify-content-center border-down p-5">
 
-            <div class="selling-with-container">
-                <div class="center-title-container">
-                    <p>Selling with us</p>
-                </div>
-
-                <div class="selling-with-elements">
-                    <div class="selling-with-element selling-with-left">
-                        <div class="selling-img-container">
-                            <img src="{{asset('/sell_images/why_images/image-1.svg')}}">
-                        </div>
-                        <div class="selling-text-container">
-                            <p class="title-orange">Same day payment</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper.</p>
-                        </div>
-                    </div>
-                    <div class="selling-with-element selling-with-right">
-                        <div class="selling-text-container">
-                            <p class="title-orange">Free Postage</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper.</p>
-                        </div>
-                        <div class="selling-img-container">
-                            <img src="{{asset('/sell_images/why_images/image-2.svg')}}">
-                        </div>
-                    </div>
-                    <div class="selling-with-element selling-with-left">
-                        <div class="selling-img-container">
-                            <img src="{{asset('/sell_images/why_images/image-3.svg')}}">
-                        </div>
-                        <div class="selling-text-container">
-                            <p class="title-orange">GDPR compliant</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper.</p>
-                        </div>
-                    </div>
-                    <div class="selling-with-element selling-with-right">
-                        <div class="selling-text-container">
-                            <p class="title-orange">Data is always protected</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper.</p>
-                        </div>
-                        <div class="selling-img-container">
-                            <img src="{{asset('/sell_images/why_images/image-4.svg')}}">
-                        </div>
-                    </div>
-                    <div class="selling-with-element selling-with-left">
-                        <div class="selling-img-container">
-                            <img src="{{asset('/sell_images/why_images/image-5.svg')}}">
-                        </div>
-                        <div class="selling-text-container">
-                            <p class="title-orange">We help to Reduce, Reuse, Recycle</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper.</p>
-                        </div>
-                    </div>
-                    <div class="selling-with-element selling-with-right">
-                        <div class="selling-text-container">
-                            <p class="title-orange">Bamboo Price or your device back for free</p>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper, ex tellus finibus odio, eget accumsan risus ligula vel risus elementum laoreet tortor. Pellentesque rhoncus, leo non efficitur ullamcorper.</p>
-                        </div>
-                        <div class="selling-img-container">
-                            <img src="{{asset('/sell_images/why_images/image-6.svg')}}">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="selling-btn-container">
-                    <a href="" class="btn btn-orange btn-primary">
-                        Start Selling
-                    </a>
-                </div>
-            </div>
-
-            @include('partial.sustainability', ['whySell' => false, 'about' => false])
-
-            {{-- <div class="about-sustainability">
-                <div class="about-images-container">
-                    <div class="about-images" id="top-image">
-                        <img src="{{asset('/images/ss-img-1.svg')}}">
-                    </div>
-                    <div class="about-images" id="bottom-image">
-                        <img src="{{asset('/images/ss-img-2.svg')}}">
-                    </div>
-                </div>
-        
-                <div class="sustainability-element-container">
+                <div class="whysell-main-text p-5 d-flex flex-column">
                     <div class="center-title-container">
-                        <p>Sustainability</p>
+                        <p class="customer-sections-title">The benefits of selling <br> With Bamboo Mobile</p>
                     </div>
-                    <p class="about-bamboo-text">Sustainability is at the heart of Bamboo Mobile and everything we do. Like our parent company, Bamboo Distribution, the protection of the environment is central to our ethics and business strategy. </p>
-                    <div class="grading-show-more-container">
-                        <a href="#"><div class="grading-show-more-btn">
-                            <p>Read More</p>
-                        </div></a>
-                    </div>   
+                    <p class="mt-5">Not only at bamboo mobile do we offer best prices for your devices, free postage, same day payment and data wipe guarantee, together we can help cut down tech waste and be part of the circular economy. Start now, find out how much your device is worth today.</p>
                 </div>
-            </div> --}}
+                <div class="d-flex flex-column justify-content-between">
 
-            <div class="shop-categories-container w-1000">
-                <a href="#">
-                    <div class="category-container smaller-a">
-                        <p class="shop-title">Mobile Phones</p>
-                        <div class="rounded-background-image" id="rounded-mobile">
-                            <img src="{{asset('/shop_images/category-image-1.png')}}">
+                    <div class="main-whysell-video-container text-center ml-auto mr-auto">
+                        <div class="mainWhySellVideoToggle" data-toggle="modal" data-target="#mainWhySellVideoModal">
+                            <p class="mb-4">Selling with us</p>
+                            <img src="{{asset('/video/play_video.svg')}}">
+                            <p class="mt-4">Explained</p>
                         </div>
                     </div>
-                </a>
-                <a href="#">
-                    <div class="category-container smaller-a">
-                        <p class="shop-title">Tablets</p>
-                        <div class="rounded-background-image" id="rounded-tablets">
-                            <img src="{{asset('/shop_images/category-image-2.png')}}">
+
+                    <div class="modal fade noscroll" id="mainWhySellVideoModal" tabindex="-1" role="dialog" aria-labelledby="mainWhySellVideoLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <h5 class="modal-title howitworks text-center" id="mainWhySellVideoLabel">Selling with us</h5>
+                            <div class="modal-content howitworksvideo">
+                                {{-- <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div> --}}
+                                <div class="modal-body">
+                                <video id="whyvideoid" width="100%" controls>
+                                    <source src="{{ asset('/video/old/Bamboo Selling v4.mp4') }}" type="video/mp4">
+                                    Your browser does not support HTML video.
+                                </video>
+                                </div>
+                                <img class="dismiss-howitworks" src="{{asset('images/front-end-icons/close_modal_orange.svg')}}" data-dismiss="modal">
+                                {{-- <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div> --}}
+                          </div>
                         </div>
                     </div>
-                </a>
-                <a href="#">
-                    <div class="category-container smaller-a">
-                        <p class="shop-title">Watches</p>
-                        <div class="rounded-background-image" id="rounded-watches">
-                            <img src="{{asset('/shop_images/category-image-3.png')}}">
-                        </div>
-                    </div>
-                </a>
+
+                    <p class="whysell-main-subtext">Watch our quick video explaining the benefits you'll receive when selling your next device with Bamboo Mobile</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="selling-with-container">
+            <div class="center-title-container">
+                <p>Selling with us</p>
             </div>
 
-            <div class="home-element sign-up">
-        
-                <div class="center-title-container">
-                    <p>Sign up to our newsletter!</p>
+            <div class="selling-with-elements">
+                <div class="selling-with-element selling-with-left">
+                    <div class="selling-img-container">
+                        <img src="{{asset('/sell_images/why_images/image-1.svg')}}">
+                    </div>
+                    <div class="selling-text-container">
+                        <p class="title-orange">Same day payment</p>
+                        <p>As soon as we receive your device, we'll carry out all the testing required and issue payment directly into your bank account the same day we receive it*. The sooner you send in your device the sooner you'll get paid!
+                            *Subject to our testing terms and conditions</p>
+                    </div>
                 </div>
-        
-                <div class="text-center-container">
-                    <p>amazing offers, hints and tips and just awesome-ness</p>
+                <div class="selling-with-element selling-with-right">
+                    <div class="selling-text-container">
+                        <p class="title-orange">Free Postage</p>
+                        <p>We offer a Freepost service with Royal Mail which allows you to post up to 2 devices free of charge. It covers up to £100.00 and you will be able to track your delivery via <a href="www.royalmail.com">www.royalmail.com</a>. If you have more than 2 devices to sell, feel free to place several orders of 2 devices per order.</p>
+                    </div>
+                    <div class="selling-img-container">
+                        <img src="{{asset('/sell_images/why_images/image-2.svg')}}">
+                    </div>
                 </div>
-        
-                <form action="/newslettersingup" method="POST">
-                    @csrf
-        
-                    <div class="row w-100">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input class="email-input mt-0" name="first_name" type="text" placeholder="First Name">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input class="email-input mt-0" name="last_name" type="text" placeholder="Last Name">
-                            </div>
-                        </div>
+                <div class="selling-with-element selling-with-left">
+                    <div class="selling-img-container">
+                        <img src="{{asset('/sell_images/why_images/image-3.svg')}}">
                     </div>
-                    <div class="row w-100">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <select class="email-input w-100" name="age_range" id="age_range">
-                                    <option value="" default selected disabled>Age Range</option>
-                                    <option value="16">0-16</option>
-                                    <option value="24">16-24</option>
-                                    <option value="48">24-48</option>
-                                    <option value="62">48-62</option>
-                                    <option value="62+">62+</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="form-group">
-                                <input class="email-input mt-0" name="email_address" type="email" placeholder="Email address">
-                            </div>
-                        </div>
+                    <div class="selling-text-container">
+                        <p class="title-orange">GDPR compliant</p>
+                        <p>Bamboo understands how important it is to protect personal data from getting into the wrong hands. We are fully GDPR (General Data Protection Regulation) compliant. We ensure that the way in which we store, process, remove and destroy any data is fully compliant against the regulation put in place across UK. Your data is in safe hands.</p>
                     </div>
-        
-                    <div class="terms-container">
-                        <input type="checkbox" class="newsletter_checkbox mx-3" id="newsletter_terms" name="newsletter_terms">
-                        <label class="newsletter_checkbox" id="newsletter_terms_label" for="newsletter_terms">
-                            <p style="margin-left: 40px">In addition to receiving an instant email when you open your account with Bamboo, I agree to Bamboo sending me a regular newsletter, carrying out market research, keeping me informed with personalised news, offers, products and promotions it believes would be of interest to me through my preferred channel. </p>
-                        </label>
+                </div>
+                <div class="selling-with-element selling-with-right">
+                    <div class="selling-text-container">
+                        <p class="title-orange">Data is always protected</p>
+                        <p>As our lives has become more dependent on our mobile devices, more personal data, pictures, and bank details are stored on our devices. At bamboo mobile we will ensure that every device processed will have all data removed or destroyed</p>
                     </div>
-        
-                    <div class="form-group">
-                        <div class="col-md-3 mt-3 mx-auto">
-                            <input type="submit" class="btn btn-purple" value="Sign me up!">
-                        </div>
+                    <div class="selling-img-container">
+                        <img src="{{asset('/sell_images/why_images/image-4.svg')}}">
                     </div>
-                </form>
-        
+                </div>
+                <div class="selling-with-element selling-with-left">
+                    <div class="selling-img-container">
+                        <img src="{{asset('/sell_images/why_images/image-5.svg')}}">
+                    </div>
+                    <div class="selling-text-container">
+                        <p class="title-orange">We help to Reduce, Reuse, Recycle</p>
+                        <p>We are committed to helping the environment and together we can help minimise tech waste with 3R's - Reduce, Reuse Recycle! Be part of the circular economy revolution.</p>
+                    </div>
+                </div>
+                <div class="selling-with-element selling-with-right">
+                    <div class="selling-text-container">
+                        <p class="title-orange">Bamboo Price or your device back for free</p>
+                        <p>We at bamboo mobile understand that used devices will come in all kinds of conditions - so we have a simple guide that will help describe the condition of your device so we can offer you the best possible price. We are so confident of our grading that if you are unhappy with the price offered, we will send your device back to you for FREE - what have you got to lose!</p>
+                    </div>
+                    <div class="selling-img-container">
+                        <img src="{{asset('/sell_images/why_images/image-6.svg')}}">
+                    </div>
+                </div>
             </div>
 
-        </main>
-        
-        <footer>@include('customer.layouts.footer', ['showGetstarted' => true])</footer>
-        <script>
+            <div class="selling-btn-container">
+                <a href="/sell" class="btn btn-orange btn-primary">
+                    Start Selling
+                </a>
+            </div>
+        </div>
 
-            function showRegistrationForm(){
-                if(!document.getElementsByClassName('modal-second-element')[0].classList.contains('modal-second-element-active')){
-                    document.getElementsByClassName('modal-second-element')[0].classList.add('modal-second-element-active');
-                }
-            }
+        @include('partial.sustainability', ['whySell' => false, 'about' => false])
 
-        </script>
-    </body>
-</html>
+        <div class="sell-categories-container pt-5">
+
+            <div class="single-sell-category" id="mobile-category">
+                <p class="sell-about-category-subtitle">Sell</p>
+                <p class="sell-category-title">Mobile Phones</p>
+    
+                <div class="sell-category-wrapper" id="sell-mobile-phones">
+                    <div class="sell-category-device-background" id="rounded-mobile"></div>
+                    <img class="sell-category-device-image mobile" src="{{asset('/images/devices/phones.png')}}">
+    
+                    <img class="device-shadow mobile" src="{{asset('/images/device_shadow.svg')}}">
+                </div>
+    
+            </div>
+    
+            <div class="single-sell-category" id="tablets-category">
+                <p class="sell-about-category-subtitle">Sell</p>
+                <p class="sell-category-title">Tablets</p>
+    
+                <div class="sell-category-wrapper" id="sell-tablets">
+                    <div class="sell-category-device-background" id="rounded-tablets"></div>
+                    <img class="sell-category-device-image tablet" src="{{asset('/images/devices/tablets.png')}}">
+    
+                    <img class="device-shadow" src="{{asset('/images/device_shadow.svg')}}">
+                </div>
+    
+            </div>
+    
+            <div class="single-sell-category" id="watches-category">
+                <p class="sell-about-category-subtitle">Sell</p>
+                <p class="sell-category-title">Watches</p>
+    
+                <div class="sell-category-wrapper" id="sell-watches">
+                    <div class="sell-category-device-background" id="rounded-watches"></div>
+                    <img class="sell-category-device-image watch" src="{{asset('/images/devices/watches.png')}}">
+                    
+                    <img class="device-shadow" src="{{asset('/images/device_shadow.svg')}}">
+                </div>
+    
+            </div>
+    
+        </div>
+
+        @include('partial.newsletter')
+
+        @include('customer.layouts.footer', ['showGetstarted' => true])
+
+    </main>
+
+<script>
+    $('#sell-mobile-phones').click( function(){window.location = '/sell/shop/mobile/all'});
+    $('#sell-watches').click( function(){window.location = '/sell/shop/tablets/all'});
+    $('#sell-tablets').click( function(){window.location = '/sell/shop/watches/all'});
+
+    $(".sell-category-wrapper")
+        .mouseenter(function() {
+            // background - 1
+            let bg = this.childNodes[1];
+            bg.classList.add('small');
+            // image - 3
+            let img = this.childNodes[3];
+            img.classList.add('enlarged');
+            // shadow - 5
+            let shadow = this.childNodes[5];
+            shadow.classList.add('zoomed');
+        })
+        .mouseleave(function() {
+            //unfocusCategory(this);
+            // background - 1
+            let bg = this.childNodes[1];
+            bg.classList.remove('small');
+            // image - 3
+            let img = this.childNodes[3];
+            img.classList.remove('enlarged');
+            // shadow - 5
+            let shadow = this.childNodes[5];
+            shadow.classList.remove('zoomed');
+        });
+</script>
+
+@endsection

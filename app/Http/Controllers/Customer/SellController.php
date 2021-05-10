@@ -306,7 +306,7 @@ class SellController extends Controller
             $trimmed = preg_replace("/[^A-Za-z0-9 ]/", '', $request->term);
             if($trimmed !== ""){
                 $searchterm = $trimmed;
-                $devices = SellingProduct::where('product_name', 'LIKE', '%'.$searchterm.'%')->get();
+                $devices = SellingProduct::where('product_name', 'LIKE', '%'.$searchterm.'%')->get()->take(10);
 
                 // if matching results
                 if($devices->count() > 0){

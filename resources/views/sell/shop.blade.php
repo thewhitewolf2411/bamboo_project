@@ -25,7 +25,7 @@
 
     <body>
         <header>@include('customer.layouts.header')</header>
-        <main>
+        <main class="selling-margin">
             @include('customer.layouts.sellinglinks')
             {{-- <div class="assurance-container">
                 <div class="assurance-element">
@@ -321,7 +321,7 @@
             </div>
         </main>
 
-        {{-- <footer>@include('customer.layouts.footer', ['showGetstarted' => true])</footer> --}}
+        <footer>@include('customer.layouts.footer', ['showGetstarted' => false])</footer>
 
         <script>
 

@@ -25,7 +25,7 @@
 
     <body>
         <header>@include('customer.layouts.header')</header>
-        <main>
+        <main class="selling-margin">
             @include('customer.layouts.sellinglinks')
 
             @if(Session::get('_previous') !== null)
@@ -604,7 +604,6 @@
             function checkCanSell(){
                 let selected = $('.select-make-result-device.selected-device');
                 let btn = document.getElementById('select-sell-this');
-                console.log(selected);
                 if(selected.length === 1){
                     btn.classList.remove('btn-light');
                     btn.classList.remove('disabled');
