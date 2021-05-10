@@ -26,23 +26,26 @@
                 </div>
                 <div class="single-step-column">
                     <p class="step-title-info">Step 2</p>
-                    <div class="column-item">
+                    <div class="column-item column-link" onclick="printPackagingInstructions({!!$tradein->id!!})">
                         <img class="step-image" src="{{asset('/customer_page_images/body/packaging_posting.svg')}}">
                         <p class="step-info-bold">Packaging & Posting instructions</p>
+                        <div id="packaging-label-loader" class="hidden mr-auto">
+                            <div class="loader"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="single-step-column">
                     <p class="step-title-info">Step 3</p>
-                    <div class="single-step-row link" onclick="printFreeLabel({!!$tradein->id!!})">
+
+                    <a class="single-step-row link m-0" href="https://www.royalmail.com/track-my-return/create/4356" target="_blank">
                         <img class="step-image row" src="{{asset('/customer_page_images/body/postage_label.svg')}}">
                         <p class="step-info-bold row">Print FREE Postage Label</p>
-                        <div id="free-label-loader" class="hidden ml-auto">
-                            <div class="loader"></div>
-                        </div>
-                    </div>
+                    </a>
+
                     <div class="step-or">
                         <div class="grey-step-line"></div><p>or</p><div class="grey-step-line"></div>
                     </div>
+
                     <div class="single-step-row link" onclick="printSpecialLabel({!!$tradein->id!!})">
                         <img class="step-image row" src="{{asset('/customer_page_images/body/delivery_address_label.svg')}}">
                         <p class="step-info-bold row">Print Special Delivery Return Address Label</p>
@@ -74,30 +77,59 @@
 </div>
 
 <script>
-    function printFreeLabel(id){
-        $('#free-label-loader').removeClass('hidden');
+    // function printFreeLabel(id){
+    //     $('#free-label-loader').removeClass('hidden');
 
-        $.ajax({
-            url: "/printdeliverylabel/free",
-            method:"POST",
-                data:{
-                    _token: "{!! csrf_token() !!}",
-                    tradein: id,
-                },
-            success:function(response){
-                if(response['code'] == 200){
-                    $('#free-label-loader').addClass('hidden');
-                    $('#labelDeliveryModal').modal('hide');
+    //     $.ajax({
+    //         url: "/printdeliverylabel/free",
+    //         method:"POST",
+    //             data:{
+    //                 _token: "{!! csrf_token() !!}",
+    //                 tradein: id,
+    //             },
+    //         success:function(response){
+    //             if(response['code'] == 200){
+    //                 $('#free-label-loader').addClass('hidden');
+    //                 $('#labelDeliveryModal').modal('hide');
 
-                    $('#labels-iframe').attr('src', '/' + response['filename']);
-                    $('#labels-print-modal').modal('show');
-                }
-            },
-            // error:function(response){
-            //     alert(response.responseText);
-            // }
-        });
+    //                 $('#labels-iframe').attr('src', '/' + response['filename']);
+    //                 $('#labels-print-modal').modal('show');
+    //             }
+    //         },
+    //         // error:function(response){
+    //         //     alert(response.responseText);
+    //         // }
+    //     });
     
+    // }
+
+    function printPackagingInstructions(){
+        $('#packaging-label-loader').removeClass('hidden');
+        $('#packaging-label-loader').addClass('hidden');
+        $('#labelDeliveryModal').modal('hide');
+
+        $('#labels-iframe').attr('src', '/Bamboo_4pp_InfoLeaflet_PrintYourOwn_V2.pdf');
+        $('#labels-print-modal').modal('show');
+        
+        // $.ajax({
+        //     url: "/printdeliverylabel/instructions",
+        //     method:"POST",
+        //         data:{
+        //             _token: "{!! csrf_token() !!}",
+        //         },
+        //     success:function(response){
+        //         if(response['code'] == 200){
+        //             $('#packaging-label-loader').addClass('hidden');
+        //             $('#labelDeliveryModal').modal('hide');
+
+        //             $('#labels-iframe').attr('src', '/' + response['filename']);
+        //             $('#labels-print-modal').modal('show');
+        //         }
+        //     },
+        //     error:function(response){
+        //         alert(response.responseText);
+        //     }
+        // });
     }
 
     function printSpecialLabel(id){

@@ -521,11 +521,18 @@
 
 .product-image-container{
     min-width: 200px;
+    height: auto;
     margin: auto;
 }
 
 .product-image-container img{
-    height: 500px;
+    //height: 500px;
+    position: relative;
+    display: block;
+    width: auto;
+    height: auto;
+    max-height: 500px;
+    margin-right: 40px;
 }
 
 .select-shopping-option-title{
@@ -1710,7 +1717,7 @@ input.lookup-delivery-basket::placeholder{
 }
 
 // tablets - breakpoint
-@media (max-width: 740px){
+@media only screen and (max-width: 740px){
     .products a {
         flex: 1 0 50%;
     }
@@ -1727,7 +1734,7 @@ input.lookup-delivery-basket::placeholder{
 }
 
 // tablets - regular
-@media (max-width: 625px){
+@media only screen and (max-width: 625px){
     .device-brands-row{
         padding: 0 15px;
     }
@@ -1826,7 +1833,7 @@ input.lookup-delivery-basket::placeholder{
 }
 
 // mobile
-@media (max-width: 460px){
+@media only screen and  (max-width: 460px){
     .device-brand {
         flex: 1 0 40%;
     }

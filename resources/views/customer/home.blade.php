@@ -7,15 +7,15 @@
     <div class="home-element home-title-container" id="main-home-image">
         <div class="left-container" id="home-left-container">
             <div class="title-container" id="regular-title">
-                <p>Pay less for your next mobile with bamboo</p>
+                <p class="heading-1">Pay less for your next mobile with bamboo</p>
             </div>
             <div class="offer-texts-container hidden" id="offers-texts">
-                <p class="offer-top-bold">LATEST RECYCLE OFFER</p>
+                {{-- <p class="offer-top-bold">LATEST RECYCLE OFFER</p>
                 <p class="offer-device-bold" id="offer-device"></p>
                 <p class="offer-title-bold" id="offer-title"></p>
-                <p class="offer-description-bold" id="offer-description"></p>
-                <a class="btn btn-light w-25 mt-2 mb-2" id="offer-link">Sell now</a>
-                <p class="offer-misc-small mt-5" id="offer-misc"></p>
+                <p class="offer-description-bold" id="offer-description"></p> --}}
+                {{-- <a class="btn btn-light w-25 mt-2 mb-2" id="offer-link">Sell now</a> --}}
+                {{-- <p class="offer-misc-small mt-5" id="offer-misc"></p> --}}
             </div>
             <div class="start-buttons-container" id="startbuttons">
                 {{-- <div class="url-footer-container" id="start-shopping">
@@ -39,7 +39,8 @@
         </div>
 
         <div class="how-buttons-container mt-5">
-            <div class="how-button-container active" id="selling-btn" onclick="changeHowState('selling')">
+            {{-- <div class="how-button-container active" id="selling-btn" onclick="changeHowState('selling')"> --}}
+            <div class="how-button-container active" id="selling-btn">
                 <p class="semilarge-bold-text">Selling</p>
             </div>
         </div>
@@ -51,7 +52,7 @@
                         <p class="how-title-text bebas-neue">2. FREE DELIVERY OPTIONS</p>
                     </div>
                     <div class="how-text-container">
-                        <p class="regular-text">Once you have completed your sales order, you simply request for a free sales pack or print your own labels to send in your device.</p>
+                        <p class="regular-text">Once you have completed your sales order, you simply request a FREE Trade Pack or print your own labels to send in your device.</p>
                     </div>
                 </div>
             </div>
@@ -62,7 +63,8 @@
                     <img src="{{asset('/customer_page_images/body/How-Icon-4.svg')}}">
                 </div>
                 <div class="how-image-container">
-                    <img src="{{asset('/customer_page_images/body/How-Icon-5.svg')}}">
+                    {{-- <img src="{{asset('/customer_page_images/body/How-Icon-5.svg')}}"> --}}
+                    <img class="how-image" src="{{ asset('/customer_page_images/body/revised_trade_pack.png') }}">
                 </div>
                 <div class="how-image-container">
                     <img src="{{asset('/customer_page_images/body/How-Icon-6.svg')}}">
@@ -79,7 +81,7 @@
                         <p class="how-title-text bebas-neue">1. YOU SEARCH FOR YOUR DEVICE</p>
                     </div>
                     <div class="how-text-container">
-                        <p  class="regular-text">Find your old device and how much it's worth. Choose your preferred payment option with all your details.</p>
+                        <p  class="regular-text">Find your old device and see how much it’s worth. Choose your preferred payment option with all your details.</p>
                     </div>
                 </div>
                 <div class="how-text-element last-element">
@@ -87,7 +89,7 @@
                         <p class="how-title-text bebas-neue">3. FAST SAME DAY PAYMENT</p>
                     </div>
                     <div class="how-text-container">
-                        <p class="regular-text">When we receive your device, we will check  it against your order. If it is all correct, payment will be made on the same day of receipt. Woohoo!</p>
+                        <p class="regular-text">When we receive your device, we will check  it against your order. If it is all correct, payment will be made on the same day we receive it. Woohoo!</p>
                     </div>
                 </div>
             </div>
@@ -435,6 +437,8 @@
 
     </div> --}}
 
+    <footer>@include('customer.layouts.footer', ['showGetstarted' => true])</footer>
+
     <script>
          (function() {
             let offerbanner = "{!!App\Helpers\RecycleOffers::check()!!}";
@@ -443,13 +447,12 @@
                 document.getElementById('offers-texts').classList.remove('hidden');
                 document.getElementById('regular-title').classList.add('hidden');
                 document.getElementById('startbuttons').classList.add('hidden');
-                document.getElementById("offer-device").innerHTML = "{!!App\Helpers\RecycleOffers::getDevice()!!}"
-                document.getElementById("offer-title").innerHTML = "{!!App\Helpers\RecycleOffers::getTitle()!!}"
-                document.getElementById("offer-description").innerHTML = "{!!App\Helpers\RecycleOffers::getDescription()!!}"
-                document.getElementById("offer-link").href = "{!!App\Helpers\RecycleOffers::getLink()!!}"
-                document.getElementById("offer-misc").innerHTML = "{!!App\Helpers\RecycleOffers::getMisc()!!}"
                 document.getElementById("main-home-image").style.backgroundImage = "url('"+offerbanner+"')";
                 document.getElementById("main-home-image").style.padding = '30px 150px'; 
+                document.getElementById("main-home-image").onclick = function(){
+                    window.location = "{!!App\Helpers\RecycleOffers::getLink()!!}";
+                }
+                document.getElementById("main-home-image").classList.add('cursor-pointer');
             }
 
         })();

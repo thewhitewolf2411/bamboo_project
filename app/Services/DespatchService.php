@@ -168,7 +168,7 @@ class DespatchService {
                 "recipient" => [
                     "address" => [
                         "fullName" => $fullname,
-                        "companyName" => "Bamboo Mobile",
+                        "companyName" => null,               // was "Bamboo Mobile"
                         "addressLine1" => $address,
                         "addressLine2" => null,
                         "addressLine3" => null,
@@ -183,8 +183,9 @@ class DespatchService {
                 ],
                 "sender" => [
                     "tradingName" => "Bamboo Distribution",
-                    "phoneNumber" => "061061061",
-                    "emailAddress" => "info@bamboodistribution.com",
+                    "phoneNumber" => $customer->contact_number,         // was "061061061" - needs to be customer number             
+                    // No 'PhoneNumber' was provided corresponding to 'SendNotificationsTo' field" - Sender.PhoneNumber
+                    "emailAddress" => $customer->email,                 // was "info@bamboodistribution.com"
                 ],
                 "billing" => [
                     "address" => [
@@ -290,7 +291,14 @@ class DespatchService {
         $response = json_decode($result,true);
         $success_msg = [];
         $error_msg = [];
-
+        if($response === null){
+            return ['error' => "Could not estabilish connection with RM C&D API. Check your authorization token."];
+            return [
+                'success' => $success_msg,
+                'error' => $error_msg,
+                'info' => $info
+            ];
+        }
         if($response['successCount'] > 0){
             $created_orders = $response['createdOrders'];
             foreach($created_orders as $created_order){

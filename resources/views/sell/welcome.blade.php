@@ -28,6 +28,14 @@
         <main>
             @include('customer.layouts.sellinglinks')
 
+            @if(Session::get('_previous') !== null)
+                <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+            @else
+                <a class="back-to-home-footer mt-3" href="/">
+            @endif
+                <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
+            </a>
+
             @include('partial.sellsearch', ['title' => 'What do you want to sell?', 'info' => 'Please use the search bar below or follow the steps to find your device'])
 
             <div class="col">
@@ -132,7 +140,7 @@
             </div>
 
             @if(App\Helpers\RecycleOffers::getSellBanner() !== null)
-                <a href="{{App\Helpers\RecycleOffers::getLink()}}"><img src="{!!App\Helpers\RecycleOffers::getSellBanner()!!}"></a>
+                <a href="{{App\Helpers\RecycleOffers::getLink()}}"><img class="w-100" style="max-height: 320px;" src="{!!App\Helpers\RecycleOffers::getSellBanner()!!}"></a>
             @endif
 
             <div class="selling-info-items-container">
@@ -531,7 +539,7 @@
                                     if(singleresult.product_image === 'default_image'){
                                         deviceimg.src = 'http://127.0.0.1:8000/images/placeholder_phone_image.png';
                                     } else {
-                                        deviceimg.src = singleresult.product_image;
+                                        deviceimg.src = '/storage/product_images/'+singleresult.product_image;
                                     }
 
                                     let devicename = document.createElement('p');

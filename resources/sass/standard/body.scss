@@ -284,46 +284,46 @@ h3, h4, h5{
 
 
 // offer styles
-.offer-texts-container{
-    margin-top: auto;
-    margin-bottom: auto;
-}
+// .offer-texts-container{
+//     margin-top: auto;
+//     margin-bottom: auto;
+// }
 
-.offer-device-bold{
-    font-size: 4rem;
-    font-weight: 600;
-    color: #fff;
-    font-family: Sharp Sans No1 Semibold;
-    text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
-}
+// .offer-device-bold{
+//     font-size: 4rem;
+//     font-weight: 600;
+//     color: #fff;
+//     font-family: Sharp Sans No1 Semibold;
+//     text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
+// }
 
-.offer-top-bold{
-    font-size: 2rem;
-    font-weight: 600;
-    color: #fff;
-    font-family: Sharp Sans No1 Bold;
-    text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
-}
+// .offer-top-bold{
+//     font-size: 2rem;
+//     font-weight: 600;
+//     color: #fff;
+//     font-family: Sharp Sans No1 Bold;
+//     text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
+// }
 
-.offer-title-bold, .offer-description-bold{
-    font-weight: 600;
-    color: #fff;
-    font-family: Sharp Sans No1 Semibold;
-    text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
-}
+// .offer-title-bold, .offer-description-bold{
+//     font-weight: 600;
+//     color: #fff;
+//     font-family: Sharp Sans No1 Semibold;
+//     text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
+// }
 
-.offer-title-bold{
-    font-size: 2rem;
-}
+// .offer-title-bold{
+//     font-size: 2rem;
+// }
 
-.offer-description-bold{
-    font-size: 2.5rem;
-}
+// .offer-description-bold{
+//     font-size: 2.5rem;
+// }
 
-.offer-misc-small{
-    color: #fff;
-    font-size: 17px;
-}
+// .offer-misc-small{
+//     color: #fff;
+//     font-size: 17px;
+// }
 
 
 .how-text-element.last-element{
@@ -365,7 +365,7 @@ h3, h4, h5{
 
 .back-line-container{
     position: absolute;
-    width: 4px;
+    width: 7px;
     background: black;
     height: 600px;
     z-index: -50;
@@ -692,15 +692,24 @@ h3, h4, h5{
     .contact-footer{
         padding: 30px !important;
         flex-direction: column;
-        margin-top: 20px;
+        // margin-top: 20px;
+        height: auto;
+    }
+
+    .service-header-1, .service-header-2{
+        margin: auto;
+        text-align: center;
+        width: 100%;
     }
 
     .contact-footer-image{
-        margin-bottom: 20px;
+        //margin-bottom: 20px;
+        margin: auto;
     }
 
     .contact-footer-text{
         width: 100%;
+        margin-right: 0;
     }
 
     .contact-footer-arrow{

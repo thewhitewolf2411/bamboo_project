@@ -6,31 +6,36 @@
 
     <div class="contact-page contact-title-container">
         <div class="center-title-container">
-            <p>Contact us</p>
+            <p class="large-page-title">Contact us</p>
         </div>
     </div>
 
+    @if(Session::get('_previous') !== null)
+    <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+    @else
     <a class="back-to-home-footer mt-3" href="/">
-        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to home</p>
+    @endif
+        <p class="back-home-text support"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
     </a>
 
 
     <div class="contact-ways-container">
-        <div class="center-title-container">
-            <p>You can contact Boo’s friendly team of mobile recycling experts by a number of ways. </p>
+        <div class="text-center">
+            {{-- <p>You can contact Boo’s friendly team of mobile recycling experts by a number of ways. </p> --}}
+            <p class="customer-sections-title center mb-5">Ways to get in touch with us</p>
         </div>
 
         <div class="ways-container">
             <div class="ways-element">
                 <a onclick="showContactForm('message')">
                     <div class="contact-div" id="contact-message">
-                        <div class="center-title-container">
-                            <p>Send us a message</p>
+                        <div class="contact-text">
+                            Send us a message
                         </div>
                         <img src="{{asset('/customer_page_images/body/contact-images/image-1.svg')}}">
                     </div>
                 </a>
-            </div>-
+            </div>
             {{--<div class="ways-element">
                 <a onclick="showContactForm('live')">
                     <div class="contact-div" id="contact-live">
@@ -44,8 +49,8 @@
             <div class="ways-element">
                 <a onclick="showContactForm('telephone')">
                     <div class="contact-div" id="contact-telephone">
-                        <div class="center-title-container">
-                            <p>Telephone</p>
+                        <div class="contact-text">
+                            Telephone
                         </div>
                         <img src="{{asset('/customer_page_images/body/contact-images/image-3.svg')}}">
                     </div>
@@ -66,51 +71,68 @@
     </div>
 
     <div class="contact-forms-container">
+
         <div class="contact-form-container" id="message-form-container">
-            <span>SEND US A MESSAGE</span>
-            <p>Please complete the form below and we’ll get back to you without delay.</p>
+            <p class="contact-form-header">SEND US A MESSAGE</span>
+            <p class="contact-form-desc">To contact us, please complete the form below and a member of our team will get back to you.</p>
 
             <form id="message-form" method="post" action="/sendMessage">
                 @csrf
 
-                <div class="row w-100">
-                    <div class="form-group col-md-6">
-                        <label for="firstname">First Name*</label>
-                        <input id="firstname" name="firstname" type="text" class="form-control" @if(Auth::user()) value="{{Auth::user()->first_name}}" @endif required>
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="lastname">Last Name*</label>
-                        <input id="lastname" name="lastname" type="text" class="form-control"  @if(Auth::user()) value="{{Auth::user()->last_name}}" @endif required>
+                <div class="contact-form-message-row">
+                    <div class="contact-form-title-wrapper">
+                        <label class="contact-message-label mt-auto mb-auto" for="title">Title</label>
+                        <select class="form-control" name="title">
+                            <option value="Mr.">Mr.</option>
+                            <option value="Ms.">Ms.</option>
+                        </select>
                     </div>
                 </div>
 
-                <div class="row w-100">
-                    <div class="form-group col-md-6">
-                        <label for="emailadress">Email address*</label>
-                        <input id="emailadress" name="emailadress" type="email" class="form-control"  @if(Auth::user()) value="{{Auth::user()->email}}" @endif required>
+                <div class="contact-form-message-row">
+                    <div class="contact-form-message-column">
+                        <label class="contact-message-label" for="firstname">First Name*</label>
+                        <input id="firstname" name="firstname" type="text" class="form-control contact-message-input" @if(Auth::user()) value="{{Auth::user()->first_name}}" @endif required>
                     </div>
 
-                    <div class="form-group col-md-6">
-                        <label for="telephone">Telephone</label>
-                        <input id="telephone" name="telephone" type="number" class="form-control"  @if(Auth::user()) value="{{Auth::user()->contact_number}}" @endif>
+                    <div class="contact-form-message-column">
+                        <label class="contact-message-label" for="lastname">Last Name*</label>
+                        <input id="lastname" name="lastname" type="text" class="form-control contact-message-input"  @if(Auth::user()) value="{{Auth::user()->last_name}}" @endif required>
                     </div>
                 </div>
 
-                <div class="row w-100">
-                    <div class="form-group col-md-6">
-                        <label for="title">Title</label>
-                        <input id="title" name="title" type="text" class="form-control">
+                <div class="contact-form-message-row">
+                    <div class="contact-form-message-column">
+                        <label class="contact-message-label" for="email_address">Email address*</label>
+                        <input id="email_address" name="email_address" type="email" class="form-control contact-message-input"  @if(Auth::user()) value="{{Auth::user()->email}}" @endif required>
+                    </div>
+
+                    <div class="contact-form-message-column">
+                        <label class="contact-message-label" for="telephone">Contact Number</label>
+                        <input id="telephone" name="telephone" type="number" class="form-control contact-message-input"  @if(Auth::user()) value="{{Auth::user()->contact_number}}" @endif>
+                    </div>
+                </div>
+
+                <div class="contact-form-message-row">
+                    <div class="contact-form-message-column">
+                        <label class="contact-message-label" for="title" style="margin-bottom: 0.375rem;">Date of Birth</label>
+                        {{-- <input id="title" name="title" type="text" class="form-control"> --}}
+                        @include('partial.birthdate', ['required' => false])
+                    </div>
+
+                    <div class="contact-form-message-column">
+                        <label class="contact-message-label" for="order_number">Order Number</label>
+                        <input id="order_number" name="order_number" type="text" class="form-control contact-message-input">
                     </div>
                 </div>
 
                 <div class="form-group" style="width: 100%; height: 350px;">
-                    <label for="yourmessage">Your Message*</label>
+                    <label class="contact-message-label mb-1" for="yourmessage">Your Message*</label>
                     <textarea id="yourmessage" name="yourmessage" form="message-form" type="text" class="form-control" required></textarea>
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" class="form-control" value="Send message" id="message-submit">
+                    <button type="submit" class="btn btn-jade" id="message-submit">Send Message</button>
                 </div>
             </form>
         </div>
@@ -129,37 +151,38 @@
         </div>
 
         <div class="contact-form-container" id="telephone-form-container">
-            <div class="telephone-header">
-                <span>TELEPHONE</span>
-                <p>Call the number opposite to talk to our friendly and professional team of mobile specialists.</p>
+            <div class="telephone-header mb-4">
+                <p class="contact-form-header">TELEPHONE</p>
+                {{-- <p class="contact-form-desc">Call the number opposite to talk to our friendly and professional team of mobile specialists.</p> --}}
+                <p class="contact-form-desc telephone">To contact a member of the bamboo team, please use the number opposite</p>
             </div>
-
+ 
             <div class="telephone-contact-container">
-                <span>0845 582 8880</span>
+                <span>0345 582 0511</span>
 
                 <div class="worktime-container">
-                    <p style="opacity: 0.5; margin: 0;">Opening times:</p>
-                    <div class="workdays-container">
+                    <p style="opacity: 0.5; margin: 0;" class="worktime-text mt-4">Opening times:</p>
+                    <div class="workdays-container mt-2">
                         <div class="workays">
-                            <p>Monday</p>
-                            <p>Tuesday</p>
-                            <p>Wenesday</p>
-                            <p>Thursday</p>
-                            <p>Friday</p>
-                            <p>Saturday</p>
-                            <p>Sunday</p>
+                            <p class="worktime-text">Monday</p>
+                            <p class="worktime-text">Tuesday</p>
+                            <p class="worktime-text">Wenesday</p>
+                            <p class="worktime-text">Thursday</p>
+                            <p class="worktime-text">Friday</p>
+                            <p class="worktime-text">Saturday</p>
+                            <p class="worktime-text">Sunday</p>
                         </div>
                         <div class="hours">
-                            <p class="hours-time">8 am - 5:30pm</p>
-                            <p class="hours-time">8 am - 5:30pm</p>
-                            <p class="hours-time">8 am - 5:30pm</p>
-                            <p class="hours-time">8 am - 5:30pm</p>
-                            <p class="hours-time">8 am - 5:30pm</p>
-                            <p>Closed</p>
-                            <p>Closed</p>
+                            <p class="worktime-text hours-time">9 am – 5.30pm</p>
+                            <p class="worktime-text hours-time">9 am – 5.30pm</p>
+                            <p class="worktime-text hours-time">9 am – 5.30pm</p>
+                            <p class="worktime-text hours-time">9 am – 5.30pm</p>
+                            <p class="worktime-text hours-time">9 am – 5.30pm</p>
+                            <p class="worktime-text">Closed</p>
+                            <p class="worktime-text">Closed</p>
                         </div>
                     </div>
-                    <p style="opacity: 0.5; margin: 0;">Calls are charged at local rate.</p>
+                    <p style="opacity: 0.5; margin: 0;" class="worktime-text mt-2">Calls are charged at local rate.</p>
                 </div>
             </div>
         </div>
@@ -198,6 +221,8 @@
 
 </div>
 
+@include('customer.layouts.footer', ['showGetstarted' => true, 'getStartedColor' => '#A3D147'])
+
 <script>
 
     $(document).ready(function(){
@@ -214,18 +239,32 @@
             $('#title').val('Customer device not available');
         }
 
-
-
+        let preselected = '{!!$selected!!}';
+        if(preselected){
+            switch (preselected) {
+                case "message":
+                    document.getElementById("contact-message").click();
+                    break;
+                case "call":
+                    document.getElementById("contact-telephone").click();
+                    break;
+                default:
+                    break;
+            }
+        }
     });
 
 
     function showContactForm(contact){
 
-        contactbuttons = document.getElementsByClassName('ways-container')[0].getElementsByClassName('ways-element');
-        contactforms = document.getElementsByClassName('contact-form-container');
+        let contactbuttons = document.getElementsByClassName('ways-container')[0].getElementsByClassName('ways-element');
+        let contactforms = document.getElementsByClassName('contact-form-container');
         for(var i = 0; i<contactbuttons.length; i++){
             contactbuttons[i].classList.add('contact-div-hidden');
-            contactforms[i].classList.remove('contact-form-container-active');
+        }
+
+        for(var j = 0; j < contactforms.length; j++){
+            contactforms[j].classList.remove('contact-form-container-active');
         }
 
         switch(contact){

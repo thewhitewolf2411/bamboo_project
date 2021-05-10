@@ -10,7 +10,7 @@
         })(window,document,'script','dataLayer','GTM-KC33JWC');</script>
         <!-- End Google Tag Manager -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+        <title>Sitemap</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -27,187 +27,138 @@
 
             <div class="container">
 
-                <div class="row map-row">
-                    <div class="col">
-                        <h2>How it works</h2>
-                        <p>Shopping</p>
-                        <p>Selling</p>
+                <a class="back-to-home-footer mt-3 mb-5 ml-0" href="/">
+                    <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to home</p>
+                </a>
+
+                <div class="row m-0 map-row">
+                    <div class="map-col">
+                        <p class="sitemap-title">How it works</p>
+                        {{-- <a class="sitemap-text" href="/how">Shopping</a> --}}
+                        <a class="sitemap-text" href="/sell">Selling</a>
                     </div>
-                    <div class="col">
-                        <h2>About Us</h2>
-                        <p>How it works</p>
+                    <div class="map-col">
+                        <p class="sitemap-title">About Us</p>
+                        <a class="sitemap-text" href="/how">How it works</a>
                     </div>
-                    <div class="col">
-                        <h2>Service & Support</h2>
-                        <p>Selling a device</p>
-                        <p>Tech</p>
-                        <p>Delivery</p>
-                        <p>Your Order</p>
-                        <p>Your Account</p>
-                        <p>General Questions</p>
+                    <div class="map-col">
+                        <p class="sitemap-title">News & Blog</p>
+                        <a class="sitemap-text" href="/news">News & Blog</a>
                     </div>
-                    <div class="col">
-                        <h2>Contact</h2>
+                    <div class="map-col">
+                        <p class="sitemap-title">Service & Support</p>
+                        <a class="sitemap-text" href="/support/selling">Selling a device</a>
+                        <a class="sitemap-text" href="/support">Tech</a>
+                        <a class="sitemap-text" href="/support">Delivery</a>
+                        <a class="sitemap-text" href="/support">Your Order</a>
+                        <a class="sitemap-text" href="/support">Your Account</a>
+                        <a class="sitemap-text" href="/support">General Questions</a>
                     </div>
-                    <div class="col">
-                        <h2>My Bamboo</h2>
+                    <div class="map-col">
+                        <p class="sitemap-title">Contact Us</p>
+                        <a class="sitemap-text" href="/contact/message">Message Us</a>
+                        <a class="sitemap-text" href="/contact/call">Call Us</a>
                     </div>
-                    <div class="col">
-                        <h2>Responsibilities</h2>
-                        <p>Environment</p>
+                    <div class="map-col">
+                        <p class="sitemap-title">My Bamboo</p>
                     </div>
-                    <div class="col">
-                        <h2>Legal</h2>
-                        <p>Privacy Policy</p>
-                        <p>Terms & Condition</p>
-                        <p>Site map</p>
-                        <p>Cookies</p>
-                        <p>Modern Slavery Statement</p>
-                        <p>Corporate Site</p>
+                    <div class="map-col">
+                        <p class="sitemap-title">Responsibilities</p>
+                        <a class="sitemap-text" href="/environment">Environment</a>
+                    </div>
+                    <div class="map-col">
+                        <p class="sitemap-title">Legal</p>
+                        <a class="sitemap-text" href="/privacy">Privacy Policy</a>
+                        <a class="sitemap-text" href="/terms">Terms & Condition</a>
+                        <a class="sitemap-text" href="/map">Site map</a>
+                        <a class="sitemap-text" href="/cookies">Cookies</a>
+                        <a class="sitemap-text" href="/slavery">Modern Slavery Statement</a>
+                        <a class="sitemap-text" href="https://www.bamboodistribution.com/">Corporate Site</a>
                     </div>
                 </div>
 
-                <div class="row border-top my-5">
-                    <h1>
-                        <strong>Shopping</strong>
-                    </h1>
+                {{-- <div class="row m-0 border-top my-5">
+                    <p class="sitemap-section-title ml-1 mt-4">Shopping</p>
                 </div>
 
-                <div class="row map-row">
+                <div class="row m-0 map-row">
 
-                    <div class="col">
-                        <h2>Latest Offers</h2>
+                    <div class="map-col">
+                        <p class="sitemap-title">Latest Offers</p>
                     </div>
-                    <div class="col">
-                        <h2>Shop Mobile Phones</h2>
-                        <p>Shop All Mobile Phones</p>
-                        <p>By Grade</p>
-                        <p>Apple iPhone</p>
-                        <p>Samsung Galaxy</p>
+                    <div class="map-col">
+                        <p class="sitemap-title">Shop Mobile Phones</p>
+                        <a class="sitemap-text">Shop All Mobile Phones</a>
+                        <p class="sitemap-text">By Grade</p>
+                        <p class="sitemap-text">Apple iPhone</p>
+                        <p class="sitemap-text">Samsung Galaxy</p>
                     </div>
-                    <div class="col">
-                        <h2>Shop Tablets</h2>
-                        <p>Shop All Tablets</p>
-                        <p>By Grade</p>
-                        <p>Apple iPhone</p>
-                        <p>Samsung Galaxy</p>
+                    <div class="map-col">
+                        <p class="sitemap-title">Shop Tablets</p>
+                        <p class="sitemap-text">Shop All Tablets</p>
+                        <p class="sitemap-text">By Grade</p>
+                        <p class="sitemap-text">Apple iPhone</p>
+                        <p class="sitemap-text">Samsung Galaxy</p>
                     </div>
-                    <div class="col">
-                        <h2>Shop Watches</h2>
-                        <p>Shop All Watches</p>
-                        <p>By Grade</p>
-                        <p>Apple iPhone</p>
-                        <p>Samsung Galaxy</p>
+                    <div class="map-col">
+                        <p class="sitemap-title">Shop Watches</p>
+                        <p class="sitemap-text">Shop All Watches</p>
+                        <p class="sitemap-text">By Grade</p>
+                        <p class="sitemap-text">Apple iPhone</p>
+                        <p class="sitemap-text">Samsung Galaxy</p>
                     </div>
-                    <div class="col">
-                        <h2>Compare Models</h2>
+                    <div class="map-col">
+                        <p class="sitemap-title">Compare Models</p>
                     </div>
-                    <div class="col">
-                        <h2>Why Shop With Us</h2>
+                    <div class="map-col">
+                        <p class="sitemap-title">Why Shop With Us</p>
                     </div>
-                    <div class="col">
-                        <h2>Let Boo do it, for you</h2>
+                    <div class="map-col">
+                        <p class="sitemap-title">Let Boo do it, for you</p>
                     </div>
+                </div> --}}
+
+                <div class="row m-0 border-top my-5">
+                    <p class="sitemap-section-title ml-1 mt-4">Selling</p>
                 </div>
 
-                <div class="row border-top my-5">
-                    <h1>
-                        <strong>Selling</strong>
-                    </h1>
-                </div>
+                <div class="row m-0 map-row">
 
-                <div class="row map-row">
-
-                    <div class="col">
-                        <h2>Sell Mobile Phones</h2>
-                        <p>Apple iPhone</p>
-                        <p>Samsung Galaxy</p>
+                    <div class="map-col">
+                        <p class="sitemap-title">Sell Mobile Phones</p>
+                        <a class="sitemap-text" href="/sell/shop/mobile/all">Search All</a>
+                        @foreach($phones as $phone)
+                            <a class="sitemap-text" href="/sell/sellitem/{{$phone->id}}">{{$phone->product_name}}</a>
+                        @endforeach
+                        {{-- <a class="sitemap-text" href="#">Apple iPhone</a>
+                        <a class="sitemap-text" href="#">Samsung Galaxy</a> --}}
                     </div>
-                    <div class="col">
-                        <h2>Sell Tablets</h2>
-                        <p>Apple iPhone</p>
-                        <p>Samsung Galaxy</p>
+                    <div class="map-col">
+                        <p class="sitemap-title">Sell Tablets</p>
+                        @foreach($tablets as $tablet)
+                            <a class="sitemap-text" href="/sell/sellitem/{{$tablet->id}}">{{$tablet->product_name}}</a>
+                        @endforeach
+                        {{-- <a class="sitemap-text" href="#">Apple iPhone</a>
+                        <a class="sitemap-text" href="#">Samsung Galaxy</a> --}}
                     </div>
-                    <div class="col">
-                        <h2>Sell Watches</h2>
-                        <p>Apple iPhone</p>
-                        <p>Samsung Galaxy</p>
+                    <div class="map-col">
+                        <p class="sitemap-title">Sell Watches</p>
+                        @foreach($watches as $watch)
+                            <a class="sitemap-text" href="/sell/sellitem/{{$watch->id}}">{{$watch->product_name}}</a>
+                        @endforeach
+                        {{-- <a class="sitemap-text" href="#">Apple iPhone</a>
+                        <a class="sitemap-text" href="#">Samsung Galaxy</a> --}}
                     </div>
-                    <div class="col">
-                        <h2>Why Sell With Us</h2>
+                    <div class="map-col">
+                        <p class="sitemap-title">Why Sell With Us</p>
+                        <a class="sitemap-text" href="/sell/why">Benefits of Selling with Bamboo</a>
                     </div>
                 </div>
 
             </div>
 
-            @if(session('showLogin') || $errors->all())
-                <script>
-                    $(window).on('load',function(){
-                        $('#loginModal').modal('show');
-                    });
-                </script>
-            @endif
-            <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true"><img src="{{ url('/customer_page_images/body/modal-close.svg') }}"></span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="modal-first-element">
-                                <div class="register-elements-container">
-                                    <h3>New Customers</h3>
-                                    <button onclick="showRegistrationForm()" class="btn btn-primary">
-                                        Sign up
-                                    </button>
-                                </div>
+            @include('partial.loginmodal')
 
-                                <div class="login-form-container">
-                                    <h3>Sign in</h3>
-                                    <form method="POST" action="{{ route('login') }}">
-                                        @csrf
-                                        <div class="form-group">
-                                            <input id="login" type="text" class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Username or Email" name="login" value="{{ old('username') ?: old('email') }}" required autofocus>
-                
-                                                @error('email')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" name="password" required autocomplete="current-password">
-            
-                                            @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group mb-0" style="display:flex; flex-direction: row; justify-content:space-between; align-items:center;">
-                                            @if (Route::has('password.request'))
-                                                <a class="btn-link" style="color: #000; margin:0;" href="{{ route('password.request') }}">
-                                                    {{ __('Forgot Your Password?') }}
-                                                </a>
-                                            @endif
-                                            <button type="submit" class="btn btn-primary">
-                                                {{ __('Login') }}
-                                            </button>
-                                        </div>    
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="modal-second-element">
-                                <div class="register-form-container">
-                                    @include('auth.register')
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </main>
         <footer>@include('customer.layouts.footer', ['showGetstarted' => true])</footer>
 

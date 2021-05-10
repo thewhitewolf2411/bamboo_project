@@ -4,13 +4,21 @@
 
 <div class="app container">
 
-    <div class="support-search-element">
+    @if(Session::get('_previous') !== null)
+    <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+    @else
+    <a class="back-to-home-footer mt-3" href="/">
+    @endif
+        <p class="back-home-text support"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to previous page</p>
+    </a>
+
+    <div class="support-search-element height-100">
         <div class="center-title-container font-orange bold">
-            <p>Selling a device</p>
+            <p class="no-text-shadow">Selling a device</p>
         </div>
     </div>
 
-    <div class="support-faq">
+    {{-- <div class="support-faq">
         <div class="faq-left">
 
             <div class="faq-question">
@@ -116,7 +124,120 @@
                 </a>
             </div>
         </div>
-    </div>
+    </div> --}}
+
+    {{-- <div class="support-faq">
+
+        <div class="faq-left">
+
+            <div class="faq-question">
+                <a onclick="showAnswer(1)">
+                    <div class="faq-question-text">
+                        <p>How does it work?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a onclick="showAnswer(2)">
+                    <div class="faq-question-text">
+                        <p>How do I find out how much my phone is worth?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a onclick="showAnswer(3)">
+                    <div class="faq-question-text">
+                        <p>What sort of handsets can I sell?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a onclick="showAnswer(4)">
+                    <div class="faq-question-text">
+                        <p>How do I find out what model my handset is?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a onclick="showAnswer(5)">
+                    <div class="faq-question-text">
+                        <p>What is an IMEI number?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}">
+                    </div>
+                </a>
+            </div> 
+        </div>
+
+        <div class="faq-right">
+            <div class="faq-question">
+                <a onclick="showAnswer(6)">
+                    <div class="faq-question-text">
+                        <p>Is my personal data safe?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a onclick="showAnswer(7)">
+                    <div class="faq-question-text">
+                        <p>What do I need to include with my device?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a onclick="showAnswer(8)">
+                    <div class="faq-question-text">
+                        <p>How How about if my mobile device is locked to a UK network?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a onclick="showAnswer(9)">
+                    <div class="faq-question-text">
+                        <p>What do I do wih iCloud or Google locked?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}">
+                    </div>
+                </a>
+            </div>
+            <div class="faq-question">
+                <a onclick="showAnswer(10)">
+                    <div class="faq-question-text">
+                        <p>Any other questions?</p>
+                    </div>
+                    <div class="faq-question-icon">
+                        <img src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}">
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div> --}}
+
+    {{-- <hr>
 
     <div class="support-faq-answers">
         <div class="border-top answer" id="question-1">
@@ -228,7 +349,38 @@
                 </p>
             </div>
         </div>
+    </div>--}}
+
+
+    <div class="support-questions-row">
+        @foreach($faq as $question)
+            <div class="support-question">
+                <p class="support-question-title">{!!$question->question!!}</p>
+                <img class="support-question-toggle-icon" src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}" onclick="toggleCollapse({!!$question->id!!})">
+            </div>
+        @endforeach
     </div>
+    
+    <div id="support-question-answers-container">
+        @foreach($faq as $question_answer)
+            <div class="support-question-answers">
+                <div class="support-question-answers-title" id="collapse{!!$question_answer->id!!}">
+                    <button class="btn btn-link collapsed toggle-collapse-answer" data-toggle="collapse" data-target="#{!!$question_answer->id!!}" aria-expanded="false" aria-controls="collapse{!!$question_answer->id!!}">
+                        {!!$question_answer->question!!}
+                    </button>
+                </div>
+                <div id="{!!$question_answer->id!!}" class="collapse" aria-labelledby="heading{!!$question_answer->id!!}" data-parent="#support-question-answers-container">
+                    <div class="card-body">
+                        <p class="answer-text">{!!$question_answer->answer!!}</p>
+                        @if($question_answer->link)<a class="btn mt-4 btn-{!!$question_answer->link_color!!}" href="{!!$question_answer->link!!}">{!!$question_answer->link_text!!}</a>@endif
+                    </div>
+                </div>
+            </div>
+            <div class="answer-separate"></div>
+        @endforeach
+    </div>
+
+    @include('partial.supportsearch')
 
     <div class="supprt-titles-container">
         <div class="row-height-140 support-top-row pc-15-50">
@@ -238,45 +390,68 @@
                 </div>
             </a> --}}
             <a href="/support/selling">
-                <div class="btn btn-primary btn-orange btn-font-white">
-                    <p>Selling a device</p>
+                <div class="support-btn orange">
+                    <p class="support-btn-text">Selling a device</p>
                 </div>
             </a>
         </div>
 
         <div class="row-height-140 support-middle-row pc-15-50">
             <a href="">
-                <div class="btn btn-primary btn-purple btn-font-white">
-                    <p>Tech</p>
+                <div class="support-btn purple">
+                    <p class="support-btn-text">Tech</p>
                 </div>
             </a>
         </div>
 
         <div class="row-height-140 support-bottom-row pc-15-50">
             <a href="">
-                <div class="btn btn-primary btn-green btn-font-white">
-                    <p>Delivery</p>
+                <div class="support-btn green">
+                    <p class="support-btn-text">Delivery</p>
                 </div>
             </a>
             <a href="">
-                <div class="btn btn-primary btn-green btn-font-white">
-                    <p>Your Order</p>
+                <div class="support-btn green">
+                    <p class="support-btn-text">Your Order</p>
                 </div>
             </a>
             <a href="">
-                <div class="btn btn-primary btn-green btn-font-white">
-                    <p>Your Account</p>
+                <div class="support-btn green">
+                    <p class="support-btn-text">Your Account</p>
                 </div>
             </a>
             <a href="">
-                <div class="btn btn-primary btn-green btn-font-white">
-                    <p>General Questions</p>
+                <div class="support-btn green">
+                    <p class="support-btn-text">General Questions</p>
                 </div>
             </a>
         </div>
 
     </div>
+
 </div>
 
+    @include('customer.layouts.footer', ['showGetstarted' => false])
+    
+<script>
+    (function() {
+        var question_prev = '{!!$question_id!!}';
+        if(question_prev){
+            setTimeout(() => {
+                toggleCollapse(question_prev);
+            }, 500);
+        }
+    })()
+    function toggleCollapse(id){
+        $('.collapse').collapse('hide');
+        setTimeout(function(){
+            $('#'+id).collapse('show');  
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $('#' + id).offset().top - 300
+            }, 500);
+        }, 500);
+        
+    }
+</script>    
 <script src="{{asset('js/Customer.js')}}"></script>
 @endsection

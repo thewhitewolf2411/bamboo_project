@@ -7,9 +7,9 @@
 
         <div class="logo-header-container" id="full-logo-container">
             <a href="/" class="full-logo" id="full-logo-img">
-                <img id="full-bamboo-logo" src="{{asset('/customer_page_images/header/Bamboo Logo.svg')}}" width="550px" height="82px">
+                <img id="full-bamboo-logo" src="{{asset('/customer_page_images/header/Bamboo Logo.svg')}}" width="536px" height="81px">
             </a>
-            <a href="/" class="mobile-logo hidden" id="mobile-logo-img">
+            <a href="/" class="mobile-logo invisible" id="mobile-logo-img">
                 <img id="mobile-bamboo-logo" src="{{asset('/customer_page_images/body/emoji_emotionless.svg')}}">
             </a>
         </div>
@@ -22,6 +22,12 @@
             @if(Auth::user())
             <div class="hover-link" id="user-hover-link">
                 <a href="/userprofile"><div class="img"></div><p class="showhover" style="color: #fff">Account</p></a>
+                @if(App\Helpers\NotificationHelper::count() !== null)
+                    <div class="notifications-count">
+                        <img src="{{asset('/images/front-end-icons/notification_count.svg')}}">
+                        <p>{!!App\Helpers\NotificationHelper::count()!!}</p>
+                    </div>
+                @endif
             </div>
             @else
             <div class="hover-link" id="user-hover-link">
@@ -74,38 +80,38 @@
         <a href="/news">News & Blog</a>
     </div>
     <div class="url-header-container">
-        <a href="/support">Support & Service</a>
+        <a href="/support">Service & Support</a>
     </div>
     <div class="url-header-container">
-        <a href="/contact">Contact</a>
+        <a href="/contact">Contact Us</a>
     </div>
 
 </div>
 
 <div class="urls-header-mobile navbar-collapse collapse" id="navbarSupportedContent">
-
-    {{-- <div class="url-header-container" id="start-shopping">
-        <a href="/shop">Start Shopping</a>
-    </div> --}}
-    <div class="url-header-container mobile-orange" id="start-selling">
-        <a href="/sell">Start Selling</a>
+    <div class="mobile-menu-wrapper">
+        {{-- <div class="url-header-container" id="start-shopping">
+            <a href="/shop">Start Shopping</a>
+        </div> --}}
+        <div class="url-header-container mobile mobile-orange" id="start-selling">
+            <a href="/sell" class="mobilemenu-bold white">Start Selling</a>
+        </div>
+        <div class="url-header-container mobile">
+            <a href="/how" class="mobilemenu-medium">How it works</a>
+        </div>
+        <div class="url-header-container mobile">
+            <a href="about" class="mobilemenu-medium">About</a>
+        </div>
+        <div class="url-header-container mobile">
+            <a href="/news" class="mobilemenu-medium">News & Blog</a>
+        </div>
+        <div class="url-header-container mobile">
+            <a href="/support" class="mobilemenu-medium">Service & Support</a>
+        </div>
+        <div class="url-header-container mobile lastitem">
+            <a href="/contact" class="mobilemenu-medium">Contact Us</a>
+        </div>
     </div>
-    <div class="url-header-container mobile">
-        <a href="/how">How it works</a>
-    </div>
-    <div class="url-header-container mobile">
-        <a href="about">About</a>
-    </div>
-    <div class="url-header-container">
-        <a href="/news">News & Blog</a>
-    </div>
-    <div class="url-header-container mobile">
-        <a href="/support">Support & Service</a>
-    </div>
-    <div class="url-header-container mobile lastitem">
-        <a href="/contact">Contact</a>
-    </div>
-
 </div>
 
 <script type="application/javascript" defer src="{{ asset('js/header.js') }}"></script>

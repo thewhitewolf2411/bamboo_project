@@ -18,12 +18,12 @@ class RecycleOffersTable extends Migration
             $table->integer('device_id');
             $table->string('offer_banner');
             $table->string('offer_selling_banner');
-            $table->string('offer_title');
-            $table->string('offer_description');
-            $table->string('offer_additional_info');
-            $table->dateTime('offer_start_date');
-            $table->dateTime('offer_end_date');
-            $table->string('offer_price');
+            // $table->string('offer_title');
+            // $table->string('offer_description');
+            // $table->string('offer_additional_info');
+            // $table->dateTime('offer_start_date');
+            // $table->dateTime('offer_end_date');
+            // $table->string('offer_price');
             $table->boolean('status')->default(false);
             $table->timestamps();
         });

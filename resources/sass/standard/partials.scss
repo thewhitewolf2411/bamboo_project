@@ -272,6 +272,16 @@
     border-color: #A375BC;
 }
 
+.column-link{
+    cursor: pointer;
+    transition: all 1s;
+}
+
+.column-link:hover{
+    border-color: #A375BC;
+
+}
+
 .single-step-column{
     display: flex;
     flex-direction: column;
@@ -471,7 +481,7 @@
 .newscontactsupport-item > p {
     font-family: Sharp Sans No1 Bold;
     font-size: 38px;
-    width: 400px;
+    width: 325px;
 }
 
 .newscontactsupport-item > img {
@@ -511,6 +521,10 @@
 
     .whathappens-large{
         font-size: 1.5em;
+    }
+    
+    .newscontactsupport-item{
+        padding: 20px;
     }
 }
 

@@ -6,9 +6,17 @@
 
     <div class="about-page about-title-container">
         <div class="center-title-container">
-            <p>About</p>
+            <p class="large-page-title">About</p>
         </div>
     </div>
+
+    @if(Session::get('_previous') !== null)
+        <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+    @else
+        <a class="back-to-home-footer mt-3" href="/">
+    @endif
+        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
+    </a>
 
     <div class="about-first-element">
         <div class="text-center">
@@ -111,6 +119,8 @@
     </div>
 
     @include('partial.newsletter')
+
+    @include('customer.layouts.footer', ['showGetstarted' => true])
 
 </div>
 

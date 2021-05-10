@@ -43,7 +43,7 @@
                     <input type="file" name="offer_selling_banner_image" accept="image/*" class="form-control" required>
                 </div>
 
-                <div class="d-flex flex-column p-0">
+                {{-- <div class="d-flex flex-column p-0">
                     <label for="offer_title" class="ml-1 mb-2">Offer title:</label>
                     <input type="text" class="form-control" name="offer_title" required>
                 </div>
@@ -75,7 +75,7 @@
                         <div class="pound-sign-newoffer">£</div>
                         <input type="text" class="form-control w-25 mt-auto mb-auto" name="offer_price" required>
                     </div>
-                </div>
+                </div> --}}
 
                 <button type="submit" class="btn btn-primary w-25 ml-auto mr-auto">Save</button>
 

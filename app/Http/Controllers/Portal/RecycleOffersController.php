@@ -45,12 +45,12 @@ class RecycleOffersController extends Controller
                 'offer_image' => 'required|mimes:jpeg,png,svg|max:10000',
                 'offer_selling_banner_image' => 'required|mimes:jpeg,png,svg|max:10000',
                 'device' => 'required',
-                'offer_title' => 'required',
-                'offer_description' => 'required',
-                'offer_additional_info' => 'required',
-                'offer_price' => 'required',
-                'offer_start_date' => 'required',
-                'offer_end_date' => 'required',
+                // 'offer_title' => 'required',
+                // 'offer_description' => 'required',
+                // 'offer_additional_info' => 'required',
+                // 'offer_price' => 'required',
+                // 'offer_start_date' => 'required',
+                // 'offer_end_date' => 'required',
             ]);
 
             $image_filename_withext = $validated['offer_image']->getClientOriginalName();
@@ -67,12 +67,12 @@ class RecycleOffersController extends Controller
                 'device_id' => $request->device,
                 'offer_banner' => $image_filename.".".$image_extension,
                 'offer_selling_banner' => $banner_filename.".".$banner_extension,
-                'offer_title' => $request->offer_title,
-                'offer_description' => $request->offer_description,
-                'offer_additional_info' => $request->offer_additional_info,
-                'offer_price' => $request->offer_price,
-                'offer_start_date' => Carbon::parse($request->offer_start_date),
-                'offer_end_date' => Carbon::parse($request->offer_end_date)
+                // 'offer_title' => $request->offer_title,
+                // 'offer_description' => $request->offer_description,
+                // 'offer_additional_info' => $request->offer_additional_info,
+                // 'offer_price' => $request->offer_price,
+                // 'offer_start_date' => Carbon::parse($request->offer_start_date),
+                // 'offer_end_date' => Carbon::parse($request->offer_end_date)
             ]);
             
             return redirect('/portal/recycleoffers')->with('success', 'Recycle offer created successfully.');
@@ -94,17 +94,19 @@ class RecycleOffersController extends Controller
         $recycleOffer = RecycleOffer::find($request->id);
 
         $imageWithExt = null;
+        $sellBannerImageWithExt = null;
+
         if($request->file('offer_image')) {
             // validation
             $validated = $request->validate([
                 'offer_image' => 'required|mimes:jpeg,png,svg|max:10000',
                 'device' => 'required',
-                'offer_title' => 'required',
-                'offer_description' => 'required',
-                'offer_additional_info' => 'required',
-                'offer_price' => 'required',
-                'offer_start_date' => 'required',
-                'offer_end_date' => 'required',
+                // 'offer_title' => 'required',
+                // 'offer_description' => 'required',
+                // 'offer_additional_info' => 'required',
+                // 'offer_price' => 'required',
+                // 'offer_start_date' => 'required',
+                // 'offer_end_date' => 'required',
             ]);
 
             // delete previous image
@@ -120,29 +122,59 @@ class RecycleOffersController extends Controller
             $imageWithExt = $filename.".".$extension;
         }
 
+        if($request->file('offer_selling_banner_image')) {
+            // validation
+            $validated = $request->validate([
+                'offer_selling_banner_image' => 'required|mimes:jpeg,png,svg|max:10000',
+                'device' => 'required',
+                // 'offer_title' => 'required',
+                // 'offer_description' => 'required',
+                // 'offer_additional_info' => 'required',
+                // 'offer_price' => 'required',
+                // 'offer_start_date' => 'required',
+                // 'offer_end_date' => 'required',
+            ]);
+
+            // delete previous image
+            Storage::delete('public/recycle_offers_images/'.$recycleOffer->offer_selling_banner);
+
+            if($request->file('offer_selling_banner_image')->isValid()) {
+                $banner_filename_withext = $validated['offer_selling_banner_image']->getClientOriginalName();
+                $banner_filename = explode('.', $banner_filename_withext)[0];
+                $banner_extension = $request->offer_selling_banner_image->extension();
+                Storage::put('public/recycle_offers_images/'.$banner_filename.".".$banner_extension, file_get_contents($request->offer_selling_banner_image));
+            }
+            
+            $sellBannerImageWithExt = $banner_filename.".".$banner_extension;
+        }
+
         // validation
         $validated = $request->validate([
             'device' => 'required',
-            'offer_title' => 'required',
-            'offer_description' => 'required',
-            'offer_additional_info' => 'required',
-            'offer_price' => 'required',
-            'offer_start_date' => 'required',
-            'offer_end_date' => 'required',
+            // 'offer_title' => 'required',
+            // 'offer_description' => 'required',
+            // 'offer_additional_info' => 'required',
+            // 'offer_price' => 'required',
+            // 'offer_start_date' => 'required',
+            // 'offer_end_date' => 'required',
         ]);
     
         $recycleOffer->update([
             'device_id' => $request->device,
-            'offer_title' => $request->offer_title,
-            'offer_description' => $request->offer_description,
-            'offer_additional_info' => $request->offer_additional_info,
-            'offer_price' => $request->offer_price,
-            'offer_start_date' => Carbon::parse($request->offer_start_date),
-            'offer_end_date' => Carbon::parse($request->offer_end_date)
+            // 'offer_title' => $request->offer_title,
+            // 'offer_description' => $request->offer_description,
+            // 'offer_additional_info' => $request->offer_additional_info,
+            // 'offer_price' => $request->offer_price,
+            // 'offer_start_date' => Carbon::parse($request->offer_start_date),
+            // 'offer_end_date' => Carbon::parse($request->offer_end_date)
         ]);
 
         if($imageWithExt){
             $recycleOffer->offer_banner = $imageWithExt;
+            $recycleOffer->save();
+        }
+        if($sellBannerImageWithExt){
+            $recycleOffer->offer_selling_banner = $sellBannerImageWithExt;
             $recycleOffer->save();
         }
 

@@ -5,30 +5,66 @@
 <div class="app">
     <div class="how-page how-title-container">
         <div class="center-title-container">
-            <p>How it works</p>
+            <p class="large-page-title">How it works</p>
         </div>
     </div>
 
-    <div class="how-first-element">
-        <div class="d-flex flex-row justify-content-between">
+    @if(Session::get('_previous') !== null)
+        <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+    @else
+        <a class="back-to-home-footer mt-3" href="/">
+    @endif
+        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
+    </a>
 
-            <div class="p-5 d-flex flex-column justify-content-between">
+    <div class="how-first-element">
+        <div class="howitworks-container-top">
+
+            <div class="howitworks-element-container">
                 <div class="center-title-container">
                     {{-- <p>Shop and sell easily <br> with just a few clicks</p> --}}
-                    <p>Sell easily <br> with just a few clicks</p>
+                    <p class="customer-sections-title">Sell easily <br> with just a few clicks</p>
                 </div>
-                <p>We pride ourselves in offering a smart simple way to shop and sell mobile devices. With Boo, all it takes is just a few clicks to buy and sell the devices of your choice. In just several a few simple steps you can either trade in or trade up your mobile tech for unbeatable prices, while doing your bit for the environment.   
-Watch our quick video that explains how our meticulous grading system works. We guarantee you’ll be pleasantly surprised at just how thorough and exhaustive our grading system is. 
-</p>
+                <p class="max-450 mt-4">
+                    We pride ourselves in offering a smart simple way to shop and sell mobile devices. With Boo, all it takes is just a few clicks to buy and sell the devices of your choice. 
+                    In just several a few simple steps you can either trade in or trade up your mobile tech for unbeatable prices, while doing your bit for the environment.   
+                    Watch our quick video that explains how our meticulous grading system works. We guarantee you’ll be pleasantly surprised at just how thorough and exhaustive our grading system is. 
+                </p>
             </div>
-            <div class="p-5 d-flex flex-wrap flex-column justify-content-between align-items-center mx-auto">
-                <div class="grading-video-container">
-                    <video id="howvideoid" width="100%" controls>
-                        <source src="{{ asset('/video/old/Bamboo Selling v4.mp4') }}" type="video/mp4">
-                        Your browser does not support HTML video.
-                    </video>
+            <div class="howitworks-element-container text-center p-0">
+                <div class="grading-video-container mt-auto mb-auto">
+                    <div class="howVideoToggle" data-toggle="modal" data-target="#howVideoModal">
+                        <p class="mb-4">Grading System</p>
+                        <img src="{{asset('/video/play_video.svg')}}">
+                        <p class="mt-4">Explained</p>
+                    </div>
                 </div>
-                <p class="mt-2">Watch our quick video explaining just how thorough our grading system is. Trust us, you will be shocked.</p>
+
+                <div class="modal fade" id="howVideoModal" tabindex="-1" role="dialog" aria-labelledby="howVideoLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <h5 class="modal-title howitworks" id="howVideoLabel">How it works</h5>
+                        <div class="modal-content howitworksvideo">
+                            {{-- <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div> --}}
+                            <div class="modal-body">
+                            <video id="howvideoid" width="100%" controls>
+                                <source src="{{ asset('/video/old/Bamboo Selling v4.mp4') }}" type="video/mp4">
+                                Your browser does not support HTML video.
+                            </video>
+                            </div>
+                            <img class="dismiss-howitworks" src="{{asset('images/front-end-icons/close_modal_orange.svg')}}" data-dismiss="modal">
+                            {{-- <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div> --}}
+                      </div>
+                    </div>
+                </div>
+
+                {{-- <p class="mt-2">Watch our quick video explaining just how thorough our grading system is. Trust us, you will be shocked.</p> --}}
             </div>
         </div>
     </div>
@@ -88,7 +124,10 @@ Watch our quick video that explains how our meticulous grading system works. We 
             <div class="shopping-element container">
                 <div class="shopping-element-text">
                     <p class="left-title-text">1. Search for a new device</p>
-                    <p class="how-text-desc">Search for your old device and find out how much it’s worth. If you’re happy with the price, simply register the mobile and provide us with your preferred payment option and with your details. </p>
+                    <p class="how-text-desc">
+                        {{-- Search for your old device and find out how much it’s worth. If you’re happy with the price, simply register the mobile and provide us with your preferred payment option and with your details.  --}}
+                        Search your old device and find out how much its worth. If you are happy with the price , simply register the device, provide us with your details and we’ll get the ball rolling.
+                    </p>
                 </div>
                 <div class="shopping-element-image">
                     <img class="how-image" src="{{ asset('/customer_page_images/body/hearts.svg') }}">
@@ -101,7 +140,8 @@ Watch our quick video that explains how our meticulous grading system works. We 
                     <p class="how-text-desc">Once your sales order is completed, simply request for a free sales pack. Alternatively, you can print your own labels to send us your device</p>
                 </div>
                 <div class="shopping-element-image">
-                    <img class="how-image" src="{{ asset('/customer_page_images/body/free_post_pack.svg') }}">
+                    {{-- <img class="how-image" src="{{ asset('/customer_page_images/body/free_post_pack.svg') }}"> --}}
+                    <img class="how-image" src="{{ asset('/customer_page_images/body/revised_trade_pack.png') }}">
                 </div>
             </div>
 
@@ -221,6 +261,8 @@ Watch our quick video that explains how our meticulous grading system works. We 
         </form>
 
     </div> --}}
+
+    @include('customer.layouts.footer', ['showGetstarted' => true])
 
     <script>
 

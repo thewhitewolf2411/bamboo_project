@@ -4,7 +4,7 @@
 <div class="app">
     <div class="news-page news-title-container">
         <div class="center-title-container">
-            <p>News & Blog</p>
+            <p class="large-page-title">News & Blog</p>
         </div>
     </div>
 
@@ -13,7 +13,7 @@
     @else
         <a class="back-to-home-footer mt-3" href="/">
     @endif
-        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to home</p>
+        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
     </a>
 
     <div class="container">
@@ -293,6 +293,8 @@
     
 
     @include('partial.newscontactsupport')
+
+    @include('customer.layouts.footer', ['showGetstarted' => true])
     
 </div>
 

@@ -9,7 +9,8 @@ header{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    height: 150px;
+    // height: 150px;
+    height: 130px;
     padding: 0 120px 0 120px;
     justify-content: space-between;
     background: #fff;
@@ -17,7 +18,8 @@ header{
 }
 
 #header.resized{
-    height: 100px;
+    // height: 100px;
+    height: 80px;
     padding: 0 30px 60px;
 }
 #full-bamboo-logo.resized{
@@ -32,7 +34,7 @@ header{
 
 #full-logo-container.resized{
     margin-top: 65px;
-    margin-left: 45px;
+    margin-left: 85px;
 }
 
 #full-bamboo-logo{
@@ -41,7 +43,10 @@ header{
 
 .mobile-logo{
     display: block;
-    //display: none;
+}
+
+.mobile-logo.invisible{
+    display: none;
 }
 
 .mobile-logo > img{
@@ -58,6 +63,7 @@ header{
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    margin-top: 35px;
     // margin-top: -15px;
     //margin-top: 50px;
 }
@@ -123,6 +129,54 @@ header{
     margin: 0;
     position: absolute;
     top: 4px;
+    left: 10px;
+}
+
+.notifications-count{
+    position: absolute;
+    bottom: -15px;
+}
+
+.notifications-count.menu{
+    position: relative;
+    bottom: unset;
+    margin-top: auto;
+    margin-bottom: 7px;
+    margin-left: auto;
+    margin-right: 1rem;
+}
+
+.notifications-count.menu-mobile{
+    position: relative;
+    bottom: unset;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 1rem;
+    margin-right: 0;
+}
+
+.notifications-count.collapse-header{
+    position: relative;
+    bottom: unset;
+    margin-top: 5px;
+    margin-bottom: auto;
+    margin-left: 0;
+    margin-right: 1rem;
+}
+
+.notifications-count > p{
+    color: white;
+    margin: 0;
+    position: absolute;
+    top: 4px;
+    left: 10px;
+}
+
+.notifications-count.menu > p {
+    color: white;
+    margin: 0;
+    position: absolute;
+    top: 8px;
     left: 10px;
 }
 
@@ -297,6 +351,12 @@ header{
     margin-right: 10px;
 }
 
+.url-header-container.mobile{
+    background: white;
+    // padding-left: 15px;
+    // margin-left: 0;
+}
+
 .url-header-container a{
     font-size: 14px;
     text-align: center;
@@ -307,6 +367,18 @@ header{
 .url-header-container a:hover{
     color: #A3D147;
     transition: 0.1s linear;
+}
+
+.mobilemenu-bold{
+    font-family: Sharp Sans No1 Bold !important;
+}
+
+.mobilemenu-medium{
+    font-family: Sharp Sans No1 Medium !important;
+}
+
+.mobilemenu-bold.white{
+    color: white;
 }
 
 #start-shopping{
@@ -378,6 +450,15 @@ header{
 
 .header-selling-links{
     background: #F28E33;
+    position: fixed;
+    z-index: 49;
+    width: 100%;
+    top: 180px;
+    transition: all 0.5s ease;
+}
+
+.header-selling-links.resized{
+    top: 130px;
 }
 
 @media screen and (max-width: 740px) and (min-width: 325px){
@@ -439,15 +520,6 @@ header{
         flex-wrap: wrap;
     }
 
-    .url-header-container{
-        background: none !important;
-        width: 100% !important;
-        border-radius: 0 !important;
-        border-bottom: 1px solid #AAAAAA !important;
-        justify-content: left;
-        height: 50px !important;
-    }
-
     #start-shopping{
         max-width: none;
     }
@@ -466,7 +538,7 @@ header{
 
     .url-header-container a{
         margin: 0 !important;
-        color: #000 !important;
+        // color: #000 !important;
     }
 
 
@@ -481,13 +553,19 @@ header{
 .urls-header-mobile{
     display: flex;
     justify-content: center;
-    background: white;
+    //background: white;
 }
 
-.url-header-container.mobile{
+.mobile-menu-wrapper{
+    // width: 100%;
+    // height: 100vh;
+    // background-color: rgba(#000000, 0.6);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
     background: white;
+    justify-content: center;
 }
-
 
 .tablet-mobile-menu-wrapper{
     display: flex;
@@ -497,9 +575,10 @@ header{
 // large breakpoint
 @media (max-width: 1400px){
     .logo-header-container{
-        // margin-top: 35px;
-        margin-top: -15px;
-        margin-left: 35px;
+        // margin-top: -15px;
+        margin-top: -10px;
+        // margin-left: 35px;
+        margin-left: 0px;
     }
     .header-container{
         padding: 0 60px;
@@ -509,10 +588,11 @@ header{
 // general
 @media (max-width: 1130px){
     .header-container{
-        padding: 0 60px 60px;
+        // padding: 0 60px 60px;
+        padding: 0 60px 0px;
     }
     #full-logo-container.resized{
-        margin-left: 10px;
+        margin-left: 40px;
         margin-top: 45px;
     }
 }
@@ -559,6 +639,12 @@ header{
     .hover-link:hover{
         height: 85px !important;
     }
+    .header-selling-links{
+        top: 100px;
+    }
+    .header-selling-links.resized{
+        top: 80px;    
+    }
 }
 
 // logo breakpoint
@@ -586,6 +672,31 @@ header{
     }
     #header.resized{
         padding: 0 25px 25px;
+    }
+    .header-selling-links{
+        top: 100px;
+    }
+    .header-selling-links.resized{
+        top: 80px;
+    }
+    .url-header-container.mobile{
+        background: white;
+        padding-left: 15px;
+        margin-left: 0;
+    }
+    .mobile-menu-wrapper{
+        height: 100vh;
+        background-color: rgba(#000000, 0.6);
+        flex-direction: column;
+        justify-content: start;
+    }
+    .url-header-container{
+        //background: none !important;
+        width: 100% !important;
+        border-radius: 0 !important;
+        border-bottom: 1px solid #AAAAAA !important;
+        justify-content: left;
+        height: 50px !important;
     }
 }
 

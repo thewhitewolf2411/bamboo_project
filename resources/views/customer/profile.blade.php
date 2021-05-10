@@ -4,6 +4,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         {{-- <script src="{{ asset('js/Customer.js') }}"></script> --}}
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <!-- jQuery -->
@@ -39,18 +40,34 @@
 
                         <div class="sections-menu">
                             <div class="change-page menu-item link-active" id="menu-overview">Account overview</div>
-                            <div class="change-page menu-item" id="menu-notifications">Notifications</div>
+                            <div class="change-page menu-item" id="menu-notifications">
+                                Notifications
+                                @if(App\Helpers\NotificationHelper::count() !== null) 
+                                    <div class="notifications-count menu">
+                                        <img src="{{asset('/images/front-end-icons/notification_count.svg')}}">
+                                        <p>{!!App\Helpers\NotificationHelper::count()!!}</p>
+                                    </div>
+                                @endif
+                            </div>
                             <div class="change-page menu-item" id="menu-personal">Personal Information</div>
                             <div class="change-page menu-item" id="menu-account">Account Information</div>
                             <div class="change-page menu-item" id="menu-sales">My Sales</div>
                             <div class="change-page menu-item" id="menu-communications">Communications</div>
-                            <div class="menu-item" data-toggle="modal" data-target="#logoutModal"><img class="mr-3" src="{{asset('/images/logout-black.svg')}}">Log Out</div>
+                            <div class="menu-item" data-toggle="modal" data-target="#logoutModal">
+                                <img class="logout-icon-menu" src="{{asset('/images/logout-black.svg')}}">Log Out
+                            </div>
                         </div>
 
                         <div class="sections-menu-mobile">
                             <div class="change-page-mobile mobile-menu-item" id="mobile-menu-notifications">
                                 <img class="mobile-img-arrow-back hidden" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
-                                <p class="left">Notifications</p>
+                                <p class="left  @if(App\Helpers\NotificationHelper::count() !== null) norightmargin @endif">Notifications</p>
+                                @if(App\Helpers\NotificationHelper::count() !== null) 
+                                    <div class="notifications-count menu-mobile">
+                                        <img src="{{asset('/images/front-end-icons/notification_count.svg')}}">
+                                        <p>{!!App\Helpers\NotificationHelper::count()!!}</p>
+                                    </div>
+                                @endif
                                 <img class="mobile-img-arrow-next" src="{{asset('/images/front-end-icons/black_arrow_next.svg')}}">
                             </div>
                             <div class="change-page-mobile mobile-menu-item" id="mobile-menu-personal">
@@ -514,7 +531,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col">
+                                                <div class="col view-sale-item">
                                                     <p class="sale-item-label">View</p>
                                                     <a href="/userprofile/{{$tradein->id}}"><img class="sale-item-link-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Orange.svg')}}"></a>
                                                 </div>
@@ -663,7 +680,7 @@
 
                         <div class="row border-bottom pb-5">
                         
-                            <div class="col-md-2"><img src="/storage/product_images/{{ $tradein->getProductImage($tradein->product_id) }}" width="100%"></div>
+                            {{-- <div class="col-md-2"><img src="/storage/product_images/{{ $tradein->getProductImage($tradein->product_id) }}" width="100%"></div> --}}
                             <div class="col-md-4">
                                 <h5 class="modal-title">{{ $tradein->getProductName($tradein->product_id) }}</h5>
                                 <p class="black">Network: {{ $tradein->network }}</p>

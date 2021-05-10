@@ -95,7 +95,7 @@
             </tfoot>
             <tbody>
                 @foreach($tradeins as $tradein)
-                    <tr id="tradein-{{$tradein->id}}" @if($tradein->isManifested()) class="can_confirm" @endif>
+                    <tr id="tradein-{{$tradein->id}}">
                         <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
                         <td><div class="table-element">{{$tradein->barcode}}</div></td>
                         <td><div class="table-element">{{$tradein->getProductName($tradein->id)}}</div></td>
@@ -107,6 +107,9 @@
                         <td><div class="table-element">{{$tradein->tracking_reference}}</div></td>
                         <td><div class="table-element"><input type="checkbox" name="selected_despatch_devices" class="form-check-input m-0 w-auto" value="{!!$tradein->id!!}"></div></td>
                     </tr>
+
+                    @if($tradein->isManifested()) <script> document.getElementById('tradein-{!!$tradein->id!!}').classList.add('can_confirm');</script> @endif
+                    @if($tradein->isDespatched()) <script> document.getElementById('tradein-{!!$tradein->id!!}').style = 'background: darkgrey;';</script> @endif
                 @endforeach
             </tbody>
 

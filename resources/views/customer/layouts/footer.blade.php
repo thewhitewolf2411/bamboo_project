@@ -9,7 +9,7 @@
                 {{-- <div class="url-footer-container" id="start-shopping">
                     <a href="/shop">Start Shopping</a>
                 </div> --}}
-                <div class="url-footer-container" id="start-selling">
+                <div class="url-footer-container" id="start-selling" @if(isset($getStartedColor)) style="background: {!!$getStartedColor!!}" @endif>
                     <a href="/sell">Start Selling</a>
                 </div>
             </div>
@@ -71,6 +71,11 @@
             <a href="/slavery">Modern Slavery</a>
             <a href="/recyclepolicy">Recycle Policy</a>
             <a href="https://www.bamboodistribution.com/" target="_blank">Corporate Site</a>
+        </div>
+        <div class="footer-row-6">
+            <span>Contact Us</span>
+            <a href="/contact/message">Message Us</a>
+            <a href="/contact/call">Call Us</a>
         </div>
     </div>
 

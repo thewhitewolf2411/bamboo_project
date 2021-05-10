@@ -10,6 +10,7 @@ use App\Eloquent\PortalUsers;
 use App\Eloquent\Blog;
 use App\Eloquent\Order;
 use App\Eloquent\BuyingProduct;
+use App\Eloquent\FAQ;
 use App\Eloquent\Message;
 use App\Eloquent\SellingProduct;
 use App\Services\KlaviyoEmail;
@@ -89,9 +90,9 @@ class PagesController extends Controller
         $products = $buyingProducts->merge($sellingProducts);
 
         $blogs = Blog::all()->sortByDesc('id');
-        $all_news = Blog::where('cms_type', 0)->get();
-        $all_blogs = Blog::where('cms_type', 1)->get();
-        $all_howto = Blog::where('cms_type', 2)->get();
+        $all_news = Blog::where('cms_type', 0)->get()->take(4);
+        $all_blogs = Blog::where('cms_type', 1)->get()->take(4);
+        $all_howto = Blog::where('cms_type', 2)->get()->take(4);
         
         return view('customer.news', [
             'products'=>$products, 
@@ -123,20 +124,34 @@ class PagesController extends Controller
         return view('customer.support')->with('products', $products);
     }
 
-    public function showSellingSupportPage(){
+    public function showSellingSupportPage($id = null){
+        $question_id = null;
+        if($id){
+            $question_id = $id;
+        }
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
+        $faq = FAQ::all();
 
         $products = $buyingProducts->merge($sellingProducts);
-        return view('customer.supportselling')->with('products', $products);
+        return view('customer.supportselling', ['products' => $products, 'faq' => $faq, 'question_id' => $question_id]);
+    }
+
+    public function searchFAQSupport(Request $request){
+        if(isset($request->term)){
+            $searchterm = $request->term;
+            $results = FAQ::where('question', 'LIKE', "%".strtolower($searchterm)."%")->get();
+            return $results;
+        }
     }
 
     public function showContactPage(){
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
+        $selected = isset(request()->selected) ? request()->selected : null;
 
         $products = $buyingProducts->merge($sellingProducts);
-        return view('customer.contact')->with('products', $products);
+        return view('customer.contact', ['products' => $products, 'selected' => $selected]);
     }
 
 
@@ -189,8 +204,12 @@ class PagesController extends Controller
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
 
+        $phones = SellingProduct::where('category_id', 1)->get()->take(4);
+        $tablets = SellingProduct::where('category_id', 2)->get()->take(2);
+        $watches = SellingProduct::where('category_id', 3)->get()->take(3);
+
         $products = $buyingProducts->merge($sellingProducts);
-        return view('customer.footer-links.map')->with('products', $products);
+        return view('customer.footer-links.map', ['products' => $products, 'tablets' => $tablets, 'phones' => $phones, 'watches' => $watches]);
     }
 
     public function showCookiesPage(){
@@ -253,12 +272,12 @@ class PagesController extends Controller
 
         $firstName = $request->firstname;
         $lastname = $request->lastname;
-        $email = $request->emailadress;
+        $email = $request->email_address;
         $telephone = $request->telephone;
-        $ordernumber = $request->title;
+        $ordernumber = $request->order_number;
         $message = $request->yourmessage;
 
-        $newMessage = Message::create([
+        Message::create([
             'first_name'=>$firstName,
             'last_name'=>$lastname,
             'email'=>$email,

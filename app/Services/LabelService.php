@@ -91,6 +91,10 @@ class LabelService{
         return response(['code'=>200, 'filename'=>$filename]);
     }
 
+    // public function printPackagingInstructions(){
+    //     return response()->file(public_path(''));
+    // }
+
 
     public function downloadSDLabel(){
         // $html = "";
