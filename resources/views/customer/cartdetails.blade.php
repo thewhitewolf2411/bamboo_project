@@ -191,7 +191,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="row"><input type="checkbox" class="checkbox-input" name="email_newsletter">Email</div>
-                                    <div class="row"><input type="checkbox" class="checkbox-input" name="sms_newsletter">SMS</div>
+                                    <div class="row"><input type="checkbox" class="checkbox-input" name="sms_newsletter">SMS / Text Message</div>
                                     <div class="row"><input type="checkbox" class="checkbox-input" name="telephone_newsletter">Telephone</div>
                                     <div class="row"><input type="checkbox" class="checkbox-input" name="post_newsletter">Post</div>
                                 </div>

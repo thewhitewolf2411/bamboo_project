@@ -29,7 +29,7 @@
     </div>
 
     <div class="about-elements">
-        <div class="about-element">
+        <div class="about-element" style="align-items: center">
             <div class="about-element-text">
                 <p class="about-title-text text-left">About Bamboo</p>
                 <p class="about-regular-text">Hello and welcome to Bamboo Mobile – aka ‘Boo’. In a nutshell, Bamboo Mobile offers a smart way for you to Shop and sell mobile phones and/or devices. With the help of Bamboo Mobile, you can trade in and trade up your mobile, quickly, safely, and simply – not to mention for a great price!
@@ -39,8 +39,8 @@
                     Reach out to our friendly team of mobile phone recycling experts to chat about how we can provide you with the best value for mobile phones and devices, while helping save the environment at the same time. 
                      </p>
             </div>
-            <div class="about-image-container" id="first-about-image">
-                <div class="about-rounded-image" id="first-round-image"></div>
+            <div class="about-image-container" id="first-about-image" >
+                <img src="{{asset('/images/bamboo-laughing.gif')}}" width="200px">
             </div>
         </div>
         {{-- <div class="about-element">

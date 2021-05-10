@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\User;
+use App\Eloquent\Tradein;
 use DNS1D;
 use PDF;
 
@@ -120,5 +121,34 @@ class LabelService{
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="'.$filename.'"'
         ]);        
+    }
+
+    public function downloadTradeLabel(array $data){
+
+        $tradein = Tradein::where('id', $data['tradein'])->first();
+
+        $tradeins = Tradein::where('barcode_original', $tradein->barcode_original)->get();
+
+        $filename = "delivery_note_" . $tradein->barcode_original . "_.pdf";
+        // 100 - 150 cm to pt approx
+
+        if(!is_dir(public_path() . '/storage/pdf')){
+            mkdir(public_path() . '/storage/pdf', 0777, true);
+        }
+
+        PDF::loadView('portal.labels.orderlabel', ['tradeins'=>$tradeins])->setPaper('a4', 'portrait')->setWarnings(false)->save('./storage/pdf/' . $filename);
+
+        return response()->json(
+            [
+                'status'=>200,
+                'filename'=>$filename
+            ]
+        );
+
+        return response()->file($filename, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.$filename.'"'
+        ]);  
+
     }
 }

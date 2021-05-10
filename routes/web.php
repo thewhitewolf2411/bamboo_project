@@ -19,6 +19,7 @@ Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/login', '\App\Http\Controllers\Auth\LoginController@login')->name('login');
 
 Route::get('/specialdeliverylabel', 'Customer\PagesController@downloadSDLabel');
+Route::get('/printorderlabel', 'Customer\PagesController@downloadTradeLabel');
 
 //User get Route
 Route::get('/', 'Customer\PagesController@index')->name('index');
