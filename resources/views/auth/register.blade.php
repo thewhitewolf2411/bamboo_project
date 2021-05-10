@@ -42,20 +42,25 @@
         <input class="form-control" type="number" id="contact_number" name="contact_number" placeholder="Contact number" required autofocus>
     </div>
 
-    <div class="form-group">
-        <label for="contact_number">Password</label>
-        <input type="password" id="psw" class="form-control" placeholder="Select password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required autofocus>
-        <div id="message">
-            <p>Password must contain the following:</p>
-            <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-            <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-            <p id="number" class="invalid">A <b>number</b></p>
-            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+    <div class="row m-0 mt-2">
+        <div class="col-12 m-0 p-0">
+            <label for="password" class="verify-label">Select password*</label>
+            <div class="row m-0 password-input" style="width: 100%">
+                <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,50}$" class="form-control" name="password" id="password" required class="verification-input" required/>
+                <img class="toggle-pass-visibility" id="pass-visibility-toggle" onclick="togglePassVisibility()" src="{{asset('/images/front-end-icons/pass_invisible.svg')}}">
+            </div>
+            <div class="pass-info-requirements mb-2">
+                Your password needs to be at least 8 characters long, contain an uppercase letter, a number and a symbol.
+            </div>
+            <div id="pass-check-info" class="pass-strength mt-0 mb-4">
+                <div class="row m-0 ml-1">
+                    <div id="progress">
+                        <div id="bar"></div>
+                    </div>
+                    <div id="pass-strength" class="ml-3">Unsecure</div>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <div class="d-flex py-3">
-        <input id="showpassword" type="checkbox" onclick="showPassword()" style="width:auto; margin:0;"><label id="showPasswordLabel" style="margin-left:1rem" for="showpassword">Show password</label>
     </div>
 
     <div class="form-group">
@@ -637,6 +642,156 @@
 </div>
 
 <script>
+
+    $(document).ready(function(){
+        $('#password').change(function(){
+            checkNewPass();
+            console.log("radi");
+        });
+    });
+
+    function checkNewPass(){
+        let pass = document.getElementById("password").value;
+        let passcheck = document.getElementById("pass-check-info");
+
+        pass = pass.trim();
+
+        if(pass !== ""){
+            // show pass info
+            if(passcheck.classList.contains("hidden")){
+                passcheck.classList.remove("hidden");
+            }
+            // analyze pass
+
+            let has_number = false;
+            let has_symbol = false;
+            let has_uppercase_letter = false;
+            let has_ten_characters = false;
+            
+            // check length
+            if(pass.length < 8){
+                has_ten_characters = false;
+            } else {
+                has_ten_characters = true;
+            }
+
+            // check if it has a number
+            let has_number_check = pass.match(/\d+/g);
+            if(Array.isArray(has_number_check)){
+                has_number = true;
+            } else {
+                has_number = false;
+            }
+
+            // check for symbols
+            var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+            has_symbol = format.test(pass);
+
+            // check for uppercase
+            let countUpperCase = 0;
+            let i = 0;
+            while (i <= pass.length) {
+                const character = pass.charAt(i);
+                if (character === character.toUpperCase() && character !== character.toLowerCase()) {
+                    countUpperCase++;
+                }
+                i++;
+            }
+            if(countUpperCase > 0){
+                has_uppercase_letter = true;
+            }
+
+            // bar percentage
+            let percentage = '10%';
+
+            if(has_ten_characters){
+                percentage = '25%';
+            }
+            if(has_number){
+                percentage = '50%';
+            }
+            if(has_symbol){
+                percentage = '75%';
+            }
+            if(has_uppercase_letter){
+                percentage = '100%';
+            }
+
+            let passqualityobj = {
+                has_ten_characters: has_ten_characters,
+                has_number: has_number,
+                has_symbol: has_symbol,
+                has_uppercase_letter: has_uppercase_letter
+            };
+
+            let pass_quality = 0;
+            for (const [key, value] of Object.entries(passqualityobj)) {
+                if(value === true){
+                    pass_quality++;
+                }
+            }
+
+            percentage = Math.round(pass_quality * 2.5) + "0%";
+
+            // set bar percentage
+            document.getElementById("bar").style.width = percentage;
+
+            // pass text strength
+            if(has_ten_characters && has_number && has_symbol && has_uppercase_letter){
+                document.getElementById("pass-strength").innerHTML = 'Fair';
+
+                // if(current.value && email.value){
+                //     if(save_btn.classList.contains('btn-secondary')){
+                //         save_btn.classList.remove('btn-secondary');
+                //         if(!save_btn.classList.contains('btn-orange')){
+                //             save_btn.classList.add('btn-orange');
+                //         }
+                //     }
+                //     if(save_btn.classList.contains('disabled')){
+                //         save_btn.classList.remove('disabled');
+                //     }
+                // }
+            } else {
+
+                // if(!save_btn.classList.contains('btn-secondary')){
+                //     save_btn.classList.add('btn-secondary');
+                //     if(save_btn.classList.contains('btn-orange')){
+                //         save_btn.classList.remove('btn-orange');
+                //     }
+                // }
+                // if(!save_btn.classList.contains('disabled')){
+                //     save_btn.classList.add('disabled');
+                // }
+                
+
+                document.getElementById("pass-strength").innerHTML = 'Unsecure';
+            }
+
+            
+
+        } else {
+            if(!passcheck.classList.contains("hidden")){
+                passcheck.classList.add("hidden");
+            }
+        }
+    }
+
+    function togglePassVisibility(){
+
+        var img = document.getElementById('pass-visibility-toggle');
+        var pass = document.getElementById('password');
+        
+        if (pass.type === "password") {
+            pass.type = "text";
+            img.src = '/images/front-end-icons/pass_visible.svg';
+            img.style.right = '7px';
+        } else {
+            img.src = '/images/front-end-icons/pass_invisible.svg';
+            pass.type = "password";
+            img.style.right = '5px';
+        }
+    }
+
     var myInput = document.getElementById("psw");
     var letter = document.getElementById("letter");
     var capital = document.getElementById("capital");

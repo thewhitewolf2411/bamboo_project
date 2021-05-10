@@ -31,8 +31,10 @@ function networkChanged(element){
     
     for(var i = 0; i<networks.length; i++){
         networks[i].classList.add('network-container-disabled');
+        networks[i].classList.remove('network-container-selected');
     }
     label.removeClass('network-container-disabled');
+    label.addClass('network-container-selected');
 
     network = element.value;
 
@@ -54,8 +56,10 @@ function gradeChanged(element, no_networks = false){
 
     for(var i = 0; i<grades.length; i++){
         grades[i].classList.add('elem-grade-container-deselected');
+        grades[i].classList.remove('elem-grade-container-selected');
     }
     label.removeClass('elem-grade-container-deselected');
+    label.addClass('elem-grade-container-selected');
 
     grade = element.value;
     $('#selected-grade').html($('#grade-'+grade+'-text').html());
@@ -70,8 +74,10 @@ function memoryChanged(element){
 
     for(var i = 0; i<grades.length; i++){
         grades[i].classList.add('memory-container-deselected');
+        grades[i].classList.remove('memory-container-selected');
     }
     label.removeClass('memory-container-deselected');
+    label.addClass('memory-container-selected');
 
     basePrices = JSON.parse(element.value);
     memoryValue = label.attr("id");
