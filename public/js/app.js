@@ -56713,11 +56713,11 @@ $('#deleteblog').on('click', function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$.ajaxSetup({
-  headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  }
-});
+/*$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});*/
 $(document).ready(function () {
   $('#box-in-progress-table tfoot td').each(function () {
     var title = $(this).text();
@@ -56936,12 +56936,23 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 document.getElementById("password_reg").addEventListener('keyup', function () {
-  checkNewPass();
+  checkNewPass("password_reg");
+});
+document.getElementById("password_card").addEventListener('keyup', function () {
+  checkNewPass("password_card");
 });
 
-window.checkNewPass = function () {
-  var pass = document.getElementById("password_reg").value;
-  var passcheck = document.getElementById("pass-check-info");
+window.checkNewPass = function (select) {
+  var pass = document.getElementById(select).value;
+  var select2 = null;
+
+  if (select == "password_card") {
+    select2 = "pass-check-info-card";
+  } else {
+    select2 = "pass-check-info";
+  }
+
+  var passcheck = document.getElementById(select2);
   pass = pass.trim();
 
   if (pass !== "") {
@@ -57030,11 +57041,22 @@ window.checkNewPass = function () {
     }
 
     percentage = Math.round(pass_quality * 2.5) + "0%"; // set bar percentage
+    //document.getElementById("bar").style.width = percentage;
 
-    document.getElementById("bar").style.width = percentage; // pass text strength
+    if (select == "password_card") {
+      console.log("here");
+      document.getElementById("bar-card").style.width = percentage;
+    } else {
+      document.getElementById("bar").style.width = percentage;
+    } // pass text strength
+
 
     if (has_ten_characters && has_number && has_symbol && has_uppercase_letter) {
-      document.getElementById("pass-strength").innerHTML = 'Fair'; // if(current.value && email.value){
+      if (select == "password_card") {
+        document.getElementById("pass-strength-card").innerHTML = 'Fair';
+      } else {
+        document.getElementById("pass-strength").innerHTML = 'Fair';
+      } // if(current.value && email.value){
       //     if(save_btn.classList.contains('btn-secondary')){
       //         save_btn.classList.remove('btn-secondary');
       //         if(!save_btn.classList.contains('btn-orange')){
@@ -57045,6 +57067,7 @@ window.checkNewPass = function () {
       //         save_btn.classList.remove('disabled');
       //     }
       // }
+
     } else {
       // if(!save_btn.classList.contains('btn-secondary')){
       //     save_btn.classList.add('btn-secondary');
@@ -57055,7 +57078,11 @@ window.checkNewPass = function () {
       // if(!save_btn.classList.contains('disabled')){
       //     save_btn.classList.add('disabled');
       // }
-      document.getElementById("pass-strength").innerHTML = 'Unsecure';
+      if (select == "password_card") {
+        document.getElementById("pass-strength-card").innerHTML = 'Unsecure';
+      } else {
+        document.getElementById("pass-strength").innerHTML = 'Unsecure';
+      }
     }
   } else {
     if (!passcheck.classList.contains("hidden")) {
@@ -57065,8 +57092,23 @@ window.checkNewPass = function () {
 };
 
 window.togglePassVisibility = function () {
-  var img = document.getElementById('pass-visibility-toggle');
+  var img = document.getElementById('pass-visibility-toggle-reg');
   var pass = document.getElementById('password_reg');
+
+  if (pass.type === "password") {
+    pass.type = "text";
+    img.src = '/images/front-end-icons/pass_visible.svg';
+    img.style.right = '7px';
+  } else {
+    img.src = '/images/front-end-icons/pass_invisible.svg';
+    pass.type = "password";
+    img.style.right = '5px';
+  }
+};
+
+window.togglePassCardVisibility = function () {
+  var img = document.getElementById('pass-visibility-toggle');
+  var pass = document.getElementById('password_card');
 
   if (pass.type === "password") {
     pass.type = "text";
@@ -57384,11 +57426,12 @@ $('#print_trade_pack_bulk_form_trigger').on('click', function () {
   $('.printcheckbox:checked').each(function () {
     selected.push($(this).attr('name'));
   });
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
+  /*$.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+  });*/
+
   $.ajax({
     url: "/portal/customer-care/trade-in/printlabelbulk",
     type: "POST",
@@ -57496,11 +57539,11 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$.ajaxSetup({
-  headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  }
-});
+/*$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});*/
 $('#generate-overview-report-btn').on('click', function () {
   $.ajax({
     url: "/portal/reports/getoverviewreport",
@@ -57773,12 +57816,13 @@ $('#allocateboxtobaymodal').on('hide.bs.modal', function () {
 
 var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
     isEmpty = _require.isEmpty;
+/*$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});*/
 
-$.ajaxSetup({
-  headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  }
-});
+
 $(document).ready(function () {});
 $('#changetoviewtradeins').on('click', function () {
   if (!$('#boxedtradeinstable_wrapper').hasClass('table-visible')) {
@@ -57887,11 +57931,11 @@ $('#closedboxtable-selectall').on('click', function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$.ajaxSetup({
-  headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  }
-});
+/*$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});*/
 $('.saleslots').on('click', function () {
   $('.saleslots').each(function () {
     $(this).removeClass('saleslot-active');
@@ -58013,11 +58057,11 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$.ajaxSetup({
-  headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  }
-});
+/*$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});*/
 $('.deletedate').on('click', function () {
   var dateid = $(this).prop('id');
   var c = confirm('Are you sure you want to delete non-working date from system?');
@@ -58045,11 +58089,11 @@ $('.deletedate').on('click', function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$.ajaxSetup({
-  headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  }
-});
+/*$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});*/
 $('#manifacturer').on('change', function () {
   var options;
 
@@ -58551,12 +58595,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var _require = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"),
     get = _require.get;
+/*$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});*/
 
-$.ajaxSetup({
-  headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  }
-});
+
 $(document).on('change', function () {
   if ($('#boxedtradeinstable .tradein-sales-lot:checked').length + $('#closedboxtable .box-sales-lot:checked').length > 0) {
     $('#addtolot').prop('disabled', false);

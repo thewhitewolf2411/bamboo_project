@@ -1,8 +1,8 @@
-$.ajaxSetup({
+/*$.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
-});
+});*/
 
 $('#generate-overview-report-btn').on('click', function(){
 

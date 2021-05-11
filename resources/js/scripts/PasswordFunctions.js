@@ -1,10 +1,24 @@
 document.getElementById("password_reg").addEventListener('keyup',  function(){
-    checkNewPass();
+    checkNewPass("password_reg");
 });
 
-window.checkNewPass = function(){
-    let pass = document.getElementById("password_reg").value;
-    let passcheck = document.getElementById("pass-check-info");
+document.getElementById("password_card").addEventListener('keyup',  function(){
+    checkNewPass("password_card");
+});
+
+window.checkNewPass = function(select){
+    let pass = document.getElementById(select).value;
+
+    let select2 = null;
+
+    if(select == "password_card"){
+        select2 = "pass-check-info-card";
+    }
+    else{
+        select2 = "pass-check-info";
+    }
+    
+    var passcheck = document.getElementById(select2);
 
     pass = pass.trim();
 
@@ -86,11 +100,24 @@ window.checkNewPass = function(){
         percentage = Math.round(pass_quality * 2.5) + "0%";
 
         // set bar percentage
-        document.getElementById("bar").style.width = percentage;
+        //document.getElementById("bar").style.width = percentage;
+
+        if(select == "password_card"){
+            console.log("here");
+            document.getElementById("bar-card").style.width = percentage;
+        }
+        else{
+            document.getElementById("bar").style.width = percentage;
+        }
 
         // pass text strength
         if(has_ten_characters && has_number && has_symbol && has_uppercase_letter){
-            document.getElementById("pass-strength").innerHTML = 'Fair';
+            if(select == "password_card"){
+                document.getElementById("pass-strength-card").innerHTML = 'Fair';
+            }
+            else{
+                document.getElementById("pass-strength").innerHTML = 'Fair';
+            }
 
             // if(current.value && email.value){
             //     if(save_btn.classList.contains('btn-secondary')){
@@ -114,9 +141,13 @@ window.checkNewPass = function(){
             // if(!save_btn.classList.contains('disabled')){
             //     save_btn.classList.add('disabled');
             // }
-            
 
-            document.getElementById("pass-strength").innerHTML = 'Unsecure';
+            if(select == "password_card"){
+                document.getElementById("pass-strength-card").innerHTML = 'Unsecure';
+            }
+            else{
+                document.getElementById("pass-strength").innerHTML = 'Unsecure';
+            }
         }
 
         
@@ -129,8 +160,23 @@ window.checkNewPass = function(){
 }
 
 window.togglePassVisibility = function(){
-    var img = document.getElementById('pass-visibility-toggle');
+    var img = document.getElementById('pass-visibility-toggle-reg');
     var pass = document.getElementById('password_reg');
+    
+    if (pass.type === "password") {
+        pass.type = "text";
+        img.src = '/images/front-end-icons/pass_visible.svg';
+        img.style.right = '7px';
+    } else {
+        img.src = '/images/front-end-icons/pass_invisible.svg';
+        pass.type = "password";
+        img.style.right = '5px';
+    }
+}
+
+window.togglePassCardVisibility = function(){
+    var img = document.getElementById('pass-visibility-toggle');
+    var pass = document.getElementById('password_card');
     
     if (pass.type === "password") {
         pass.type = "text";

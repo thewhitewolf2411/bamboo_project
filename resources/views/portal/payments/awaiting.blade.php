@@ -131,12 +131,12 @@
 $(document).ready(function(){
 
     var elem = $('.portal-links-container > .portal-header-element')[5];
-
-    $.ajaxSetup({
+    
+    /*$.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
-    });
+    });*/
     
     // console.log(elem.children[0]);
 

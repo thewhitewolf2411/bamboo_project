@@ -99,7 +99,15 @@ class SellController extends Controller
                     $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
                     break;
                 }else{
-                    $products = SellingProduct::where('category_id', 1)->get();
+                    $products = collect();// SellingProduct::where('category_id', 1)->get();
+                    $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working')->toArray();
+                    foreach($productIdsSorted as $key=>$productId){
+                        $product = SellingProduct::where('category_id', 1)->where('id', $key)->first();
+                        if($product){
+                            $products->add($product);
+                        }
+                    }
+
                     $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
                     break;
                 }
@@ -113,7 +121,14 @@ class SellController extends Controller
                     $numberofproducts = count(SellingProduct::where('category_id', 2)->get());
                     break;
                 }else{
-                    $products = SellingProduct::where('category_id', 2)->get();
+                    $products = collect();// SellingProduct::where('category_id', 1)->get();
+                    $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working')->toArray();
+                    foreach($productIdsSorted as $key=>$productId){
+                        $product = SellingProduct::where('category_id', 2)->where('id', $key)->first();
+                        if($product){
+                            $products->add($product);
+                        }
+                    }
                     $numberofproducts = count(SellingProduct::where('category_id', 2)->get());
                     break;
                 }
@@ -128,7 +143,14 @@ class SellController extends Controller
                     $numberofproducts = count(SellingProduct::where('category_id', 3)->get());
                     break;
                 }else{
-                    $products = SellingProduct::where('category_id', 3)->get();
+                    $products = collect();// SellingProduct::where('category_id', 1)->get();
+                    $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working')->toArray();
+                    foreach($productIdsSorted as $key=>$productId){
+                        $product = SellingProduct::where('category_id', 3)->where('id', $key)->first();
+                        if($product){
+                            $products->add($product);
+                        }
+                    }
                     $numberofproducts = count(SellingProduct::where('category_id', 3)->get());
                     break;
                 }
@@ -213,7 +235,15 @@ class SellController extends Controller
         switch($category){
             case "mobile":
                 if(isset($request->brand)){
-                    $products = SellingProduct::where('category_id', 1)->where('brand_id', $brand)->get();
+                    //$products = SellingProduct::where('category_id', 1)->where('brand_id', $brand)->get();
+                    $products = collect();// SellingProduct::where('category_id', 1)->get();
+                    $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working');
+                    foreach($productIdsSorted as $key=>$productId){
+                        $product = SellingProduct::where('category_id', 1)->where('brand_id', $brand)->where('id', $key)->first();
+                        if($product){
+                            $products->add($product);
+                        }
+                    }
                     $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
                     break;
                 }else{
@@ -223,7 +253,14 @@ class SellController extends Controller
                 }
             case "tablets":
                 if(isset($request->brand)){
-                    $products = SellingProduct::where('category_id', 2)->where('brand_id', $brand)->get();
+                    $products = collect();// SellingProduct::where('category_id', 1)->get();
+                    $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working');
+                    foreach($productIdsSorted as $key=>$productId){
+                        $product = SellingProduct::where('category_id', 2)->where('brand_id', $brand)->where('id', $key)->first();
+                        if($product){
+                            $products->add($product);
+                        }
+                    }
                     $numberofproducts = count(SellingProduct::where('category_id', 2)->get());
                     break;
                 }else{
@@ -234,7 +271,14 @@ class SellController extends Controller
             break;
             case "watches":
                 if(isset($request->brand)){
-                    $products = SellingProduct::where('category_id', 3)->where('brand_id', $brand)->get();
+                    $products = collect();// SellingProduct::where('category_id', 1)->get();
+                    $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working');
+                    foreach($productIdsSorted as $key=>$productId){
+                        $product = SellingProduct::where('category_id', 3)->where('brand_id', $brand)->where('id', $key)->first();
+                        if($product){
+                            $products->add($product);
+                        }
+                    }
                     $numberofproducts = count(SellingProduct::where('category_id', 3)->get());
                     break;
                 }else{
