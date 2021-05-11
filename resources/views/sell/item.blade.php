@@ -21,7 +21,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
         <script src="{{asset('js/Price.js')}}"></script>
-        <script src="{{ asset('js/Addressian.js') }}"></script>
         <script src="{{asset('/js/SellingPage.js')}}"></script>
     </head>
 

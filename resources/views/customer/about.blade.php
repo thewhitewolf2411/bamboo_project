@@ -123,36 +123,4 @@
     @include('customer.layouts.footer', ['showGetstarted' => true])
 
 </div>
-
-<script>
-    $('#sell-mobile-phones').click( function(){window.location = '/sell/shop/mobile/all'});
-    $('#sell-watches').click( function(){window.location = '/sell/shop/tablets/all'});
-    $('#sell-tablets').click( function(){window.location = '/sell/shop/watches/all'});
-
-    $(".sell-category-wrapper")
-        .mouseenter(function() {
-            // background - 1
-            let bg = this.childNodes[1];
-            bg.classList.add('small');
-            // image - 3
-            let img = this.childNodes[3];
-            img.classList.add('enlarged');
-            // shadow - 5
-            let shadow = this.childNodes[5];
-            shadow.classList.add('zoomed');
-        })
-        .mouseleave(function() {
-            //unfocusCategory(this);
-            // background - 1
-            let bg = this.childNodes[1];
-            bg.classList.remove('small');
-            // image - 3
-            let img = this.childNodes[3];
-            img.classList.remove('enlarged');
-            // shadow - 5
-            let shadow = this.childNodes[5];
-            shadow.classList.remove('zoomed');
-        });
-</script>
-
 @endsection

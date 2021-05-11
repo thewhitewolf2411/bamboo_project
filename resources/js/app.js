@@ -7,6 +7,8 @@
 require('datatables.net');
 require('datatables.net-buttons');
 require('./bootstrap');
+require('easy-autocomplete');
+require('jquery');
 
 require('./scripts/quarantinemanagement');
 require('./scripts/bayoverview');
@@ -17,7 +19,6 @@ require('./scripts/PrintTradeIn');
 require('./scripts/dates');
 require('./scripts/Reports');
 require('./scripts/BoxManagement');
-//require('./scripts/SearchTable');
 require('./scripts/Settings');
 require('./scripts/SalesLotDespatch');
 require('./scripts/Messages');
@@ -25,6 +26,8 @@ require('./scripts/Blogs');
 require('./scripts/AddUser');
 require('./scripts/PrintLabels');
 require('./scripts/DespatchDevices');
+require('./scripts/PasswordFunctions');
+require('./scripts/Addressian');
 
 "use strict";
 

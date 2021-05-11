@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{--<!DOCTYPE html>
 <html>
 
     <head>
@@ -10,6 +10,8 @@
         })(window,document,'script','dataLayer','GTM-KC33JWC');</script>
         <!-- End Google Tag Manager -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+        <script src="{{ asset('js/app.js') }}" defer></script>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -76,4 +78,4 @@
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KC33JWC"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-</html>
+</html>--}}

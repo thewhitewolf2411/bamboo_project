@@ -19,11 +19,6 @@
 
         <link rel="icon" type="image/png" sizes="96x96" href="/customer_page_images/header/favicon-96x96.png">
 
-        <!-- Addressian -->
-        <script src="{{asset('/js/Addressian.js')}}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css">
-
     </head>
     <body>
         <header>@include('customer.layouts.header')</header>
