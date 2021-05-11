@@ -19,6 +19,42 @@ document.addEventListener("DOMContentLoaded", function(e) {
         // preselect it
         network_available[0].click();
     }
+
+    // frontend validation
+    document.getElementById('addToCart').addEventListener('click', function(e){
+        e.preventDefault();
+        let errorNetwork = document.getElementById('please-select-network');
+        let errorMemory = document.getElementById('please-select-memory');
+        let errorGrade = document.getElementById('please-select-grade');
+
+        let isValid = true;
+        if(!network){
+            isValid = false;
+            errorNetwork.classList.remove('invisible');
+            setTimeout(function(){
+                errorNetwork.classList.add('invisible');
+            }, 3000);
+        }
+        if(!memoryValue){
+            isValid = false;
+            errorMemory.classList.remove('invisible');
+            setTimeout(function(){
+                errorMemory.classList.add('invisible');
+            }, 3000);
+        }
+        if(!grade){
+            isValid = false;
+            errorGrade.classList.remove('invisible');
+            setTimeout(function(){
+                errorGrade.classList.add('invisible');
+            }, 3000);
+        }
+
+        if(isValid){
+           document.getElementById('selldeviceform').submit();
+        }
+        
+    });
 });
 
 
@@ -116,10 +152,10 @@ function getPrice(){
             $('#memory').val(memoryValue);
             $('#price').val(basePrice);
     
-            $("#addToCart").prop('disabled', false);
+            //$("#addToCart").prop('disabled', false);
         }
         else{
-            $("#addToCart").prop('disabled', true);
+            //$("#addToCart").prop('disabled', true);
         }
 
     } else {
@@ -153,10 +189,10 @@ function getPrice(){
             $('#price').val(basePrice);
     
     
-            $("#addToCart").prop('disabled', false);
+            //$("#addToCart").prop('disabled', false);
         }
         else{
-            $("#addToCart").prop('disabled', true);
+            //$("#addToCart").prop('disabled', true);
         }
     }
         

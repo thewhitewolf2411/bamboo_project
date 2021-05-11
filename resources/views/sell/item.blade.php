@@ -72,6 +72,8 @@
                                 <input class="device-network" id="network-{{$network->id}}" name="network" value="{{$network->knockoff_price}}" onchange="networkChanged(this)" type="radio">
                             @endforeach
                             </div>
+
+                            <div id="please-select-network" class="alert alert-danger pleaseSelect invisible"><p>Please complete network field to proceed.</p></div>
                         </div>
                     @else
                         <div class="row m-0">
@@ -101,6 +103,8 @@
                                 <input id="info-{{$info->id}}" name="info" value='{ "price1": {{$info->excellent_working}}, "price2": {{$info->good_working}}, "price3": {{$info->poor_working}}, "price4": {{$info->damaged_working}}, "price5": {{$info->faulty}}}' type="radio" onchange="memoryChanged(this)">
                             @endforeach
                             </div>
+
+                            <div id="please-select-memory" class="alert alert-danger pleaseSelect invisible mt-2"><p>Please complete memory field to proceed.</p></div>
                         </div>
                     @endif
 
@@ -130,6 +134,8 @@
                             <input id="grade-4" name="grade" type="radio" value="4" onchange="gradeChanged(this @if($networks->isEmpty()), true @endif) ">
                             <input id="grade-5" name="grade" type="radio" value="5" onchange="gradeChanged(this @if($networks->isEmpty()), true @endif) ">
                         </div>
+
+                        <div id="please-select-grade" class="alert alert-danger pleaseSelect invisible"><p>Please complete grade field to proceed.</p></div>
                     </div>
 
                     <div class="d-flex">
@@ -167,7 +173,7 @@
 
                     @if(Auth::user())
                     <div class="add-to-container">
-                        <form action="/sell/shop/item/addtocart" method="POST">
+                        <form action="/sell/shop/item/addtocart" id="selldeviceform" method="POST">
                             <div class="add-to-cart-container">
                                 @csrf
                                 <input type="hidden" name="productid" value="{{$product->id}}">
@@ -176,7 +182,7 @@
                                 <input type="hidden" name="memory" id="memory"></input>
                                 <input type="hidden" name="price" id="price"></input>
                                 <input type="hidden" name="type" value="tradein"></input>
-                                <button id="addToCart" type="submit" disabled class="btn btn-primary btn-orange">Sell my device</button>
+                                <button id="addToCart" type="submit" class="btn btn-primary btn-orange">Sell my device</button>
                             </div>
                         </form>
 
@@ -188,7 +194,7 @@
 
                     @else
                     <div class="add-to-container">
-                        <form action="/sell/shop/item/addtocart" method="POST">
+                        <form action="/sell/shop/item/addtocart"  id="selldeviceform" method="POST">
 
                             <div class="add-to-cart-container">
                                 @csrf
@@ -208,7 +214,7 @@
                                             <input type="email" class="mb-0 sell-email-input" required name="email"/>
                                         @endif
                                     </div>
-                                    <button id="addToCart" type="submit" disabled class="btn btn-primary btn-orange h-25 mt-auto mb-0 ml-2">Sell my device</button>
+                                    <button id="addToCart" type="submit" class="btn btn-primary btn-orange h-25 mt-auto mb-0 ml-2">Sell my device</button>
                                 </div>
                                 
                             </div>

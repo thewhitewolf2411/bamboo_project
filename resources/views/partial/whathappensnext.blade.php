@@ -48,12 +48,7 @@
         </div>
     @endif
 </div>
-<script type="application/javascript">
-
-    // (function() {
-    //     document.getElementById('whathappens').addEventListener('touchstart', playVideo(true), false);
-    //     document.getElementById('play-icon-whathappens').addEventListener('touchstart', playVideo(false), false);
-    // })();
+{{-- <script type="application/javascript">
 
     function playVideo(isPlaying){
         let video = document.getElementById("whathappens");
@@ -71,4 +66,4 @@
             video.setAttribute("controls","controls");
         }
     }
-</script>
+</script> --}}

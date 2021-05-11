@@ -795,6 +795,24 @@
     max-height: 38px;
 }
 
+.pleaseSelect{
+    text-align: center;
+    transition: all 0.3s linear;
+    height: 35px;
+    padding: 0;
+    overflow-y: hidden;
+}
+
+.pleaseSelect > p {
+    color: black;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.pleaseSelect.invisible{
+    height: 0;
+}
+
 .green-success{
     color: #57D591;
     font-size: 18px;
