@@ -208,13 +208,14 @@
                                     <div class="col mt-3 p-0">
                                         <label for="email_address">Email address*</label>
                                         @if(Session::has('session_email'))
-                                            <input type="email" class="mb-0 sell-email-input" value="{!!Session::get('session_email')!!}" required name="email"/>
+                                            <input type="email" id="basket_email" class="mb-0 sell-email-input" value="{!!Session::get('session_email')!!}" required name="email"/>
                                         @else
-                                            <input type="email" class="mb-0 sell-email-input" required name="email"/>
+                                            <input type="email" id="basket_email" class="mb-0 sell-email-input" required name="email"/>
                                         @endif
                                     </div>
                                     <button id="addToCart" type="submit" class="btn btn-primary btn-orange h-25 mt-auto mb-0 ml-2">Sell my device</button>
                                 </div>
+                                <div id="please-enter-email" class="alert alert-danger pleaseSelect invisible mt-2"><p>Please complete email field to proceed.</p></div>
                                 
                             </div>
 

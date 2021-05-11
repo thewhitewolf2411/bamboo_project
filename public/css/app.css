@@ -17646,6 +17646,10 @@ input.lookup-delivery-basket::placeholder {
   margin: 0;
 }
 
+.order-summary-cart {
+  margin-top: 73px;
+}
+
 @media (max-width: 990px) {
   .selling-info-item {
     height: 250px;

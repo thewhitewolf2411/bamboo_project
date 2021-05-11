@@ -26,6 +26,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
         let errorNetwork = document.getElementById('please-select-network');
         let errorMemory = document.getElementById('please-select-memory');
         let errorGrade = document.getElementById('please-select-grade');
+        let basketEmail = document.getElementById('basket_email');
+        let errorEmail = document.getElementById('please-enter-email');
 
         let isValid = true;
         if(!network){
@@ -49,9 +51,18 @@ document.addEventListener("DOMContentLoaded", function(e) {
                 errorGrade.classList.add('invisible');
             }, 3000);
         }
+        if(basketEmail){
+            if(!basketEmail.value){
+                isValid = false;
+                errorEmail.classList.remove('invisible');
+                setTimeout(function(){
+                    errorEmail.classList.add('invisible');
+                }, 3000);
+            }
+        }
 
         if(isValid){
-           document.getElementById('selldeviceform').submit();
+            document.getElementById('selldeviceform').submit();
         }
         
     });
