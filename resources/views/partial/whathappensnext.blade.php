@@ -7,11 +7,36 @@
         Watch our quick video explaining just what happens next
     </p>
 
-    <div class="whathappens-wrapper">
+    {{-- <div class="whathappens-wrapper">
         <video id="whathappens" class="whathappens-video" onclick="playVideo(true)">
             <source src="{{asset('/video/what_happens_next.mp4')}}" type="video/mp4">
         </video>
         <img id="play-icon-whathappens" class="playvideo-whathappens" src="{{asset('/video/play_video.svg')}}"  onclick="playVideo(false)">
+    </div> --}}
+
+    <div class="whathappensvideocontainer mt-4 mb-4">
+        <div class="video-container" data-toggle="modal" data-target="#whatNextModal">
+            <img class="play-whathappensvideo" src="{{asset('/video/play_video.svg')}}">
+        </div>
+    </div>
+
+    <div class="modal fade" id="whatNextModal" tabindex="-1" role="dialog" aria-labelledby="whatNextModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <h5 class="modal-title howitworks text-center" id="whatNextModalLabel">What happens next?</h5>
+            <div class="modal-content howitworksvideo">
+                <div class="modal-body">
+                <video id="whathappens" width="100%" controls>
+                    <source src="{{asset('/video/what_happens_next.mp4')}}" type="video/mp4">
+                    Your browser does not support HTML video.
+                </video>
+                </div>
+                <img class="dismiss-howitworks" src="{{asset('images/front-end-icons/close_modal_orange.svg')}}" data-dismiss="modal">
+          </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-row justify-content-center">
+        <a href="#" class="btn btn-light">Read More</a>
     </div>
 
     @if(Auth::user())
