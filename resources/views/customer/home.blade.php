@@ -486,25 +486,6 @@
 
         }
 
-        function showgradingvideo(){
-            console.log('Play video');
-        }
-
-        $(".popular-product")
-        .mouseenter(function() {
-            let element = this;
-            let wrapper = element.childNodes[1];
-            let buttons = element.childNodes[3];
-            wrapper.classList.add('faded');
-            buttons.classList.remove('hidden');
-        })
-        .mouseleave(function() {
-            let element = this;
-            let wrapper = element.childNodes[1];
-            let buttons = element.childNodes[3];
-            wrapper.classList.remove('faded');
-            buttons.classList.add('hidden');
-        });
 
     </script>
 </div>

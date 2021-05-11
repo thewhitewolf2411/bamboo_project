@@ -19,7 +19,7 @@
             <div class="steps-container-row">
                 <div class="single-step-column">
                     <p class="step-title-info">Step 1</p>
-                    <div class="column-item">
+                    <div class="column-item column-link" onclick="printDeliveryNote({!!$tradein->id!!})">
                         <img class="step-image" src="{{asset('/customer_page_images/body/delivery_note.svg')}}">
                         <p class="step-info-bold">Delivery Note</p>
                     </div>
@@ -102,6 +102,27 @@
     //     });
     
     // }
+
+    function printDeliveryNote(id){
+
+        $.ajax({
+            url: "/printorderlabel",
+            method:"GET",
+                data:{
+                    tradein: id,
+                },
+            success:function(response){
+                $('#special-label-loader').addClass('hidden');
+                $('#labelDeliveryModal').modal('hide');
+
+                $('#labels-iframe').attr('src', '/storage/pdf/' + response['filename']);
+                $('#labels-print-modal').modal('show');
+            },
+            error:function(response){
+                alert(response.responseText);
+            }
+        });
+    }
 
     function printPackagingInstructions(){
         $('#packaging-label-loader').removeClass('hidden');

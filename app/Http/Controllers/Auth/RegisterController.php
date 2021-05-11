@@ -80,6 +80,7 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
+        dd($request->all());
         if(!$this->checkBirthDate($request->all())){
             return redirect('/')->with('regerror','Invalid birth date');
         }

@@ -11321,22 +11321,13 @@ main p, a, span {
   align-items: center;
   justify-content: center;
   min-width: 400px;
-  height: 260px;
+  height: 100%;
 }
 
 .about-rounded-image {
   height: 200px;
   width: 200px;
   border-radius: 50%;
-}
-
-#first-about-image {
-  background: transparent linear-gradient(180deg, #569CCE 0%, #FBC24F 100%) 0% 0% no-repeat padding-box;
-}
-
-#first-round-image {
-  background: transparent linear-gradient(180deg, #569CCE 0%, #FBC24F 100%) 0% 0% no-repeat padding-box;
-  transform: matrix(0.87, 0.5, -0.5, 0.87, 0, 0);
 }
 
 #second-about-image {
@@ -16709,6 +16700,30 @@ h3, h4, h5 {
 
 .memory-container-deselected {
   opacity: 0.5;
+}
+
+.network-container-selected {
+  border: 1px solid #F28E33 !important;
+  color: #F28E33;
+  transform: scale(1.05);
+  transition: 0.2s linear;
+  font-size: 16px !important;
+}
+
+.memory-container-selected {
+  border: 1px solid #F28E33 !important;
+  color: #F28E33;
+  transform: scale(1.05);
+  transition: 0.2s linear;
+  font-size: 16px !important;
+}
+
+.elem-grade-container-selected {
+  border: 1px solid #F28E33 !important;
+  color: #F28E33;
+  transform: scale(1.05);
+  transition: 0.2s linear;
+  font-size: 16px !important;
 }
 
 .selling-item-grade-container {

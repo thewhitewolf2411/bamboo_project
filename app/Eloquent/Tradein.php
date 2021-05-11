@@ -683,6 +683,11 @@ class Tradein extends Model
         $user = User::find($this->user_id);
         return $user->first_name . " " . $user->last_name;
     }
+
+    public function customerFirstName(){
+        $user = User::find($this->user_id);
+        return $user->first_name;
+    }
     
     public function addressLine(){
         $user = $this->customer();
@@ -690,6 +695,14 @@ class Tradein extends Model
         $post_code = explode(',', $address_line);
         return $post_code[0];
     }
+
+    public function addressLastLine(){
+        $user = $this->customer();
+        $address_line = $user->delivery_address;
+        $post_code = explode(',', $address_line);
+        return $post_code[1];
+    }
+
 
     public function carrier(){}
     

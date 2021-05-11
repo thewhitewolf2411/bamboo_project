@@ -42,20 +42,25 @@
         <input class="form-control" type="number" id="contact_number" name="contact_number" placeholder="Contact number" required autofocus>
     </div>
 
-    <div class="form-group">
-        <label for="contact_number">Password</label>
-        <input type="password" id="psw" class="form-control" placeholder="Select password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required autofocus>
-        <div id="message">
-            <p>Password must contain the following:</p>
-            <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-            <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
-            <p id="number" class="invalid">A <b>number</b></p>
-            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+    <div class="row m-0 mt-2">
+        <div class="col-12 m-0 p-0">
+            <label for="password_reg" class="verify-label">Select password*</label>
+            <div class="row m-0 password-input" style="width: 100%">
+                <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,50}$" class="form-control" name="password" id="password_reg" required class="verification-input" required/>
+                <img class="toggle-pass-visibility" id="pass-visibility-toggle" onclick="togglePassVisibility()" src="{{asset('/images/front-end-icons/pass_invisible.svg')}}">
+            </div>
+            <div class="pass-info-requirements mb-2">
+                Your password needs to be at least 8 characters long, contain an uppercase letter, a number and a symbol.
+            </div>
+            <div id="pass-check-info" class="pass-strength mt-0 mb-4">
+                <div class="row m-0 ml-1">
+                    <div id="progress">
+                        <div id="bar"></div>
+                    </div>
+                    <div id="pass-strength" class="ml-3">Unsecure</div>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <div class="d-flex py-3">
-        <input id="showpassword" type="checkbox" onclick="showPassword()" style="width:auto; margin:0;"><label id="showPasswordLabel" style="margin-left:1rem" for="showpassword">Show password</label>
     </div>
 
     <div class="form-group">
@@ -637,73 +642,6 @@
 </div>
 
 <script>
-    var myInput = document.getElementById("psw");
-    var letter = document.getElementById("letter");
-    var capital = document.getElementById("capital");
-    var number = document.getElementById("number");
-    var length = document.getElementById("length");
-
-    // When the user clicks on the password field, show the message box
-    myInput.onfocus = function() {
-    document.getElementById("message").style.display = "block";
-    }
-
-    // When the user clicks outside of the password field, hide the message box
-    myInput.onblur = function() {
-    document.getElementById("message").style.display = "none";
-    }
-
-    // When the user starts to type something inside the password field
-    myInput.onkeyup = function() {
-    // Validate lowercase letters
-    var lowerCaseLetters = /[a-z]/g;
-    if(myInput.value.match(lowerCaseLetters)) {
-        letter.classList.remove("invalid");
-        letter.classList.add("valid");
-    } else {
-        letter.classList.remove("valid");
-        letter.classList.add("invalid");
-    }
-
-    // Validate capital letters
-    var upperCaseLetters = /[A-Z]/g;
-    if(myInput.value.match(upperCaseLetters)) {
-        capital.classList.remove("invalid");
-        capital.classList.add("valid");
-    } else {
-        capital.classList.remove("valid");
-        capital.classList.add("invalid");
-    }
-
-    // Validate numbers
-    var numbers = /[0-9]/g;
-    if(myInput.value.match(numbers)) {
-        number.classList.remove("invalid");
-        number.classList.add("valid");
-    } else {
-        number.classList.remove("valid");
-        number.classList.add("invalid");
-    }
-
-    // Validate length
-    if(myInput.value.length >= 8) {
-        length.classList.remove("invalid");
-        length.classList.add("valid");
-    } else {
-        length.classList.remove("valid");
-        length.classList.add("invalid");
-    }
-}
-
-    function showPassword(){
-        var x = document.getElementById("psw");
-        if (x.type === "password") {
-            x.type = "text";
-        } else {
-            x.type = "password";
-        }
-    }
-
     function showTerms(){
         $('#reg-terms').toggleClass('hidden');
     }
@@ -711,24 +649,6 @@
 
 <script>
 
-    $('input[type=radio][name=sub]').change(function() {
-        if (this.value == 'true') {
-            $('#select-image-yes').attr('src', '/customer_page_images/body/Icon-Tick-Selected.svg');
-            $('#select-text-yes').text('Selected');
-            $('#select-image-no').attr('src', '/customer_page_images/body/Icon-Tick-Selected-clear.svg');
-            $('#select-text-no').text('Select');
-        }
-        else if (this.value == 'false') {
-            $('#select-image-yes').attr('src', '/customer_page_images/body/Icon-Tick-Selected-clear.svg');
-            $('#select-text-yes').text('Select');
-            $('#select-image-no').attr('src', '/customer_page_images/body/Icon-Tick-Selected.svg');
-            $('#select-text-no').text('Selected');
-        }
-    });
+
 
 </script>
-
-<script src="{{asset('/js/Addressian.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css">
-

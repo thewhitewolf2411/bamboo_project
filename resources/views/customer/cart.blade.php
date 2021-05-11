@@ -163,7 +163,7 @@
                                         </div>
                                         <div class="d-flex flex-column w-25 cart-product-single-column">
                                             <h6 class="m-0 mb-3 cart-text-bold">Item price</h6>
-                                            <p class="m-0">Offered Price: £{{$cartitem->price}}</p>
+                                            <p class="m-0">£{{$cartitem->price}}</p>
                                         </div>
                                         <div class="d-flex flex-column w-25 cart-product-single-column">
                                             <h6 class="m-0 mb-3 cart-text-bold">Quantity</h6>
@@ -171,7 +171,7 @@
                                         </div>
                                         <div class="d-flex flex-column w-25 cart-product-single-column">
                                             <h6 class="m-0 mb-3 cart-text-bold">Total Price</h6>
-                                            <p class="m-0 font-weight-bold">Total Price: £{{$cartitem->price}}</p>
+                                            <p class="m-0 font-weight-bold">£{{$cartitem->price}}</p>
                                         </div>
                                     </div>
 

@@ -223,81 +223,12 @@
 
 @include('customer.layouts.footer', ['showGetstarted' => true, 'getStartedColor' => '#A3D147'])
 
-<script>
-
-    $(document).ready(function(){
-
-        //alert(location.hash);
-
-        if(location.hash === '#CustomerDeviceNotAvaliable'){
-            showContactForm('message');
-
-            $([document.documentElement, document.body]).animate({
-                scrollTop: $("#message-form-container").offset().top
-            }, 1000);
-
-            $('#title').val('Customer device not available');
-        }
-
-        let preselected = '{!!$selected!!}';
-        if(preselected){
-            switch (preselected) {
-                case "message":
-                    document.getElementById("contact-message").click();
-                    break;
-                case "call":
-                    document.getElementById("contact-telephone").click();
-                    break;
-                default:
-                    break;
-            }
-        }
-    });
-
-
-    function showContactForm(contact){
-
-        let contactbuttons = document.getElementsByClassName('ways-container')[0].getElementsByClassName('ways-element');
-        let contactforms = document.getElementsByClassName('contact-form-container');
-        for(var i = 0; i<contactbuttons.length; i++){
-            contactbuttons[i].classList.add('contact-div-hidden');
-        }
-
-        for(var j = 0; j < contactforms.length; j++){
-            contactforms[j].classList.remove('contact-form-container-active');
-        }
-
-        switch(contact){
-            case "message":
-            contactbuttons[0].classList.remove('contact-div-hidden');
-            contactforms[0].classList.add('contact-form-container-active');
-            break;
-            //case "live":
-            //contactbuttons[1].classList.remove('contact-div-hidden');
-            //contactforms[1].classList.add('contact-form-container-active');
-            break;
-            case "telephone":
-            contactbuttons[1].classList.remove('contact-div-hidden');
-            contactforms[2].classList.add('contact-form-container-active');
-            break;
-            //case "whatsapp":
-            //contactbuttons[3].classList.remove('contact-div-hidden');
-            //contactforms[3].classList.add('contact-form-container-active');
-            break;
-        }
-
-    }
-
-</script>
 
 @if(Session::has('message_success'))
 
 <script>
 
-    $(document).ready(function(){
-        alert('Your message has been sent.');
-    });
-    
+    alert('Your message has been sent.');
 
 </script>
 

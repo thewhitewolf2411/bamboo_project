@@ -747,6 +747,30 @@
     opacity: 0.5;
 }
 
+.network-container-selected{
+    border: 1px solid #F28E33 !important;
+    color: #F28E33;
+    transform: scale(1.05);
+    transition: 0.2s linear;
+    font-size: 16px !important;
+}
+
+.memory-container-selected{
+    border: 1px solid #F28E33 !important;
+    color: #F28E33;
+    transform: scale(1.05);
+    transition: 0.2s linear;
+    font-size: 16px !important;
+}
+
+.elem-grade-container-selected{
+    border: 1px solid #F28E33 !important;
+    color: #F28E33;
+    transform: scale(1.05);
+    transition: 0.2s linear;
+    font-size: 16px !important;
+}
+
 .selling-item-grade-container{
     flex-wrap: wrap;
 }

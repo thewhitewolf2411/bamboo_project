@@ -66,7 +66,8 @@
                                     <img class="confirmation-info-img" src="{{asset('/customer_page_images/body/free_bamboo_trade_pack.svg')}}">
                                     <p class="confirmation-info-text-bold-smaller mt-4 ml-0">Hold tight! Your Free Trade Pack is on its way to you</p>
                                     <p class="confirmation-info-text mt-2">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. 
+                                        Thank you for selling your device with us and ordering a Free Trade Pack – this will be posted via 1st Class post via Royal Mail.<br>
+                                        [Please can the icon change for this to reflect a Free Postage label and a postal bag instead of a box. Also change the ‘FREE post pack’ to ‘FREE Trade Pack’]
                                     </p>
                                 </div>
                             @else
@@ -74,7 +75,8 @@
                                     <img class="confirmation-info-img" src="{{asset('/customer_page_images/body/free_print_own_label.svg')}}">
                                     <p class="confirmation-info-text-bold-smaller mt-4 ml-0">Print your postage label and send your device to us</p>
                                     <p class="confirmation-info-text mt-2">
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. 
+                                        Please click on the link below to create and print off a FREE postage label to affix to your securely packed device with the delivery note.<br>
+                                        Packing and Posting Instructions are also available here.
                                     </p>
                                     <!-- labels and delivery notes popup -->
                                     @include('partial.labeldeliverynotes', ['tradein' => $tradein, 'btn_text' => 'Print Your Own Trade Pack & Label'])
@@ -86,7 +88,7 @@
                                 <img class="confirmation-info-img" src="{{asset('/customer_page_images/body/Icon-Trust.svg')}}">
                                 <p class="confirmation-info-text-bold-smaller mt-4 ml-0">Verification process</p>
                                 <p class="confirmation-info-text mt-2">
-                                    You can check the status of your sale at any time using the My Bamboo section. The link below will take you straight there. 
+                                    You can check the status of your SELL order at any time using ‘My Bamboo’ section. Click below to take your straight there.
                                 </p>
                                 <a class="btn btn-orange mt-4 ml-0" href="/userprofile/{{$tradein->id}}">Check Sale Status <img class="ml-2" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
                             </div>
@@ -94,7 +96,8 @@
                                 <img class="confirmation-info-img" src="{{asset('/customer_page_images/body/How-Icon-6.svg')}}">
                                 <p class="confirmation-info-text-bold-smaller mt-4 ml-0">Get Paid! Woohoo!</p>
                                 <p class="confirmation-info-text mt-2">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas erat risus, condimentum sed leo ut, elementum laoreet tortor. 
+                                    Heres the best bit!! Once your device has tested successfully we promise to pay you directly into your bank account on the same day!!<br>
+                                    *Mon-Fri, excluding public holidays. Same day payment does not apply to orders received after 2pm 
                                 </p>
                             </div>
                         </div>

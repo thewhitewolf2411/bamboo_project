@@ -294,4 +294,14 @@ class PagesController extends Controller
         $labelService = new LabelService();
         return $labelService->downloadSDLabel();
     }
+
+
+    public function downloadTradeLabel(Request $request){
+
+        $requestData = $request->all();
+
+        $labelService = new LabelService();
+        #dd($labelService->downloadTradeLabel($requestData));
+        return $labelService->downloadTradeLabel($requestData);
+    }
 }
