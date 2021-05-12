@@ -16753,6 +16753,10 @@ h3, h4, h5 {
   margin-bottom: 10px;
 }
 
+.elem-grade-container, .device-memory > label, .network-container > div > label {
+  font-family: Sharp Sans No1 Bold;
+}
+
 .elem-grade-container-deselected {
   opacity: 0.5;
 }
