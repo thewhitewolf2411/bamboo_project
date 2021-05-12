@@ -188,6 +188,9 @@ class UsersController extends Controller
         if($request->recycle_offers == 'on'){
             $portalUser->recycle_offers = true;
         }
+        if($request->promo_codes == 'on'){
+            $portalUser->promo_codes = true;
+        }
 
 
         $portalUser->save();
@@ -440,6 +443,12 @@ class UsersController extends Controller
             $portalUser->recycle_offers = true;
         } else {
             $portalUser->recycle_offers = false;
+        }
+
+        if($request->promo_codes == 'on'){
+            $portalUser->promo_codes = true;
+        } else {
+            $portalUser->promo_codes = false;
         }
 
 

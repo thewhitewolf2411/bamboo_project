@@ -56552,7 +56552,8 @@ $('#administration').on('change', function () {
     $('#cms').prop('checked', true);
     $('#categories').prop('checked', true);
     $('#settings').prop('checked', true);
-    $('#recycle_offers').prop('checked', false);
+    $('#recycle_offers').prop('checked', true);
+    $('#promo_codes').prop('checked', true);
   } else {
     $('#salvage_models').prop('checked', false);
     $('#sales_models').prop('checked', false);
@@ -56563,6 +56564,7 @@ $('#administration').on('change', function () {
     $('#categories').prop('checked', false);
     $('#settings').prop('checked', false);
     $('#recycle_offers').prop('checked', false);
+    $('#promo_codes').prop('checked', false);
   }
 });
 $('#payments').on('change', function () {
@@ -56935,12 +56937,17 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-document.getElementById("password_reg").addEventListener('keyup', function () {
-  checkNewPass("password_reg");
-});
-document.getElementById("password_card").addEventListener('keyup', function () {
-  checkNewPass("password_card");
-});
+if (document.getElementById('password_reg')) {
+  document.getElementById("password_reg").addEventListener('keyup', function () {
+    checkNewPass("password_reg");
+  });
+}
+
+if (document.getElementById('password_card')) {
+  document.getElementById("password_card").addEventListener('keyup', function () {
+    checkNewPass("password_card");
+  });
+}
 
 window.checkNewPass = function (select) {
   var pass = document.getElementById(select).value;
@@ -57044,7 +57051,6 @@ window.checkNewPass = function (select) {
     //document.getElementById("bar").style.width = percentage;
 
     if (select == "password_card") {
-      console.log("here");
       document.getElementById("bar-card").style.width = percentage;
     } else {
       document.getElementById("bar").style.width = percentage;

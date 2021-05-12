@@ -55,7 +55,8 @@ $('#administration').on('change', function(){
         $('#cms').prop('checked', true);
         $('#categories').prop('checked', true);
         $('#settings').prop('checked', true);
-        $('#recycle_offers').prop('checked', false);
+        $('#recycle_offers').prop('checked', true);
+        $('#promo_codes').prop('checked', true);
     }
     else{
         $('#salvage_models').prop('checked', false);
@@ -67,6 +68,7 @@ $('#administration').on('change', function(){
         $('#categories').prop('checked', false);
         $('#settings').prop('checked', false);
         $('#recycle_offers').prop('checked', false);
+        $('#promo_codes').prop('checked', false);
     }
 
 });

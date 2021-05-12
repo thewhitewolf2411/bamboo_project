@@ -166,6 +166,7 @@ main p, a, span{
 
 .howVideoToggle > img {
     cursor: pointer;
+    transition: all 0.3s linear;
 }
 
 .modal-title.howitworks{
@@ -282,6 +283,10 @@ main p, a, span{
     justify-content: center;
     align-items: center;
     margin-top: 40px;
+}
+
+.grading-video-container:hover > div.howVideoToggle > img{
+    transform: scale(1.2);
 }
 
 .grading-video-container a{

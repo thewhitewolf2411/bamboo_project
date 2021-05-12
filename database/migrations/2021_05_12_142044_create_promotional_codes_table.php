@@ -15,13 +15,12 @@ class CreatePromotionalCodesTable extends Migration
     {
         Schema::create('promotional_codes', function (Blueprint $table) {
             $table->id();
+            $table->integer('type');
             $table->string('name');
-            $table->string('code');
-            $table->string('value');
-            $table->integer('min_value');
-            $table->integer('limit');
-            $table->string('date_from');
-            $table->string('date_to');
+            $table->text('apply_rules');
+            $table->text('promotional_code');
+            $table->float('value');
+            $table->datetime('expires_at');
             $table->timestamps();
         });
     }

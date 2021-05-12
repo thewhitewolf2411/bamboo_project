@@ -78,7 +78,7 @@
                 <div class="selling-with-element selling-with-right">
                     <div class="selling-text-container">
                         <p class="title-orange">Free Postage</p>
-                        <p>We offer a Freepost service with Royal Mail which allows you to post up to 2 devices free of charge. It covers up to £100.00 and you will be able to track your delivery via <a href="www.royalmail.com">www.royalmail.com</a>. If you have more than 2 devices to sell, feel free to place several orders of 2 devices per order.</p>
+                        <p>We offer a Freepost service with Royal Mail which allows you to post up to 2 devices free of charge. It covers up to £100.00 and you will be able to track your delivery via <a style="font-size: inherit;color: orange;" href="https://www.royalmail.com" target="_blank">www.royalmail.com</a>. If you have more than 2 devices to sell, feel free to place several orders of 2 devices per order.</p>
                     </div>
                     <div class="selling-img-container">
                         <img src="{{asset('/sell_images/why_images/image-2.svg')}}">
@@ -181,33 +181,35 @@
     </main>
 
 <script>
-    $('#sell-mobile-phones').click( function(){window.location = '/sell/shop/mobile/all'});
-    $('#sell-watches').click( function(){window.location = '/sell/shop/tablets/all'});
-    $('#sell-tablets').click( function(){window.location = '/sell/shop/watches/all'});
+    document.addEventListener("DOMContentLoaded", function(event) {
+        $('#sell-mobile-phones').click( function(){window.location = '/sell/shop/mobile/all'});
+        $('#sell-watches').click( function(){window.location = '/sell/shop/tablets/all'});
+        $('#sell-tablets').click( function(){window.location = '/sell/shop/watches/all'});
 
-    $(".sell-category-wrapper")
-        .mouseenter(function() {
-            // background - 1
-            let bg = this.childNodes[1];
-            bg.classList.add('small');
-            // image - 3
-            let img = this.childNodes[3];
-            img.classList.add('enlarged');
-            // shadow - 5
-            let shadow = this.childNodes[5];
-            shadow.classList.add('zoomed');
-        })
-        .mouseleave(function() {
-            //unfocusCategory(this);
-            // background - 1
-            let bg = this.childNodes[1];
-            bg.classList.remove('small');
-            // image - 3
-            let img = this.childNodes[3];
-            img.classList.remove('enlarged');
-            // shadow - 5
-            let shadow = this.childNodes[5];
-            shadow.classList.remove('zoomed');
+        $(".sell-category-wrapper")
+            .mouseenter(function() {
+                // background - 1
+                let bg = this.childNodes[1];
+                bg.classList.add('small');
+                // image - 3
+                let img = this.childNodes[3];
+                img.classList.add('enlarged');
+                // shadow - 5
+                let shadow = this.childNodes[5];
+                shadow.classList.add('zoomed');
+            })
+            .mouseleave(function() {
+                //unfocusCategory(this);
+                // background - 1
+                let bg = this.childNodes[1];
+                bg.classList.remove('small');
+                // image - 3
+                let img = this.childNodes[3];
+                img.classList.remove('enlarged');
+                // shadow - 5
+                let shadow = this.childNodes[5];
+                shadow.classList.remove('zoomed');
+            });
         });
 </script>
 

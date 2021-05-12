@@ -52,6 +52,7 @@ class CreatePortalUsersTable extends Migration
             $table->boolean('payment_confirmations')->default(false);
             $table->boolean('failed_payments')->default(false);
             $table->boolean('recycle_offers')->default(false);
+            $table->boolean('promo_codes')->default(false);
             $table->timestamps();
         });
     }

@@ -1,10 +1,15 @@
-document.getElementById("password_reg").addEventListener('keyup',  function(){
-    checkNewPass("password_reg");
-});
+if(document.getElementById('password_reg')){
+    document.getElementById("password_reg").addEventListener('keyup',  function(){
+        checkNewPass("password_reg");
+    });
+}
 
-document.getElementById("password_card").addEventListener('keyup',  function(){
-    checkNewPass("password_card");
-});
+if(document.getElementById('password_card')){
+    document.getElementById("password_card").addEventListener('keyup',  function(){
+        checkNewPass("password_card");
+    });
+}
+
 
 window.checkNewPass = function(select){
     let pass = document.getElementById(select).value;
@@ -103,7 +108,6 @@ window.checkNewPass = function(select){
         //document.getElementById("bar").style.width = percentage;
 
         if(select == "password_card"){
-            console.log("here");
             document.getElementById("bar-card").style.width = percentage;
         }
         else{

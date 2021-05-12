@@ -657,4 +657,14 @@ class SellController extends Controller
 
         #$this->downloadFile($filename);
     }
+
+    /**
+     * Verify & apply promo code (if valid)
+     */
+    public function checkPromoCode(Request $request){
+        if(isset($request->promo_code)){
+            $code = $request->promo_code;
+            dd($code);
+        }
+    }
 }

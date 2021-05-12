@@ -77,6 +77,14 @@
         $('.selling-single-result').remove();
         clearTimeout(typingTimer);
         typingTimer = setTimeout(getResults, doneTypingInterval);
+
+        let loader = document.getElementById('sell-results-loader');
+        let resultsWrapper = document.getElementById('selling-search-results-wrapper');
+        loader.classList.remove('invisible');
+        resultsWrapper.classList.remove('invisible');
+        if(noresults.classList.contains('noresults')){
+            noresults.classList.remove('noresults');
+        }
     });
 
     //on keydown, clear the countdown 

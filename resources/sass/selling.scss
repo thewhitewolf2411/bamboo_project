@@ -264,6 +264,10 @@
     margin: 20px;
 }
 
+.main-whysell-video-container:hover > div.mainWhySellVideoToggle > img{
+    transform: scale(1.2);
+}
+
 .mainWhySellVideoToggle{
     background: #F28E33;
     width: 100%;
@@ -278,6 +282,10 @@
     font-family: Sharp Sans No1 Bold;
     font-size: 45px !important;
     color: white;
+}
+
+.mainWhySellVideoToggle > img {
+    transition: all 0.3s linear;
 }
 
 .selling-video-container{
@@ -554,7 +562,8 @@
 .sell-item-back{
     width: 50%;
     position: absolute;
-    top: 80px;
+    //top: 80px;
+    top: 0;
 }
 
 .results-back.selling{
@@ -748,7 +757,7 @@
 }
 
 .network-container-selected{
-    border: 1px solid #F28E33 !important;
+    border: 2px solid #F28E33 !important;
     color: #F28E33;
     transform: scale(1.05);
     transition: 0.2s linear;
@@ -756,7 +765,7 @@
 }
 
 .memory-container-selected{
-    border: 1px solid #F28E33 !important;
+    border: 2px solid #F28E33 !important;
     color: #F28E33;
     transform: scale(1.05);
     transition: 0.2s linear;
@@ -764,7 +773,7 @@
 }
 
 .elem-grade-container-selected{
-    border: 1px solid #F28E33 !important;
+    border: 2px solid #F28E33 !important;
     color: #F28E33;
     transform: scale(1.05);
     transition: 0.2s linear;
@@ -1553,6 +1562,37 @@ input.lookup-delivery-basket::placeholder{
     font-family:Sharp Sans No1 Bold;
 }
 
+.cartdetails-container{
+    justify-content: center;
+}
+
+.cartdetails-summary{
+    min-width: 460px;
+    max-width: 460px;
+}
+
+.cart-promotional-code{
+
+}
+
+.apply-promo-code{
+    width: 125px;
+    margin-left: 11px;
+    padding-top: 18px;
+}
+
+.form-input.promotional-code{
+    margin: 0;
+    height: 65px;
+    max-width: 330px;
+}
+
+.promotional-code-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
 
 
 
@@ -1571,6 +1611,13 @@ input.lookup-delivery-basket::placeholder{
 
 .title-trade-pack-type{
     font-size: 14px;
+}
+
+.title-trade-pack-type.pack-instructions{
+    text-align: left;
+    margin-top: auto;
+    margin-bottom: auto;
+    max-width: 250px;
 }
 
 .select-pack-type{
@@ -1828,6 +1875,7 @@ input.lookup-delivery-basket::placeholder{
         margin-top: 20px;
         margin-left: 0 !important;
         padding: 15px;
+        min-width: 100% !important;
     }
 
     .select-pack-type{

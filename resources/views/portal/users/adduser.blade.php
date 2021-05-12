@@ -183,6 +183,10 @@
                                     <input type="checkbox" class="form-check-input" name="recycle_offers" id="recycle_offers" @if(isset($userdata) && $thisportalUser->recycle_offers) checked @endif>
                                     <label class="form-check-label" for="recycle_offers">Recycle Offers</label>
                                 </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="promo_codes" id="promo_codes" @if(isset($userdata) && $thisportalUser->promo_codes) checked @endif>
+                                    <label class="form-check-label" for="promo_codes">Promotional Codes</label>
+                                </div>
                             </div>
 
                             <div class="form-group p20 w-25">

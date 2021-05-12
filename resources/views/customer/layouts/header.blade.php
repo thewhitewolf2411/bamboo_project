@@ -100,7 +100,7 @@
             <a href="/how" class="mobilemenu-medium">How it works</a>
         </div>
         <div class="url-header-container mobile">
-            <a href="about" class="mobilemenu-medium">About</a>
+            <a href="/about" class="mobilemenu-medium">About</a>
         </div>
         <div class="url-header-container mobile">
             <a href="/news" class="mobilemenu-medium">News & Blog</a>

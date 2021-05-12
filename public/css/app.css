@@ -10629,6 +10629,7 @@ main p, a, span {
 
 .howVideoToggle > img {
   cursor: pointer;
+  transition: all 0.3s linear;
 }
 
 .modal-title.howitworks {
@@ -10741,6 +10742,10 @@ main p, a, span {
   justify-content: center;
   align-items: center;
   margin-top: 40px;
+}
+
+.grading-video-container:hover > div.howVideoToggle > img {
+  transform: scale(1.2);
 }
 
 .grading-video-container a {
@@ -14395,7 +14400,7 @@ footer {
 .footer-line {
   display: flex;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-  width: 90%;
+  width: 100%;
   justify-content: center;
   margin-top: 100px;
   margin-bottom: 50px;
@@ -15054,7 +15059,7 @@ h3, h4, h5 {
   }
 
   main.selling-margin {
-    margin-top: 170px !important;
+    margin-top: 130px !important;
   }
 
   .how-buttons-container {
@@ -16566,6 +16571,10 @@ h3, h4, h5 {
   margin: 20px;
 }
 
+.main-whysell-video-container:hover > div.mainWhySellVideoToggle > img {
+  transform: scale(1.2);
+}
+
 .mainWhySellVideoToggle {
   background: #F28E33;
   width: 100%;
@@ -16580,6 +16589,10 @@ h3, h4, h5 {
   font-family: Sharp Sans No1 Bold;
   font-size: 45px !important;
   color: white;
+}
+
+.mainWhySellVideoToggle > img {
+  transition: all 0.3s linear;
 }
 
 .selling-video-container {
@@ -16832,7 +16845,7 @@ h3, h4, h5 {
 .sell-item-back {
   width: 50%;
   position: absolute;
-  top: 80px;
+  top: 0;
 }
 
 .results-back.selling {
@@ -17025,7 +17038,7 @@ h3, h4, h5 {
 }
 
 .network-container-selected {
-  border: 1px solid #F28E33 !important;
+  border: 2px solid #F28E33 !important;
   color: #F28E33;
   transform: scale(1.05);
   transition: 0.2s linear;
@@ -17033,7 +17046,7 @@ h3, h4, h5 {
 }
 
 .memory-container-selected {
-  border: 1px solid #F28E33 !important;
+  border: 2px solid #F28E33 !important;
   color: #F28E33;
   transform: scale(1.05);
   transition: 0.2s linear;
@@ -17041,7 +17054,7 @@ h3, h4, h5 {
 }
 
 .elem-grade-container-selected {
-  border: 1px solid #F28E33 !important;
+  border: 2px solid #F28E33 !important;
   color: #F28E33;
   transform: scale(1.05);
   transition: 0.2s linear;
@@ -17782,6 +17795,33 @@ input.lookup-delivery-basket::placeholder {
   font-family: Sharp Sans No1 Bold;
 }
 
+.cartdetails-container {
+  justify-content: center;
+}
+
+.cartdetails-summary {
+  min-width: 460px;
+  max-width: 460px;
+}
+
+.apply-promo-code {
+  width: 125px;
+  margin-left: 11px;
+  padding-top: 18px;
+}
+
+.form-input.promotional-code {
+  margin: 0;
+  height: 65px;
+  max-width: 330px;
+}
+
+.promotional-code-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
 .trade-pack-type {
   background-color: #ffefcc;
 }
@@ -17793,6 +17833,13 @@ input.lookup-delivery-basket::placeholder {
 
 .title-trade-pack-type {
   font-size: 14px;
+}
+
+.title-trade-pack-type.pack-instructions {
+  text-align: left;
+  margin-top: auto;
+  margin-bottom: auto;
+  max-width: 250px;
 }
 
 .select-pack-type {
@@ -18043,6 +18090,7 @@ input.lookup-delivery-basket::placeholder {
     margin-top: 20px;
     margin-left: 0 !important;
     padding: 15px;
+    min-width: 100% !important;
   }
 
   .select-pack-type {
@@ -19328,7 +19376,7 @@ input[type=number] {
 .image-whathappens-col {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   width: 450px;
   margin-left: 50px;
   margin-right: 50px;
@@ -19336,7 +19384,7 @@ input[type=number] {
 
 .whathappens-img {
   width: 250px;
-  height: auto;
+  height: 250px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -19718,6 +19766,7 @@ input[type=number] {
   text-align: center;
   font-family: Sharp Sans No1 Bold;
   line-height: 1.1;
+  color: black;
 }
 
 .newsletter-small-text {
@@ -19725,6 +19774,11 @@ input[type=number] {
   text-align: center;
   text-transform: uppercase;
   font-family: Bebas Neue, Helvetica, sans-serif;
+  color: black;
+}
+
+.newsletter_checkbox > p {
+  color: black;
 }
 
 .newscontactsupport-container {
@@ -19759,6 +19813,7 @@ input[type=number] {
   font-family: Sharp Sans No1 Bold;
   font-size: 38px;
   width: 325px;
+  color: black;
 }
 
 .newscontactsupport-item > img {
@@ -19785,6 +19840,12 @@ input[type=number] {
   background: #A3D147;
 }
 
+@media screen and (max-width: 740px) and (min-width: 325px) {
+  .whathappensvideocontainer {
+    width: 100%;
+    padding: 1rem 2rem !important;
+  }
+}
 @media (max-width: 625px) {
   .image-whathappens-col {
     margin-bottom: 40px;

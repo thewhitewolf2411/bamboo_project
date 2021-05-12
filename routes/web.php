@@ -111,6 +111,7 @@ Route::post('/sell/shop/item/addtocart','Customer\SellController@addSellItemToCa
 Route::get('/cart/details', 'Customer\CustomerController@showCartDetails');
 Route::post('/cart/sell', 'Customer\SellController@sellItems');
 Route::post('/cart/buy', 'Customer\SellController@buyItems');
+Route::post('/cart/sell/promocode', 'Customer\SellController@checkPromoCode');
 
 Route::post('/cart/printtradein', 'Customer\SellController@generateTradeInHTML');
 
@@ -514,4 +515,12 @@ Route::group(['prefix' => 'portal/recycleoffers'], function(){
     Route::get('/activate/{id}', 'Portal\RecycleOffersController@activateRecycleOffer')->name('activateRecycleOffer');
     Route::post('/updateoffer', 'Portal\RecycleOffersController@updateRecycleOffer')->name('updateRecycleOffer');
     Route::get('/offer/delete/{id}', 'Portal\RecycleOffersController@deleteOffer')->name('deleteRecycleOffer');
+});
+
+Route::group(['prefix' => 'portal/promocodes'], function(){
+
+    Route::get('/', 'Portal\PromotionalCodesController@index');
+    Route::get('/create', 'Portal\PromotionalCodesController@create');
+    Route::post('/savepromocode', 'Portal\PromotionalCodesController@savePromoCode')->name('createPromocode');
+
 });

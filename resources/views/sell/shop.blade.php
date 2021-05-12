@@ -321,7 +321,11 @@
             </div>
         </main>
 
-        <footer>@include('customer.layouts.footer', ['showGetstarted' => false])</footer>
+        @include('partial.newscontactsupport')
+
+        @include('partial.newsletter')
+
+        @include('customer.layouts.footer', ['showGetstarted' => false])
 
         <script>
 

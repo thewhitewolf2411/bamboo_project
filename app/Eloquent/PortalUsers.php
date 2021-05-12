@@ -45,6 +45,7 @@ class PortalUsers extends Model
             'cms',
             'categories',
             'settings',
+            'promo_codes',
         'payments',
             'awaiting_payments',
             'submit_payments',

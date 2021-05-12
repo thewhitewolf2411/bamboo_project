@@ -32,7 +32,7 @@
 
             <div class="d-flex p-5 ml-5 cartdetails-container">
 
-                <div class="d-flex flex-column w-75 cartdetails-type">
+                <div class="d-flex flex-column cartdetails-type">
                     <h3 class="mb-4">Your details</h3>
 
                     <div class="welcome-user-container w-75 mb-4">
@@ -65,6 +65,8 @@
                                         <img class="order-label-select-svg" id="own-print-selected-tick" src="{{asset('/customer_page_images/body/orange_deselected.svg')}}">
                                     </div>
                                 </div>
+
+                                <p class="title-trade-pack-type pack-instructions">Instructions on how to print your label at home will be given on the next page</p>
                                 
                             </div>
                         </div>
@@ -184,6 +186,14 @@
                                 }
                             </script>
 
+                        </div>
+
+                        <div class="cart-promotional-code">
+                            <label for="promotional_code" class="mt-4 mb-2">Enter Promotional Code</label>
+                            <div class="promotional-code-row">
+                                <input type="text" name="promotional_code" id="promotional_code" class="form-input promotional-code">
+                                <div class="btn btn-primary apply-promo-code" id="applyPromo">Apply</div>
+                            </div>
                         </div>
                     @endif
 
@@ -435,6 +445,26 @@
                 }
             })
         }
+
+        if(document.getElementById('applyPromo')){
+            document.getElementById('applyPromo').addEventListener('click', function(){
+                let promocode = document.getElementById('promotional_code').value;
+
+                $.ajax({
+                    url: '/cart/sell/promocode',
+                    type: 'POST',
+                    data: {
+                        _token:     $('meta[name="csrf-token"]').attr('content'),
+                        promo_code: promocode
+                    },
+                    /* remind that 'data' is the response of the AjaxController */
+                    success: function (data) { 
+                        // $(".writeinfo").append(data.msg); 
+                    }
+                }); 
+            });
+        }
+        
 
         // var rand = Math.floor(10000000 + Math.random() * 900000);
         // document.getElementById('order_code').value = rand;
