@@ -1,4 +1,5 @@
 $(function() {
+
     var selectItem = function(event, ui) {
      $("#billing_address").val(ui.item.value);
      return false;

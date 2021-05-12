@@ -108,11 +108,11 @@ $('#print_trade_pack_bulk_form_trigger').on('click', function(){
         selected.push($(this).attr('name'));
     });
 
-    $.ajaxSetup({
+    /*$.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
-    });
+    });*/
 
     $.ajax({
         url: "/portal/customer-care/trade-in/printlabelbulk",
