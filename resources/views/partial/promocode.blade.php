@@ -9,6 +9,8 @@
     </div>
 </div>
 
+<input type="hidden" name="promotional_code" id="promo_code"/>
+
 <script type="application/javascript">
     if(document.getElementById('applyPromo')){
         document.getElementById('applyPromo').addEventListener('click', function(){
@@ -27,6 +29,7 @@
                         document.getElementById('promotional-info').classList.remove('invisible');
                         document.getElementById('promo-percentage').innerHTML = response.data.percentage;
                         document.getElementById('total-sell-price').innerHTML = '£'+response.data.total;
+                        document.getElementById('promo_code').value = promocode;
                     }
                 }
             }); 

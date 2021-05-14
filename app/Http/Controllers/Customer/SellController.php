@@ -494,6 +494,10 @@ class SellController extends Controller
             foreach($cart as $item){     
                 if($item->type === 'tradein'){
 
+                    if(isset($request->promotional_code)){
+                        dd('sellcontroller 498 [tradein order price] - calculate price with promotional code price evaluation todo');
+                    }
+
                     $expiryDate = new ExpiryDate();
                     $eD = $expiryDate->getExpiryDate();
                     $tradein = new Tradein();

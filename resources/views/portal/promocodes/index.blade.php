@@ -39,7 +39,7 @@
                 @foreach($promocodes as $code)
                     <tr>
                         <td>{!!$code->name!!}</td>
-                        <td>{!!$code->value!!} %</td>
+                        <td>{!!$code->value!!}%</td>
                         <td><pre>{!!$code->promotional_code!!}</pre></td>
                         <td><a href="{{route("editPromoCode", ['id' => $code->id])}}"><i class="fa fa-edit edit-offer" style="color: black;"></i></a></td>
                         <td><a class="delete-offer" href="{{route("deletePromoCode", ['id' => $code->id])}}"><i class="fa fa-trash edit-offer" style="color: black;"></i></a></td>
