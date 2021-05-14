@@ -522,5 +522,8 @@ Route::group(['prefix' => 'portal/promocodes'], function(){
     Route::get('/', 'Portal\PromotionalCodesController@index');
     Route::get('/create', 'Portal\PromotionalCodesController@create');
     Route::post('/savepromocode', 'Portal\PromotionalCodesController@savePromoCode')->name('createPromocode');
+    Route::get('/edit/{id}', 'Portal\PromotionalCodesController@showEditPromoCode')->name('editPromoCode');
+    Route::post('/save/{id}', 'Portal\PromotionalCodesController@updatePromoCode')->name('updatePromoCode');
+    Route::get('/delete/{id}', 'Portal\PromotionalCodesController@deletePromoCode')->name('deletePromoCode');
 
 });

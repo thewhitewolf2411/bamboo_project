@@ -583,6 +583,51 @@
     background: #A3D147;
 }
 
+
+
+
+
+// promocode partial
+.cart-promotional-code{
+
+}
+
+.apply-promo-code{
+    width: 125px;
+    margin-left: 11px;
+    padding-top: 12px;
+}
+
+.form-input.promotional-code{
+    margin: 0;
+    height: 50px;
+    max-width: 330px;
+}
+
+.promotional-code-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.summary-cart.promotional{
+    height: 39px;
+    transition: all 0.3s ease;
+    overflow-y: hidden;
+}
+
+.summary-cart.promotional.invisible{
+    height: 0;
+}
+
+
+
+
+
+
+
+
+
 @media screen and (max-width: 740px) and (min-width: 325px){
     .whathappensvideocontainer {
         width: 100%;

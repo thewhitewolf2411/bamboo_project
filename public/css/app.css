@@ -17804,24 +17804,6 @@ input.lookup-delivery-basket::placeholder {
   max-width: 460px;
 }
 
-.apply-promo-code {
-  width: 125px;
-  margin-left: 11px;
-  padding-top: 18px;
-}
-
-.form-input.promotional-code {
-  margin: 0;
-  height: 65px;
-  max-width: 330px;
-}
-
-.promotional-code-row {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-}
-
 .trade-pack-type {
   background-color: #ffefcc;
 }
@@ -19838,6 +19820,34 @@ input[type=number] {
 
 .newscontactsupport-item.support {
   background: #A3D147;
+}
+
+.apply-promo-code {
+  width: 125px;
+  margin-left: 11px;
+  padding-top: 12px;
+}
+
+.form-input.promotional-code {
+  margin: 0;
+  height: 50px;
+  max-width: 330px;
+}
+
+.promotional-code-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.summary-cart.promotional {
+  height: 39px;
+  transition: all 0.3s ease;
+  overflow-y: hidden;
+}
+
+.summary-cart.promotional.invisible {
+  height: 0;
 }
 
 @media screen and (max-width: 740px) and (min-width: 325px) {

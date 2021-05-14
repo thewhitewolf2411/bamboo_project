@@ -29,6 +29,7 @@ use App\Services\KlaviyoEmail;
 use App\Services\ExpiryDate;
 use App\Eloquent\AdditionalCosts;
 use App\Eloquent\Payment\UserBankDetails;
+use App\Eloquent\PromotionalCode;
 use App\Services\NotificationService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Crypt;
@@ -664,7 +665,58 @@ class SellController extends Controller
     public function checkPromoCode(Request $request){
         if(isset($request->promo_code)){
             $code = $request->promo_code;
-            dd($code);
+            $promotionalCode = PromotionalCode::where('promotional_code', $code)->first();
+            if($promotionalCode){
+                $applies_to = json_decode($promotionalCode->apply_rules, true);
+                if(isset($applies_to['device_id'])){
+                    $current_items = Cart::where('user_id', Auth::user()->id)->get();
+
+                    $device_ids = $current_items->pluck('product_id')->toArray();
+                    if(in_array($applies_to['device_id'], $device_ids)){
+
+                        $total = null;
+                        $price = null;
+                        foreach($current_items as $sell_item){
+                            $price+= $sell_item->price;
+                        }
+                        if(strlen($promotionalCode->value) === 1){
+                            $perc = '0.0'.$promotionalCode->value;
+                        }
+                        if(strlen($promotionalCode->value) === 2){
+                            $perc = '0.'.$promotionalCode->value;
+                        }
+                        if(strlen($promotionalCode->value) === 3){
+                            $perc = 1;
+                        }
+                        $total = (float)$perc * $price + $price;
+
+                        $data = [
+                            'message' => 'Promotional code "'.$promotionalCode->name.'" applied succesfully.', 
+                            'pass' => true, 
+                            'total' => $total,
+                            'percentage' => (int)$promotionalCode->value.'%',
+                            'total' => $total
+                        ];
+                        return response(['data' => $data ], 200);
+                    }
+                    $data = [
+                        'message' => 'Promotional code not eligible for this tradein.', 
+                        'pass' => false
+                    ];
+                    return response(['data' => $data ], 200);
+                }
+                $data = [
+                    'message' => 'Promotional code not eligible for this tradein.', 
+                    'pass' => false
+                ];
+                return response(['data' => $data], 200);
+            } else {
+                $data = [
+                    'message' => 'Invalid promotional code.', 
+                    'pass' => false
+                ];
+                return response(['data' => $data], 200);
+            }
         }
     }
 }

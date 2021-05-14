@@ -29,10 +29,10 @@
               <tr>
                 <th scope="col">Name</th>
                 <th scope="col">Value</th> 
-                <th scope="col">Expires</th> 
-                {{-- <th scope="col" class="no-border-lr"></th>
+                <th scope="col">Code</th> 
                 <th scope="col" class="no-border-lr"></th>
-                <th scope="col" class="no-border-lr"></th> --}}
+                <th scope="col" class="no-border-lr"></th>
+                {{-- <th scope="col" class="no-border-lr"></th> --}}
               </tr>
             </thead>
             <tbody>
@@ -40,7 +40,9 @@
                     <tr>
                         <td>{!!$code->name!!}</td>
                         <td>{!!$code->value!!} %</td>
-                        <td>{!!$code->name!!}</td>
+                        <td><pre>{!!$code->promotional_code!!}</pre></td>
+                        <td><a href="{{route("editPromoCode", ['id' => $code->id])}}"><i class="fa fa-edit edit-offer" style="color: black;"></i></a></td>
+                        <td><a class="delete-offer" href="{{route("deletePromoCode", ['id' => $code->id])}}"><i class="fa fa-trash edit-offer" style="color: black;"></i></a></td>
                     </tr>
                 @endforeach
             </tbody>

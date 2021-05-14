@@ -2,6 +2,7 @@
 
 namespace App\Eloquent;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class PromotionalCode extends Model
@@ -26,4 +27,8 @@ class PromotionalCode extends Model
     protected $fillable = [
         'type', 'name', 'apply_rules', 'promotional_code', 'value', 'expires_at',
     ];
+
+    public function getExpiryDate(){
+        return Carbon::parse($this->expires_at)->format('Y-m-d');
+    }
 }

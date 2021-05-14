@@ -158,9 +158,13 @@
                                 <p class="summary-cart-text">Subtotal</p>
                                 <p class="summary-cart-text">£{{$sellPrice}}</p>
                             </div>
+                            <div class="summary-cart promotional invisible" id="promotional-info">
+                                <p class="summary-cart-text" id="promo-info">Promotional code</p>
+                                <p class="summary-cart-text-bold" id="promo-percentage">5%</p>
+                            </div>
                             <div class="summary-cart">
                                 <p class="summary-cart-text-bold">TOTAL</p>
-                                <p class="summary-cart-text-bold">£{{$sellPrice}}</p>
+                                <p class="summary-cart-text-bold" id="total-sell-price">£{{$sellPrice}}</p>
                             </div>
                             {{-- <select class="form-control my-3" onchange="changelabelstatus(this)">
                                 <option value="1" selected>Make an order without printing label</option>
@@ -188,13 +192,7 @@
 
                         </div>
 
-                        <div class="cart-promotional-code">
-                            <label for="promotional_code" class="mt-4 mb-2">Enter Promotional Code</label>
-                            <div class="promotional-code-row">
-                                <input type="text" name="promotional_code" id="promotional_code" class="form-input promotional-code">
-                                <div class="btn btn-primary apply-promo-code" id="applyPromo">Apply</div>
-                            </div>
-                        </div>
+                        @include('partial.promocode')
                     @endif
 
                 </div>
@@ -444,27 +442,7 @@
                     $('#post_code').attr('required', true);
                 }
             })
-        }
-
-        if(document.getElementById('applyPromo')){
-            document.getElementById('applyPromo').addEventListener('click', function(){
-                let promocode = document.getElementById('promotional_code').value;
-
-                $.ajax({
-                    url: '/cart/sell/promocode',
-                    type: 'POST',
-                    data: {
-                        _token:     $('meta[name="csrf-token"]').attr('content'),
-                        promo_code: promocode
-                    },
-                    /* remind that 'data' is the response of the AjaxController */
-                    success: function (data) { 
-                        // $(".writeinfo").append(data.msg); 
-                    }
-                }); 
-            });
-        }
-        
+        }        
 
         // var rand = Math.floor(10000000 + Math.random() * 900000);
         // document.getElementById('order_code').value = rand;

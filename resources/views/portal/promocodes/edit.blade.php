@@ -3,27 +3,30 @@
 @section('content')
 
 <div class="portal-app-container">
-    <div class="portal-title-container">
+
+    <div class="portal-title-container d-flex flex-row">
         <div class="portal-title">
-            <p>Create Promotional Code</p>
+            <p>Edit Promotional Code</p>
         </div>
+        <a href="/portal/promocodes" class="btn btn-light ml-auto mb-auto mt-auto mr-0">Back</a>
     </div>
+
     <div class="container">
 
         <div class="d-flex flex-column">
 
-            <form method="POST" action="{{route('createPromocode')}}">
+            <form method="POST" action="{{route('updatePromoCode', ['id' => $promocode->id])}}">
                 @csrf
 
                 <div class="d-flex flex-row justify-content-around">
                     <div class="form-group mr-5">
                         <label for="name">Name:</label>
-                        <input type="text" class="form-input" name="name" required/>
+                        <input type="text" class="form-input" name="name" value="{!!$promocode->name!!}" required/>
                     </div>
     
                     <div class="form-group">
                         <label for="name">Value (%):</label>
-                        <input type="number" class="form-input" min="1" max="100" name="value" required/>
+                        <input type="number" class="form-input" value="{!!$promocode->value!!}" min="1" max="100" name="value" required/>
                     </div>
                 </div>
                 
@@ -31,12 +34,12 @@
 
                     <div class="form-group mr-5">
                         <label for="name">Code:</label>
-                        <input type="text" class="form-input" name="promotional_code" required/>
+                        <input type="text" class="form-input" name="promotional_code" value="{!!$promocode->promotional_code!!}" required/>
                     </div>
 
                     <div class="form-group">
                         <label for="name">Expires at:</label>
-                        <input type="date" min="{{\Carbon\Carbon::now()->addDays(7)->format('Y-m-d')}}" class="form-input" name="expires_at" required/>
+                        <input type="date" min="{{\Carbon\Carbon::now()->addDays(7)->format('Y-m-d')}}" value="{!!$promocode->getExpiryDate()!!}" class="form-input" name="expires_at" required/>
                     </div>
 
                 </div>
@@ -72,6 +75,26 @@
 </div>
 
 <script type="application/javascript">
+    window.addEventListener('DOMContentLoaded', (event) => {
+        let applyrules = JSON.parse('{!!$promocode->apply_rules!!}');
+
+        let option = document.getElementById('applies_to');
+        let device_applies_to = document.getElementById('device_applies_to');
+        let single_device =  document.getElementById('single-device');
+
+        // single device
+        if(applyrules.device_id){
+
+            option.value = 'single_device';
+            single_device.classList.remove('hidden');
+            device_applies_to.required = 'required';
+            device_applies_to.value = applyrules.device_id;
+
+            document.getElementById('device_applies_to').addEventListener('change', function(){singleDevice();});
+            singleDevice();
+        }
+    });
+
     document.getElementById('applies_to').addEventListener('change', function(){
         let option = document.getElementById('applies_to');
         let device_applies_to = document.getElementById('device_applies_to');
