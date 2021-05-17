@@ -494,9 +494,24 @@ class SellController extends Controller
             foreach($cart as $item){     
                 if($item->type === 'tradein'){
 
+                    $order_price = $item->price;
                     if(isset($request->promotional_code)){
-                        dd('sellcontroller 498 [tradein order price] - calculate price with promotional code price evaluation todo');
+                        //dd('sellcontroller 498 [tradein order price] - calculate price with promotional code price evaluation todo');
+                        $promotionalCode = PromotionalCode::where('promotional_code', $request->promotional_code)->first();
+
+                        $price = $item->price;
+                        if(strlen($promotionalCode->value) === 1){
+                            $perc = '0.0'.$promotionalCode->value;
+                        }
+                        if(strlen($promotionalCode->value) === 2){
+                            $perc = '0.'.$promotionalCode->value;
+                        }
+                        if(strlen($promotionalCode->value) === 3){
+                            $perc = 1;
+                        }
+                        $order_price = (float)$perc * $price + $price;
                     }
+                    dd($order_price, $item->price);
 
                     $expiryDate = new ExpiryDate();
                     $eD = $expiryDate->getExpiryDate();
@@ -505,7 +520,8 @@ class SellController extends Controller
                     $tradein->barcode_original = $tradeinbarcode;
                     $tradein->user_id = Auth::user()->id;
                     $tradein->product_id = $item->product_id;
-                    $tradein->order_price = $item->price;
+                    // $tradein->order_price = $item->price;
+                    $tradein->order_price = $order_price;
                     $tradein->job_state = 1;
                     if($labelstatus === '2'){
                         $tradein->trade_pack_send_by_customer = true;
