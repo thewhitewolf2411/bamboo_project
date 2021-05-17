@@ -527,6 +527,50 @@
     color: black;
 }
 
+#newsletter-signup-success{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 250px;
+    transition: all 0.3s ease;
+    overflow-y: hidden;
+}
+
+#newsletter-signup-success.invisible{
+    height: 0;
+}
+
+#newsletter-signup-success > img{
+    display: block;
+    width: 150px;
+    height: auto;
+    margin: auto;
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+
+#newsletter-signup-success > p {
+    font-family: Sharp Sans No1 Bold;
+    font-size: 40px;
+}
+
+// #newsletter-description{
+//     transition: all 0.3s ease;
+//     height: 36px;
+// }
+
+// #newsletter-description.invisible{
+//     height: 0;
+// }
+
+// #newsletter-signup-form{
+//     transition: all 0.3s ease;
+//     height: 400px;
+// }
+
+// #newsletter-signup-form.invisible{
+//     height: 0;
+// }
 
 
 // newsletter contact support styles

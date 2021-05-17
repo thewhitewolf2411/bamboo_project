@@ -613,7 +613,7 @@ main p, a, span{
     font-family: Sharp Sans No1 Bold;
 }
 
-.sign-up form{
+.sign-up-form{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -631,7 +631,7 @@ main p, a, span{
     border: 2px solid #000;
     padding: 15px;
     border-radius: 8px;
-    
+    outline: none;
 }
 
 .email-input::placeholder{

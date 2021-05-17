@@ -74,19 +74,19 @@
         </a>
     </div>
     <div class="url-header-container">
-        <a href="/how" class="header-url-link">How it works</a>
+        <a href="/how" class="header-url-link" @if(request()->path() === 'how') style="font-family: Sharp Sans No1 Bold;" @endif>How it works</a>
     </div>
     <div class="url-header-container">
-        <a href="/about" class="header-url-link">About</a>
+        <a href="/about" class="header-url-link" @if(request()->path() === 'about') style="font-family: Sharp Sans No1 Bold;" @endif>About</a>
     </div>
     <div class="url-header-container">
-        <a href="/news" class="header-url-link">News & Blog</a>
+        <a href="/news" class="header-url-link" @if(request()->path() === 'news') style="font-family: Sharp Sans No1 Bold;" @endif>News & Blog</a>
     </div>
     <div class="url-header-container">
-        <a href="/support" class="header-url-link">Service & Support</a>
+        <a href="/support" class="header-url-link" @if(request()->path() === 'support') style="font-family: Sharp Sans No1 Bold;" @endif>Service & Support</a>
     </div>
     <div class="url-header-container">
-        <a href="/contact" class="header-url-link">Contact Us</a>
+        <a href="/contact" class="header-url-link" @if(request()->path() === 'contact') style="font-family: Sharp Sans No1 Bold;" @endif>Contact Us</a>
     </div>
 
 </div>

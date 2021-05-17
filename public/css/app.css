@@ -11061,7 +11061,7 @@ main p, a, span {
   font-family: Sharp Sans No1 Bold;
 }
 
-.sign-up form {
+.sign-up-form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -11078,6 +11078,7 @@ main p, a, span {
   border: 2px solid #000;
   padding: 15px;
   border-radius: 8px;
+  outline: none;
 }
 
 .email-input::-moz-placeholder {
@@ -19842,6 +19843,33 @@ input[type=number] {
 
 .newsletter_checkbox > p {
   color: black;
+}
+
+#newsletter-signup-success {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 250px;
+  transition: all 0.3s ease;
+  overflow-y: hidden;
+}
+
+#newsletter-signup-success.invisible {
+  height: 0;
+}
+
+#newsletter-signup-success > img {
+  display: block;
+  width: 150px;
+  height: auto;
+  margin: auto;
+  margin-top: auto;
+  margin-bottom: 20px;
+}
+
+#newsletter-signup-success > p {
+  font-family: Sharp Sans No1 Bold;
+  font-size: 40px;
 }
 
 .newscontactsupport-container {

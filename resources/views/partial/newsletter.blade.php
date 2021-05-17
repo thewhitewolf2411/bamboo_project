@@ -4,12 +4,11 @@
         <p class="newsletter-large-text">Sign up to our newsletter!</p>
     </div>
 
-    <div class="text-center mt-4">
+    <div class="text-center mt-4" id="newsletter-description">
         <p class="newsletter-small-text">amazing offers, hints and tips and just awesome-ness</p>
     </div>
 
-    <form action="/newslettersingup" method="POST">
-        @csrf
+    <div class="sign-up-form" id="newsletter-signup-form">
 
         <div class="row w-100">
             <div class="col-md-6">
@@ -38,7 +37,7 @@
             </div>
             <div class="col-md-9">
                 <div class="form-group">
-                    <input class="email-input mt-0" name="email_address" type="email" required placeholder="Email address">
+                    <input class="email-input mt-0" name="email_address" type="email" id="newsletter_email" required placeholder="Email address">
                 </div>
             </div>
         </div>
@@ -52,41 +51,41 @@
 
         <div class="form-group" id="newsletter-section-scrollinto">
             <div class="col-md-3 mt-3 mx-auto">
-                <input type="submit" class="btn btn-purple" value="Sign me up!">
+                <div class="btn btn-purple" onclick="signUpNewsletter()">Sign me up!</div>
             </div>
         </div>
 
-        @if(Session::has('success-newslettersignup') || Session::has('error-newslettersignup'))
-            {{-- <script>
-                var duration = 2000;
-                var startingY = 0;
-                var diff = document.getElementById('newsletter-section-scrollinto').getBoundingClientRect().top - startingY;
-                var start;
+    </div>
 
-                window.requestAnimationFrame(function step(timestamp) {
-                    if (!start) start = timestamp;
-                    var time = timestamp - start;
-                    var percent = Math.min(time / duration, 1);
-
-                    window.scrollTo(0, startingY + diff * percent);
-
-                    if (time < duration) {
-                    window.requestAnimationFrame(step);
-                    }
-                })
-            </script> --}}
-            @if(Session::get('success-newslettersignup'))
-                <div class="alert alert-light w-50 text-center m-auto" role="alert">
-                    {!!Session::get('success-newslettersignup')!!}
-                </div>
-            @endif
-            @if(Session::get('error-newslettersignup'))
-                <div class="alert alert-danger w-50 text-center m-auto" role="alert">
-                    {!!Session::get('error-newslettersignup')!!}
-                </div>
-            @endif
-        @endif
-    </form>
+    <div id="newsletter-signup-success" class="invisible">
+        <img src="{{asset('/customer_page_images/body/emoji_winking.svg')}}">
+        <p>Woo hoo! You are all signed up</p>
+    </div>
 
 </div>
+
+<script>
+    function signUpNewsletter(){
+        let email = document.getElementById('newsletter_email').value;
+        if(email){
+            $.ajax({
+                type: "POST",
+                url: '/newslettersingup',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    email_address: email,
+                },
+                success: function(data, textStatus, jqXHR){
+                    if(data === "200"){
+                        document.getElementById('newsletter-description').classList.add('hidden');
+                        document.getElementById('newsletter-signup-form').classList.add('hidden');
+                        document.getElementById('newsletter-signup-success').classList.remove('invisible');
+                    }
+                },
+            });
+        }
+    }
+</script>
 
