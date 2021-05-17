@@ -16,7 +16,7 @@ class CreateSellingProductsTable extends Migration
         Schema::create('selling_products', function (Blueprint $table) {
             $table->id();
             $table->string('product_name');
-            $table->string('product_image');
+            $table->text('product_image')->nullable();
             $table->smallInteger('category_id');
             $table->smallInteger('brand_id');
             $table->boolean('checkmend_check')->default(true);

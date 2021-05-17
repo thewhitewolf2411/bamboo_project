@@ -56436,6 +56436,8 @@ __webpack_require__(/*! ./scripts/PasswordFunctions */ "./resources/js/scripts/P
 
 __webpack_require__(/*! ./scripts/Addressian */ "./resources/js/scripts/Addressian.js");
 
+__webpack_require__(/*! ./scripts/Costs */ "./resources/js/scripts/Costs.js");
+
 "use strict";
 /*
 window.Vue = require('vue');
@@ -56849,6 +56851,48 @@ var boxsummarytable = $('#saleslot-table').DataTable({
 
 /***/ }),
 
+/***/ "./resources/js/scripts/Costs.js":
+/*!***************************************!*\
+  !*** ./resources/js/scripts/Costs.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$('.misccost-select').on('change', function () {
+  var numberOfChecked = $('.misccost-select:checked').length;
+
+  if (numberOfChecked > 0) {
+    $('#deletemisccost').prop('disabled', false);
+  } else {
+    $('#deletemisccost').prop('disabled', true);
+  }
+});
+$('#deletemisccost').on('click', function () {
+  var selected = [];
+  $('.misccost-select:checked').each(function () {
+    selected.push($(this).data('value'));
+  });
+  var c = confirm('Are you sure you want to delete selected Miscellaneous costs?');
+
+  if (c) {
+    $.ajax({
+      url: "/portal/settings/costs/delete",
+      type: "POST",
+      data: {
+        selected: selected
+      },
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success: function success(response) {
+        location.reload();
+      }
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/scripts/DespatchDevices.js":
 /*!*************************************************!*\
   !*** ./resources/js/scripts/DespatchDevices.js ***!
@@ -56935,12 +56979,17 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-document.getElementById("password_reg").addEventListener('keyup', function () {
-  checkNewPass("password_reg");
-});
-document.getElementById("password_card").addEventListener('keyup', function () {
-  checkNewPass("password_card");
-});
+if (document.getElementById("password_reg")) {
+  document.getElementById("password_reg").addEventListener('keyup', function () {
+    checkNewPass("password_reg");
+  });
+}
+
+if (document.getElementById("password_card")) {
+  document.getElementById("password_card").addEventListener('keyup', function () {
+    checkNewPass("password_card");
+  });
+}
 
 window.checkNewPass = function (select) {
   var pass = document.getElementById(select).value;
@@ -57411,7 +57460,6 @@ $('#tradein-checkallbtn').on('click', function () {
 });
 $('.printcheckbox').on('click', function () {
   var numberOfChecked = $('.printcheckbox:checked').length;
-  console.log(numberOfChecked);
 
   if ($(this).is('checked')) {
     $(this).prop('checked', false);
@@ -57516,7 +57564,9 @@ $(document).ready(function () {
     var ordermanagementtable = $('#order-management-table').DataTable({
       "oLanguage": {
         "sInfo": "Showing _START_ to _END_"
-      }
+      },
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "pageLength": 100
     }); // Apply the search
 
     ordermanagementtable.columns().every(function () {
@@ -57572,6 +57622,8 @@ $('#generate-recycle-report-btn').on('click', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var _require = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"),
     each = _require.each;
 
@@ -57619,24 +57671,27 @@ $('#despatchpickingsaleslot').on('click', function () {
   var c = confirm("Are you sure you want to mark " + $('.tagfordespatch:checked').length + " sales lots as despatched?");
 
   if (c) {
+    var _$$ajax;
+
     var salesLotIds = [];
     $('.tagfordespatch:checked').each(function () {
       var salelotid = $(this).data('value');
       salesLotIds.push(salelotid);
     });
-    $.ajax({
+    $.ajax((_$$ajax = {
       url: "/portal/warehouse-management/picking-despatch/pick-lot/despatch-picking",
       type: "POST",
-      data: {
-        salesLotIds: salesLotIds
-      },
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
-      success: function success(response) {
-        location.reload();
+      data: {
+        salesLotIds: salesLotIds
       }
-    });
+    }, _defineProperty(_$$ajax, "headers", {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }), _defineProperty(_$$ajax, "success", function success(response) {
+      location.reload();
+    }), _$$ajax));
   }
 });
 $('#printpicknote').on('click', function () {
@@ -57771,6 +57826,9 @@ $('#checkboxsubmit').on('click', function () {
   $.ajax({
     url: "/portal/warehouse-management/bay-overview/bay/checkallocatebox",
     type: "POST",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
     data: {
       bayname: bayname,
       boxname: boxname
@@ -57973,6 +58031,9 @@ $('#payment-received-btn').on('click', function () {
     $.ajax({
       type: "POST",
       url: "/portal/sales-lot/completed-sales-lot/markaspaymentrecieved",
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
       data: {
         lot_id: selectedid
       },

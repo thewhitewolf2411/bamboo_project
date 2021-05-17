@@ -159,6 +159,13 @@ class DespatchController extends Controller
      */
     public function showArchive(){
         $despatched = DespatchedDevice::all();
+
+        foreach($despatched as $key=>$d){
+            if(Tradein::where('id', $d->tradein_id)->first()->job_state !== '21'){
+                unset($despatched[$key]);
+            }
+        }
+
         $portalUser = PortalUsers::where('user_id', Auth::user()->id)->first();
         return view('portal.despatch.archive', ['despatched' => $despatched ,'portalUser' => $portalUser]);
     }

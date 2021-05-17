@@ -27,6 +27,9 @@ $('#checkboxsubmit').on('click', function(){
     $.ajax({
         url: "/portal/warehouse-management/bay-overview/bay/checkallocatebox",
         type:"POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
         data:{
             bayname:bayname,
             boxname:boxname,

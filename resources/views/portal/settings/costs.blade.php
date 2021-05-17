@@ -100,7 +100,7 @@
                     </table>
                 </div>
                 <div class="d-flex flex-column my-5">
-                    <div class="my-3"><button style="float: right" class="btn btn-primary">Delete</button></div>
+                    <div class="my-3"><button id="deletemisccost" style="float: right" class="btn btn-primary" disabled>Delete</button></div>
                     <table class="portal-table sortable" id="categories-table">
                         <tr>
                             <td>Miscellaneous cost</td>
@@ -117,7 +117,7 @@
                             <td>£{{$mC->miscellaneous_costs - ($mC->applied_to * $mC->per_job_deduction)}}</td>
                             <td>{{$mC->cost_description}}</td>
                             <td>{{$mC->applied_to}}</td>
-                            <td><input type="checkbox" data-value="{{$mC->id}}"></td>
+                            <td><input type="checkbox" class="misccost-select" data-value="{{$mC->id}}"></td>
                         </tr>
                         @endforeach
                     </table>

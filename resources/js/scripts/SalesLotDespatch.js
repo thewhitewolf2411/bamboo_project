@@ -71,6 +71,9 @@ $('#despatchpickingsaleslot').on('click', function(){
         $.ajax({
             url: "/portal/warehouse-management/picking-despatch/pick-lot/despatch-picking",
             type:"POST",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             data:{
                 salesLotIds:salesLotIds,
             },

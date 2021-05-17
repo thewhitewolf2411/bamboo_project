@@ -113,9 +113,12 @@ class SalesLotController extends Controller
 
         if(Session::has('tradeins')){
             $tradeins = Session::get('tradeins');
+            #dd($tradeins);
             foreach($tradeinsids as $key=>$tradeinid){
+                $key = count($tradeins) + $key;
                 $tradeins[$key] = Tradein::where('id', $tradeinid)->first();
             }
+            #dd($tradeins);
         }
         else{
             $tradeins = Tradein::whereIn('id', $tradeinsids)->get();
@@ -147,6 +150,8 @@ class SalesLotController extends Controller
 
         Session::put('tradeins', $tradeins);
         Session::put('boxes', $boxes);
+
+        #dd(Session::get('tradeins'));
 
         return response(['tradeins'=>$tradeins, 'boxes'=>$boxes], 200);
         
@@ -292,7 +297,15 @@ class SalesLotController extends Controller
             ]);
     
             foreach($salesLotItems as $salesLotItem){
+
                 $tradein = Tradein::where('id', $salesLotItem->id)->first();
+
+                $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+                $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
+                $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+                $oldTray->save();
+                $oldTrayContent->delete();
+
     
                 $sli = new SalesLotContent();
                 $sli->sales_lot_id = $saleLot->id;

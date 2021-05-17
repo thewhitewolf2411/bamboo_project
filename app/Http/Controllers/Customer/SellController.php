@@ -239,16 +239,16 @@ class SellController extends Controller
                     $products = collect();// SellingProduct::where('category_id', 1)->get();
                     $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working');
                     foreach($productIdsSorted as $key=>$productId){
-                        $product = SellingProduct::where('category_id', 1)->where('brand_id', $brand)->where('id', $key)->first();
+                        $product = SellingProduct::where('category_id', 1)->where('brand_id', $brand)->where('id', $key)->where('avaliable_for_sell', true)->first();
                         if($product){
                             $products->add($product);
                         }
                     }
-                    $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
+                    $numberofproducts = count(SellingProduct::where('category_id', 1)->where('avaliable_for_sell', true)->get());
                     break;
                 }else{
                     $products = SellingProduct::where('category_id', 1)->get();
-                    $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
+                    $numberofproducts = count(SellingProduct::where('category_id', 1)->where('avaliable_for_sell', true)->get());
                     break;
                 }
             case "tablets":
@@ -256,16 +256,16 @@ class SellController extends Controller
                     $products = collect();// SellingProduct::where('category_id', 1)->get();
                     $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working');
                     foreach($productIdsSorted as $key=>$productId){
-                        $product = SellingProduct::where('category_id', 2)->where('brand_id', $brand)->where('id', $key)->first();
+                        $product = SellingProduct::where('category_id', 2)->where('brand_id', $brand)->where('id', $key)->where('avaliable_for_sell', true)->first();
                         if($product){
                             $products->add($product);
                         }
                     }
-                    $numberofproducts = count(SellingProduct::where('category_id', 2)->get());
+                    $numberofproducts = count(SellingProduct::where('category_id', 2)->where('avaliable_for_sell', true)->get());
                     break;
                 }else{
                     $products = SellingProduct::where('category_id', 2)->get();
-                    $numberofproducts = count(SellingProduct::where('category_id', 2)->get());
+                    $numberofproducts = count(SellingProduct::where('category_id', 2)->where('avaliable_for_sell', true)->get());
                     break;
                 }
             break;
@@ -274,16 +274,16 @@ class SellController extends Controller
                     $products = collect();// SellingProduct::where('category_id', 1)->get();
                     $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working');
                     foreach($productIdsSorted as $key=>$productId){
-                        $product = SellingProduct::where('category_id', 3)->where('brand_id', $brand)->where('id', $key)->first();
+                        $product = SellingProduct::where('category_id', 3)->where('brand_id', $brand)->where('id', $key)->where('avaliable_for_sell', true)->first();
                         if($product){
                             $products->add($product);
                         }
                     }
-                    $numberofproducts = count(SellingProduct::where('category_id', 3)->get());
+                    $numberofproducts = count(SellingProduct::where('category_id', 3)->where('avaliable_for_sell', true)->get());
                     break;
                 }else{
                     $products = SellingProduct::where('category_id', 3)->get();
-                    $numberofproducts = count(SellingProduct::where('category_id', 3)->get());
+                    $numberofproducts = count(SellingProduct::where('category_id', 3)->where('avaliable_for_sell', true)->get());
                     break;
                 }
             break;
@@ -299,7 +299,7 @@ class SellController extends Controller
             $products->count(),
             $perPage,
             $page,
-            ['path' => url('/sell/devices/mobile/'.$brand)]
+            ['path' => url('/sell/devices/' . $category . '/'.$brand)]
         );
         
         return view('sell.alldevicesbrand', [

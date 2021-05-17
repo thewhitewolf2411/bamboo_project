@@ -294,6 +294,16 @@ class SettingsController extends Controller
         }
     }
 
+    public function deleteCosts(Request $request){
+
+        foreach($request->selected as $selectedCostId){
+            $additionalCost = AdditionalCosts::find($selectedCostId);
+            $additionalCost->delete();
+        }
+
+        return response(200);
+    }
+
     public function showNonWorkingDaysPage(){
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();

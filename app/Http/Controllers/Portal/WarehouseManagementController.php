@@ -833,8 +833,14 @@ class WarehouseManagementController extends Controller
 
         if($tradein){
             $salesLotContent = SalesLotContent::where('device_id', $tradein->id)->first();
-            $salesLotContent->picked = true;
-            $salesLotContent->save();
+            if($salesLotContent){
+                $salesLotContent->picked = true;
+                $salesLotContent->save();
+            }
+            else{
+                return redirect()->back()->with('pickerror', 'This barcode is not recognized for this lot!');
+            }
+
         }
 
         return redirect()->back();
@@ -913,9 +919,9 @@ class WarehouseManagementController extends Controller
                         'sold_to'=>$salesLot->sold_to
                     ]);
     
-                    $tradein->delete();
+                    //$tradein->delete();
                 }
-                $box->delete();
+                //$box->delete();
             }
     
             foreach($salesLotContentDevices as $sLCD){
@@ -932,7 +938,7 @@ class WarehouseManagementController extends Controller
                     'sold_to'=>$salesLot->sold_to
                 ]);
     
-                $device->delete();
+                //$device->delete();
             }
     
         }

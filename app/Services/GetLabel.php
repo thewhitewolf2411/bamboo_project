@@ -18,7 +18,7 @@ class GetLabel{
 
         if(in_array($tradein->job_state, $matches)){
             $barcodenumber = $tradein->barcode;
-            $makeModel = $tradein->getProductName($tradein->product_id);
+            $makeModel = $tradein->getProductName($tradein->product_id) . " " . $tradein->getDeviceMemory();
             $imei = $tradein->imei_number;
             $sn = $tradein->serial_number;
             $location = $tradein->getTrayName($tradein->id);
@@ -42,7 +42,7 @@ class GetLabel{
         $matches = ["6", "7", "8a", "8b", "8c", "8d", "8e", "8f"];
         if(in_array($tradein->job_state, $matches)){
             $barcodenumber = $tradein->barcode;
-            $makeModel = $tradein->getProductName($tradein->product_id);
+            $makeModel = $tradein->getProductName($tradein->product_id) . " " . $tradein->getDeviceMemory();
             $imei = $tradein->imei_number;
             $sn = $tradein->serial_number;
             $location = $tradein->getTrayName($tradein->id);
@@ -68,7 +68,7 @@ class GetLabel{
         $matches = ["10", "12", "16"];
         if(in_array($tradein->job_state, $matches)){
             $barcodenumber = $tradein->barcode;
-            $makeModel = $tradein->getProductName($tradein->product_id);
+            $makeModel = $tradein->getProductName($tradein->product_id) . " " . $tradein->getDeviceMemory();
             $imei = $tradein->imei_number;
             $sn = $tradein->serial_number;
             $location = $tradein->getTrayName($tradein->id);
@@ -99,7 +99,7 @@ class GetLabel{
         $matches = ["11", "11a", "11b","11c", "11d","11e", "11f","11g", "11h","11i", "11j", "15", "15a", "15b","15c", "15d","15e", "15f","15g", "15h","15i", "15j"];
         if(in_array($tradein->job_state, $matches)){
             $barcodenumber = $tradein->barcode;
-            $makeModel = $tradein->getProductName($tradein->product_id);
+            $makeModel = $tradein->getProductName($tradein->product_id) . " " . $tradein->getDeviceMemory();
             $imei = $tradein->imei_number;
             $sn = $tradein->serial_number;
             $location = $tradein->getTrayName($tradein->id);
@@ -128,7 +128,7 @@ class GetLabel{
         $matches = ["13", "14", "19", "20", "21"];
         if(in_array($tradein->job_state, $matches)){
             $barcodenumber = $tradein->barcode;
-            $makeModel = $tradein->getProductName($tradein->product_id);
+            $makeModel = $tradein->getProductName($tradein->product_id) . " " . $tradein->getDeviceMemory();
             $imei = $tradein->imei_number;
             $sn = $tradein->serial_number;
             $location = $tradein->getTrayName($tradein->id);
@@ -154,7 +154,7 @@ class GetLabel{
 
 
         $barcodenumber = $tradein->barcode;
-        $makeModel = $tradein->getProductName($tradein->product_id);
+        $makeModel = $tradein->getProductName($tradein->product_id) . " " . $tradein->getDeviceMemory();
         $imei = $tradein->imei_number;
         $sn = $tradein->serial_number;
         $location = $tradein->getTrayName($tradein->id);

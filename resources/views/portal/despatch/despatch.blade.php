@@ -43,9 +43,13 @@
         @if(Session::has('messages'))
             @if(isset(Session::get('messages')['error']))
                 <div class="alert alert-danger text-center" role="alert">
-                    @foreach(Session::get('messages')['error'] as $message)
-                        {!!$message!!}<br>
-                    @endforeach
+                    @if(is_array(Session::get('messages')['error']))
+                        @foreach(Session::get('messages')['error'] as $message)
+                            {!!$message!!}<br>
+                        @endforeach
+                    @else
+                        {{Session::get('messages')['error']}}
+                    @endif
                 </div>
             @endif
             @if(isset(Session::get('messages')['success']))

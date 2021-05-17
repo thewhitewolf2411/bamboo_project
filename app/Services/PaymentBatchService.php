@@ -157,7 +157,7 @@ class PaymentBatchService {
             $payment_batch->save();
 
             $path = storage_path().'/app/public/exports/batches/';
-            $filename = \Carbon\Carbon::now()->addDay()->format("Y-M-D_h-i-s") . ".txt";
+            $filename = \Carbon\Carbon::now()->addDay()->format("Y-m-d_h-i-s") . ".txt";
     
             if(!is_dir($path)){
                 mkdir($path, 0777, true);

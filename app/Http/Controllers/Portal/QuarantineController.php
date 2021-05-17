@@ -219,15 +219,14 @@ class QuarantineController extends Controller
                 $tradein->location_changed_at = \Carbon\Carbon::now();
                 $tradein->save();
             }
-        
-        
-            if(empty($response)){
-                return redirect()->back()->with(['success'=>'All devices have been succesfully reallocated to new trays.']);
-            }
-            else{
-                return redirect()->back()->with(['error'=>'Some devices are allocated to new trays.', 'notallocated'=>$response]);
-            }
 
+        }
+
+        if(empty($response)){
+            return redirect()->back()->with(['success'=>'All devices have been succesfully reallocated to new trays.']);
+        }
+        else{
+            return redirect()->back()->with(['error'=>'Some devices are allocated to new trays.', 'notallocated'=>$response]);
         }
 
     }

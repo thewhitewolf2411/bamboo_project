@@ -43,7 +43,7 @@ class Tradein extends Model
         'correct_memory','correct_network', 'product_colour', 'missing_image', 'imei_number', 'serial_number',
         'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 
         'expiry_date', 'location_changed_at', 'trade_pack_send_by_customer', 'carriage_cost', 'admin_cost', 'misc_cost', 'pin_pattern_number',
-        'fmip', 'pin_locked'
+        'fmip', 'pin_locked', 'blacklisted'
     ];
 
 
@@ -52,6 +52,11 @@ class Tradein extends Model
             return SellingProduct::where('id', $this->correct_product_id)->first()->product_name;
         }
         #dd(SellingProduct::where('id', $this->product_id)->first());
+        $product = SellingProduct::where('id', $this->product_id)->first();
+        return $product->product_name;
+    }
+
+    public function getCustomerProductName(){
         $product = SellingProduct::where('id', $this->product_id)->first();
         return $product->product_name;
     }
@@ -261,7 +266,7 @@ class Tradein extends Model
 
     public function isBlacklisted(){
         $blacklisted = ["7", "8a", "8b", "8c", "8d", "8e", "8f"];
-        if(in_array($this->job_state, $blacklisted)){
+        if(in_array($this->job_state, $blacklisted) || $this->blacklisted){
             return true;
         }
         return false;
@@ -444,7 +449,7 @@ class Tradein extends Model
             /*18*/  ['Device destroyed','Order expired'],
             /*19*/  ['Return to customer','Returning Device'],
             /*20*/  ['Return to customer','Returning Device'],
-            /*21*/  ['Despatched to customer','Returning Device'],
+            /*21*/  ['Despatched','Returning Device'],
             /*22*/  ['Awaiting Box build','Awaiting payment'],
             /*23*/  ['Awaiting Box build','Submitted for payment'],
             /*24*/  ['Awaiting Box build','Payment Failed'],
@@ -707,10 +712,11 @@ class Tradein extends Model
     public function carrier(){}
     
     public function getDeviceMemory(){
-        $product = ProductInformation::where('product_id', $this->product_id)->first();
-        if($product){
-            return $product->memory;
+        if($this->correct_memory){
+            return $this->correct_memory;
         }
+        return $this->customer_memory;
+
     }
 
     public function getDeviceNetwork(){
@@ -1093,6 +1099,40 @@ class Tradein extends Model
                 return "N/A";
                 break;
         }
+    }
+
+    public function isTablet(){
+        if($this->correct_product_id){
+            $product = SellingProduct::where('id', $this->correct_product_id)->first();
+            if($product->category_id === 2){
+                return true;
+            }
+        }
+        else{
+            $product = SellingProduct::where('id', $this->product_id)->first();
+            if($product->category_id === 2){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function isSmartWatch(){
+        if($this->correct_product_id){
+            $product = SellingProduct::where('id', $this->correct_product_id)->first();
+            if($product->category_id === 3){
+                return true;
+            }
+        }
+        else{
+            $product = SellingProduct::where('id', $this->product_id)->first();
+            if($product->category_id === 3){
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

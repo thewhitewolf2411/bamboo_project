@@ -86,8 +86,10 @@
                         <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
                         @if($tradein->imei_number !== null)
                         <td><div class="table-element">{{$tradein->imei_number}}</div></td>
-                        @else
+                        @elseif($tradein->serial_number !== null)
                         <td><div class="table-element">{{$tradein->serial_number}}</div></td>
+                        @else
+                        <td><div class="table-element">N/A</div></td>
                         @endif
                         <td><div class="table-element">{{$tradein->getBambooStatus()}}</div></td>
                         <td><div class="table-element">
@@ -403,6 +405,8 @@ function enablebtn(){
 
 $('#selectAllQuarantineDevices').on('change', function(){
     $('input:checkbox').not(this).prop('checked', this.checked);
+
+    enablebtn();
 })
 
 </script>

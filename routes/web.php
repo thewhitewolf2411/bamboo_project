@@ -377,6 +377,7 @@ Route::get('/portal/settings/barcode-id','Portal\SettingsController@showSettings
 Route::get('/portal/settings/costs', 'Portal\SettingsController@showCostsPage');
 Route::post('/portal/settings/costs/update', 'Portal\SettingsController@updateCosts');
 Route::post('/portal/settings/costs/add', 'Portal\SettingsController@addCosts');
+Route::post('/portal/settings/costs/delete', 'Portal\SettingsController@deleteCosts');
 
 Route::get('/portal/settings/non-working-days', 'Portal\SettingsController@showNonWorkingDaysPage');
 Route::post('/portal/settings/non-working-days/add-non-working-days', 'Portal\SettingsController@addNonWorkingDays');

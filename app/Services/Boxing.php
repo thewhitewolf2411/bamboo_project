@@ -55,8 +55,15 @@ class Boxing{
             if($box->tray_grade === 'TAB' && $tradein->getCategoryId($tradein->correct_product_id) !== 2){
                 return ['Device is not a tablet.', 404];
             }
+            if($tradein->isTablet() && $box->tray_grade !== 'TAB'){
+                return ['Box is not accepting tablets.', 404];
+            }
+
             if($box->tray_grade === 'SW' && $tradein->getCategoryId($tradein->correct_product_id) !== 3){
                 return ['Device is not a watch.', 404];
+            }
+            if($tradein->isSmartWatch() && $box->tray_grade !== 'SW'){
+                return ['Box is not accepting tablets.', 404];
             }
 
         }

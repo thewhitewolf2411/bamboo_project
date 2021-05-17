@@ -28,6 +28,7 @@ require('./scripts/PrintLabels');
 require('./scripts/DespatchDevices');
 require('./scripts/PasswordFunctions');
 require('./scripts/Addressian');
+require('./scripts/Costs');
 
 "use strict";
 

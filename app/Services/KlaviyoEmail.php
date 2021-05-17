@@ -50,7 +50,7 @@ class KlaviyoEmail{
                 'event' => 'Item Sold to Bamboo (Print own label)',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName(),
                     '$tradein_id' => $tradein->barcode_original,
                     '$proposed_price' => $tradein->order_price,
                 ),
@@ -71,7 +71,7 @@ class KlaviyoEmail{
                 'event' => 'Item Sold to Bamboo (Tradepack)',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName($tradein->product_id),
                     '$tradein_id' => $tradein->barcode_original,
                     '$proposed_price' => $tradein->order_price,
                 ),
@@ -92,7 +92,7 @@ class KlaviyoEmail{
                 'event' => 'Trade pack sent',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName($tradein->product_id),
                     '$tradein_id' => $tradein->barcode_original,
                     '$proposed_price' => $tradein->order_price,
                 ),
@@ -128,7 +128,7 @@ class KlaviyoEmail{
                 'event' => 'Receipt of device',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName(),
                 ),
                 'properties' => array(
                     'Receipt of device' => true
@@ -146,7 +146,7 @@ class KlaviyoEmail{
                 'event' => 'No IMEI',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName($tradein->product_id),
                 ),
                 'properties' => array(
                     'No IMEI' => true
@@ -218,7 +218,7 @@ class KlaviyoEmail{
                 'event' => 'Pin Locked',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName(),
                 ),
                 'properties' => array(
                     'Pin Locked' => true
@@ -236,7 +236,7 @@ class KlaviyoEmail{
                 'event' => 'Google Locked',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName(),
                 ),
                 'properties' => array(
                     'Google Locked' => true
@@ -254,7 +254,7 @@ class KlaviyoEmail{
                 'event' => 'FIMP',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName(),
                 ),
                 'properties' => array(
                     'FIMP' => true
@@ -272,8 +272,8 @@ class KlaviyoEmail{
                 'event' => 'Wrong Device',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$deviceWrong' => $tradein->getProductName($tradein->product_id),
-                    '$deviceRight' => $tradein->getProductName($tradein->correct_product_id),
+                    '$deviceWrong' => $tradein->getCustomerProductName(),
+                    '$deviceRight' => $tradein->getProductName(),
                     '$newPrice' => $tradein->bamboo_price,
                 ),
                 'properties' => array(
@@ -315,7 +315,7 @@ class KlaviyoEmail{
                     '$originalNetwork' => $tradein->customer_network,
                     '$bambooNetwork' => $tradein->correct_network,
                     '$newPrice' => $tradein->bamboo_price,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName(),
                 ),
                 'properties' => array(
                     'Locked Network' => true
@@ -333,7 +333,7 @@ class KlaviyoEmail{
                 'event' => 'Passed Test',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName(),
                     '$price' => $tradein->bamboo_price,
                 ),
                 'properties' => array(
@@ -352,7 +352,7 @@ class KlaviyoEmail{
                 'event' => 'Blacklisted',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName(),
                 ),
                 'properties' => array(
                     'Blacklisted' => true
@@ -370,7 +370,7 @@ class KlaviyoEmail{
                 'event' => 'Device Stolen',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName(),
                 ),
                 'properties' => array(
                     'Device Stolen' => true
@@ -388,7 +388,7 @@ class KlaviyoEmail{
                 'event' => 'Device Under Contract',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName(),
                     '$originalNetwork' => $tradein->customer_network,
                 ),
                 'properties' => array(
@@ -406,7 +406,7 @@ class KlaviyoEmail{
                 'event' => 'Device Return',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName(),
                 ),
                 'properties' => array(
                     'Device Return' => true
@@ -428,7 +428,7 @@ class KlaviyoEmail{
                 'event' => 'Payment Unsuccessful',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName(),
                     '$message' => $message
                 ),
                 'properties' => array(
@@ -446,7 +446,7 @@ class KlaviyoEmail{
                 'event' => 'Payment Successful',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getProductName($tradein->product_id),
+                    '$device' => $tradein->getCustomerProductName(),
                 ),
                 'properties' => array(
                     'Payment Successful' => true

@@ -79,6 +79,7 @@
                     <div id="buildsaleslot-scandevicediv" class="buildsaleslot-hidden">
                         <form action="/portal/warehouse-management/picking-despatch/pick-lot/pickdevice" method="POST">
                             @csrf
+                            
                             <input type="hidden" name="buildsaleslot_salelot" value="{{$saleLot->id}}">
                             <div class="portal-title">
                                 <p class="my-0">Enter Device Number </p>
@@ -110,6 +111,12 @@
                     </div>
                     
                 </div>
+
+                @if(Session::has('pickerror'))
+                <div class="alert alert-danger" role="alert">
+                    {{Session::get('pickerror')}}
+                </div>
+                @endif
 
                 <div class="row my-5">
                     
