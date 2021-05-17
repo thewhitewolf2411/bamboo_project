@@ -470,7 +470,8 @@
     flex-direction: row;
     flex-wrap: wrap;
     padding: 40px 0;
-    justify-content: space-evenly;
+    // justify-content: space-evenly;
+    justify-content: center;
 }
 
 .deliveryqualitybanner-col{
@@ -487,6 +488,11 @@
     height: 120px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.deliveryqualitybanner-img.larger{
+    width: 145px;
+    margin-left: 65px;
 }
 
 .deliveryqualitybanner-text{

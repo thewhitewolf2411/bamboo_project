@@ -160,7 +160,7 @@
                             </div>
                             <div class="summary-cart promotional invisible" id="promotional-info">
                                 <p class="summary-cart-text" id="promo-info">Promotional code</p>
-                                <p class="summary-cart-text-bold" id="promo-percentage">5%</p>
+                                <p class="summary-cart-text-bold" id="promo-percentage"></p>
                             </div>
                             <div class="summary-cart">
                                 <p class="summary-cart-text-bold">TOTAL</p>

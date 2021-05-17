@@ -35,7 +35,7 @@
 
     <div class="home-element how-container">
         <div class="text-center">
-            <p class="large-bold-text">Sounds great, but, how does it actually work?</p>
+            <p class="large-bold-text">Sounds great, but, <br>how does it actually work?</p>
         </div>
 
         <div class="how-buttons-container mt-5">
@@ -69,7 +69,7 @@
                 <div class="how-image-container">
                     <img src="{{asset('/customer_page_images/body/How-Icon-6.svg')}}">
                 </div>
-                <div class="url-footer-container" id="start-selling">
+                <div class="url-footer-container sell-section" id="start-selling">
                     <a href="/sell">Start Selling</a>
                 </div>
             </div>

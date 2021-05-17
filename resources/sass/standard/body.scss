@@ -252,7 +252,7 @@ h3, h4, h5{
 .cookie-consent__message > a{
     font-size: 14px;
     color: white;
-    text-decoration: underline;
+    //text-decoration: underline;
     transition: color 0.5s ease-in-out;
 }
 
@@ -466,6 +466,10 @@ h3, h4, h5{
     font-family: Sharp Sans No1 Bold;
 }
 
+
+.noscrolly{
+    overflow-y: hidden !important;
+}
 
 
 

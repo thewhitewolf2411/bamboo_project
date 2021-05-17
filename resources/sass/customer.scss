@@ -906,7 +906,8 @@ main p, a, span{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 250px;
+    // height: 250px;
+    height: 300px;
 }
 
 .worktime-text{
@@ -1215,6 +1216,31 @@ main p, a, span{
     border-radius: 50%;
 }
 
+
+.about-sustainability-images{
+    display: block;
+    position: relative;
+    width: auto;
+    max-width: 400px;
+    margin-top: 150px;
+    margin-bottom: auto;
+}
+
+.about-sustainability-images > .image-1, .about-sustainability-images > .image-2{
+    display: block;
+    width: 200px;
+    height: 200px;
+}
+
+.about-sustainability-images > .image-1{
+    position: relative;
+}
+
+.about-sustainability-images > .image-2{
+    position: absolute;
+    right: -55px;
+    top: -105px;
+}
 
 #second-about-image{
     background: transparent linear-gradient(180deg, #FD7F8E 0%, #29C0B4 100%) 0% 0% no-repeat padding-box;

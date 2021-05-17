@@ -52,11 +52,11 @@
             <a href="/support">Your Account</a>
             <a href="/support">General Questions</a>
         </div>
-        <div class="footer-row-6">
+        {{-- <div class="footer-row-6">
             <span>RESPONSIBILITIES</span>
             <a href="/environment">Environment</a>
-            {{-- <a href="/charity">Charity Partners</a> --}}
-        </div>
+            <a href="/charity">Charity Partners</a>
+        </div> --}}
         <div class="footer-row-6">
             <span>NEWS & BLOG</span>
             <a href="/news">News</a>

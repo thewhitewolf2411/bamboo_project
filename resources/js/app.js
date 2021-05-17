@@ -28,6 +28,9 @@ require('./scripts/PrintLabels');
 require('./scripts/DespatchDevices');
 require('./scripts/PasswordFunctions');
 require('./scripts/Addressian');
+require('./scripts/frontend/homepage');
+require('./scripts/frontend/aboutpage');
+require('./scripts/frontend/whysellpage');
 
 "use strict";
 

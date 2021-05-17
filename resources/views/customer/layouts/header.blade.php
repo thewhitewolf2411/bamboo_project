@@ -68,22 +68,25 @@
         <a href="/shop">Start Shopping</a>
     </div> --}}
     <div class="url-header-container" id="start-selling">
-        <a href="/sell">Start Selling</a>
+        <a href="/sell" class="start-selling-button-header">
+            <p id="start-selling-button-text">Start Selling</p> 
+            <img id="start-selling-button-img-down" class="invisible" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White.svg')}}">
+        </a>
     </div>
     <div class="url-header-container">
-        <a href="/how">How it works</a>
+        <a href="/how" class="header-url-link">How it works</a>
     </div>
     <div class="url-header-container">
-        <a href="/about">About</a>
+        <a href="/about" class="header-url-link">About</a>
     </div>
     <div class="url-header-container">
-        <a href="/news">News & Blog</a>
+        <a href="/news" class="header-url-link">News & Blog</a>
     </div>
     <div class="url-header-container">
-        <a href="/support">Service & Support</a>
+        <a href="/support" class="header-url-link">Service & Support</a>
     </div>
     <div class="url-header-container">
-        <a href="/contact">Contact Us</a>
+        <a href="/contact" class="header-url-link">Contact Us</a>
     </div>
 
 </div>

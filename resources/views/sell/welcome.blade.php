@@ -43,7 +43,7 @@
                 <p class="sell-subtitle mb-5 mt-4">Step 1: Select your device below</p>
             </div>
 
-            <div class="sell-categories-container">
+            <div class="sell-categories-container" id="all-selling-categories">
 
                 <div class="single-sell-category" onclick="selectCategory('mobile')" id="mobile-category">
                     <p class="sell-category-title">Mobile Phones</p>
@@ -382,10 +382,22 @@
         <footer>@include('customer.layouts.footer', ['showGetstarted' => false])</footer>
         <script>
 
+            window.addEventListener('DOMContentLoaded', function(){
+                let preselectedCategory = localStorage.getItem('preselectedSellCategory');
+                if(preselectedCategory){
+                    selectCategory(preselectedCategory);
+                    localStorage.removeItem('preselectedSellCategory');
+                    document.getElementById('all-selling-categories').scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+
+                }
+
+            });
+
             // var categories = document.getElementsByClassName('sell-category-device-image');
             // for (let index = 0; index < categories.length; index++) {
             //     console.log(categories[index]);
             // }
+            
             $(".sell-category-wrapper")
             .mouseenter(function() {
                 // background - 1

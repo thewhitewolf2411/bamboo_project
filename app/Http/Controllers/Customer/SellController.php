@@ -30,6 +30,7 @@ use App\Services\ExpiryDate;
 use App\Eloquent\AdditionalCosts;
 use App\Eloquent\Payment\UserBankDetails;
 use App\Eloquent\PromotionalCode;
+use App\Eloquent\UserPromotionalCode;
 use App\Services\NotificationService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Crypt;
@@ -495,10 +496,15 @@ class SellController extends Controller
                 if($item->type === 'tradein'){
 
                     $order_price = $item->price;
+                    $hasPromotionalCode = false;
+                    $promoCodeId = null;
                     if(isset($request->promotional_code)){
                         //dd('sellcontroller 498 [tradein order price] - calculate price with promotional code price evaluation todo');
                         $promotionalCode = PromotionalCode::where('promotional_code', $request->promotional_code)->first();
-
+                        if($promotionalCode){
+                            $hasPromotionalCode = true;
+                            $promoCodeId = $promotionalCode->id;
+                        }
                         $price = $item->price;
                         if(strlen($promotionalCode->value) === 1){
                             $perc = '0.0'.$promotionalCode->value;
@@ -511,7 +517,6 @@ class SellController extends Controller
                         }
                         $order_price = (float)$perc * $price + $price;
                     }
-                    dd($order_price, $item->price);
 
                     $expiryDate = new ExpiryDate();
                     $eD = $expiryDate->getExpiryDate();
@@ -554,6 +559,14 @@ class SellController extends Controller
 
                     $tradein->save();
                     $tradeinexp = $tradein;
+
+                    if($hasPromotionalCode){
+                        UserPromotionalCode::create([
+                            'user_id' => $tradein->user_id,
+                            'promotional_code_id' => $promoCodeId,
+                            'trade_in_id' => $tradein->id
+                        ]);
+                    }
 
                     if($labelstatus == "2"){
                         // send notification - own label
@@ -691,6 +704,20 @@ class SellController extends Controller
                 if(isset($applies_to['device_id'])){
                     $current_items = Cart::where('user_id', Auth::user()->id)->get();
 
+                    // prevent promocode reuse
+                    $userPromotionalCodes = UserPromotionalCode::where('user_id', Auth::user()->id)->get();
+                    if($userPromotionalCodes){
+                        $used_ids = $userPromotionalCodes->pluck('id')->toArray();
+                        if(in_array($promotionalCode->id, $used_ids)){
+                            $data = [
+                                'message' => 'Promotional code "'.$promotionalCode->name.'" already used.', 
+                                'pass' => false
+                            ];
+                            return response(['data' => $data ], 200);
+                        }
+                    }
+
+                    // check apply rules (only for one device for now)
                     $device_ids = $current_items->pluck('product_id')->toArray();
                     if(in_array($applies_to['device_id'], $device_ids)){
 

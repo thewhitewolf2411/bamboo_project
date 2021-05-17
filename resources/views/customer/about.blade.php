@@ -67,13 +67,19 @@
                     Oh, we almost forgot… your stunning new device will come with a 12-month warranty – you can’t say fairer than that! 
                     </p>
             </div>
-            <div class="about-image-container" id="third-about-image">
-                <div class="about-rounded-image" id="third-round-image"></div>
+            <div class="about-image-container">
+                <div class="about-sustainability-images">
+                    <img class="image-1" src="{{asset('images/ss-img-1.svg')}}">
+                    <img class="image-2" src="{{asset('images/ss-img-2.svg')}}">
+                </div>
             </div>
+            {{-- <div class="about-image-container" id="third-about-image">
+                <div class="about-rounded-image" id="third-round-image"></div>
+            </div> --}}
         </div>
     </div>
 
-    @include('partial.sustainability', ['whySell' => false, 'about' => false])
+    {{-- @include('partial.sustainability', ['whySell' => false, 'about' => false]) --}}
 
     <div class="sell-categories-container pt-5">
 

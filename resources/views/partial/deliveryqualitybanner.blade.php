@@ -6,7 +6,7 @@
     </div>
 
     <div class="deliveryqualitybanner-col">
-        <img class="deliveryqualitybanner-img" src="{{asset('/images/bamboo_quality.svg')}}">
+        <img class="deliveryqualitybanner-img larger" src="{{asset('/images/bamboo_quality.svg')}}">
         <p class="deliveryqualitybanner-text mt-3">bamboo quality approved <br>over 100 functional checks</p>
     </div>
 

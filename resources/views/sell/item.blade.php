@@ -363,13 +363,13 @@
                                 <div class="grade-section-description ml-1 mr-1 mb-1 selected-grade-desc" id="excellent-description">
                                     <div class="grade-desc-column">
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Handset/Device is fully functional, working and complete</p>
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Minor wear and tear is acceptable </p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Very Minimal wear and tear is acceptable with no marks to LCD screen</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No physical damage (i.e. cracks, chips to device or screen or bent chassis)</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Must not have any Water Damage</p>
                                     </div>
                                     <div class="grade-desc-column">
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Touch / Face ID must be working</p>
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No FMIP, iCloud lock, Google locks or Pin / Password Locks</p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Touch / Face ID must be fully working</p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Find My iPhone, iCloud locks, Google, PIN or Password locks</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Knox disabled</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Blocked, Stolen or fake items </p>
                                     </div>
@@ -378,28 +378,28 @@
                                 <div class="grade-section-description ml-1 mr-1 mb-1 selected-grade-desc hidden" id="good-description">
                                     <div class="grade-desc-column">
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Handset/Device is fully functional, working and complete</p>
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Very Minor wear and tear is acceptable</p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Minor wear and tear is acceptable</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No physical damage (i.e. cracks, chips to device or screen or bent chassis)</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Must not have any Water Damage</p>
                                     </div>
                                     <div class="grade-desc-column">
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Touch / Face ID must be working</p>
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No FMIP, iCloud lock, Google locks or Pin / Password Locks</p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Touch / Face ID must be fully working</p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Find My iPhone, iCloud locks, Google, PIN or Password locks</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Knox disabled</p>
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Blocked, Stolen or fake items </p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Blocked, Stolen or fake items</p>
                                     </div>
                                 </div>
 
                                 <div class="grade-section-description ml-1 mr-1 mb-1 selected-grade-desc hidden" id="poor-description">
                                     <div class="grade-desc-column">
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Handset/Device is fully functional, working and complete</p>
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Mid / Heavy wear and tear is acceptable  </p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Mid / Heavy wear and tear is acceptable </p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No physical damage (i.e. cracks, chips to device or screen or bent chassis)</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Must not have any Water Damage</p>
                                     </div>
                                     <div class="grade-desc-column">
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Touch / Face ID must be working</p>
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No FMIP, iCloud lock, Google locks or Pin / Password Locks</p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Touch / Face ID must be fully working</p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Find My iPhone, iCloud locks, Google, PIN or Password locks</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Knox disabled</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Blocked, Stolen or fake items </p>
                                     </div>
@@ -410,10 +410,11 @@
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Handset/Device is fully functional, working and complete</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Mid / Heavy wear and tear is acceptable (i.e. heavy scratches or small dents) </p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Only physical damage acceptable are cracked or chipped digitiser or glass back</p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Must not have any Water Damage</p>
                                     </div>
                                     <div class="grade-desc-column">
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Touch / Face ID must be working</p>
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No FMIP, iCloud lock, Google locks or Pin / Password Locks</p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Touch / Face ID must be fully working</p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Find My iPhone, iCloud locks, Google, PIN or Password locks</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Knox disabled</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Blocked, Stolen or fake items </p>
                                     </div>
@@ -422,16 +423,16 @@
                                 <div class="grade-section-description ml-1 mr-1 mb-1 selected-grade-desc hidden" id="faulty-description">
                                     <div class="grade-desc-column">
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Handset/Device is NOT fully functional</p>
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Heavy wear and tear is acceptable (i.e. heavy scratches or small dents) </p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Heavy wear and tear is acceptable (i.e. heavy scratches or small dents)</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">All components must be intact and device cannot be snapped into pieces</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Significant physical damage / Water damage</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Dust under screens or cameras</p>
                                     </div>
                                     <div class="grade-desc-column">
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Touch / Face ID must be working</p>
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No FMIP, iCloud lock, Google locks or Pin / Password Locks</p>
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Software faulty </p>
-                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Knox disabled</p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Touch / Face ID does not work</p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Software faulty</p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Accept Find My iPhone, iCloud locks, Google, PIN or Password locks</p>
+                                        <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">Accept Knox disabled</p>
                                         <p class="grade-desc-item"><img class="grade-desc-tick" src="{{ url('/images/front-end-icons/black_tick_selected.svg') }}">No Blocked, Stolen or fake items </p>
                                     </div>
                                 </div>

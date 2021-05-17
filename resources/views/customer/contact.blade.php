@@ -183,6 +183,7 @@
                         </div>
                     </div>
                     <p style="opacity: 0.5; margin: 0;" class="worktime-text mt-2">Calls are charged at local rate.</p>
+                    <p class="worktime-text mt-2" style="max-width: 480px;">Please note calls are recorded for monitoring and are used for ongoing training purposes</p>
                 </div>
             </div>
         </div>

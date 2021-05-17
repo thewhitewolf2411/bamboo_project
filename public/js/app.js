@@ -56436,6 +56436,12 @@ __webpack_require__(/*! ./scripts/PasswordFunctions */ "./resources/js/scripts/P
 
 __webpack_require__(/*! ./scripts/Addressian */ "./resources/js/scripts/Addressian.js");
 
+__webpack_require__(/*! ./scripts/frontend/homepage */ "./resources/js/scripts/frontend/homepage.js");
+
+__webpack_require__(/*! ./scripts/frontend/aboutpage */ "./resources/js/scripts/frontend/aboutpage.js");
+
+__webpack_require__(/*! ./scripts/frontend/whysellpage */ "./resources/js/scripts/frontend/whysellpage.js");
+
 "use strict";
 /*
 window.Vue = require('vue');
@@ -57139,50 +57145,6 @@ $('input[type=radio][name=sub]').change(function () {
     $('#select-image-no').attr('src', '/customer_page_images/body/Icon-Tick-Selected.svg');
     $('#select-text-no').text('Selected');
   }
-});
-$(".popular-product").mouseenter(function () {
-  var element = this;
-  var wrapper = element.childNodes[1];
-  var buttons = element.childNodes[3];
-  wrapper.classList.add('faded');
-  buttons.classList.remove('hidden');
-}).mouseleave(function () {
-  var element = this;
-  var wrapper = element.childNodes[1];
-  var buttons = element.childNodes[3];
-  wrapper.classList.remove('faded');
-  buttons.classList.add('hidden');
-});
-$('#sell-mobile-phones').click(function () {
-  window.location = '/sell/shop/mobile/all';
-});
-$('#sell-watches').click(function () {
-  window.location = '/sell/shop/tablets/all';
-});
-$('#sell-tablets').click(function () {
-  window.location = '/sell/shop/watches/all';
-});
-$(".sell-category-wrapper").mouseenter(function () {
-  // background - 1
-  var bg = this.childNodes[1];
-  bg.classList.add('small'); // image - 3
-
-  var img = this.childNodes[3];
-  img.classList.add('enlarged'); // shadow - 5
-
-  var shadow = this.childNodes[5];
-  shadow.classList.add('zoomed');
-}).mouseleave(function () {
-  //unfocusCategory(this);
-  // background - 1
-  var bg = this.childNodes[1];
-  bg.classList.remove('small'); // image - 3
-
-  var img = this.childNodes[3];
-  img.classList.remove('enlarged'); // shadow - 5
-
-  var shadow = this.childNodes[5];
-  shadow.classList.remove('zoomed');
 });
 $(document).ready(function () {
   //alert(location.hash);
@@ -58084,6 +58046,119 @@ $('.deletedate').on('click', function () {
       }
     });
   }
+});
+
+/***/ }),
+
+/***/ "./resources/js/scripts/frontend/aboutpage.js":
+/*!****************************************************!*\
+  !*** ./resources/js/scripts/frontend/aboutpage.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$('#sell-mobile-phones').on('click', function () {
+  window.location = '/sell';
+  localStorage.setItem('preselectedSellCategory', 'mobile');
+});
+$('#sell-watches').on('click', function () {
+  window.location = '/sell';
+  localStorage.setItem('preselectedSellCategory', 'watches');
+});
+$('#sell-tablets').on('click', function () {
+  window.location = '/sell';
+  localStorage.setItem('preselectedSellCategory', 'tablets');
+});
+$(".sell-category-wrapper").on('mouseenter', function () {
+  // background - 1
+  var bg = this.childNodes[1];
+  bg.classList.add('small'); // image - 3
+
+  var img = this.childNodes[3];
+  img.classList.add('enlarged'); // shadow - 5
+
+  var shadow = this.childNodes[5];
+  shadow.classList.add('zoomed');
+}).on('mouseleave', function () {
+  //unfocusCategory(this);
+  // background - 1
+  var bg = this.childNodes[1];
+  bg.classList.remove('small'); // image - 3
+
+  var img = this.childNodes[3];
+  img.classList.remove('enlarged'); // shadow - 5
+
+  var shadow = this.childNodes[5];
+  shadow.classList.remove('zoomed');
+});
+
+/***/ }),
+
+/***/ "./resources/js/scripts/frontend/homepage.js":
+/*!***************************************************!*\
+  !*** ./resources/js/scripts/frontend/homepage.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(".popular-product").on('mouseenter', function () {
+  var element = this;
+  var wrapper = element.childNodes[1];
+  var buttons = element.childNodes[3];
+  wrapper.classList.add('faded');
+  buttons.classList.remove('hidden');
+}).on('mouseleave', function () {
+  var element = this;
+  var wrapper = element.childNodes[1];
+  var buttons = element.childNodes[3];
+  wrapper.classList.remove('faded');
+  buttons.classList.add('hidden');
+});
+
+/***/ }),
+
+/***/ "./resources/js/scripts/frontend/whysellpage.js":
+/*!******************************************************!*\
+  !*** ./resources/js/scripts/frontend/whysellpage.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+document.addEventListener("DOMContentLoaded", function (event) {
+  $('#sell-mobile-phones').on('click', function () {
+    window.location = '/sell';
+    localStorage.setItem('preselectedSellCategory', 'mobile');
+  });
+  $('#sell-watches').on('click', function () {
+    window.location = '/sell';
+    localStorage.setItem('preselectedSellCategory', 'watches');
+  });
+  $('#sell-tablets').on('click', function () {
+    window.location = '/sell';
+    localStorage.setItem('preselectedSellCategory', 'tablets');
+  });
+  $(".sell-category-wrapper").on('mouseenter', function () {
+    // background - 1
+    var bg = this.childNodes[1];
+    bg.classList.add('small'); // image - 3
+
+    var img = this.childNodes[3];
+    img.classList.add('enlarged'); // shadow - 5
+
+    var shadow = this.childNodes[5];
+    shadow.classList.add('zoomed');
+  }).on('mouseleave', function () {
+    //unfocusCategory(this);
+    // background - 1
+    var bg = this.childNodes[1];
+    bg.classList.remove('small'); // image - 3
+
+    var img = this.childNodes[3];
+    img.classList.remove('enlarged'); // shadow - 5
+
+    var shadow = this.childNodes[5];
+    shadow.classList.remove('zoomed');
+  });
 });
 
 /***/ }),

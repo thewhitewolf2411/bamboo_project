@@ -31,6 +31,9 @@
                         document.getElementById('total-sell-price').innerHTML = '£'+response.data.total;
                         document.getElementById('promo_code').value = promocode;
                     }
+                    if(response.data.pass === false){
+                        document.getElementById('promotional-code-info-text').innerHTML = response.data.message;
+                    }
                 }
             }); 
         });

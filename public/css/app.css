@@ -11354,7 +11354,7 @@ main p, a, span {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 250px;
+  height: 300px;
 }
 
 .worktime-text {
@@ -11644,6 +11644,31 @@ main p, a, span {
   height: 200px;
   width: 200px;
   border-radius: 50%;
+}
+
+.about-sustainability-images {
+  display: block;
+  position: relative;
+  width: auto;
+  max-width: 400px;
+  margin-top: 150px;
+  margin-bottom: auto;
+}
+
+.about-sustainability-images > .image-1, .about-sustainability-images > .image-2 {
+  display: block;
+  width: 200px;
+  height: 200px;
+}
+
+.about-sustainability-images > .image-1 {
+  position: relative;
+}
+
+.about-sustainability-images > .image-2 {
+  position: absolute;
+  right: -55px;
+  top: -105px;
 }
 
 #second-about-image {
@@ -13719,7 +13744,7 @@ header {
   flex-direction: row;
   flex-wrap: nowrap;
   height: 130px;
-  padding: 0 120px 0 120px;
+  padding: 0 120px 0 100px;
   justify-content: space-between;
   background: #fff;
   transition: height 0.5s ease;
@@ -13727,7 +13752,6 @@ header {
 
 #header.resized {
   height: 80px;
-  padding: 0 30px 60px;
 }
 
 #full-bamboo-logo.resized {
@@ -13736,8 +13760,7 @@ header {
 }
 
 #header-urls.resized {
-  padding: 0 60px 0;
-  justify-content: center;
+  justify-content: flex-end;
 }
 
 #full-logo-container.resized {
@@ -13798,8 +13821,8 @@ header {
 }
 
 .hover-link {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   border: 2px solid;
   border-top: none;
   border-bottom-right-radius: 5px;
@@ -13932,7 +13955,7 @@ header {
 }
 
 #user-hover-link:hover {
-  height: 120px;
+  height: 80px;
 }
 
 #user-hover-link:hover .showhover {
@@ -13953,9 +13976,9 @@ header {
   background-position: center;
   background-repeat: no-repeat;
   width: 100%;
-  height: 76px;
-  min-height: 76px;
-  background-size: 50px;
+  height: 50px;
+  min-height: 50px;
+  background-size: 35px;
 }
 
 #user-hover-link:hover .img {
@@ -13981,9 +14004,9 @@ header {
   background-position: center;
   background-repeat: no-repeat;
   width: 100%;
-  height: 76px;
-  min-height: 76px;
-  background-size: 50px;
+  height: 50px;
+  min-height: 50px;
+  background-size: 35px;
 }
 
 #card-hover-link:hover .img {
@@ -14018,7 +14041,7 @@ header {
 }
 
 #card-hover-link:hover {
-  height: 120px;
+  height: 80px;
 }
 
 #card-hover-link:hover .showhover {
@@ -14103,6 +14126,56 @@ header {
   transition: 0.2s linear;
 }
 
+#start-selling.sell-section {
+  cursor: pointer;
+  transition: border 0.3s ease-in-out;
+  border: 0px solid black;
+  min-width: 230px;
+}
+
+#start-selling.sell-section:hover {
+  border: 3px solid black;
+}
+
+#start-selling.large {
+  min-height: 66px;
+}
+
+.start-selling-button-header {
+  transition: 0.2s linear;
+}
+
+#start-selling-button-text {
+  font-size: 16px;
+  font-family: Sharp Sans No1 Semibold;
+  transition: all 0.3s linear !important;
+}
+
+.start-selling-button-header:hover > #start-selling-button-text {
+  font-size: 17px;
+}
+
+#start-selling-button-text.margin-b {
+  margin-bottom: 5px;
+}
+
+#start-selling-button-img-down {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#start-selling-button-img-down.invisible {
+  display: none;
+}
+
+.header-url-link {
+  margin-top: auto;
+  margin-bottom: 14px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 #start-shopping a {
   color: #fff;
   transition: 0.2s linear;
@@ -14150,7 +14223,7 @@ header {
 }
 
 .header-selling-links.resized {
-  top: 130px;
+  top: 145px;
 }
 
 @media screen and (max-width: 740px) and (min-width: 325px) {
@@ -14870,7 +14943,6 @@ h3, h4, h5 {
 .cookie-consent__message > a {
   font-size: 14px;
   color: white;
-  text-decoration: underline;
   transition: color 0.5s ease-in-out;
 }
 
@@ -15034,6 +15106,10 @@ h3, h4, h5 {
 
 .semibold-text {
   font-family: Sharp Sans No1 Bold;
+}
+
+.noscrolly {
+  overflow-y: hidden !important;
 }
 
 @media (max-width: 1130px) {
@@ -19716,7 +19792,7 @@ input[type=number] {
   flex-direction: row;
   flex-wrap: wrap;
   padding: 40px 0;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .deliveryqualitybanner-col {
@@ -19733,6 +19809,11 @@ input[type=number] {
   height: 120px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.deliveryqualitybanner-img.larger {
+  width: 145px;
+  margin-left: 65px;
 }
 
 .deliveryqualitybanner-text {
