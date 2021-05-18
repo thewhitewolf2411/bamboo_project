@@ -607,8 +607,10 @@ class CustomerCareController extends Controller
         $tradein->save();
 
         $trayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
-        $trayContent->delete();
-
+        if($trayContent){
+            $trayContent->delete();
+        }
+        
         return redirect()->back();
 
     }

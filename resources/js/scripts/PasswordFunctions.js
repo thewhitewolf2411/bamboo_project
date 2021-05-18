@@ -1,10 +1,10 @@
-if(document.getElementById('password_reg')){
+if(document.getElementById("password_reg")){
     document.getElementById("password_reg").addEventListener('keyup',  function(){
         checkNewPass("password_reg");
-    });
+    });    
 }
 
-if(document.getElementById('password_card')){
+if(document.getElementById("password_card")){
     document.getElementById("password_card").addEventListener('keyup',  function(){
         checkNewPass("password_card");
     });

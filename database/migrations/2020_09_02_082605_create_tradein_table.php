@@ -48,6 +48,7 @@ class CreateTradeinTable extends Migration
             $table->boolean('trade_pack_send_by_customer')->nullable();
             $table->boolean('fmip_gock')->nullable();
             $table->boolean('pin_locked')->nullable();
+            $table->boolean('blacklisted')->default(false);
             $table->timestamps();
         });
     }

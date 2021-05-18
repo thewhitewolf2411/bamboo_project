@@ -461,6 +461,7 @@ class TestingController extends Controller
         $result = (json_decode($response));
         if($result->RawResponse->blackliststatus == "Yes"){
             $tradein->job_state = "7";
+            $tradein->blacklisted = true;
             $tradein->save();
 
             $user = User::where('id', $tradein->user_id)->first();

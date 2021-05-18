@@ -31,6 +31,7 @@ require('./scripts/Addressian');
 require('./scripts/frontend/homepage');
 require('./scripts/frontend/aboutpage');
 require('./scripts/frontend/whysellpage');
+require('./scripts/Costs');
 
 "use strict";
 

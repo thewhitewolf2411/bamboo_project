@@ -26,14 +26,14 @@ class DespatchedDevice extends Model
     public function getTradeinId(){
         $tradein = Tradein::find($this->tradein_id);
         if($tradein){
-            return $tradein->barcode;
+            return $tradein->barcode_original;
         }
     }
 
     public function getTradeinBarcode(){
         $tradein = Tradein::find($this->tradein_id);
         if($tradein){
-            return $tradein->barcode_original;
+            return $tradein->barcode;
         }
     }
 

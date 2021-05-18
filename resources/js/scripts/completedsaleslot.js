@@ -60,6 +60,9 @@ $('#payment-received-btn').on('click', function () {
         $.ajax({
             type: "POST",
             url: "/portal/sales-lot/completed-sales-lot/markaspaymentrecieved",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             data: {
                 lot_id: selectedid
             },

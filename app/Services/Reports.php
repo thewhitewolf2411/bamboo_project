@@ -52,6 +52,7 @@ class Reports{
         if(isset($request->from) && isset($request->to)){
             $from = \Carbon\Carbon::parse($request->from);
             $to = \Carbon\Carbon::parse($request->to);
+            $to->addDay();
         }
 
         $tradeins = "";
@@ -397,6 +398,7 @@ class Reports{
         if(isset($request->from) && isset($request->to)){
             $from = \Carbon\Carbon::parse($request->from);
             $to = \Carbon\Carbon::parse($request->to);
+            $to->addDay();
         }
 
         $tradeins = "";
@@ -559,6 +561,7 @@ class Reports{
         if(isset($request->from) && isset($request->to)){
             $from = \Carbon\Carbon::parse($request->from);
             $to = \Carbon\Carbon::parse($request->to);
+            $to->addDay();
         }
 
         $tradeins = "";

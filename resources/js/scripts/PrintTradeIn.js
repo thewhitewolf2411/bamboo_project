@@ -88,7 +88,6 @@ $('#tradein-checkallbtn').on('click', function(){
 $('.printcheckbox').on('click', function(){
 
     var numberOfChecked = $('.printcheckbox:checked').length;
-    console.log(numberOfChecked);
 
     if($(this).is('checked')){
         $(this).prop('checked', false);        
@@ -219,6 +218,8 @@ $(document).ready(function(){
             "oLanguage" : {
                 "sInfo" : "Showing _START_ to _END_",
              },
+             "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+             "pageLength": 100
         });
     
         // Apply the search

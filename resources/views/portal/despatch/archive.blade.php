@@ -20,7 +20,7 @@
 
     <div class="portal-table-container">
 
-        <table class="portal-table sortable" id="despatch-devices-table">
+        <table class="portal-table" id="despatch-devices-table">
             <tr>
                 <td class="text-center"><div class="table-element">Trade-in ID</div></td>
                 <td class="text-center"><div class="table-element">Trade-in barcode number</div></td>

@@ -16,7 +16,7 @@
             </div>
             @endif
 
-            <div class="py-4 d-flex align-items-center">
+            <!--<div class="py-4 d-flex align-items-center">
                 <form class="d-flex align-items-center" action="/portal/customer-care/order-managment/" method="get">              
                     <label for="searchtradeins">Select product type:</label>
                     <select id="search" name="search" class="form-control mx-3">
@@ -26,13 +26,7 @@
                         <option value="3" @if($search == 3) selected @endif>Smartwatches</option>
                     </select>
                     <button type="submit" class="btn btn-primary btn-blue">Search</button>
-                </form>
-                <!--<form class="d-flex align-items-center mx-5" action="/portal/customer-care/order-managment/" method="get">              
-                    <label for="searchtradeins">Input Trade-in barcode number / Trade-in ID:</label>
-                    <input type="text" minlength="7" name="search" class="form-control mx-3 my-0">
-                    <button type="submit" class="btn btn-primary btn-blue">Search</button>
-                </form>-->
-            </div>
+            </div>-->
 
             <table class="portal-table" id="order-management-table">
                 <thead>
@@ -107,7 +101,7 @@
                                 
                             <td class="text-center 1 p-0">
                                 @if($tradein->hasDeviceBeenReceived() && !$tradein->deviceInPaymentProcess())
-                                    <a title="Return device to receiving" href="/toreceive/{{$tradein->barcode}}">
+                                    <a title="Return device to receiving" onclick="return confirm('Are you sure you want to send device to receiving?')" href="/toreceive/{{$tradein->barcode}}">
                                         {{-- <i class="fa fa-times" style="color:blue !important;" title="Return device to receiving" ></i> --}}
                                         <img style="width: 15px;" src="{{url('/images/undo.png')}}">
                                     </a>
@@ -119,7 +113,7 @@
                             
                             <td class="text-center 3 p-0">
                                 @if($tradein->hasBeenTested())
-                                <a title="Return device to testing" href="/totesting/{{$tradein->id}}">
+                                <a title="Return device to testing" onclick="return confirm('Are you sure you want to send device to testing?')" href="/totesting/{{$tradein->id}}">
                                     {{-- <i class="fa fa-times" style="color:black !important;"></i> --}}
                                     <img style="width: 15px;" src="{{url('/images/undo.png')}}">
                                 </a>
@@ -147,6 +141,13 @@
 
 
             </table>
+
+            <div class="py-4 d-flex align-items-center">
+
+                <p>Number of tradeins: {{count($tradeins)}}</p>
+
+            </div>
+
 
             <form id="print_trade_pack_form" name="form-print-trade-pack" enctype="multipart/form-data" action="/portal/customer-care/trade-in/printlabel" method="post">
                 @csrf
@@ -203,7 +204,11 @@
 
 <script>
     function sendToDespatch(id){
-        $.ajax({
+
+        var c = confirm('Are you sure you want to send device back to customer?');
+
+        if(c){
+            $.ajax({
             type: "POST",
             url: "{{route('sendToDespatch')}}",
             headers: {
@@ -214,9 +219,12 @@
                 if(response == 200){
                     alert('This order has been marked to be returned to customer.');
                     window.location.reload();
+                    }
                 }
-            }
-        });
+            });
+        }
+
+
     }
 </script>
 

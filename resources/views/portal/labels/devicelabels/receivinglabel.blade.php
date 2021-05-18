@@ -18,7 +18,7 @@
     td{
         width: 200px !important;
         padding: 0 !important;
-        min-width: 141px;
+        min-width: 121px;
     }
 
 </style>
