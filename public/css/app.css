@@ -12466,6 +12466,26 @@ main p, a, span {
   flex-direction: row;
 }
 
+#birth-date-alert {
+  margin: 5px;
+  height: 30px;
+  transition: all 0.3s linear;
+  overflow-y: hidden;
+  padding: 0;
+}
+
+#birth-date-alert > p {
+  text-align: center;
+  font-size: 12px;
+  margin: 0;
+  color: black;
+  margin-top: 4px;
+}
+
+#birth-date-alert.invisible {
+  height: 0;
+}
+
 .top-text-shadow {
   text-shadow: 0px 1px #798080;
   font-size: 64px;
@@ -15061,7 +15081,6 @@ h3, h4, h5 {
   justify-content: start;
   max-width: 400px;
   position: relative;
-  cursor: pointer;
 }
 
 .popular-product-wrapper {
@@ -15103,6 +15122,18 @@ h3, h4, h5 {
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.btn.btn-orange.sell-popular {
+  color: white;
+  border-radius: 0.25rem;
+  border: 0px solid white;
+}
+
+.btn.btn-orange.sell-popular:hover {
+  color: white !important;
+  background-color: #F28E33 !important;
+  border: 3px solid white;
 }
 
 .semibold-text {
@@ -17652,6 +17683,14 @@ input.lookup-delivery-basket::placeholder {
 .single-sell-category {
   width: 400px;
   cursor: pointer;
+  transition: all 0.3s linear;
+  -webkit-filter: opacity(1);
+          filter: opacity(1);
+}
+
+.single-sell-category.faded {
+  -webkit-filter: opacity(0.5);
+          filter: opacity(0.5);
 }
 
 .single-sell-category > .rounded-background-image {
@@ -18078,7 +18117,7 @@ input.lookup-delivery-basket::placeholder {
   margin: 0;
 }
 
-.order-summary-cart {
+.order-summary-cart.margin-top {
   margin-top: 73px;
 }
 

@@ -25,6 +25,7 @@
 
     </head>
     <body>
+        {{-- {!!dd(App\Helpers\Dates::getYears())!!} --}}
         <header>@include('customer.layouts.header')</header>
         <main>
 
@@ -44,7 +45,7 @@
                         <div class="modal-first-element">
                             <div class="register-elements-container">
                                 <h3>New Customers</h3>
-                                <button onclick="showRegistrationForm()" class="btn btn-primary">
+                                <button onclick="showRegistrationForm()" class="btn btn-primary" id="registerBtn">
                                     Sign up
                                 </button>
                             </div>
@@ -122,6 +123,9 @@
                     document.getElementsByClassName('modal-second-element')[0].classList.add('modal-second-element-active');
                 }
             }
+            document.getElementById('registerBtn').addEventListener('click', function(){
+                document.getElementById('loginModal').classList.remove('noscrolly');
+            })
         </script>
 
     </body>

@@ -9,7 +9,7 @@
                 @csrf
                 <div class="sell-searchfield">
                     <input class="search-sell-input" id="searchSellDevices" type="text" name="search_argument" placeholder="Enter the make or model of your device">
-                    <div class="search-sell-btn" onclick="hitSearch()"><img class="sell-search-icon" src="{{asset('/images/front-end-icons/search_icon.svg')}}"></div>
+                    <div class="search-sell-btn" onclick="hitSearch()" id="to_search_results"><img class="sell-search-icon" src="{{asset('/images/front-end-icons/search_icon.svg')}}"></div>
                 </div>
                 <div id="selling-search-results-wrapper" class="invisible">
                     <div id="selling-search-results" class="nomatches">
@@ -75,6 +75,10 @@
     //on keyup, start the countdown
     input.addEventListener('keyup', function(){
         $('.selling-single-result').remove();
+        let noresults = document.getElementById("no-results-sorry");
+        if(!noresults.classList.contains('invisible')){
+            noresults.classList.add('invisible');
+        }
         clearTimeout(typingTimer);
         typingTimer = setTimeout(getResults, doneTypingInterval);
 
@@ -82,9 +86,6 @@
         let resultsWrapper = document.getElementById('selling-search-results-wrapper');
         loader.classList.remove('invisible');
         resultsWrapper.classList.remove('invisible');
-        if(noresults.classList.contains('noresults')){
-            noresults.classList.remove('noresults');
-        }
     });
 
     //on keydown, clear the countdown 
@@ -151,6 +152,7 @@
                                 resultsdiv.appendChild(singledevice);
                             }
                         } else {
+                            document.getElementById('to_search_results').onclick = function(e){ e.preventDefault(); }
                             // if(noresults.classList.contains('invisible')){
                             //     noresults.classList.remove('invisible');
                             // }

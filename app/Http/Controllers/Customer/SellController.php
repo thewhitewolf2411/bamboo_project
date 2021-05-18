@@ -32,6 +32,7 @@ use App\Eloquent\Payment\UserBankDetails;
 use App\Eloquent\PromotionalCode;
 use App\Eloquent\UserPromotionalCode;
 use App\Services\NotificationService;
+use App\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Crypt;
 
@@ -352,7 +353,7 @@ class SellController extends Controller
             $trimmed = preg_replace("/[^A-Za-z0-9 ]/", '', $request->term);
             if($trimmed !== ""){
                 $searchterm = $trimmed;
-                $devices = SellingProduct::where('product_name', 'LIKE', '%'.$searchterm.'%')->get()->take(10);
+                $devices = SellingProduct::where('product_name', 'LIKE', "%{$searchterm}%")->get()->take(10);
 
                 // if matching results
                 if($devices->count() > 0){
@@ -404,6 +405,11 @@ class SellController extends Controller
             return redirect()->back()->with('productaddedtocart', true);
         } else {
             if($request->has('email')){
+
+                $userExists = User::where('email', $request->email)->first();
+                if($userExists){
+                    return redirect()->back()->with('useralreadyexists', true);
+                }
 
                 $abandoned_cart = new AbandonedCart([
                     'user_email'    => $request->email,

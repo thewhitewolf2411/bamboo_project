@@ -113,10 +113,10 @@
                 </div>
             </div>
 
-            <div id="device-make-results-title" class="hidden">
+            <a href="/contact" id="device-make-results-title" class="hidden">
                 <p class="sell-subtitle mb-2 mt-5">Step 3: Select your model</p>
                 <p class="sell-subtitle-regular mb-5 mt-1">Not sure what model your device is? Don't worry, we got your covered <img class="sell-icon-covered ml-2" src="{{asset('images/front-end-icons/black_arrow_next.svg')}}"></p>
-            </div>
+            </a>
             
             <div id="device-makes-results" class="hidden">
             </div>
@@ -456,9 +456,9 @@
                         tablets.style.display = 'none';
                         watches.style.display = 'none';
 
-                        mobile_category.style.filter =  'opacity(1)';
-                        tablets_category.style.filter =  'opacity(0.5)';
-                        watches_category.style.filter =  'opacity(0.5)';
+                        mobile_category.classList.remove('faded');
+                        tablets_category.classList.add('faded');
+                        watches_category.classList.add('faded');
                         break;
 
                     case 'tablets':
@@ -470,9 +470,9 @@
                         tablets.style.display = 'flex';
                         watches.style.display = 'none';
 
-                        mobile_category.style.filter =  'opacity(0.5)';
-                        tablets_category.style.filter =  'opacity(1)';
-                        watches_category.style.filter =  'opacity(0.5)';
+                        mobile_category.classList.add('faded');
+                        tablets_category.classList.remove('faded');
+                        watches_category.classList.add('faded');
                         break;
 
                     case 'watches':
@@ -484,14 +484,17 @@
                         tablets.style.display = 'none';
                         watches.style.display = 'flex';
 
-                        mobile_category.style.filter =  'opacity(0.5)';
-                        tablets_category.style.filter =  'opacity(0.5)';
-                        watches_category.style.filter =  'opacity(1)';
+                        mobile_category.classList.add('faded');
+                        tablets_category.classList.add('faded');
+                        watches_category.classList.remove('faded');
                         break;
                 
                     default:
                         break;
                 }
+
+                $('.device-brand').removeClass('selected');
+                $('.device-brand').css('filter', 'opacity(0.3)');
             }
 
             function selectBrand(id){

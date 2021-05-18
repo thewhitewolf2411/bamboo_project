@@ -4,6 +4,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         
@@ -122,7 +123,12 @@
                                 <label class="elem-grade-container ml-0 mr-2" id="grade-5-text" for="grade-5">Faulty</label>
                             </div>
                             <div class="row m-0 mt-2">
-                                <a role="button" class="my-auto ml-0" data-toggle="modal" data-target="#gradesModal"><label class="d-flex ml-0 mr-3 my-auto"><img class="grades-info-img" src="{{asset('/customer_page_images/body/Icon-Information.png')}}" class="mx-3"><p class="pt-2">What do these grades mean?</p></label></a>
+                                <a role="button" class="my-auto ml-0" data-toggle="modal" data-target="#gradesModal">
+                                    <label class="d-flex ml-0 mr-3 my-auto cursor-pointer">
+                                        <img class="grades-info-img" src="{{asset('/customer_page_images/body/Icon-Information.png')}}" class="mx-3">
+                                        <p class="pt-1" style="font-size: 14px;">What do these grades mean?</p>
+                                    </label>
+                                </a>
                             </div>
                         </div>
                     
@@ -270,6 +276,14 @@
 
             @include('partial.newsletter')
 
+            @if(Session::has('useralreadyexists'))
+                <script>
+                    $(window).on('load',function(){
+                        $('#loginModal').modal('show');
+                    });
+                </script>
+            @endif
+
             @if(session('showLogin') || $errors->all())
                 <script>
                     $(window).on('load',function(){
@@ -277,7 +291,7 @@
                     });
                 </script>
             @endif
-            <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade noscrolly" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -297,6 +311,13 @@
                                 <div class="login-form-container">
                                     <h3>Sign in</h3>
                                     <form method="POST" action="{{ route('login') }}">
+
+                                        @if(Session::has('useralreadyexists'))
+                                            <span class="invalid-feedback" style="display: block;" role="alert">
+                                                <strong>Account with given email already exists. Please login to sell your device.</strong>
+                                            </span>
+                                        @endif
+
                                         @csrf
                                         <div class="form-group">
                                             <input id="login" type="text" class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Username or Email" name="login" value="{{ old('username') ?: old('email') }}" required autofocus>

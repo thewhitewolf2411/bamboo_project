@@ -3,6 +3,26 @@
     flex-direction: row;
 }
 
+#birth-date-alert{
+    margin: 5px;
+    height: 30px;
+    transition: all 0.3s linear;
+    overflow-y: hidden;
+    padding: 0;
+}
+
+#birth-date-alert > p {
+    text-align: center;
+    font-size: 12px;
+    margin: 0;
+    color: black;
+    margin-top: 4px;
+}
+
+#birth-date-alert.invisible{
+    height: 0;
+}
+
 .top-text-shadow{
     text-shadow: 0px 1px #798080;
     font-size: 64px;

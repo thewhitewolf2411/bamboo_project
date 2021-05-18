@@ -244,7 +244,7 @@
                                 <img class="next-icon-results" src="{{asset('/images/front-end-icons/purple_arrow_next.svg')}}">
                             </div> --}}
                             <div class="product-buttons hidden">
-                                <a class="btn btn-orange" href="{{route('showSellItem', ['parameter' => $device->id])}}">Start Selling</a>
+                                <a class="btn btn-orange sell-popular" href="{{route('showSellItem', ['parameter' => $device->id])}}">Start Selling</a>
                             </div>
                         </div>
 

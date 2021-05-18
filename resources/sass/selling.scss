@@ -1345,6 +1345,12 @@ input.lookup-delivery-basket::placeholder{
 .single-sell-category{
     width: 400px;
     cursor: pointer;
+    transition: all 0.3s linear;
+    filter: opacity(1);
+}
+
+.single-sell-category.faded{
+    filter: opacity(0.5);
 }
 
 .single-sell-category > .rounded-background-image{
@@ -1776,7 +1782,7 @@ input.lookup-delivery-basket::placeholder{
     margin: 0;
 }
 
-.order-summary-cart{
+.order-summary-cart.margin-top{
     margin-top: 73px;
 }
 

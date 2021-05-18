@@ -33,7 +33,7 @@ class Dates{
     }
 
     public static function getYears(){
-        $current = Carbon::now()->year;
+        $current = Carbon::now()->year - 17;
         $max_revers = -100;
         $years = [];
         $i = 0;
@@ -41,8 +41,37 @@ class Dates{
             $i-=1;
             array_push($years, $current + $i);
         }
-        
+
         return $years;
+    }
+
+    public static function getDates(){
+        $current = Carbon::now()->year - 17;
+        $max_revers = -100;
+        $years = [];
+        $i = 0;
+        while($max_revers < $i){
+            $i-=1;
+            array_push($years, $current + $i);
+        }
+
+        $dates = [];
+
+        $count = 0;
+        foreach($years as $year){
+            $dates[$count]['year'] = $year;
+            for($month = 1; $month <= 12; $month++){
+                $totalDays = Carbon::parse('1.'.$month.'.'.$year)->daysInMonth;
+                $allDays = [];
+                for($day = 1; $day<= $totalDays; $day++){
+                    array_push($allDays, $day);
+                }
+                $dates[$count]['months'][$month]['days'] = $allDays;
+            }
+            $count++;
+        }
+        
+        return json_encode($dates);
     }
 
 
