@@ -10,11 +10,9 @@
         })(window,document,'script','dataLayer','GTM-KC33JWC');</script>
         <!-- End Google Tag Manager -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-        <title>Terms & Conditions</title>
-
-
+        <title>Bamboo Mobile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" sizes="96x96" href="/customer_page_images/header/favicon-96x96.png">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <!-- jQuery -->
@@ -45,11 +43,13 @@
                         </p>
                     </div>
                     <br>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
                             <p class="text-left footer-text-title">How The Contract Is Formed Between You And Us</p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             Our site is only intended for use by people registered with us and resident in Great Britain and Northern Ireland. At our complete discretion we may accept or reject orders from people outside of these territories.<br>
                             Your contract with us will be formed when we receive your sell order. It will incorporate these terms and conditions and our terms of use. Please click on the "How It Works" page for more information.<br>
@@ -73,13 +73,18 @@
                     </div>
 
                     <br>
+                    <hr>
+                    <br>
+
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
                             <p class="text-left footer-text-title">PLEASE ENSURE THAT YOU ARE HAPPY TO SEND THE PHONE TO US AND THAT IT IS WITHIN YOUR RIGHTS TO DO SO.</p>
                         </div>
+                        <br>
                         <div class="slavery-title-container-small">
                             <p class="text-left footer-text-title">Consumers</p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             By placing an order through our site, you warrant that:
                         </p>
@@ -96,10 +101,14 @@
                             If you deal as a consumer any provision of this contract which is of no effect to a consumer shall not apply. Your statutory rights are not affected by this contract.<br>
                             For the purposes of these terms and conditions, "consumer" means an individual who neither makes this contract in the course of a business, nor holds himself out as doing so, as defined by the Unfair Contract Terms Act 1977.<br>
                         </p>
+                        <br>
+                        <hr>
+                        <br>
 
                         <div class="slavery-title-container-small">
                             <p class="text-left footer-text-title">Businesses</p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             By placing an order through our site, you warrant that:
                         </p>
@@ -111,16 +120,20 @@
                         </ul>
                     </div>
                     <br>
+                    <hr>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small title-red">
                             <p class="text-left footer-text-title">Phones and Devices</p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             Each mobile device(s) (inc. Mobile Phones, Tablets and Watches) sold should match the make and model in the sale order and meet the following conditions:
                         </p>
-                        <div class="slavery-title-container-small title-red">
-                            <p class="text-left footer-text-title">Condition – Excellent Working</p>
+                        <br>
+                        <div class="title-red">
+                            <p class="text-left footer-text-title terms-condition-title">Condition – Excellent Working</p>
                         </div>
                         <ul class="footer-text-small">
                             <li>Handset/Device is fully functional, working and complete</li>
@@ -132,7 +145,8 @@
                             <li>No Knox disabled</li>
                             <li>No Blocked, Stolen or fake items </li>
                         </ul>
-                        <div class="slavery-title-container-small title-red">
+                        <br>
+                        <div class="title-red">
                             <p class="text-left footer-text-title">Condition – Good Working</p>
                         </div>
                         <ul class="footer-text-small">
@@ -145,7 +159,8 @@
                             <li>No Knox disabled</li>
                             <li>No Blocked, Stolen or fake items </li>
                         </ul>
-                        <div class="slavery-title-container-small title-red">
+                        <br>
+                        <div class="title-red">
                             <p class="text-left footer-text-title">Condition – Poor Working</p>
                         </div>
                         <ul class="footer-text-small">
@@ -158,7 +173,8 @@
                             <li>No Knox disabled</li>
                             <li>No Blocked, Stolen or fake items </li>
                         </ul>
-                        <div class="slavery-title-container-small title-red">
+                        <br>
+                        <div class="title-red">
                             <p class="text-left footer-text-title">Condition – Damaged Working</p>
                         </div>
                         <ul class="footer-text-small">
@@ -171,7 +187,8 @@
                             <li>No Knox disabled</li>
                             <li>No Blocked, Stolen or fake items </li>
                         </ul>
-                        <div class="slavery-title-container-small title-red">
+                        <br>
+                        <div class="title-red">
                             <p class="text-left footer-text-title">Condition – Faulty</p>
                         </div>
                         <ul class="footer-text-small">
@@ -186,6 +203,7 @@
                             <li>Accept Knox disabled </li>
                             <li>No Blocked, Stolen or fake items </li>
                         </ul>
+                        <br>
                         <p class="footer-text-small">
                             We accept phone battery chargers and accessories. But, these do not increase the value of your order. We may not be able to return accessories or original packaging (box) if you request your phone to be returned.<br>
                             By submitting an order through our site you warrant that the phone(s) and/or devices(s) comply with these terms.<br>
@@ -193,11 +211,14 @@
                         </p>
                     </div>
                     <br>
+                    <hr>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
                             <p class="text-left footer-text-title">Data Risks and Precautions - Important</p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             Please remember that by sending your device to us, you agree to release us from all and any claims, losses or damages with respect to the device, any data stored or contained therein or on any media used in conjunction with the device (whether in the form of personal details, SMS, photos, games, songs or other data ("Data")). We accept no responsibility in relation to the security, protection, confidentiality or use of such data and it is your responsibility to ensure so far as practicable that Data is removed from the device prior to you sending it to us.<br><br>
                             Although in our experience the risk of Data left on your device being accessed by us or by any third party to whom we subsequently sell the device are very low, we draw to your attention the following points which will help you decide whether to accept the risk of selling us a device which may contain accessible Data.<br><br>
@@ -209,22 +230,28 @@
                         </p>
                     </div>
                     <br>
+                    <hr>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
                             <p class="text-left footer-text-title">Sim Card and Memory Card removal – Important</p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             You are responsible for cancelling any airtime contract linked to each device. We are not responsible for any call costs arising before, or after, receipt of your device, or arising from any other circumstances whatsoever.<br><br>
                             Please ensure you remove your SIM card and Memory card before sending us your device. We accept no liability in the event that a SIM card is sent with a device and charges are then incurred. You shall continue to be responsible for such charges. Any SIM cards and/or Memory cards received by us are non-returnable and will be destroyed.
                         </p>
                     </div>
                     <br>
+                    <hr>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
                             <p class="text-left footer-text-title">Lost or Stolen Mobile Phones and Devices</p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             Selling a mobile phone or device which you do not own may amount to a criminal offence. We will check the IMEI/Serial number of all mobile phones and devices received on Phonecheck (www.phonecheck.com) to ensure no lost or stolen items are purchased.<br><br>
                             If a mobile phone or device is found to have a record that indicates it has been lost or stolen or we become aware of any other issue relating to its ownership, we will notify the seller by email and quarantine the mobile phone or device for an initial period of 28 days ("the Quarantine Period"). Payment for the mobile phone or device will be withheld by us until the Phonecheck does not show the mobile phone as stolen or lost.<br><br>
@@ -239,11 +266,14 @@
                         </p>
                     </div>
                     <br>
+                    <hr>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
                             <p class="text-left footer-text-title">Mobile Phones and Devices with AssetWatch</p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             We will check the IMEI/Serial number of all mobile phones and devices received on Phonecheck (www.phonecheck.com) to ensure it is not registered to AssetWatch.<br><br>
                             If a mobile phone or device is found to have a record that indicates it is an AssetWatch item, we will notify the seller by email and quarantine the mobile phone or device for an initial period of 28 days ("the Quarantine Period"). Payment for the mobile phone or device will be withheld by us until Phonecheck does not show the mobile phone as AssetWatch.<br><br>
@@ -251,11 +281,14 @@
                         </p>
                     </div>
                     <br>
+                    <hr>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
                             <p class="text-left footer-text-title">Pricing</p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             Prices offered on our website are subject to change at any time without notice.<br><br>
                             All prices include VAT (or other applicable tax).<br><br>
@@ -263,11 +296,14 @@
                         </p>
                     </div>
                     <br>
+                    <hr>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
                             <p class="text-left footer-text-title">Postage & Packaging</p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             If you have more than 2 devices to SELL to us please contact our customer support team at 0345 582 0511 or email customersupport@bamboo.co.uk<br><br>
                             Phones and devices must be packaged in accordance with our packaging instructions to ensure safe and successful delivery to us.<br><br>
@@ -288,36 +324,47 @@
                         <p class="footer-text-small">Please see <a href="https://www.mazumamobile.com/printPostingInstructions.html" target="blank">posting options</a> and <a href="https://www.mazumamobile.com/printPackingInstructions.html" target="_blank">packaging instructions</a> for further details.</p>
                     </div>
                     <br>
+                    <hr>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
                             <p class="text-left footer-text-title">Payments</p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             We offer bank transfer payment. You will be required to select a payment option when placing each online sell order. Unfortunately, this payment option cannot be changed once the order is placed.<br><br>
                             When we receive your sale items, we will check that the sale is complete, and that it meets our terms and conditions. Providing it does, we will make payment to you by bank transfer on the same day of receipt (Monday to Friday, excluding public holidays) of your mobile phone(s) and/or device(s). Same day payment does not apply to sale items received after 2pm and in events that are out of our control.
                         </p>
                     </div>
                     <br>
+                    <hr>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
                             <p class="text-left footer-text-title">Bank Transfer payments</p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             Bank Transfer payments can only be made to the account details given when placing the online order. We cannot, under any circumstances, recall or reissue bank transfer payments once they have been made.
                         </p>
                     </div>
+                    <br>
+                    <hr>
                     <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small">
                             <p class="text-left footer-text-title">Events Outside of Our Control</p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             We will not be liable or responsible for any failure to perform, or delay in performance of, any of our obligations under a contract that is caused by events outside our reasonable control or due to our compliance with any applicable laws or regulations.
                         </p>
                     </div>
+                    <br>
+                    <hr>
                     <br>
 
                     <div class="col-md-12">
@@ -329,6 +376,8 @@
                         </p>
                     </div>
                     <br>
+                    <hr>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-small title-red">
@@ -338,7 +387,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
+                        <div>
                             <p class="text-left footer-text-title">1. Information About Us</p>
                         </div>
                         <p class="footer-text-small">
@@ -348,7 +397,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
+                        <div>
                             <p class="text-left footer-text-title">2. Accessing Our Site</p>
                         </div>
                         <p class="footer-text-small">
@@ -389,7 +438,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
+                        <div>
                             <p class="text-left footer-text-title">3. Intellectual Property Rights</p>
                         </div>
                         <p>
@@ -414,7 +463,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
+                        <div>
                             <p class="text-left footer-text-title">4. Reliance on Information Posted</p>
                         </div>
                         <p class="footer-text-small">
@@ -424,7 +473,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
+                        <div>
                             <p class="text-left footer-text-title">5. Our Site Changes Regularly</p>
                         </div>
                         <p class="footer-text-small">
@@ -434,7 +483,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
+                        <div>
                             <p class="text-left footer-text-title">6. Our Liability</p>
                         </div>
                         <p class="footer-text-small">
@@ -455,7 +504,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
+                        <div>
                             <p class="text-left footer-text-title">7. Information About You and Your Visits to Our Site</p>
                         </div>
                         <p class="footer-text-small">
@@ -465,7 +514,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
+                        <div>
                             <p class="text-left footer-text-title">8. Viruses, Hacking and Other Offences</p>
                         </div>
                         <p class="footer-text-small">
@@ -481,7 +530,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
+                        <div>
                             <p class="text-left footer-text-title">9. Linking To Our Site</p>
                         </div>
                         <p class="footer-text-small">
@@ -500,7 +549,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
+                        <div>
                             <p class="text-left footer-text-title">10. Links from Our Site</p>
                         </div>
                         <p class="footer-text-small">
@@ -510,7 +559,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
+                        <div>
                             <p class="text-left footer-text-title">11. Jurisdiction and Applicable Law</p>
                         </div>
                         <p class="footer-text-small">
@@ -526,7 +575,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
+                        <div>
                             <p class="text-left footer-text-title">12. Trademarks</p>
                         </div>
                         <p class="footer-text-small">
@@ -536,7 +585,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
+                        <div>
                             <p class="text-left footer-text-title">13. Variations</p>
                         </div>
                         <p class="footer-text-small">

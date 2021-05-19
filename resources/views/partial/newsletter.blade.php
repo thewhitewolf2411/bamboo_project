@@ -27,11 +27,10 @@
                 <div class="form-group">
                     <select class="email-input w-100" name="age_range" id="age_range">
                         <option value="" default selected disabled>Age Range</option>
-                        <option value="16">0-16</option>
-                        <option value="24">16-24</option>
-                        <option value="48">24-48</option>
-                        <option value="62">48-62</option>
-                        <option value="62+">62+</option>
+                        <option value="18-24">18-24</option>
+                        <option value="25-40">25-40</option>
+                        <option value="41-65">41-65</option>
+                        <option value="65+">65+</option>
                     </select>
                 </div>
             </div>

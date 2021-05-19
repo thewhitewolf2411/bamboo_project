@@ -10,10 +10,9 @@
         })(window,document,'script','dataLayer','GTM-KC33JWC');</script>
         <!-- End Google Tag Manager -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-        <title>Modern Slavery</title>
-
+        <title>Bamboo Mobile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" sizes="96x96" href="/customer_page_images/header/favicon-96x96.png">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
         <!-- jQuery -->
@@ -54,11 +53,13 @@
                         </p>
                     </div>
                     <br>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-large">
                             <p class="text-left footer-text-title">OUR POLICIES ON SLAVERY AND HUMAN TRAFFICKING </p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             Our internal policies replicate our commitment to acting ethically and with integrity in all our business relationships. We operate a number of internal policies to ensure that we are conducting business in an ethical and transparent manner.  These include: 
                         </p>
@@ -118,17 +119,26 @@
                         </p>
                     </div>
                     <br>
+                    <hr>
+                    <br>
 
                     <div class="col-md-12">
                         <div class="slavery-title-container-large">
                             <p class="text-left footer-text-title">RISK ASSESSMENT AND DUE DILIGENCE </p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             We identify suppliers where there is a high risk of modern slavery occurring and increase the level of investigation accordingly. We will not trade with a business which does not meet our standards.  
                         </p>
+
+                        <br>
+                        <hr>
+                        <br>
+
                         <div class="slavery-title-container-large">
                             <p class="text-left footer-text-title">MEASURING EFFECTIVENESS </p>
                         </div>
+                        <br>
                         <p class="footer-text-small">
                             We will understand the effectiveness of the steps that we are taking to ensure that slavery is not taking place within our business or supply chain if: 
                         </p>
@@ -150,6 +160,7 @@
                     </div>
 
                 </div>
+                <br>
 
             </div>
 
