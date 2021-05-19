@@ -56588,6 +56588,28 @@ $('#payments').on('change', function () {
     $('#failed_payments').prop('checked', false);
   }
 });
+$(document).ready(function () {
+  $('#users-table tfoot td').each(function () {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+  var userstable = $('#users-table').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    },
+    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+    "pageLength": -1
+  }); // Apply the search
+
+  userstable.columns().every(function () {
+    var that = this;
+    $('input', this.footer()).on('keyup change', function () {
+      if (that.search() !== this.value) {
+        that.search(this.value).draw();
+      }
+    });
+  });
+});
 
 /***/ }),
 
@@ -56738,7 +56760,7 @@ $(document).ready(function () {
       "sInfo": "Showing _START_ to _END_"
     },
     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": 100
+    "pageLength": -1
   }); // Apply the search
 
   boxinprogresstable.columns().every(function () {
@@ -56758,7 +56780,7 @@ $(document).ready(function () {
       "sInfo": "Showing _START_ to _END_"
     },
     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": 100
+    "pageLength": -1
   }); // Apply the search
 
   boxeddevicetable.columns().every(function () {
@@ -56778,7 +56800,7 @@ $(document).ready(function () {
       "sInfo": "Showing _START_ to _END_"
     },
     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": 100
+    "pageLength": -1
   }); // Apply the search
 
   boxsummarytable.columns().every(function () {
@@ -56854,7 +56876,7 @@ var boxsummarytable = $('#saleslot-table').DataTable({
     "sInfo": "Showing _START_ to _END_"
   },
   "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-  "pageLength": 100
+  "pageLength": -1
 });
 
 /***/ }),
@@ -56919,7 +56941,7 @@ $(document).ready(function () {
         "sInfo": "Showing _START_ to _END_"
       },
       "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-      "pageLength": 100
+      "pageLength": -1
     });
     despatchTable.columns().every(function () {
       var that = this;
@@ -57529,7 +57551,7 @@ $(document).ready(function () {
         "sInfo": "Showing _START_ to _END_"
       },
       "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-      "pageLength": 100
+      "pageLength": -1
     }); // Apply the search
 
     ordermanagementtable.columns().every(function () {
@@ -57672,7 +57694,7 @@ $(document).ready(function () {
       "sInfo": "Showing _START_ to _END_"
     },
     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": 100
+    "pageLength": -1
   });
   quarantineTable.columns().every(function () {
     var that = this;
@@ -57691,7 +57713,7 @@ $(document).ready(function () {
       "sInfo": "Showing _START_ to _END_"
     },
     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": 100
+    "pageLength": -1
   });
   quarantineTable.columns().every(function () {
     var that = this;
@@ -58038,6 +58060,26 @@ $(document).ready(function () {
   }); // Apply the search
 
   boxsummarytable.columns().every(function () {
+    var that = this;
+    $('input', this.footer()).on('keyup change', function () {
+      if (that.search() !== this.value) {
+        that.search(this.value).draw();
+      }
+    });
+  });
+  $('#saleslotboxes tfoot td').each(function () {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+  var salelotitems = $('#saleslotboxes').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    },
+    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+    "pageLength": -1
+  }); // Apply the search
+
+  salelotitems.columns().every(function () {
     var that = this;
     $('input', this.footer()).on('keyup change', function () {
       if (that.search() !== this.value) {
@@ -58560,7 +58602,7 @@ $(document).ready(function () {
       "sInfo": "Showing _START_ to _END_"
     },
     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": 100
+    "pageLength": -1
   }); // Apply the search
 
   quarantineTable.columns().every(function () {

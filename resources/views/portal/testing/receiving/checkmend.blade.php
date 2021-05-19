@@ -56,7 +56,14 @@
                                     <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
                                     <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                 </div>
-                                <div class="d-flex w-50 border p-3"><input id="imei_number" type="number" name="imei_number" @if($tradein->imei_number != null) value="{{$tradein->imei_number}}" @endif required title="15 characters required"></div>
+                                <div class="d-flex flex-column w-50 border p-3">
+                                    <input id="imei_number" size="15" type="number" name="imei_number" @if($tradein->imei_number != null) value="{{$tradein->imei_number}}" @endif required title="15 characters required">
+                                    @if(Session::has('error'))
+                                    <div class="alert alert-danger" role="alert">
+                                        {{Session::get('error')}}
+                                      </div>
+                                    @endif
+                                </div>
                             </div>
                             
                         </div>

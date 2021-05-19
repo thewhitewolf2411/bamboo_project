@@ -515,6 +515,14 @@ input[type=number] {
     display: table-header-group;
 }
 
+#saleslotboxes tfoot{
+    display: table-header-group;
+}
+
+#users-table tfoot{
+    display: table-header-group;
+}
+
 
 .paging_simple_numbers{
     display: flex;
@@ -637,10 +645,11 @@ input[type=number] {
     margin: 0 !important;
 }
 
+
+
 .sortable:hover{
     cursor: pointer;
 }
-
 
 .table-invisible{
     display: none;

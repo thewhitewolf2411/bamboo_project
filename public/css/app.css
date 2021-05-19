@@ -18849,6 +18849,14 @@ input[type=number] {
   display: table-header-group;
 }
 
+#saleslotboxes tfoot {
+  display: table-header-group;
+}
+
+#users-table tfoot {
+  display: table-header-group;
+}
+
 .paging_simple_numbers {
   display: flex;
 }

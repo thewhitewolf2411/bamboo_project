@@ -157,6 +157,16 @@
                             <td><div class="table-element"><input type="checkbox" id="saleslotboxes-selectall"></div></td>
                         </tr>
                     </thead>
+                    <tfoot>
+                        <tr>
+                            <td><div class="table-element">Box number</div></td>
+                            <td><div class="table-element">Bamboo Grade</div></td>
+                            <td><div class="table-element">Manufacturer/Model</div></td>
+                            <td><div class="table-element">GB Size</div></td>
+                            <td><div class="table-element">Total Cost</div></td>
+                            <td><div class="table-element"><input type="checkbox" id="saleslotboxes-selectall"></div></td>
+                        </tr>
+                    </tfoot>
                     <tbody>
                         @if($completedTradeins)
                             @foreach($completedTradeins as $completedTradein)

@@ -185,7 +185,7 @@ class Tradein extends Model
         $trayid = TrayContent::where('trade_in_id', $id)->first();
 
         if($trayid !== null && TrayContent::where('trade_in_id', $id)->first()->tray_id !== 0){
-            if($trayid->pseudo_tray_id !== null){
+            /*if($trayid->pseudo_tray_id !== null){
                 $trayid = $trayid->pseudo_tray_id;
                 $tray = Tray::where('id', $trayid)->first();
                 /*if($tray->trolley_id !== null){
@@ -193,18 +193,18 @@ class Tradein extends Model
                     if($trolley->trolley_type === "B" || $trolley->trolley_type === "Bay"){
                         return $trolley->trolley_name . " / " . $tray->tray_name;
                     }
-                }*/
+                }
                 $trayname = $tray->tray_name;
 
                 return $trayname;
-            }
+            }*/
             $trayid = $trayid->tray_id;
             $tray = Tray::where('id', $trayid)->first();
 
             if($tray->trolley_id !== null){
                 $trolley = Trolley::where('id', $tray->trolley_id)->first();
                 if($trolley->trolley_type === "B" || $trolley->trolley_type === "Bay"){
-                    return $trolley->trolley_name;
+                    //return $trolley->trolley_name;
                 }
             }
 
@@ -1130,6 +1130,15 @@ class Tradein extends Model
             if($product->category_id === 3){
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    public function isPartOfSalesLot(){
+        $saleLotContent = SalesLotContent::where('device_id', $this->id)->first();
+        if($saleLotContent){
+            return true;
         }
 
         return false;

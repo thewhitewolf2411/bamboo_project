@@ -454,7 +454,7 @@ class UsersController extends Controller
 
         $portalUser->save();
 
-        return \redirect()->back()->with(['success'=>'You have succesfully eddited a user.']);
+        return \redirect('/portal/user')->with(['success'=>'You have succesfully eddited a user.']);
 
 
     }
