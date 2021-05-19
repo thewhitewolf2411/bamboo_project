@@ -188,12 +188,12 @@ class Tradein extends Model
             if($trayid->pseudo_tray_id !== null){
                 $trayid = $trayid->pseudo_tray_id;
                 $tray = Tray::where('id', $trayid)->first();
-                if($tray->trolley_id !== null){
+                /*if($tray->trolley_id !== null){
                     $trolley = Trolley::where('id', $tray->trolley_id)->first();
                     if($trolley->trolley_type === "B" || $trolley->trolley_type === "Bay"){
                         return $trolley->trolley_name . " / " . $tray->tray_name;
                     }
-                }
+                }*/
                 $trayname = $tray->tray_name;
 
                 return $trayname;
@@ -284,7 +284,7 @@ class Tradein extends Model
         return url('/storage/missing_images/'.$this->missing_image);
     }
 
-    public function getQuarantineReason(){
+    public function getQuarantineRean(){
         if($this->job_state === '8a' || $this->job_state === '8b' || $this->job_state === '8c' || $this->job_state === '8d' || $this->job_state === '8e' || $this->job_state === '8f'){
             return true;
         }
@@ -1084,7 +1084,7 @@ class Tradein extends Model
                 return "Poor Working";
             break;
             case "WSI":
-                return "Damaged Working";
+                return "Faulty";
             break;
             case "WSD":
                 return "Faulty";

@@ -111,7 +111,7 @@ $(document).ready(function () {
             [10, 25, 50, 100, -1],
             [10, 25, 50, 100, "All"]
         ],
-        "pageLength": 100,
+        "pageLength": -1,
     });
 
     // Apply the search
@@ -140,7 +140,7 @@ $(document).ready(function () {
             [10, 25, 50, 100, -1],
             [10, 25, 50, 100, "All"]
         ],
-        "pageLength": 100,
+        "pageLength": -1,
     });
 
     // Apply the search
