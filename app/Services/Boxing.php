@@ -83,7 +83,7 @@ class Boxing{
         }
 
         if(substr($box->tray_brand, 0, 1) !== $tradein->getBrandLetter($tradein->correct_product_id)){
-            return ['Device can\'t be added to this box.', 404];
+            return ['Manufacturer is wrong.', 404];
         }
 
         if($box->getBoxBrand() !== $tradein->getBrandId($tradein->correct_product_id)){
@@ -91,7 +91,7 @@ class Boxing{
                 return ['Device can be added to this box.', 200];
             }
             else{
-                return ['Device manufacturer not matching box manufacturer.', 200];
+                return ['Manufacturer is wrong.', 200];
             }
         }
 

@@ -1,4 +1,4 @@
-{{--<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
     <head>
@@ -29,7 +29,7 @@
 
     </head>
     <body>
-        <header>@include('customer.layouts.header')</header>
+        <header>@include('customer.layouts.header', ['showProfileButton' => false])</header>
             <main>
             
                 @yield('content')
@@ -78,4 +78,4 @@
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KC33JWC"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-</html>--}}
+</html>

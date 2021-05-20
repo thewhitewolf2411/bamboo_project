@@ -25,13 +25,22 @@ class Trolley extends Model
         'trolley_name', 'trolley_type', 'trolley_brand', 'number_of_trays','trolley_type'
     ];
 
-    public function getNumberOfDevices($trolley_id){
+    public function getNumberOfDevices(){
         $numberOfDevices = 0;
 
-        $trays = Tray::where('trolley_id', $trolley_id)->get();
+        $trays = Tray::where('trolley_id', $this->id)->get();
 
         foreach($trays as $tray){
-            $numberOfDevices += $tray->number_of_devices;
+
+            $trayContent = TrayContent::where('tray_id', $tray->id)->get();
+            foreach($trayContent as $trayItem){
+                $tradein = Tradein::where('id', $trayItem->trade_in_id)->first();
+                #dd($tradein->isPartOfSalesLot());
+                if(!$tradein->isPartOfSalesLot()){
+                    $numberOfDevices++;
+                }
+            }
+            #$numberOfDevices += $tray->number_of_devices;
         }
 
         return $numberOfDevices;

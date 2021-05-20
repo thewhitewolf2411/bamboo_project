@@ -217,8 +217,10 @@
                             <tr>
                                 <td><div class="table-element">{{$boxedTradein->getTrayName($boxedTradein->id)}}</div></td>
                                 <td><div class="table-element">{{$boxedTradein->barcode}}</div></td>
-                                <td><div class="table-element">{{$boxedTradein->cosmetic_condition}}</div></td>
-                                <td><div class="table-element">{{$boxedTradein->imei_number}}</div></td>
+                                <td><div class="table-element">{{$boxedTradein->getDeviceBambooGrade()}}</div></td>
+                                @if($boxedTradein->imei_number  !== null)<td><div class="table-element">{{$boxedTradein->imei_number}}</div></td>
+                                @elseif($boxedTradein->serial_number  !== null)<td><div class="table-element">{{$boxedTradein->serial_number}}</div></td>
+                                @else<td><div class="table-element">N/A</div></td>@endif
                                 <td><div class="table-element">{{$boxedTradein->getProductName()}}</div></td>
                             </tr>
                             @endforeach

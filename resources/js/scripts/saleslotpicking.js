@@ -60,9 +60,6 @@ $('#addtolot').on('click', function(){
         },
         success:function(response){
             handleShownData(response);
-            window.addEventListener("beforeunload", function(e){
-                e.preventDefault();
-            });
         },
     });
 });
@@ -157,6 +154,15 @@ $('#saleslotboxes').on('click','.saleslotbox' ,function(){
 
 $('#completelot').on('click', function(){
 
+    completeLotFunction();
+
+});
+
+
+function completeLotFunction(){
+
+    console.log(2);
+
     var url = $(location).attr('href');
     var rest = url.substring(0, url.lastIndexOf("/") + 1);
     var last = url.substring(url.lastIndexOf("/") + 1, url.length);
@@ -183,8 +189,7 @@ $('#completelot').on('click', function(){
             },
         });
     }
-
-});
+}
 
 
 $('#removefromlot').on('click', function(){

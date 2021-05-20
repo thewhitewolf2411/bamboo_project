@@ -38,6 +38,7 @@
                         <a href="/portal/testing/receive/{{$tradein->id}}" class="p-3 ml-0 mr-0"><div class="d-flex flex-column shadow bg-white rounded ml-5 mr-5 p-3">
                             <div class="" style="width:200px;">Product name: {{$tradein->getProductName($tradein->product_id)}}</div>
                             <div class="" style="width:200px;">Customer grade: {{$tradein->customer_grade}}</div>
+                            <div class="" style="width:200px;">GB Size: {{$tradein->getDeviceMemory()}}</div>
                             <div class="" style="width:200px;">Price: £{{$tradein->order_price}}</div>
                         </div></a>
                     @endforeach
@@ -50,20 +51,5 @@
     </main>
 
 </body>
-<script>
-
-$(document).ready(function(){
-
-    var elem = $('.portal-links-container > .portal-header-element')[4];
-    
-    console.log(elem.children[0]);
-
-    elem.children[0].style.color = "#fff";
-    elem.children[0].children[0].style.opacity = 1;
-
-});
-
-</script>
-
 
 </html>

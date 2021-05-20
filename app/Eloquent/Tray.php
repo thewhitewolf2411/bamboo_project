@@ -56,7 +56,19 @@ class Tray extends Model
     }
 
     public function getNumberOfDevices(){
-        return count(TrayContent::where('tray_id', $this->id)->get());
+
+        $numberOfDevices = 0;
+
+        $trayContent = TrayContent::where('tray_id', $this->id)->get();
+        foreach($trayContent as $trayItem){
+            $tradein = Tradein::where('id', $trayItem->trade_in_id)->first();
+            #dd($tradein->isPartOfSalesLot());
+            if(!$tradein->isPartOfSalesLot()){
+                $numberOfDevices++;
+            }
+        }
+
+        return $numberOfDevices;
     }
 
     public function canBeDeleted(){

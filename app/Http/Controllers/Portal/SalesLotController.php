@@ -300,13 +300,12 @@ class SalesLotController extends Controller
 
                 $tradein = Tradein::where('id', $salesLotItem->id)->first();
 
-                $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
-                $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
-                $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
-                $oldTray->save();
-                $oldTrayContent->delete();
+                //$oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+                //$oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
+                //$oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+                //$oldTray->save();
+                //$oldTrayContent->delete();
 
-    
                 $sli = new SalesLotContent();
                 $sli->sales_lot_id = $saleLot->id;
                 $sli->box_id = $tradein->getTrayId();
@@ -409,7 +408,7 @@ class SalesLotController extends Controller
     public function markLotPaymentRecieved(Request $request){
         if(isset($request->lot_id)){
             $salesLot = SalesLot::find($request->lot_id);
-            if($salesLot && intval($salesLot->sales_lot_status) === 3){
+            if($salesLot && intval($salesLot->sales_lot_status) === 2 || intval($salesLot->sales_lot_status) === 3){
                 $salesLot->sales_lot_status = 4;
                 $salesLot->payment_date = \Carbon\Carbon::now();
                 $salesLot->save();

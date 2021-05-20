@@ -32,7 +32,7 @@
 
         <div class="row">
             <div class="col-md-6">
-                <table class="portal-table sortable" id="categories-table">
+                <table class="portal-table" id="categories-table">
                     <tr>
                         <td><div class="table-element">Bay Location</div></td>
                         <td><div class="table-element">Box Quantity</div></td>
@@ -47,7 +47,7 @@
             </div>
 
             <div class="col-md-6">
-                <table class="portal-table sortable" id="categories-table">
+                <table class="portal-table" id="categories-table">
                     <tr>
                         <td><div class="table-element">Box name</div></td>
                         <td><div class="table-element">Device Qty</div></td>

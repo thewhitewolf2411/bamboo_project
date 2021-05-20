@@ -65,11 +65,6 @@ $('.clickable').on('click', function(){
 
 });
 
-$('#removefromlot').on('click', function(){
-
-    location.reload(true);
-
-});
 
 $('#buildalot').on('click', function(){
 
@@ -112,10 +107,10 @@ $('#buildalot').on('click', function(){
 
 $('#saleslotboxes-selectall').on('click', function(){
     if(this.checked){
-        $('.box-sales-lot').prop('checked', true);
+        $('.buildingsaleslot-remove-checkbox').prop('checked', true);
     }
     else{
-        $('.box-sales-lot').prop('checked', false);
+        $('.buildingsaleslot-remove-checkbox').prop('checked', false);
     }
 });
 

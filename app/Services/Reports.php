@@ -171,8 +171,8 @@ class Reports{
             $sheet->setCellValue('L'.$index, '£' . $total);
             $sheet->setCellValue('M'.$index, $tradein->customer_grade);
             $sheet->setCellValue('N'.$index, $tradein->bamboo_grade);
-            $sheet->setCellValue('O'.$index, $tradein->customer_grade);
-            $sheet->setCellValue('P'.$index, $tradein->cosmetic_condition);
+            $sheet->setCellValue('O'.$index, $tradein->cosmetic_condition);
+            $sheet->setCellValue('P'.$index, $tradein->getCustomerStatus());
             $sheet->setCellValue('Q'.$index, $tradein->getBambooStatus());
             $sheet->setCellValue('R'.$index, $fullyFunctional);
             $sheet->setCellValue('S'.$index, $tradein->created_at);

@@ -30,9 +30,9 @@
                 @endif
             </div>
             @else
-            <div class="hover-link" id="user-hover-link">
-                <a role="button" data-toggle="modal" data-target="#loginModal"><div class="img"></div><p class="showhover" style="color: #fff">Account</p></a>
-            </div>
+                <div class="hover-link" id="user-hover-link">
+                    <a role="button" data-toggle="modal" data-target="#loginModal"><div class="img"></div><p class="showhover" style="color: #fff">Account</p></a>
+                </div>
             @endif
             {{--<div class="hover-link" id="wishlist-hover-link">
                 <a href="/userprofile/show/wishlist"><div class="img"></div><p class="showhover">Wishlist</p></a>

@@ -56588,6 +56588,28 @@ $('#payments').on('change', function () {
     $('#failed_payments').prop('checked', false);
   }
 });
+$(document).ready(function () {
+  $('#users-table tfoot td').each(function () {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+  var userstable = $('#users-table').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    },
+    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+    "pageLength": -1
+  }); // Apply the search
+
+  userstable.columns().every(function () {
+    var that = this;
+    $('input', this.footer()).on('keyup change', function () {
+      if (that.search() !== this.value) {
+        that.search(this.value).draw();
+      }
+    });
+  });
+});
 
 /***/ }),
 
@@ -56738,7 +56760,7 @@ $(document).ready(function () {
       "sInfo": "Showing _START_ to _END_"
     },
     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": 100
+    "pageLength": -1
   }); // Apply the search
 
   boxinprogresstable.columns().every(function () {
@@ -56758,7 +56780,7 @@ $(document).ready(function () {
       "sInfo": "Showing _START_ to _END_"
     },
     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": 100
+    "pageLength": -1
   }); // Apply the search
 
   boxeddevicetable.columns().every(function () {
@@ -56778,7 +56800,7 @@ $(document).ready(function () {
       "sInfo": "Showing _START_ to _END_"
     },
     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": 100
+    "pageLength": -1
   }); // Apply the search
 
   boxsummarytable.columns().every(function () {
@@ -56854,7 +56876,7 @@ var boxsummarytable = $('#saleslot-table').DataTable({
     "sInfo": "Showing _START_ to _END_"
   },
   "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-  "pageLength": 100
+  "pageLength": -1
 });
 
 /***/ }),
@@ -56919,7 +56941,7 @@ $(document).ready(function () {
         "sInfo": "Showing _START_ to _END_"
       },
       "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-      "pageLength": 100
+      "pageLength": -1
     });
     despatchTable.columns().every(function () {
       var that = this;
@@ -57529,7 +57551,7 @@ $(document).ready(function () {
         "sInfo": "Showing _START_ to _END_"
       },
       "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-      "pageLength": 100
+      "pageLength": -1
     }); // Apply the search
 
     ordermanagementtable.columns().every(function () {
@@ -57672,7 +57694,7 @@ $(document).ready(function () {
       "sInfo": "Showing _START_ to _END_"
     },
     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": 100
+    "pageLength": -1
   });
   quarantineTable.columns().every(function () {
     var that = this;
@@ -57691,7 +57713,7 @@ $(document).ready(function () {
       "sInfo": "Showing _START_ to _END_"
     },
     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": 100
+    "pageLength": -1
   });
   quarantineTable.columns().every(function () {
     var that = this;
@@ -57885,9 +57907,6 @@ $('.clickable').on('click', function () {
     $('#addtolot').css("opacity", 0.65);
   }
 });
-$('#removefromlot').on('click', function () {
-  location.reload(true);
-});
 $('#buildalot').on('click', function () {
   if (confirm("Are you sure that you want to build a lot with selected tradeins/boxes?")) {
     var checkedtradeins = $('#selected-tradeins tr');
@@ -57923,9 +57942,9 @@ $('#buildalot').on('click', function () {
 });
 $('#saleslotboxes-selectall').on('click', function () {
   if (this.checked) {
-    $('.box-sales-lot').prop('checked', true);
+    $('.buildingsaleslot-remove-checkbox').prop('checked', true);
   } else {
-    $('.box-sales-lot').prop('checked', false);
+    $('.buildingsaleslot-remove-checkbox').prop('checked', false);
   }
 });
 $('#boxedtradeinstable-selectall').on('click', function () {
@@ -58037,10 +58056,30 @@ $(document).ready(function () {
       "sInfo": "Showing _START_ to _END_"
     },
     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": 100
+    "pageLength": -1
   }); // Apply the search
 
   boxsummarytable.columns().every(function () {
+    var that = this;
+    $('input', this.footer()).on('keyup change', function () {
+      if (that.search() !== this.value) {
+        that.search(this.value).draw();
+      }
+    });
+  });
+  $('#saleslotboxes tfoot td').each(function () {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+  var salelotitems = $('#saleslotboxes').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    },
+    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+    "pageLength": -1
+  }); // Apply the search
+
+  salelotitems.columns().every(function () {
     var that = this;
     $('input', this.footer()).on('keyup change', function () {
       if (that.search() !== this.value) {
@@ -58057,7 +58096,7 @@ $(document).ready(function () {
       "sInfo": "Showing _START_ to _END_"
     },
     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": 100
+    "pageLength": -1
   }); // Apply the search
 
   closedboxtable.columns().every(function () {
@@ -58563,7 +58602,7 @@ $(document).ready(function () {
       "sInfo": "Showing _START_ to _END_"
     },
     "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": 100
+    "pageLength": -1
   }); // Apply the search
 
   quarantineTable.columns().every(function () {
@@ -58781,9 +58820,6 @@ $('#addtolot').on('click', function () {
     },
     success: function success(response) {
       handleShownData(response);
-      window.addEventListener("beforeunload", function (e) {
-        e.preventDefault();
-      });
     }
   });
 });
@@ -58870,6 +58906,11 @@ $('#saleslotboxes').on('click', '.saleslotbox', function () {
   $('#saleslotboxes-content').modal('show');
 });
 $('#completelot').on('click', function () {
+  completeLotFunction();
+});
+
+function completeLotFunction() {
+  console.log(2);
   var url = $(location).attr('href');
   var rest = url.substring(0, url.lastIndexOf("/") + 1);
   var last = url.substring(url.lastIndexOf("/") + 1, url.length);
@@ -58894,7 +58935,8 @@ $('#completelot').on('click', function () {
       }
     });
   }
-});
+}
+
 $('#removefromlot').on('click', function () {
   var removedTradeins = [];
   $('.buildingsaleslot-remove-checkbox:checkbox:checked').each(function () {
@@ -58938,8 +58980,8 @@ $('#removefromlot').on('click', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
