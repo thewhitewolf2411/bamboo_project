@@ -246,8 +246,11 @@ class PagesController extends Controller
     }
 
     public function showPaswordResetPage(){
-        
-        return view('auth.passwords.reset');
+        $buyingProducts = BuyingProduct::all();
+        $sellingProducts = SellingProduct::all();
+        $products = $buyingProducts->merge($sellingProducts);
+
+        return view('auth.passwords.reset', ['products'=>$products]);
 
     }
 

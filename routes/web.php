@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,7 @@ Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('/login', '\App\Http\Controllers\Auth\LoginController@login')->name('login');
 
+Route::post('/reset-password', '\App\Http\Controllers\Auth\ResetPasswordController@resetPassword')->middleware('guest')->name('password.update');
 Route::get('/specialdeliverylabel', 'Customer\PagesController@downloadSDLabel');
 Route::get('/printorderlabel', 'Customer\PagesController@downloadTradeLabel');
 
@@ -39,7 +41,7 @@ Route::get('/contact/{selected?}', 'Customer\PagesController@showContactPage');
 
 Route::post('/sendMessage', 'Customer\PagesController@sendMessage');
 
-//Route::get('/password/reset', 'PagesController@showPaswordResetPage')->name('password.request');
+//Route::get('/password/reset', 'Customer\PagesController@showPaswordResetPage')->name('password.request');
 
 //Footer pages
 Route::get('/environment', 'Customer\PagesController@showEnvironmentPage');
