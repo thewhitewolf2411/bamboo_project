@@ -32,6 +32,7 @@
                         <p>Cookie Policy</p>
                     </div>
                 </div>
+                
                 @if(Session::get('_previous') !== null)
                     <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
                 @else
