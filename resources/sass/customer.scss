@@ -617,59 +617,6 @@ main p, a, span{
     font-family: Sharp Sans No1 Bold;
 }
 
-.sign-up-form{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 50px;
-
-    width: 80%;
-}
-
-.sign-up .terms-container{
-    width: auto;
-}
-
-.email-input{
-    border: 2px solid #000;
-    padding: 15px;
-    border-radius: 8px;
-    outline: none;
-}
-
-.email-input::placeholder{
-    color: #000;
-    opacity: 0.3;
-}
-
-#age_range {
-    -moz-appearance:none; /* Firefox */
-    -webkit-appearance:none; /* Safari and Chrome */
-    appearance:none;
-    background-image: url('/images/svg.svg');
-    background-repeat: no-repeat;
-    background-position-x: 100%;
-    background-position-y: center;
-    cursor: pointer;
-}
-
-.terms-container input[type="checkbox"] {
-	display:none;
-}
-
-.terms-container input + label {
-	display: inline-block;	
-	cursor: pointer;	
-	background-image: url('/images/front-end-icons/black_circle.svg');
-    background-repeat: no-repeat;
-    background-position-y: center;
-}
-
-.terms-container input[type="checkbox"]:checked + label {
-	background-image: url('/images/front-end-icons/black_tick_selected.svg')
-}
-
 .email-submit{
     width: 180px;
     height: 56px;

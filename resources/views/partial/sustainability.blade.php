@@ -60,7 +60,7 @@
                 <p class="sustainability-small ml-0 mt-4">
                     Bamboo Mobile’s parent company is Bamboo Distribution which is a recognised international, independent phone distributor, and recycler which has been operating for over 10 years...
                 </p>
-                <a href="/about" class="btn btn-light ml-0 mt-4 w-25 mb-auto">Read More</a>
+                <a href="/about" class="btn btn-light ml-0 mt-4 w-25 mb-auto black-border-hover">Read More</a>
             </div>
             <div class="sustainability-about-col">
                 <img class="laughing-gif" src="{{asset('/images/bamboo-laughing.gif')}}">
@@ -79,7 +79,7 @@
             <p class="sustainability-small ml-0 mt-4">
                 Sustainability is at the heart of Bamboo Mobile and everything we do. Like our parent company, Bamboo Distribution, the protection of the environment is central to our ethics and business strategy
             </p>
-            <a href="/about" class="btn btn-light ml-0 mt-4 w-25">Read More</a>
+            <a href="/about" class="btn btn-light ml-0 mt-4 w-25 black-border-hover">Read More</a>
         </div>
     </div>
 

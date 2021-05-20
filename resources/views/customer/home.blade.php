@@ -41,7 +41,7 @@
         <div class="how-buttons-container mt-5">
             {{-- <div class="how-button-container active" id="selling-btn" onclick="changeHowState('selling')"> --}}
             <div class="how-button-container active" id="selling-btn">
-                <p class="semilarge-bold-text">Selling</p>
+                <p class="semilarge-bold-text" style="cursor: default;">Selling</p>
             </div>
         </div>
 
@@ -213,7 +213,7 @@
             </div>
         </div>
     </div> --}}
-    @include('partial.deliveryqualitybanner')
+    @include('partial.paymentpostagebanner')
 
     @if(!empty($popular))
         <div class="home-element popular-devices">
@@ -235,7 +235,7 @@
                                         <img src="{{asset('/storage/product_images').'/'.$device->product_image}}">
                                     @endif
                                 </div>
-                                <div class="popular-product-name-model mt-2">
+                                <div class="popular-product-name-model mt-4">
                                     <p class="popular-product-brand">{!!$device->getBrand()!!}</p>
                                     <p class="popular-product-name">{{$device->product_name}}</p>
                                 </div>

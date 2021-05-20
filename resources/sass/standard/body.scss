@@ -249,9 +249,14 @@ h3, h4, h5{
     margin-left: 15px;
 }
 
+.cookie-consent__message{
+    font-family: Sharp Sans No1 Bold;
+}
+
 .cookie-consent__message > a{
     font-size: 14px;
     color: white;
+    font-family: Sharp Sans No1 Bold;
     //text-decoration: underline;
     transition: color 0.5s ease-in-out;
 }
@@ -275,6 +280,7 @@ h3, h4, h5{
     font-size: 14px;
     padding: 5px;
     transition: color 0.5s ease-in-out;
+    font-family: Sharp Sans No1 Bold;
 }
 
 #accept-cookies:hover{
@@ -376,7 +382,8 @@ h3, h4, h5{
 }
 
 .large-bold-text{
-    font-size: 3rem;
+    // font-size: 3rem;
+    font-size: 4rem;
     font-family: Sharp Sans No1 Bold;
     //text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
 }
@@ -443,6 +450,7 @@ h3, h4, h5{
 
 .popular-product-name-model{
     max-width: 225px;
+    margin: auto;
 }
 
 .popular-product-brand{
@@ -484,7 +492,18 @@ h3, h4, h5{
 }
 
 
+.btn.black-border-hover{
+    transition: border 0.2s linear;
+    border: 0px solid black;
+}
 
+.btn-light:hover{
+    background-color: #f8f9fa !important;
+}
+
+.btn.black-border-hover:hover{
+    border: 3px solid black;
+}
 
 
 
