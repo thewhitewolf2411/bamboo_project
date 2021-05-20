@@ -1,30 +1,7 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+@extends('customer.layouts.layout')
 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+@section('content')        
 
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        
-        
-        <title>Bamboo Mobile::Recycle</title>
-
-        <link rel="icon" type="image/png" sizes="96x96" href="/customer_page_images/header/favicon-96x96.png">
-        
-        <!-- jQuery -->
-        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-
-        <script src="{{asset('/js/SellingPage.js')}}"></script>
-    </head>
-
-    <body>
-        <header>@include('customer.layouts.header')</header>
         <main class="selling-margin">
             @include('customer.layouts.sellinglinks')
 
@@ -162,59 +139,6 @@
                 </div>
             </div>
 
-            {{-- <div class="home-element about-container">
-                <div class="about-top-container">
-                    <div class="about-element-container">
-                        <div class="center-title-container">
-                            <p>Why Sell with us</p>
-                        </div>
-                        <p class="about-bamboo-text">Hello and welcome to Bamboo Mobile – aka ‘Boo’. In a nutshell, Bamboo Mobile offers a smart way for you to Shop and sell mobile phones and/or devices. With the help of Bamboo Mobile, you can trade in and trade up your mobile, quickly, safely, and simply – not to mention for a great price!</p>
-                        <div class="grading-show-more-container">
-                            <a href="/sell/why"><div class="grading-show-more-btn">
-                                <p>Read More</p>
-                            </div></a>
-                        </div>    
-                    </div>
-            
-                    <div class="about-image-container">
-                        <div class="selling-video-container">
-                            <p>Selling With Us</p>
-                            <a href="javascript:void(0)" role="button" data-toggle="modal" data-target="#sellingvideomodal">
-                                <div class="video-image-container">
-                                    <div class="play-container">
-                                        <i class="fa fa-play" aria-hidden="true"></i>
-                                    </div>
-                                </div>
-                            </a>
-                            <p>Explained</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="about-bottom-container">
-                    <div class="about-images-container">
-                        <div class="about-images" id="top-image">
-                            <img src="{{asset('/images/ss-img-1.svg')}}">
-                        </div>
-                        <div class="about-images" id="bottom-image">
-                            <img src="{{asset('/images/ss-img-2.svg')}}">
-                        </div>
-                    </div>
-
-                    <div class="sustainability-element-container">
-                        <div class="center-title-container">
-                            <p>Sustainability</p>
-                        </div>
-                        <p class="about-bamboo-text">Sustainability is at the heart of Bamboo Mobile and everything we do. Like our parent company, Bamboo Distribution, the protection of the environment is central to our ethics and business strategy. </p>
-                        <div class="grading-show-more-container">
-                            <a href="/about"><div class="grading-show-more-btn">
-                                <p>Read More</p>
-                            </div></a>
-                        </div>   
-                    </div>
-                </div>
-            </div> --}}
-
             @include('partial.sustainability', ['whySell' => true, 'about' => false])
 
             {{--<div class="selling-service-container">
@@ -233,66 +157,6 @@
             @include('partial.newscontactsupport')
 
             @include('partial.newsletter')
-            {{-- <div class="home-element sign-up">
-        
-                <div class="center-title-container">
-                    <p>Sign up to our newsletter!</p>
-                </div>
-        
-                <div class="text-center-container">
-                    <p>amazing offers, hints and tips and just awesome-ness</p>
-                </div>
-        
-                <form action="/newslettersingup" method="POST">
-                    @csrf
-        
-                    <div class="row w-100">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input class="email-input mt-0" name="first_name" type="text" placeholder="First Name">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input class="email-input mt-0" name="last_name" type="text" placeholder="Last Name">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row w-100">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <select class="email-input w-100" name="age_range" id="age_range">
-                                    <option value="" default selected disabled>Age Range</option>
-                                    <option value="16">0-16</option>
-                                    <option value="24">16-24</option>
-                                    <option value="48">24-48</option>
-                                    <option value="62">48-62</option>
-                                    <option value="62+">62+</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="form-group">
-                                <input class="email-input mt-0" name="email_address" type="email" placeholder="Email address">
-                            </div>
-                        </div>
-                    </div>
-        
-                    <div class="terms-container">
-                        <input type="checkbox" class="newsletter_checkbox mx-3" id="newsletter_terms" name="newsletter_terms">
-                        <label class="newsletter_checkbox" id="newsletter_terms_label" for="newsletter_terms">
-                            <p style="margin-left: 40px">In addition to receiving an instant email when you open your account with Bamboo, I agree to Bamboo sending me a regular newsletter, carrying out market research, keeping me informed with personalised news, offers, products and promotions it believes would be of interest to me through my preferred channel. </p>
-                        </label>
-                    </div>
-        
-                    <div class="form-group">
-                        <div class="col-md-3 mt-3 mx-auto">
-                            <input type="submit" class="btn btn-purple" value="Sign me up!">
-                        </div>
-                    </div>
-                </form>
-        
-            </div> --}}
 
             @if(session('showLogin') || $errors->all())
                 <script>
@@ -301,67 +165,6 @@
                     });
                 </script>
             @endif
-            <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true"><img src="{{ url('/customer_page_images/body/modal-close.svg') }}"></span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="modal-first-element">
-                                <div class="register-elements-container">
-                                    <h3>New Customers</h3>
-                                    <button onclick="showRegistrationForm()" class="btn btn-primary">
-                                        Sign up
-                                    </button>
-                                </div>
-
-                                <div class="login-form-container">
-                                    <h3>Sign in</h3>
-                                    <form method="POST" action="{{ route('login') }}">
-                                        @csrf
-                                        <div class="form-group">
-                                            <input id="login" type="text" class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Username or Email" name="login" value="{{ old('username') ?: old('email') }}" required autofocus>
-                
-                                                @error('email')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" name="password" required autocomplete="current-password">
-            
-                                            @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group mb-0" style="display:flex; flex-direction: row; justify-content:space-between; align-items:center;">
-                                            @if (Route::has('password.request'))
-                                                <a class="btn-link" style="color: #000; margin:0;" href="{{ route('password.request') }}">
-                                                    {{ __('Forgot Your Password?') }}
-                                                </a>
-                                            @endif
-                                            <button type="submit" class="btn btn-primary">
-                                                {{ __('Login') }}
-                                            </button>
-                                        </div>    
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="modal-second-element">
-                                <div class="register-form-container">
-                                    @include('auth.register')
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="modal fade" id="sellingvideomodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -380,6 +183,7 @@
         </main>
 
         <footer>@include('customer.layouts.footer', ['showGetstarted' => false])</footer>
+        <script src="{{asset('/js/SellingPage.js')}}"></script>
         <script>
 
             window.addEventListener('DOMContentLoaded', function(){
@@ -391,36 +195,30 @@
 
                 }
 
-            });
-
-            // var categories = document.getElementsByClassName('sell-category-device-image');
-            // for (let index = 0; index < categories.length; index++) {
-            //     console.log(categories[index]);
-            // }
-            
-            $(".sell-category-wrapper")
-            .mouseenter(function() {
-                // background - 1
-                let bg = this.childNodes[1];
-                bg.classList.add('small');
-                // image - 3
-                let img = this.childNodes[3];
-                img.classList.add('enlarged');
-                // shadow - 5
-                let shadow = this.childNodes[5];
-                shadow.classList.add('zoomed');
-            })
-            .mouseleave(function() {
-                //unfocusCategory(this);
-                // background - 1
-                let bg = this.childNodes[1];
-                bg.classList.remove('small');
-                // image - 3
-                let img = this.childNodes[3];
-                img.classList.remove('enlarged');
-                // shadow - 5
-                let shadow = this.childNodes[5];
-                shadow.classList.remove('zoomed');
+                $(".sell-category-wrapper")
+                .mouseenter(function() {
+                    // background - 1
+                    let bg = this.childNodes[1];
+                    bg.classList.add('small');
+                    // image - 3
+                    let img = this.childNodes[3];
+                    img.classList.add('enlarged');
+                    // shadow - 5
+                    let shadow = this.childNodes[5];
+                    shadow.classList.add('zoomed');
+                })
+                .mouseleave(function() {
+                    //unfocusCategory(this);
+                    // background - 1
+                    let bg = this.childNodes[1];
+                    bg.classList.remove('small');
+                    // image - 3
+                    let img = this.childNodes[3];
+                    img.classList.remove('enlarged');
+                    // shadow - 5
+                    let shadow = this.childNodes[5];
+                    shadow.classList.remove('zoomed');
+                });
             });
 
             function showRegistrationForm(){
@@ -656,5 +454,4 @@
             }
 
         </script>
-    </body>
-</html>
+@endsection

@@ -13,7 +13,7 @@ if(window.location.href.indexOf('watches')>-1){
 
 var queryUrl = "";
 var landingUrl = "";
-$(function() {
+window.addEventListener('DOMContentLoaded', function(){
   $('#number_select').on('change', function () {
       if($(this).val() == 0) {
          queryUrl = "";

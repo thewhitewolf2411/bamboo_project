@@ -4,7 +4,7 @@ $('#sellwatches-header-hover').hide();
 $('#whysellwithus-header-hover').hide();*/
 
 
-$(function() {
+window.addEventListener('DOMContentLoaded', () => {
 
     if($('#sellmobilephones-header-link')){
 

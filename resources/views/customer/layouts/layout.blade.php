@@ -25,7 +25,6 @@
 
     </head>
     <body>
-        {{-- {!!dd(App\Helpers\Dates::getYears())!!} --}}
         <header>@include('customer.layouts.header')</header>
         <main>
 
@@ -54,6 +53,13 @@
                                 <h3>Sign in</h3>
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
+
+                                    @if(Session::has('useralreadyexists'))
+                                        <span class="invalid-feedback" style="display: block;" role="alert">
+                                            <strong>Account with given email already exists. Please login to sell your device.</strong>
+                                        </span>
+                                    @endif
+
                                     <div class="form-group">
                                         <input id="login" type="text" class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Username or Email" name="login" value="{{ old('username') ?: old('email') }}" required autofocus>
             
