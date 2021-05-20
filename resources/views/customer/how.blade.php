@@ -27,7 +27,7 @@
                 </div>
                 <p class="max-450 mt-4">
                     We pride ourselves in offering a smart simple way to shop and sell mobile devices. With Boo, all it takes is just a few clicks to buy and sell the devices of your choice. 
-                    In just several a few simple steps you can either trade in or trade up your mobile tech for unbeatable prices, while doing your bit for the environment.   
+                    In just a few simple steps you can either trade in or trade up your mobile tech for unbeatable prices, while doing your bit for the environment.   
                     Watch our quick video that explains how our meticulous grading system works. We guarantee you’ll be pleasantly surprised at just how thorough and exhaustive our grading system is. 
                 </p>
             </div>
@@ -78,7 +78,7 @@
                 </a>
             </div> --}}
             <div class="toggle-element-btn selling-toggle" style="width: 100% !important">
-                <a onclick="changeToggleElement('selling')" class="active">
+                <a onclick="changeToggleElement('selling')" class="active" style="cursor: default;">
                     <p style="color: #F28E33" class="m-0" id="toggle-element-btn-selling">Selling with us</p>
                     <img id="selling-image" class="ml-3 rotate" src="{{ asset('/customer_page_images/body/Group 938.svg') }}">
                 </a>
@@ -137,7 +137,7 @@
             <div class="shopping-element container">
                 <div class="shopping-element-text">
                     <p class="left-title-text">2. Free Next Day Delivery</p>
-                    <p class="how-text-desc">Once your sales order is completed, simply request for a free sales pack. Alternatively, you can print your own labels to send us your device</p>
+                    <p class="how-text-desc">Once your sales order is completed, simply request for a free sales pack. Alternatively, you can print your own labels to send us your device.</p>
                 </div>
                 <div class="shopping-element-image">
                     {{-- <img class="how-image" src="{{ asset('/customer_page_images/body/free_post_pack.svg') }}"> --}}

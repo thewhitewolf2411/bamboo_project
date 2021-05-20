@@ -84,7 +84,7 @@
             <p class="copyright">©Bamboo {!!\Carbon\Carbon::now()->year!!}. All rights reserved</p>
         </div>
         <div class="row m-0 return-top-container">
-            <a class="mr-0 ml-auto" onclick="window.scrollTo({top: 0, behavior: 'smooth'});"><p class="return-top-button bebas-neue">RETURN TO TOP</p> <i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+            <a class="mr-0 ml-auto cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'});"><p class="return-top-button bebas-neue" style="color: white;">RETURN TO TOP</p> <i class="fa fa-arrow-up" aria-hidden="true"></i></a>
         </div>
     </div>
 
