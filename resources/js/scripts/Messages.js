@@ -29,3 +29,26 @@ $('.message').on('click', function(){
 $('#messageModal').on('hidden.bs.modal', function () {
     location.reload();
 });
+
+
+//sending message
+
+$(document).ready(function(){
+
+    if(document.getElementById('title')){
+        $('#custom-title-container').hide();
+    }
+    
+    $('#title').change(function(){
+    
+        if($(this).val() === 'other'){
+            $('#custom-title-container').show();
+        }
+        else{
+            $('#custom-title-container').hide();
+        }
+    
+    })
+
+});
+

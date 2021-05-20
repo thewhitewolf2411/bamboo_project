@@ -273,6 +273,14 @@ class PagesController extends Controller
 
         #dd($request->all());
 
+        $title = "";
+        if($request->title !== 'other'){
+            $title = $request->title;
+        }
+        else{
+            $title = $request->custom_title;
+        }
+
         $firstName = $request->firstname;
         $lastname = $request->lastname;
         $email = $request->email_address;
@@ -281,6 +289,7 @@ class PagesController extends Controller
         $message = $request->yourmessage;
 
         Message::create([
+            'title'=>$title,
             'first_name'=>$firstName,
             'last_name'=>$lastname,
             'email'=>$email,

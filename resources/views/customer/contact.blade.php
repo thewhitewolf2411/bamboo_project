@@ -25,8 +25,14 @@
             <p class="customer-sections-title center mb-5">Ways to get in touch with us</p>
         </div>
 
+        @if(Session::has('message_success'))
+            <div class="alert alert-success" role="alert">
+                Your message has been sent.
+            </div>
+        @endif
+
         <div class="ways-container">
-            <div class="ways-element">
+            <div class="ways-element @if($selected && $selected==='call') contact-div-hidden @endif">
                 <a onclick="showContactForm('message')">
                     <div class="contact-div" id="contact-message">
                         <div class="contact-text">
@@ -46,7 +52,7 @@
                     </div>
                 </a>
             </div>--}}
-            <div class="ways-element">
+            <div class="ways-element @if($selected && $selected==='message') contact-div-hidden @endif">
                 <a onclick="showContactForm('telephone')">
                     <div class="contact-div" id="contact-telephone">
                         <div class="contact-text">
@@ -72,7 +78,7 @@
 
     <div class="contact-forms-container">
 
-        <div class="contact-form-container" id="message-form-container">
+        <div class="contact-form-container @if($selected && $selected==='message') contact-form-container-active @endif" id="message-form-container">
             <p class="contact-form-header">SEND US A MESSAGE</span>
             <p class="contact-form-desc">To contact us, please complete the form below and a member of our team will get back to you.</p>
 
@@ -82,12 +88,24 @@
                 <div class="contact-form-message-row">
                     <div class="contact-form-title-wrapper">
                         <label class="contact-message-label mt-auto mb-auto" for="title">Title</label>
-                        <select class="form-control" name="title">
-                            <option value="Mr.">Mr.</option>
+                        <select class="form-control" name="title" id="title">
+                            <option value="Miss.">Miss.</option>
+                            <option value="Miss.">Mrs.</option>
                             <option value="Ms.">Ms.</option>
+                            <option value="Mr.">Mr.</option>
+                            <option value="Dr.">Dr.</option>
+                            <option value="other">Other</option>
                         </select>
                     </div>
                 </div>
+
+                <div class="contact-form-message-row" id="custom-title-container">
+                    <div class="contact-form-message-column">
+                        <label class="contact-message-label mt-auto mb-auto" for="custom-title">Your title</label>
+                        <input type="text" name="custom_title" id="custom_title" class="form-control">
+                    </div>
+                </div>
+
 
                 <div class="contact-form-message-row">
                     <div class="contact-form-message-column">
@@ -150,7 +168,7 @@
             </div>
         </div>
 
-        <div class="contact-form-container" id="telephone-form-container">
+        <div class="contact-form-container @if($selected && $selected==='call') contact-form-container-active @endif" id="telephone-form-container">
             <div class="telephone-header mb-4">
                 <p class="contact-form-header">TELEPHONE</p>
                 {{-- <p class="contact-form-desc">Call the number opposite to talk to our friendly and professional team of mobile specialists.</p> --}}
@@ -184,6 +202,10 @@
                     </div>
                     <p style="opacity: 0.5; margin: 0;" class="worktime-text mt-2">Calls are charged at local rate.</p>
                     <p class="worktime-text mt-2" style="max-width: 480px;">Please note calls are recorded for monitoring and are used for ongoing training purposes.</p>
+
+                    <a href="/sell" class="btn btn-primary m-0" style="background: #A3D147 !important; border: #A3D147 !important">
+                        Start Selling
+                    </a>
                 </div>
             </div>
         </div>
@@ -222,17 +244,32 @@
 
 </div>
 
-@include('customer.layouts.footer', ['showGetstarted' => true, 'getStartedColor' => '#A3D147'])
-
-
-@if(Session::has('message_success'))
-
+@if($selected && $selected==='call')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+    $(document).ready(function(){
 
-    alert('Your message has been sent.');
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $("#telephone-form-container").offset().top
+        }, 1000);
 
+    });
+</script>
+
+@elseif($selected && $selected==='message') 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $("#message-form-container").offset().top
+        }, 1000);
+
+    });
 </script>
 
 @endif
+
+@include('customer.layouts.footer', ['showGetstarted' => true, 'getStartedColor' => '#A3D147'])
 
 @endsection

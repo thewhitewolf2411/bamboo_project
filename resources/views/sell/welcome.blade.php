@@ -228,6 +228,7 @@
             }
 
             function selectCategory(category){
+
                 // clear results
                 $('.device-make-result').remove();
 
@@ -293,6 +294,12 @@
 
                 $('.device-brand').removeClass('selected');
                 $('.device-brand').css('filter', 'opacity(0.3)');
+
+                $([document.documentElement, document.body]).animate({
+                    scrollTop: $("#all-selling-categories").offset().top + 250
+                }, 500);
+
+
             }
 
             function selectBrand(id){

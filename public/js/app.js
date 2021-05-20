@@ -56986,6 +56986,20 @@ $('.message').on('click', function () {
 });
 $('#messageModal').on('hidden.bs.modal', function () {
   location.reload();
+}); //sending message
+
+$(document).ready(function () {
+  if (document.getElementById('title')) {
+    $('#custom-title-container').hide();
+  }
+
+  $('#title').change(function () {
+    if ($(this).val() === 'other') {
+      $('#custom-title-container').show();
+    } else {
+      $('#custom-title-container').hide();
+    }
+  });
 });
 
 /***/ }),
@@ -58153,15 +58167,15 @@ $('.deletedate').on('click', function () {
 /***/ (function(module, exports) {
 
 $('#sell-mobile-phones').on('click', function () {
-  window.location = '/sell';
+  window.location = '/sell#device-makes';
   localStorage.setItem('preselectedSellCategory', 'mobile');
 });
 $('#sell-watches').on('click', function () {
-  window.location = '/sell';
+  window.location = '/sell#device-makes';
   localStorage.setItem('preselectedSellCategory', 'watches');
 });
 $('#sell-tablets').on('click', function () {
-  window.location = '/sell';
+  window.location = '/sell#device-makes';
   localStorage.setItem('preselectedSellCategory', 'tablets');
 });
 $(".sell-category-wrapper").on('mouseenter', function () {
