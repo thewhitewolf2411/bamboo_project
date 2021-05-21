@@ -10,8 +10,13 @@
     </div>
     <div class="portal-content-container">
 
+        @if(Session::has('promo_success'))
+            <div class="alert alert-success" role="alert">
+                {{Session::get('promo_success')}}
+            </div>
+        @endif
 
-        <form action="editMainPromoDevices" method="POST" class="w-100">
+        <form action="{{route('editMainPromoDevices')}}" method="POST" class="w-100">
             @csrf
             <div class="row">
 
@@ -23,6 +28,8 @@
                                 <option value="{{$device->id}}">{{$device->product_name}}</option>
                             @endforeach
                         </select>
+
+                        <p>Currently selected device:<b>{{$selectedDevices->getFirstDevice(true)}}</b></p>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -33,6 +40,8 @@
                                 <option value="{{$device->id}}">{{$device->product_name}}</option>
                             @endforeach
                         </select>
+
+                        <p>Currently selected device:<b>{{$selectedDevices->getSecondDevice(true)}}</b></p>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -43,6 +52,8 @@
                                 <option value="{{$device->id}}">{{$device->product_name}}</option>
                             @endforeach
                         </select>
+
+                        <p>Currently selected device:<b>{{$selectedDevices->getThirdDevice(true)}}</b></p>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -53,6 +64,8 @@
                                 <option value="{{$device->id}}">{{$device->product_name}}</option>
                             @endforeach
                         </select>
+
+                        <p>Currently selected device:<b>{{$selectedDevices->getFourhtDevice(true)}}</b></p>
                     </div>
                 </div>
             </div>

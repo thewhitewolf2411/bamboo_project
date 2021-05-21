@@ -538,5 +538,6 @@ Route::group(['prefix' => 'portal/promodevices'], function(){
     Route::get('/map-site', 'Portal\PromotionalDevicesController@mapSite');
 
     Route::post('/main-site/editpromodevices', 'Portal\PromotionalDevicesController@editPromoDevices')->name('editMainPromoDevices');
+    Route::post('/main-site/editmappromodevices', 'Portal\PromotionalDevicesController@editMapPromoDevices')->name('editMapPromoDevices');
 
 });
