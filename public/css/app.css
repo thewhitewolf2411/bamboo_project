@@ -10481,7 +10481,7 @@ main {
 }
 
 main.selling-margin {
-  margin-top: 260px;
+  margin-top: 280px;
 }
 
 main p, a, span {
@@ -10495,7 +10495,7 @@ main p, a, span {
 .large-page-title {
   font-size: 4rem !important;
   font-family: Sharp Sans No1 Semibold !important;
-  text-shadow: 0px 3px 20px rgba(0, 0, 0, 0.2) !important;
+  text-shadow: 0px 3px 6px rgba(0, 0, 0, 0.4) !important;
 }
 
 .customer-sections-title {
@@ -10535,7 +10535,7 @@ main p, a, span {
   font-weight: 600;
   color: #fff;
   font-family: Sharp Sans No1 Semibold;
-  text-shadow: 0px 3px 20px rgba(0, 0, 0, 0.2);
+  text-shadow: 0px 3px 20px rgba(0, 0, 0, 0.25);
 }
 
 .back-to-home-footer {
@@ -10543,6 +10543,7 @@ main p, a, span {
   display: flex;
   justify-content: start;
   margin: auto;
+  max-width: 1150px;
 }
 
 .back-home-text {
@@ -10601,10 +10602,22 @@ main p, a, span {
 .howitworks-container-top {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
+  max-width: 1250px;
+  margin: auto;
 }
 
+@media screen and (max-width: 1260px) {
+  .howitworks-container-top {
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .max-450 {
+    max-width: 100% !important;
+  }
+}
 .max-450 {
   max-width: 450px;
 }
@@ -11212,6 +11225,10 @@ main p, a, span {
   margin-left: 0;
 }
 
+.contact-message-input {
+  border-color: #707070;
+}
+
 .contact-form-message-row {
   display: flex;
   flex-direction: row;
@@ -11266,6 +11283,7 @@ main p, a, span {
 
 #yourmessage {
   height: 90%;
+  border-color: #707070;
 }
 
 #telephone-form-container {
@@ -11421,6 +11439,7 @@ main p, a, span {
 .how-text-desc {
   font-size: 16px;
   margin-top: 16px;
+  font-family: Sharp Sans No1 Semibold;
 }
 
 .how-image {
@@ -11439,7 +11458,7 @@ main p, a, span {
 }
 
 .selling-toggle {
-  background: rgba(252, 196, 76, 0.05) !important;
+  background: #fff6e4;
 }
 
 .container {
@@ -11516,6 +11535,7 @@ main p, a, span {
   width: 70%;
   margin: 0 auto;
   padding-bottom: 50px;
+  max-width: 1150px;
 }
 
 .about-first-element p {
@@ -11528,6 +11548,8 @@ main p, a, span {
   justify-content: center;
   align-items: center;
   padding-top: 50px;
+  max-width: 1600px;
+  margin: auto;
 }
 
 .about-element {
@@ -14897,7 +14919,19 @@ h3, h4, h5 {
 }
 
 .cookie-consent__message {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.cookie-bold-text {
   font-family: Sharp Sans No1 Bold;
+  font-size: 14px;
+}
+
+.cookie-regular-text {
+  font-family: Sharp Sans No1 Book;
+  font-size: 14px;
 }
 
 .cookie-consent__message > a {
@@ -14912,7 +14946,7 @@ h3, h4, h5 {
 }
 
 #accept-cookies {
-  width: 130px;
+  width: 110px;
   height: 35px;
   background: white;
   margin-bottom: auto;
@@ -15002,6 +15036,10 @@ h3, h4, h5 {
 
 .bebas-neue {
   font-family: Bebas Neue, Helvetica, sans-serif;
+}
+
+.sharp-sans-medium {
+  font-family: Sharp Sans No1 Medium;
 }
 
 .popular-devices-container {
@@ -15113,7 +15151,7 @@ h3, h4, h5 {
 }
 @media (max-width: 890px) {
   main.selling-margin {
-    margin-top: 150px;
+    margin-top: 170px;
   }
 }
 @media screen and (max-width: 740px) and (min-width: 325px) {
@@ -15122,7 +15160,7 @@ h3, h4, h5 {
   }
 
   main.selling-margin {
-    margin-top: 130px !important;
+    margin-top: 160px !important;
   }
 
   .how-buttons-container {
@@ -17582,6 +17620,39 @@ input.lookup-delivery-basket::placeholder {
   max-width: 260px;
 }
 
+.sell-category-device-image.about.mobile {
+  left: 0;
+  top: -75px;
+}
+
+.sell-category-device-image.about.tablet {
+  top: 10px;
+  left: 0;
+}
+
+.sell-category-device-image.about.watch {
+  top: -25px;
+  left: 20px;
+  max-width: 260px;
+}
+
+@media only screen and (max-width: 625px) {
+  .sell-category-device-image.about.mobile {
+    left: 40px;
+    top: -55px;
+  }
+
+  .sell-category-device-image.about.tablet {
+    top: 10px;
+    left: 40px;
+  }
+
+  .sell-category-device-image.about.watch {
+    top: -17px;
+    left: 45px;
+    max-width: 210px;
+  }
+}
 .device-shadow {
   position: relative;
   display: block;
@@ -17641,6 +17712,10 @@ input.lookup-delivery-basket::placeholder {
   transition: all 0.3s linear;
   -webkit-filter: opacity(1);
           filter: opacity(1);
+}
+
+.single-sell-category.about {
+  width: 300px;
 }
 
 .single-sell-category.faded {

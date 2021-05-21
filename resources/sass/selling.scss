@@ -1285,6 +1285,38 @@ input.lookup-delivery-basket::placeholder{
     max-width: 260px;
 }
 
+// about us page sell categories
+.sell-category-device-image.about.mobile{
+    left: 0;
+    top: -75px;
+}
+.sell-category-device-image.about.tablet{
+    top: 10px;
+    left: 0;
+}
+.sell-category-device-image.about.watch{
+    top: -25px;
+    left: 20px;
+    max-width: 260px;
+}
+
+// breakpoint about us page
+@media only screen and (max-width: 625px){
+    .sell-category-device-image.about.mobile{
+        left: 40px;
+        top: -55px;
+    }
+    .sell-category-device-image.about.tablet{
+        top: 10px;
+        left: 40px;
+    }
+    .sell-category-device-image.about.watch{
+        top: -17px;
+        left: 45px;
+        max-width: 210px;
+    }
+}
+
 .device-shadow{
     position: relative;
     display: block;
@@ -1347,6 +1379,10 @@ input.lookup-delivery-basket::placeholder{
     cursor: pointer;
     transition: all 0.3s linear;
     filter: opacity(1);
+}
+
+.single-sell-category.about{
+    width: 300px;
 }
 
 .single-sell-category.faded{

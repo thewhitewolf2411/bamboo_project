@@ -23,9 +23,9 @@
             <div class="howitworks-element-container">
                 <div class="center-title-container">
                     {{-- <p>Shop and sell easily <br> with just a few clicks</p> --}}
-                    <p class="customer-sections-title">Sell easily <br> with just a few clicks</p>
+                    <p class="customer-sections-title howitworks-title">Sell easily <br> with just a few clicks</p>
                 </div>
-                <p class="max-450 mt-4">
+                <p class="max-450 mt-4 sharp-sans-medium">
                     We pride ourselves in offering a smart simple way to shop and sell mobile devices. With Boo, all it takes is just a few clicks to buy and sell the devices of your choice. 
                     In just a few simple steps you can either trade in or trade up your mobile tech for unbeatable prices, while doing your bit for the environment.   
                     Watch our quick video that explains how our meticulous grading system works. We guarantee you’ll be pleasantly surprised at just how thorough and exhaustive our grading system is. 
@@ -124,7 +124,7 @@
             <div class="shopping-element container">
                 <div class="shopping-element-text">
                     <p class="left-title-text">1. Search for a new device</p>
-                    <p class="how-text-desc">
+                    <p class="how-text-desc sharp-sans-medium">
                         {{-- Search for your old device and find out how much it’s worth. If you’re happy with the price, simply register the mobile and provide us with your preferred payment option and with your details.  --}}
                         Search your old device and find out how much its worth. If you are happy with the price , simply register the device, provide us with your details and we’ll get the ball rolling.
                     </p>
@@ -137,7 +137,7 @@
             <div class="shopping-element container">
                 <div class="shopping-element-text">
                     <p class="left-title-text">2. Free Next Day Delivery</p>
-                    <p class="how-text-desc">Once your sales order is completed, simply request for a free sales pack. Alternatively, you can print your own labels to send us your device.</p>
+                    <p class="how-text-desc sharp-sans-medium">Once your sales order is completed, simply request for a free sales pack. Alternatively, you can print your own labels to send us your device.</p>
                 </div>
                 <div class="shopping-element-image">
                     {{-- <img class="how-image" src="{{ asset('/customer_page_images/body/free_post_pack.svg') }}"> --}}
@@ -148,14 +148,14 @@
             <div class="shopping-element container">
                 <div class="shopping-element-text">
                     <p class="left-title-text">3. You have a shiny new phone to play with</p>
-                    <p class="how-text-desc">With Boo you won’t be left waiting for your payment. Once we receive your device, our team will check it against your order. If everything is correct, we’ll issue the payment that very same day! It’s that Simple!</p>
+                    <p class="how-text-desc sharp-sans-medium">With Boo you won’t be left waiting for your payment. Once we receive your device, our team will check it against your order. If everything is correct, we’ll issue the payment that very same day! It’s that Simple!</p>
                 </div>
                 <div class="shopping-element-image">
                     <img class="how-image" src="{{ asset('/customer_page_images/body/get_paid.svg') }}">
                 </div>
             </div>
 
-            <div class="url-footer-container mb-5" id="start-selling">
+            <div class="url-footer-container mb-5 btn black-border-hover" id="start-selling">
                 <a href="/sell">Start Selling</a>
             </div>
 

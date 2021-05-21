@@ -83,39 +83,39 @@
 
     <div class="sell-categories-container pt-5">
 
-        <div class="single-sell-category" id="mobile-category">
+        <div class="single-sell-category about" id="mobile-category">
             <p class="sell-about-category-subtitle">Sell</p>
             <p class="sell-category-title">Mobile Phones</p>
 
             <div class="sell-category-wrapper" id="sell-mobile-phones">
                 <div class="sell-category-device-background" id="rounded-mobile"></div>
-                <img class="sell-category-device-image mobile" src="{{asset('/images/devices/phones.png')}}">
+                <img class="sell-category-device-image about mobile" src="{{asset('/images/devices/phones.png')}}">
 
                 <img class="device-shadow mobile" src="{{asset('/images/device_shadow.svg')}}">
             </div>
 
         </div>
 
-        <div class="single-sell-category" id="tablets-category">
+        <div class="single-sell-category about" id="tablets-category">
             <p class="sell-about-category-subtitle">Sell</p>
             <p class="sell-category-title">Tablets</p>
 
             <div class="sell-category-wrapper" id="sell-tablets">
                 <div class="sell-category-device-background" id="rounded-tablets"></div>
-                <img class="sell-category-device-image tablet" src="{{asset('/images/devices/tablets.png')}}">
+                <img class="sell-category-device-image about tablet" src="{{asset('/images/devices/tablets.png')}}">
 
                 <img class="device-shadow" src="{{asset('/images/device_shadow.svg')}}">
             </div>
 
         </div>
 
-        <div class="single-sell-category" id="watches-category">
+        <div class="single-sell-category about" id="watches-category">
             <p class="sell-about-category-subtitle">Sell</p>
             <p class="sell-category-title">Watches</p>
 
             <div class="sell-category-wrapper" id="sell-watches">
                 <div class="sell-category-device-background" id="rounded-watches"></div>
-                <img class="sell-category-device-image watch" src="{{asset('/images/devices/watches.png')}}">
+                <img class="sell-category-device-image about watch" src="{{asset('/images/devices/watches.png')}}">
                 
                 <img class="device-shadow" src="{{asset('/images/device_shadow.svg')}}">
             </div>
