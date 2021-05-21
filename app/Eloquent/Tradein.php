@@ -1048,7 +1048,7 @@ class Tradein extends Model
         $datework = Carbon::parse($paymentBatchDevice->updated_at);
         $now = Carbon::now();
 
-        return $datework->diffForHumans($now);
+        return $datework->diffInHours($now);
     }
 
     public function getTimePassed(){
@@ -1057,7 +1057,7 @@ class Tradein extends Model
         $datework = Carbon::parse($paymentBatchDevice->updated_at);
         $now = Carbon::now();
 
-        return $datework->diffInDays($now);
+        return $datework->diffInHours($now);
     }
 
     public function getDatePaid(){

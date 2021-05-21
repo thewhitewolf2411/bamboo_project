@@ -191,6 +191,9 @@ class UsersController extends Controller
         if($request->promo_codes == 'on'){
             $portalUser->promo_codes = true;
         }
+        if($request->promo_devices == 'on'){
+            $portalUser->promo_devices = true;
+        }
 
 
         $portalUser->save();
@@ -449,6 +452,13 @@ class UsersController extends Controller
             $portalUser->promo_codes = true;
         } else {
             $portalUser->promo_codes = false;
+        }
+
+        if($request->promo_devices == 'on'){
+            $portalUser->promo_devices = true;
+        }
+        else{
+            $portalUser->promo_devices = false;
         }
 
 

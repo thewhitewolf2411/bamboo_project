@@ -175,6 +175,9 @@ main p, a, span{
     -moz-box-shadow: 1px 1px 15px 1px rgba(204,204,204,1);
     box-shadow: 1px 1px 15px 1px rgba(204,204,204,1);
     padding: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .howVideoToggle > p {
@@ -748,7 +751,6 @@ main p, a, span{
 
 .contact-forms-container{
     background: #F4F4F4;
-    padding: 100px 250px;
 }
 
 .contact-form-container span{
@@ -811,7 +813,7 @@ main p, a, span{
 }
 
 .contact-form-title-wrapper > select {
-    max-width: 80px;
+    max-width: 110px;
     margin-left: 100px;
 }
 
@@ -831,6 +833,7 @@ main p, a, span{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 100px 0;
 }
 
 .form-group{
@@ -875,7 +878,7 @@ main p, a, span{
     flex-direction: column;
     justify-content: space-between;
     // height: 250px;
-    height: 300px;
+    //height: 300px;
 }
 
 .worktime-text{

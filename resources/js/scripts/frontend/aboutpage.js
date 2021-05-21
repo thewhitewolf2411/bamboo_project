@@ -1,13 +1,13 @@
 $('#sell-mobile-phones').on('click', function(){
-    window.location = '/sell';
+    window.location = '/sell#device-makes';
     localStorage.setItem('preselectedSellCategory', 'mobile');
 });
 $('#sell-watches').on('click', function(){
-    window.location = '/sell';
+    window.location = '/sell#device-makes';
     localStorage.setItem('preselectedSellCategory', 'watches');
 });
 $('#sell-tablets').on('click', function(){
-    window.location = '/sell';
+    window.location = '/sell#device-makes';
     localStorage.setItem('preselectedSellCategory', 'tablets');
 });
 

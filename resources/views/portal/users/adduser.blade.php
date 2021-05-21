@@ -187,6 +187,10 @@
                                     <input type="checkbox" class="form-check-input" name="promo_codes" id="promo_codes" @if(isset($userdata) && $thisportalUser->promo_codes) checked @endif>
                                     <label class="form-check-label" for="promo_codes">Promotional Codes</label>
                                 </div>
+                                <div class="form-group p20 w-25">
+                                    <input type="checkbox" class="form-check-input" name="promo_devices" id="promo_devices" @if(isset($userdata) && $thisportalUser->promo_devices) checked @endif>
+                                    <label class="form-check-label" for="promo_devices">Promotional Devices</label>
+                                </div>
                             </div>
 
                             <div class="form-group p20 w-25">

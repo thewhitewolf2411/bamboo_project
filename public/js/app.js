@@ -56986,6 +56986,20 @@ $('.message').on('click', function () {
 });
 $('#messageModal').on('hidden.bs.modal', function () {
   location.reload();
+}); //sending message
+
+$(document).ready(function () {
+  if (document.getElementById('title')) {
+    $('#custom-title-container').hide();
+  }
+
+  $('#title').change(function () {
+    if ($(this).val() === 'other') {
+      $('#custom-title-container').show();
+    } else {
+      $('#custom-title-container').hide();
+    }
+  });
 });
 
 /***/ }),
@@ -58153,15 +58167,15 @@ $('.deletedate').on('click', function () {
 /***/ (function(module, exports) {
 
 $('#sell-mobile-phones').on('click', function () {
-  window.location = '/sell';
+  window.location = '/sell#device-makes';
   localStorage.setItem('preselectedSellCategory', 'mobile');
 });
 $('#sell-watches').on('click', function () {
-  window.location = '/sell';
+  window.location = '/sell#device-makes';
   localStorage.setItem('preselectedSellCategory', 'watches');
 });
 $('#sell-tablets').on('click', function () {
-  window.location = '/sell';
+  window.location = '/sell#device-makes';
   localStorage.setItem('preselectedSellCategory', 'tablets');
 });
 $(".sell-category-wrapper").on('mouseenter', function () {
@@ -58980,8 +58994,8 @@ $('#removefromlot').on('click', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

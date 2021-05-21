@@ -9,7 +9,7 @@
                 {{-- <div class="url-footer-container" id="start-shopping">
                     <a href="/shop">Start Shopping</a>
                 </div> --}}
-                <div class="url-footer-container" id="start-selling" @if(isset($getStartedColor)) style="background: {!!$getStartedColor!!}" @endif>
+                <div class="url-footer-container" id="start-selling">
                     <a href="/sell">Start Selling</a>
                 </div>
             </div>
@@ -40,7 +40,11 @@
         <div class="footer-row-6">
             <span>HOW IT WORKS</span>
             {{-- <a href="/setpage/how">Shopping</a> --}}
+            @if(isset($sellingurl) && $sellingurl)
+            <a href="/sell">Selling</a>
+            @else
             <a href="/how">Selling</a>
+            @endif
         </div>
         <div class="footer-row-6">
             <span>SERVICE & SUPPORT</span>

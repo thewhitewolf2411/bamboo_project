@@ -28,8 +28,12 @@
 
             <div class="container">
 
-                <a class="back-to-home-footer mt-3 mb-5 ml-0" href="/">
-                    <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to home</p>
+                @if(Session::get('_previous') !== null)
+                    <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+                @else
+                    <a class="back-to-home-footer mt-3" href="/">
+                @endif
+                    <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
                 </a>
 
                 <div class="row m-0 map-row">
@@ -154,6 +158,10 @@
                         <p class="sitemap-title">Why Sell With Us</p>
                         <a class="sitemap-text" href="/sell/why">Benefits of Selling with Bamboo</a>
                     </div>
+                </div>
+
+                <div class="row m-0 border-top my-5">
+                    <p class="sitemap-section-title ml-1 mt-4"></p>
                 </div>
 
             </div>

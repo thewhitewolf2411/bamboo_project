@@ -57,7 +57,8 @@ class LoginController extends Controller
                 Auth::login($user);
                 //return $this->sendLoginResponse($request);
                 #return $next($request);
-                return redirect()->back();
+                //return redirect()->back();
+                $this->redirectTo();
             }
         }
 
@@ -73,6 +74,7 @@ class LoginController extends Controller
      */
     public function redirectTo(){
         // User role
+
         $role = Auth::user()->type_of_user; 
         // Check user role
         switch ($role) {
@@ -91,7 +93,7 @@ class LoginController extends Controller
             default:
                 return redirect()->back();
                 break;
-            }
+        }
     }
 
     /**

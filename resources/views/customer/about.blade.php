@@ -126,7 +126,7 @@
 
     @include('partial.newsletter')
 
-    @include('customer.layouts.footer', ['showGetstarted' => true])
+    @include('customer.layouts.footer', ['showGetstarted' => false])
 
 </div>
 @endsection

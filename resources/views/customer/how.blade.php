@@ -34,9 +34,9 @@
             <div class="howitworks-element-container text-center p-0">
                 <div class="grading-video-container mt-auto mb-auto">
                     <div class="howVideoToggle" data-toggle="modal" data-target="#howVideoModal">
-                        <p class="mb-4">Grading System</p>
+
                         <img src="{{asset('/video/play_video.svg')}}">
-                        <p class="mt-4">Explained</p>
+
                     </div>
                 </div>
 
@@ -50,8 +50,8 @@
                                 </button>
                             </div> --}}
                             <div class="modal-body">
-                            <video id="howvideoid" width="100%" controls>
-                                <source src="{{ asset('/video/old/Bamboo Selling v4.mp4') }}" type="video/mp4">
+                            <video id="howvideoid" width="100%" controls autoplay muted>
+                                <source src="{{ asset('/video/Bamboo_Selling_Web_140521.mp4') }}" type="video/mp4">
                                 Your browser does not support HTML video.
                             </video>
                             </div>
@@ -262,7 +262,7 @@
 
     </div> --}}
 
-    @include('customer.layouts.footer', ['showGetstarted' => true])
+    @include('customer.layouts.footer', ['showGetstarted' => false, 'sellingurl'=>true])
 
     <script>
 

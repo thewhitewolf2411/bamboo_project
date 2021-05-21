@@ -366,7 +366,7 @@ class FeedsController extends Controller
             // ignore 12 & 13 (created_at and updated_at) index at
 
             // required fields for importing Recycle products
-            $required_product_fields = ['id', 'product_name', 'product_image', 'category_id', 'brand_id'];
+            $required_product_fields = ['id', 'product_name', /*'product_image',*/ 'category_id', 'brand_id'];
             // if memory, then these required
             $required_product_info_fields = ['product_memory', 'excellent_working', 'good_working', 'poor_working', 'damaged_working', 'faulty'];
 
@@ -441,7 +441,7 @@ class FeedsController extends Controller
                         $sellingProduct->product_name = $row[1];
                         if($row[2] === null){
                             $sellingProduct->product_image = 'default_image';
-                            $sellingProduct->avaliable_for_sell = true;
+                            $sellingProduct->avaliable_for_sell = false;
                         }
                         else{
                             $sellingProduct->product_image = $row[2];
@@ -537,13 +537,9 @@ class FeedsController extends Controller
                     $productColours->product_id = $sellingProduct->id;
                     $productColours->color_value = $importeddata[$key][14];
                     $productColours->save(); 
-                    
                 }
 
-
             }
-
-
 
             if(!empty($export_log)){
                 array_push($export_log, 'You have succesfully imported products.');

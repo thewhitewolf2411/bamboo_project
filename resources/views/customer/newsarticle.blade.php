@@ -9,7 +9,7 @@
     </div>
 
     <a class="back-to-home-footer mt-3" href="/news">
-        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to news</p>
+        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
     </a>
 
     <div class="container view-blog mt-5">
@@ -214,6 +214,8 @@
     @endif
 
     @include('partial.newscontactsupport')
+
+    @include('customer.layouts.footer', ['showGetstarted' => false])
     
 </div>
 
