@@ -40,18 +40,21 @@ class PagesController extends Controller
                     $products = $buyingProducts->merge($sellingProducts);
                     $popularDevices = PromotionalDevices::where('promo_type', 1)->first();
                     $popular = collect();
-                    if($popularDevices->device_1 !==null){
-                        $popular->push($popularDevices->getFirstDevice());
+                    if($popularDevices !== null){
+                        if($popularDevices->device_1 !==null){
+                            $popular->push($popularDevices->getFirstDevice());
+                        }
+                        if($popularDevices->device_2 !==null){
+                            $popular->push($popularDevices->getSecondDevice());
+                        }
+                        if($popularDevices->device_3 !==null){
+                            $popular->push($popularDevices->getThirdDevice());
+                        }
+                        if($popularDevices->device_4 !==null){
+                            $popular->push($popularDevices->getFourhtDevice());
+                        }
                     }
-                    if($popularDevices->device_2 !==null){
-                        $popular->push($popularDevices->getSecondDevice());
-                    }
-                    if($popularDevices->device_3 !==null){
-                        $popular->push($popularDevices->getThirdDevice());
-                    }
-                    if($popularDevices->device_4 !==null){
-                        $popular->push($popularDevices->getFourhtDevice());
-                    }
+
 
                     return view('customer.home', ['products' => $products, 'popular' => $popular]);
                     break;
