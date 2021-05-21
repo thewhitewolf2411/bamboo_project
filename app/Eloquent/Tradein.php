@@ -284,7 +284,7 @@ class Tradein extends Model
         return url('/storage/missing_images/'.$this->missing_image);
     }
 
-    public function getQuarantineRean(){
+    public function getQuarantineReason(){
         if($this->job_state === '8a' || $this->job_state === '8b' || $this->job_state === '8c' || $this->job_state === '8d' || $this->job_state === '8e' || $this->job_state === '8f'){
             return true;
         }

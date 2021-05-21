@@ -19,7 +19,7 @@ class RedirectUser
         // redirect to login if not authorized
         if(!Auth::user()){
             request()->session()->flash('nouser', true);
-            return redirect('setpage/account');
+            return redirect('/userprofile');
         }
         
         return $next($request);
