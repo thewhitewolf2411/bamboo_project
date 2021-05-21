@@ -24,16 +24,16 @@ Route::get('/specialdeliverylabel', 'Customer\PagesController@downloadSDLabel');
 Route::get('/printorderlabel', 'Customer\PagesController@downloadTradeLabel');
 
 //User get Route
-Route::get('/', 'Customer\PagesController@index')->name('index');
-Route::get('/how', 'Customer\PagesController@showHowitWorksPage');
-Route::get('/about', 'Customer\PagesController@showAboutPage');
-Route::get('/news', 'Customer\PagesController@showNewsPage');
-Route::get('/news/{id}', 'Customer\PagesController@showSingleNews');
-Route::get('/support', 'Customer\PagesController@showSupportAndServicePage');
-Route::get('/support/selling/{id?}', 'Customer\PagesController@showSellingSupportPage');
-Route::post('/support/searchfaq', 'Customer\PagesController@searchFAQSupport');
-Route::get('/contact', 'Customer\PagesController@showContactPage');
-Route::get('/contact/{selected?}', 'Customer\PagesController@showContactPage');
+Route::get('/', 'Customer\PagesController@index')->name('index')->middleware('checkAdmin');
+Route::get('/how', 'Customer\PagesController@showHowitWorksPage')->middleware('checkAdmin');
+Route::get('/about', 'Customer\PagesController@showAboutPage')->middleware('checkAdmin');
+Route::get('/news', 'Customer\PagesController@showNewsPage')->middleware('checkAdmin');
+Route::get('/news/{id}', 'Customer\PagesController@showSingleNews')->middleware('checkAdmin');
+Route::get('/support', 'Customer\PagesController@showSupportAndServicePage')->middleware('checkAdmin');
+Route::get('/support/selling/{id?}', 'Customer\PagesController@showSellingSupportPage')->middleware('checkAdmin');
+Route::post('/support/searchfaq', 'Customer\PagesController@searchFAQSupport')->middleware('checkAdmin');
+Route::get('/contact', 'Customer\PagesController@showContactPage')->middleware('checkAdmin');
+Route::get('/contact/{selected?}', 'Customer\PagesController@showContactPage')->middleware('checkAdmin');
 /*Route::get('/setpage/{parameter}', [
     'as'=>'setpage',
     'uses'=>'Customer\CustomerController@setPage'
@@ -44,16 +44,16 @@ Route::post('/sendMessage', 'Customer\PagesController@sendMessage');
 //Route::get('/password/reset', 'Customer\PagesController@showPaswordResetPage')->name('password.request');
 
 //Footer pages
-Route::get('/environment', 'Customer\PagesController@showEnvironmentPage');
-Route::get('/charity', 'Customer\PagesController@showCharityPage');
-Route::get('/privacy', 'Customer\PagesController@showPrivacyPage');
-Route::get('/terms', 'Customer\PagesController@showTermsPage');
-Route::get('/map', 'Customer\PagesController@showMapPage');
-Route::get('/cookies', 'Customer\PagesController@showCookiesPage');
-Route::get('/slavery', 'Customer\PagesController@showSlaveryPage');
-Route::get('/corporate', 'Customer\PagesController@showCorporatePage');
-Route::get('/recyclepolicy', 'Customer\PagesController@showReturnPolicyPage');
-Route::post('/newslettersingup', 'Customer\PagesController@singUpNewsletter');
+Route::get('/environment', 'Customer\PagesController@showEnvironmentPage')->middleware('checkAdmin');
+Route::get('/charity', 'Customer\PagesController@showCharityPage')->middleware('checkAdmin');
+Route::get('/privacy', 'Customer\PagesController@showPrivacyPage')->middleware('checkAdmin');
+Route::get('/terms', 'Customer\PagesController@showTermsPage')->middleware('checkAdmin');
+Route::get('/map', 'Customer\PagesController@showMapPage')->middleware('checkAdmin');
+Route::get('/cookies', 'Customer\PagesController@showCookiesPage')->middleware('checkAdmin');
+Route::get('/slavery', 'Customer\PagesController@showSlaveryPage')->middleware('checkAdmin');
+Route::get('/corporate', 'Customer\PagesController@showCorporatePage')->middleware('checkAdmin');
+Route::get('/recyclepolicy', 'Customer\PagesController@showReturnPolicyPage')->middleware('checkAdmin');
+Route::post('/newslettersingup', 'Customer\PagesController@singUpNewsletter')->middleware('checkAdmin');
 
 
 //User profile
@@ -528,5 +528,15 @@ Route::group(['prefix' => 'portal/promocodes'], function(){
     Route::get('/edit/{id}', 'Portal\PromotionalCodesController@showEditPromoCode')->name('editPromoCode');
     Route::post('/save/{id}', 'Portal\PromotionalCodesController@updatePromoCode')->name('updatePromoCode');
     Route::get('/delete/{id}', 'Portal\PromotionalCodesController@deletePromoCode')->name('deletePromoCode');
+
+});
+
+Route::group(['prefix' => 'portal/promodevices'], function(){
+
+    Route::get('/', 'Portal\PromotionalDevicesController@index');
+    Route::get('/main-site', 'Portal\PromotionalDevicesController@mainSite');
+    Route::get('/map-site', 'Portal\PromotionalDevicesController@mapSite');
+
+    Route::post('/main-site/editpromodevices', 'Portal\PromotionalDevicesController@editPromoDevices')->name('editMainPromoDevices');
 
 });

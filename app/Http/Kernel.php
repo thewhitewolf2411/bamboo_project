@@ -22,7 +22,8 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Spatie\GoogleTagManager\GoogleTagManagerMiddleware::class,
-        \App\Http\Middleware\MyRobotsMiddleware::class
+        \App\Http\Middleware\MyRobotsMiddleware::class,
+        \App\Http\Middleware\UserGroupMiddleware::class
     ];
 
     /**
@@ -65,6 +66,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'checkAuth' => \App\Http\Middleware\RedirectUser::class
+        'checkAuth' => \App\Http\Middleware\RedirectUser::class,
+        'checkAdmin' => \App\Http\Middleware\UserGroupMiddleware::class
     ];
 }

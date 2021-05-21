@@ -91,6 +91,7 @@ class UserSeeder extends Seeder
             'failed_payments'=>true,
             'recycle_offers'=>true,
             'promo_codes' => true,
+            'promo_devices' => true,
             'despatch'=>true
         ]);
     }

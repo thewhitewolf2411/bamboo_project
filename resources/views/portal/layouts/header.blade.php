@@ -72,6 +72,7 @@
                     @if($portalUser->settings)<a class="dropdown-item" href="/portal/settings">Settings</a>@endif
                     @if($portalUser->recycle_offers)<a class="dropdown-item" href="/portal/recycleoffers">Recycle Offers</a>@endif
                     @if($portalUser->promo_codes)<a class="dropdown-item" href="/portal/promocodes">Promotional Codes</a>@endif
+                    @if($portalUser->promo_devices)<a class="dropdown-item" href="/portal/promodevices">Promotional Devices</a>@endif
                 </div>
             </div>
             @endif

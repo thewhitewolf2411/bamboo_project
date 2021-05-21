@@ -159,6 +159,7 @@ class WarehouseManagementController extends Controller
             array_push($tradeins, $tradein);
         }
 
+        array_reverse($tradeins);
         
         return view('portal.warehouse.box-management', ['portalUser'=>$portalUser, 'boxes'=>$boxes, 'brands'=>$brands, 'box'=>$currentBox, 'tradeins'=>$tradeins, 'boxedTradeIns'=>$boxedTradeIns, 'showLabel'=>$showLabel]);
     }

@@ -332,6 +332,14 @@
                     </div>
                 </a>
                 @endif
+
+                @if($portalUser->promo_devices)
+                <a href="/portal/promodevices" class="col-2 my-2">
+                    <div class="portal-content-element">
+                        <p>Promotional Devices</p>
+                    </div>
+                </a>
+                @endif
             </div>
 
         </div>

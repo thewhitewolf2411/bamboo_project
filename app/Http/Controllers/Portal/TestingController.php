@@ -138,7 +138,7 @@ class TestingController extends Controller
             if(count(Tradein::where('barcode', $request->scanid)->whereIn('job_state', ["19","20", "21"])->get())>=1){
                 return redirect()->back()->with('error', 'This order has been marked to be returned to customer.');
             }
-            return redirect()->back()->with('error', 'Trade pack despach has not been sent, or device was already received.');
+            return redirect()->back()->with('error', 'This order need to be returned to customer');
         }
 
         $user_id = Auth::user()->id;

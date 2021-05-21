@@ -51,7 +51,7 @@
                             </div> --}}
                             <div class="modal-body">
                             <video id="howvideoid" width="100%" controls autoplay muted>
-                                <source src="{{ asset('/video/old/Bamboo Selling v4.mp4') }}" type="video/mp4">
+                                <source src="{{ asset('/video/Bamboo_Selling_Web_140521.mp4') }}" type="video/mp4">
                                 Your browser does not support HTML video.
                             </video>
                             </div>

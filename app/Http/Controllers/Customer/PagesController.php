@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Mail;
 
 class PagesController extends Controller
 {
+
     /**
      * Show the application dashboard.
      *
