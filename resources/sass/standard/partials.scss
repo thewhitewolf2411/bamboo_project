@@ -137,7 +137,8 @@
 
 .sustainability-container{
     background: #59DDC1;
-    padding: 200px 140px 100px 100px;
+    // padding: 200px 140px 100px 100px;
+    padding: 200px 140px 100px 140px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -165,6 +166,14 @@
     color: #bcbcbc;
 }
 
+.whySellVideoToggle > img {
+    transition: all 0.3s linear;
+}
+
+.whysell-video-container:hover > div.whySellVideoToggle > img{
+    transform: scale(1.2);
+}
+
 #whySellVideoModal.noscroll{
     overflow-y: hidden;
 }
@@ -172,7 +181,8 @@
 .sustainability-row{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    // justify-content: space-evenly;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
@@ -188,6 +198,8 @@
     margin-bottom: auto;
     max-width: 450px;
     text-align: left;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 .sustainability-large{
@@ -278,7 +290,8 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    // justify-content: space-evenly;
+    justify-content: center;
     margin-bottom: 250px;
 }
 
@@ -289,6 +302,15 @@
 
 .sustainability-about-col.text{
     max-width: 500px;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+@media (max-width: 1306px){
+    .sustainability-about-col.text, .text-buttons-sustainability{
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
 
 .laughing-gif{

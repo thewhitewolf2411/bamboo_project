@@ -226,7 +226,7 @@
                 
                     {{-- <a href="{{route('showSellItem', ['parameter' => $device->id])}}"> --}}
 
-                        <div class="popular-product">
+                        <a class="popular-product" href="{{route('showSellItem', ['parameter' => $device->id])}}">
                             <div class="popular-product-wrapper">
                                 <div class="popular-product-image-container">
                                     @if($device->product_image === 'default_image')
@@ -243,10 +243,7 @@
                             {{-- <div class="go-to-selldevice mt-4">
                                 <img class="next-icon-results" src="{{asset('/images/front-end-icons/purple_arrow_next.svg')}}">
                             </div> --}}
-                            <div class="product-buttons hidden">
-                                <a class="btn btn-orange sell-popular" href="{{route('showSellItem', ['parameter' => $device->id])}}">Start Selling</a>
-                            </div>
-                        </div>
+                        </a>
 
                     {{-- </a> --}}
 

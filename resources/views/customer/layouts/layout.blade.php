@@ -60,7 +60,6 @@
                                         </span>
                                     @endif
 
-                                    {!!$errors!!}
 
                                     <div class="form-group">
                                         <input id="login" type="text" class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }} mb-0" placeholder="Username or Email" name="login" value="{{ old('username') ?: old('email') }}" required autofocus>
