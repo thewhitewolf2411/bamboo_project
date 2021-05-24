@@ -32,6 +32,7 @@ use App\Eloquent\Payment\UserBankDetails;
 use App\Eloquent\PromotionalCode;
 use App\Eloquent\UserPromotionalCode;
 use App\Services\NotificationService;
+use App\Services\Sorting;
 use App\User;
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -94,87 +95,18 @@ class SellController extends Controller
 
         switch($parameter){
             case "mobile":
-                if(isset($request->brand)){
-                    if($onlyTopResults){
-                        $products = SellingProduct::where('category_id', 1)->where('brand_id', $request->brand)->take(16)->get();
-                    } else {
-                        $products = SellingProduct::where('category_id', 1)->where('brand_id', $request->brand)->get();
-                    }
-                    $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
-                    break;
-                }else{
-                    $products = collect();// SellingProduct::where('category_id', 1)->get();
-                    $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working');
-                    foreach($productIdsSorted as $key=>$productId){
-                        #dd($productId);
-
-                        $product = SellingProduct::where('category_id', 1)->where('id', $productId['product_id'])->first();
-
-                        if($product){
-                            if(!$products->contains($product)){
-                                $products->add($product);
-                            }
-                        }
-                    }
-
-                    $numberofproducts = count(SellingProduct::where('category_id', 1)->get());
-                    break;
-                }
+                $sorting = new Sorting(null, 1);
+                $products = $sorting->sortDevices();
+                break;
             case "tablets":
-                if(isset($request->brand)){
-                    if($onlyTopResults){
-                        $products = SellingProduct::where('category_id', 2)->where('brand_id', $request->brand)->take(16)->get();
-                    } else {
-                        $products = SellingProduct::where('category_id', 2)->where('brand_id', $request->brand)->get();
-                    }
-                    $numberofproducts = count(SellingProduct::where('category_id', 2)->get());
-                    break;
-                }else{
-                    $products = collect();// SellingProduct::where('category_id', 1)->get();
-                    $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working')->toArray();
-                    foreach($productIdsSorted as $key=>$productId){
-                        $product = SellingProduct::where('category_id', 2)->where('id', $key)->first();
-                        if($product){
-                            $products->add($product);
-                        }
-                    }
-                    $numberofproducts = count(SellingProduct::where('category_id', 2)->get());
-                    break;
-                }
-            break;
+                $sorting = new Sorting(null, 2);
+                $products = $sorting->sortDevices();
+                break;
             case "watches":
-                if(isset($request->brand)){
-                    if($onlyTopResults){
-                        $products = SellingProduct::where('category_id', 3)->where('brand_id', $request->brand)->take(16)->get();
-                    } else {
-                        $products = SellingProduct::where('category_id', 3)->where('brand_id', $request->brand)->get();
-                    }
-                    $numberofproducts = count(SellingProduct::where('category_id', 3)->get());
-                    break;
-                }else{
-                    $products = collect();// SellingProduct::where('category_id', 1)->get();
-                    $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working')->toArray();
-                    foreach($productIdsSorted as $key=>$productId){
-                        $product = SellingProduct::where('category_id', 3)->where('id', $key)->first();
-                        if($product){
-                            $products->add($product);
-                        }
-                    }
-                    $numberofproducts = count(SellingProduct::where('category_id', 3)->get());
-                    break;
-                }
-            break;
+                $sorting = new Sorting(null, 3);
+                $products = $sorting->sortDevices();
+                break;
             default:
-                if($onlyTopResults){
-                    $total = SellingProduct::where('product_name', 'LIKE', '%'.$parameter.'%')->get()->count();
-                    if($total > 16){
-                        $canSeeMore = true;
-                    }
-                    $products = SellingProduct::where('product_name', 'LIKE', '%'.$parameter.'%')->take(16)->get();
-                } else {
-                    $products = SellingProduct::where('product_name', 'LIKE', '%'.$parameter.'%')->get();
-                }
-                $numberofproducts = count($products);
                 break;
         }
 
@@ -215,6 +147,7 @@ class SellController extends Controller
      * Show all devices by category and brand.
      */
     public function showBrandCategoryResults(Request $request, $category, $brand){
+        
         $number = 0;
         $page = 1;
         $start = null;
@@ -243,61 +176,20 @@ class SellController extends Controller
 
         switch($category){
             case "mobile":
-                if(isset($request->brand)){
-                    //$products = SellingProduct::where('category_id', 1)->where('brand_id', $brand)->get();
-                    $products = collect();// SellingProduct::where('category_id', 1)->get();
-                    $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working');
-                    foreach($productIdsSorted as $key=>$productId){
-                        $product = SellingProduct::where('category_id', 1)->where('brand_id', $brand)->where('id', $key)->where('avaliable_for_sell', true)->first();
-                        if($product){
-                            $products->add($product);
-                        }
-                    }
-                    $numberofproducts = count(SellingProduct::where('category_id', 1)->where('avaliable_for_sell', true)->get());
-                    break;
-                }else{
-                    $products = SellingProduct::where('category_id', 1)->get();
-                    $numberofproducts = count(SellingProduct::where('category_id', 1)->where('avaliable_for_sell', true)->get());
-                    break;
-                }
+                $sorting = new Sorting($brand, 1);
+                $products = $sorting->sortDevices();
+            break;
             case "tablets":
-                if(isset($request->brand)){
-                    $products = collect();// SellingProduct::where('category_id', 1)->get();
-                    $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working');
-                    foreach($productIdsSorted as $key=>$productId){
-                        $product = SellingProduct::where('category_id', 2)->where('brand_id', $brand)->where('id', $key)->where('avaliable_for_sell', true)->first();
-                        if($product){
-                            $products->add($product);
-                        }
-                    }
-                    $numberofproducts = count(SellingProduct::where('category_id', 2)->where('avaliable_for_sell', true)->get());
-                    break;
-                }else{
-                    $products = SellingProduct::where('category_id', 2)->get();
-                    $numberofproducts = count(SellingProduct::where('category_id', 2)->where('avaliable_for_sell', true)->get());
-                    break;
-                }
+                $sorting = new Sorting($brand, 2);
+                $products = $sorting->sortDevices();
             break;
             case "watches":
-                if(isset($request->brand)){
-                    $products = collect();// SellingProduct::where('category_id', 1)->get();
-                    $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working');
-                    foreach($productIdsSorted as $key=>$productId){
-                        $product = SellingProduct::where('category_id', 3)->where('brand_id', $brand)->where('id', $key)->where('avaliable_for_sell', true)->first();
-                        if($product){
-                            $products->add($product);
-                        }
-                    }
-                    $numberofproducts = count(SellingProduct::where('category_id', 3)->where('avaliable_for_sell', true)->get());
-                    break;
-                }else{
-                    $products = SellingProduct::where('category_id', 3)->get();
-                    $numberofproducts = count(SellingProduct::where('category_id', 3)->where('avaliable_for_sell', true)->get());
-                    break;
-                }
+                $sorting = new Sorting($brand, 3);
+                $products = $sorting->sortDevices();
             break;
             default:
-                break;
+
+            break;
         }
 
         $page = isset($request->page) ? $request->page : 1;

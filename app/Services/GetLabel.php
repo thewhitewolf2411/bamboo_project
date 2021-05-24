@@ -136,6 +136,7 @@ class GetLabel{
             $quarantineReason = $tradein->getBambooStatus();
             $grade = $tradein->cosmetic_condition;
             $network = $tradein->correct_network;
+            $quarantineReason = $tradein->getTestingQuarantineReason();
 
             $pdf = PDF::loadView('portal.labels.devicelabels.testingquarantinelabel', 
             array(
@@ -145,6 +146,7 @@ class GetLabel{
                 'imei'=>$imei,
                 'serial'=>$sn,
                 'location'=>$location,
+                'quarantinereason'=>$quarantineReason,
                 ))
             ->setPaper($this->customPaper, 'landscape')
             ->save('pdf/devicelabel-'.$barcodenumber.'.pdf');
@@ -192,7 +194,7 @@ class GetLabel{
                 $brand = "Samsung";
                 break;
             case "H":
-                $brand = "Huaweii";
+                $brand = "Huawei";
                 break;
             default:
                 $brand = "Miscellaneous";

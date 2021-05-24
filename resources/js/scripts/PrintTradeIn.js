@@ -72,7 +72,7 @@ function selectDeviceForTesting(barcode){
     $('#select_device_for_testing_button').click();
 }
 
-function deleteTradeInDetailsFromSystem(id){
+window.deleteTradeInDetailsFromSystem = function(id){
     $('#delete_trade_in_id').val(id);
     $('#delete_trade_in_button').click();
 }
@@ -118,6 +118,9 @@ $('#print_trade_pack_bulk_form_trigger').on('click', function(){
         type:"POST",
         data:{
             selected:selected,
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(response){
             console.log(response);

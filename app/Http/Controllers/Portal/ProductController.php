@@ -413,12 +413,81 @@ class ProductController extends Controller
 
         #dd($request->all());
 
-        if(isset($request->color_new)){
+        if(isset($request->color_new_1)){
             Colour::create([
                 'product_id'=>$request->product_id,
-                'color_value'=>$request->color_new
+                'color_value'=>$request->color_new_1
             ]);
         }
+        if(isset($request->color_new_2)){
+            Colour::create([
+                'product_id'=>$request->product_id,
+                'color_value'=>$request->color_new_2
+            ]);
+        }
+        if(isset($request->color_new_3)){
+            Colour::create([
+                'product_id'=>$request->product_id,
+                'color_value'=>$request->color_new_3
+            ]);
+        }
+        if(isset($request->color_new_4)){
+            Colour::create([
+                'product_id'=>$request->product_id,
+                'color_value'=>$request->color_new_4
+            ]);
+        }
+        if(isset($request->color_new_5)){
+            Colour::create([
+                'product_id'=>$request->product_id,
+                'color_value'=>$request->color_new_5
+            ]);
+        }
+        if(isset($request->color_new_6)){
+            Colour::create([
+                'product_id'=>$request->product_id,
+                'color_value'=>$request->color_new_6
+            ]);
+        }
+        if(isset($request->color_new_7)){
+            Colour::create([
+                'product_id'=>$request->product_id,
+                'color_value'=>$request->color_new_7
+            ]);
+        }
+        if(isset($request->color_new_8)){
+            Colour::create([
+                'product_id'=>$request->product_id,
+                'color_value'=>$request->color_new_8
+            ]);
+        }
+        if(isset($request->color_new_9)){
+            Colour::create([
+                'product_id'=>$request->product_id,
+                'color_value'=>$request->color_new_9
+            ]);
+        }
+        if(isset($request->color_new_10)){
+            Colour::create([
+                'product_id'=>$request->product_id,
+                'color_value'=>$request->color_new_10
+            ]);
+        }
+
+        for($i=0; $i<10; $i++){
+            if(isset($request->{'color_old_id_' . $i})){
+                if(isset($request->{'color_old_' . $i})){
+                    $color = Colour::find($request->{'color_old_id_' . $i});
+                    $color->color_value = $request->{'color_old_' . $i};
+                    $color->save();
+                }
+                else{
+                    $color = Colour::find($request->{'color_old_id_' . $i});
+                    $color->delete();
+                }
+            }
+        }
+
 
         $product = SellingProduct::where('id', $request->product_id)->first();
         $product->product_name = $request->product_name;

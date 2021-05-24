@@ -16,7 +16,7 @@
     }
 
     td{
-        width: 200px !important;
+        width: 121px !important;
         padding: 0 !important;
         min-width: 121px;
     }

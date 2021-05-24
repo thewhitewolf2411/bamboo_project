@@ -207,10 +207,13 @@
                                     </div>
                                     <table class="portal-table" id="categories-table">
                                         <tr>
-                                            @foreach($colors as $color)
-                                            <td><div class="table-element"><input class="table-element" type="text" name="color_{{$color->id}}" value="{{$color->color_value}}"></div></td>
+                                            @foreach($colors as $key=>$color)
+                                            <td><div class="table-element"><input class="table-element" type="text" name="color_old_{{$key}}" value="{{$color->color_value}}"></div></td>
+                                            <input class="table-element" type="hidden" name="color_old_id_{{$key}}" value="{{$color->id}}">
                                             @endforeach
-                                            <td><div class="table-element"><input class="table-element" type="text" name="color_new" placeholder="Add new colour"></div></td>
+                                            @for($i=1; $i<=(10 - count($colors)); $i++)
+                                            <td><div class="table-element"><input class="table-element" type="text" name="color_new_{{$i + count($colors)}}" placeholder="Add new colour"></div></td>
+                                            @endfor
                                         </tr>
                                     </table>
 

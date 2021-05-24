@@ -63,8 +63,8 @@ class DespatchController extends Controller
             $sheet->setCellValue('I1', 'Tracking Reference');
             $row = 2;
             foreach($tradeins as $tradein){
-                $sheet->setCellValue('A'.$row, $tradein->barcode);
-                $sheet->setCellValue('B'.$row, $tradein->barcode_original);
+                $sheet->setCellValue('A'.$row, $tradein->barcode_original);
+                $sheet->setCellValue('B'.$row, $tradein->barcode);
                 $sheet->setCellValue('C'.$row, $tradein->getProductName($tradein->id));
                 $sheet->setCellValue('D'.$row, $tradein->customerName());
                 $sheet->setCellValue('E'.$row, $tradein->postCode());
