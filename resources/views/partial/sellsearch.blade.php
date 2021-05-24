@@ -30,25 +30,6 @@
 </div>
 
 <script>
-
-    if(window.location.pathname === '/sell'){
-        window.addEventListener('DOMContentLoaded', function(){
-            var session_data = JSON.parse('{!!json_encode(Session::all())!!}');
-            if(session_data._previous){
-                let previous_url = session_data._previous.url;
-                let parameters = previous_url.split('/');
-                if(parameters.indexOf("topresults") !== -1){
-                    console.log(parameters.indexOf("topresults"));
-                    let searched_term = parameters[parameters.indexOf("topresults") - 1];
-                    searched_term = searched_term.replace("%20", " ");
-                    document.getElementById("searchSellDevices").value = searched_term;
-                } else {
-                    // preselect category and brand TODO
-                }
-            }
-        });
-    }
-    
     
     function hitSearch(){
         let searchterm = document.getElementById('searchSellDevices').value;

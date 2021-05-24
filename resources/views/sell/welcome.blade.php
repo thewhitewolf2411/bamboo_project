@@ -187,6 +187,7 @@
         <script>
 
             window.addEventListener('DOMContentLoaded', function(){
+
                 let preselectedCategory = localStorage.getItem('preselectedSellCategory');
                 if(preselectedCategory){
                     selectCategory(preselectedCategory);
@@ -219,7 +220,27 @@
                     let shadow = this.childNodes[5];
                     shadow.classList.remove('zoomed');
                 });
-            });
+
+                // preselect category/brand || retrieve searched text
+                var session_data = JSON.parse('{!!json_encode(Session::all())!!}');
+                if(session_data._previous){
+                    let previous_url = session_data._previous.url;
+                    let parameters = previous_url.split('/');
+                    if(parameters.indexOf("topresults") !== -1){;
+                        let searched_term = parameters[parameters.indexOf("topresults") - 1];
+                        searched_term = searched_term.replace("%20", " ");
+                        document.getElementById("searchSellDevices").value = searched_term;
+                    } else {
+                        if(parameters.indexOf("devices") !== -1){
+                            let ref_pos = parameters.indexOf("devices");
+                            let category = parameters[ref_pos + 1];
+                            let brand_id = parameters[ref_pos + 2];
+                            selectCategory(category);
+                            selectBrand(brand_id);
+                        }
+                    }
+                }
+                });
 
             function showRegistrationForm(){
                 if(!document.getElementsByClassName('modal-second-element')[0].classList.contains('modal-second-element-active')){
