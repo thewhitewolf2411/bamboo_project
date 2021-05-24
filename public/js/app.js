@@ -57448,10 +57448,10 @@ function selectDeviceForTesting(barcode) {
   $('#select_device_for_testing_button').click();
 }
 
-function deleteTradeInDetailsFromSystem(id) {
+window.deleteTradeInDetailsFromSystem = function (id) {
   $('#delete_trade_in_id').val(id);
   $('#delete_trade_in_button').click();
-}
+};
 
 $('#tradein-checkallbtn').on('click', function () {
   $('.printcheckbox').prop('checked', false);
@@ -58997,8 +58997,8 @@ $('#removefromlot').on('click', function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -72,7 +72,7 @@ function selectDeviceForTesting(barcode){
     $('#select_device_for_testing_button').click();
 }
 
-function deleteTradeInDetailsFromSystem(id){
+window.deleteTradeInDetailsFromSystem = function(id){
     $('#delete_trade_in_id').val(id);
     $('#delete_trade_in_button').click();
 }
