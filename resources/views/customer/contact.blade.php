@@ -88,7 +88,7 @@
                 <div class="contact-form-message-row">
                     <div class="contact-form-title-wrapper">
                         <label class="contact-message-label mt-auto mb-auto" for="title">Title</label>
-                        <select class="form-control" name="title" id="title">
+                        <select class="form-control input-grey-border" name="title" id="title">
                             <option value="Miss.">Miss.</option>
                             <option value="Miss.">Mrs.</option>
                             <option value="Ms.">Ms.</option>
@@ -135,7 +135,7 @@
                     <div class="contact-form-message-column">
                         <label class="contact-message-label" for="title" style="margin-bottom: 0.375rem;">Date of Birth</label>
                         {{-- <input id="title" name="title" type="text" class="form-control"> --}}
-                        @include('partial.birthdate', ['required' => false])
+                        @include('partial.birthdate', ['required' => false, 'greyborder' => true])
                     </div>
 
                     <div class="contact-form-message-column">
@@ -203,7 +203,7 @@
                     <p style="opacity: 0.5; margin: 0;" class="worktime-text mt-2">Calls are charged at local rate.</p>
                     <p class="worktime-text mt-2" style="max-width: 480px;">Please note calls are recorded for monitoring and are used for ongoing training purposes.</p>
 
-                    <a href="/sell" class="btn btn-primary m-0" style="background: #A3D147 !important; border: #A3D147 !important">
+                    <a href="/sell" class="btn btn-primary m-0 mt-4" style="background: #A3D147 !important; border: #A3D147 !important">
                         Start Selling
                     </a>
                 </div>

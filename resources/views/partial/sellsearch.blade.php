@@ -30,6 +30,7 @@
 </div>
 
 <script>
+    
     function hitSearch(){
         let searchterm = document.getElementById('searchSellDevices').value;
         if(searchterm){

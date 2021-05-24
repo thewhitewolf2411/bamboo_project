@@ -51,14 +51,13 @@ class LoginController extends Controller
             return \redirect()->back()->with(['error'=>'Your account has been disabled by administrator. Please contact customer support', 'showLogin'=>true]);
         }
 
-
         if($user) {
             if (Crypt::decrypt($user->password) == $decrypted) {
                 Auth::login($user);
                 //return $this->sendLoginResponse($request);
                 #return $next($request);
                 //return redirect()->back();
-                $this->redirectTo();
+                return redirect($this->redirectTo());
             }
         }
 
@@ -76,10 +75,13 @@ class LoginController extends Controller
         // User role
 
         $role = Auth::user()->type_of_user; 
+        $redirectUrl = (request()->session()->get('_previous') !== null) ? request()->session()->get('_previous')['url'] : '/';
+
         // Check user role
         switch ($role) {
             case 0:
-                return '/userprofile';
+                // return '/userprofile';
+                return $redirectUrl;
                 break;
             case 1:
                 return '/portal';

@@ -60,14 +60,22 @@
                                         </span>
                                     @endif
 
+                                    {!!$errors!!}
+
                                     <div class="form-group">
-                                        <input id="login" type="text" class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }}" placeholder="Username or Email" name="login" value="{{ old('username') ?: old('email') }}" required autofocus>
+                                        <input id="login" type="text" class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }} mb-0" placeholder="Username or Email" name="login" value="{{ old('username') ?: old('email') }}" required autofocus>
             
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
+
+                                            {{-- @error('username')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror --}}
                                     </div>
                                     <div class="form-group">
                                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" name="password" required autocomplete="current-password">
@@ -109,17 +117,21 @@
 
         @if(Session::has('regerror'))
         <script>
-            $('#loginModal').modal('show');
-            if(!document.getElementsByClassName('modal-second-element')[0].classList.contains('modal-second-element-active')){
-                document.getElementsByClassName('modal-second-element')[0].classList.add('modal-second-element-active');
-            }
+            window.addEventListener('DOMContentLoaded', function(){
+                $('#loginModal').modal('show');
+                if(!document.getElementsByClassName('modal-second-element')[0].classList.contains('modal-second-element-active')){
+                    document.getElementsByClassName('modal-second-element')[0].classList.add('modal-second-element-active');
+                }
+            });
         </script>
         @endif
 
         @if(session('showLogin') || $errors->all())
             <script>
-                $(window).on('load',function(){
-                    $('#loginModal').modal('show');
+                window.addEventListener('DOMContentLoaded', function(){
+                    $(window).on('load',function(){
+                        $('#loginModal').modal('show');
+                    });
                 });
             </script>
         @endif
