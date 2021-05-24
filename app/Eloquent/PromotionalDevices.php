@@ -102,14 +102,22 @@ class PromotionalDevices extends Model
 
     public static function getDeviceName($i, $j){
         if($j === 1){
-            return SellingProduct::find(PromotionalDevices::find($i+1)->device_1)->product_name;
+            if(SellingProduct::find(PromotionalDevices::find($i+1)->device_1)){
+                return SellingProduct::find(PromotionalDevices::find($i+1)->device_1)->product_name;
+            }
         }
         if($j === 2){
-            return SellingProduct::find(PromotionalDevices::find($i+1)->device_2)->product_name;
+            if(SellingProduct::find(PromotionalDevices::find($i+1)->device_2)){
+                return SellingProduct::find(PromotionalDevices::find($i+1)->device_2)->product_name;
+            }
         }
         if($j === 3){
-            return SellingProduct::find(PromotionalDevices::find($i+1)->device_3)->product_name;
+            if(SellingProduct::find(PromotionalDevices::find($i+1)->device_3)){
+                return SellingProduct::find(PromotionalDevices::find($i+1)->device_3)->product_name;
+            }
         }
+
+        return null;
     }
 
 }
