@@ -16,7 +16,7 @@
                     <img src="{{asset('/images/front-end-icons/black_arrow_next.svg')}}" width="25px">
                 </a>
                 <a href="/sell/devices/mobile/3" class="sell-links-sublink-item">
-                    <p>Huaweii Devices</p>
+                    <p>Huawei Devices</p>
                     <img src="{{asset('/images/front-end-icons/black_arrow_next.svg')}}" width="25px">
                 </a>
             </div>

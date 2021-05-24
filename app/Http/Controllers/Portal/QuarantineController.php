@@ -39,12 +39,12 @@ class QuarantineController extends Controller
 
         $tradeins = Tradein::all();
 
-        $matches = ["4","5","6","7","8a","8b","8c","8d","8e","8f","11","11a","11b","11c","11d","11e","11f","11g","11h","11i","11j","15","15a","15b","15c","15d","15e",
+        $matches = ["4","5","6","7","8a","8b","8c","8d","8e","8f","11","11a","11b","11c","11d","11e","11f","11g","11h","11i","11j","13","15","15a","15b","15c","15d","15e",
         "15f","15g","15h","15i"];
 
 
         $tradeins = $tradeins->filter(function($tradein) use ($matches){
-            if(in_array($tradein->job_state, $matches)){
+            if(in_array($tradein->job_state, $matches) && $tradein->isInQuarantineTrayBin()){
                 return $tradein;
             }
             return null;
@@ -122,12 +122,15 @@ class QuarantineController extends Controller
                 $tradeins = Session::get('allocateToTrays');
             }
 
-            $matches = ["4","5","6","7","8a","8b","8c","8d","8e","8f","11","11a","11b","11c","11d","11e","11f","11g","11h","11i","11j","15","15a","15b","15c","15d","15e",
-            "15f","15g","15h","15i"];
+            #$matches = ["4","5","6","7","8a","8b","8c","8d","8e","8f","11","11a","11b","11c","11d","11e","11f","11g","11h","11i","11j","15","15a","15b","15c","15d","15e",
+            #"15f","15g","15h","15i"];
+
+            $matches = ["13"];
+
             $tradein = Tradein::where('barcode', $request->submitscannedid_allocatetotray)->first();
 
             if(!in_array($tradein->job_state, $matches)){
-                return redirect()->back()->with(['hasAllocateToTrays'=>true, 'error'=>'This device cannot be moved at this moment']);
+                return redirect()->back()->with(['hasAllocateToTrays'=>true, 'error'=>'Device could not be moved as no response from customer.']);
             }
 
             if(count($tradeins)>0){

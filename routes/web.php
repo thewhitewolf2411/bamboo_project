@@ -77,8 +77,6 @@ Route::get('/userprofile/acceptoffer/{id}', 'Customer\CustomerController@acceptF
 Route::get('/userprofile/sendtoretest/{id}', 'Customer\CustomerController@sendToRetesting')->middleware('auth')->name('retestDevice');
 Route::get('/userprofile/returndevice/{id}', 'Customer\CustomerController@returnDevice')->middleware('auth')->name('returnDevice');
 
-
-
 Route::get('/products/{category}', 'Customer\CustomerController@customerCategoryView')->name('customerproducts');
 Route::get('/product/{product}', 'Customer\CustomerController@showProduct')->name('showproduct');
 Route::get('/cart', 'Customer\CustomerController@showCart')->name('showcart');

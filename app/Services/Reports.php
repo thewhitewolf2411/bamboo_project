@@ -77,12 +77,18 @@ class Reports{
             }
 
             $fullyFunctional = '';
-            if($tradein->isFullyFunctional()){
-                $fullyFunctional = "Yes";
+            if($tradein->hasDeviceBeenReceived()){
+                if($tradein->isFullyFunctional()){
+                    $fullyFunctional = "Yes";
+                }
+                else{
+                    $fullyFunctional = "No";
+                }
             }
             else{
-                $fullyFunctional = "No";
+                $fullyFunctional = 'N/A';
             }
+
 
             $fimp = '';
             if($tradein->isFimpLocked()){

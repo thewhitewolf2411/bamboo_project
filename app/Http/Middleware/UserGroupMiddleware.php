@@ -23,6 +23,8 @@ class UserGroupMiddleware
             }
         }
 
+        #dd("here");
+
         return $next($request);
 
     }

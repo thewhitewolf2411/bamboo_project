@@ -57485,6 +57485,9 @@ $('#print_trade_pack_bulk_form_trigger').on('click', function () {
     data: {
       selected: selected
     },
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
     success: function success(response) {
       console.log(response);
       window.open(response, '_blank');
