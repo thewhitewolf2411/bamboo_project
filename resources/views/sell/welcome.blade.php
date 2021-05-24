@@ -90,10 +90,13 @@
                 </div>
             </div>
 
+
             <a href="/contact" id="device-make-results-title" class="hidden">
                 <p class="sell-subtitle mb-2 mt-5">Step 3: Select your model</p>
                 <p class="sell-subtitle-regular mb-5 mt-1">Not sure what model your device is? Don't worry, we got your covered <img class="sell-icon-covered ml-2" src="{{asset('images/front-end-icons/black_arrow_next.svg')}}"></p>
             </a>
+
+            <div class="loader invisible" id="selling-brand-results-loader"></div>
             
             <div id="device-makes-results" class="hidden">
             </div>
@@ -316,6 +319,7 @@
                 $('.device-brand').removeClass('selected');
                 $('.device-brand').css('filter', 'opacity(0.3)');
 
+                // mobile TODO
                 $([document.documentElement, document.body]).animate({
                     scrollTop: $("#all-selling-categories").offset().top + 250
                 }, 500);
@@ -347,6 +351,10 @@
                 brand.classList.add('selected');
                 brand.style = 'filter: opacity(1)';
 
+                // mobile TODO
+                $([document.documentElement, document.body]).animate({
+                    scrollTop: $("#all-selling-categories").offset().top + 850
+                }, 500);
 
                 $('.device-make-result').remove();
 
@@ -361,6 +369,9 @@
                 if(devicemakeresultstitle.classList.contains('hidden')){
                     devicemakeresultstitle.classList.remove('hidden');
                 }
+
+                // show loader
+                document.getElementById('selling-brand-results-loader').classList.remove('invisible');
 
                 $.ajax({
                     type: "GET",
@@ -378,7 +389,7 @@
                                     let deviceimg = document.createElement('img');
                                     deviceimg.classList.add('device-make-result-image');
                                     if(singleresult.product_image === 'default_image'){
-                                        deviceimg.src = 'http://127.0.0.1:8000/images/placeholder_phone_image.png';
+                                        deviceimg.src = '/images/placeholder_phone_image.png';
                                     } else {
                                         deviceimg.src = '/storage/product_images/'+singleresult.product_image;
                                     }
@@ -411,6 +422,8 @@
 
                                 // show see all and sell
                                 document.getElementById('sell-this').classList.remove('hidden');
+                                // hide loader
+                                document.getElementById('selling-brand-results-loader').classList.add('invisible');
                             } else {
                                 // show no results
                                 document.getElementById('no-results-brand').classList.remove('hidden');

@@ -30,7 +30,9 @@ document.addEventListener("DOMContentLoaded", function(e) {
         let errorEmail = document.getElementById('please-enter-email');
 
         let isValid = true;
-        if(!network){
+        let availableNetworks = document.getElementsByName('network');
+
+        if(availableNetworks.length > 1){
             isValid = false;
             errorNetwork.classList.remove('invisible');
             setTimeout(function(){

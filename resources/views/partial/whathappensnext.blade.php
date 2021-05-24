@@ -63,7 +63,7 @@
                 <p class="whathappens-large bold">Get paid! Woohoo!</p>
                 <p class="whathappens-small">
                     Heres the best bit!! Once your device has tested successfully we promise to pay you directly into your bank account on the same day!!
-                    *Mon-Fri, excluding public holidays. Same day payment does not apply to orders received after 2pm
+                    *Mon-Fri, excluding public holidays. Same day payment does not apply to orders received after 2pm.
                 </p>
             </div>
         </div>

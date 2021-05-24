@@ -434,12 +434,13 @@ class SellController extends Controller
                 return redirect()->back()->with('productaddedtocart', true);
             }
         }
-        
-        
-
-
     }
 
+
+    /**
+     * Sell items from cart.
+     * @param Request $request
+     */
     public function sellItems(Request $request){
 
         if(Auth::user()){
@@ -447,6 +448,12 @@ class SellController extends Controller
             $labelstatus = $request->label_status;
             // tradein null by default
             $tradein = null;
+
+            // if different address is entered, update it
+            if(Auth::user()->delivery_address !== $request->delivery_address){
+                Auth::user()->delivery_address = $request->delivery_address;
+                Auth::user()->save();
+            }
 
             // if bank details present, store them
             if(isset($request->account_name) && isset($request->account_number) && isset($request->sort_code_1) && isset($request->sort_code_2) && isset($request->sort_code_3)){
