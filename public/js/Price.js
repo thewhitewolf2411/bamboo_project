@@ -33,11 +33,13 @@ document.addEventListener("DOMContentLoaded", function(e) {
         let availableNetworks = document.getElementsByName('network');
 
         if(availableNetworks.length > 1){
-            isValid = false;
-            errorNetwork.classList.remove('invisible');
-            setTimeout(function(){
-                errorNetwork.classList.add('invisible');
-            }, 3000);
+            if(!network){
+                isValid = false;
+                errorNetwork.classList.remove('invisible');
+                setTimeout(function(){
+                    errorNetwork.classList.add('invisible');
+                }, 3000);
+            }
         }
         if(!memoryValue){
             isValid = false;
