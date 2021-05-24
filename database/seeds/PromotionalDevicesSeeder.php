@@ -42,5 +42,13 @@ class PromotionalDevicesSeeder extends Seeder
             'device_3'=>null,
             'device_4'=>null,
         ]);
+
+        DB::table('promotional_devices')->insert([
+            'promo_type'=>2,
+            'device_1'=>null,
+            'device_2'=>null,
+            'device_3'=>null,
+            'device_4'=>null,
+        ]);
     }
 }

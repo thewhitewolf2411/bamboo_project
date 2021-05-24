@@ -33,6 +33,7 @@ use App\Eloquent\PromotionalCode;
 use App\Eloquent\UserPromotionalCode;
 use App\Services\NotificationService;
 use App\User;
+use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Crypt;
 
@@ -103,11 +104,16 @@ class SellController extends Controller
                     break;
                 }else{
                     $products = collect();// SellingProduct::where('category_id', 1)->get();
-                    $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working')->toArray();
+                    $productIdsSorted = ProductInformation::all()->sortByDesc('excellent_working');
                     foreach($productIdsSorted as $key=>$productId){
-                        $product = SellingProduct::where('category_id', 1)->where('id', $key)->first();
+                        #dd($productId);
+
+                        $product = SellingProduct::where('category_id', 1)->where('id', $productId['product_id'])->first();
+
                         if($product){
-                            $products->add($product);
+                            if(!$products->contains($product)){
+                                $products->add($product);
+                            }
                         }
                     }
 

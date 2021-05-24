@@ -12,6 +12,7 @@ use App\Eloquent\Order;
 use App\Eloquent\BuyingProduct;
 use App\Eloquent\FAQ;
 use App\Eloquent\Message;
+use App\Eloquent\PromotionalDevices;
 use App\Eloquent\SellingProduct;
 use App\Services\KlaviyoEmail;
 use App\Services\LabelService;
@@ -37,10 +38,23 @@ class PagesController extends Controller
                     $buyingProducts = BuyingProduct::all();
                     $sellingProducts = SellingProduct::all();            
                     $products = $buyingProducts->merge($sellingProducts);
+                    $popularDevices = PromotionalDevices::where('promo_type', 1)->first();
                     $popular = collect();
-                    if(!empty($products)){
-                        $popular = $products->take(4);
+                    if($popularDevices !== null){
+                        if($popularDevices->device_1 !==null){
+                            $popular->push($popularDevices->getFirstDevice());
+                        }
+                        if($popularDevices->device_2 !==null){
+                            $popular->push($popularDevices->getSecondDevice());
+                        }
+                        if($popularDevices->device_3 !==null){
+                            $popular->push($popularDevices->getThirdDevice());
+                        }
+                        if($popularDevices->device_4 !==null){
+                            $popular->push($popularDevices->getFourhtDevice());
+                        }
                     }
+
 
                     return view('customer.home', ['products' => $products, 'popular' => $popular]);
                     break;
@@ -59,9 +73,21 @@ class PagesController extends Controller
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
         $products = $buyingProducts->merge($sellingProducts);
+        $popularDevices = PromotionalDevices::where('promo_type', 1)->first();
         $popular = collect();
-        if(!empty($products)){
-            $popular = $products->take(4);
+        if($popularDevices !== null){
+            if($popularDevices->device_1 !==null){
+                $popular->push($popularDevices->getFirstDevice());
+            }
+            if($popularDevices->device_2 !==null){
+                $popular->push($popularDevices->getSecondDevice());
+            }
+            if($popularDevices->device_3 !==null){
+                $popular->push($popularDevices->getThirdDevice());
+            }
+            if($popularDevices->device_4 !==null){
+                $popular->push($popularDevices->getFourhtDevice());
+            }
         }
         
 
@@ -205,9 +231,9 @@ class PagesController extends Controller
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
 
-        $phones = SellingProduct::where('category_id', 1)->get()->take(4);
-        $tablets = SellingProduct::where('category_id', 2)->get()->take(2);
-        $watches = SellingProduct::where('category_id', 3)->get()->take(3);
+        $phones = PromotionalDevices::getDevice(1);
+        $tablets = PromotionalDevices::getDevice(2);
+        $watches = PromotionalDevices::getDevice(3);
 
         $products = $buyingProducts->merge($sellingProducts);
         return view('customer.footer-links.map', ['products' => $products, 'tablets' => $tablets, 'phones' => $phones, 'watches' => $watches]);

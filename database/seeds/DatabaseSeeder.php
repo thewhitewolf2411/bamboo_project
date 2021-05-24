@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(NetworksSeeder::class);
         $this->call(ClientsSeeder::class);
         $this->call(FAQSeeder::class);
+        $this->call(PromotionalDevicesSeeder::class);
 
         DB::table('additional_costs')->insert([
             'administration_costs'=>0.00,
