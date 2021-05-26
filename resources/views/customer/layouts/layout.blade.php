@@ -4,6 +4,18 @@
     <head>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+        <link rel="preload" as="image" href="customer_page_images/header/Bamboo Logo.svg" />
+
+        <!-- image preload -->
+        {{-- <link
+            rel="preload"
+            as="image"
+            href="wolf.jpg"
+            imagesrcset="wolf_400px.jpg 400w, wolf_800px.jpg 800w, wolf_1600px.jpg 1600w"
+            imagesizes="50vw"
+        /> --}}
+        
+
         <!-- Google Tag Manager -->
         <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],

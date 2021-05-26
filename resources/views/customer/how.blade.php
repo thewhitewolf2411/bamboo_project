@@ -17,15 +17,94 @@
         <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
     </a>
 
-    <div class="how-first-element">
+    <div class="howitworks-container row justify-content-center">
+
+        <div class="howitworks-container col howitworks-col-text">
+            <p class="howitworks-title">Sell easily <br> with just a few clicks</p>
+            <p class="howitworks-description">
+                We pride ourselves in offering a smart simple way to shop and sell mobile devices. With Boo, all it takes is just a few clicks to buy and sell the devices of your choice. 
+                In just a few simple steps you can either trade in or trade up your mobile tech for unbeatable prices, while doing your bit for the environment.   
+                Watch our quick video that explains how our meticulous grading system works. We guarantee you’ll be pleasantly surprised at just how thorough and exhaustive our grading system is. 
+            </p>
+        </div>
+
+        <div class="howitworks-video-container">
+            <img src="{{asset('/video/play_video.svg')}}" data-toggle="modal" data-target="#howVideoModal">
+        </div>
+
+        <div class="modal fade" id="howVideoModal" tabindex="-1" role="dialog" aria-labelledby="howVideoLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <h5 class="modal-title howitworks text-center" id="howVideoLabel">How it works</h5>
+                <div class="modal-content howitworksvideo">
+                    {{-- <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div> --}}
+                    <div class="modal-body">
+                    <video id="howvideoid" width="100%" controls autoplay muted>
+                        <source src="{{ asset('/video/Bamboo_Selling_Web_140521.mp4') }}" type="video/mp4">
+                        Your browser does not support HTML video.
+                    </video>
+                    </div>
+                    <img class="dismiss-howitworks" src="{{asset('images/front-end-icons/close_modal_orange.svg')}}" data-dismiss="modal">
+                    {{-- <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div> --}}
+              </div>
+            </div>
+        </div>
+
+
+        <!--
+            <div class="howitworks-element-container text-center p-0">
+            <div class="grading-video-container mt-auto mb-auto">
+                <div class="howVideoToggle" data-toggle="modal" data-target="#howVideoModal">
+
+                    <img src="{{asset('/video/play_video.svg')}}">
+
+                </div>
+            </div>
+
+            <div class="modal fade" id="howVideoModal" tabindex="-1" role="dialog" aria-labelledby="howVideoLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <h5 class="modal-title howitworks" id="howVideoLabel">How it works</h5>
+                    <div class="modal-content howitworksvideo">
+                        {{-- <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div> --}}
+                        <div class="modal-body">
+                        <video id="howvideoid" width="100%" controls autoplay muted>
+                            <source src="{{ asset('/video/Bamboo_Selling_Web_140521.mp4') }}" type="video/mp4">
+                            Your browser does not support HTML video.
+                        </video>
+                        </div>
+                        <img class="dismiss-howitworks" src="{{asset('images/front-end-icons/close_modal_orange.svg')}}" data-dismiss="modal">
+                        {{-- <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div> --}}
+                  </div>
+                </div>
+            </div>
+
+            {{-- <p class="mt-2">Watch our quick video explaining just how thorough our grading system is. Trust us, you will be shocked.</p> --}}
+        </div>
+        -->
+    </div>
+
+    <!--<div class="">
         <div class="howitworks-container-top">
 
             <div class="howitworks-element-container">
-                <div class="center-title-container">
+                <div class="">
                     {{-- <p>Shop and sell easily <br> with just a few clicks</p> --}}
-                    <p class="customer-sections-title howitworks-title">Sell easily <br> with just a few clicks</p>
+                    <p class="howitworks-title">Sell easily <br> with just a few clicks</p>
                 </div>
-                <p class="max-450 mt-4 sharp-sans-medium">
+                <p class="howitworks-description">
                     We pride ourselves in offering a smart simple way to shop and sell mobile devices. With Boo, all it takes is just a few clicks to buy and sell the devices of your choice. 
                     In just a few simple steps you can either trade in or trade up your mobile tech for unbeatable prices, while doing your bit for the environment.   
                     Watch our quick video that explains how our meticulous grading system works. We guarantee you’ll be pleasantly surprised at just how thorough and exhaustive our grading system is. 
@@ -67,7 +146,7 @@
                 {{-- <p class="mt-2">Watch our quick video explaining just how thorough our grading system is. Trust us, you will be shocked.</p> --}}
             </div>
         </div>
-    </div>
+    </div>-->
 
     <div class="toggle-elements">
         <div class="toggle-elements-btn">
