@@ -53,8 +53,8 @@
             <img class="mt-2 ml-4 rotate-90-deg" src="{{ asset('/customer_page_images/body/Group 938.svg') }}">
         </div>
     </div>
-    <div class="howitworks-selling-section">
-        <div class="howitworks-container how-row justify-content-center">
+    <div class="howitworks-selling-sections">
+        <div class="howitworks-container how-row justify-content-center selling-section-item">
             <div class="howitworks-container how-column text-description">
                 <p class="howitworks-selling-title">1. Search for a new device</p>
                 <p class="howitworks-selling-desc">
@@ -63,6 +63,31 @@
             </div>
             <img class="howitworks-selling-image" src="{{ asset('/customer_page_images/body/hearts.svg') }}">
         </div>
+
+        <div class="howitworks-container how-row justify-content-center selling-section-item">
+            <div class="howitworks-container how-column text-description">
+                <p class="howitworks-selling-title">2. Free Next Day Delivery</p>
+                <p class="howitworks-selling-desc">
+                    Once your sales order is completed, simply request for a free sales pack. Alternatively, you can print your own labels to send us your device.
+                </p>
+            </div>
+            <img class="howitworks-selling-image post-pack" src="{{ asset('/customer_page_images/body/final_free_post_pack.svg') }}">
+        </div>
+
+        <div class="howitworks-container how-row justify-content-center selling-section-item">
+            <div class="howitworks-container how-column text-description">
+                <p class="howitworks-selling-title">3. You have a shiny new phone to play with</p>
+                <p class="howitworks-selling-desc">
+                   With Boo you won’t be left waiting for your payment. Once we receive your device, our team will check it against your order. If everything is correct, we’ll issue the payment that very same day! It’s that Simple!
+                </p>
+            </div>
+            <img class="howitworks-selling-image" src="{{ asset('/customer_page_images/body/get_paid.svg') }}">
+        </div>
+
+        <div class="howitworks-container how-row justify-content-center selling-section-item">
+            <a href="/sell" class="btn start-selling howitworks"><p>Start Selling</p></a>
+        </div>
+
     </div>
 
     <!--<div class="toggle-elements">

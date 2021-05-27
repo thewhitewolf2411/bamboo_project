@@ -58,6 +58,10 @@
     cursor: pointer;
 }
 
+.howitworks-video-container:hover > img{
+    transform: scale(1.1);
+}
+
 .howitworks-video-container > img {
     width: 150px;
     height: 150px;
@@ -68,6 +72,7 @@
     top: 0;
     bottom: 0;
     margin: auto;
+    transition: all 0.3s linear;
 }
 
 .howitworks-top-element{
@@ -119,9 +124,15 @@
     transform: rotateZ(90deg);
 }
 
-.howitworks-sellin-sections{
+.howitworks-selling-sections{
     display: flex;
     flex-direction: column;
+}
+
+.selling-section-item{
+    background: #fff6e4;
+    padding-bottom: 50px;
+    padding-top: 50px;
 }
 
 .howitworks-selling-title{
@@ -154,6 +165,12 @@
     width: 287px;
     height: 287px;
     margin-left: 100px;
+}
+
+.howitworks-selling-image.post-pack{
+    width: 315px;
+    height: auto;
+    margin-left: 70px;
 }
 
 .howitworks-container.how-column.text-description{
