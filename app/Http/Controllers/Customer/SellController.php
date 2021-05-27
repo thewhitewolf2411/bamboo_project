@@ -107,6 +107,10 @@ class SellController extends Controller
                 $products = $sorting->sortDevices();
                 break;
             default:
+                if($parameter){
+                    $sorting = new Sorting($parameter, null);
+                }
+                $products = $sorting->sortDevices();
                 break;
         }
 

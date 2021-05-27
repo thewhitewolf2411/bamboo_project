@@ -36,18 +36,22 @@ class Sorting{
 
         if($this->brand !== null && $this->category !== null){
             $sellingDevices = SellingProduct::where('category_id', $this->category)->where('brand_id', $this->brand)->get();
+            
         }
         else if($this->brand === null && $this->category !== null){
             $sellingDevices = SellingProduct::where('category_id', $this->category)->get();
         }
         else if($this->brand !== null && $this->category === null){
-            $sellingDevices = SellingProduct::where('brand_id', $this->brand)->get();
+            if(is_int($this->brand)){
+                $sellingDevices = SellingProduct::where('category_id', $this->category)->where('brand_id', $this->brand)->get();
+            }
+            else{
+                $sellingDevices = SellingProduct::where('product_name', 'LIKE' ,"%".$this->brand."%")->get();
+            }
         }
         else{
             $sellingDevices = SellingProduct::all();
         }
-
-        #dd($sellingDevices);
 
         $prices = array();
 
