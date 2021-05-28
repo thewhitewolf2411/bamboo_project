@@ -2,13 +2,16 @@
 
     @page{
         margin: 10mm;
-        font-size: 8pt;
+        font-size: 7pt;
         width: 100%;
         text-align: center;
+        page-break-inside: avoid;
+        page-break-before: always;
     }
 
     table {
         border-collapse: collapse;
+        height: auto;
     }
 
     tr{
@@ -58,5 +61,3 @@
         <td>{{$network}}</td>
     </tr>
 </table>
-    
-</div>

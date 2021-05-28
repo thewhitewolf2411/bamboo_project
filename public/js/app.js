@@ -58860,7 +58860,9 @@ function handleShownData(data) {
   }
 
   if (data.tradeins) {
-    $('#saleslotboxes tbody').empty();
+    //$('#saleslotboxes tbody').empty();
+    var table = $('#saleslotboxes').DataTable();
+    table.rows().remove();
 
     for (var _i2 = 0, _Object$entries2 = Object.entries(data.tradeins); _i2 < _Object$entries2.length; _i2++) {
       var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 2),
@@ -58872,8 +58874,17 @@ function handleShownData(data) {
         $(this).prop('checked', false);
       });
       total_price += _item.total_cost;
-      total_quantity++;
-      $('#saleslotboxes tbody').append('<tr id="' + _item.id + '"> <td><div class="table-element">' + _item.box_name + '</div></td><td><div class="table-element">' + _item.bamboo_grade + '</div></td><td><div class="table-element">' + _item.model + '</div></td><td><div class="table-element">' + _item.correct_memory + '</div></td><td><div class="table-element" >£' + _item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + _item.id + '"></div></td> </tr>');
+      total_quantity++; //$('#saleslotboxes tbody').append('<tr id="' + item.id + '"> <td><div class="table-element">' + item.box_name + '</div></td><td><div class="table-element">' + item.bamboo_grade + '</div></td><td><div class="table-element">' + item.model + '</div></td><td><div class="table-element">' + item.correct_memory + '</div></td><td><div class="table-element" >£' + item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + item.id + '"></div></td> </tr>');
+
+      table.row.add({
+        0: _item.box_name,
+        1: _item.bamboo_grade,
+        2: _item.model,
+        3: _item.correct_memory,
+        4: '£' + _item.total_cost,
+        5: '<input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + _item.id + '">'
+      }).node().id = _item.id;
+      table.draw(false);
       $('#exportxls').prop('disabled', false);
       $('#completelot').prop('disabled', false);
     }
@@ -58970,8 +58981,10 @@ $('#removefromlot').on('click', function () {
     },
     success: function success(response) {
       for (var i = 0; i < response.length; i++) {
-        $('#boxedtradeinstable tbody tr#' + response[i]).show();
-        $('#saleslotboxes tr#' + response[i]).hide();
+        $('#boxedtradeinstable tbody tr#' + response[i]).show(); //$('#saleslotboxes tr#'+response[i]).hide();
+
+        var table = $('#saleslotboxes').DataTable();
+        table.row('#' + response[i]).remove().draw();
       }
     }
   });

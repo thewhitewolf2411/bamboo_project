@@ -600,6 +600,22 @@ input[type=number] {
     display: none;
 }
 
+#saleslotboxes_filter{
+    display: none;
+}
+
+#saleslotboxes, #boxedtradeinstable{
+    font-size: 9pt !important;
+    padding: 0 !important;
+}
+
+#saleslotboxes td{
+    padding: 0 !important;
+}
+
+#boxedtradeinstable td{
+    padding: 0 !important;
+}
 
 #closedboxtable_filter{
     display: none;

@@ -84,7 +84,7 @@
 
             <div class="col-md-7">
                 <div class="d-flex mb-5 w-50">
-                    <table class="portal-table sortable" id="categories-table">
+                    <table class="portal-table" id="categories-table">
                         <tr>
                             <td></td>
                             <td>Current price</td>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="d-flex flex-column my-5">
                     <div class="my-3"><button id="deletemisccost" style="float: right" class="btn btn-primary" disabled>Delete</button></div>
-                    <table class="portal-table sortable" id="categories-table">
+                    <table class="portal-table" id="categories-table">
                         <tr>
                             <td>Miscellaneous cost</td>
                             <td>Per job deduction</td>

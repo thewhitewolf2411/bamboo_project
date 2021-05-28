@@ -77,7 +77,7 @@ class Reports{
             }
 
             $fullyFunctional = '';
-            if($tradein->hasDeviceBeenReceived()){
+            if($tradein->hasDeviceBeenReceived() && $tradein->hasBeenTested()){
                 if($tradein->isFullyFunctional()){
                     $fullyFunctional = "Yes";
                 }

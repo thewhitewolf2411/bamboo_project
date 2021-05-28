@@ -290,8 +290,8 @@ class SalesLotController extends Controller
             $tradein->save();
         }
         else{
-            $salesLotItems = Session::get('tradeins');
 
+            $salesLotItems = Session::get('tradeins');
             $saleLot = SalesLot::create([
                 'sales_lot_status'=>1,
             ]);
@@ -300,17 +300,21 @@ class SalesLotController extends Controller
 
                 $tradein = Tradein::where('id', $salesLotItem->id)->first();
 
-                //$oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
-                //$oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
-                //$oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+                $oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
+                $oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
+                $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
                 //$oldTray->save();
-                //$oldTrayContent->delete();
+                $oldTrayContent->delete();
 
                 $sli = new SalesLotContent();
                 $sli->sales_lot_id = $saleLot->id;
                 $sli->box_id = $tradein->getTrayId();
                 $sli->device_id = $tradein->id;
                 $sli->save();
+
+                if(count(TrayContent::where('tray_id', $oldTray->id)->get()) === 0){
+                    $oldTray->delete();
+                }
             }
 
             return response(200);

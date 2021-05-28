@@ -169,14 +169,14 @@ class TestingController extends Controller
         $tradein->carriage_cost = $additionalCosts->carriage_costs;
         $tradein->admin_cost = $additionalCosts->administration_costs;
 
-        $miscCost = AdditionalCosts::where('id', '!=', 1)->first();
-        if($miscCost !== null){
+        /*$miscCost = AdditionalCosts::where('id', '!=', 1)->first();
+        if($miscCost !== null && $miscCost->miscellaneous_costs > 0){
             $miscCost->miscellaneous_costs = $miscCost->miscellaneous_costs - $miscCost->per_job_deduction;
             $miscCost->applied_to += 1;
             $miscCost->save();
 
             $tradein->misc_cost = $miscCost->per_job_deduction;
-        }
+        }*/
         $notificationService = new NotificationService();
 
         $expiryDate = Carbon::parse($tradein->expiry_date);

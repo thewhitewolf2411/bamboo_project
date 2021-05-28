@@ -152,12 +152,14 @@ class DespatchService {
             $postcode = $splitted[count($splitted) - 1];
             $countryCode = 'UK';
 
+            #dd($splitted, explode(', ', $customer->billing_address));
+
             $customer_billing_address = $customer->billing_address;
             $splitted_billing = explode(', ', $customer_billing_address);
-            $city_billing = $splitted[count($splitted_billing) - 2];
-            $address_billing = $splitted[count($splitted_billing) - 3];
+            $city_billing = $splitted_billing[count($splitted_billing) - 2];
+            $address_billing = $splitted_billing[count($splitted_billing) - 3];
             $country_billing = 'United Kingdom';
-            $postcode_billing = $splitted[count($splitted_billing) - 1];
+            $postcode_billing = $splitted_billing[count($splitted_billing) - 1];
             $countryCode_billing = 'UK';
             
             $orderReference =  "ORDER " . $tradein->barcode;

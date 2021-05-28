@@ -46,6 +46,12 @@ class Trolley extends Model
         return $numberOfDevices;
     }
 
+    public function getNumberOfTrays(){
+        $trays = Tray::where('trolley_id', $this->id)->get();
+
+        return count($trays);
+    }
+
     public function canBeDeleted(){
         if($this->getNumberOfDevices($this->id) === 0){
             return true;

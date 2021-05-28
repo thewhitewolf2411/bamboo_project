@@ -79,7 +79,11 @@ function handleShownData(data){
     }
 
     if(data.tradeins){
-        $('#saleslotboxes tbody').empty();
+        //$('#saleslotboxes tbody').empty();
+        var table = $('#saleslotboxes').DataTable();
+
+        table.rows().remove();
+
         for(const [key, item] of Object.entries(data.tradeins)){
             $('#boxedtradeinstable tbody tr#'+item.id).hide();
             $('.tradein-sales-lot:checkbox:checked').each(function(){
@@ -89,7 +93,18 @@ function handleShownData(data){
             total_price += item.total_cost;
             total_quantity++;
 
-            $('#saleslotboxes tbody').append('<tr id="' + item.id + '"> <td><div class="table-element">' + item.box_name + '</div></td><td><div class="table-element">' + item.bamboo_grade + '</div></td><td><div class="table-element">' + item.model + '</div></td><td><div class="table-element">' + item.correct_memory + '</div></td><td><div class="table-element" >£' + item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + item.id + '"></div></td> </tr>');
+            
+            
+            //$('#saleslotboxes tbody').append('<tr id="' + item.id + '"> <td><div class="table-element">' + item.box_name + '</div></td><td><div class="table-element">' + item.bamboo_grade + '</div></td><td><div class="table-element">' + item.model + '</div></td><td><div class="table-element">' + item.correct_memory + '</div></td><td><div class="table-element" >£' + item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + item.id + '"></div></td> </tr>');
+            table.row.add({
+                0:      item.box_name,
+                1:      item.bamboo_grade,
+                2:      item.model,
+                3:      item.correct_memory,
+                4:      '£' + item.total_cost,
+                5:      '<input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + item.id + '">',
+            }).node().id = item.id;
+            table.draw(false);
             $('#exportxls').prop('disabled', false);
             $('#completelot').prop('disabled', false);
         }
@@ -215,7 +230,9 @@ $('#removefromlot').on('click', function(){
             for(var i = 0; i<response.length; i++){
                 
                 $('#boxedtradeinstable tbody tr#'+response[i]).show();
-                $('#saleslotboxes tr#'+response[i]).hide();
+                //$('#saleslotboxes tr#'+response[i]).hide();
+                var table = $('#saleslotboxes').DataTable();
+                table.row('#' + response[i]).remove().draw();
             }
         },
     });
