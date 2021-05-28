@@ -1,0 +1,152 @@
+.btn.start-selling{
+    background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
+    background: #F28E33 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    opacity: 1;
+    transition: all 0.3s linear;
+}
+
+.btn.start-selling.howitworks{
+    width: 260px;
+    height: 72px;
+}
+
+.btn.start-selling.howitworks > p{
+    padding-top: 10px;
+}
+
+.btn.start-selling.footer{
+    padding-top: 17px;
+    padding-bottom: 23px;
+    padding-left: 34px;
+    padding-right: 34px;
+    width: 260px;
+    height: 72px;
+}
+
+.btn.start-selling > p {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 24px/32px Sharp Sans No1 Semibold;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 24px/32px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    padding-top: 10px;
+    transition: all 0.3s linear;
+}
+
+.btn.start-selling > p {
+    padding-top: 2px;
+}
+
+.btn.start-selling:hover{
+    background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
+    border: 3px solid var(--black);
+    background: #F28E33 0% 0% no-repeat padding-box;
+    border: 3px solid #000000;
+    border-radius: 8px;
+    opacity: 1;
+}
+
+.btn.start-selling.footer:hover{
+    background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
+    background: #F28E33 0% 0% no-repeat padding-box;
+    border: 3px solid #FFFFFF;
+    border-radius: 8px;
+    opacity: 1;
+}
+
+.btn.start-selling:hover > p {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 24.5px/var(--unnamed-line-spacing-33) Sharp Sans No1 Semibold;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 25px/33px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+
+.btn.read-more{
+    width: 260px;
+    height: 72px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    opacity: 1;
+    transition: all 0.3s linear;
+}
+
+.btn.read-more.sustainability{
+    margin-top: 85px;
+    margin-left: 0;
+}
+
+.btn.read-more > p {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 24px/32px Sharp Sans No1 Semibold;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 24px/32px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+    padding-top: 10px;
+    transition: all 0.3s linear;
+}
+
+.btn.read-more:hover{
+    border: 3px solid var(--black);
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 3px solid #000000;
+    border-radius: 8px;
+    opacity: 1;
+}
+
+.btn.read-more:hover > p {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 24.5px/var(--unnamed-line-spacing-33) Sharp Sans No1 Semibold;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 25px/33px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+}
+
+
+.btn.start-selling-button-header{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 168px;
+    height: 51px;
+    background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
+    background: #F28E33 0% 0% no-repeat padding-box;
+    border-radius: 8px 8px 0px 0px;
+    opacity: 1;
+    margin: 0;
+}
+
+.btn.start-selling-button-header > p {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 18px/25px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 18px/25px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    padding-top: 5px;
+    transition: all 0.3s linear;
+}
+
+.btn.start-selling-button-header:hover > p{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 19px/26px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 19px/26px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}

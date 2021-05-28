@@ -67,13 +67,13 @@
     {{-- <div class="url-header-container" id="start-shopping">
         <a href="/shop">Start Shopping</a>
     </div> --}}
-    <div class="url-header-container" id="start-selling">
-        <a href="/sell" class="start-selling-button-header">
-            <p id="start-selling-button-text">Start Selling</p> 
-            <img id="start-selling-button-img-down" class="invisible" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White.svg')}}">
-        </a>
-    </div>
-    <div class="url-header-container">
+    {{-- <div class="url-header-container" id="start-selling"> --}}
+    <a href="/sell" class="btn start-selling-button-header">
+        <p id="start-selling-button-text">Start Selling</p> 
+        <img id="start-selling-button-img-down" class="invisible" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White.svg')}}">
+    </a>
+    {{-- </div> --}}
+    <div class="url-header-container how">
         <a href="/how" class="header-url-link" @if(request()->path() === 'how') style="font-family: Sharp Sans No1 Bold;" @endif>How it works</a>
     </div>
     <div class="url-header-container">
@@ -85,7 +85,7 @@
     <div class="url-header-container">
         <a href="/support" class="header-url-link" @if(request()->path() === 'support') style="font-family: Sharp Sans No1 Bold;" @endif>Service & Support</a>
     </div>
-    <div class="url-header-container">
+    <div class="url-header-container mr-0">
         <a href="/contact" class="header-url-link" @if(request()->path() === 'contact') style="font-family: Sharp Sans No1 Bold;" @endif>Contact Us</a>
     </div>
 

@@ -1,4 +1,4 @@
-<div class="home-element sign-up">
+<div class="newsletter-container">
         
     <div class="text-center">
         <p class="newsletter-large-text">Sign up to our newsletter!</p>
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="terms-container">
+        <div class="newsletter-terms-container">
             <input type="checkbox" id="newsletter_terms" name="newsletter_terms">
             <img id="newsletter-terms-toggle" src="{{asset('/images/front-end-icons/black_circle.svg')}}">
             <p class="newsletter-terms-text text-left">
@@ -54,7 +54,7 @@
 
         <div class="form-group" id="newsletter-section-scrollinto">
             <div class="text-center mt-3 mx-auto">
-                <div class="btn btn-purple newsletter-signupbtn" onclick="signUpNewsletter()">Sign me up!</div>
+                <div class="btn newsletter-signupbtn" onclick="signUpNewsletter()"><p>Sign me up!</p></div>
             </div>
         </div>
 

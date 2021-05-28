@@ -394,10 +394,16 @@ h3, h4, h5{
 }
 
 .large-bold-text{
-    // font-size: 3rem;
-    font-size: 4rem;
-    font-family: Sharp Sans No1 Bold;
-    //text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
+    // font-size: 4rem;
+    // font-family: Sharp Sans No1 Bold;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-80)/var(--unnamed-line-spacing-90) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 80px/90px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
 }
 
 .semilarge-bold-text{

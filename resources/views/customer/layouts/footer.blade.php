@@ -3,26 +3,31 @@
     <div class="footer-row" id="footer-row-1">
 
         @if($showGetstarted)
-        <div class="footer-row-2">
-            <span class="semibold-text">Get Started</span>
-            <div class="footer-button-container">
-                {{-- <div class="url-footer-container" id="start-shopping">
-                    <a href="/shop">Start Shopping</a>
-                </div> --}}
-                <div class="url-footer-container" id="start-selling">
-                    <a href="/sell">Start Selling</a>
-                </div>
+            <div class="footer-row-2">
+                <span>Get Started</span>
+                    {{-- <div class="url-footer-container" id="start-shopping">
+                        <a href="/shop">Start Shopping</a>
+                    </div> --}}
+                    <a href="/sell" class="btn start-selling footer"><p>Start Selling</p></a>
             </div>
-        </div>
         @endif
 
         <div class="footer-row-2">
-            <span class="semibold-text">Follow our adventures</span>
+            <span>Follow our adventures</span>
             <div class="footer-social-icons-container">
-                <a href="http://www.facebook.com/BambooMobileTech/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="http://www.facebook.com/BambooMobileTech/" target="_blank">
+                    {{-- <i class="fa fa-facebook" aria-hidden="true"></i> --}}
+                    <img src="{{asset('/images/front-end-icons/social-facebook.svg')}}">
+                </a>
                 {{--<a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a>--}}
-                <a href="http://www.instagram.com/mobileswithboo/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                <a href="http://www.youtube.com/channel/UCePgdCF8oCRXenvvLADp38w/featured" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a>
+                <a href="http://www.instagram.com/mobileswithboo/" target="_blank">
+                    {{-- <i class="fa fa-instagram" aria-hidden="true"></i> --}}
+                    <img src="{{asset('/images/front-end-icons/social-instagram.svg')}}">
+                </a>
+                <a href="http://www.youtube.com/channel/UCePgdCF8oCRXenvvLADp38w/featured" target="_blank">
+                    {{-- <i class="fa fa-youtube" aria-hidden="true"></i> --}}
+                    <img src="{{asset('/images/front-end-icons/social-youtube.svg')}}">
+                </a>
             </div>
         </div>
 

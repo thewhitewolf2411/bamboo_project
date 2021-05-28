@@ -138,7 +138,8 @@
 .sustainability-container{
     background: #59DDC1;
     // padding: 200px 140px 100px 100px;
-    padding: 200px 140px 100px 140px;
+    // padding: 200px 140px 100px 140px;
+    padding: 300px 140px 200px 140px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -203,24 +204,45 @@
 }
 
 .sustainability-large{
-    font-size: 3rem;
-    font-family: Sharp Sans No1 Bold;
+    // font-size: 3rem;
+    // font-family: Sharp Sans No1 Bold;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-80)/var(--unnamed-line-spacing-90) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 80px/90px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    width: 555px;
 }
 
 .sustainability-small{
-    font-size: 1rem;
+    // font-size: 1rem;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/var(--unnamed-line-spacing-34) var(--unnamed-font-family-sharp-sans-no1-medium);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 25px/34px Sharp Sans No1 Medium;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    width: 555px;
 }
 
 .sustainability-images-overlay{
     position: relative;
-    width: 500px;
+    // width: 500px;
+    width: 700px;
     height: auto;
     margin-top: 120px;
 }
 
 .sustainability-img{
-    width: 400px;
-    height: 400px;
+    // width: 400px;
+    // height: 400px;
+    width: 534px;
+    height: 537px;
 }
 
 .sustainability-img.one{
@@ -228,9 +250,11 @@
 }
 
 .sustainability-img.two{
+    // right: -25px;
+    // top: -250px;
     position: absolute;
-    right: -25px;
-    top: -250px;
+    right: 15px;
+    top: -280px;
 }
 
 .sustainability-whysell{
@@ -292,7 +316,7 @@
     flex-wrap: wrap;
     // justify-content: space-evenly;
     justify-content: center;
-    margin-bottom: 250px;
+    margin-bottom: 350px;
 }
 
 .sustainability-about-col{
@@ -303,7 +327,7 @@
 .sustainability-about-col.text{
     max-width: 500px;
     margin-left: 100px;
-    margin-right: 100px;
+    margin-right: 250px;
 }
 
 @media (max-width: 1306px){
@@ -529,6 +553,16 @@
 
 
 // newsletter styles
+.newsletter-container{
+    //width: 100vw;
+    width: 100%;
+    background: #FCC44C;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px;
+}
+
 .sign-up-form{
     display: flex;
     flex-direction: column;
@@ -569,11 +603,14 @@
 }
 
 .newsletter-terms-text{
-    font-family: Sharp Sans No1 Semibold;
-    width: auto;
-    max-width: 760px;
-    margin: 0;
-    font-size: 10px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 15px/20px var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 15px/20px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
 }
 
 #newsletter-terms-toggle{
@@ -582,13 +619,20 @@
     width: 28px;
     height: 28px;
     margin-right: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
-.terms-container input[type="checkbox"] {
+.newsletter-terms-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.newsletter-terms-container input[type="checkbox"] {
 	display:none;
 }
 
-.terms-container input + label {
+.newsletter-terms-container input + label {
 	display: inline-block;	
 	cursor: pointer;	
 	background-image: url('/images/front-end-icons/black_circle.svg');
@@ -596,24 +640,30 @@
     background-position-y: center;
 }
 
-.terms-container input[type="checkbox"]:checked + label {
+.newsletter-terms-container input[type="checkbox"]:checked + label {
 	background-image: url('/images/front-end-icons/black_tick_selected.svg')
 }
 
 .newsletter-large-text{
-    font-size: 3rem;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-80)/var(--unnamed-line-spacing-90) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
     text-align: center;
-    font-family: Sharp Sans No1 Bold;
-    line-height: 1.1;
-    color: black;
+    font: normal normal normal 80px/90px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
 }
 
 .newsletter-small-text{
-    font-size: 1.5rem;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
     text-align: center;
-    text-transform: uppercase;
-    font-family: Bebas Neue, Helvetica, sans-serif;
-    color: black;
+    font: normal normal normal 37px/40px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
 }
 
 .newsletter_checkbox > p{
@@ -689,25 +739,33 @@
 }
 
 .newsletter-signupbtn{
-    color: white;
-    padding-left: 66px;
-    padding-right: 66px;
-    padding-top: 19px;
-    padding-bottom: 23px;
     width: 260px;
     height: 72px;
-    font-size: 21px;
+    background: var(--technical-–-violet) 0% 0% no-repeat padding-box;
+    background: #A375BC 0% 0% no-repeat padding-box;
     border-radius: 8px;
+    opacity: 1;
     transition: all 0.3s linear;
-    border: 0px solid black !important;
+}
+
+.newsletter-signupbtn > p {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 24px/32px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 24px/32px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    padding-top: 10px;
 }
 
 .newsletter-signupbtn:hover{
-    padding-top: 17px;
-    border: 3px solid black !important;
-    color: white !important;
-    background-color: #A375BC !important;
-    font-size: 22px;
+    background: var(--technical-–-violet) 0% 0% no-repeat padding-box;
+    border: 3px solid var(--black);
+    background: #A375BC 0% 0% no-repeat padding-box;
+    border: 3px solid #000000;
+    border-radius: 8px;
+    opacity: 1;
 }
 
 
@@ -765,10 +823,13 @@
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    width: auto;
-    max-width: 400px;
-    height: auto;
-    padding: 30px;
+    // width: auto;
+    // max-width: 400px;
+    // height: auto;
+    width: 536px;
+    height: 357px;
+    padding: 40px;
+    padding-right: 30px;
     border-radius: 10px;
     margin-left: 5px;
     margin-right: 5px;
@@ -778,26 +839,44 @@
 }
 
 .newscontactsupport-item:hover{
-    border: 2px solid black;
+    border: 3px solid black;
 }
 
 .newscontactsupport-item > p {
-    font-family: Sharp Sans No1 Bold;
-    font-size: 38px;
-    width: 325px;
-    color: black;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-50)/var(--unnamed-line-spacing-58) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 50px/58px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
 }
 
 .newscontactsupport-item > img {
-    max-width: 170px;
+    // max-width: 170px;
     margin-left: auto;
     margin-top: auto;
     padding-top: 15px;
+    width: 287px;
+    height: 106px;
 }
 
 .newscontactsupport-item > img.news {
-    max-width: 200px;
+    width: 287px;
+    height: 106px;
     margin-left: auto;
+}
+
+.newscontactsupport-item > img.servicesupport{
+    width: 210px;
+    height: 176px;
+}
+
+.newscontactsupport-item > img.contactus{
+    width: 196px;
+    height: 148px;
 }
 
 .newscontactsupport-item.news{

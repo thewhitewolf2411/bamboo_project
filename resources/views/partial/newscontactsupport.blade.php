@@ -7,12 +7,12 @@
 
     <a class="newscontactsupport-item service" href="/support">
         <p>Service & Support</p>
-        <img src="{{asset('/customer_page_images/body/home-link-images/home-links-2.svg')}}">
+        <img class="servicesupport" src="{{asset('/customer_page_images/body/home-link-images/home-links-2.svg')}}">
     </a>
 
     <a class="newscontactsupport-item support" href="/contact">
         <p>Contact Us</p>
-        <img src="{{asset('/customer_page_images/body/home-link-images/home-links-3.svg')}}">
+        <img class="contactus" src="{{asset('/customer_page_images/body/home-link-images/home-links-3.svg')}}">
     </a>
     
 </div>

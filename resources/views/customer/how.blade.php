@@ -71,7 +71,7 @@
                     Once your sales order is completed, simply request for a free sales pack. Alternatively, you can print your own labels to send us your device.
                 </p>
             </div>
-            <img class="howitworks-selling-image post-pack" src="{{ asset('/customer_page_images/body/final_free_post_pack.svg') }}">
+            <img class="howitworks-selling-image post-pack" src="{{ asset('/customer_page_images/body/final_free_trade_pack.svg') }}">
         </div>
 
         <div class="howitworks-container how-row justify-content-center selling-section-item">

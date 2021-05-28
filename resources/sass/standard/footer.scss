@@ -9,7 +9,8 @@ footer{
     background: #000;
     //width: 100vw;
     width: 100%;
-    padding: 100px 60px 0px 60px;
+    // padding: 100px 60px 0px 60px;
+    padding: 140px 120px 0px 120px;
 
     display: flex;
     flex-direction: column;
@@ -48,11 +49,14 @@ footer{
 }
 
 .footer-row-2 span{
-    font-size: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 30px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-50)/var(--unnamed-line-spacing-58) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 50px/58px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    margin-bottom: 55px;
 }
 
 .footer-button-container{
@@ -81,18 +85,31 @@ footer{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 160px;
+    // width: 160px;
+    width: 200px;
 }
 
 .footer-row-6 > span{
-    font-size: 24px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-30)/var(--unnamed-line-spacing-33) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    font: normal normal normal 30px/33px Bebas Neue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    margin-bottom: 20px;
 }
 
 .footer-row-6 a{
-    margin: 0;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 18px/24px var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    font: normal normal normal 18px/24px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #FFFFFF;
     opacity: 1;
-    transition: 0.2s linear;
-    font-size: 14px;
+    margin: 0;
+    margin-bottom: 5px;
 }
 
 .footer-row-6 a:hover{
@@ -122,6 +139,19 @@ footer{
     transition: 0.2s linear;
 }
 
+.footer-social-icons-container > a > img{
+    transition: 0.3s linear;
+    opacity: 0.5;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.footer-social-icons-container > a:hover > img{
+    opacity: 1;
+    transition: 0.2s linear;
+    cursor: pointer;
+}
+
 .fa:hover{
     opacity: 1;
     transition: 0.2s linear;
@@ -140,13 +170,17 @@ footer{
     justify-content: space-between;
     position: relative;
     bottom: 15px;
-    margin-top: 50px;
+    margin-top: 140px;
 }
 
 #footer-row-3 .footer-row-2{
     display: flex;
     flex-direction: row;
     align-items: flex-end;
+}
+
+#footer-row-2{
+    justify-content: space-between;
 }
 
 .copyright-container{

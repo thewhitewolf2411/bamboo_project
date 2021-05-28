@@ -3,16 +3,17 @@ header{
     top: 0;
     width: 100%;
     z-index: 50;
+    background: white;
 }
 
 .header-container{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    // height: 150px;
+    // height: 129px;
     height: 130px;
     // padding: 0 120px 0 120px;
-    padding: 0 120px 0 100px;
+    padding: 0 130px 0 130px;    
     justify-content: space-between;
     background: #fff;
     transition: height 0.5s ease;
@@ -20,7 +21,7 @@ header{
 
 #header.resized{
     // height: 100px;
-    height: 80px;
+    height: 82px;
     // padding: 0 30px 60px;
 }
 #full-bamboo-logo.resized{
@@ -35,7 +36,7 @@ header{
 }
 
 #full-logo-container.resized{
-    margin-top: 65px;
+    margin-top: 45px;
     margin-left: 85px;
 }
 
@@ -52,7 +53,7 @@ header{
 }
 
 .mobile-logo > img{
-    width: 80px;
+    width: 113px;
     height: 80px;
 }
 
@@ -89,18 +90,19 @@ header{
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    box-shadow: 0 5px 6px rgba(0,0,0, 0.16);
-    background: white;
-    padding: 0 110px 0 110px;
+    box-shadow: 0px 5px 6px #00000029;
+    background: #FFFFFF;
+    padding: 0 130px 0 130px;
+    height: 50px;
 }
 
 .hover-link{
     // width: 80px;
     // height: 80px;
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 62px;
 
-    border: 2px solid;
+    border: 3px solid;
     border-top: none;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -231,16 +233,28 @@ header{
 
 
 #user-hover-link,  #user-hover-link a, #user-hover-link i{
-    color: #A375BC;
+    color: var(--technical-–-violet);
     transition: 0.2s linear;
+    // border-radius: 0px 0px 8px 8px;
+}
+
+#user-hover-link{
+    border-radius: 0px 0px 8px 8px;
 }
 
 #user-hover-link:hover{
     // height: 120px;
-    height: 80px;
+    height: 85px;
 }
 
 #user-hover-link:hover .showhover{
+    opacity: 1;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 18px/25px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 18px/25px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
     opacity: 1;
 }
 
@@ -261,9 +275,9 @@ header{
     // height: 76px;
     // min-height: 76px;
     // background-size: 50px;
-    height: 50px;
-    min-height: 50px;
-    background-size: 35px;
+    height: 55px;
+    min-height: 55px;
+    background-size: 37px;
 }
 
 #user-hover-link:hover .img{
@@ -359,8 +373,17 @@ header{
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-left: 10px;
-    margin-right: 10px;
+    // margin-left: 25px;
+    // margin-right: 25px;
+}
+
+.url-header-container.how{
+    margin-left: 33px;
+    margin-right: 16px;
+}
+.url-header-container{
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .url-header-container.mobile{
@@ -459,15 +482,19 @@ header{
     display: block;
     margin-left: auto;
     margin-right: auto;
+    width: 24px;
+    height: 24px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 #start-selling-button-img-down.invisible{
-    display: none;
+    display: none !important;
 }
 
 .header-url-link{
     margin-top: auto;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -485,7 +512,15 @@ header{
 }
 
 .url-header-container > a{
-    font-size: 16px;
+    // font-size: 16px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 20px/28px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
 }
 
 #start-shopping a:hover{
@@ -520,7 +555,7 @@ header{
 }
 
 .header-selling-links.resized{
-    top: 145px;
+    top: 132px;
 }
 
 @media screen and (max-width: 740px) and (min-width: 325px){
