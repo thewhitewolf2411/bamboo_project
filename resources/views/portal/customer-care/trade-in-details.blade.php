@@ -377,6 +377,15 @@
                                         </td>
                                     @endif
 
+                                    @if($testingfaults->knox_removed !== null)
+                                    <td>
+                                        <div class="table-element">
+                                            <div class="mr-auto"><strong>Functional Fail:</strong></div>
+                                            <div class="ml-auto">Knox Removed</div>
+                                        </div>
+                                    </td>
+                                @endif
+
                                 @endif
 
                             </tbody>

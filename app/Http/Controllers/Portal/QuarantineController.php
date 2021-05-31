@@ -244,7 +244,14 @@ class QuarantineController extends Controller
             }
             $tradein = Tradein::where('barcode', $request->submitscannedid_returntocustomer)->first();
             if($tradein !== null){
-                array_push($tradeins, $tradein);
+                #dd($tradein->getTrayType() === 'Q');
+                if($tradein->getTrayType() === 'Q'){
+                    array_push($tradeins, $tradein);
+                }
+                else{
+                    return redirect()->back()->with(['error'=>'This device is not in quarantine']);
+                }
+                
             }
         }
         else{

@@ -833,7 +833,7 @@ class WarehouseManagementController extends Controller
         $tradein = Tradein::where('barcode', $request->buildssaleslot_scandeviceinput)->first();
 
         if($tradein){
-            $salesLotContent = SalesLotContent::where('device_id', $tradein->id)->first();
+            $salesLotContent = SalesLotContent::find($tradein->id)->first();
             if($salesLotContent){
                 $salesLotContent->picked = true;
                 $salesLotContent->save();
@@ -841,7 +841,9 @@ class WarehouseManagementController extends Controller
             else{
                 return redirect()->back()->with('pickerror', 'This barcode is not recognized for this lot!');
             }
-
+        }
+        else{
+            return redirect()->back()->with('pickerror', 'This barcode is not recognized for this lot or tradein barcode does not exist!');
         }
 
         return redirect()->back();
@@ -893,7 +895,7 @@ class WarehouseManagementController extends Controller
             $box = Tray::find($key);
             $boxContent = TrayContent::where('tray_id', $box->id)->get();
 
-            if($count === $box->max_number_of_devices){
+            if($count === $box->number_of_devices){
                 $box->delete();
             }
             else{

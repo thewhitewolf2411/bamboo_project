@@ -56920,6 +56920,11 @@ $('#deletemisccost').on('click', function () {
     });
   }
 });
+$('#per_job_deduction').keyup(function () {
+  var miscCost = $('#miscellaneous_costs').val();
+  console.log(miscCost);
+  $('#live_unallocated_cost').val(miscCost);
+});
 
 /***/ }),
 
@@ -57145,9 +57150,9 @@ window.checkNewPass = function (select) {
 
     if (has_ten_characters && has_number && has_symbol && has_uppercase_letter) {
       if (select == "password_card") {
-        document.getElementById("pass-strength-card").innerHTML = 'Fair';
+        document.getElementById("pass-strength-card").innerHTML = 'Strong';
       } else {
-        document.getElementById("pass-strength").innerHTML = 'Fair';
+        document.getElementById("pass-strength").innerHTML = 'Strong';
       } // if(current.value && email.value){
       //     if(save_btn.classList.contains('btn-secondary')){
       //         save_btn.classList.remove('btn-secondary');
@@ -58213,19 +58218,21 @@ $(".sell-category-wrapper").on('mouseenter', function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$(".popular-product").on('mouseenter', function () {
-  var element = this;
-  var wrapper = element.childNodes[1];
-  var buttons = element.childNodes[3];
-  wrapper.classList.add('faded');
-  buttons.classList.remove('hidden');
-}).on('mouseleave', function () {
-  var element = this;
-  var wrapper = element.childNodes[1];
-  var buttons = element.childNodes[3];
-  wrapper.classList.remove('faded');
-  buttons.classList.add('hidden');
-});
+// $(".popular-product")
+// .on('mouseenter', function() {
+//     let element = this;
+//     let wrapper = element.childNodes[1];
+//     let buttons = element.childNodes[3];
+//     wrapper.classList.add('faded');
+//     buttons.classList.remove('hidden');
+// })
+// .on('mouseleave', function() {
+//     let element = this;
+//     let wrapper = element.childNodes[1];
+//     let buttons = element.childNodes[3];
+//     wrapper.classList.remove('faded');
+//     buttons.classList.add('hidden');
+// });
 
 /***/ }),
 

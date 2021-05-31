@@ -180,8 +180,6 @@ class SalesLotController extends Controller
                     $product = SellingProduct::find($tradein->product_id);
                 }
                 $brand = Brand::find($product->brand_id)->brand_name;
-                $productInfo = ProductInformation::where('product_id', $product->id)->first();
-                $additionalCost = AdditionalCosts::first();
     
                 $cost = $tradein->bamboo_price + $tradein->admin_cost + (2 * $tradein->carriage_costs) + $tradein->misc_cost;
                 // price = bamboo_price + administration costs + 2 * carriage cost per device

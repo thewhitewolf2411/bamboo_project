@@ -15067,6 +15067,11 @@ h3, h4, h5 {
   justify-content: start;
   max-width: 400px;
   position: relative;
+  transition: transform 0.2s;
+}
+
+.popular-product:hover {
+  transform: scale(1.1);
 }
 
 .popular-product-wrapper {
@@ -17324,6 +17329,23 @@ h3, h4, h5 {
   padding-bottom: 20px;
 }
 
+#manual_address_error {
+  padding: 0;
+  margin: 0;
+  transition: all 0.3s linear;
+  overflow-y: hidden;
+  height: 30px;
+}
+
+#manual_address_error.invisible {
+  height: 0;
+}
+
+#manual_address_error > p {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
 .search-button-basket-delivery {
   background: #F28E33;
   width: 57px;
@@ -17824,6 +17846,7 @@ input.lookup-delivery-basket::placeholder {
   text-align: center;
   width: 240px;
   height: 75px;
+  overflow-y: hidden;
 }
 
 .select-make-result-device {
@@ -19564,7 +19587,7 @@ input[type=number] {
 
 .sustainability-container {
   background: #59DDC1;
-  padding: 200px 140px 100px 100px;
+  padding: 200px 140px 100px 140px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -19592,6 +19615,14 @@ input[type=number] {
   color: #bcbcbc;
 }
 
+.whySellVideoToggle > img {
+  transition: all 0.3s linear;
+}
+
+.whysell-video-container:hover > div.whySellVideoToggle > img {
+  transform: scale(1.2);
+}
+
 #whySellVideoModal.noscroll {
   overflow-y: hidden;
 }
@@ -19599,7 +19630,7 @@ input[type=number] {
 .sustainability-row {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -19615,6 +19646,8 @@ input[type=number] {
   margin-bottom: auto;
   max-width: 450px;
   text-align: left;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 .sustainability-large {
@@ -19702,7 +19735,7 @@ input[type=number] {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
   margin-bottom: 250px;
 }
 
@@ -19713,8 +19746,16 @@ input[type=number] {
 
 .sustainability-about-col.text {
   max-width: 500px;
+  margin-left: 100px;
+  margin-right: 100px;
 }
 
+@media (max-width: 1306px) {
+  .sustainability-about-col.text, .text-buttons-sustainability {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
 .laughing-gif {
   width: 350px;
   height: auto;

@@ -192,6 +192,10 @@
                                 <label for="fake_missing_parts">Fake or missing parts</label>
                                 <input type="checkbox" class="single-checkbox" name="fake_missing_parts" id="fake_missing_parts" value="true">
                                 </div>
+                                <div class="col-md-1 d-flex flex-column align-items-center justify-content-between">
+                                <label for="knox_removed">Knox removed</label>
+                                <input type="checkbox" class="single-checkbox" name="knox_removed" id="knox_removed" value="true">
+                                </div>
                             </div>
 
                         </div>

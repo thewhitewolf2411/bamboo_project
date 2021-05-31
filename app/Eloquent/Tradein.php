@@ -255,6 +255,17 @@ class Tradein extends Model
         }
     }
 
+    public function getTrayType(){
+        $trayid = TrayContent::where('trade_in_id', $this->id)->first();
+        if($trayid !== null){
+            $tray = Tray::find($trayid->tray_id);
+            return $tray->tray_brand;
+        }
+        else{
+            return null;
+        }
+    }
+
     public function isGoogleLocked(){
         if($this->fmip_gock && $this->getBrandId($this->product_id) !== 1){
             return true;
@@ -861,6 +872,7 @@ class Tradein extends Model
             "nfc" => "NFC",
             "no_power" => "No Power",
             "fake_missing_parts" => "Fake Missing Parts",
+            "knox_removed"=>"Knox Removed"
         ];
 
         if($testing_faults){

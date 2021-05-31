@@ -440,6 +440,7 @@ class FeedsController extends Controller
                         $sellingProduct = new SellingProduct();
                         $sellingProduct->product_name = $row[1];
                         if($row[2] === null){
+                            array_push($export_log, 'Image not added for ' . $row[1]);
                             $sellingProduct->product_image = 'default_image';
                             $sellingProduct->avaliable_for_sell = false;
                         }

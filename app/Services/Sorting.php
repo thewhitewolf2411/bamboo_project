@@ -65,7 +65,10 @@ class Sorting{
 
         foreach($prices as $key=>$price){
             $sortedDevice = SellingProduct::find($key);
-            $sortedDevices->push($sortedDevice);
+            if($sortedDevice->avaliable_for_sell){
+                $sortedDevices->push($sortedDevice);
+            }
+            
         }
 
         return $sortedDevices;
