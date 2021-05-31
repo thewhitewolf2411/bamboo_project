@@ -56444,6 +56444,8 @@ __webpack_require__(/*! ./scripts/frontend/whysellpage */ "./resources/js/script
 
 __webpack_require__(/*! ./scripts/Costs */ "./resources/js/scripts/Costs.js");
 
+__webpack_require__(/*! ./scripts/FeedsScript */ "./resources/js/scripts/FeedsScript.js");
+
 "use strict";
 /*
 window.Vue = require('vue');
@@ -56562,6 +56564,7 @@ $('#administration').on('change', function () {
     $('#settings').prop('checked', true);
     $('#recycle_offers').prop('checked', true);
     $('#promo_codes').prop('checked', true);
+    $('#promo_devices').prop('checked', true);
   } else {
     $('#salvage_models').prop('checked', false);
     $('#sales_models').prop('checked', false);
@@ -56573,6 +56576,7 @@ $('#administration').on('change', function () {
     $('#settings').prop('checked', false);
     $('#recycle_offers').prop('checked', false);
     $('#promo_codes').prop('checked', false);
+    $('#promo_devices').prop('checked', false);
   }
 });
 $('#payments').on('change', function () {
@@ -56957,6 +56961,38 @@ $(document).ready(function () {
       });
     });
   }
+});
+
+/***/ }),
+
+/***/ "./resources/js/scripts/FeedsScript.js":
+/*!*********************************************!*\
+  !*** ./resources/js/scripts/FeedsScript.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$('.feed-container').on('click', function () {
+  feedid = $(this).data('value');
+  $.ajax({
+    url: "/portal/feeds/summary/getLogs",
+    type: "GET",
+    data: {
+      feedid: feedid
+    },
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(response) {
+      for (var i = 0; i < response.length; i++) {
+        $('#feed-logs-table tbody').append('<tr><th>' + response[i].id + '</th><th>' + response[i].error_log + '</th><th>' + response[i].created_at + '</th></tr>');
+      }
+    }
+  });
+  $('#view-feeds-log').modal('show');
+});
+$('#view-feeds-log').on('hide.bs.modal', function () {
+  $('#feed-logs-table tbody').empty();
 });
 
 /***/ }),
@@ -57460,7 +57496,7 @@ window.deleteTradeInDetailsFromSystem = function (id) {
 
 $('#tradein-checkallbtn').on('click', function () {
   $('.printcheckbox').prop('checked', false);
-  $('.printcheckbox').slice(0, 50).prop('checked', this.checked);
+  $('.printcheckbox').slice(0, 30).prop('checked', this.checked);
 });
 $('.printcheckbox').on('click', function () {
   var numberOfChecked = $('.printcheckbox:checked').length;
@@ -57468,8 +57504,9 @@ $('.printcheckbox').on('click', function () {
   if ($(this).is('checked')) {
     $(this).prop('checked', false);
   } else {
-    if (numberOfChecked >= 50) {
+    if (numberOfChecked >= 30) {
       $(this).prop('checked', false);
+      alert('Can\'t print more than 30 tradepacks at one time.');
     }
   }
 });

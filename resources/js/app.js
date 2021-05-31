@@ -32,6 +32,7 @@ require('./scripts/frontend/homepage');
 require('./scripts/frontend/aboutpage');
 require('./scripts/frontend/whysellpage');
 require('./scripts/Costs');
+require('./scripts/FeedsScript');
 
 "use strict";
 

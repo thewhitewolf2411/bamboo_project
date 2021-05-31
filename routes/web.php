@@ -334,6 +334,7 @@ Route::group(['prefix'=>'portal/reports'], function(){
 Route::get('/portal/feeds', 'Portal\FeedsController@showFeedsPage');
 Route::get('/portal/feeds/export-import', 'Portal\FeedsController@showExportImportPage');
 Route::get('/portal/feeds/summary', 'Portal\FeedsController@showFeedsSummaryPage');
+Route::get('/portal/feeds/summary/getLogs', 'Portal\FeedsController@getFeedsLogs');
 
 Route::post('/portal/feeds/export-import/export', 'Portal\FeedsController@feedsExport');
 Route::post('/portal/feeds/export-import/import', 'Portal\FeedsController@feedsImport');

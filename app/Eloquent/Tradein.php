@@ -961,6 +961,9 @@ class Tradein extends Model
 
     public function getBlacklistedIssue(){
         switch ($this->job_state) {
+            case '7':
+                return 'Blacklisted.';
+                break;
             case '8a':
                 return 'This device has been reported as stolen.';
                 break;
@@ -980,7 +983,7 @@ class Tradein extends Model
                 return 'Assetwatch.';
                 break;
             default:
-                # code...
+                return 'N/A';
                 break;
         }
     }

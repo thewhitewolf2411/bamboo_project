@@ -25,6 +25,7 @@ use App\Eloquent\BuyingProductColours;
 use App\Eloquent\BuyingProductInformation;
 use App\Eloquent\BuyingProductNetworks;
 use App\Eloquent\Feed;
+use App\Eloquent\FeedLog;
 use Exception;
 
 class FeedsController extends Controller
@@ -543,14 +544,40 @@ class FeedsController extends Controller
             }
 
             if(!empty($export_log)){
+                $feedLog = Feed::create([
+                    'feed_type'=>'2',
+                    'status'=>'Import succeded'
+                ]);
+
+                foreach($export_log as $log){
+                    FeedLog::create([
+                        'log_id'=>$feedLog->id,
+                        'error_log'=>$log
+                    ]);
+                }
                 array_push($export_log, 'You have succesfully imported products.');
                 return \redirect()->back()->with('failed-info', $export_log);
             }
      
         }
         else{
+            $feedLog = Feed::create([
+                'feed_type'=>'2',
+                'status'=>'Import failed'
+            ]);
             return \redirect()->back()->with('error','Something went wrong, please try again.');
         }
+        $feedLog = Feed::create([
+            'feed_type'=>'2',
+            'status'=>'Import succeded'
+        ]);
         return \redirect()->back()->with('success','You have succesfully imported products.');
+    }
+
+
+    public function getFeedsLogs(Request $request){
+        $feedlogs = FeedLog::where('log_id', $request->feedid)->get();
+
+        return response($feedlogs, 200);
     }
 }

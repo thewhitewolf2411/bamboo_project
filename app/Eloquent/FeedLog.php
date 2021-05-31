@@ -4,14 +4,14 @@ namespace App\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Feed extends Model
+class FeedLog extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'feeds_logs';
+    protected $table = 'feed_logs';
 
     /**
      * The attributes that are mass assignable.
@@ -19,10 +19,6 @@ class Feed extends Model
      * @var array
      */
     protected $fillable = [
-        'feed_type', 'status'
+        'log_id', 'error_log'
     ];
-
-    public function countLogs(){
-        return count(FeedLog::where('log_id', $this->id)->get());
-    }
 }

@@ -19117,6 +19117,10 @@ input[type=number] {
   cursor: pointer;
 }
 
+.feed-container {
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 1720px) {
   .sm-column {
     flex-direction: column;

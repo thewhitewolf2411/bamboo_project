@@ -80,12 +80,10 @@ class QuarantineController extends Controller
 
             if($tradein != null){
                 if($tradein->quarantine_status == null){
-                    array_push($tradeins, array($tradein->barcode, $tradein->getProductName($tradein->product_id), $tradein->imei_number . "\t", 
-                    $tradein->getBambooStatus(),  $tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0], $tradein->getTrayName($tradein->id), $tradein->getDeviceBambooGrade()));
+                    array_push($tradeins, array($tradein->barcode, $tradein->getProductName($tradein->product_id), $tradein->imei_number . "\t", $tradein->getBambooStatus(),  $tradein->getBlacklistedIssue(), $tradein->getTrayName($tradein->id), $tradein->getDeviceBambooGrade()));
                 }
                 else{
-                    array_push($tradeins, array($tradein->barcode, $tradein->getProductName($tradein->product_id), $tradein->imei_number . "\t", 
-                    $tradein->getDeviceStatus(),  $tradein->getQuarantineReason($tradein->id)[0], $tradein->getTrayName($tradein->id), $tradein->getDeviceBambooGrade()));
+                    array_push($tradeins, array($tradein->barcode, $tradein->getProductName($tradein->product_id), $tradein->imei_number . "\t", $tradein->getDeviceStatus(),  $tradein->getBlacklistedIssue(), $tradein->getTrayName($tradein->id), $tradein->getDeviceBambooGrade()));
                 }
             }
 

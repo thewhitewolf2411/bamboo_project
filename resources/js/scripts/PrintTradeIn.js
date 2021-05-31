@@ -81,7 +81,7 @@ $('#tradein-checkallbtn').on('click', function(){
 
     $('.printcheckbox').prop('checked', false);
 
-    $('.printcheckbox').slice(0, 50).prop('checked', this.checked);
+    $('.printcheckbox').slice(0, 30).prop('checked', this.checked);
 
 });
 
@@ -93,8 +93,9 @@ $('.printcheckbox').on('click', function(){
         $(this).prop('checked', false);        
     }
     else{
-        if(numberOfChecked >= 50){
+        if(numberOfChecked >= 30){
             $(this).prop('checked', false);
+            alert('Can\'t print more than 30 tradepacks at one time.');
         }
     }
 
