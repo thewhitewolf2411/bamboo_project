@@ -294,6 +294,9 @@ class CustomerController extends Controller
             }
 
             $cartItems = Cart::where('user_id', Auth::user()->id)->get();
+            if($cartItems->isEmpty()){
+                return redirect('cart');
+            }
 
             $products = SellingProduct::all();
 
@@ -331,6 +334,9 @@ class CustomerController extends Controller
             $email = request()->session()->get('session_email', null);
             if($email){
                 $abandoned_cart_items = AbandonedCart::where('user_email', $email)->get();
+                if($abandoned_cart_items->isEmpty()){
+                    return redirect('cart');
+                }
                 $products = SellingProduct::all();
 
                 $price = 0;

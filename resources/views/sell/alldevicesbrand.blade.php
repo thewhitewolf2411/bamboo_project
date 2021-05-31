@@ -213,7 +213,9 @@
         @endif
     </main>
 
+    @include('partial.newsletter')
     <footer>@include('customer.layouts.footer', ['showGetstarted' => false])</footer>
+    <script src="{{asset('/js/SellingPage.js')}}"></script>
 
     <script>
 

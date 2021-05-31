@@ -85,8 +85,10 @@
                                 <input class="form-control" type="text" name="street_name" id="street_name" placeholder="Street name">
                                 <input class="form-control" type="text" name="town" id="town" placeholder="Town">
                                 <input class="form-control" type="text" name="country" id="country" placeholder="Country">
-                                <input class="form-control" type="text" name="post_code" id="post_code" placeholder="Post Code">
+                                <input class="form-control mb-2" type="text" name="post_code" id="post_code" placeholder="Post Code">
 
+                                <div class="alert alert-danger text-center invisible" id="manual_address_error"><p>Please complete all fields in order to save address.</p></div>
+                                <div class="btn btn-primary d-block mb-4 mt-2" id="saveManualAddress">Save</div>
                             </div>
                         </div>
 
@@ -443,6 +445,24 @@
                 }
             })
         }        
+
+        document.getElementById('saveManualAddress').addEventListener('click', function(){
+            let housename = document.getElementById('house_name').value;
+            let streetname = document.getElementById('street_name').value;
+            let town = document.getElementById('town').value;
+            let country = document.getElementById('country').value;
+            let postcode = document.getElementById('post_code').value;
+            if(housename && streetname && town && country && postcode){
+                address_delivery = housename + ", " + streetname + ", " + town + ", " + country + ", " + postcode;
+                document.getElementById('delivery_address').value = address_delivery;
+            } else {
+                document.getElementById('manual_address_error').classList.remove('invisible');
+                setTimeout(() => {
+                    document.getElementById('manual_address_error').classList.add('invisible');
+                }, 3000);
+            }
+            
+        });
 
         // var rand = Math.floor(10000000 + Math.random() * 900000);
         // document.getElementById('order_code').value = rand;

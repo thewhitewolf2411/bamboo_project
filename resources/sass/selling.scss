@@ -934,6 +934,23 @@
     padding-bottom: 20px;
 }
 
+#manual_address_error{
+    padding: 0;
+    margin: 0;
+    transition: all 0.3s linear;
+    overflow-y: hidden;
+    height: 30px;
+}
+
+#manual_address_error.invisible{
+    height: 0;
+}
+
+#manual_address_error > p{
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
 .search-button-basket-delivery{
     background: #F28E33;
     width: 57px;
@@ -1485,6 +1502,7 @@ input.lookup-delivery-basket::placeholder{
     text-align: center;
     width: 240px;
     height: 75px;
+    overflow-y: hidden;
 }
 
 .select-make-result-device{
