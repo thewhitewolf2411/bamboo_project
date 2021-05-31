@@ -214,6 +214,11 @@ class Tradein extends Model
         }
         else{
             if($this->deviceInPaymentProcess() || (TrayContent::where('trade_in_id', $id)->first() !== null && TrayContent::where('trade_in_id', $id)->first()->tray_id === 0)){
+                
+                if(SalesLotContent::where('device_id', $this->id)->first() && SalesLotContent::where('device_id', $this->id)->first()->picked){
+                    return "Picked for sale lot " . SalesLotContent::where('device_id', $this->id)->first()->sales_lot_id;
+                }
+
                 return "Not assigned.";
             }
             return "Not received yet.";
@@ -1138,6 +1143,16 @@ class Tradein extends Model
     public function isPartOfSalesLot(){
         $saleLotContent = SalesLotContent::where('device_id', $this->id)->first();
         if($saleLotContent){
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isPicked(){
+
+        $saleLotContent = SalesLotContent::where('device_id', $this->id)->first();
+        if($saleLotContent && $saleLotContent->picked){
             return true;
         }
 

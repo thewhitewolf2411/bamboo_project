@@ -886,6 +886,25 @@ class WarehouseManagementController extends Controller
         $salesLot->sales_lot_status = 3;
         $salesLot->save();
 
+        $salesLotContent = SalesLotContent::where('sales_lot_id', $salesLot->id)->get();
+
+        $boxcount = $salesLotContent->countBy('box_id');
+        foreach($boxcount as $key=>$count){
+            $box = Tray::find($key);
+            $boxContent = TrayContent::where('tray_id', $box->id)->get();
+
+            if($count === $box->max_number_of_devices){
+                $box->delete();
+            }
+            else{
+                $box->number_of_devices = $box->number_of_devices - $count;
+                $box->save();
+            }
+            foreach($boxContent as $boxedDevice){
+                $boxedDevice->delete();
+            }
+        }
+
         return redirect('/portal/warehouse-management/picking-despatch')->with(['success'=>'Picking succesfully completed']);
     }
 
