@@ -159,9 +159,21 @@ class PagesController extends Controller
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
         $faq = FAQ::all();
+        $all_faq = $faq;
+
+        $chunk = $faq->splice(0,ceil($faq->count() / 2));
+        $first_faq = $faq;
+        $second_faq = $chunk;
 
         $products = $buyingProducts->merge($sellingProducts);
-        return view('customer.supportselling', ['products' => $products, 'faq' => $faq, 'question_id' => $question_id]);
+        return view('customer.supportselling', [
+                'products' => $products, 
+                'faq' => $all_faq,
+                'first_faq' => $first_faq, 
+                'second_faq' => $second_faq,
+                'question_id' => $question_id
+            ]
+        );
     }
 
     public function searchFAQSupport(Request $request){

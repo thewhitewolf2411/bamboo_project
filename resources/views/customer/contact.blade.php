@@ -4,10 +4,8 @@
 
 <div class="app">
 
-    <div class="contact-page contact-title-container">
-        <div class="center-title-container">
-            <p class="large-page-title">Contact us</p>
-        </div>
+    <div class="page-header-container contact">
+        <p class="page-header-text">Contact</p>
     </div>
 
     @if(Session::get('_previous') !== null)
@@ -20,10 +18,11 @@
 
 
     <div class="contact-ways-container">
-        <div class="text-center">
-            {{-- <p>You can contact Boo’s friendly team of mobile recycling experts by a number of ways. </p> --}}
+        {{-- <div class="text-center">
+            <!--<p>You can contact Boo’s friendly team of mobile recycling experts by a number of ways. </p>-->
             <p class="customer-sections-title center mb-5">Ways to get in touch with us</p>
-        </div>
+        </div> --}}
+        <p class="contact-text-title">Ways to get in touch with us</p>
 
         @if(Session::has('message_success'))
             <div class="alert alert-success" role="alert">
@@ -176,7 +175,7 @@
             </div>
  
             <div class="telephone-contact-container">
-                <span>0345 582 0511</span>
+                <div class="telnumber">0345 582 0511</div>
 
                 <div class="worktime-container">
                     <p style="opacity: 0.5; margin: 0;" class="worktime-text mt-4">Opening times:</p>
@@ -201,7 +200,7 @@
                         </div>
                     </div>
                     <p style="opacity: 0.5; margin: 0;" class="worktime-text mt-2">Calls are charged at local rate.</p>
-                    <p class="worktime-text mt-2" style="max-width: 480px;">Please note calls are recorded for monitoring and are used for ongoing training purposes.</p>
+                    <p class="worktime-text mt-2 disclaimer">Please note calls are recorded for monitoring and are used for ongoing training purposes.</p>
 
                     <a href="/sell" class="btn btn-primary m-0 mt-4" style="background: #A3D147 !important; border: #A3D147 !important">
                         Start Selling

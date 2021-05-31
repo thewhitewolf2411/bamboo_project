@@ -559,6 +559,12 @@
     top: 30px;
 }
 
+.product-data{
+    width: 50%;
+    margin-top: 120px;
+    max-width: 900px;
+}
+
 .sell-item-back{
     width: 50%;
     position: absolute;
@@ -572,8 +578,15 @@
 }
 
 .product-title{
-    font-size: 24px;
-    font-family: Sharp Sans No1 Bold;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-40)/var(--unnamed-line-spacing-48) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 40px/48px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
 }
 
 .product-selected{
@@ -584,10 +597,15 @@
 .single-product-container{
     display: flex;
     flex-direction: row;
-    padding: 50px 50px;
+    //padding: 50px 140px 140px 50px;
+    margin-left: 140px;
+    margin-right: 140px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     //flex-wrap: wrap;
-    max-width: 1400px;
+    // max-width: 1400px;
     margin: auto;
+    margin-bottom: 108px;
 }
 
 .product-image-container{
@@ -607,8 +625,16 @@
 }
 
 .select-shopping-option-title{
-    font-size: 14px;
-    margin-bottom: 5px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/28px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+    margin-bottom: 10px;
 }
 
 .grades-info-img{
@@ -703,16 +729,36 @@
 }
 
 #selected-grade, #selected-network, #selected-gb{
-    font-size: 14px;
-    margin-left: 6px;
-    font-family:Sharp Sans No1 Bold;
+    // font-size: 14px;
+    // margin-left: 6px;
+    // font-family:Sharp Sans No1 Bold;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/28px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+    margin-bottom: 0;
+    margin-left: 10px;
 }
 
 #product-price{
-    font-size: 32pt;
+    // font-size: 32pt;
+    // color: #F28E33;
+    // font-weight: 600;
+    // font-family:Sharp Sans No1 Bold;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 67px/var(--unnamed-line-spacing-90) Sharp Sans No1 Semibold;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--sell-–-orange);
+    text-align: left;
+    font: normal normal normal 67px/90px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
     color: #F28E33;
-    font-weight: 600;
-    font-family:Sharp Sans No1 Bold;
+    opacity: 1;
+    margin: 0;
 }
 
 .networks-container{
@@ -742,14 +788,14 @@
 }
 
 .memory-container{
-    width: 80px;
+    width: 120px;    
     border: 1px solid #000;
     border-radius: 5px;
     padding: 0.375rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12pt;
+    //font-size: 12pt;
 }
 
 .memory-container-deselected{
@@ -758,26 +804,62 @@
 
 .network-container-selected{
     border: 2px solid #F28E33 !important;
-    color: #F28E33;
+    color: #F28E33 !important;
     transform: scale(1.05);
     transition: 0.2s linear;
     font-size: 16px !important;
+    font: normal normal normal 25px/34px Sharp Sans No1 Bold !important;
 }
 
 .memory-container-selected{
     border: 2px solid #F28E33 !important;
-    color: #F28E33;
+    color: #F28E33 !important;
     transform: scale(1.05);
     transition: 0.2s linear;
-    font-size: 16px !important;
+    font: normal normal normal 25px/34px Sharp Sans No1 Bold !important; 
+    //font-size: 16px !important;
 }
 
 .elem-grade-container-selected{
     border: 2px solid #F28E33 !important;
-    color: #F28E33;
+    color: #F28E33 !important;
     transform: scale(1.05);
     transition: 0.2s linear;
-    font-size: 16px !important;
+    font: normal normal normal 25px/34px Sharp Sans No1 Bold !important;
+    //font-size: 16px !important;
+}
+
+.infotext-sell-item{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/28px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+}
+
+.infotext-sell-item.bold{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/27px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+}
+
+.infotext-sell-item.border-bottom{
+    border-bottom: 1px solid rgba(0, 0, 0, 1);
+    max-width: 110px;
+}
+
+.link-small{
+    width: 110px;
 }
 
 .selling-item-grade-container{
@@ -788,18 +870,20 @@
     flex-direction: row;
     flex-wrap: wrap;
     height: auto;
-    max-width: 501px;
-    min-width: 350px;
+    // max-width: 501px;
+    // min-width: 350px;
 }
 
 .elem-grade-container{
     width: auto;
     min-width: 150px;
-    max-width: 200px;
-    height: 40px;
+    max-width: 285px;    
+    height: 62px;
     border: 1px solid #000;
     border-radius: 5px;
     padding: 0.375rem;
+    padding-left: 24px;
+    padding-right: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -809,7 +893,14 @@
 }
 
 .elem-grade-container, .device-memory > label, .network-container > div > label{
-    font-family: Sharp Sans No1 Bold;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/var(--unnamed-line-spacing-34) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 25px/34px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
 }
 
 .elem-grade-container-deselected{
@@ -829,7 +920,16 @@
 }
 
 .sell-email-input{
-    max-height: 38px;
+    height: 60px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 22px/30px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 22px/30px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    border-radius: 5px;
 }
 
 .pleaseSelect{
@@ -838,6 +938,8 @@
     height: 35px;
     padding: 0;
     overflow-y: hidden;
+    width: auto;
+    max-width: 700px;
 }
 
 .pleaseSelect > p {
@@ -1058,17 +1160,26 @@ input.lookup-delivery-basket::placeholder{
 }
 
 .sell-title{
-    font-family: Sharp Sans No1 Bold;
-}
-
-.sell-title{
-    font-size: 60px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-80)/var(--unnamed-line-spacing-90) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 80px/90px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin-bottom: 55px;
 }
 
 .sell-subtitle{
-    font-size: 24px;
-    text-transform: uppercase;
-    font-family: Bebas Neue;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 37px/40px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
 }
 
 .sell-subtitle-regular{
@@ -1108,12 +1219,20 @@ input.lookup-delivery-basket::placeholder{
     height: 72px;
     width: 100%;
     text-align: left;
-    padding-left: 25px;
+    padding-left: 31px;
     background: #F2F2F2;
     border: none;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
-    font-family: Sharp Sans No1 Book;
+    
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/var(--unnamed-line-spacing-34) var(--unnamed-font-family-sharp-sans-no1-medium);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 25px/34px Sharp Sans No1 Medium;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 0.5;
 }
 
 .search-sell-input:focus{
@@ -1221,8 +1340,14 @@ input.lookup-delivery-basket::placeholder{
 
 .selling-single-result > p{
     margin: 0;
-    font-family: Sharp Sans No1 Bold;
-    font-size: 20px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/35px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 25px/35px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
     padding-left: 20px;
     padding-top: 5px;
 }
@@ -1355,7 +1480,7 @@ input.lookup-delivery-basket::placeholder{
 
 
 .sell-category-device-background{
-    margin-top: 100px;
+    margin-top: 65px;
     margin-left: auto;
     margin-right: auto;
     width: 260px;
@@ -1420,9 +1545,15 @@ input.lookup-delivery-basket::placeholder{
 }
 
 .sell-category-title{
-    font-family: Sharp Sans No1 Bold;
-    font-size: 30px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-40)/var(--unnamed-line-spacing-48) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
     text-align: center;
+    font: normal normal normal 40px/48px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
 }
 
 
@@ -1441,6 +1572,7 @@ input.lookup-delivery-basket::placeholder{
 
 .device-makes-container{
     margin: auto;
+    margin-bottom: 110px;
 }
 
 .device-brands-row{

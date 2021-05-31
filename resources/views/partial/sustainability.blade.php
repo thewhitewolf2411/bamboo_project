@@ -6,7 +6,7 @@
                 <p class="sustainability-small ml-0 mt-4">
                     Selling with us is quick, easy and simple with same day payment straight into your bank account. We even pay for the postage. So why wait, find out how much your device is worth today.
                 </p>
-                <a href="/about" class="btn btn-light ml-0 mt-4 w-25 mb-auto">Read More</a>
+                <a href="/about" class="btn read-more sustainability"><p>Read More</p></a>
             </div>
             <div class="sustainability-whysell-col whysellwithus">
                 <div class="whysell-video-container text-center">
@@ -48,8 +48,11 @@
             </div>
         </div>
 
-        <div class="start-selling-whysell mt-5">
+        {{-- <div class="start-selling-whysell mt-5">
             <a href="/sell" class="btn btn-orange">Start Selling</a>
+        </div> --}}
+        <div class="start-selling-whysell mt-5">
+            <a class="btn start-selling sustainability" href="/sell"><p>Start Selling</p></a>
         </div>
     @endif
 

@@ -2,10 +2,9 @@
 
 @section('content')
 <div class="app">
-    <div class="news-page news-title-container">
-        <div class="center-title-container">
-            <p class="large-page-title">News & Blog</p>
-        </div>
+    
+    <div class="page-header-container news">
+        <p class="page-header-text">News & Blog</p>
     </div>
 
     @if(Session::get('_previous') !== null)

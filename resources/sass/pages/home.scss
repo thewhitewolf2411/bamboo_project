@@ -1,0 +1,105 @@
+.homepage-type-column{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.homepage-type-title{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-50)/var(--unnamed-line-spacing-58) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--sell-–-orange);
+    text-align: center;
+    font: normal normal normal 50px/58px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #F28E33;
+    opacity: 1;
+}
+
+.homepage-type-border.orange{
+    margin-top: 14px;
+    height: 3px;
+    width: 207px;
+    background: var(--sell-–-orange);
+    opacity: 1;
+}
+
+.homepage-type-text-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.homepage-types-text-wrapper{
+    max-width: 467px;
+}
+
+.homepage-type-text-title{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 37px/40px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+    height: 44px;
+}
+
+.homepage-type-text-desc{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/28px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+
+    max-width: 467px;
+}
+
+.homepage-types-images-wrapper{
+    width: 260px;
+}
+
+.hor-line-homepage{
+    width: 5px;
+    height: 620px;    
+    background: var(--black);
+    position: absolute;
+    z-index: -1;
+    margin-left: 130px;
+}
+
+.homepage-type-step-image{
+    display: block;
+    width: 151px;
+    height: 150px;
+    display: block;
+    margin: auto;
+    margin-bottom: 28px;
+}
+
+.homepage-type-step-image.larger{
+    width: 169px;
+    height: 178px;
+    width: 169px;
+    height: 178px;
+    margin-right: 53px;
+    margin-bottom: 52px;
+}
+
+.homepage-type-text-container.first-step{
+    margin-bottom: 280px;
+}
+
+.homepage-type-text-container.second-step{
+    margin-top: 200px;
+    margin-bottom: 200px;
+}
+
+.third-step{
+
+}

@@ -203,7 +203,7 @@
     margin-right: 50px;
 }
 
-.sustainability-large{
+.sustainability-large, .whathappensnext-large{
     // font-size: 3rem;
     // font-family: Sharp Sans No1 Bold;
     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-80)/var(--unnamed-line-spacing-90) var(--unnamed-font-family-sharp-sans-no1-bold);
@@ -214,10 +214,10 @@
     letter-spacing: 0px;
     color: #000000;
     opacity: 1;
-    width: 555px;
+    //width: 555px;
 }
 
-.sustainability-small{
+.sustainability-small, .whathappensnext-small{
     // font-size: 1rem;
     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/var(--unnamed-line-spacing-34) var(--unnamed-font-family-sharp-sans-no1-medium);
     letter-spacing: var(--unnamed-character-spacing-0);
@@ -228,6 +228,12 @@
     color: #000000;
     opacity: 1;
     width: 555px;
+}
+
+.whathappensnext-small{
+    width: initial;
+    margin-top: 40px;
+    margin-bottom: 20px;
 }
 
 .sustainability-images-overlay{
@@ -283,7 +289,7 @@
 }
 
 .sustainability-whysell-col.text{
-    max-width: 500px;
+    max-width: 600px;
 }
 
 .sustainability-whysell-videowrapper{
@@ -561,6 +567,7 @@
     flex-direction: column;
     align-items: center;
     padding: 80px;
+    padding-bottom: 10px;
 }
 
 .sign-up-form{
@@ -611,6 +618,7 @@
     letter-spacing: 0px;
     color: #000000;
     opacity: 1;
+    max-width: 965px;
 }
 
 #newsletter-terms-toggle{
@@ -626,6 +634,7 @@
 .newsletter-terms-container{
     display: flex;
     flex-direction: row;
+    margin-bottom: 24px;
 }
 
 .newsletter-terms-container input[type="checkbox"] {
@@ -699,6 +708,7 @@
 
 .newsletter-name-input{
     width: 100%;
+    // max-width: 500px;
     max-width: 500px;
     min-width: 250px;
 }

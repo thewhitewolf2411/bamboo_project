@@ -26,6 +26,10 @@
         <header>@include('customer.layouts.header')</header>
         <main>
 
+            <div class="page-header-container sitemap">
+                <p class="page-header-text">Sitemap</p>
+            </div>
+
             <div class="container">
 
                 @if(Session::get('_previous') !== null)
@@ -36,7 +40,7 @@
                     <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
                 </a>
 
-                <div class="row m-0 map-row">
+                <div class="row m-0 map-row mt-5">
                     <div class="map-col">
                         <p class="sitemap-title">How it works</p>
                         {{-- <a class="sitemap-text" href="/how">Shopping</a> --}}
@@ -127,7 +131,7 @@
                     <p class="sitemap-section-title ml-1 mt-4">Selling</p>
                 </div>
 
-                <div class="row m-0 map-row">
+                <div class="row m-0 map-row justify-content-between">
 
                     <div class="map-col">
                         <p class="sitemap-title">Sell Mobile Phones</p>

@@ -16,7 +16,7 @@
             @include('partial.sellsearch', ['title' => 'What do you want to sell?', 'info' => 'Please use the search bar below or follow the steps to find your device'])
 
             <div class="col">
-                <p class="sell-subtitle mt-4">OR</p>
+                <p class="sell-subtitle mt-5">OR</p>
                 <p class="sell-subtitle mb-5 mt-4">Step 1: Select your device below</p>
             </div>
 

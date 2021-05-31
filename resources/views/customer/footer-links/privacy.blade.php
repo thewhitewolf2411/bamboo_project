@@ -26,11 +26,11 @@
         <header>@include('customer.layouts.header')</header>
         <main>
             <div class="app">
-                <div class="slavery-title-container">
-                    <div class="center-title-container">
-                        <p>Privacy Policy</p>
-                    </div>
+
+                <div class="page-header-container privacypolicy">
+                    <p class="page-header-text">Privacy Policy</p>
                 </div>
+
                 @if(Session::get('_previous') !== null)
                     <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
                 @else
@@ -137,7 +137,7 @@
                         <p class="footer-text-small">
                             As well as our Privacy Promise, your privacy is protected by law, which says that we are allowed to use personal information only if we have a proper reason to do so. The law says that we must have one or more of these reasons: 
                         </p>
-                        <ul>
+                        <ul class="footer-text-small">
                             <li>To fulfil a contract we have with you, or </li>
                             <li>When it is our legal duty, or </li>
                             <li>When it is in our legitimate interest, or </li>

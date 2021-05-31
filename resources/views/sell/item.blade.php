@@ -33,7 +33,7 @@
                     <div class="product-selected product-network-container" id="product-network-container">
                         <div class="row m-0">
                             <p class="select-shopping-option-title m-0 mb-1">Select Network:</p>
-                            <div id="selected-network"></div>
+                            <p id="selected-network"></p>
                         </div>
 
                         <div class="networks-container">
@@ -64,7 +64,7 @@
                     <div class="product-selected product-memory-container">
                         <div class="row m-0">
                             <p class="select-shopping-option-title m-0 mb-1">Select Memory:</p>
-                            <div id="selected-gb"></div>
+                            <p id="selected-gb"></p>
                         </div>
 
                         <div class="d-flex">
@@ -86,22 +86,22 @@
                 <div class="product-selected product-grade-container selling-item-grades-container">
                     <div class="row m-0">
                         <p class="select-shopping-option-title m-0 mb-1">Select Grade:</p>
-                        <div id="selected-grade"></div>
+                        <p id="selected-grade"></p>
                     </div>
 
                     <div class="">
                         <div class="d-flex grade-options-container" id="grades-text">
-                            <label class="elem-grade-container ml-0 mr-2" id="grade-1-text" for="grade-1">Excellent Working</label>
-                            <label class="elem-grade-container ml-0 mr-2" id="grade-2-text" for="grade-2">Good Working</label>
-                            <label class="elem-grade-container ml-0 mr-2" id="grade-3-text" for="grade-3">Poor Working</label>
-                            <label class="elem-grade-container ml-0 mr-2" id="grade-4-text" for="grade-4">Damaged Working</label>
-                            <label class="elem-grade-container ml-0 mr-2" id="grade-5-text" for="grade-5">Faulty</label>
+                            <label class="elem-grade-container ml-0 mr-3" id="grade-1-text" for="grade-1">Excellent Working</label>
+                            <label class="elem-grade-container ml-0 mr-3" id="grade-2-text" for="grade-2">Good Working</label>
+                            <label class="elem-grade-container ml-0 mr-3" id="grade-3-text" for="grade-3">Poor Working</label>
+                            <label class="elem-grade-container ml-0 mr-3" id="grade-4-text" for="grade-4">Damaged Working</label>
+                            <label class="elem-grade-container ml-0 mr-3" id="grade-5-text" for="grade-5">Faulty</label>
                         </div>
                         <div class="row m-0 mt-2">
                             <a role="button" class="my-auto ml-0" data-toggle="modal" data-target="#gradesModal">
                                 <label class="d-flex ml-0 mr-3 my-auto cursor-pointer">
                                     <img class="grades-info-img" src="{{asset('/customer_page_images/body/Icon-Information.png')}}" class="mx-3">
-                                    <p class="pt-1" style="font-size: 14px;">What do these grades mean?</p>
+                                    <p class="infotext-sell-item">What do these grades mean?</p>
                                 </label>
                             </a>
                         </div>
@@ -120,13 +120,13 @@
 
                 <div class="d-flex">
                     <div class="d-flex flex-column mb-1">
-                        <p>You don't need to send your charger, accessories or the original box!</p>
+                        <p class="infotext-sell-item">You don't need to send your charger, accessories or the original box!</p>
                     </div>
                 </div>
 
                 @if(str_contains(strtolower($product->product_name), 'samsung galaxy note'))
                     <div class="d-flex flex-column mb-2 samsung-note-alert">
-                        Please remember to include your stylus with the Note
+                        <p class="infotext-sell-item bold">Please remember to include your stylus with the Note></p>
                     </div>
                 @endif
 
@@ -140,7 +140,7 @@
 
                 <div class="">
                 
-                    <a href="" class="border-bottom">Reset filters</a>
+                    <a class="link-small" href=""><p class="infotext-sell-item border-bottom mt-2">Reset filters</p></a>
 
                 </div>
 
@@ -162,7 +162,7 @@
                             <input type="hidden" name="memory" id="memory"></input>
                             <input type="hidden" name="price" id="price"></input>
                             <input type="hidden" name="type" value="tradein"></input>
-                            <button id="addToCart" type="submit" class="btn btn-primary btn-orange">Sell my device</button>
+                            <button id="addToCart" type="submit" class="btn start-selling sellitem"><p>Sell my device</p></button>
                         </div>
                     </form>
 
@@ -186,15 +186,15 @@
                             <input type="hidden" name="type" value="tradein"></input>
 
                             <div class="row m-0">
-                                <div class="col mt-3 p-0">
-                                    <label for="email_address">Email address*</label>
+                                <div class="col p-0">
+                                    <label for="email_address" class="select-shopping-option-title m-0 mb-1">Email address*</label>
                                     @if(Session::has('session_email'))
                                         <input type="email" id="basket_email" class="mb-0 sell-email-input" value="{!!Session::get('session_email')!!}" required name="email"/>
                                     @else
                                         <input type="email" id="basket_email" class="mb-0 sell-email-input" required name="email"/>
                                     @endif
                                 </div>
-                                <button id="addToCart" type="submit" class="btn btn-primary btn-orange h-25 mt-auto mb-0 ml-2">Sell my device</button>
+                                <button id="addToCart" type="submit" class="btn start-selling sellitem-small mt-auto ml-2"><p>Sell my device</p></button>
                             </div>
                             <div id="please-enter-email" class="alert alert-danger pleaseSelect invisible mt-2"><p>Please complete email field to proceed.</p></div>
                             

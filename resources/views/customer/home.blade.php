@@ -40,13 +40,17 @@
 
         <div class="how-buttons-container mt-5">
             {{-- <div class="how-button-container active" id="selling-btn" onclick="changeHowState('selling')"> --}}
-            <div class="how-button-container active" id="selling-btn">
+            {{-- <div class="how-button-container active" id="selling-btn">
                 <p class="semilarge-bold-text" style="cursor: default;">Selling</p>
+            </div> --}}
+            <div class="homepage-type-column">
+                <div class="homepage-type-title">Selling</div>
+                <div class="homepage-type-border orange"></div>
             </div>
         </div>
 
         <div class="selling-content-container active">
-            <div class="how-second-text-container">
+            {{-- <div class="how-second-text-container">
                 <div class="how-text-element">
                     <div class="how-text-title-container">
                         <p class="how-title-text bebas-neue">2. FREE DELIVERY OPTIONS</p>
@@ -55,43 +59,64 @@
                         <p class="regular-text">Once you have completed your sales order, you simply request a FREE Trade Pack or print your own labels to send in your device.</p>
                     </div>
                 </div>
+            </div> --}}
+
+            <div class="homepage-types-text-wrapper">
+            
+                <div class="homepage-type-text-container second-step">
+                    <p class="homepage-type-text-title">2. FREE DELIVERY OPTIONS</p>
+                    <p class="homepage-type-text-desc">Once you have completed your sales order, you simply request a FREE Trade Pack or print your own labels to send in your device.</p>
+                </div>
+
             </div>
 
-            <div class="how-images-container">
-                <div class="back-line-container"></div>
-                <div class="how-image-container">
-                    <img src="{{asset('/customer_page_images/body/How-Icon-4.svg')}}">
-                </div>
-                <div class="how-image-container">
-                    {{-- <img src="{{asset('/customer_page_images/body/How-Icon-5.svg')}}"> --}}
-                    <img class="how-image" src="{{ asset('/customer_page_images/body/revised_trade_pack.png') }}">
-                </div>
-                <div class="how-image-container">
-                    <img src="{{asset('/customer_page_images/body/How-Icon-6.svg')}}">
-                </div>
-                <div class="url-footer-container sell-section" id="start-selling">
-                    <a href="/sell">Start Selling</a>
-                </div>
+
+            
+            <div class="homepage-types-images-wrapper">
+
+                <div class="hor-line-homepage"></div>
+
+                <img class="homepage-type-step-image" src="{{asset('/customer_page_images/body/How-Icon-4.svg')}}">
+                <img class="homepage-type-step-image larger" src="{{ asset('/customer_page_images/body/final_free_trade_pack.svg') }}">
+                <img class="homepage-type-step-image last" src="{{asset('/customer_page_images/body/How-Icon-6.svg')}}">
+
+                <a href="/sell" class="btn start-selling howitworks mt-4"><p>Start Selling</p></a>
+
             </div>
 
-            <div class="how-first-text-container">
-                <div class="how-text-element">
+            <div class="homepage-types-text-wrapper"></div>
+
+            <div class="homepage-types-text-wrapper">
+                {{-- <div class="how-text-element">
                     <div class="how-text-title-container">
-                        {{-- <p class="regular-bold-text">1. REGISTER YOUR DEVICE TO SELL</p> --}}
+                        <!-- <p class="regular-bold-text">1. REGISTER YOUR DEVICE TO SELL</p> -->
                         <p class="how-title-text bebas-neue">1. YOU SEARCH FOR YOUR DEVICE</p>
                     </div>
                     <div class="how-text-container">
                         <p  class="regular-text">Find your old device and see how much it’s worth. Choose your preferred payment option with all your details.</p>
                     </div>
-                </div>
-                <div class="how-text-element last-element">
+                </div> --}}
+
+                {{-- <div class="how-text-element last-element">
                     <div class="how-text-title-container">
                         <p class="how-title-text bebas-neue">3. FAST SAME DAY PAYMENT</p>
                     </div>
                     <div class="how-text-container">
                         <p class="regular-text">When we receive your device, we will check  it against your order. If it is all correct, payment will be made on the same day we receive it. Woohoo!</p>
                     </div>
+                </div> --}}
+
+                <div class="homepage-type-text-container first-step">
+                    <p class="homepage-type-text-title">1. YOU SEARCH FOR YOUR DEVICE</p>
+                    <p class="homepage-type-text-desc">Find your old device and see how much it’s worth. Choose your preferred payment option with all your details.</p>
                 </div>
+
+                <div class="homepage-type-text-container third-step">
+                    <p class="homepage-type-text-title">3. FAST SAME DAY PAYMENT</p>
+                    <p class="homepage-type-text-desc">When we receive your device, we will check  it against your order. If it is all correct, payment will be made on the same day we receive it. Woohoo!</p>
+                </div>
+
+                
             </div>
         </div>
 

@@ -3,10 +3,13 @@
 @section('content')
 
 <div class="app">
-    <div class="how-page support-title-container">
+    {{-- <div class="how-page support-title-container">
         <div class="center-title-container">
             <p class="large-page-title">Service & Support</p>
         </div>
+    </div> --}}
+    <div class="page-header-container servicesupport">
+        <p class="page-header-text">Service & Support</p>
     </div>
 
     @if(Session::get('_previous') !== null)
@@ -19,48 +22,37 @@
 
     @include('partial.supportsearch')
 
-    <div class="supprt-titles-container">
-        <div class="row-height-140 support-top-row pc-15-50">
+    <div class="support-titles-container">
+        <div class="support-row">
             {{-- <a href="">
                 <div class="btn btn-primary btn-blue btn-font-white">
                     <p>Buying a device</p>
                 </div>
             </a> --}}
-            <a href="/support/selling">
-                <div class="support-btn orange">
-                    <p class="support-btn-text">Selling a device</p>
-                </div>
+            <a href="/support/selling" class="support-btn orange ml-auto mr-auto mt-2 mb-2 w-100">
+                <p class="support-btn-text">Selling a device</p>
             </a>
         </div>
 
-        <div class="row-height-140 support-middle-row pc-15-50">
-            <a href="">
-                <div class="support-btn purple">
-                    <p class="support-btn-text">Tech</p>
-                </div>
+        <div class="support-row">
+            <a class="support-btn purple ml-auto mr-auto mt-2 mb-2 w-100">
+                <p class="support-btn-text">Tech</p>
             </a>
         </div>
 
-        <div class="row-height-140 support-bottom-row pc-15-50">
-            <a href="">
-                <div class="support-btn green">
-                    <p class="support-btn-text">Delivery</p>
-                </div>
+        <div class="support-row justify-content-center">
+            <a class="support-btn green mt-2 mb-2 mr-2">
+                <p class="support-btn-text">Delivery</p>
             </a>
-            <a href="">
-                <div class="support-btn green">
-                    <p class="support-btn-text">Your Order</p>
-                </div>
+            <a class="support-btn green mt-2 mb-2 mr-2">
+                <p class="support-btn-text">Your Order</p>
             </a>
-            <a href="">
-                <div class="support-btn green">
-                    <p class="support-btn-text">Your Account</p>
-                </div>
+            <a class="support-btn green mt-2 mb-2 mr-2">
+                <p class="support-btn-text">Your Account</p>
             </a>
-            <a href="">
-                <div class="support-btn green">
-                    <p class="support-btn-text">General Questions</p>
-                </div>
+            <a class="support-btn green mt-2 mb-2">
+                <p class="support-btn-text">General Questions</p>
+            </a>
             </a>
         </div>
 

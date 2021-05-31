@@ -28,7 +28,6 @@
 @import './selling.scss';
 @import './portal.scss';
 @import './portal/payment.scss';
-@import './standard/news.scss';
 @import './standard/partials.scss';
 
 @import './typography.scss';
@@ -40,6 +39,11 @@
 @import './pages/general.scss';
 @import './pages/buttons.scss';
 @import './pages/howitworks.scss';
+@import './pages/home.scss';
+@import './pages/about.scss';
+@import './pages/supportservice.scss';
+@import './pages/news.scss';
+@import './pages/contact.scss';
 
 // disable dragging images
 img{

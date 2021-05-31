@@ -1,9 +1,9 @@
 <div class="whathappensnext-container">
 
-    <p class="what-title">
+    <p class="whathappensnext-large">
         What happens next?
     </p>
-    <p class="what-subtitle mt-3">
+    <p class="whathappensnext-small">
         Watch our quick video explaining just what happens next
     </p>
 
@@ -68,9 +68,7 @@
             </div>
         </div>
     @else
-        <div class="row m-0 ml-auto mr-auto mt-4">
-            <a href="#" class="btn btn-light">Read More</a>
-        </div>
+        <a href="/about" class="btn read-more sustainability ml-auto mr-auto"><p>Read More</p></a>
     @endif
 </div>
 {{-- <script type="application/javascript">
