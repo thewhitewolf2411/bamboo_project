@@ -180,8 +180,8 @@
                             <tr>
                                 <td><div class="table-element">{{$box->tray_name}}</div></td>
                                 <td><div class="table-element">{{$tradein->barcode}}</div></td>
-                                <td><div class="table-element">{{$tradein->cosmetic_condition}}</div></td>
-                                <td><div class="table-element">{{$tradein->imei_number}}</div></td>
+                                <td><div class="table-element">{{$tradein->getDeviceBambooGrade()}}</div></td>
+                                <td><div class="table-element">{{$tradein->imei_number ?? null ?: $tradein->serial_number}}</div></td>
                                 <td><div class="table-element">{{$tradein->getProductName()}}</div></td>
                                 <td><div class="table-element"><input type="checkbox" class="select-to-remove-from-box" id="{{$tradein->id}}"></div></td>
                             </tr>

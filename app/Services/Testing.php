@@ -79,6 +79,9 @@ class Testing{
             if(isset($request->fake_missing_parts) && $request->fake_missing_parts === 'true'){
                 $testingFaults->fake_missing_parts = true;
             }
+            if(isset($request->knox_removed) && $request->knox_removed === 'true'){
+                $testingFaults->knox_removed = true;
+            }
 
             $testingFaults->save();
         }

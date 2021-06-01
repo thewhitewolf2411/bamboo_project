@@ -42,7 +42,7 @@
                     </div>
                     @endif
 
-                    <table class="portal-table sortable" id="categories-table">
+                    <table class="portal-table" id="categories-table">
                         <tr>
                             <td><div class="table-element">Id</div></td>
                             <td><div class="table-element">Image</div></td>
@@ -51,7 +51,7 @@
                             <td><div class="table-element">Brand</div></td>
                             <td>
                                 <a href="/portal/product/addsellingproduct">
-                                <i class="fa fa-plus-circle"></i>
+                                <i title="Add a new product" class="fa fa-plus-circle"></i>
                                 </a>
                             </td>
                         </tr>
@@ -65,10 +65,10 @@
                             <td><div class="table-element">{{$sellingProduct->getBrand($sellingProduct->brand_id)}}</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/product/editsellingproduct/{{$sellingProduct->id}}">
-                                    <i class="fa fa-pencil"></i>
+                                    <i title="Edit product" class="fa fa-pencil"></i>
                                 </a>
                                 <a onclick="return confirm('Are you sure? This will delete this product from customer view!')" href="/portal/product/removesellingproduct/{{$sellingProduct->id}}">
-                                    <i class="fa fa-times remove"></i>
+                                    <i title="Delete product" class="fa fa-times remove"></i>
                                 </a>
                                 </div>
                             </td>
@@ -84,19 +84,5 @@
     </main>
 
 </body>
-<script>
-
-$(document).ready(function(){
-
-    var elem = $('.portal-links-container > .portal-header-element')[2];
-    
-    console.log(elem.children[0]);
-
-    elem.children[0].style.color = "#fff";
-    elem.children[0].children[0].style.opacity = 1;
-
-});
-
-</script>
 
 </html>

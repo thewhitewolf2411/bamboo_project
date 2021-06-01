@@ -21,6 +21,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Eloquent\AdditionalCosts;
 use ZipArchive;
 
 class PaymentsController extends Controller
@@ -298,6 +299,14 @@ class PaymentsController extends Controller
                    
                     $tradein->job_state = '23';
                     $tradein->save();
+
+                    $miscCost = AdditionalCosts::where('id', '!=', 1)->first();
+                    if($miscCost !== null && ($miscCost->miscellaneous_costs - ($miscCost->applied_to *  $miscCost->per_job_deduction) > 0)){
+                        $miscCost->applied_to += 1;
+                        $miscCost->save();
+
+                        $tradein->misc_cost = $miscCost->per_job_deduction;
+                    }
 
                     $klaviyo = new KlaviyoEmail();
                     $klaviyo->devicePassedTest(User::find($tradein->user_id), $tradein);

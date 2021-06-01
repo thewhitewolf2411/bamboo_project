@@ -56444,6 +56444,10 @@ __webpack_require__(/*! ./scripts/frontend/whysellpage */ "./resources/js/script
 
 __webpack_require__(/*! ./scripts/Costs */ "./resources/js/scripts/Costs.js");
 
+__webpack_require__(/*! ./scripts/FeedsScript */ "./resources/js/scripts/FeedsScript.js");
+
+__webpack_require__(/*! ./scripts/CustomerCare */ "./resources/js/scripts/CustomerCare.js");
+
 "use strict";
 /*
 window.Vue = require('vue');
@@ -56562,6 +56566,7 @@ $('#administration').on('change', function () {
     $('#settings').prop('checked', true);
     $('#recycle_offers').prop('checked', true);
     $('#promo_codes').prop('checked', true);
+    $('#promo_devices').prop('checked', true);
   } else {
     $('#salvage_models').prop('checked', false);
     $('#sales_models').prop('checked', false);
@@ -56573,6 +56578,7 @@ $('#administration').on('change', function () {
     $('#settings').prop('checked', false);
     $('#recycle_offers').prop('checked', false);
     $('#promo_codes').prop('checked', false);
+    $('#promo_devices').prop('checked', false);
   }
 });
 $('#payments').on('change', function () {
@@ -56920,6 +56926,44 @@ $('#deletemisccost').on('click', function () {
     });
   }
 });
+$('#per_job_deduction').keyup(function () {
+  var miscCost = $('#miscellaneous_costs').val();
+  console.log(miscCost);
+  $('#live_unallocated_cost').val(miscCost);
+});
+
+/***/ }),
+
+/***/ "./resources/js/scripts/CustomerCare.js":
+/*!**********************************************!*\
+  !*** ./resources/js/scripts/CustomerCare.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  if (document.getElementById('users_table')) {
+    $('#users_table tfoot td').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    var usersTable = $('#users_table').DataTable({
+      "oLanguage": {
+        "sInfo": "Showing _START_ to _END_"
+      },
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "pageLength": -1
+    });
+    usersTable.columns().every(function () {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+        if (that.search() !== this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
+  }
+});
 
 /***/ }),
 
@@ -56952,6 +56996,38 @@ $(document).ready(function () {
       });
     });
   }
+});
+
+/***/ }),
+
+/***/ "./resources/js/scripts/FeedsScript.js":
+/*!*********************************************!*\
+  !*** ./resources/js/scripts/FeedsScript.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$('.feed-container').on('click', function () {
+  feedid = $(this).data('value');
+  $.ajax({
+    url: "/portal/feeds/summary/getLogs",
+    type: "GET",
+    data: {
+      feedid: feedid
+    },
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(response) {
+      for (var i = 0; i < response.length; i++) {
+        $('#feed-logs-table tbody').append('<tr><th>' + response[i].id + '</th><th>' + response[i].error_log + '</th><th>' + response[i].created_at + '</th></tr>');
+      }
+    }
+  });
+  $('#view-feeds-log').modal('show');
+});
+$('#view-feeds-log').on('hide.bs.modal', function () {
+  $('#feed-logs-table tbody').empty();
 });
 
 /***/ }),
@@ -57145,9 +57221,9 @@ window.checkNewPass = function (select) {
 
     if (has_ten_characters && has_number && has_symbol && has_uppercase_letter) {
       if (select == "password_card") {
-        document.getElementById("pass-strength-card").innerHTML = 'Fair';
+        document.getElementById("pass-strength-card").innerHTML = 'Strong';
       } else {
-        document.getElementById("pass-strength").innerHTML = 'Fair';
+        document.getElementById("pass-strength").innerHTML = 'Strong';
       } // if(current.value && email.value){
       //     if(save_btn.classList.contains('btn-secondary')){
       //         save_btn.classList.remove('btn-secondary');
@@ -57455,7 +57531,7 @@ window.deleteTradeInDetailsFromSystem = function (id) {
 
 $('#tradein-checkallbtn').on('click', function () {
   $('.printcheckbox').prop('checked', false);
-  $('.printcheckbox').slice(0, 50).prop('checked', this.checked);
+  $('.printcheckbox').slice(0, 30).prop('checked', this.checked);
 });
 $('.printcheckbox').on('click', function () {
   var numberOfChecked = $('.printcheckbox:checked').length;
@@ -57463,8 +57539,9 @@ $('.printcheckbox').on('click', function () {
   if ($(this).is('checked')) {
     $(this).prop('checked', false);
   } else {
-    if (numberOfChecked >= 50) {
+    if (numberOfChecked >= 30) {
       $(this).prop('checked', false);
+      alert('Can\'t print more than 30 tradepacks at one time.');
     }
   }
 });
@@ -58117,6 +58194,27 @@ $(document).ready(function () {
   }); // Apply the search
 
   closedboxtable.columns().every(function () {
+    var that = this;
+    $('input', this.footer()).on('keyup change', function () {
+      if (that.search() !== this.value) {
+        that.search(this.value).draw();
+      }
+    });
+  });
+  $('#completed-sales-lots-table tfoot td').each(function () {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+  var completedsaleslottable = $('#completed-sales-lots-table').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    },
+    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+    "pageLength": -1,
+    "ordering": false
+  }); // Apply the search
+
+  completedsaleslottable.columns().every(function () {
     var that = this;
     $('input', this.footer()).on('keyup change', function () {
       if (that.search() !== this.value) {
@@ -58862,7 +58960,9 @@ function handleShownData(data) {
   }
 
   if (data.tradeins) {
-    $('#saleslotboxes tbody').empty();
+    //$('#saleslotboxes tbody').empty();
+    var table = $('#saleslotboxes').DataTable();
+    table.rows().remove();
 
     for (var _i2 = 0, _Object$entries2 = Object.entries(data.tradeins); _i2 < _Object$entries2.length; _i2++) {
       var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 2),
@@ -58874,8 +58974,17 @@ function handleShownData(data) {
         $(this).prop('checked', false);
       });
       total_price += _item.total_cost;
-      total_quantity++;
-      $('#saleslotboxes tbody').append('<tr id="' + _item.id + '"> <td><div class="table-element">' + _item.box_name + '</div></td><td><div class="table-element">' + _item.bamboo_grade + '</div></td><td><div class="table-element">' + _item.model + '</div></td><td><div class="table-element">' + _item.correct_memory + '</div></td><td><div class="table-element" >£' + _item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + _item.id + '"></div></td> </tr>');
+      total_quantity++; //$('#saleslotboxes tbody').append('<tr id="' + item.id + '"> <td><div class="table-element">' + item.box_name + '</div></td><td><div class="table-element">' + item.bamboo_grade + '</div></td><td><div class="table-element">' + item.model + '</div></td><td><div class="table-element">' + item.correct_memory + '</div></td><td><div class="table-element" >£' + item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + item.id + '"></div></td> </tr>');
+
+      table.row.add({
+        0: _item.box_name,
+        1: _item.bamboo_grade,
+        2: _item.model,
+        3: _item.correct_memory,
+        4: '£' + _item.total_cost,
+        5: '<input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + _item.id + '">'
+      }).node().id = _item.id;
+      table.draw(false);
       $('#exportxls').prop('disabled', false);
       $('#completelot').prop('disabled', false);
     }
@@ -58972,8 +59081,10 @@ $('#removefromlot').on('click', function () {
     },
     success: function success(response) {
       for (var i = 0; i < response.length; i++) {
-        $('#boxedtradeinstable tbody tr#' + response[i]).show();
-        $('#saleslotboxes tr#' + response[i]).hide();
+        $('#boxedtradeinstable tbody tr#' + response[i]).show(); //$('#saleslotboxes tr#'+response[i]).hide();
+
+        var table = $('#saleslotboxes').DataTable();
+        table.row('#' + response[i]).remove().draw();
       }
     }
   });

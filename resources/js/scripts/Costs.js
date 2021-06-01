@@ -35,3 +35,13 @@ $('#deletemisccost').on('click', function(){
     }
 
 });
+
+$('#per_job_deduction').keyup(function(){
+
+    var miscCost = $('#miscellaneous_costs').val();
+
+    console.log(miscCost);
+
+    $('#live_unallocated_cost').val(miscCost);
+
+});

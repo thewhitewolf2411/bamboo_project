@@ -36,14 +36,18 @@ class Trolley extends Model
             foreach($trayContent as $trayItem){
                 $tradein = Tradein::where('id', $trayItem->trade_in_id)->first();
                 #dd($tradein->isPartOfSalesLot());
-                if(!$tradein->isPartOfSalesLot()){
-                    $numberOfDevices++;
-                }
+                $numberOfDevices++;
             }
             #$numberOfDevices += $tray->number_of_devices;
         }
 
         return $numberOfDevices;
+    }
+
+    public function getNumberOfTrays(){
+        $trays = Tray::where('trolley_id', $this->id)->get();
+
+        return count($trays);
     }
 
     public function canBeDeleted(){

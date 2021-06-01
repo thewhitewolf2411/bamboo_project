@@ -186,6 +186,37 @@ $(document).ready(function () {
         });
     });
 
+    $('#completed-sales-lots-table tfoot td').each(function () {
+        var title = $(this).text();
+        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+
+    var completedsaleslottable = $('#completed-sales-lots-table').DataTable({
+        "oLanguage": {
+            "sInfo": "Showing _START_ to _END_",
+        },
+        "lengthMenu": [
+            [10, 25, 50, 100, -1],
+            [10, 25, 50, 100, "All"]
+        ],
+        "pageLength": -1,
+        "ordering": false
+        
+    });
+
+    // Apply the search
+    completedsaleslottable.columns().every(function () {
+
+        var that = this;
+        $('input', this.footer()).on('keyup change', function () {
+            if (that.search() !== this.value) {
+                that
+                    .search(this.value)
+                    .draw();
+            }
+        });
+    });
+
 
     $('#boxedtradeinstable_wrapper').addClass('table-visible');
     $('#closedboxtable_wrapper').addClass('table-invisible');

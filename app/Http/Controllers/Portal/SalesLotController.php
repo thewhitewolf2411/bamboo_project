@@ -180,8 +180,6 @@ class SalesLotController extends Controller
                     $product = SellingProduct::find($tradein->product_id);
                 }
                 $brand = Brand::find($product->brand_id)->brand_name;
-                $productInfo = ProductInformation::where('product_id', $product->id)->first();
-                $additionalCost = AdditionalCosts::first();
     
                 $cost = $tradein->bamboo_price + $tradein->admin_cost + (2 * $tradein->carriage_costs) + $tradein->misc_cost;
                 // price = bamboo_price + administration costs + 2 * carriage cost per device
@@ -290,8 +288,8 @@ class SalesLotController extends Controller
             $tradein->save();
         }
         else{
-            $salesLotItems = Session::get('tradeins');
 
+            $salesLotItems = Session::get('tradeins');
             $saleLot = SalesLot::create([
                 'sales_lot_status'=>1,
             ]);
@@ -311,6 +309,10 @@ class SalesLotController extends Controller
                 $sli->box_id = $tradein->getTrayId();
                 $sli->device_id = $tradein->id;
                 $sli->save();
+
+                //if(count(TrayContent::where('tray_id', $oldTray->id)->get()) === 0){
+                //    $oldTray->delete();
+                //}
             }
 
             return response(200);
@@ -324,9 +326,13 @@ class SalesLotController extends Controller
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
         $clients = Clients::all();
 
-        $salesLots = SalesLot::all()->sortDesc();
+        $salesLots = SalesLot::all();
 
-        return view('portal.sales-lot.completed-sales-lot', ['portalUser'=>$portalUser, 'salesLots'=>$salesLots, 'clients'=>$clients]);
+        $sorted = $salesLots->sortDesc();
+        $sorted->values()->all();
+        #dd($sorted);
+
+        return view('portal.sales-lot.completed-sales-lot', ['portalUser'=>$portalUser, 'salesLots'=>$sorted, 'clients'=>$clients]);
     }
 
     public function getSalesLotContent(Request $request){

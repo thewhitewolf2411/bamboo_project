@@ -39,6 +39,12 @@
                     <div class="col-md-6"><p>{{count($devices)}}</p></div>
                 </div>
 
+                @if(Session::has('pickerror'))
+                <div class="alert alert-danger" role="alert">
+                    {{Session::get('pickerror')}}
+                </div>
+                @endif
+        
 
                 <div class="border border-primary rounded p-3">
                     <input type="hidden" id="buildsaleslot-salelot" value="{{$saleLot->id}}">
@@ -112,11 +118,7 @@
                     
                 </div>
 
-                @if(Session::has('pickerror'))
-                <div class="alert alert-danger" role="alert">
-                    {{Session::get('pickerror')}}
-                </div>
-                @endif
+
 
                 <div class="row my-5">
                     
@@ -201,13 +203,15 @@
                     </tfoot>
                     <tbody>
                         @foreach ($devices as $device)
-                        <tr @if($device->job_state === '29') class="device-picked" @endif>
+                        @if(!$device->picked)
+                        <tr>
                             <td><div class="table-element">{{$device->barcode}}</div></td>
                             <td><div class="table-element">{{$device->box_location}}</div></td>
                             <td><div class="table-element">{{$device->cosmetic_condition}}</div></td>
                             <td><div class="table-element">{{$device->product_name}}</div></td>
                             <td><div class="table-element">{{$device->imei_number}}</div></td>
                         </tr>
+                        @endif
                         @endforeach
                     </tbody>
                 </table>     

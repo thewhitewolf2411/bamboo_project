@@ -36,7 +36,7 @@
                 </div>
                 <div class="portal-table-container">
 
-                    <table class="portal-table sortable" id="brands-table">
+                    <table class="portal-table" id="brands-table">
                         <tr>
                             <td>Id</td>
                             <td>Image</td>
@@ -45,7 +45,7 @@
                             <td>Tree</td>
                             <td>
                                 <a href="/portal/brands/add">
-                                <i class="fa fa-plus-circle"></i>
+                                <i title="Add a new manufacturer" class="fa fa-plus-circle"></i>
                                 </a>
                             </td>
                         </tr>
@@ -60,10 +60,10 @@
                                 <td><div class="table-element">{{$brand->brand_name}}</div></td>
                                 <td><div class="table-element">
                                     <a href="/portal/brands/edit/{{$brand->id}}">
-                                        <i class="fa fa-pencil"></i>
+                                        <i title="Edit manufacturer" class="fa fa-pencil"></i>
                                     </a>
                                     <a href="/portal/brands/delete/{{$brand->id}}">
-                                        <i class="fa fa-times remove"></i>
+                                        <i title="Delete manufacturer" class="fa fa-times remove"></i>
                                     </a>
                                     </div>
                                 </td>
@@ -79,19 +79,4 @@
     </main>
 
 </body>
-<script>
-
-$(document).ready(function(){
-
-    var elem = $('.portal-links-container > .portal-header-element')[9];
-    
-    console.log(elem.children[0]);
-
-    elem.children[0].style.color = "#fff";
-    elem.children[0].children[0].style.opacity = 1;
-
-});
-
-</script>
-
 </html>

@@ -168,6 +168,11 @@
                                             <td><div class="table-element"><input class="table-element" type="text" name="color_3"></div></td>
                                             <td><div class="table-element"><input class="table-element" type="text" name="color_4"></div></td>
                                             <td><div class="table-element"><input class="table-element" type="text" name="color_5"></div></td>
+                                            <td><div class="table-element"><input class="table-element" type="text" name="color_6"></div></td>
+                                            <td><div class="table-element"><input class="table-element" type="text" name="color_7"></div></td>
+                                            <td><div class="table-element"><input class="table-element" type="text" name="color_8"></div></td>
+                                            <td><div class="table-element"><input class="table-element" type="text" name="color_9"></div></td>
+                                            <td><div class="table-element"><input class="table-element" type="text" name="color_10"></div></td>
                                         </tr>
                                     </table>
                                 </div>

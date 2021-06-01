@@ -31,6 +31,7 @@ class CreateTestingFaultsTable extends Migration
             $table->boolean('nfc')->nullable();
             $table->boolean('no_power')->nullable();
             $table->boolean('fake_missing_parts')->nullable();
+            $table->boolean('knox_removed')->nullable();
             $table->timestamps();
         });
     }

@@ -40,7 +40,7 @@
                     </tr>
                     <tr>
                         <td><div class="table-element">{{$bay->trolley_name}}</div></td>
-                        <td><div class="table-element">{{$bay->number_of_trays}}</div></td>
+                        <td><div class="table-element">{{$bay->getNumberOfTrays()}}</div></td>
                         <td><div class="table-element"><div class="btn btn-primary printbaylabel" data-value="{{$bay->id}}"><p style="color: #fff;">Print label</p></div></div></td>
                     </tr>
                 </table>

@@ -16,11 +16,13 @@ class Sorting{
 
     private $brand = null;
     private $category = null;
+    private $number = null;
 
-    public function __construct($brand = null, $category = null)
+    public function __construct($brand = null, $category = null, $number = null)
     {
         $this->brand = $brand;
         $this->category = $category;
+        $this->number = $number;
     }
 
 
@@ -36,18 +38,22 @@ class Sorting{
 
         if($this->brand !== null && $this->category !== null){
             $sellingDevices = SellingProduct::where('category_id', $this->category)->where('brand_id', $this->brand)->get();
+            
         }
         else if($this->brand === null && $this->category !== null){
             $sellingDevices = SellingProduct::where('category_id', $this->category)->get();
         }
         else if($this->brand !== null && $this->category === null){
-            $sellingDevices = SellingProduct::where('brand_id', $this->brand)->get();
+            if(is_int($this->brand)){
+                $sellingDevices = SellingProduct::where('category_id', $this->category)->where('brand_id', $this->brand)->get();
+            }
+            else{
+                $sellingDevices = SellingProduct::where('product_name', 'LIKE' ,"%".$this->brand."%")->get();
+            }
         }
         else{
             $sellingDevices = SellingProduct::all();
         }
-
-        #dd($sellingDevices);
 
         $prices = array();
 
@@ -59,9 +65,26 @@ class Sorting{
 
         $sortedDevices = collect();
 
-        foreach($prices as $key=>$price){
-            $sortedDevice = SellingProduct::find($key);
-            $sortedDevices->push($sortedDevice);
+        if($this->number !== null){
+            $i = 0;
+            foreach($prices as $key=>$price){
+                $sortedDevice = SellingProduct::find($key);
+                if($sortedDevice->avaliable_for_sell){
+                    $sortedDevices->push($sortedDevice);
+                }
+                
+                $i++;
+                if($i === $this->number) break;
+            }
+        }
+        else{
+            foreach($prices as $key=>$price){
+                $sortedDevice = SellingProduct::find($key);
+                if($sortedDevice->avaliable_for_sell){
+                    $sortedDevices->push($sortedDevice);
+                }
+                
+            }
         }
 
         return $sortedDevices;

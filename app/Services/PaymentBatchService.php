@@ -139,7 +139,8 @@ class PaymentBatchService {
                     ",,,,".
                     $tradein->getDevicePrice().
                     ",,".
-                    Carbon::parse($payment_batch->arrive_at)->format('dmY').
+                    //Carbon::parse($payment_batch->arrive_at)->format('dmY').
+                    Carbon::now()->format('dmY') . 
                     ",,,,,,".
                     $account_identifier.
                     ",,,,,,".

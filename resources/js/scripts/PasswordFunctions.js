@@ -117,10 +117,10 @@ window.checkNewPass = function(select){
         // pass text strength
         if(has_ten_characters && has_number && has_symbol && has_uppercase_letter){
             if(select == "password_card"){
-                document.getElementById("pass-strength-card").innerHTML = 'Fair';
+                document.getElementById("pass-strength-card").innerHTML = 'Strong';
             }
             else{
-                document.getElementById("pass-strength").innerHTML = 'Fair';
+                document.getElementById("pass-strength").innerHTML = 'Strong';
             }
 
             // if(current.value && email.value){

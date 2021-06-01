@@ -77,7 +77,7 @@ class Reports{
             }
 
             $fullyFunctional = '';
-            if($tradein->hasDeviceBeenReceived()){
+            if($tradein->hasDeviceBeenReceived() && $tradein->hasBeenTested()){
                 if($tradein->isFullyFunctional()){
                     $fullyFunctional = "Yes";
                 }
@@ -676,6 +676,7 @@ class Reports{
                         "nfc" => "NFC",
                         "no_power" => "No Power",
                         "fake_missing_parts" => "Fake Missing Parts",
+                        "knox_removed"=>"Knox Removed"
                     ];
 
                     foreach($available_faults as $fault => $text){
@@ -818,6 +819,7 @@ class Reports{
                     "nfc" => "NFC",
                     "no_power" => "No Power",
                     "fake_missing_parts" => "Fake Missing Parts",
+                    "knox_removed"=>"Knox Removed"
                 ];
 
                 foreach($available_faults as $fault => $text){

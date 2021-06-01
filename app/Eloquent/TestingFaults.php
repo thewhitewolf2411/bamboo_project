@@ -22,6 +22,6 @@ class TestingFaults extends Model
         'tradein_id','audio_test','front_microphone','headset_test',
         'loud_speaker_test','microphone_playback_test','buttons_test',
         'camera_test','glass_condition','vibration','original_colour',
-        'battery_health','nfc','no_power','fake_missing_parts'
+        'battery_health','nfc','no_power','fake_missing_parts','knox_removed'
     ];
 }

@@ -1,7 +1,7 @@
 @extends('portal.layouts.portal')
 
 @section('content')
-<div class="portal-app-container">
+<div class="portal-app-container" id="costs-page">
     <div class="portal-title-container">
         <div class="portal-title">
             <p>Service Costs</p>
@@ -26,14 +26,14 @@
                         <div class="form-group">
                             <label for="admin_costs">Administration costs:</label>
                             <div class="d-flex align-items-center">
-                                <input class="form-control m-0" type="text" step="0.01" id="administration_costs" name="administration_costs" pattern="^\£\d{1,3}(,\d{3})*(\.\d+)?£" data-type="currency" value="{{$additionalCosts->administration_costs}}">
+                                <input class="form-control m-0" type="text" step="0.01" id="administration_costs" name="administration_costs" pattern="^\£\d{1,3}(,\d{3})*(\.\d+)?£" data-type="currency" >
                             </div>
                         </div>
                     
                         <div class="form-group">
                             <label for="logistics_costs">Carriage:</label>
                             <div class="d-flex align-items-center">
-                                <input class="form-control m-0" type="text" step="0.01" id="carriage_costs" name="carriage_costs" pattern="^\£\d{1,3}(,\d{3})*(\.\d+)?£" data-type="currency" value="{{$additionalCosts->carriage_costs}}">
+                                <input class="form-control m-0" type="text" step="0.01" id="carriage_costs" name="carriage_costs" pattern="^\£\d{1,3}(,\d{3})*(\.\d+)?£" data-type="currency" >
                             </div>
                         </div>
             
@@ -61,10 +61,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="">Live unallocated cost:</label>
+                            <label for="live_unallocated_cost">Live unallocated cost:</label>
                             <div class="d-flex align-items-center">
-                                <p>£</p>
-                                <input class="form-control m-0" type="number" step="0.01" id="" name="" data-type="currency" disabled>
+                                <input class="form-control m-0" type="text" step="0.01" id="live_unallocated_cost" name="" data-type="currency" disabled>
                             </div>
                         </div>
 
@@ -84,7 +83,7 @@
 
             <div class="col-md-7">
                 <div class="d-flex mb-5 w-50">
-                    <table class="portal-table sortable" id="categories-table">
+                    <table class="portal-table" id="categories-table">
                         <tr>
                             <td></td>
                             <td>Current price</td>
@@ -101,7 +100,7 @@
                 </div>
                 <div class="d-flex flex-column my-5">
                     <div class="my-3"><button id="deletemisccost" style="float: right" class="btn btn-primary" disabled>Delete</button></div>
-                    <table class="portal-table sortable" id="categories-table">
+                    <table class="portal-table" id="categories-table">
                         <tr>
                             <td>Miscellaneous cost</td>
                             <td>Per job deduction</td>
@@ -111,7 +110,7 @@
                             <td>Tag</td>
                         </tr>
                         @foreach($miscalaniousCosts as $mC)
-                        <tr>
+                        <tr class="misc_cost_tr">
                             <td>£{{$mC->miscellaneous_costs}}</td>
                             <td>£{{$mC->per_job_deduction}}</td>
                             <td>£{{$mC->miscellaneous_costs - ($mC->applied_to * $mC->per_job_deduction)}}</td>

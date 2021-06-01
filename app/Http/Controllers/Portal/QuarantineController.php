@@ -79,13 +79,40 @@ class QuarantineController extends Controller
             $tradein = Tradein::where('id', $id)->first();
 
             if($tradein != null){
-                if($tradein->quarantine_status == null){
-                    array_push($tradeins, array($tradein->barcode, $tradein->getProductName($tradein->product_id), $tradein->imei_number . "\t", 
-                    $tradein->getBambooStatus(),  $tradein->getDeviceStatus($tradein->id, $tradein->job_state)[0], $tradein->getTrayName($tradein->id), $tradein->getDeviceBambooGrade()));
+                $number = 'N/A';
+                if($tradein->imei_number !== null){
+                    $number = $tradein->imei_number;
+                }
+                elseif($tradein->serial_number !== null){
+                    $number = $tradein->serial_number;
+                }
+                if($tradein->getQuarantineReason()){
+                    array_push($tradeins, [
+                        $tradein->barcode_original,
+                        $tradein->barcode,
+                        $tradein->getProductName($tradein->product_id),
+                        $number,
+                        $tradein->getBambooStatus(),
+                        $tradein->quarantine_reason,
+                        $tradein->getTrayName($tradein->id),
+                        $tradein->created_at,
+                        $tradein->quarantine_date,
+                        $tradein->getDeviceBambooGrade(),
+                    ]);
                 }
                 else{
-                    array_push($tradeins, array($tradein->barcode, $tradein->getProductName($tradein->product_id), $tradein->imei_number . "\t", 
-                    $tradein->getDeviceStatus(),  $tradein->getQuarantineReason($tradein->id)[0], $tradein->getTrayName($tradein->id), $tradein->getDeviceBambooGrade()));
+                    array_push($tradeins, [
+                        $tradein->barcode_original,
+                        $tradein->barcode,
+                        $tradein->getProductName($tradein->product_id),
+                        $number,
+                        $tradein->getBambooStatus(),
+                        $tradein->getTestingQuarantineReason(),
+                        $tradein->getTrayName($tradein->id),
+                        $tradein->created_at,
+                        $tradein->quarantine_date,
+                        $tradein->getDeviceBambooGrade(),
+                    ]);
                 }
             }
 
@@ -96,8 +123,8 @@ class QuarantineController extends Controller
 
         $fp = fopen( \public_path() .  '/quarantinecsv/' . $filename, 'w');
 
-        $headers = array("Trade-In Barcode", "Model", "IMEI", "Bamboo Status", "Blacklisted Reason", "Stock Location", "Bamboo Grade");
-
+        #$headers = array("Trade-In Barcode", "Model", "IMEI", "Bamboo Status", "Blacklisted Reason", "Stock Location", "Bamboo Grade");
+        $headers = array("Trade-in ID", "Trade-in Barcode", "Model", "IMEI", "Bamboo Status", "Quarantine Reason", "Stock location", "Order Date", "Quarantine Date", "Bamboo Grade");
 
         \fputcsv($fp, $headers);
 
@@ -241,10 +268,22 @@ class QuarantineController extends Controller
         if($request->submitscannedid_returntocustomer){
             if(Session::has('returnToCustomer')){
                 $tradeins = Session::get('returnToCustomer');
+                foreach($tradeins as $tradein){
+                    if($tradein->barcode == $request->submitscannedid_returntocustomer){
+                        return redirect()->back()->with(['error'=>'This device is already added.', 'hasTradeIns'=>true]);
+                    }
+                }
             }
             $tradein = Tradein::where('barcode', $request->submitscannedid_returntocustomer)->first();
             if($tradein !== null){
-                array_push($tradeins, $tradein);
+                #dd($tradein->getTrayType() === 'Q');
+                if($tradein->getTrayType() === 'Q'){
+                    array_push($tradeins, $tradein);
+                }
+                else{
+                    return redirect()->back()->with(['error'=>'This device is not in quarantine']);
+                }
+                
             }
         }
         else{

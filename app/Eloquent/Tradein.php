@@ -214,6 +214,11 @@ class Tradein extends Model
         }
         else{
             if($this->deviceInPaymentProcess() || (TrayContent::where('trade_in_id', $id)->first() !== null && TrayContent::where('trade_in_id', $id)->first()->tray_id === 0)){
+                
+                if(SalesLotContent::where('device_id', $this->id)->first() && SalesLotContent::where('device_id', $this->id)->first()->picked){
+                    return "Picked for sale lot " . SalesLotContent::where('device_id', $this->id)->first()->sales_lot_id;
+                }
+
                 return "Not assigned.";
             }
             return "Not received yet.";
@@ -244,6 +249,17 @@ class Tradein extends Model
         if($trayid !== null){
             $trayid = $trayid->tray_id;
             return $trayid;
+        }
+        else{
+            return null;
+        }
+    }
+
+    public function getTrayType(){
+        $trayid = TrayContent::where('trade_in_id', $this->id)->first();
+        if($trayid !== null){
+            $tray = Tray::find($trayid->tray_id);
+            return $tray->tray_brand;
         }
         else{
             return null;
@@ -856,6 +872,7 @@ class Tradein extends Model
             "nfc" => "NFC",
             "no_power" => "No Power",
             "fake_missing_parts" => "Fake Missing Parts",
+            "knox_removed"=>"Knox Removed"
         ];
 
         if($testing_faults){
@@ -944,6 +961,9 @@ class Tradein extends Model
 
     public function getBlacklistedIssue(){
         switch ($this->job_state) {
+            case '7':
+                return 'Blacklisted.';
+                break;
             case '8a':
                 return 'This device has been reported as stolen.';
                 break;
@@ -963,7 +983,7 @@ class Tradein extends Model
                 return 'Assetwatch.';
                 break;
             default:
-                # code...
+                return 'N/A';
                 break;
         }
     }
@@ -1138,6 +1158,16 @@ class Tradein extends Model
     public function isPartOfSalesLot(){
         $saleLotContent = SalesLotContent::where('device_id', $this->id)->first();
         if($saleLotContent){
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isPicked(){
+
+        $saleLotContent = SalesLotContent::where('device_id', $this->id)->first();
+        if($saleLotContent && $saleLotContent->picked){
             return true;
         }
 

@@ -771,7 +771,7 @@ class WarehouseManagementController extends Controller
         }
 
         
-        $filename = 'pick_note_'.$request->saleslotid.'_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
+        $filename = 'pick_note_'.$request->saleslotid.'_' . \Carbon\Carbon::now()->format('Y_m_d_h_i');
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -833,7 +833,7 @@ class WarehouseManagementController extends Controller
         $tradein = Tradein::where('barcode', $request->buildssaleslot_scandeviceinput)->first();
 
         if($tradein){
-            $salesLotContent = SalesLotContent::where('device_id', $tradein->id)->first();
+            $salesLotContent = SalesLotContent::find($tradein->id)->first();
             if($salesLotContent){
                 $salesLotContent->picked = true;
                 $salesLotContent->save();
@@ -841,7 +841,9 @@ class WarehouseManagementController extends Controller
             else{
                 return redirect()->back()->with('pickerror', 'This barcode is not recognized for this lot!');
             }
-
+        }
+        else{
+            return redirect()->back()->with('pickerror', 'This barcode is not recognized for this lot or tradein barcode does not exist!');
         }
 
         return redirect()->back();
@@ -885,6 +887,25 @@ class WarehouseManagementController extends Controller
 
         $salesLot->sales_lot_status = 3;
         $salesLot->save();
+
+        $salesLotContent = SalesLotContent::where('sales_lot_id', $salesLot->id)->get();
+
+        $boxcount = $salesLotContent->countBy('box_id');
+        foreach($boxcount as $key=>$count){
+            $box = Tray::find($key);
+            $boxContent = TrayContent::where('tray_id', $box->id)->get();
+
+            if($count === $box->number_of_devices){
+                $box->delete();
+            }
+            else{
+                $box->number_of_devices = $box->number_of_devices - $count;
+                $box->save();
+            }
+            foreach($boxContent as $boxedDevice){
+                $boxedDevice->delete();
+            }
+        }
 
         return redirect('/portal/warehouse-management/picking-despatch')->with(['success'=>'Picking succesfully completed']);
     }

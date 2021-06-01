@@ -332,7 +332,7 @@ class ProductController extends Controller
             $productNetworks->save();
         }
 
-        for($i=1; $i<=5; $i++){
+        for($i=1; $i<=10; $i++){
             if(isset($request->{"color_" . $i}) && $request->{"color_" . $i} !== null){
                 $productColours = new Colour();
                 $productColours->product_id = $product->id;
@@ -568,7 +568,7 @@ class ProductController extends Controller
                 #dd($network);
                 if($request->{"network_".$network->id} != $network->knockoff_price){
                     $network->knockoff_price = $request->{"network_".$network->id};
-                    dd($request->{"network_".$network->id});
+                    #dd($request->{"network_".$network->id});
                     $network->save();
                 }
             }

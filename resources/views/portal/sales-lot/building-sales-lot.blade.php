@@ -10,25 +10,28 @@
     </div>
     <div class="portal-table-container p-0">
 
-        <div class="row sm-column">
+        <div class="d-flex flex-column">
 
+            <div class="row">
+                <div class="col-md-6">Lot No.</div>
+                <div class="col-md-6">{{$totalSalesLots + 1}}</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">Total Qty.</div>
+                <div class="col-md-6" id="total_qty">0</div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">Total Cost</div>
+                <div class="col-md-6" id="total_cost">0</div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            
             <div class="col-md-6">
-                <div class="d-flex flex-column">
 
-                    <div class="row">
-                        <div class="col-md-6">Lot No.</div>
-                        <div class="col-md-6">{{$totalSalesLots}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">Total Qty.</div>
-                        <div class="col-md-6" id="total_qty">0</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">Total Cost</div>
-                        <div class="col-md-6" id="total_cost">0</div>
-                    </div>
-
-                </div>
                 <div class="d-flex">
                     <div class="button-box my-3 d-flex" id="changeview-container" data-toggle="buttons">
                         <label class="btn btn-secondary active" style="display: flex; align-items:center; justify-content:center; max-width:310px;margin:0; margin-right:10px;">
@@ -123,7 +126,7 @@
                             <td><div class="table-element">{{$box->tray_name ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element">{{$box->tray_grade ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element">{{$box->tray_network ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">{{$box->number_of_devices}} / {{$box->max_number_of_devices ?? null ?: 'N/A'}}</div></td>
+                            <td><div class="table-element">{{$box->number_of_devices}} }}</div></td>
                             <td><div class="table-element">£{{$box->getBoxPrice() ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="{{$box->id}}"></div></td>
                         </tr>

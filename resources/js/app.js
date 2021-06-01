@@ -32,6 +32,8 @@ require('./scripts/frontend/homepage');
 require('./scripts/frontend/aboutpage');
 require('./scripts/frontend/whysellpage');
 require('./scripts/Costs');
+require('./scripts/FeedsScript');
+require('./scripts/CustomerCare');
 
 "use strict";
 

@@ -63,7 +63,7 @@ class Tray extends Model
         foreach($trayContent as $trayItem){
             $tradein = Tradein::where('id', $trayItem->trade_in_id)->first();
             #dd($tradein->isPartOfSalesLot());
-            if(!$tradein->isPartOfSalesLot()){
+            if(!$tradein->isPicked()){
                 $numberOfDevices++;
             }
         }

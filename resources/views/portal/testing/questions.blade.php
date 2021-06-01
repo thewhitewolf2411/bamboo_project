@@ -387,24 +387,4 @@
     </main>
 
 </body>
-<script>
-
-$(document).ready(function(){
-
-    var elem = $('.portal-links-container > .portal-header-element')[4];
-
-    elem.children[0].style.color = "#fff";
-    elem.children[0].children[0].style.opacity = 1;
-
-});
-
-$("#checkbox-received").click(function() {
-  $("#receive-button").attr("disabled", !this.checked);
-});
-
-
-
-</script>
-
-
 </html>

@@ -46,7 +46,7 @@ $('#customer_care').on('change', function(){
 
 $('#administration').on('change', function(){
 
-    if($(this).is(':checked')){
+    if ($(this).is(':checked')) {
         $('#salvage_models').prop('checked', true);
         $('#sales_models').prop('checked', true);
         $('#feeds').prop('checked', true);
@@ -57,8 +57,8 @@ $('#administration').on('change', function(){
         $('#settings').prop('checked', true);
         $('#recycle_offers').prop('checked', true);
         $('#promo_codes').prop('checked', true);
-    }
-    else{
+        $('#promo_devices').prop('checked', true);
+      } else {
         $('#salvage_models').prop('checked', false);
         $('#sales_models').prop('checked', false);
         $('#feeds').prop('checked', false);
@@ -69,7 +69,8 @@ $('#administration').on('change', function(){
         $('#settings').prop('checked', false);
         $('#recycle_offers').prop('checked', false);
         $('#promo_codes').prop('checked', false);
-    }
+        $('#promo_devices').prop('checked', false);
+      }
 
 });
 
