@@ -80,9 +80,9 @@ class SellController extends Controller
         $products = BuyingProduct::all();
         $brands = Brand::all();
 
-        $menuDevices = $this->getSortedDevices();
+        // $menuDevices = $this->getSortedDevices();
 
-        return view('sell.welcome', ['products'=>$products, 'recycleBasket'=>true , 'brands' => $brands, $menuDevices]);
+        return view('sell.welcome', ['products'=>$products, 'recycleBasket'=>true , 'brands' => $brands]);
     }
 
     public function showSellWhy(){

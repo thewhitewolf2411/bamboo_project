@@ -686,7 +686,20 @@ header{
 }
 
 .mobile-phone-submenu-item{
-    max-width: 230px;
+    max-width: 320px;
+    margin: 0;
+}
+
+.mobile-phone-submenu-title{
+    margin: 0;
+}
+
+.mobile-phone-submenu-item > p, .mobile-phone-submenu-title > p {
+    transition: all 0.3s linear;
+}
+
+.mobile-phone-submenu-item:hover > p, .mobile-phone-submenu-title:hover > p{
+    color: var(--sell-–-orange);
 }
 
 .mobile-phone-submenu-title > p{

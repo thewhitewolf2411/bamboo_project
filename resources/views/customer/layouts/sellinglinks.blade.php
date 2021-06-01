@@ -94,7 +94,7 @@
 </div>
 
 
-
+{{-- {!!dd(App\Helpers\MenuHelper::getMobileBrands())!!} --}}
 
 
 <div id="sellmobilephones-header-hover" class="not-visible">
@@ -113,123 +113,33 @@
     <div class="mobile-phones-submenu">
 
         <div class="mobile-phones-submenu-column">
-            <div class="mobile-phone-submenu-title">
-                <p>Apple IPhone</p> 
+            <a class="mobile-phone-submenu-title" href="/sell/devices/mobile/1">
+                <p>Apple iPhone</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
+            </a>
 
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 11</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 11 Pro</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 11 Pro Max</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone XR</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone XS Max</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone XS</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone X</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 8 Plus</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 8</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 7 Plus</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 7</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 6S Plus</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 6S</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
+            @foreach(App\Helpers\MenuHelper::getApplePhones() as $apple_phone)
+                <a class="mobile-phone-submenu-item" href="/sell/sellitem/{{$apple_phone->id}}">
+                    <p>{{$apple_phone->product_name}}</p>
+                    <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                </a>
+            @endforeach
+
         </div>
 
         <div class="mobile-phones-submenu-column">
-            <div class="mobile-phone-submenu-title">
+            <a class="mobile-phone-submenu-title" href="/sell/devices/mobile/2">
                 <p>Samsung Galaxy</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
+            </a>
 
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 11</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 11 Pro</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 11 Pro Max</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone XR</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone XS Max</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone XS</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone X</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 8 Plus</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 8</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 7 Plus</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 7</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 6S Plus</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 6S</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
+            @foreach(App\Helpers\MenuHelper::getSamsungPhones() as $samsung_phone)
+                <a class="mobile-phone-submenu-item" href="/sell/sellitem/{{$samsung_phone->id}}">
+                    <p>{{$samsung_phone->product_name}}</p>
+                    <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                </a>
+            @endforeach
+            
         </div>
 
         <div class="mobile-phones-submenu-column">
@@ -238,58 +148,12 @@
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </div>
 
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 11</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 11 Pro</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 11 Pro Max</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone XR</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone XS Max</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone XS</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone X</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 8 Plus</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 8</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 7 Plus</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 7</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 6S Plus</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
-            <div class="mobile-phone-submenu-item">
-                <p>iPhone 6S</p>
-                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
+            @foreach(App\Helpers\MenuHelper::getMobileBrands() as $brand)
+                <a class="mobile-phone-submenu-item" href="/sell/devices/mobile/{{$brand->id}}">
+                    <p>Sell all {{$brand->brand_name}} Phones</p>
+                    <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                </a>
+            @endforeach
         </div>
 
         <a class="whysell-banner-container" href="/sell/why">

@@ -13693,7 +13693,20 @@ header {
 }
 
 .mobile-phone-submenu-item {
-  max-width: 230px;
+  max-width: 320px;
+  margin: 0;
+}
+
+.mobile-phone-submenu-title {
+  margin: 0;
+}
+
+.mobile-phone-submenu-item > p, .mobile-phone-submenu-title > p {
+  transition: all 0.3s linear;
+}
+
+.mobile-phone-submenu-item:hover > p, .mobile-phone-submenu-title:hover > p {
+  color: var(--sell-–-orange);
 }
 
 .mobile-phone-submenu-title > p {
@@ -18572,6 +18585,10 @@ input[type=number] {
   display: table-header-group;
 }
 
+#users_table tfoot {
+  display: table-header-group;
+}
+
 .paging_simple_numbers {
   display: flex;
 }
@@ -18646,6 +18663,23 @@ input[type=number] {
 
 #boxedtradeinstable_filter {
   display: none;
+}
+
+#saleslotboxes_filter {
+  display: none;
+}
+
+#saleslotboxes, #boxedtradeinstable {
+  font-size: 9pt !important;
+  padding: 0 !important;
+}
+
+#saleslotboxes td {
+  padding: 0 !important;
+}
+
+#boxedtradeinstable td {
+  padding: 0 !important;
 }
 
 #closedboxtable_filter {
@@ -18759,6 +18793,10 @@ input[type=number] {
 }
 
 .message {
+  cursor: pointer;
+}
+
+.feed-container {
   cursor: pointer;
 }
 

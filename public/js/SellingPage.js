@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         $('#sellmobilephones-header-link, #sellmobilephones-header-hover').hover(
             function(){
-                //$('#sellmobilephones-header-hover').show();
+                // $('#sellmobilephones-header-hover').show();
                 $('#sellmobilephones-header-link').addClass('white-bg');
                 $('#selling-icon-dropdown-mobile').removeClass('down');
                 $('#selling-icon-dropdown-mobile').addClass('up');
@@ -18,13 +18,12 @@ window.addEventListener('DOMContentLoaded', () => {
                 $('#sell-mobile-text').addClass('orange');
             }, 
             function(){
-                //$('#sellmobilephones-header-hover').hide();
+                // $('#sellmobilephones-header-hover').hide();
                 $('#selling-icon-dropdown-mobile').addClass('down');
                 $('#selling-icon-dropdown-mobile').removeClass('up');
                 $('#sellmobilephones-header-hover').addClass('not-visible');
                 $('#sellmobilephones-header-link').removeClass('white-bg');
                 $('#sell-mobile-text').removeClass('orange');
-
             }
         );
     }
