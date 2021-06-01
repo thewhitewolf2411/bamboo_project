@@ -56,6 +56,28 @@ class TradeInObserver
      */
     public function updated(Tradein $tradein)
     {
+
+        $value = 0;
+        if($tradein->bamboo_price === null && $tradein->order_price === null){
+            $value = 0;
+        }
+        else{
+            if($tradein->bamboo_price !== null && $tradein->order_price === null){
+                $value = $tradein->bamboo_price;
+            }
+            elseif($tradein->bamboo_price === null && $tradein->order_price !== null){
+                $value = $tradein->order_price;
+            }
+            else{
+                if($tradein->bamboo_price > $tradein->order_price){
+                    $value = $tradein->order_price;
+                }
+                else{
+                    $value = $tradein->bamboo_price;
+                }
+            }
+        }
+        
         # To check:
         # 1. when clicked on revert to receiving, tradein id changes and older audits are not visible
         $last_audit = TradeinAudit::where('tradein_id', $tradein->id)->orderBy('created_at', 'DESC')->first();
@@ -70,7 +92,7 @@ class TradeInObserver
             'customer_grade' => $tradein->customer_grade,
             // 'bamboo_grade' => $tradein->bamboo_grade,
             'bamboo_grade' => $tradein->getDeviceBambooGrade(),
-            'value' => ($tradein->bamboo_price !== null) ? (string)$tradein->bamboo_price : (string)$tradein->order_price,
+            'value' => $value,
             'stock_location' => $tradein->getTrayName($tradein->id),
             'cheque_number' => $tradein->cheque_number,
             'pin_pattern_number' => $tradein->pin_pattern_number

@@ -771,7 +771,7 @@ class WarehouseManagementController extends Controller
         }
 
         
-        $filename = 'pick_note_'.$request->saleslotid.'_' . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.xlsx';
+        $filename = 'pick_note_'.$request->saleslotid.'_' . \Carbon\Carbon::now()->format('Y_m_d_h_i');
 
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

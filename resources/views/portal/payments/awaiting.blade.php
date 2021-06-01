@@ -128,23 +128,6 @@
 </body>
 <script>
 
-$(document).ready(function(){
-
-    var elem = $('.portal-links-container > .portal-header-element')[5];
-    
-    /*$.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });*/
-    
-    // console.log(elem.children[0]);
-
-    // elem.children[0].style.color = "#fff";
-    // elem.children[0].children[0].style.opacity = 1;
-
-});
-
 var scanoption = null;
 var CAN_SCAN = null;
 

@@ -57,12 +57,32 @@ class SellController extends Controller
         });
     }
 
+    private function getDevices($brand, $category){
+        $sorting = new Sorting($brand, $category, 13);
+        return $sorting->sortDevices();
+    }
+
+    private function getSortedDevices(){
+        return [
+            //'brandCategoryDevices => $this->getDevices(brandid, categoryid)
+            'appleMobileDevices'=>$this->getDevices(1, 1),
+            'appleTabletDevices'=>$this->getDevices(1, 2),
+            'appleSWDevices'=>$this->getDevices(1, 3),
+            'samsungMobileDevices'=>$this->getDevices(2, 1),
+            'samsungTabletDevices'=>$this->getDevices(2, 2),
+            'samsungSWDevices'=>$this->getDevices(2, 3),
+        ];
+    }
+
     public function showSellView(){
 
 
         $products = BuyingProduct::all();
         $brands = Brand::all();
-        return view('sell.welcome', ['products'=>$products, 'recycleBasket'=>true , 'brands' => $brands]);
+
+        $menuDevices = $this->getSortedDevices();
+
+        return view('sell.welcome', ['products'=>$products, 'recycleBasket'=>true , 'brands' => $brands, $menuDevices]);
     }
 
     public function showSellWhy(){

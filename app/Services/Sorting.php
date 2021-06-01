@@ -16,11 +16,13 @@ class Sorting{
 
     private $brand = null;
     private $category = null;
+    private $number = null;
 
-    public function __construct($brand = null, $category = null)
+    public function __construct($brand = null, $category = null, $number = null)
     {
         $this->brand = $brand;
         $this->category = $category;
+        $this->number = $number;
     }
 
 
@@ -63,12 +65,26 @@ class Sorting{
 
         $sortedDevices = collect();
 
-        foreach($prices as $key=>$price){
-            $sortedDevice = SellingProduct::find($key);
-            if($sortedDevice->avaliable_for_sell){
-                $sortedDevices->push($sortedDevice);
+        if($this->number !== null){
+            $i = 0;
+            foreach($prices as $key=>$price){
+                $sortedDevice = SellingProduct::find($key);
+                if($sortedDevice->avaliable_for_sell){
+                    $sortedDevices->push($sortedDevice);
+                }
+                
+                $i++;
+                if($i === $this->number) break;
             }
-            
+        }
+        else{
+            foreach($prices as $key=>$price){
+                $sortedDevice = SellingProduct::find($key);
+                if($sortedDevice->avaliable_for_sell){
+                    $sortedDevices->push($sortedDevice);
+                }
+                
+            }
         }
 
         return $sortedDevices;

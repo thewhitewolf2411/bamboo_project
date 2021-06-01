@@ -26,14 +26,14 @@
                         <div class="form-group">
                             <label for="admin_costs">Administration costs:</label>
                             <div class="d-flex align-items-center">
-                                <input class="form-control m-0" type="text" step="0.01" id="administration_costs" name="administration_costs" pattern="^\£\d{1,3}(,\d{3})*(\.\d+)?£" data-type="currency" value="{{$additionalCosts->administration_costs}}">
+                                <input class="form-control m-0" type="text" step="0.01" id="administration_costs" name="administration_costs" pattern="^\£\d{1,3}(,\d{3})*(\.\d+)?£" data-type="currency" >
                             </div>
                         </div>
                     
                         <div class="form-group">
                             <label for="logistics_costs">Carriage:</label>
                             <div class="d-flex align-items-center">
-                                <input class="form-control m-0" type="text" step="0.01" id="carriage_costs" name="carriage_costs" pattern="^\£\d{1,3}(,\d{3})*(\.\d+)?£" data-type="currency" value="{{$additionalCosts->carriage_costs}}">
+                                <input class="form-control m-0" type="text" step="0.01" id="carriage_costs" name="carriage_costs" pattern="^\£\d{1,3}(,\d{3})*(\.\d+)?£" data-type="currency" >
                             </div>
                         </div>
             
