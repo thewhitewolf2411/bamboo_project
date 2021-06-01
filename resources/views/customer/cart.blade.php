@@ -140,10 +140,12 @@
                             {{-- </div> --}}
 
                             @if($hasTradeIn)
-                                <div class="left-title-container">
-                                    <img src="{{asset('/shop_images/Icon-Sell.svg')}}">
-                                    <p class="mx-3 mt-3">Basket - Trade in</p>
+                                {{-- <div class="left-title-container"> --}}
+                                <div class="basket-title-container">
+                                    <img class="basket-summary-icon" src="{{asset('/shop_images/Icon-Sell.svg')}}">
+                                    <p class="basket-summary-title">Basket - Trade in</p>
                                 </div>
+                                {{-- </div> --}}
                             @endif
 
                             {{-- <div class="d-flex flex-column w-100"> --}}
@@ -156,22 +158,22 @@
                                             <img src="{{asset('/storage/product_images').'/' . $cartitem->getProductImage($cartitem->id)}}" width="80%">
                                         </div> --}}
                                         <div class="d-flex flex-column w-25 cart-product-single-column">
-                                            <h6 class="m-0 mb-3 cart-text-bold">{{$cartitem->getProductName($cartitem->id)}}</h6>
-                                            <p class="m-0">Network: {{$cartitem->network}}</p>
-                                            <p class="m-0">Memory: {{$cartitem->memory}}</p>
-                                            <p class="m-0">Grade: {{$cartitem->grade}}</p>
+                                            <h6 class="m-0 mb-3 summary-cart-text-bold-large">{{$cartitem->getProductName($cartitem->id)}}</h6>
+                                            <p class="m-0 summary-regular-text">Network: {{$cartitem->network}}</p>
+                                            <p class="m-0 summary-regular-text">Memory: {{$cartitem->memory}}</p>
+                                            <p class="m-0 summary-regular-text">Grade: {{$cartitem->grade}}</p>
                                         </div>
                                         <div class="d-flex flex-column w-25 cart-product-single-column">
-                                            <h6 class="m-0 mb-3 cart-text-bold">Item price</h6>
-                                            <p class="m-0">£{{$cartitem->price}}</p>
+                                            <h6 class="m-0 mb-3 summary-cart-text-bold">Item price</h6>
+                                            <p class="m-0 summary-regular-text">£{{$cartitem->price}}</p>
                                         </div>
                                         <div class="d-flex flex-column w-25 cart-product-single-column">
-                                            <h6 class="m-0 mb-3 cart-text-bold">Quantity</h6>
+                                            <h6 class="m-0 mb-3 summary-cart-text-bold">Quantity</h6>
                                             <p class="m-0 cart-text-bold">1</p>
                                         </div>
                                         <div class="d-flex flex-column w-25 cart-product-single-column">
-                                            <h6 class="m-0 mb-3 cart-text-bold">Total Price</h6>
-                                            <p class="m-0 font-weight-bold">£{{$cartitem->price}}</p>
+                                            <h6 class="m-0 mb-3 summary-cart-text-bold">Total Price</h6>
+                                            <p class="m-0 summary-cart-text-bold">£{{$cartitem->price}}</p>
                                         </div>
                                     </div>
 
@@ -181,13 +183,13 @@
                                         @if(Auth::user())
                                             <a href="/removefromcart/{{$cartitem->id}}" class="w-25 m-0">
                                                 <div class="">
-                                                    <p class="m-0 pl-2">REMOVE</p>
+                                                    <p class="m-0 pl-2 summary-regular-text">REMOVE</p>
                                                 </div>
                                             </a>
                                         @else
                                             <a href="/removefromabandoned/{{$cartitem->id}}" class="w-25 m-0">
                                                 <div class="">
-                                                    <p class="m-0 pl-2">REMOVE</p>
+                                                    <p class="m-0 pl-2 summary-regular-text">REMOVE</p>
                                                 </div>
                                             </a>
                                         @endif
@@ -214,12 +216,12 @@
                                 
                                 @if($hasTradeIn)
                                     <div class="summary-cart">
-                                        <p class="summary-cart-text">Subtotal</p>
-                                        <p class="summary-cart-text">£{{$sellPrice}}</p>
+                                        <p class="summary-cart-text-total">Subtotal</p>
+                                        <p class="summary-cart-text-total">£{{$sellPrice}}</p>
                                     </div>
                                     <div class="summary-cart">
-                                        <p class="summary-cart-text-bold">TOTAL</p>
-                                        <p class="summary-cart-text-bold">£{{$sellPrice}}</p>
+                                        <p class="summary-cart-text-bold-total">TOTAL</p>
+                                        <p class="summary-cart-text-bold-total">£{{$sellPrice}}</p>
                                     </div>
                                     {{-- <select class="form-control my-3" onchange="changelabelstatus(this)">
                                         <option value="1" selected>Make an order without printing label</option>
@@ -258,11 +260,11 @@
                                     @if(App\Helpers\CartHelper::cartItems() > 15000)
                                         <button id="addToCart" class="btn btn-primary btn-orange w-100 mt-2" data-toggle="modal" data-target="#newOrderModal">Sell my device</button>
                                     @else
-                                        <a href="/cart/details" class="btn btn-primary w-100 mt-2">Sell my device</a>
+                                        <a href="/cart/details" class="btn start-selling cart mt-2"><p>Sell my device</p></a>
                                     @endif
 
                                     @if($cart->count() < 2)
-                                        <a class="btn btn-purple w-100 mt-2 sell-more-devices-ordersummary" href="/sell" class="btn btn-purple">More devices to sell?</a>
+                                        <a class="btn cart-purple basket mt-2" href="/sell"><p>More devices to Sell?</p></a>
                                     @endif
                 
                                 {{-- </form> --}}

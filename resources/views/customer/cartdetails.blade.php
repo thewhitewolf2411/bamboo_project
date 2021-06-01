@@ -33,11 +33,11 @@
             <div class="d-flex p-5 ml-5 cartdetails-container">
 
                 <div class="d-flex flex-column cartdetails-type">
-                    <h3 class="mb-4">Your details</h3>
+                    <p class="welcome-basket-details">Your details</p>
 
                     <div class="welcome-user-container w-75 mb-4">
-                        <p class="welcome-bold mb-4 mt-2">Woohoo! You're all signed in</p>
-                        <div class="row m-0 mb-4">
+                        <p class="welcome-bold">Woohoo! You're all signed in</p>
+                        <div class="cartdetails-user-info-row">
                             <img class="welcome-img" src="{{asset('/customer_page_images/body/emoji_laughing.svg')}}">
                             <p class="welcome-small">Welcome back, {!!Auth::user()->first_name!!}</p>
                         </div>
@@ -157,11 +157,11 @@
                         
                         @if($hasTradeIn)
                             <div class="summary-cart">
-                                <p class="summary-cart-text">Subtotal</p>
-                                <p class="summary-cart-text">£{{$sellPrice}}</p>
+                                <p class="summary-cart-details-text">Subtotal</p>
+                                <p class="summary-cart-details-text">£{{$sellPrice}}</p>
                             </div>
                             <div class="summary-cart promotional invisible" id="promotional-info">
-                                <p class="summary-cart-text" id="promo-info">Promotional code</p>
+                                <p class="summary-cart-details-text" id="promo-info">Promotional code</p>
                                 <p class="summary-cart-text-bold" id="promo-percentage"></p>
                             </div>
                             <div class="summary-cart">
@@ -184,7 +184,7 @@
                     
                                 <input type="hidden" id="label_status" name="label_status" value="1">
 
-                                <button type="submit" id="submit-sell" disabled class="btn btn-orange w-100 mt-2">Sell my device</button>
+                                <button type="submit" id="submit-sell" disabled class="btn start-selling cart-final mt-4"><p>Sell my device</p></button>
             
                             <script>
                                 function changelabelstatus(value){

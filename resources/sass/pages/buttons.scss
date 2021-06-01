@@ -6,9 +6,29 @@
     transition: all 0.3s linear;
 }
 
+.btn.cart-purple{
+    background: var(--technical-–-violet) 0% 0% no-repeat padding-box;
+    background: #A375BC 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    opacity: 1;
+    transition: all 0.3s linear;
+}
+
+.btn.cart-purple.basket{
+    width: 100%;
+    max-width: 468px;
+    height: 91px;
+}
+
 .btn.start-selling.howitworks{
     width: 260px;
     height: 72px;
+}
+
+.btn.start-selling.cart, .btn.start-selling.cart-final{
+    width: 100%;
+    max-width: 468px;
+    height: 91px;
 }
 
 .btn.btn.start-selling.sellitem{
@@ -28,6 +48,14 @@
 
 .btn.start-selling.howitworks > p{
     padding-top: 10px;
+}
+
+.btn.start-selling.cart > p{
+    padding-top: 21px;
+}
+
+.btn.start-selling.cart-final > p{
+    padding-top: 0;
 }
 
 .btn.start-selling.footer{
@@ -51,6 +79,18 @@
     transition: all 0.3s linear;
 }
 
+.btn.cart-purple > p {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 24px/32px Sharp Sans No1 Semibold;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 24px/32px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    padding-top: 21px;
+    transition: all 0.3s linear;
+}
+
 .btn.start-selling > p {
     padding-top: 2px;
 }
@@ -59,6 +99,15 @@
     background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
     border: 3px solid var(--black);
     background: #F28E33 0% 0% no-repeat padding-box;
+    border: 3px solid #000000;
+    border-radius: 8px;
+    opacity: 1;
+}
+
+.btn.cart-purple:hover{
+    background: var(--technical-–-violet) 0% 0% no-repeat padding-box;
+    border: 3px solid var(--black);
+    background: #A375BC 0% 0% no-repeat padding-box;
     border: 3px solid #000000;
     border-radius: 8px;
     opacity: 1;
@@ -82,6 +131,16 @@
     opacity: 1;
 }
 
+.btn.cart-purple:hover > p {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 35.5px/var(--unnamed-line-spacing-48) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 25px/33px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+}
 
 .btn.read-more{
     width: 260px;

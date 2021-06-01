@@ -558,6 +558,265 @@ header{
     top: 132px;
 }
 
+// sell sublinks styles
+
+.top-element-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s linear;
+    cursor:pointer;
+    position: relative;
+    max-width: 281px;
+}
+
+.sell-links-item{ 
+    color: white;   
+}
+
+.selllinks-sublink{
+    position: absolute;
+    //display: none;
+    flex-direction: column;
+    top: 80px;
+    background: #F28E33;
+    z-index: 60;
+    width: 100%;
+}
+
+#sellmobilephones-header-hover, #selltablets-header-hover, #sellwatches-header-hover{
+    position: fixed;
+    min-height: 100vh;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    //display: none;
+    top: 260px;
+    z-index: 60;
+    opacity: 1;
+    transition: opacity 0.3s linear;
+}
+
+#sellmobilephones-header-hover.not-visible, #selltablets-header-hover.not-visible, #sellwatches-header-hover.not-visible {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#sell-mobile-text.orange, #sell-tablets-text.orange, #sell-watches-text.orange{
+    color: var(--sell-–-orange);
+}
+
+#sellmobilephones-header-link.white-bg, #selltablets-header-link.white-bg, #sellwatches-header-link.white-bg{
+    background: #FFFFFF;
+}
+
+#sellmobilephones-header-hover.repositioned, #selltablets-header-hover.repositioned, #sellwatches-header-hover.repositioned{
+    top: 212px;
+}
+
+
+.mobile-phones-submenu, .tablets-submenu, .watches-submenu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 16px #00000029;
+    opacity: 1;
+    padding: 40px 80px 80px 40px;
+    max-width: 1742px;
+    margin: auto;
+}
+
+.whysell-banner-container{
+    width: 260px;
+    height: 240px;
+    background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
+    background: #F28E33 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    opacity: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin: 0;
+}
+
+.whysell-banner-container > p.title{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 37px/40px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin-top: 10px;
+}
+
+.whysell-banner-container > p.text{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/28px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+}
+
+.whysell-submenu-icon{
+    display: block;
+    width: 50px;
+    height: 50px;
+    margin-left: auto;
+    margin-right: 0;
+    margin-top: auto;
+}
+
+.mobile-phones-submenu-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.mobile-phone-submenu-title, .mobile-phone-submenu-item{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.mobile-phone-submenu-item{
+    max-width: 230px;
+}
+
+.mobile-phone-submenu-title > p{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/35px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/35px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    margin: 0;
+    margin-bottom: 6px;
+
+}
+
+.mobile-phone-submenu-title > img, .mobile-phone-submenu-item > img {
+    width: 20px;
+    height: 20px;
+    margin-left: 13px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+
+.mobile-phone-submenu-item > p{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/35px var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/35px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    margin: 0;
+}
+
+#selling-icon-dropdown-mobile, #selling-icon-dropdown-tablets, #selling-icon-dropdown-watches{
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transition: all 0.3s linear;
+    margin-left: 16px;
+}
+
+#selling-icon-dropdown-mobile.down, #selling-icon-dropdown-tablets.down, #selling-icon-dropdown-watches.down{
+    // border: solid #000000;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+#selling-icon-dropdown-mobile.up, #selling-icon-dropdown-tablets.up, #selling-icon-dropdown-watches.up{
+    border-color: #E29248;
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    margin-top: 6px;
+}
+
+.sell-links-sublink-item > p{
+    color: white;
+}
+
+.sell-links-sublink-item:hover > p{
+    color: #F28E33;
+}
+
+.sell-links-sublink-item:hover{
+    background: white;
+}
+
+.sell-links-sublink-item > p{
+    color: white;
+}
+
+.top-element-container a{
+    //color: #000;
+    padding: 20px;
+    transform: 0.2s linear;
+    display: flex;
+    // justify-content: space-between;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+}
+
+.top-element-container a:hover{
+    color: #F28E33;
+    padding: 20px;
+    transform: 0.2s linear;
+}
+
+.top-element-container:hover{
+    background: #fff;
+    transition: 0.2s linear;
+}
+
+.top-element-container:hover > .sell-links-item > p{
+    color: #F28E33;
+    transition: 0.2s linear;
+}
+
+.top-element-container p{
+    // font-family: Sharp Sans No1 Semibold;
+    // font-size: 14pt;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) Sharp Sans No1 Semibold;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 20px/27px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    margin: 0;
+    transition: 0.2s linear;
+}
+
+.sell-links-item > p{
+    color: #fff;
+}
+
+.sell-title-container{
+    //padding: 50px;
+}
+
+.sell-title-container div{
+    //margin-bottom: 2.5rem;
+}
+
+
+
+
+
 @media screen and (max-width: 740px) and (min-width: 325px){
 
     .header-container{

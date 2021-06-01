@@ -51,10 +51,10 @@
                     <img class="confirmation-woohoo-img" src="{{asset('/customer_page_images/body/emoji_winking.svg')}}">
                     <p class="confirmation-info-text-bold-large mt-2 mb-2 pl-2 pr-2 text-center">Wohoo! Your device is sold</p>
                     <p class="confirmation-info-text-bold-smaller mb-2 pl-2 pr-2 text-center">Thanks for your sale! Your order number is {!!$tradein->barcode!!}</p>
-                    <p class="confirmation-info-text mt-2 pl-2 pr-2 text-center padded">
+                    <p class="confirmation-info-text-smaller mt-2 pl-2 pr-2 text-center padded">
                         An email order confirmation has been sent which will include all the order details.
                     </p>
-                    <p class="confirmation-info-text mb-4 padded">
+                    <p class="confirmation-info-text-smaller mb-4 padded">
                         Check out your Sale Status to see regular up-to-date notifications around your sale.
                     </p>
 
@@ -90,7 +90,7 @@
                                 <p class="confirmation-info-text mt-2">
                                     You can check the status of your SELL order at any time using ‘My Bamboo’ section. Click below to take your straight there.
                                 </p>
-                                <a class="btn btn-orange mt-4 ml-0" href="/userprofile/{{$tradein->id}}">Check Sale Status <img class="ml-2" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+                                <a class="btn btn-orange mt-4 ml-0" href="/userprofile/{{$tradein->id}}" style="color: white;">Check Sale Status <img class="ml-2" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
                             </div>
                             <div class="single-box-confirmation mb-5">
                                 <img class="confirmation-info-img" src="{{asset('/customer_page_images/body/How-Icon-6.svg')}}">

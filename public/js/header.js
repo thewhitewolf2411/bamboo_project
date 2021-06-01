@@ -54,6 +54,9 @@
       let logo_full = document.getElementById('full-logo-img');
       let logo_mobile = document.getElementById('mobile-logo-img');
       let selling_arrow = document.getElementById('start-selling-button-img-down');
+      let sell_mobile_submenu = document.getElementById('sellmobilephones-header-hover');
+      let sell_tablets_submenu = document.getElementById('selltablets-header-hover');
+      let sell_watches_submenu = document.getElementById('sellwatches-header-hover');
 
 
       header.style.background = 'white';
@@ -72,6 +75,25 @@
       if(!img.classList.contains('resized')){
         img.classList.add('resized');
       }
+
+      if(sell_mobile_submenu){
+        if(!sell_mobile_submenu.classList.contains('repositioned')){
+          sell_mobile_submenu.classList.add('repositioned');
+        }
+      }
+
+      if(sell_tablets_submenu){
+        if(!sell_tablets_submenu.classList.contains('repositioned')){
+          sell_tablets_submenu.classList.add('repositioned');
+        }
+      }
+      
+      if(sell_watches_submenu){
+        if(!sell_watches_submenu.classList.contains('repositioned')){
+          sell_watches_submenu.classList.add('repositioned');
+        }
+      }
+      
 
       if(!urls.classList.contains('resized')){
         urls.classList.add('resized');
@@ -105,7 +127,9 @@
       let logo_full = document.getElementById('full-logo-img');
       let logo_mobile = document.getElementById('mobile-logo-img');
       let selling_arrow = document.getElementById('start-selling-button-img-down');
-
+      let sell_mobile_submenu = document.getElementById('sellmobilephones-header-hover');
+      let sell_tablets_submenu = document.getElementById('selltablets-header-hover');
+      let sell_watches_submenu = document.getElementById('sellwatches-header-hover');
 
 
       if(header.classList.contains('resized')){
@@ -122,8 +146,22 @@
         img.classList.remove('resized');
       }
 
-      if(img.classList.contains('resized')){
-        img.classList.remove('resized');
+      if(sell_mobile_submenu){
+        if(sell_mobile_submenu.classList.contains('repositioned')){
+          sell_mobile_submenu.classList.remove('repositioned');
+        }
+      }
+      
+      if(sell_tablets_submenu){
+        if(sell_tablets_submenu.classList.contains('repositioned')){
+          sell_tablets_submenu.classList.remove('repositioned');
+        }
+      }
+      
+      if(sell_watches_submenu){
+        if(sell_watches_submenu.classList.contains('repositioned')){
+          sell_watches_submenu.classList.remove('repositioned');
+        }
       }
 
       if(urls.classList.contains('resized')){

@@ -8,7 +8,8 @@
                 <input type="hidden" name="topresults" value="true">
                 @csrf
                 <div class="sell-searchfield">
-                    <input class="search-sell-input" id="searchSellDevices" type="text" name="search_argument" placeholder="Enter the make or model of your device">
+                    {{-- <input class="search-sell-input" id="searchSellDevices" type="text" name="search_argument" placeholder="Enter the make or model of your device"> --}}
+                    <input class="search-sell-input" id="searchSellDevices" type="text" name="search_argument" placeholder="What are you SELLING…">
                     <div class="search-sell-btn" onclick="hitSearch()" id="to_search_results"><img class="sell-search-icon" src="{{asset('/images/front-end-icons/search_icon.svg')}}"></div>
                 </div>
                 <div id="selling-search-results-wrapper" class="invisible">
