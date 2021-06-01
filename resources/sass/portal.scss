@@ -523,6 +523,9 @@ input[type=number] {
     display: table-header-group;
 }
 
+#users_table tfoot{
+    display: table-header-group;
+}
 
 .paging_simple_numbers{
     display: flex;

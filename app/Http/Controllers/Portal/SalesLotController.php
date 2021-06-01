@@ -326,9 +326,13 @@ class SalesLotController extends Controller
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
         $clients = Clients::all();
 
-        $salesLots = SalesLot::all()->sortDesc();
+        $salesLots = SalesLot::all();
 
-        return view('portal.sales-lot.completed-sales-lot', ['portalUser'=>$portalUser, 'salesLots'=>$salesLots, 'clients'=>$clients]);
+        $sorted = $salesLots->sortDesc();
+        $sorted->values()->all();
+        #dd($sorted);
+
+        return view('portal.sales-lot.completed-sales-lot', ['portalUser'=>$portalUser, 'salesLots'=>$sorted, 'clients'=>$clients]);
     }
 
     public function getSalesLotContent(Request $request){

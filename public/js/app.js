@@ -56446,6 +56446,8 @@ __webpack_require__(/*! ./scripts/Costs */ "./resources/js/scripts/Costs.js");
 
 __webpack_require__(/*! ./scripts/FeedsScript */ "./resources/js/scripts/FeedsScript.js");
 
+__webpack_require__(/*! ./scripts/CustomerCare */ "./resources/js/scripts/CustomerCare.js");
+
 "use strict";
 /*
 window.Vue = require('vue');
@@ -56928,6 +56930,39 @@ $('#per_job_deduction').keyup(function () {
   var miscCost = $('#miscellaneous_costs').val();
   console.log(miscCost);
   $('#live_unallocated_cost').val(miscCost);
+});
+
+/***/ }),
+
+/***/ "./resources/js/scripts/CustomerCare.js":
+/*!**********************************************!*\
+  !*** ./resources/js/scripts/CustomerCare.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  if (document.getElementById('users_table')) {
+    $('#users_table tfoot td').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    var usersTable = $('#users_table').DataTable({
+      "oLanguage": {
+        "sInfo": "Showing _START_ to _END_"
+      },
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "pageLength": -1
+    });
+    usersTable.columns().every(function () {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+        if (that.search() !== this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
+  }
 });
 
 /***/ }),
@@ -58159,6 +58194,27 @@ $(document).ready(function () {
   }); // Apply the search
 
   closedboxtable.columns().every(function () {
+    var that = this;
+    $('input', this.footer()).on('keyup change', function () {
+      if (that.search() !== this.value) {
+        that.search(this.value).draw();
+      }
+    });
+  });
+  $('#completed-sales-lots-table tfoot td').each(function () {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+  var completedsaleslottable = $('#completed-sales-lots-table').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    },
+    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+    "pageLength": -1,
+    "ordering": false
+  }); // Apply the search
+
+  completedsaleslottable.columns().every(function () {
     var that = this;
     $('input', this.footer()).on('keyup change', function () {
       if (that.search() !== this.value) {

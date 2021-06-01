@@ -22,35 +22,54 @@
     <input type="hidden" class="saleslot-active" id="{{$salesLots->id}}">
 
     <div class="portal-table-container">
-        <table class="portal-table table-visible" id="boxedtradeinstable">
-            <tr>
-                <td><div class="table-element">Trade-in Barcode number</div></td>
-                <td><div class="table-element">Box number</div></td>
-                <td><div class="table-element">Bamboo Grade</div></td>
-                <td><div class="table-element">Customer Grade</div></td>
-                <td><div class="table-element">Manufacturer/Model</div></td>
-                <td><div class="table-element">Category</div></td>
-                <td><div class="table-element">GB Size</div></td>
-                <td><div class="table-element">Network</div></td>
-                <td><div class="table-element">Colour</div></td>
-                <td><div class="table-element">IMEI</div></td>
-                <td><div class="table-element">Cost</div></td>
-            </tr>
-            @foreach ($tradeins as $key=>$tradein)
-            <tr id="{{$tradein->id}}">
-                <td><div class="table-element">{{$tradein->barcode ?? null ?: 'N/A'}}</div></td>
-                <td><div class="table-element">{{$tradein->getTrayName($tradein->id) ?? null ?: 'N/A'}}</div></td>
-                <td><div class="table-element">{{$tradein->getDeviceBambooGrade() ?? null ?: 'N/A'}}</div></td>
-                <td><div class="table-element">{{$tradein->customer_grade ?? null ?: 'N/A'}}</div></td>
-                <td><div class="table-element">{{$tradein->getProductName($tradein->product_id) ?? null ?: 'N/A'}}</div></td>
-                <td><div class="table-element">{{$tradein->getCategoryName($tradein->correct_product_id) ?? null ?: 'N/A'}}</div></td>
-                <td><div class="table-element">{{$tradein->correct_memory ?? null ?: 'N/A'}}</div></td>
-                <td><div class="table-element">{{$tradein->correct_network ?? null ?: 'N/A'}}</div></td>
-                <td><div class="table-element">{{$tradein->product_colour ?? null ?: 'N/A'}}</div></td>
-                <td><div class="table-element">{{$tradein->imei_number ?? null ?: $tradein->serial_number}}</div></td>
-                <td><div class="table-element">£{{$tradein->bamboo_price ?? null ?: 'N/A'}}</div></td>
-            </tr>
-            @endforeach
+        <table class="portal-table table-visible" id="completed-sales-lots-table">
+            <thead>
+                <tr>
+                    <td><div class="table-element">Trade-in Barcode number</div></td>
+                    <td><div class="table-element">Box number</div></td>
+                    <td><div class="table-element">Bamboo Grade</div></td>
+                    <td><div class="table-element">Customer Grade</div></td>
+                    <td><div class="table-element">Manufacturer/Model</div></td>
+                    <td><div class="table-element">Category</div></td>
+                    <td><div class="table-element">GB Size</div></td>
+                    <td><div class="table-element">Network</div></td>
+                    <td><div class="table-element">Colour</div></td>
+                    <td><div class="table-element">IMEI</div></td>
+                    <td><div class="table-element">Cost</div></td>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td><div class="table-element">Trade-in Barcode number</div></td>
+                    <td><div class="table-element">Box number</div></td>
+                    <td><div class="table-element">Bamboo Grade</div></td>
+                    <td><div class="table-element">Customer Grade</div></td>
+                    <td><div class="table-element">Manufacturer/Model</div></td>
+                    <td><div class="table-element">Category</div></td>
+                    <td><div class="table-element">GB Size</div></td>
+                    <td><div class="table-element">Network</div></td>
+                    <td><div class="table-element">Colour</div></td>
+                    <td><div class="table-element">IMEI</div></td>
+                    <td><div class="table-element">Cost</div></td>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach ($tradeins as $key=>$tradein)
+                <tr id="{{$tradein->id}}">
+                    <td><div class="table-element">{{$tradein->barcode ?? null ?: 'N/A'}}</div></td>
+                    <td><div class="table-element">{{$tradein->getTrayName($tradein->id) ?? null ?: 'N/A'}}</div></td>
+                    <td><div class="table-element">{{$tradein->getDeviceBambooGrade() ?? null ?: 'N/A'}}</div></td>
+                    <td><div class="table-element">{{$tradein->customer_grade ?? null ?: 'N/A'}}</div></td>
+                    <td><div class="table-element">{{$tradein->getProductName($tradein->product_id) ?? null ?: 'N/A'}}</div></td>
+                    <td><div class="table-element">{{$tradein->getCategoryName($tradein->correct_product_id) ?? null ?: 'N/A'}}</div></td>
+                    <td><div class="table-element">{{$tradein->correct_memory ?? null ?: 'N/A'}}</div></td>
+                    <td><div class="table-element">{{$tradein->correct_network ?? null ?: 'N/A'}}</div></td>
+                    <td><div class="table-element">{{$tradein->product_colour ?? null ?: 'N/A'}}</div></td>
+                    <td><div class="table-element">{{$tradein->imei_number ?? null ?: $tradein->serial_number}}</div></td>
+                    <td><div class="table-element">£{{$tradein->bamboo_price ?? null ?: 'N/A'}}</div></td>
+                </tr>
+                @endforeach
+            </tbody>
     </div>
 </div>
 

@@ -45,10 +45,10 @@
                         {{-- <td>{!!$recycleOffer->getStartDate()!!} - {!!$recycleOffer->getEndDate()!!}</td> --}}
                         <td>@if($recycleOffer->status) Active @else Inactive @endif</td>
                         <td><a href="{{route("activateRecycleOffer", ['id' => $recycleOffer->id])}}">
-                            <i class="fa @if($recycleOffer->status) fa-toggle-on @else fa-toggle-off @endif edit-offer" style="color: black;"></i></a>
+                            <i class="fa @if($recycleOffer->status) fa-toggle-on @else fa-toggle-off @endif edit-offer" @if($recycleOffer->status) title="Activate offer" @else title="Deactivate offer" @endif style="color: black;"></i></a>
                         </td>
-                        <td><a href="{{route("editRecycleOffer", ['id' => $recycleOffer->id])}}"><i class="fa fa-edit edit-offer" style="color: black;"></i></a></td>
-                        <td><a class="delete-offer" href="{{route("deleteRecycleOffer", ['id' => $recycleOffer->id])}}"><i class="fa fa-trash edit-offer" style="color: black;"></i></a></td>
+                        <td><a href="{{route("editRecycleOffer", ['id' => $recycleOffer->id])}}"><i class="fa fa-edit edit-offer" title="Edit offer" style="color: black;"></i></a></td>
+                        <td><a class="delete-offer" href="{{route("deleteRecycleOffer", ['id' => $recycleOffer->id])}}"><i class="fa fa-trash edit-offer" title="Delete offer" style="color: black;"></i></a></td>
                     </tr>
                 @endforeach
             </tbody>

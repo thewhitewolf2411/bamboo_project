@@ -45,7 +45,7 @@
                             <td><div class="table-element">Tree</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/categories/add">
-                                <i class="fa fa-plus-circle"></i>
+                                    <i title="Add a new category" class="fa fa-plus-circle"></i>
                                 </a>
                                 </div>
                             </td>
@@ -61,10 +61,10 @@
                             <td><div class="table-element">{{$category->category_name}}</div></td>
                             <td><div class="table-element">
                                 <a href="/portal/categories/edit/{{$category->id}}">
-                                    <i class="fa fa-pencil"></i>
+                                    <i title="Edit category" class="fa fa-pencil"></i>
                                 </a>
                                 <a href="/portal/categories/delete/{{$category->id}}">
-                                    <i class="fa fa-times remove"></i>
+                                    <i title="Delete category" class="fa fa-times remove"></i>
                                 </a>
                                 </div>
                             </td>

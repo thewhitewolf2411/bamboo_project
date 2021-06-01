@@ -35,7 +35,7 @@
             </div>
 
             <div class="col-md-12">
-                <table class="portal-table table-visible" id="boxedtradeinstable">
+                <table class="portal-table table-visible" id="completed-sales-lots-table">
                     <thead>
                         <tr>
                             <td><div class="table-element">Lot no.</div></td>
