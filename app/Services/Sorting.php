@@ -108,7 +108,12 @@ class Sorting{
     }
 
     private function getExcellentWorkingPrice(SellingProduct $device){
-        return $this->getLowestMemoryId($device)->excellent_working;
+        if($this->getLowestMemoryId($device)->excellent_working){
+            return $this->getLowestMemoryId($device)->excellent_working;
+        }
+        else{
+            return 0;
+        }
     }
 
 }
