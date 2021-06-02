@@ -15,6 +15,7 @@ use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
 use App\Eloquent\Trolley;
 use App\Eloquent\TrolleyContent;
+use App\Services\DateTimeService;
 use App\Services\DespatchService;
 use App\Services\NotificationService;
 use App\User;
@@ -1052,8 +1053,8 @@ class Tradein extends Model
         $auditTrailLatest = \Carbon\Carbon::parse($this->created_at);
         $auditTrailSecond = \Carbon\Carbon::now();
 
-        $difference = $auditTrailLatest->diffForHumans($auditTrailSecond);
-       #dd($difference);
+        $dateTimeService = new DateTimeService();
+        $difference = $dateTimeService->timeDifference($auditTrailLatest, $auditTrailSecond);
 
         return $difference;
     }
@@ -1068,7 +1069,10 @@ class Tradein extends Model
         $datework = Carbon::parse($paymentBatchDevice->updated_at);
         $now = Carbon::now();
 
-        return $datework->diffInHours($now);
+        $dateTimeService = new DateTimeService();
+        $difference = $dateTimeService->timeDifference($datework, $now);
+
+        return $difference;
     }
 
     public function getTimePassed(){
@@ -1077,7 +1081,10 @@ class Tradein extends Model
         $datework = Carbon::parse($paymentBatchDevice->updated_at);
         $now = Carbon::now();
 
-        return $datework->diffInHours($now);
+        $dateTimeService = new DateTimeService();
+        $difference = $dateTimeService->timeDifference($datework, $now);
+
+        return $difference;
     }
 
     public function getDatePaid(){
