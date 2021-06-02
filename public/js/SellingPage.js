@@ -39,7 +39,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 $('#sell-tablets-text').addClass('orange');
             },
             function(){
-                // $('#selltablets-header-hover').hide();\
+                // $('#selltablets-header-hover').hide();
                 $('#selling-icon-dropdown-tablets').addClass('down');
                 $('#selling-icon-dropdown-tablets').removeClass('up');
                 $('#selltablets-header-hover').addClass('not-visible');

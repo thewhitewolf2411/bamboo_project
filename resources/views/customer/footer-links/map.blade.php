@@ -137,7 +137,9 @@
                         <p class="sitemap-title">Sell Mobile Phones</p>
                         <a class="sitemap-text" href="/sell/shop/mobile/all">Search All</a>
                         @foreach($phones as $phone)
-                            <a class="sitemap-text" href="/sell/sellitem/{{$phone->id}}">{{$phone->product_name}}</a>
+                            @if(isset($phone->id))
+                                <a class="sitemap-text" href="/sell/sellitem/{{$phone->id}}">{{$phone->product_name}}</a>
+                            @endif
                         @endforeach
                         {{-- <a class="sitemap-text" href="#">Apple iPhone</a>
                         <a class="sitemap-text" href="#">Samsung Galaxy</a> --}}
@@ -145,7 +147,9 @@
                     <div class="map-col">
                         <p class="sitemap-title">Sell Tablets</p>
                         @foreach($tablets as $tablet)
-                            <a class="sitemap-text" href="/sell/sellitem/{{$tablet->id}}">{{$tablet->product_name}}</a>
+                            @if(isset($tablet->id))
+                                <a class="sitemap-text" href="/sell/sellitem/{{$tablet->id}}">{{$tablet->product_name}}</a>
+                            @endif
                         @endforeach
                         {{-- <a class="sitemap-text" href="#">Apple iPhone</a>
                         <a class="sitemap-text" href="#">Samsung Galaxy</a> --}}
@@ -153,7 +157,9 @@
                     <div class="map-col">
                         <p class="sitemap-title">Sell Watches</p>
                         @foreach($watches as $watch)
-                            <a class="sitemap-text" href="/sell/sellitem/{{$watch->id}}">{{$watch->product_name}}</a>
+                            @if(isset($watch->id))
+                                <a class="sitemap-text" href="/sell/sellitem/{{$watch->id}}">{{$watch->product_name}}</a>
+                            @endif
                         @endforeach
                         {{-- <a class="sitemap-text" href="#">Apple iPhone</a>
                         <a class="sitemap-text" href="#">Samsung Galaxy</a> --}}

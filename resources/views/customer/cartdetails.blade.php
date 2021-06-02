@@ -161,7 +161,7 @@
                                 <p class="summary-cart-details-text">£{{$sellPrice}}</p>
                             </div>
                             <div class="summary-cart promotional invisible" id="promotional-info">
-                                <p class="summary-cart-details-text" id="promo-info">Promotional code</p>
+                                <p class="summary-cart-details-text m-0" id="promo-info">Promotional code</p>
                                 <p class="summary-cart-text-bold" id="promo-percentage"></p>
                             </div>
                             <div class="summary-cart">

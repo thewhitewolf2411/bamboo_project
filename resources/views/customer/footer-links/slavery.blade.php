@@ -42,9 +42,7 @@
                 <div class="container footer-legal">
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-large">
-                            <p class="text-left footer-text-title">INTRODUCTION</p>
-                        </div>
+                        <p class="text-left footer-text-title">INTRODUCTION</p>
                     </div>
                     <br>
 
@@ -60,9 +58,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-large">
-                            <p class="text-left footer-text-title">OUR POLICIES ON SLAVERY AND HUMAN TRAFFICKING </p>
-                        </div>
+                        <p class="text-left footer-text-title">OUR POLICIES ON SLAVERY AND HUMAN TRAFFICKING </p>
                         <br>
                         <p class="footer-text-small">
                             Our internal policies replicate our commitment to acting ethically and with integrity in all our business relationships. We operate a number of internal policies to ensure that we are conducting business in an ethical and transparent manner.  These include: 
@@ -71,9 +67,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">1. Recruitment policy</p>
-                        </div>
+                        <p class="text-left footer-text-title">1. Recruitment policy</p>
                         <p class="footer-text-small">
                             We operate a robust recruitment policy, including conducting eligibility to work in the UK checks for all directly employed staff, and agencies on approved frameworks are audited to provide assurance that pre-employment clearance has been obtained for agency staff, to safeguard against human trafficking or individuals being forced to work against their will. 
                         </p>
@@ -81,9 +75,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">2. Equal Opportunities</p>
-                        </div>
+                        <p class="text-left footer-text-title">2. Equal Opportunities</p>
                         <p class="footer-text-small">
                             We have a range of controls to protect staff from poor treatment and/or exploitation, which comply with all respective laws and regulations. These include provision of fair pay rates, fair terms and conditions of employment, and access to training and development opportunities. 
                         </p>
@@ -91,9 +83,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">3. Whistle blowing policy</p>
-                        </div>
+                        <p class="text-left footer-text-title">3. Whistle blowing policy</p>
                         <p class="footer-text-small">
                             We operate a whistle blowing policy so that all employees know that they can raise concerns about how colleagues or people receiving our services are being treated, or about practices within our business or supply chain, without fear of reprisals. 
                         </p>
@@ -101,9 +91,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">4. Supply chain</p>
-                        </div>
+                        <p class="text-left footer-text-title">4. Supply chain</p>
                         <p class="footer-text-small">
                             Our approach to supply chain includes: 
                         </p>
@@ -115,9 +103,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">5. Training </p>
-                        </div>
+                        <p class="text-left footer-text-title">5. Training </p>
                         <p class="footer-text-small">
                             All relevant employees are given training to understand modern slavery and our policies and procedures to combat it
                         </p>
@@ -127,9 +113,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-large">
-                            <p class="text-left footer-text-title">RISK ASSESSMENT AND DUE DILIGENCE </p>
-                        </div>
+                        <p class="text-left footer-text-title">RISK ASSESSMENT AND DUE DILIGENCE </p>
                         <br>
                         <p class="footer-text-small">
                             We identify suppliers where there is a high risk of modern slavery occurring and increase the level of investigation accordingly. We will not trade with a business which does not meet our standards.  
@@ -139,9 +123,7 @@
                         <hr>
                         <br>
 
-                        <div class="slavery-title-container-large">
-                            <p class="text-left footer-text-title">MEASURING EFFECTIVENESS </p>
-                        </div>
+                        <p class="text-left footer-text-title">MEASURING EFFECTIVENESS </p>
                         <br>
                         <p class="footer-text-small">
                             We will understand the effectiveness of the steps that we are taking to ensure that slavery is not taking place within our business or supply chain if: 
@@ -156,12 +138,12 @@
                     </div>
                     <br>
 
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
 
                         <p>Paula Hansson</p>
                         <p>Company Security</p>
 
-                    </div>
+                    </div> --}}
 
                 </div>
                 <br>

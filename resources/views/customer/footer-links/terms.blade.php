@@ -50,9 +50,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">How The Contract Is Formed Between You And Us</p>
-                        </div>
+                        <p class="text-left footer-text-title">How The Contract Is Formed Between You And Us</p>
                         <br>
                         <p class="footer-text-small">
                             Our site is only intended for use by people registered with us and resident in Great Britain and Northern Ireland. At our complete discretion we may accept or reject orders from people outside of these territories.<br>
@@ -81,13 +79,9 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">PLEASE ENSURE THAT YOU ARE HAPPY TO SEND THE PHONE TO US AND THAT IT IS WITHIN YOUR RIGHTS TO DO SO.</p>
-                        </div>
+                        <p class="text-left footer-text-title">PLEASE ENSURE THAT YOU ARE HAPPY TO SEND THE PHONE TO US AND THAT IT IS WITHIN YOUR RIGHTS TO DO SO.</p>
                         <br>
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Consumers</p>
-                        </div>
+                        <p class="text-left footer-text-title">Consumers</p>
                         <br>
                         <p class="footer-text-small">
                             By placing an order through our site, you warrant that:
@@ -109,9 +103,7 @@
                         <hr>
                         <br>
 
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Businesses</p>
-                        </div>
+                        <p class="text-left footer-text-title">Businesses</p>
                         <br>
                         <p class="footer-text-small">
                             By placing an order through our site, you warrant that:
@@ -128,9 +120,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small title-red">
-                            <p class="text-left footer-text-title">Phones and Devices</p>
-                        </div>
+                        <p class="text-left footer-text-title">Phones and Devices</p>
                         <br>
                         <p class="footer-text-small">
                             Each mobile device(s) (inc. Mobile Phones, Tablets and Watches) sold should match the make and model in the sale order and meet the following conditions:
@@ -151,7 +141,7 @@
                         </ul>
                         <br>
                         <div class="title-red">
-                            <p class="text-left footer-text-title">Condition – Good Working</p>
+                            <p class="text-left footer-text-title terms-condition-title">Condition – Good Working</p>
                         </div>
                         <ul class="footer-text-small">
                             <li>Handset/Device is fully functional, working and complete</li>
@@ -165,7 +155,7 @@
                         </ul>
                         <br>
                         <div class="title-red">
-                            <p class="text-left footer-text-title">Condition – Poor Working</p>
+                            <p class="text-left footer-text-title terms-condition-title">Condition – Poor Working</p>
                         </div>
                         <ul class="footer-text-small">
                             <li>Handset/Device is fully functional, working and complete</li>
@@ -179,7 +169,7 @@
                         </ul>
                         <br>
                         <div class="title-red">
-                            <p class="text-left footer-text-title">Condition – Damaged Working</p>
+                            <p class="text-left footer-text-title terms-condition-title">Condition – Damaged Working</p>
                         </div>
                         <ul class="footer-text-small">
                             <li>Handset/Device is fully functional, working and complete</li>
@@ -193,7 +183,7 @@
                         </ul>
                         <br>
                         <div class="title-red">
-                            <p class="text-left footer-text-title">Condition – Faulty</p>
+                            <p class="text-left footer-text-title terms-condition-title">Condition – Faulty</p>
                         </div>
                         <ul class="footer-text-small">
                             <li>Handset/Device is NOT fully functional</li>
@@ -219,9 +209,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Data Risks and Precautions - Important</p>
-                        </div>
+                        <p class="text-left footer-text-title">Data Risks and Precautions - Important</p>
                         <br>
                         <p class="footer-text-small">
                             Please remember that by sending your device to us, you agree to release us from all and any claims, losses or damages with respect to the device, any data stored or contained therein or on any media used in conjunction with the device (whether in the form of personal details, SMS, photos, games, songs or other data ("Data")). We accept no responsibility in relation to the security, protection, confidentiality or use of such data and it is your responsibility to ensure so far as practicable that Data is removed from the device prior to you sending it to us.<br><br>
@@ -238,9 +226,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Sim Card and Memory Card removal – Important</p>
-                        </div>
+                        <p class="text-left footer-text-title">Sim Card and Memory Card removal – Important</p>
                         <br>
                         <p class="footer-text-small">
                             You are responsible for cancelling any airtime contract linked to each device. We are not responsible for any call costs arising before, or after, receipt of your device, or arising from any other circumstances whatsoever.<br><br>
@@ -252,9 +238,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Lost or Stolen Mobile Phones and Devices</p>
-                        </div>
+                        <p class="text-left footer-text-title">Lost or Stolen Mobile Phones and Devices</p>
                         <br>
                         <p class="footer-text-small">
                             Selling a mobile phone or device which you do not own may amount to a criminal offence. We will check the IMEI/Serial number of all mobile phones and devices received on Phonecheck (www.phonecheck.com) to ensure no lost or stolen items are purchased.<br><br>
@@ -274,9 +258,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Mobile Phones and Devices with AssetWatch</p>
-                        </div>
+                        <p class="text-left footer-text-title">Mobile Phones and Devices with AssetWatch</p>
                         <br>
                         <p class="footer-text-small">
                             We will check the IMEI/Serial number of all mobile phones and devices received on Phonecheck (www.phonecheck.com) to ensure it is not registered to AssetWatch.<br><br>
@@ -289,9 +271,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Pricing</p>
-                        </div>
+                        <p class="text-left footer-text-title">Pricing</p>
                         <br>
                         <p class="footer-text-small">
                             Prices offered on our website are subject to change at any time without notice.<br><br>
@@ -304,9 +284,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Postage & Packaging</p>
-                        </div>
+                        <p class="text-left footer-text-title">Postage & Packaging</p>
                         <br>
                         <p class="footer-text-small">
                             If you have more than 2 devices to SELL to us please contact our customer support team at 0345 582 0511 or email customersupport@bamboo.co.uk<br><br>
@@ -332,9 +310,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Payments</p>
-                        </div>
+                        <p class="text-left footer-text-title">Payments</p>
                         <br>
                         <p class="footer-text-small">
                             We offer bank transfer payment. You will be required to select a payment option when placing each online sell order. Unfortunately, this payment option cannot be changed once the order is placed.<br><br>
@@ -346,9 +322,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Bank Transfer payments</p>
-                        </div>
+                        <p class="text-left footer-text-title">Bank Transfer payments</p>
                         <br>
                         <p class="footer-text-small">
                             Bank Transfer payments can only be made to the account details given when placing the online order. We cannot, under any circumstances, recall or reissue bank transfer payments once they have been made.
@@ -359,9 +333,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Events Outside of Our Control</p>
-                        </div>
+                        <p class="text-left footer-text-title">Events Outside of Our Control</p>
                         <br>
                         <p class="footer-text-small">
                             We will not be liable or responsible for any failure to perform, or delay in performance of, any of our obligations under a contract that is caused by events outside our reasonable control or due to our compliance with any applicable laws or regulations.
@@ -372,9 +344,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Rejected offers</p>
-                        </div>
+                        <p class="text-left footer-text-title">Rejected offers</p>
                         <p class="footer-text-small">
                             If you reject an amended offer for your order we will return your device/s. Please allow 3-5 working days. If the delivery is failed on the first attempt we will contact you by phone and email before returning for a second time. If the second attempt is failed you the customer must contact our office to arrange a third delivery at your own cost. If there is no contact for 7 days we will automatically process your payment at the amended price.
                         </p>
@@ -384,9 +354,7 @@
                     <br>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small title-red">
-                            <p class="text-left footer-text-title">Terms of Website Use</p>
-                        </div>
+                        <p class="text-left footer-text-title">Terms of Website Use</p>
                     </div>
                     <br>
 

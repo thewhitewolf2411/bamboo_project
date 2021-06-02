@@ -41,9 +41,9 @@
 
             <div class="cart-breadcrumbs p-3 ml-5">
                 <p class="black-cart-info-text m-0 mr-2">Basket</p>
-                <img class="mr-2 ml-2" src="{{asset('/images/front-end-icons/arrow_right_black.svg')}}">
+                <img class="mr-2 ml-2" src="{{asset('/images/front-end-icons/arrow_right_black.svg')}}" alt="">
                 <p class="grey-cart-info-text m-0 ml-2 mr-2">Your details</p>
-                <img class="mr-2 ml-2" src="{{asset('/images/front-end-icons/arrow_right_grey.svg')}}">
+                <img class="mr-2 ml-2" src="{{asset('/images/front-end-icons/arrow_right_grey.svg')}}" alt="">
                 <p class="grey-cart-info-text m-0 ml-2">Confirmation</p>
             </div>
 
@@ -142,7 +142,7 @@
                             @if($hasTradeIn)
                                 {{-- <div class="left-title-container"> --}}
                                 <div class="basket-title-container">
-                                    <img class="basket-summary-icon" src="{{asset('/shop_images/Icon-Sell.svg')}}">
+                                    <img class="basket-summary-icon" src="{{asset('/shop_images/Icon-Sell.svg')}}" alt="Sell">
                                     <p class="basket-summary-title">Basket - Trade in</p>
                                 </div>
                                 {{-- </div> --}}

@@ -42,9 +42,7 @@
                 <div class="container footer-legal">
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-large">
-                            <p class="text-left footer-text-title">Data Protection</p>
-                        </div>
+                        <p class="text-left footer-text-title">Data Protection</p>
                     </div>
 
                     <div class="col-md-12">
@@ -58,9 +56,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-large">
-                            <p class="text-left footer-text-title">Legal Basis for Collecting and Processing your Personal Information </p>
-                        </div>
+                        <p class="text-left footer-text-title">Legal Basis for Collecting and Processing your Personal Information </p>
                         <p class="footer-text-small">
                             The law on data protection sets out several different grounds on which we can collect and process your personal information. The information below sets out when we rely on these different grounds:
                         </p>
@@ -69,9 +65,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Contractual Obligations</p>
-                        </div>
+                        <p class="text-left footer-text-title">Contractual Obligations</p>
                         <p class="footer-text-small">
                             When we enter into a contract with you, we need your personal data to be able to fulfil the contract. E.g. We will need your address to be able to deliver the item to you. We may also need your contact details such as email address to confirm the order to you.
                         </p>
@@ -80,9 +74,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Legal Compliance</p>
-                        </div>
+                        <p class="text-left footer-text-title">Legal Compliance</p>
                         <p class="footer-text-small">
                             We may be required by law to retain some of your personal data e.g. fraud prevention. 
                         </p>
@@ -91,9 +83,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Legitimate interest</p>
-                        </div>
+                        <p class="text-left footer-text-title">Legitimate interest</p>
                         <p class="footer-text-small">
                             We may use your personal data for our legitimate interests e.g. keeping details of your purchase history so that we can provide you with a personalised service.
                         </p>
@@ -102,9 +92,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Consent</p>
-                        </div>
+                        <p class="text-left footer-text-title">Consent</p>
                         <p class="footer-text-small">
                             Where you have given us your consent e.g. where you have ticked a box to say you would like to hear from us.<br>
 
@@ -115,9 +103,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Our Privacy Promise</p>
-                        </div>
+                        <p class="text-left footer-text-title">Our Privacy Promise</p>
                         <p class="footer-text-small">
                             We promise:
                         </p>
@@ -131,9 +117,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">How the law protects you</p>
-                        </div>
+                        <p class="text-left footer-text-title">How the law protects you</p>
                         <p class="footer-text-small">
                             As well as our Privacy Promise, your privacy is protected by law, which says that we are allowed to use personal information only if we have a proper reason to do so. The law says that we must have one or more of these reasons: 
                         </p>
@@ -148,9 +132,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Information Collected</p>
-                        </div>
+                        <p class="text-left footer-text-title">Information Collected</p>
                         <p class="footer-text-small">
                             Here’s a list of information that Bamboo collects from you when opening an Account. This enables Bamboo to fulfil its contractual obligations with you as a customer: 
                         </p>
@@ -170,9 +152,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Information about your devices and how you use our services</p>
-                        </div>
+                        <p class="text-left footer-text-title">Information about your devices and how you use our services</p>
                         <p class="footer-text-small">
                             When you visit our site or send an email to us, we will automatically collect information about the device you’re using (i.e. mobile, computer, tablet, etc) as well as your operating system, access times, browser information (including type, language and history), your location data, settings and other data required to deliver the services described in this policy.<br><br>
                             We use cookies and other technologies to collect this information and use it in the following ways:
@@ -193,9 +173,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">Why does Bamboo collect such Information? </p>
-                        </div>
+                        <p class="text-left footer-text-title">Why does Bamboo collect such Information? </p>
                         <p class="footer-text-small">
                             Bamboo collects this information is to enable Bamboo to fulfil our contractual obligations with you and enable Bamboo to provide customised services and products relevant to your specific needs:
                         </p>
@@ -225,9 +203,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small title-blue">
-                            <p class="text-left footer-text-title">How does Bamboo use such Information?</p>
-                        </div>
+                        <p class="text-left footer-text-title">How does Bamboo use such Information?</p>
                         <p class="footer-text-small">
                             Your information may be used by Bamboo to carry out our contractual obligations, or authenticate you as a customer and may be used to:
                         </p>
@@ -248,9 +224,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">How does Bamboo secure Personal Information?</p>
-                        </div>
+                        <p class="text-left footer-text-title">How does Bamboo secure Personal Information?</p>
                         <p class="footer-text-small">
                             Bamboo is committed to ensuring the security and integrity of Personal Information. Bamboo has adopted reasonable physical, electronic and managerial procedures to safeguard your Personal Information. However, due to the nature of Internet communications, we cannot guarantee or warrant that your transmission to us is secure. <br><br>
                             Does Bamboo share the information it collects? <br><br>
@@ -277,9 +251,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">How can you correct, change or delete your information held by Bamboo?</p>
-                        </div>
+                        <p class="text-left footer-text-title">How can you correct, change or delete your information held by Bamboo?</p>
                         <p class="footer-text-small">
                             You may request to access, update, correct, change, or delete your Personal Information at any time. Bamboo will use reasonable efforts to timely update and/or remove information. To protect the user’s privacy and security, Bamboo will take steps to verify the user’s identity before making any requested change. To access, change, or delete your Personal. Information, to report problems with the Website, to ask questions or to raise concerns, please send an email to info@bamboodistribution.com <br>
                             Please note that while we will assist you in protecting your Personal Information, it is your responsibility to protect your passwords and other access credentials from others. <br><br>
@@ -292,9 +264,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">How might Bamboo change this Privacy Policy?</p>
-                        </div>
+                        <p class="text-left footer-text-title">How might Bamboo change this Privacy Policy?</p>
                         <p class="footer-text-small">
                             As Bamboo expands and improves its products and services, we may need to update this Privacy Policy. This Privacy Policy may be modified from time to time without prior notice. We encourage you to review this Privacy Policy on a regular basis for any changes. Substantive changes will be identified at the top of the Privacy Policy. 
                         </p>
@@ -303,9 +273,7 @@
                     <hr>
 
                     <div class="col-md-12">
-                        <div class="slavery-title-container-small">
-                            <p class="text-left footer-text-title">How can you contact Bamboo?</p>
-                        </div>
+                        <p class="text-left footer-text-title">How can you contact Bamboo?</p>
                         <p class="footer-text-small">
                             If you have any comments or questions about this Privacy Policy, or on the manner in which we treat your personal information, please e-mail info@bamboodistribution.com
                         </p>

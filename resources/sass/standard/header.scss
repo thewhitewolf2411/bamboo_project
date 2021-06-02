@@ -21,7 +21,8 @@ header{
 
 #header.resized{
     // height: 100px;
-    height: 82px;
+    // height: 82px;
+    height: 79px;
     // padding: 0 30px 60px;
 }
 #full-bamboo-logo.resized{
@@ -100,7 +101,8 @@ header{
     // width: 80px;
     // height: 80px;
     width: 80px;
-    height: 62px;
+    // height: 62px;
+    height: 70px;
 
     border: 3px solid;
     border-top: none;
@@ -555,7 +557,8 @@ header{
 }
 
 .header-selling-links.resized{
-    top: 132px;
+    // top: 132px;
+    top: 129px;
 }
 
 // sell sublinks styles
@@ -612,7 +615,8 @@ header{
 }
 
 #sellmobilephones-header-hover.repositioned, #selltablets-header-hover.repositioned, #sellwatches-header-hover.repositioned{
-    top: 212px;
+    // top: 212px;
+    top: 208px;
 }
 
 
@@ -687,6 +691,8 @@ header{
 
 .mobile-phone-submenu-item{
     max-width: 320px;
+    overflow-y: hidden;
+    max-height: 35px;
     margin: 0;
 }
 

@@ -47,7 +47,7 @@
             <label for="password_reg" class="verify-label">Select password*</label>
             <div class="row m-0 password-input" style="width: 100%">
                 <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,50}$" class="form-control" name="password" id="password_reg" required class="verification-input" required/>
-                <img class="toggle-pass-visibility" id="pass-visibility-toggle-reg" onclick="togglePassVisibility()" src="{{asset('/images/front-end-icons/pass_invisible.svg')}}">
+                <img class="toggle-pass-visibility" alt="" id="pass-visibility-toggle-reg" onclick="togglePassVisibility()" src="{{asset('/images/front-end-icons/pass_invisible.svg')}}">
             </div>
             <div class="pass-info-requirements mb-2">
                 Your password needs to be at least 8 characters long, contain an uppercase letter, a number and a symbol.
@@ -90,7 +90,7 @@
             <div class="news-label-content">
                 <p><b>Yes,</b> I would love to hear about the latest amazing offers, hints & tips</p>
                 <div class="news-label-selected-container">
-                    <img id="select-image-yes" src="{{asset('/customer_page_images/body/Icon-Tick-Selected-clear.svg')}}" width="48px" height="48px">
+                    <img id="select-image-yes" alt="Yes" src="{{asset('/customer_page_images/body/Icon-Tick-Selected-clear.svg')}}" width="48px" height="48px">
                     <p id="select-text-yes">Select</p>
                 </div>
             </div>
@@ -103,7 +103,7 @@
             <div class="news-label-content">
                 <p><b>No,</b>  I do not want to hear about the latest amazing offers, hints & tips</p>
                 <div class="news-label-selected-container">
-                    <img id="select-image-no" src="{{asset('/customer_page_images/body/Icon-Tick-Selected-clear.svg')}}" width="48px" height="48px">
+                    <img id="select-image-no" alt="No" src="{{asset('/customer_page_images/body/Icon-Tick-Selected-clear.svg')}}" width="48px" height="48px">
                     <p id="select-text-no">Select</p>
                 </div>
             </div>

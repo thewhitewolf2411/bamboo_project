@@ -1,21 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
     <head>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-        <link rel="preload" as="image" href="customer_page_images/header/Bamboo Logo.svg" />
-
-        <!-- image preload -->
-        {{-- <link
-            rel="preload"
-            as="image"
-            href="wolf.jpg"
-            imagesrcset="wolf_400px.jpg 400w, wolf_800px.jpg 800w, wolf_1600px.jpg 1600w"
-            imagesizes="50vw"
-        /> --}}
+        <title>Bamboo Mobile</title>
+        {{-- <link rel="preload" as="image" href="customer_page_images/header/Bamboo Logo.svg" /> --}}
         
-
         <!-- Google Tag Manager -->
         <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -24,9 +14,12 @@
         })(window,document,'script','dataLayer','GTM-KC33JWC');</script>
         <!-- End Google Tag Manager -->
 
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Bamboo Mobile</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="Bamboo Mobile">
+        <meta name="keywords" content="Mobile, Tablet, Sell, Recycle">
+        <meta name="author" content="Bamboorecycle">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="icon" type="image/png" sizes="96x96" href="/customer_page_images/header/favicon-96x96.png">

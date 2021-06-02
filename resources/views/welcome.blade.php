@@ -73,7 +73,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true"><img src="{{ url('/customer_page_images/body/modal-close.svg') }}"></span>
+                                <span aria-hidden="true"><img src="{{ url('/customer_page_images/body/modal-close.svg') }}" alt="Close modal"></span>
                             </button>
                         </div>
                         <div class="modal-body">

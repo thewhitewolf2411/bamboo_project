@@ -50,7 +50,7 @@
     <div class="howitworks-toggle-sections">
         <div class="howitworks-toggle-element selling w-100 justify-content-center">
             <p>Selling with us</p>
-            <img class="mt-2 ml-4 rotate-90-deg" src="{{ asset('/customer_page_images/body/Group 938.svg') }}">
+            {{-- <img class="mt-2 ml-4 rotate-90-deg" src="{{ asset('/customer_page_images/body/Group 938.svg') }}"> --}}
         </div>
     </div>
     <div class="howitworks-selling-sections">
