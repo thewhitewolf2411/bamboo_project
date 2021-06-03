@@ -23,6 +23,7 @@ class RecycleOffer extends Model
     protected $fillable = [
         'device_id', 
         'offer_banner', 
+        'offer_mobile_banner',
         'offer_selling_banner', 
         // 'offer_title', 
         // 'offer_description', 
@@ -54,6 +55,13 @@ class RecycleOffer extends Model
             return '/'.$this->offer_banner;
         }
         return Storage::url('public/recycle_offers_images/'.$this->offer_banner);
+    }
+
+    public function getMobileSellingBanner(){
+        if($this->offer_mobile_banner === 'recycle_offer_mobile.png'){
+            return '/'.$this->offer_mobile_banner;
+        }
+        return Storage::url('public/recycle_offers_images/'.$this->offer_mobile_banner);
     }
 
     public function getSellingBanner(){

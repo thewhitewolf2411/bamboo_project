@@ -15176,6 +15176,12 @@ h3, h4, h5 {
   margin: 20px auto;
 }
 
+.offer-mobile-banner-preview {
+  max-width: 300px;
+  height: auto;
+  margin: 20px auto;
+}
+
 .no-border-lr {
   border-left-color: transparent !important;
   border-right-color: transparent !important;

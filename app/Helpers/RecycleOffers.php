@@ -10,7 +10,7 @@ class RecycleOffers{
     public static function check(){
         $offer = RecycleOffer::where('status', 1)->first();
         if($offer){
-            return $offer->getImage();
+            return json_encode(['desktop' => $offer->getImage(), 'mobile' => $offer->getMobileSellingBanner()]);
         }
         return null;
     }

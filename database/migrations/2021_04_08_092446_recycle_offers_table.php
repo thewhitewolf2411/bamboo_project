@@ -17,6 +17,7 @@ class RecycleOffersTable extends Migration
             $table->id();
             $table->integer('device_id');
             $table->string('offer_banner');
+            $table->string('offer_mobile_banner');
             $table->string('offer_selling_banner');
             // $table->string('offer_title');
             // $table->string('offer_description');

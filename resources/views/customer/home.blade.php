@@ -463,20 +463,54 @@
         @include('customer.layouts.footer', ['showGetstarted' => true])
     {{-- </footer> --}}
 
+    {{-- {{dd(App\Helpers\RecycleOffers::check())}} --}}
+
     <script>
          (function() {
-            let offerbanner = "{!!App\Helpers\RecycleOffers::check()!!}";
+            let offerbanner = JSON.parse('{!!App\Helpers\RecycleOffers::check()!!}');
             if(offerbanner){
+                var isMobile = {
+                    Android: function() {
+                        return navigator.userAgent.match(/Android/i);
+                    },
+                    BlackBerry: function() {
+                        return navigator.userAgent.match(/BlackBerry/i);
+                    },
+                    iOS: function() {
+                        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+                    },
+                    Opera: function() {
+                        return navigator.userAgent.match(/Opera Mini/i);
+                    },
+                    Windows: function() {
+                        return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
+                    },
+                    any: function() {
+                        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+                    }
+                };
+
                 document.getElementById('home-left-container').classList.add('w-50');
                 document.getElementById('offers-texts').classList.remove('hidden');
                 document.getElementById('regular-title').classList.add('hidden');
                 document.getElementById('startbuttons').classList.add('hidden');
-                document.getElementById("main-home-image").style.backgroundImage = "url('"+offerbanner+"')";
-                document.getElementById("main-home-image").style.padding = '30px 150px'; 
-                document.getElementById("main-home-image").onclick = function(){
-                    window.location = "{!!App\Helpers\RecycleOffers::getLink()!!}";
+
+                if(isMobile.any()){
+                    document.getElementById("main-home-image").style.backgroundImage = "url('"+offerbanner.mobile+"')";
+                    document.getElementById("main-home-image").style.padding = '30px 150px'; 
+                    document.getElementById("main-home-image").style.backgroundPosition = '0 0'; 
+                    document.getElementById("main-home-image").onclick = function(){
+                        window.location = "{!!App\Helpers\RecycleOffers::getLink()!!}";
+                    }
+                } else {
+                    document.getElementById("main-home-image").style.backgroundImage = "url('"+offerbanner.desktop+"')";
+                    document.getElementById("main-home-image").style.padding = '30px 150px'; 
+                    document.getElementById("main-home-image").onclick = function(){
+                        window.location = "{!!App\Helpers\RecycleOffers::getLink()!!}";
+                    }
+                    document.getElementById("main-home-image").classList.add('cursor-pointer');
                 }
-                document.getElementById("main-home-image").classList.add('cursor-pointer');
+                
             }
 
         })();
