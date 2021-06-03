@@ -70,7 +70,11 @@
             <p class="about-section-main-text">SOMETHING ABOUT BAMBOO DISTRIBUTION</p>
 
             <div class="about-something-row">
-                <img class="about-main-image" src="{{asset('/images/about_main_image.png')}}">
+                @if(App\Eloquent\Site\SiteImage::where('page', 'about')->first() !== null)
+                    <img class="about-main-image" src="{{App\Eloquent\Site\SiteImage::where('page', 'about')->first()->getURL()}}">
+                @else
+                    <img class="about-main-image" src="{{asset('/images/about_main_image.png')}}">
+                @endif
 
                 <div class="about-section-column margin-left">
                     <p class="about-bamboo-text-title margin-something">

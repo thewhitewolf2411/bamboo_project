@@ -67,7 +67,16 @@
 
 
                                     <div class="form-group">
-                                        <input id="login" type="text" class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }} mb-0" placeholder="Username or Email" name="login" value="{{ old('username') ?: old('email') }}" required autofocus>
+                                        <input 
+                                            id="login" 
+                                            type="text" 
+                                            class="form-control{{ $errors->has('username') || $errors->has('email') ? ' is-invalid' : '' }} mb-0" 
+                                            placeholder="Username or Email" 
+                                            name="login" 
+                                            {{-- value="{{ old('username') ?: old('email') }}"  --}}
+                                            @if(Session::has('session_email')) value="{!!Session::get('session_email')!!}" @else {{old('username') ?: old('email') }} @endif
+                                            required 
+                                            autofocus>
             
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
@@ -82,7 +91,14 @@
                                             @enderror --}}
                                     </div>
                                     <div class="form-group">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" name="password" required autocomplete="current-password">
+                                        <input 
+                                            id="password" 
+                                            type="password" 
+                                            class="form-control @error('password') is-invalid @enderror" 
+                                            placeholder="Password" 
+                                            name="password" 
+                                            required 
+                                            autocomplete="current-password">
         
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">

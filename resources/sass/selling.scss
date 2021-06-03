@@ -1405,6 +1405,7 @@ input.lookup-delivery-basket::placeholder{
     flex-wrap: wrap;
     max-width: 1100px;
     margin: auto;
+    justify-content: center;
 }
 
 .device-brand{
@@ -1413,6 +1414,8 @@ input.lookup-delivery-basket::placeholder{
     border: 2px solid #707070;
     border-radius: 8px;
     cursor: pointer;
+    height: 115px;
+    max-width: 264px;
 }
 
 .device-brand.selected{
@@ -1420,10 +1423,18 @@ input.lookup-delivery-basket::placeholder{
 }
 
 .device-brand > img {
+    // width: 100px;
+    // height: 100px;
+    // display: block;
+    // margin: auto;
     width: 100px;
-    height: 100px;
+    max-height: 50px;
     display: block;
-    margin: auto;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #device-makes-results{

@@ -104,6 +104,7 @@ Route::get('/sell/devices/{category}/{brand}', 'Customer\SellController@showBran
 Route::get('/sell/sellitem/{parameter}', 'Customer\SellController@showSellItem')->name('showSellItem');
 Route::post('/sell/searchdevices', 'Customer\SellController@searchAllSellDevices')->name('searchSellDevices');
 Route::get('/sell/getdevicebybrand/{brand_id}/{category_id}', 'Customer\SellController@getDevicesByBrand')->name('getDevicesByBrand');
+Route::get('/sell/getavailablebrands/{category}', 'Customer\SellController@getAvailableBrands');
 
 
 Route::post('/sell/shop/item/addtocart','Customer\SellController@addSellItemToCart');
@@ -388,6 +389,10 @@ Route::post('/portal/settings/non-working-days/remove-non-working-days', 'Portal
 route::get('/portal/settings/clients', 'Portal\SettingsController@showClientsPage');
 route::post('/portal/settings/clients/add', 'Portal\SettingsController@addClient');
 route::post('/portal/settings/clients/delete', 'Portal\SettingsController@deleteClient');
+
+Route::get('/portal/settings/siteimages', 'Portal\SettingsController@siteImages');
+Route::post('/portal/settings/siteimages/set/{page}', 'Portal\SettingsController@saveSiteImage');
+Route::get('/portal/settings/siteimages/delete/{id}', 'Portal\SettingsController@deleteSiteImage');
 
 //cms
 Route::get('/portal/cms', 'Portal\CmsController@showCmsPage');

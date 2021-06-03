@@ -299,6 +299,33 @@ class SellController extends Controller
 
 
     /**
+     * Return all available 
+     */
+    public function getAvailableBrands($category){
+        $product_brands = [];
+        switch ($category) {
+            case 'mobile':
+                $product_brands = SellingProduct::where('category_id', 1)->get()->pluck('brand_id')->toArray();
+                break;
+            case 'tablets':
+                $product_brands = SellingProduct::where('category_id', 2)->get()->pluck('brand_id')->toArray();
+                break;
+            case 'watches':
+                $product_brands = SellingProduct::where('category_id', 3)->get()->pluck('brand_id')->toArray();
+                break;
+            default:
+                # code...
+                break;
+        }
+        if(!empty($product_brands)){
+            $product_brands = array_unique($product_brands);
+            $brands = Brand::whereIn('id', $product_brands)->get();
+            return response($brands, 200);
+        }
+    }
+
+
+    /**
      * Add item to cart / abandoned basked
      * @param Request $request
      */
@@ -330,7 +357,7 @@ class SellController extends Controller
 
                 $userExists = User::where('email', $request->email)->first();
                 if($userExists){
-                    return redirect()->back()->with('useralreadyexists', true);
+                    return redirect()->back()->with('useralreadyexists', true)->with('session_email', $request->email);
                 }
 
                 $abandoned_cart = new AbandonedCart([

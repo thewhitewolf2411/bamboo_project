@@ -81,12 +81,14 @@
             <div id="device-makes" class="device-makes-container hidden">
                 <p class="sell-subtitle mb-5 mt-4">Step 2: Select the make of your device</p>
 
-                <div class="device-brands-row">
-                    @foreach($brands as $brand)
+                <div class="loader invisible" id="selling-category-brands-loader"></div>
+
+                <div class="device-brands-row" id="device-brands-row">
+                    {{-- @foreach($brands as $brand)
                         <div class="device-brand" id="brand-{{$brand->id}}" onclick="selectBrand('{!!$brand->id!!}')">
                             <img src="{{asset('images/brands/'.$brand->brand_image)}}">
                         </div>
-                    @endforeach
+                    @endforeach --}}
                 </div>
             </div>
 
@@ -255,6 +257,7 @@
 
                 // clear results
                 $('.device-make-result').remove();
+                $('.device-brand').remove();
 
                 let makes = document.getElementById('device-makes');
                 if(makes.classList.contains('hidden')){
@@ -316,6 +319,9 @@
                         break;
                 }
 
+                getAvailableBrands(category);
+                document.getElementById('selling-category-brands-loader').classList.remove('invisible');
+
                 $('.device-brand').removeClass('selected');
                 $('.device-brand').css('filter', 'opacity(0.3)');
 
@@ -326,6 +332,42 @@
 
 
             }
+
+
+            function getAvailableBrands(category){
+                let brandresults = document.getElementById("device-brands-row");
+
+                $.ajax({
+                    type: "GET",
+                    url: '/sell/getavailablebrands/'+category,
+                    success: function(data, textStatus, jqXHR){
+                        for (let index = 0; index < data.length; index++) {
+                            let singlebrand = data[index];
+
+                            let singlebrandresult = document.createElement('div');
+                            singlebrandresult.classList.add('device-brand');
+                            singlebrandresult.id = 'brand-'+singlebrand.id
+                            singlebrandresult.title = singlebrand.brand_name;
+                            singlebrandresult.onclick = function(){
+                                selectBrand(singlebrand.id);
+                            }
+
+                            let brandimg = document.createElement('img');
+                            brandimg.src = 'images/brands/'+singlebrand.brand_image;
+
+                            singlebrandresult.appendChild(brandimg);
+
+                            brandresults.appendChild(singlebrandresult);
+                            $('.device-brand').css('filter', 'opacity(0.3)');
+
+                        }
+
+                        document.getElementById('selling-category-brands-loader').classList.add('invisible');
+
+                    },
+                });
+            }
+
 
             function selectBrand(id){
                 let category_name = document.getElementsByClassName('selected-category')[0].id.split('-')[1];
@@ -426,6 +468,7 @@
                                 document.getElementById('selling-brand-results-loader').classList.add('invisible');
                             } else {
                                 // show no results
+                                document.getElementById('selling-brand-results-loader').classList.add('invisible');
                                 document.getElementById('no-results-brand').classList.remove('hidden');
                             }
 

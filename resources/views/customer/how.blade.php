@@ -32,7 +32,7 @@
 
         <div class="modal fade" id="howVideoModal" tabindex="-1" role="dialog" aria-labelledby="howVideoLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
-                <h5 class="modal-title howitworks text-center" id="howVideoLabel">How it works</h5>
+                {{-- <h5 class="modal-title howitworks text-center" id="howVideoLabel">How it works</h5> --}}
                 <div class="modal-content howitworksvideo">
                     <div class="modal-body">
                     <video id="howvideoid" width="100%" controls autoplay muted>
@@ -66,9 +66,13 @@
 
         <div class="howitworks-container how-row justify-content-center selling-section-item">
             <div class="howitworks-container how-column text-description">
-                <p class="howitworks-selling-title">2. Free Next Day Delivery</p>
-                <p class="howitworks-selling-desc">
+                {{-- <p class="howitworks-selling-title">2. Free Next Day Delivery</p> --}}
+                <p class="howitworks-selling-title">2. We send you a FREE Trade Pack</p>
+                {{-- <p class="howitworks-selling-desc">
                     Once your sales order is completed, simply request for a free sales pack. Alternatively, you can print your own labels to send us your device.
+                </p> --}}
+                <p class="howitworks-selling-desc">
+                    Once your sales order is completed, simply request a FREE Trade Pack. Alternatively, you can print your own labels to send us your device.
                 </p>
             </div>
             <img class="howitworks-selling-image post-pack" src="{{ asset('/customer_page_images/body/final_free_trade_pack.svg') }}">
@@ -76,7 +80,8 @@
 
         <div class="howitworks-container how-row justify-content-center selling-section-item">
             <div class="howitworks-container how-column text-description">
-                <p class="howitworks-selling-title">3. You have a shiny new phone to play with</p>
+                {{-- <p class="howitworks-selling-title">3. You have a shiny new phone to play with</p> --}}
+                <p class="howitworks-selling-title">3. You get paid! Woohoo!</p>
                 <p class="howitworks-selling-desc">
                    With Boo you won’t be left waiting for your payment. Once we receive your device, our team will check it against your order. If everything is correct, we’ll issue the payment that very same day! It’s that Simple!
                 </p>

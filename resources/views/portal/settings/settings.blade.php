@@ -41,6 +41,11 @@
                             <p>Clients</p>
                         </div>
                     </a>
+                    <a href="/portal/settings/siteimages" class="col-2 my-2">
+                        <div class="portal-content-element">
+                            <p>Site images</p>
+                        </div>
+                    </a>
                 </div>
             </div>
             

@@ -13,6 +13,8 @@ use App\Eloquent\Brand;
 use App\Eloquent\AdditionalCosts;
 use App\Eloquent\NonWorkingDays;
 use App\Eloquent\Clients;
+use App\Eloquent\Site\SiteImage;
+use Illuminate\Support\Facades\Storage;
 
 class SettingsController extends Controller
 {
@@ -369,5 +371,65 @@ class SettingsController extends Controller
 
         Clients::where('id', $clientid)->first()->delete();
         return 200;
+    }
+
+
+    /**
+     * Show current site images.
+     */
+    public function siteImages(Request $request)
+    {        
+        $portalUser = PortalUsers::where('user_id', Auth::user()->id)->first();
+        $about_site_image = SiteImage::where('page', 'about')->first();
+        return view('portal.settings.siteimages.index', [
+            'portalUser'=>$portalUser, 
+            'about_page_image' => $about_site_image
+        ]);
+    }
+
+    /**
+     * Update site images.
+     * @param Request $request
+     * @param string $page
+     */
+    public function saveSiteImage(Request $request, string $page){
+        if(!in_array($page, ['about'])){
+            return redirect()->back()->with('error', 'Page rule invalid.');
+        }
+        if($request->file('image')->isValid()){
+
+            $validated = $request->validate([
+                'image' => 'required|mimes:jpeg,png,svg|max:10000',
+            ]);
+
+            $is_empty = SiteImage::where('page', $page)->first();
+            if($is_empty !== null){
+                Storage::delete('public/site_images/'.$is_empty->image);
+                $is_empty->delete();
+            } 
+
+            $filename_withext = $validated['image']->getClientOriginalName();
+            $filename = explode('.', $filename_withext)[0];
+            $extension = $request->image->extension();
+            Storage::put('public/site_images/'.$filename.".".$extension, file_get_contents($request->image));
+
+            SiteImage::create([
+                'page' => $page,
+                'image' => $filename.".".$extension
+            ]);
+            return redirect()->back()->with('success', 'Image for "' . ucfirst($page) .'" page set successfuly');
+        }
+        return redirect()->back()->with('error', 'Something went wrong.');
+    }
+
+
+    /**
+     * Delete site image.
+     */
+    public function deleteSiteImage($id){
+        $siteImage = SiteImage::find($id);
+        $page = $siteImage->page;
+        $siteImage->delete();
+        return redirect()->back()->with('success', 'Image for "' . ucfirst($page) .'" page deleted successfuly');
     }
 }

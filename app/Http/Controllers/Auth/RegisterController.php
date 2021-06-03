@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Eloquent\AbandonedCart;
+use App\Eloquent\Cart;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
@@ -89,6 +91,25 @@ class RegisterController extends Controller
         }
 
         $user = $this->create($request->all());
+
+        // check for abandoned basket items. if there any - move them straight to cart
+        $abandoned_cart_items = AbandonedCart::where('user_email', $request->email)->get();
+        if(!$abandoned_cart_items->isEmpty()){
+            foreach($abandoned_cart_items as $abandoned_cart_item){
+                $cart = new Cart();
+                $cart->user_id = $user->id;
+                $cart->price = $abandoned_cart_item->price;
+                $cart->product_id = $abandoned_cart_item->product_id;
+                $cart->type = $abandoned_cart_item->type;
+                $cart->network = $abandoned_cart_item->network;
+                $cart->memory = $abandoned_cart_item->memory;
+                $cart->grade = $abandoned_cart_item->grade;
+                $cart->email_sent = false;
+                $cart->save();
+                $abandoned_cart_item->delete();
+            }
+        }
+
         $this->guard()->login($user);
         return redirect($this->redirectPath());
     }
