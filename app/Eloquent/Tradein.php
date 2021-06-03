@@ -1183,11 +1183,13 @@ class Tradein extends Model
 
     public function isInQuarantineTrayBin(){
         $tray_id = TrayContent::where('trade_in_id', $this->id)->first();
-        $tray = Tray::find($tray_id->tray_id);
+        if($tray_id){
+            $tray = Tray::find($tray_id->tray_id);
 
-        if($tray){
-            if($tray->tray_brand === 'Q'){
-                return true;
+            if($tray){
+                if($tray->tray_brand === 'Q'){
+                    return true;
+                }
             }
         }
 
