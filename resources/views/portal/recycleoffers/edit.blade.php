@@ -50,12 +50,12 @@
 
                 
                 <div class="d-flex flex-column p-0">
-                    <label class="h5 ml-auto mr-auto mt-2">Current mobile selling banner image:</label>
-                    <img class="offer-mobile-banner-preview" src="{{$recycleOffer->getMobileSellingBanner()}}">
+                    <label class="h5 ml-auto mr-auto mt-2">Current mobile offer image:</label>
+                    <img class="offer-mobile-banner-preview" src="{{$recycleOffer->getMobileImage()}}">
                 </div>
 
                 <div class="d-flex flex-column p-0">
-                    <label for="offer_mobile_image" class="ml-1 mb-2">Choose new mobile banner image:</label>
+                    <label for="offer_mobile_image" class="ml-1 mb-2">Choose new mobile offer image:</label>
                     <input type="file" name="offer_mobile_image" accept="image/*" class="form-control">
                 </div>
 
@@ -68,6 +68,17 @@
                 <div class="d-flex flex-column p-0">
                     <label for="offer_selling_banner_image" class="ml-1 mb-2">Choose new selling banner image:</label>
                     <input type="file" name="offer_selling_banner_image" accept="image/*" class="form-control">
+                </div>
+
+
+                <div class="d-flex flex-column p-0">
+                    <label class="h5 ml-auto mr-auto mt-2">Current selling banner mobile image:</label>
+                    <img class="offer-banner-preview" src="{{$recycleOffer->getMobileSellingBanner()}}">
+                </div>
+
+                <div class="d-flex flex-column p-0">
+                    <label for="offer_selling_banner_image" class="ml-1 mb-2">Choose new selling banner mobile image:</label>
+                    <input type="file" name="offer_selling_banner_mobile_image" accept="image/*" class="form-control">
                 </div>
 
                 {{-- <div class="d-flex flex-column p-0">

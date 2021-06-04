@@ -74,7 +74,7 @@
                                             placeholder="Username or Email" 
                                             name="login" 
                                             {{-- value="{{ old('username') ?: old('email') }}"  --}}
-                                            @if(Session::has('session_email')) value="{!!Session::get('session_email')!!}" @else {{old('username') ?: old('email') }} @endif
+                                            @if(Session::has('useralreadyexists')) value="{!!Session::get('session_email')!!}" @else {{old('username') ?: old('email') }} @endif
                                             required 
                                             autofocus>
             

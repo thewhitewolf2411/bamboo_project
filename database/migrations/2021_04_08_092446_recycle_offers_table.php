@@ -19,6 +19,7 @@ class RecycleOffersTable extends Migration
             $table->string('offer_banner');
             $table->string('offer_mobile_banner');
             $table->string('offer_selling_banner');
+            $table->string('offer_selling_mobile_banner');
             // $table->string('offer_title');
             // $table->string('offer_description');
             // $table->string('offer_additional_info');

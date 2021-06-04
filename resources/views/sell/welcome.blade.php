@@ -2,7 +2,7 @@
 
 @section('content')        
 
-        <main class="selling-margin">
+        <main class="selling-margin" id="top">
             @include('customer.layouts.sellinglinks')
 
             @if(Session::get('_previous') !== null)
@@ -95,7 +95,7 @@
 
             <a href="/contact" id="device-make-results-title" class="hidden">
                 <p class="sell-subtitle mb-2 mt-5">Step 3: Select your model</p>
-                <p class="sell-subtitle-regular mb-5 mt-1">Not sure what model your device is? Don't worry, we got your covered <img class="sell-icon-covered ml-2" src="{{asset('images/front-end-icons/black_arrow_next.svg')}}"></p>
+                <p class="sell-subtitle-regular mb-5 mt-1">Not sure what model your device is? Don't worry, let us know, we'll be happy to help <img class="sell-icon-covered ml-2" src="{{asset('images/front-end-icons/black_arrow_next.svg')}}"></p>
             </a>
 
             <div class="loader invisible" id="selling-brand-results-loader"></div>
@@ -106,13 +106,13 @@
             <div id="sell-this" class="col mb-4 hidden">
                 <div class="see-more-sell-devices mb-5">
                     <div class="text-center" onclick="seeAll()">
-                        see more devices
+                        see all devices
                     </div>
                 </div>
 
                 <div class="row justify-content-center">
-                    <div id="select-sell-this" class="btn btn-light disabled" onclick="sellThis()">
-                        Sell this device
+                    <div id="select-sell-this" class="btn sell-this-device btn-light disabled" onclick="sellThis()">
+                        <p>Sell this device</p>
                     </div>
                 </div>
             </div>
@@ -245,7 +245,7 @@
                         }
                     }
                 }
-                });
+            });
 
             function showRegistrationForm(){
                 if(!document.getElementsByClassName('modal-second-element')[0].classList.contains('modal-second-element-active')){
@@ -323,7 +323,7 @@
                 document.getElementById('selling-category-brands-loader').classList.remove('invisible');
 
                 $('.device-brand').removeClass('selected');
-                $('.device-brand').css('filter', 'opacity(0.3)');
+                //$('.device-brand').css('filter', 'opacity(0.3)');
 
                 // mobile TODO
                 $([document.documentElement, document.body]).animate({
@@ -358,7 +358,7 @@
                             singlebrandresult.appendChild(brandimg);
 
                             brandresults.appendChild(singlebrandresult);
-                            $('.device-brand').css('filter', 'opacity(0.3)');
+                            //$('.device-brand').css('filter', 'opacity(0.3)');
 
                         }
 
@@ -370,6 +370,26 @@
 
 
             function selectBrand(id){
+
+                let brand_element = document.getElementById('brand-'+id);
+                if(brand_element.classList.contains('selected')){
+
+                    brand_element.classList.remove('selected');
+
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: $("#all-selling-categories").offset().top - 300
+                    }, 500);
+
+                    $('.device-brand').css('filter', 'opacity(1)');
+                    $('.device-make-result').remove();
+                    $('.device-brand').remove();
+
+                    $('#device-makes').addClass('hidden');
+                    $('#device-make-results-title').addClass('hidden');
+                    $('#sell-this').addClass('hidden');
+                    return;
+                }
+
                 let category_name = document.getElementsByClassName('selected-category')[0].id.split('-')[1];
                 let category;
                 switch (category_name) {
@@ -481,19 +501,31 @@
                 let element = document.getElementById('checkbox-device-'+id);
                 let devices = $('.select-make-result-device');
 
-                devices.removeClass('selected-device');
-                for (let index = 0; index < devices.length; index++) {
-                    devices[index].src = 'images/front-end-icons/purple_circle.svg';
-                }
-
                 if(!element.classList.contains('selected-device')){
+                    devices.removeClass('selected-device');
+                    for (let index = 0; index < devices.length; index++) {
+                        devices[index].src = 'images/front-end-icons/purple_circle.svg';
+                    }
+
                     element.src = '/images/front-end-icons/purple_tick_selected.svg';
-                    element.classList.add('selected-device');
-                } 
-               
+                    element.classList.add('selected-device');                    
+                } else {
+                    element.src = 'images/front-end-icons/purple_circle.svg';
+                    element.classList.remove('selected-device');
 
+                    $([document.documentElement, document.body]).animate({
+                        scrollTop: $("#top").offset().top - 300
+                    }, 500);
 
-                //window.location = ;
+                    $('.device-brand').css('filter', 'opacity(1)');
+                    $('.device-make-result').remove();
+                    $('.device-brand').remove();
+
+                    $('#device-makes').addClass('hidden');
+                    $('#device-make-results-title').addClass('hidden');
+                    $('#sell-this').addClass('hidden');
+                }
+                
 
                 checkCanSell();
             }
@@ -504,9 +536,9 @@
                 if(selected.length === 1){
                     btn.classList.remove('btn-light');
                     btn.classList.remove('disabled');
-                    btn.classList.add('btn-orange');
+                    btn.classList.add('btn-active');
                 } else {
-                    btn.classList.remove('btn-orange');
+                    btn.classList.remove('btn-active');
                     btn.classList.add('btn-light');
                     btn.classList.add('disabled');
                 }

@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             'offer_banner' => 'recycle_offer_home.svg',
             'offer_mobile_banner' => 'recycle_offer_mobile.png',
             'offer_selling_banner' => 'recycle_offer_selling_banner.png',
+            'offer_selling_mobile_banner' => 'recycle_offer_selling_banner_mobile.png',
             'status' => true
         ]);
     }

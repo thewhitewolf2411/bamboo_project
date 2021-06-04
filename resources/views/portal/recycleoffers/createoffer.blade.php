@@ -48,6 +48,11 @@
                     <input type="file" name="offer_selling_banner_image" accept="image/*" class="form-control" required>
                 </div>
 
+                <div class="d-flex flex-column p-0">
+                    <label for="offer_selling_banner_image" class="ml-1 mb-2">Choose new selling banner mobile image:</label>
+                    <input type="file" name="offer_selling_banner_mobile_image" accept="image/*" class="form-control">
+                </div>
+
                 {{-- <div class="d-flex flex-column p-0">
                     <label for="offer_title" class="ml-1 mb-2">Offer title:</label>
                     <input type="text" class="form-control" name="offer_title" required>

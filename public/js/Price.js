@@ -10,7 +10,7 @@ HAS_NETWORKS = true;
 document.addEventListener("DOMContentLoaded", function(e) {
     let memory_available = document.getElementsByClassName('device-memory');
     if(memory_available.length === 1){
-        // preselect it
+        // preselect it if not N/A
         memory_available[0].childNodes[0].click();
     }
 
@@ -83,6 +83,14 @@ function networkChanged(element){
     for(var i = 0; i<networks.length; i++){
         networks[i].classList.add('network-container-disabled');
         networks[i].classList.remove('network-container-selected');
+
+        if(networks[i].id === label.attr("id")){
+            let img = networks[i].childNodes[0];
+            img.src = '/networks/'+label.attr("id")+'-selected.png';
+        } else {
+            let img = networks[i].childNodes[0];
+            img.src = '/networks/'+networks[i].id+'.png';
+        }
     }
     label.removeClass('network-container-disabled');
     label.addClass('network-container-selected');
@@ -133,7 +141,12 @@ function memoryChanged(element){
     basePrices = JSON.parse(element.value);
     memoryValue = label.attr("id");
 
-    $('#selected-gb').html(memoryValue);
+    if(memoryValue === 'N/A'){
+        document.getElementById('N/A').style.cursor = 'default';
+        $('#selected-gb').html("This device has no memory.");
+    } else {
+        $('#selected-gb').html(memoryValue);
+    }
 
     getPrice();
 }

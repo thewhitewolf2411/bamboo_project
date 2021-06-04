@@ -64,11 +64,13 @@
                     <div class="product-selected product-memory-container">
                         <div class="row m-0">
                             <p class="select-shopping-option-title m-0 mb-1">Select Memory:</p>
-                            <p id="selected-gb"></p>
+                            <p id="selected-gb"></p>                           
                         </div>
 
                         <div class="d-flex">
+
                         @foreach($productInformation as $info)
+                            
                             <div id="memory-box-{{$info->memory}}" class="device-memory"><label class="memory-container mr-3" id="{{$info->memory}}" for="info-{{$info->id}}">{{$info->memory}}</label></div>
                         @endforeach
                         </div>

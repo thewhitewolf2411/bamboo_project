@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="shop-top-header" style="margin: 0;">
+    {{-- <div class="shop-top-header" style="margin: 0;">
         <div class="center-title-container">
             <div class="let-top-container">
                 <div class="center-title-container">
@@ -10,9 +10,12 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+    <div class="page-header-container yourdetails">
+        <p class="page-header-text">Your details</p>
     </div>
 
-    <div class="cart-breadcrumbs p-3 ml-5">
+    <div class="cart-breadcrumbs yourdetails ml-5 p-5 pb-0">
         <p class="black-cart-info-text m-0 mr-2">Basket</p>
         <img class="mr-2 ml-2" src="{{asset('/images/front-end-icons/arrow_right_black.svg')}}">
         <p class="black-cart-info-text m-0 ml-2 mr-2">Your details</p>
@@ -372,6 +375,8 @@
             });
         </script>
     @endif
+
+    @include('customer.layouts.footer', ['showGetstarted' => false])
 
     <script>
 

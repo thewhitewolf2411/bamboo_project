@@ -14,8 +14,8 @@
             <div class="d-flex flex-row justify-content-around border-down">
 
                 <div class="whysell-main-text d-flex flex-column">
-                    <p class="whysell-page-title">The benefits of selling <br> With Bamboo Mobile</p>
-                    <p class="whysell-page-description">Not only at bamboo mobile do we offer best prices for your devices, free postage, same day payment and data wipe guarantee, together we can help cut down tech waste and be part of the circular economy. Start now, find out how much your device is worth today.</p>
+                    <p class="whysell-page-title">The benefits of Selling <br> with Bamboo Mobile</p>
+                    <p class="whysell-page-description">Not only at Bamboo Mobile do we offer best prices for your devices, free postage, same day payment and data wipe guarantee, together we can help cut down tech waste and be part of the circular economy. Start now, find out how much your device is worth today.</p>
                 </div>
                 <div class="d-flex flex-column justify-content-between">
 
@@ -29,7 +29,7 @@
 
                     <div class="modal fade noscroll" id="mainWhySellVideoModal" tabindex="-1" role="dialog" aria-labelledby="mainWhySellVideoLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
-                            <h5 class="modal-title howitworks text-center" id="mainWhySellVideoLabel">Selling With Us</h5>
+                            {{-- <h5 class="modal-title howitworks text-center" id="mainWhySellVideoLabel">Selling With Us</h5> --}}
                             <div class="modal-content howitworksvideo">
                                 {{-- <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -38,7 +38,7 @@
                                 </div> --}}
                                 <div class="modal-body">
                                 <video id="whyvideoid" width="100%" controls>
-                                    <source src="{{ asset('/video/old/Bamboo Selling v4.mp4') }}" type="video/mp4">
+                                    <source src="{{ asset('/video/Bamboo_Selling_Web_140521.mp4') }}" type="video/mp4">
                                     Your browser does not support HTML video.
                                 </video>
                                 </div>
@@ -65,14 +65,14 @@
                         </div>
                         <div class="selling-text-column">
                             <p class="selling-section-title-orange">Same day payment</p>
-                            <p class="selling-section-text-description">As soon as we receive your device, we'll carry out all the testing required and issue payment directly into your bank account the same day we receive it*. The sooner you send in your device the sooner you'll get paid!
-                                *Subject to our testing terms and conditions</p>
+                            <p class="selling-section-text-description">As soon as we receive your device, we'll carry out all the testing required and issue payment directly into your bank account the same day we receive it*. The sooner you send in your device, the sooner you'll get paid!
+                                *Subject to our testing terms and conditions.</p>
                         </div>
                     </div>
                     <div class="selling-with-element selling-with-right">
                         <div class="selling-text-column">
                             <p class="selling-section-title-orange">Free Postage</p>
-                            <p class="selling-section-text-description">We offer a Freepost service with Royal Mail which allows you to post up to 2 devices free of charge. It covers up to £100.00 and you will be able to track your delivery via <a style="font-size: inherit;color: orange;" href="https://www.royalmail.com" target="_blank">www.royalmail.com</a>. If you have more than 2 devices to sell, feel free to place several orders of 2 devices per order.</p>
+                            <p class="selling-section-text-description">We offer a Freepost service with Royal Mail which allows you to post up to 2 devices free of charge. It covers up to £100.00 and you will be able to track your delivery via <a class="bold" style="font-size: inherit;color: orange;" href="https://www.royalmail.com" target="_blank">www.royalmail.com</a>. If you have more than 2 devices to sell, feel free to place several orders of 2 devices per order.</p>
                         </div>
                         <div class="selling-img-container">
                             <img src="{{asset('/sell_images/why_images/image-2.svg')}}">
@@ -90,7 +90,8 @@
                     <div class="selling-with-element selling-with-right">
                         <div class="selling-text-column">
                             <p class="selling-section-title-orange">Data is always protected</p>
-                            <p class="selling-section-text-description">As our lives has become more dependent on our mobile devices, more personal data, pictures, and bank details are stored on our devices. At bamboo mobile we will ensure that every device processed will have all data removed or destroyed</p>
+                            {{-- <p class="selling-section-text-description">As our lives has become more dependent on our mobile devices, more personal data, pictures, and bank details are stored on our devices. At bamboo mobile we will ensure that every device processed will have all data removed or destroyed</p> --}}
+                            <p class="selling-section-text-description">As our lives have become more dependent on our mobile devices, with more personal data, pictures, and bank details being stored, here at Bamboo Mobile we will make sure that every device processed will have all data destroyed.</p>
                         </div>
                         <div class="selling-img-container">
                             <img src="{{asset('/sell_images/why_images/image-4.svg')}}">
@@ -101,8 +102,8 @@
                             <img src="{{asset('/sell_images/why_images/image-5.svg')}}">
                         </div>
                         <div class="selling-text-column">
-                            <p class="selling-section-title-orange">We help to Reduce, Reuse, Recycle</p>
-                            <p class="selling-section-text-description">We are committed to helping the environment and together we can help minimise tech waste with 3R's - Reduce, Reuse Recycle! Be part of the circular economy revolution.</p>
+                            <p class="selling-section-title-orange">We help to Reduce, Reuse, Recycle!</p>
+                            <p class="selling-section-text-description">We are committed to helping the environment and together we can help minimise tech waste with 3R's - Reduce, Reuse, Recycle! Be part of the circular economy revolution.</p>
                         </div>
                     </div>
                     <div class="selling-with-element selling-with-right">

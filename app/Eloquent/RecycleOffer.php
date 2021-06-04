@@ -25,6 +25,7 @@ class RecycleOffer extends Model
         'offer_banner', 
         'offer_mobile_banner',
         'offer_selling_banner', 
+        'offer_selling_mobile_banner',
         // 'offer_title', 
         // 'offer_description', 
         // 'offer_additional_info', 
@@ -57,7 +58,7 @@ class RecycleOffer extends Model
         return Storage::url('public/recycle_offers_images/'.$this->offer_banner);
     }
 
-    public function getMobileSellingBanner(){
+    public function getMobileImage(){
         if($this->offer_mobile_banner === 'recycle_offer_mobile.png'){
             return '/'.$this->offer_mobile_banner;
         }
@@ -70,6 +71,13 @@ class RecycleOffer extends Model
             return '/'.$this->offer_selling_banner;
         }
         return Storage::url('public/recycle_offers_images/'.$this->offer_selling_banner);
+    }
+
+    public function getMobileSellingBanner(){
+        if($this->offer_selling_mobile_banner === 'recycle_offer_selling_banner_mobile.png'){
+            return '/'.$this->offer_selling_mobile_banner;
+        }
+        return Storage::url('public/recycle_offers_images/'.$this->offer_selling_mobile_banner);
     }
 
     public function getInputStartDate(){

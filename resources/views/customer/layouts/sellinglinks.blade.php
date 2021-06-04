@@ -174,10 +174,10 @@
     <div class="tablets-submenu">
 
         <div class="mobile-phones-submenu-column">
-            <div class="mobile-phone-submenu-title">
+            <a class="mobile-phone-submenu-title" href="/sell/devices/tablets/1">
                 <p>Apple IPad</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
+            </a>
 
             @foreach(App\Helpers\MenuHelper::getAppleTablets() as $apple_tablet)
                 <a class="mobile-phone-submenu-item" href="/sell/sellitem/{{$apple_tablet->id}}" title="{{$apple_tablet->product_name}}">
@@ -188,10 +188,10 @@
         </div>
 
         <div class="mobile-phones-submenu-column">
-            <div class="mobile-phone-submenu-title">
+            <a class="mobile-phone-submenu-title" href="/sell/devices/tablets/2">
                 <p>Samsung Galaxy Tab</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
+            </a>
 
             @foreach(App\Helpers\MenuHelper::getSamsungTablets() as $samsung_tablet)
                 <a class="mobile-phone-submenu-item" href="/sell/sellitem/{{$samsung_tablet->id}}" title="{{$samsung_tablet->product_name}}">
@@ -234,10 +234,10 @@
     <div class="watches-submenu">
 
         <div class="mobile-phones-submenu-column">
-            <div class="mobile-phone-submenu-title">
+            <a class="mobile-phone-submenu-title" href="/sell/devices/watches/1">
                 <p>Apple Watches</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
+            </a>
 
             @foreach(App\Helpers\MenuHelper::getAppleWatches() as $apple_watch)
                 <a class="mobile-phone-submenu-item" href="/sell/sellitem/{{$apple_watch->id}}" title="{{$apple_watch->product_name}}">
@@ -248,10 +248,10 @@
         </div>
 
         <div class="mobile-phones-submenu-column">
-            <div class="mobile-phone-submenu-title">
+            <a class="mobile-phone-submenu-title" href="/sell/devices/watches/2">
                 <p>Samsung Watches</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
-            </div>
+            </a>
 
             @foreach(App\Helpers\MenuHelper::getSamsungWatches() as $samsung_watch)
                 <a class="mobile-phone-submenu-item" href="/sell/sellitem/{{$samsung_watch->id}}" title="{{$samsung_watch->product_name}}">

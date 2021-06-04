@@ -29,17 +29,11 @@
     <body>
         <header>@include('customer.layouts.header')</header>
         <main>
-            <div class="shop-top-header" style="margin: 0;">
-                <div class="center-title-container">
-                    <div class="let-top-container">
-                        <div class="center-title-container">
-                            <p> Basket </p>
-                        </div>
-                    </div>
-                </div>
+            <div class="page-header-container basket">
+                <p class="page-header-text">Basket</p>
             </div>
 
-            <div class="cart-breadcrumbs p-3 ml-5">
+            <div class="cart-breadcrumbs">
                 <p class="black-cart-info-text m-0 mr-2">Basket</p>
                 <img class="mr-2 ml-2" src="{{asset('/images/front-end-icons/arrow_right_black.svg')}}" alt="">
                 <p class="grey-cart-info-text m-0 ml-2 mr-2">Your details</p>
@@ -81,12 +75,13 @@
                 @endif
 
                 @if(isset($cart) && count($cart)>0)
-
+                    
                     @if($cart->count() < 2)
+                        <br><br>
                         @include('partial.sellsearch', ['title' => 'More devices to sell?', 'info' => 'Use the search bar below to find your specific device'])
                     @endif
 
-                    <div class="d-flex p-5 basket-details-container">
+                    <div class="d-flex basket-details-container">
 
                         <div class="d-flex flex-column w-75 basket-device-details">
 
@@ -153,32 +148,32 @@
                             @foreach($cart as $key=>$cartitem)
                                 @if($cartitem->type === 'tradein')
 
-                                    <div class="cart-product d-flex justify-content-between mt-3">
+                                    <div class="cart-product d-flex mt-3">
                                         {{-- <div class="cart-product-image w-25">
                                             <img src="{{asset('/storage/product_images').'/' . $cartitem->getProductImage($cartitem->id)}}" width="80%">
                                         </div> --}}
-                                        <div class="d-flex flex-column w-25 cart-product-single-column">
+                                        <div class="d-flex flex-column cart-productname-column cart-product-single-column">
                                             <h6 class="m-0 mb-3 summary-cart-text-bold-large">{{$cartitem->getProductName($cartitem->id)}}</h6>
                                             <p class="m-0 summary-regular-text">Network: {{$cartitem->network}}</p>
                                             <p class="m-0 summary-regular-text">Memory: {{$cartitem->memory}}</p>
                                             <p class="m-0 summary-regular-text">Grade: {{$cartitem->grade}}</p>
                                         </div>
-                                        <div class="d-flex flex-column w-25 cart-product-single-column">
+                                        <div class="d-flex flex-column cart-itemprice-column cart-product-single-column">
                                             <h6 class="m-0 mb-3 summary-cart-text-bold">Item price</h6>
                                             <p class="m-0 summary-regular-text">£{{$cartitem->price}}</p>
                                         </div>
-                                        <div class="d-flex flex-column w-25 cart-product-single-column">
+                                        <div class="d-flex flex-column cart-quantity-column cart-product-single-column">
                                             <h6 class="m-0 mb-3 summary-cart-text-bold">Quantity</h6>
-                                            <p class="m-0 cart-text-bold">1</p>
+                                            <p class="m-0 summary-cart-text-bold-quantity-price">1</p>
                                         </div>
-                                        <div class="d-flex flex-column w-25 cart-product-single-column">
+                                        <div class="d-flex flex-column cart-price-column cart-product-single-column">
                                             <h6 class="m-0 mb-3 summary-cart-text-bold">Total Price</h6>
-                                            <p class="m-0 summary-cart-text-bold">£{{$cartitem->price}}</p>
+                                            <p class="m-0 summary-cart-text-bold-quantity-price">£{{$cartitem->price}}</p>
                                         </div>
                                     </div>
 
-                                    <div class="d-flex justify-content-between">
-                                        <div class="w-25"></div>
+                                    <div class="d-flex">
+                                        <div class="remove-cart-space"></div>
 
                                         @if(Auth::user())
                                             <a href="/removefromcart/{{$cartitem->id}}" class="w-25 m-0">
@@ -194,8 +189,8 @@
                                             </a>
                                         @endif
 
-                                        <div class="w-25 remove-from-cart-tohide"></div>
-                                        <div class="w-25"></div>
+                                        <div class="remove-from-cart-tohide"></div>
+                                        {{-- <div class=""></div> --}}
                                     </div>
 
                                 @endif
@@ -206,7 +201,7 @@
 
                         </div>
 
-                        <div class="d-flex flex-column w-25 p-3 basket-summary">
+                        <div class="d-flex flex-column p-3 basket-summary">
                             <div class="order-summary-cart margin-top flex-column">
                                 <p class="order-summary-bold w-100">Order Summary</p>
 
@@ -296,9 +291,8 @@
                     });
                 </script>
             @endif
-
  
-        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        {{-- <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -358,7 +352,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div id="label-trade-in-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
             <div class="modal-dialog" role="document">
@@ -465,6 +459,8 @@
                 });
             </script>
         @endif --}}
+        @include('partial.newsletter')
+
         <footer>@include('customer.layouts.footer', ['showGetstarted' => false])</footer>    
     </body>
     <script>

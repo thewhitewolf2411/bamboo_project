@@ -16,7 +16,7 @@
 
 .btn.cart-purple.basket{
     width: 100%;
-    max-width: 468px;
+    // max-width: 468px;
     height: 91px;
 }
 
@@ -27,8 +27,11 @@
 
 .btn.start-selling.cart, .btn.start-selling.cart-final{
     width: 100%;
-    max-width: 468px;
     height: 91px;
+}
+
+.btn.start-selling.cart-final{
+    max-width: 468px;
 }
 
 .btn.btn.start-selling.sellitem{
@@ -51,12 +54,22 @@
 }
 
 .btn.start-selling.cart > p{
-    padding-top: 21px;
+    padding-top: 11px;
 }
 
-.btn.start-selling.cart-final > p{
-    padding-top: 0;
-}
+// .btn.start-selling.cart-final > p{
+//     // padding-top: 0;
+//     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 35px/var(--unnamed-line-spacing-48) var(--unnamed-font-family-sharp-sans-no1-bold);
+//     letter-spacing: var(--unnamed-character-spacing-0);
+//     text-align: center;
+//     font: normal normal normal 35px/48px Sharp Sans No1 Bold;
+//     letter-spacing: 0px;
+//     color: #FFFFFF;
+//     opacity: 1;
+//     margin: 0;
+// }
+
+
 
 .btn.start-selling.footer{
     padding-top: 17px;
@@ -77,6 +90,22 @@
     opacity: 1;
     padding-top: 10px;
     transition: all 0.3s linear;
+}
+
+.btn.start-selling.cart > p, .btn.cart-purple.basket > p, .btn.start-selling.cart-final > p {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 35px/var(--unnamed-line-spacing-48) var(--unnamed-font-family-sharp-sans-no1-bold) !important;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 35px/48px Sharp Sans No1 Bold !important;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    margin: 0;
+    padding-top: 11px;
+}
+
+.btn.start-selling.cart-final > p{
+    padding-top: 0;
 }
 
 .btn.cart-purple > p {
@@ -131,7 +160,7 @@
     opacity: 1;
 }
 
-.btn.cart-purple:hover > p {
+.btn.cart-purple:hover > p, .btn.start-selling.cart:hover > p {
     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 35.5px/var(--unnamed-line-spacing-48) var(--unnamed-font-family-sharp-sans-no1-bold);
     letter-spacing: var(--unnamed-character-spacing-0);
     color: var(--black);
@@ -253,4 +282,82 @@
     letter-spacing: 0px;
     color: #FFFFFF;
     opacity: 1;
+}
+
+
+
+
+
+
+
+.btn.sell-this-device, .btn.btn.sell-this-device.btn-active{
+    width: 260px;
+    height: 72px;
+    border-radius: 8px;
+    transition: all 0.3s linear;
+}
+
+.btn.sell-this-device:hover{
+    border: 3px solid var(--black);
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 3px solid #000000;
+    border-radius: 8px;
+    opacity: 1;
+}
+
+.btn.sell-this-device > p {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 24px/32px Sharp Sans No1 Semibold;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 24px/32px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    margin: 0;
+    padding-top: 11px;
+    transition: all 0.3s linear;
+}
+
+.btn.btn.sell-this-device.btn-active > p{
+    color: white;
+}
+
+.btn.btn.sell-this-device.btn-light > p{
+    color: black !important;
+}
+
+.btn.sell-this-device.active:hover{
+    background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
+    border: 3px solid var(--black);
+    background: #F28E33 0% 0% no-repeat padding-box;
+    border: 3px solid #000000;
+    border-radius: 8px;
+    opacity: 1;
+}
+
+.btn.sell-this-device.btn-light:hover{
+    border: 3px solid var(--black) !important;
+    border: 3px solid #000000 !important;
+    border-radius: 8px;
+    opacity: 1;
+}
+
+.btn.sell-this-device:hover > p{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 19px/26px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 25px/33px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.btn.sell-this-device.btn-light{
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+.btn.sell-this-device.btn-active{
+    background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
 }

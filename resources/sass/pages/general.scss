@@ -35,6 +35,10 @@
     background: transparent url('/customer_page_images/body/Sell-Orange.png') 0% 0% no-repeat padding-box;
 }
 
+.page-header-container.yourdetails, .page-header-container.basket{
+    background: transparent url('/images/basket_orange.svg') 0% 0% no-repeat padding-box;
+}
+
 .page-header-text{
     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-80)/var(--unnamed-line-spacing-90) var(--unnamed-font-family-sharp-sans-no1-bold);
     letter-spacing: var(--unnamed-character-spacing-0);
