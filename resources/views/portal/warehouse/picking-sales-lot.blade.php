@@ -24,7 +24,7 @@
 
         <div class="row">
 
-            <div class="col-md-4">
+            <div class="col-md-3">
 
                 <div class="row mb-3">
                     <div class="col-md-6"><p>Lot no.:</p></div>
@@ -49,56 +49,21 @@
                 <div class="border border-primary rounded p-3">
                     <input type="hidden" id="buildsaleslot-salelot" value="{{$saleLot->id}}">
                     @if($saleLot->sales_lot_status === 2)
-                    <div class="row">
-                        <div class="col-md-6">
-                            <a role="button" id="showscanboxdiv">
-                                <div class="btn btn-primary">Scan box No.</div>
-                            </a>
-                        </div>
-                        <div class="col-md-6">
-                            <a role="button" id="showscandevicediv">
-                                <div class="btn btn-primary btn-blue">Scan barcode No.</div>
-                            </a>
-                        </div>
-                    </div>
-                    
+
                     <div id="buildsaleslot-scanboxdiv" class="buildsaleslot-active">
                         
-                        <form action="/portal/warehouse-management/picking-despatch/pick-lot/pickbox" method="POST">
-                            @csrf
-                            <input type="hidden" name="buildsaleslot_salelot" value="{{$saleLot->id}}">
-                            <div class="portal-title">
-                                <p class="my-0">Enter Box Number </p>
-                            </div>
-                            <div class="form-group">
-                                <label for="buildssaleslot-scanboxinput">Scan or type box number:</label>
-                                <input type="text" class="form-control" name="buildssaleslot_scanboxinput" id="buildssaleslot-scanboxinput">
-                            </div>
-                            <div id="buildssaleslot-scandeviceinput-message">
-
-                            </div>
-                            <div class="col-md-12 p-0 my-3">
-                                <input type="submit" id="buildssaleslot-scanboxsubmit" class="btn btn-primary btn-blue" value="Pick box" disabled>
-                            </div>
-                        </form>
-                    </div>
-                    <div id="buildsaleslot-scandevicediv" class="buildsaleslot-hidden">
                         <form action="/portal/warehouse-management/picking-despatch/pick-lot/pickdevice" method="POST">
                             @csrf
-                            
                             <input type="hidden" name="buildsaleslot_salelot" value="{{$saleLot->id}}">
-                            <div class="portal-title">
-                                <p class="my-0">Enter Device Number </p>
-                            </div>
                             <div class="form-group">
-                                <label for="buildssaleslot-scandeviceinput">Scan or type device barcode:</label>
-                                <input type="text" class="form-control" name="buildssaleslot_scandeviceinput" id="buildssaleslot-scandeviceinput" >
+                                <label for="buildssaleslot_scan">Scan or type box or device tradein-id barcode number:</label>
+                                <input type="text" class="form-control" name="buildssaleslot_scan" id="buildssaleslot_scan">
                             </div>
                             <div id="buildssaleslot-scandeviceinput-message">
 
                             </div>
                             <div class="col-md-12 p-0 my-3">
-                                <input type="submit" id="buildssaleslot-scandevicesubmit" class="btn btn-primary btn-blue" value="Pick device">
+                                <input type="submit" id="buildssaleslot-scanboxsubmit" class="btn btn-primary btn-blue" value="Submit" >
                             </div>
                         </form>
                     </div>
@@ -154,34 +119,8 @@
 
             </div>
 
-            <div class="col-md-8">
-                <table class="portal-table my-3" id="pick-sales-lot-boxes">
-                    <thead>
-                        <tr>
-                            <th><div class="table-element">Box number</div></th>
-                            <th><div class="table-element">Bamboo Grade</div></th>
-                            <th><div class="table-element">Qty</div></th>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <td><div class="table-element">Box number</div></td>
-                            <td><div class="table-element">Bamboo Grade</div></td>
-                            <td><div class="table-element">Qty</div></td>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        @foreach ($boxes as $box)
-                        <tr @if($box->status === 5) class="box-picked" @endif>
-                            <td><div class="table-element">{{$box->tray_name}}</div></td>
-                            <td><div class="table-element">{{$box->tray_grade}}</div></td>
-                            <td><div class="table-element">{{$box->number_of_devices}}</div></td>
-                        </tr>
-                        @endforeach
-                    </tbody>
+            <div class="col-md-9">
 
-
-                </table>
                 <table class="portal-table my-3" id="pick-sales-lot-devices">
                     <thead>
                         <tr>
@@ -203,11 +142,11 @@
                     </tfoot>
                     <tbody>
                         @foreach ($devices as $device)
-                        @if(!$device->picked)
+                        @if(!$device->isPicked())
                         <tr>
                             <td><div class="table-element">{{$device->barcode}}</div></td>
                             <td><div class="table-element">{{$device->box_location}}</div></td>
-                            <td><div class="table-element">{{$device->cosmetic_condition}}</div></td>
+                            <td><div class="table-element">{{$device->getDeviceBambooGrade()}}</div></td>
                             <td><div class="table-element">{{$device->product_name}}</div></td>
                             <td><div class="table-element">{{$device->imei_number}}</div></td>
                         </tr>

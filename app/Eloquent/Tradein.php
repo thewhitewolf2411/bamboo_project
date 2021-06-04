@@ -385,6 +385,18 @@ class Tradein extends Model
         return true;
     }
 
+    public function fullyFunctional(){
+        $receivingStates = ["1", "2", "3", "4", "5", "6", "7", "8a", "8b", "8c", "8d", "8e", "8f", "9", "9a"];
+        if(in_array($this->job_state, $receivingStates)){
+            return 'N/A';
+        }
+        $quarantineStates = ["11e", "15e", "11i", "15i"];
+        if(in_array($this->job_state, $quarantineStates)){
+            return 'No';
+        }
+        return 'Yes';
+    }
+
     public function isFimpLocked(){
         if($this->fmip_gock && $this->getBrandId($this->product_id) === 1){
             return true;
@@ -1090,10 +1102,20 @@ class Tradein extends Model
     public function getDatePaid(){
         $paymentBatchDevice = PaymentBatchDevice::where('tradein_id', $this->id)->first();
 
-        if($paymentBatchDevice->payment_state === 1){
+        if($paymentBatchDevice && $paymentBatchDevice->payment_state === 1){
             return $paymentBatchDevice->updated_at;
         }
-        return null;
+        return 'N/A';
+    }
+
+    public function getCancellationDate(){
+        $despatchedTradein = DespatchedDevice::where('tradein_id', $this->id)->first();
+
+        if($despatchedTradein){
+            return $despatchedTradein->created_at;
+        }
+
+        return 'N/A';
     }
 
     public function getCustomerGradeAfterTesting(){

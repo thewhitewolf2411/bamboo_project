@@ -164,4 +164,12 @@ class Tray extends Model
         return false;
     }
 
+    public function isSold(){
+        if($this->status === 10){
+            return true;
+        }
+
+        return false;
+    }
+
 }

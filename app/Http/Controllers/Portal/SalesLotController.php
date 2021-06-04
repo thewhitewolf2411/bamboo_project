@@ -38,19 +38,15 @@ class SalesLotController extends Controller
         foreach($boxes as $key=>$box){
             if($box->isInBay()){
                 $salesLotBoxes = SalesLotContent::where('box_id', $box->id)->get();
-                if(count($salesLotBoxes) === $box->number_of_devices){
-                    unset($boxes[$key]);
-                }
-                else{
-                    $boxcontent = TrayContent::where('tray_id', $box->id)->get();
-                    #dd($boxcontent);
-                    foreach($boxcontent as $bc){
-                        if(SalesLotContent::where('device_id', $bc->trade_in_id)->first() === null){
-                            $tradein = Tradein::where('id', $bc->trade_in_id)->first();
-                            array_push($tradeins, $tradein);
-                        }
+                $boxcontent = TrayContent::where('tray_id', $box->id)->get();
+                #dd($boxcontent);
+                foreach($boxcontent as $bc){
+                    if(SalesLotContent::where('device_id', $bc->trade_in_id)->first() === null){
+                        $tradein = Tradein::where('id', $bc->trade_in_id)->first();
+                        array_push($tradeins, $tradein);
                     }
                 }
+                
             }
         }
 
@@ -242,14 +238,22 @@ class SalesLotController extends Controller
 
     public function removeFromSaleLot(Request $request){
         #dd($request->all());
+        $count = 0;
+        $price = 0;
 
         foreach(Session::get('tradeins') as $key=>$sessionTradein){
+
+            $price += $sessionTradein->bamboo_price + $sessionTradein->admin_cost + (2 * $sessionTradein->carriage_costs) + $sessionTradein->misc_cost;
+            $count +=1;
+
             if(in_array($sessionTradein['id'], $request->removedTradeins)){
+                $price -= $sessionTradein->bamboo_price + $sessionTradein->admin_cost + (2 * $sessionTradein->carriage_costs) + $sessionTradein->misc_cost;
+                $count -= 1;
                 unset(Session::get('tradeins')[$key]);
             }
         }
 
-        return response($request->removedTradeins, 200);
+        return response([$request->removedTradeins, $price, $count], 200);
 
     }
 
@@ -298,21 +302,12 @@ class SalesLotController extends Controller
 
                 $tradein = Tradein::where('id', $salesLotItem->id)->first();
 
-                //$oldTrayContent = TrayContent::where('trade_in_id', $tradein->id)->first();
-                //$oldTray = Tray::where('id', $oldTrayContent->tray_id)->first();
-                //$oldTray->number_of_devices = $oldTray->number_of_devices - 1;
-                //$oldTray->save();
-                //$oldTrayContent->delete();
-
                 $sli = new SalesLotContent();
                 $sli->sales_lot_id = $saleLot->id;
                 $sli->box_id = $tradein->getTrayId();
                 $sli->device_id = $tradein->id;
                 $sli->save();
 
-                //if(count(TrayContent::where('tray_id', $oldTray->id)->get()) === 0){
-                //    $oldTray->delete();
-                //}
             }
 
             return response(200);
@@ -378,13 +373,6 @@ class SalesLotController extends Controller
             $saleLot->date_sold = \Carbon\Carbon::now();
     
             $saleLot->save();
-
-            //$salesLotContent = SalesLotContent::where('sales_lot_id', $request->salelot_number)->get();
-
-            /*foreach($salesLotContent as $sLC){
-                $trayContent = TrayContent::where('trade_in_id', $sLC->device_id)->first();
-                $trayContent->delete();
-            }*/
     
             return redirect()->back()->with(['success'=>'You succesfully sold the lot.']);
         }

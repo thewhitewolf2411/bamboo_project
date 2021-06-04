@@ -91,7 +91,6 @@ $('#despatchpickingsaleslot').on('click', function(){
 
 $('#printpicknote').on('click', function(){
     var id = $('.saleslot-active').prop('id');
-    console.log(id);
     window.open('/portal/warehouse-management/picking-despatch/print-pick-note/' + id, '_blank');
 });
 
@@ -146,36 +145,4 @@ $(document).ready(function(){
             }
         } );
     });
-
-
-});
-
-$('#showscandevicediv').on('click', function(){
-
-    $('#buildsaleslot-scanboxdiv').removeClass('buildsaleslot-active');
-    $('#buildsaleslot-scanboxdiv').addClass('buildsaleslot-hidden');
-    $('#pick-sales-lot-devices').addClass('table-visible');
-    $('#pick-sales-lot-boxes').addClass('table-invisible');
-    $('#pick-sales-lot-boxes_wrapper').css('display', 'none');
-    $('#pick-sales-lot-devices_wrapper').css('display', 'block');
-    $('#showscandevicediv div').removeClass('btn-blue');
-
-    $('#buildsaleslot-scandevicediv').removeClass('buildsaleslot-hidden');
-    $('#buildsaleslot-scandevicediv').addClass('buildsaleslot-active');
-    $('#showscanboxdiv div').addClass('btn-blue');
-});
-
-$('#showscanboxdiv').on('click', function(){
-
-    $('#buildsaleslot-scanboxdiv').addClass('buildsaleslot-active');
-    $('#buildsaleslot-scanboxdiv').removeClass('buildsaleslot-hidden');
-    $('#pick-sales-lot-devices').addClass('table-invisible');
-    $('#pick-sales-lot-boxes').addClass('table-visible');
-    $('#pick-sales-lot-boxes_wrapper').css('display', 'block');
-    $('#pick-sales-lot-devices_wrapper').css('display', 'none');
-    $('#showscanboxdiv div').removeClass('btn-blue');
-
-    $('#buildsaleslot-scandevicediv').addClass('buildsaleslot-hidden');
-    $('#buildsaleslot-scandevicediv').removeClass('buildsaleslot-active');
-    $('#showscandevicediv div').addClass('btn-blue');
 });

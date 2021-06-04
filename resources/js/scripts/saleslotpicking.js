@@ -73,7 +73,7 @@ function handleShownData(data){
         for(const [key, item] of Object.entries(data.boxes)){
             $('#closedboxtable tbody tr#'+item.id).hide();  
             if(item.number_of_devices !== 0){
-                $('#closedboxtable tbody').append('<tr id="' + item.id + '"> <td><div class="table-element"> ' + item.tray_name + ' </div></td><td><div class="table-element">' + item.tray_grade + '</div></td> <td><div class="table-element">' + item.tray_network + '</div></td><td><div class="table-element"> ' + item.number_of_devices + ' / ' + item.max_number_of_devices + '</div></td> <td><div class="table-element">£' + item.total_cost + '</div></td> <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="' + item.id + '"></div></td> </tr>');
+                $('#closedboxtable tbody').append('<tr id="' + item.id + '"> <td><div class="table-element"> ' + item.tray_name + ' </div></td><td><div class="table-element">' + item.tray_grade + '</div></td> <td><div class="table-element">' + item.tray_network + '</div></td><td><div class="table-element"> ' + item.number_of_devices + '</div></td> <td><div class="table-element">£' + item.total_cost + '</div></td> <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="' + item.id + '"></div></td> </tr>');
             }          
         }
     }
@@ -176,8 +176,6 @@ $('#completelot').on('click', function(){
 
 function completeLotFunction(){
 
-    console.log(2);
-
     var url = $(location).attr('href');
     var rest = url.substring(0, url.lastIndexOf("/") + 1);
     var last = url.substring(url.lastIndexOf("/") + 1, url.length);
@@ -227,13 +225,16 @@ $('#removefromlot').on('click', function(){
             removedTradeins:removedTradeins,
         },
         success:function(response){
-            for(var i = 0; i<response.length; i++){
+            for(var i = 0; i<response[0].length; i++){
                 
                 $('#boxedtradeinstable tbody tr#'+response[i]).show();
                 //$('#saleslotboxes tr#'+response[i]).hide();
                 var table = $('#saleslotboxes').DataTable();
                 table.row('#' + response[i]).remove().draw();
             }
+
+            $('#total_qty').html(response[2]);
+            $('#total_cost').html('£' + response[1]);
         },
     });
 });

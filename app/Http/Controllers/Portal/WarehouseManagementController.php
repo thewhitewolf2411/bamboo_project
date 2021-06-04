@@ -715,32 +715,6 @@ class WarehouseManagementController extends Controller
     }
 
     public function printPickNote(Request $request){
-        // $salesLotContentBoxes = SalesLotContent::where('sales_lot_id', $request->saleslotid)->where('device_id', null)->get();
-        // $salesLotContentDevices = SalesLotContent::where('sales_lot_id', $request->saleslotid)->where('box_id', null)->get();
-
-        // $boxes = array();
-        // $devices = array();
-
-        // foreach($salesLotContentBoxes as $sLCB){
-        //     $box = Tray::where('id', $sLCB->box_id)->first();
-
-        //     if($box->trolley_id == null){
-        //         $box->trolley_id = 'Box not placed in a bay.';
-        //     }
-        //     else{
-        //         $box->trolley_id = $box->getTrolleyName($box->trolley_id);
-        //     }
-        //     array_push($boxes, $box);
-        // }
-
-        // foreach($salesLotContentDevices as $sLCD){
-        //     $device = Tradein::where('id', $sLCD->device_id)->first();
-        //     $device->product_name = $device->getProductName($device->product_id);
-        //     $device->box_location = $device->getTrayName($device->id);
-        //     $device->bay_location = $device->getBayName();
-        //     array_push($devices, $device);
-        // }
-
         $salesLotDevices = SalesLotContent::where('sales_lot_id', $request->saleslotid)->get();
         $device_ids = $salesLotDevices->pluck('device_id')->toArray();
         $tradeins = Tradein::whereIn('id', $device_ids)->get();
@@ -830,23 +804,43 @@ class WarehouseManagementController extends Controller
 
         #dd($request->all());
 
-        $tradein = Tradein::where('barcode', $request->buildssaleslot_scandeviceinput)->first();
+        $message = "";
 
-        if($tradein){
-            $salesLotContent = SalesLotContent::find($tradein->id)->first();
-            if($salesLotContent){
-                $salesLotContent->picked = true;
-                $salesLotContent->save();
+        $box = Tray::where('tray_name', $request->buildssaleslot_scan)->first();
+
+        if($box){
+            $salesLotContent = SalesLotContent::where('box_id', $box->id)->where('sales_lot_id', $request->buildsaleslot_salelot)->get();
+
+            foreach($salesLotContent as $saleLotDevice){
+                $saleLotDevice->picked = true;
+                $saleLotDevice->save();
             }
-            else{
-                return redirect()->back()->with('pickerror', 'This barcode is not recognized for this lot!');
-            }
+
+            $message = $request->buildssaleslot_scan . ' devices were succesfully picked.';
         }
         else{
-            return redirect()->back()->with('pickerror', 'This barcode is not recognized for this lot or tradein barcode does not exist!');
+            $tradein = Tradein::where('barcode', $request->buildssaleslot_scan)->first();
+
+            if($tradein){
+                $salesLotContent = SalesLotContent::where('device_id', $tradein->id)->where('sales_lot_id', $request->buildsaleslot_salelot)->first();
+                if($salesLotContent){
+                    $salesLotContent->picked = true;
+                    $salesLotContent->save();
+
+                    $message = $request->buildssaleslot_scan . ' was succesfully picked.';
+                }
+                else{
+                    return redirect()->back()->with('pickerror', 'This barcode is not recognized for this lot!');
+                }
+            }
+            else{
+                return redirect()->back()->with('pickerror', 'This barcode is not recognized for this lot or tradein barcode does not exist!');
+            }
         }
 
-        return redirect()->back();
+
+
+        return redirect()->back()->with(['success'=>$message]);
     }
 
     public function cancelPickingLot(Request $request){
@@ -893,18 +887,12 @@ class WarehouseManagementController extends Controller
         $boxcount = $salesLotContent->countBy('box_id');
         foreach($boxcount as $key=>$count){
             $box = Tray::find($key);
-            $boxContent = TrayContent::where('tray_id', $box->id)->get();
+            $box->number_of_devices = $box->number_of_devices - $count;
 
-            if($count === $box->number_of_devices){
-                $box->delete();
+            if($box->number_of_devices === 0){
+                $box->status = 10;
             }
-            else{
-                $box->number_of_devices = $box->number_of_devices - $count;
-                $box->save();
-            }
-            foreach($boxContent as $boxedDevice){
-                $boxedDevice->delete();
-            }
+            $box->save();
         }
 
         return redirect('/portal/warehouse-management/picking-despatch')->with(['success'=>'Picking succesfully completed']);

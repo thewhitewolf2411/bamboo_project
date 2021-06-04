@@ -46,6 +46,8 @@ class Reports{
         $sheet->setCellValue('AC1', 'Quarantine');
         $sheet->setCellValue('AD1', 'FMIP');
         $sheet->setCellValue('AE1', 'Stock Location');
+        $sheet->setCellValue('AF1', 'Paid Date');
+        $sheet->setCellValue('AG1', 'Cancellation Date');
 
         $from = "";
         $to = "";
@@ -76,19 +78,7 @@ class Reports{
                 $correctMemory = $tradein->correct_network;
             }
 
-            $fullyFunctional = '';
-            if($tradein->hasDeviceBeenReceived() && $tradein->hasBeenTested()){
-                if($tradein->isFullyFunctional()){
-                    $fullyFunctional = "Yes";
-                }
-                else{
-                    $fullyFunctional = "No";
-                }
-            }
-            else{
-                $fullyFunctional = 'N/A';
-            }
-
+            $fullyFunctional = $tradein->fullyFunctional();
 
             $fimp = '';
             if($tradein->isFimpLocked()){
@@ -194,6 +184,8 @@ class Reports{
             $sheet->setCellValue('AC'.$index, $quarantine);
             $sheet->setCellValue('AD'.$index, $fimp);
             $sheet->setCellValue('AE'.$index, $tradein->getTrayName($tradein->id));
+            $sheet->setCellValue('AF'.$index, $tradein->getDatePaid());
+            $sheet->setCellValue('AG'.$index, $tradein->getCancellationDate());
         }
 
         if(!is_dir(public_path() . '/reports/overview')){
@@ -270,13 +262,7 @@ class Reports{
                     $correctMemory = $tradein->correct_network;
                 }
 
-                $fullyFunctional = '';
-                if($tradein->isFullyFunctional()){
-                    $fullyFunctional = "Yes";
-                }
-                else{
-                    $fullyFunctional = "No";
-                }
+                $fullyFunctional = $tradein->fullyFunctional();
 
                 $fimp = '';
                 if($tradein->isFimpLocked()){
@@ -429,13 +415,7 @@ class Reports{
                     $correctNetwork = $tradein->correct_network;
                 }
 
-                $fullyFunctional = '';
-                if($tradein->isFullyFunctional()){
-                    $fullyFunctional = "Yes";
-                }
-                else{
-                    $fullyFunctional = "No";
-                }
+                $fullyFunctional = $tradein->fullyFunctional();
 
                 $fimp = '';
                 if($tradein->isFimpLocked()){
@@ -595,13 +575,7 @@ class Reports{
                     $correct_network = $tradein->correct_network;
                 }
 
-                $fullyFunctional = '';
-                if($tradein->isFullyFunctional()){
-                    $fullyFunctional = "Yes";
-                }
-                else{
-                    $fullyFunctional = "No";
-                }
+                $fullyFunctional = $tradein->fullyFunctional();
 
                 $fimpOrGoogle = 'NO';
                 if($tradein->isFimpLocked() || $tradein->isGoogleLocked()){
