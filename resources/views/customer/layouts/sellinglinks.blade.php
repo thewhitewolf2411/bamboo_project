@@ -1,14 +1,16 @@
+{{-- {!!dd(App\Helpers\MenuHelper::urlMatchesMobile())!!} --}}
+
 <div class="header-selling-links" id="selling-subheader-links">
     <div class="top-upper-elements-container">
 
-        <div class="top-element-container" id="sellmobilephones-header-link">
+        <div class="top-element-container @if(App\Helpers\MenuHelper::urlMatchesMobile())on-page @endif" id="sellmobilephones-header-link">
             <a href="/sell/shop/mobile/all" class="sell-links-item">
                 <p id="sell-mobile-text">Sell Mobile Phones</p>
                 <span id="selling-icon-dropdown-mobile" class="down"></span>
             </a>
         </div>
 
-        <div class="top-element-container" id="selltablets-header-link">
+        <div class="top-element-container @if(App\Helpers\MenuHelper::urlMatchesTablets())on-page @endif" id="selltablets-header-link">
             <a href="/sell/shop/tablets/all" class="sell-links-item">
                 <p id="sell-tablets-text">Sell Tablets</p>
                 <span id="selling-icon-dropdown-tablets" class="down"></span>
@@ -36,7 +38,7 @@
             </div> --}}
         </div>
 
-        <div class="top-element-container" id="sellwatches-header-link">
+        <div class="top-element-container @if(App\Helpers\MenuHelper::urlMatchesWatches())on-page @endif" id="sellwatches-header-link">
             <a href="/sell/shop/watches/all" class="sell-links-item">
                 <p id="sell-watches-text">Sell Watches</p>
                 <span id="selling-icon-dropdown-watches" class="down"></span>
@@ -58,7 +60,7 @@
             </div> --}}
         </div>
 
-        <div class="top-element-container" id="whysellwithus-header-link">
+        <div class="top-element-container @if(request()->path() === 'sell/why')on-page @endif" id="whysellwithus-header-link">
             <a href="/sell/why" class="sell-links-item">
                 <p>Why Sell With Us</p>
             </a>

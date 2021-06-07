@@ -13787,6 +13787,19 @@ header {
   text-align: center;
 }
 
+.top-element-container.on-page {
+  background: #fff;
+}
+
+.top-element-container.on-page > a > p {
+  color: #F28E33;
+  padding: 20px;
+}
+
+.top-element-container.on-page > a > span {
+  border-color: #F28E33 !important;
+}
+
 .top-element-container a:hover {
   color: #F28E33;
   padding: 20px;
@@ -17447,6 +17460,11 @@ input.lookup-delivery-basket::placeholder {
           user-select: none;
 }
 
+.basket-summary {
+  width: 100%;
+  max-width: 469px;
+}
+
 .basket-title-container {
   display: flex;
   flex-direction: row;
@@ -17499,6 +17517,8 @@ input.lookup-delivery-basket::placeholder {
 
 .basket-device-details {
   margin-right: 91px;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .cart-product {
@@ -17701,7 +17721,7 @@ input.lookup-delivery-basket::placeholder {
 }
 
 .trade-pack-type {
-  background-color: #ffefcc;
+  background: #fff9ed;
 }
 
 .title-trade-pack-type-large {

@@ -1567,6 +1567,10 @@ input.lookup-delivery-basket::placeholder{
 
 
 // sell cart
+.basket-summary{
+    width: 100%;
+    max-width: 469px;
+}
 
 .basket-title-container{
     display: flex;
@@ -1620,6 +1624,8 @@ input.lookup-delivery-basket::placeholder{
 
 .basket-device-details{
     margin-right: 91px;
+    width: 100%;
+    max-width: 1200px;
 }
 
 .cart-product{
@@ -1832,7 +1838,9 @@ input.lookup-delivery-basket::placeholder{
 
 
 .trade-pack-type{
-    background-color: #ffefcc;
+    // background-color: #ffefcc;
+    // background: #FCC44C 0% 0% no-repeat padding-box;
+    background: #fff9ed;
 }
 
 .title-trade-pack-type-large{

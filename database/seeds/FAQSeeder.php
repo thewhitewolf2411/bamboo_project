@@ -99,7 +99,7 @@ class FAQSeeder extends Seeder
         #13
         FAQ::create([
             'question' => 'Any Other Questions?',
-            'answer' => 'You can contact us through our <a href="/contact" class="answer-text link">Contact Us</a> Tab or telephone directly – don’t be shy give us a try!'
+            'answer' => 'You can contact us through our <a href="/contact?selected=message" class="answer-text link">Contact Us</a> Tab or telephone directly – don’t be shy give us a try!'
         ]);
     }
 }

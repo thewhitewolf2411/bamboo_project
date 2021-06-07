@@ -9,7 +9,8 @@
         </div>
     </div> --}}
     <div class="page-header-container servicesupport">
-        <p class="page-header-text">Service & Support</p>
+        {{-- <p class="page-header-text">Service & Support</p> --}}
+        <p class="page-header-text">FAQ’s</p>
     </div>
 
     @if(Session::get('_previous') !== null)

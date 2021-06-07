@@ -790,6 +790,20 @@ header{
     text-align: center;
 }
 
+.top-element-container.on-page{
+    background: #fff;
+    //color: #F28E33;
+}
+
+.top-element-container.on-page > a > p{
+    color: #F28E33;
+    padding: 20px;
+}
+
+.top-element-container.on-page > a > span{
+    border-color: #F28E33 !important;
+}
+
 .top-element-container a:hover{
     color: #F28E33;
     padding: 20px;

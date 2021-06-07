@@ -29,14 +29,8 @@
     <body>
         <header>@include('customer.layouts.header')</header>
         <main>
-            <div class="shop-top-header" style="margin: 0;">
-                <div class="center-title-container">
-                    <div class="let-top-container">
-                        <div class="center-title-container">
-                            <p> Confirmation </p>
-                        </div>
-                    </div>
-                </div>
+            <div class="page-header-container yourdetails">
+                <p class="page-header-text">Confirmation</p>
             </div>
 
             <div class="cart-breadcrumbs p-3 ml-5">
@@ -63,11 +57,11 @@
                         <div class="confirmation-info-row">
                             @if(!$tradein->trade_pack_send_by_customer)
                                 <div class="single-box-confirmation mb-5">
-                                    <img class="confirmation-info-img" src="{{asset('/customer_page_images/body/free_bamboo_trade_pack.svg')}}">
+                                    {{-- <img class="confirmation-info-img" src="{{asset('/customer_page_images/body/free_bamboo_trade_pack.svg')}}"> --}}
+                                    <img class="confirmation-info-img" src="{{asset('/customer_page_images/body/final_free_trade_pack.svg')}}">
                                     <p class="confirmation-info-text-bold-smaller mt-4 ml-0">Hold tight! Your Free Trade Pack is on its way to you</p>
                                     <p class="confirmation-info-text mt-2">
                                         Thank you for selling your device with us and ordering a Free Trade Pack – this will be posted via 1st Class post via Royal Mail.<br>
-                                        [Please can the icon change for this to reflect a Free Postage label and a postal bag instead of a box. Also change the ‘FREE post pack’ to ‘FREE Trade Pack’]
                                     </p>
                                 </div>
                             @else
@@ -141,6 +135,7 @@
         
 
         </main>
+        @include('customer.layouts.footer', ['showGetstarted' => true])
 
     </body>
     <script>

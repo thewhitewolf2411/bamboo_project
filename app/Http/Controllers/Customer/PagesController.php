@@ -358,4 +358,25 @@ class PagesController extends Controller
         #dd($labelService->downloadTradeLabel($requestData));
         return $labelService->downloadTradeLabel($requestData);
     }
+    
+
+    /**
+     * Download document from service&support.
+     */
+    public function downloadInstructions(Request $request, string $type){
+
+        if($type !== null){
+            switch ($type) {
+                case 'icloud':
+                    return response()->download(public_path().'/Remove FMIP iCloud Instructions_V2.docx');
+                    break;
+                case 'google':
+                    return response()->download(public_path().'/Remove Android lock Instructions_V2.docx');
+                    break;
+                default:
+                    abort(404);
+                    break;
+            }
+        }
+    }
 }

@@ -129,7 +129,7 @@
         $('#packaging-label-loader').addClass('hidden');
         $('#labelDeliveryModal').modal('hide');
 
-        $('#labels-iframe').attr('src', '/Bamboo_4pp_InfoLeaflet_PrintYourOwn_V2.pdf');
+        $('#labels-iframe').attr('src', '/Bamboo_4pp_InfoLeaflet_PrintYourOwn_PlannedUp.pdf');
         $('#labels-print-modal').modal('show');
         
         // $.ajax({

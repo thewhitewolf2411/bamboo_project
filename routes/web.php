@@ -39,6 +39,8 @@ Route::get('/contact/{selected?}', 'Customer\PagesController@showContactPage')->
     'uses'=>'Customer\CustomerController@setPage'
 ]);*/
 
+Route::get('/instructions/{type}', 'Customer\PagesController@downloadInstructions');
+
 Route::post('/sendMessage', 'Customer\PagesController@sendMessage');
 
 //Route::get('/password/reset', 'Customer\PagesController@showPaswordResetPage')->name('password.request');

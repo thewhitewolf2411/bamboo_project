@@ -352,7 +352,8 @@
                     <div class="home-links-element">
                         <a href="/support">
                             <div class="home-link-container" id="service">
-                                <p>Service & Support</p>
+                                {{-- <p>Service & Support</p> --}}
+                                <p>FAQ’s</p>
                                 <img src="{{asset('/customer_page_images/body/home-link-images/home-links-2.svg')}}">
                             </div>
                         </a>

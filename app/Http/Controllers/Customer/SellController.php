@@ -721,7 +721,7 @@ class SellController extends Controller
                 return response(['data' => $data], 200);
             } else {
                 $data = [
-                    'message' => 'Invalid promotional code.', 
+                    'message' => "Boo's currently not running any promotions but soon will be! Check us out of FB, Insta and YouTube for details!", 
                     'pass' => false
                 ];
                 return response(['data' => $data], 200);

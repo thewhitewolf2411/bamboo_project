@@ -72,4 +72,22 @@ class MenuHelper {
         return $brands;
     }
 
+    public static function urlMatchesMobile(){
+        if(str_contains(request()->url(), '/sell/shop/mobile')){
+            return true;
+        }
+    }
+
+    public static function urlMatchesTablets(){
+        if(str_contains(request()->url(), '/sell/shop/tablets')){
+            return true;
+        }
+    }
+
+    public static function urlMatchesWatches(){
+        if(str_contains(request()->url(), '/sell/shop/watches')){
+            return true;
+        }
+    }
+
 }
