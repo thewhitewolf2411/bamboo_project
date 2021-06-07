@@ -55,8 +55,8 @@
                                         <p class="mr-0 ml-0">GB Size: {{$tradein->getDeviceMemory()}}</p><br>
                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                     </div>
-                                    <div class="d-flex w-25 border p-3"><label for="missing-yes">Device is present.</label><input id="missing-yes" type="radio" name="missing" @if($tradein->received) checked @endif value="present" required></div>
-                                    <div class="d-flex w-25 border p-3"><label for="missing-no">Device is not present</label><input id="missing-no" type="radio" name="missing" value="missing"></div>
+                                    <div class="d-flex flex-column justify-content-center align-items-center w-25 border p-3"><label for="missing-yes" class="mx-0 my-3">Device is present.</label><input id="missing-yes" class="select-input-fixed" type="radio" name="missing" @if($tradein->received) checked @endif value="present" required></div>
+                                    <div class="d-flex flex-column justify-content-center align-items-center w-25 border p-3"><label for="missing-no" class="mx-0 my-3">Device is not present</label><input id="missing-no" class="select-input-fixed" type="radio" name="missing" value="missing"></div>
                                 </div>
                                 <div class="d-flex w-100 hidden" id="missing-image-div">
                                     <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Image proof that device is missing</p></div>

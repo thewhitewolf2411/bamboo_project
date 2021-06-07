@@ -475,6 +475,14 @@ input[type=number] {
     width: 100% !important;
 }
 
+#salelotcontent-table_wrapper{
+    width: 100% !important;
+}
+
+#salelotcontent-table tfoot{
+    display: table-header-group !important;
+}
+
 .box-table-show  tfoot {
     display: table-header-group;
 }
@@ -691,10 +699,6 @@ input[type=number] {
     display: none;
 }
 
-#pick-sales-lot-devices_wrapper{
-    display: none;
-}
-
 #pick-sales-lot-devices > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(1) {
     width: auto !important;
 }
@@ -734,6 +738,12 @@ input[type=number] {
 
 .feed-container{
     cursor: pointer;
+}
+
+.select-input-fixed{
+    margin: 0 !important;
+    width: 20px;
+    height: 20px;
 }
 
 @media only screen and (max-width: 1720px) {

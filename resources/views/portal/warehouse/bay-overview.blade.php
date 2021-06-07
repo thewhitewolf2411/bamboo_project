@@ -54,13 +54,15 @@
                     <td><div class="table-element">Print Bay Label</div></td>
                 </tr>
                 @foreach ($bays as $bay)
-                <tr>
-                    <td><a href="/portal/warehouse-management/bay-overview/bay/?bay_id_scan={{$bay->trolley_name}}"><div class="table-element">{{$bay->trolley_name}}</div></a></td>
-                    <td><a href="/portal/warehouse-management/bay-overview/bay/?bay_id_scan={{$bay->trolley_name}}"><div class="table-element">{{$bay->getNumberOfTrays()}}</div></a></td>
-                    <td><a href="/portal/warehouse-management/bay-overview/bay/?bay_id_scan={{$bay->trolley_name}}"><div class="table-element">{{$bay->getNumberOfDevices($bay->id)}}</div></a></td>
-                    <td><div class="table-element">@if($bay->canBeDeleted()) <div class="btn btn-primary baydelete" id="{{$bay->trolley_name}}"><p style="color: #fff;">Delete</p></div> @else Bay cannot be deleted @endif</div></td>
-                    <td><div class="table-element"><div class="btn btn-primary printbaylabel" data-value="{{$bay->id}}"><p style="color: #fff;">Print</p></div></div></td>
-                </tr>
+                
+                    <tr>
+                        <td><a href="/portal/warehouse-management/bay-overview/bay/?bay_id_scan={{$bay->trolley_name}}"><div class="table-element">{{$bay->trolley_name}}</div></a></td>
+                        <td><a href="/portal/warehouse-management/bay-overview/bay/?bay_id_scan={{$bay->trolley_name}}"><div class="table-element">{{$bay->getNumberOfTrays()}}</div></a></td>
+                        <td><a href="/portal/warehouse-management/bay-overview/bay/?bay_id_scan={{$bay->trolley_name}}"><div class="table-element">{{$bay->getNumberOfDevices()}}</div></a></td>
+                        <td><div class="table-element">@if($bay->canBeDeleted()) <div class="btn btn-primary baydelete" id="{{$bay->trolley_name}}"><p style="color: #fff;">Delete</p></div> @else Bay cannot be deleted @endif</div></td>
+                        <td><div class="table-element"><div class="btn btn-primary printbaylabel" data-value="{{$bay->id}}"><p style="color: #fff;">Print</p></div></div></td>
+                    </tr>
+
                 @endforeach
             </table>
 

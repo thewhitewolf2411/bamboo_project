@@ -126,7 +126,7 @@
                             <td><div class="table-element">{{$box->tray_name ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element">{{$box->tray_grade ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element">{{$box->tray_network ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">{{$box->number_of_devices}} }}</div></td>
+                            <td><div class="table-element">{{$box->number_of_devices }}</div></td>
                             <td><div class="table-element">£{{$box->getBoxPrice() ?? null ?: 'N/A'}}</div></td>
                             <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="{{$box->id}}"></div></td>
                         </tr>

@@ -107,7 +107,7 @@
                                 </div>
                                 <div class="form-group p20 w-25">
                                     <input type="checkbox" class="form-check-input" name="quarantine_managment" id="quarantine_managment" @if(isset($userdata) && $thisportalUser->quarantine_managment) checked @endif>
-                                    <label class="form-check-label" for="quarantine_managment">Quarantine Managment</label>
+                                    <label class="form-check-label" for="quarantine_managment">Quarantine Management</label>
                                 </div>
                                 <div class="form-group p20 w-25">
                                     <input type="checkbox" class="form-check-input" name="warehouse_management" id="warehouse_management" @if(isset($userdata) && $thisportalUser->warehouse_management) checked @endif>

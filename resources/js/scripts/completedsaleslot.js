@@ -15,6 +15,9 @@ $('.saleslots').on('click', function () {
     $(this).addClass('saleslot-active');
 
     $('#saleslot-option-buttons button').prop('disabled', false);
+    if($('.saleslot-active').data('editable') == false){
+        $('#edit-lot-btn').prop('disabled', true);
+    }
 
 });
 
@@ -127,7 +130,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#saleslotboxes tfoot td').each(function () {
+    /*$('#saleslotboxes tfoot td').each(function () {
         var title = $(this).text();
         $(this).html('<input type="text" placeholder="Search ' + title + '" />');
     });
@@ -154,7 +157,7 @@ $(document).ready(function () {
                     .draw();
             }
         });
-    });
+    });*/
 
 
     $('#closedboxtable tfoot td').each(function () {

@@ -15,6 +15,7 @@ use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
 use App\Eloquent\Trolley;
 use App\Eloquent\TrolleyContent;
+use App\Services\DateTimeService;
 use App\Services\DespatchService;
 use App\Services\NotificationService;
 use App\User;
@@ -382,6 +383,18 @@ class Tradein extends Model
             return false;
         }
         return true;
+    }
+
+    public function fullyFunctional(){
+        $receivingStates = ["1", "2", "3", "4", "5", "6", "7", "8a", "8b", "8c", "8d", "8e", "8f", "9", "9a"];
+        if(in_array($this->job_state, $receivingStates)){
+            return 'N/A';
+        }
+        $quarantineStates = ["11e", "15e", "11i", "15i"];
+        if(in_array($this->job_state, $quarantineStates)){
+            return 'No';
+        }
+        return 'Yes';
     }
 
     public function isFimpLocked(){
@@ -1052,8 +1065,8 @@ class Tradein extends Model
         $auditTrailLatest = \Carbon\Carbon::parse($this->created_at);
         $auditTrailSecond = \Carbon\Carbon::now();
 
-        $difference = $auditTrailLatest->diffForHumans($auditTrailSecond);
-       #dd($difference);
+        $dateTimeService = new DateTimeService();
+        $difference = $dateTimeService->timeDifference($auditTrailLatest, $auditTrailSecond);
 
         return $difference;
     }
@@ -1068,7 +1081,10 @@ class Tradein extends Model
         $datework = Carbon::parse($paymentBatchDevice->updated_at);
         $now = Carbon::now();
 
-        return $datework->diffInHours($now);
+        $dateTimeService = new DateTimeService();
+        $difference = $dateTimeService->timeDifference($datework, $now);
+
+        return $difference;
     }
 
     public function getTimePassed(){
@@ -1077,16 +1093,29 @@ class Tradein extends Model
         $datework = Carbon::parse($paymentBatchDevice->updated_at);
         $now = Carbon::now();
 
-        return $datework->diffInHours($now);
+        $dateTimeService = new DateTimeService();
+        $difference = $dateTimeService->timeDifference($datework, $now);
+
+        return $difference;
     }
 
     public function getDatePaid(){
         $paymentBatchDevice = PaymentBatchDevice::where('tradein_id', $this->id)->first();
 
-        if($paymentBatchDevice->payment_state === 1){
+        if($paymentBatchDevice && $paymentBatchDevice->payment_state === 1){
             return $paymentBatchDevice->updated_at;
         }
-        return null;
+        return 'N/A';
+    }
+
+    public function getCancellationDate(){
+        $despatchedTradein = DespatchedDevice::where('tradein_id', $this->id)->first();
+
+        if($despatchedTradein){
+            return $despatchedTradein->created_at;
+        }
+
+        return 'N/A';
     }
 
     public function getCustomerGradeAfterTesting(){
@@ -1164,6 +1193,15 @@ class Tradein extends Model
         return false;
     }
 
+    public function getSalesLotNumber(){
+        $saleLotContent = SalesLotContent::where('device_id', $this->id)->first();
+        if($saleLotContent){
+            return $saleLotContent->sales_lot_id;
+        }
+
+        return "N/A";
+    }
+
     public function isPicked(){
 
         $saleLotContent = SalesLotContent::where('device_id', $this->id)->first();
@@ -1176,11 +1214,13 @@ class Tradein extends Model
 
     public function isInQuarantineTrayBin(){
         $tray_id = TrayContent::where('trade_in_id', $this->id)->first();
-        $tray = Tray::find($tray_id->tray_id);
+        if($tray_id){
+            $tray = Tray::find($tray_id->tray_id);
 
-        if($tray){
-            if($tray->tray_brand === 'Q'){
-                return true;
+            if($tray){
+                if($tray->tray_brand === 'Q'){
+                    return true;
+                }
             }
         }
 

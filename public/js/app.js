@@ -57735,6 +57735,9 @@ $('.saleslotpicking').on('click', function () {
   } else {
     $('#starttopicklot').prop('disabled', true);
   }
+
+  var id = $(this).prop('id');
+  fetchSaleLotData(id);
 });
 $('#starttopicklot').on('click', function () {
   var status = $('.saleslot-active').data('status');
@@ -57775,7 +57778,6 @@ $('#despatchpickingsaleslot').on('click', function () {
 });
 $('#printpicknote').on('click', function () {
   var id = $('.saleslot-active').prop('id');
-  console.log(id);
   window.open('/portal/warehouse-management/picking-despatch/print-pick-note/' + id, '_blank');
 });
 $(document).ready(function () {
@@ -57818,30 +57820,47 @@ $(document).ready(function () {
     });
   });
 });
-$('#showscandevicediv').on('click', function () {
-  $('#buildsaleslot-scanboxdiv').removeClass('buildsaleslot-active');
-  $('#buildsaleslot-scanboxdiv').addClass('buildsaleslot-hidden');
-  $('#pick-sales-lot-devices').addClass('table-visible');
-  $('#pick-sales-lot-boxes').addClass('table-invisible');
-  $('#pick-sales-lot-boxes_wrapper').css('display', 'none');
-  $('#pick-sales-lot-devices_wrapper').css('display', 'block');
-  $('#showscandevicediv div').removeClass('btn-blue');
-  $('#buildsaleslot-scandevicediv').removeClass('buildsaleslot-hidden');
-  $('#buildsaleslot-scandevicediv').addClass('buildsaleslot-active');
-  $('#showscanboxdiv div').addClass('btn-blue');
-});
-$('#showscanboxdiv').on('click', function () {
-  $('#buildsaleslot-scanboxdiv').addClass('buildsaleslot-active');
-  $('#buildsaleslot-scanboxdiv').removeClass('buildsaleslot-hidden');
-  $('#pick-sales-lot-devices').addClass('table-invisible');
-  $('#pick-sales-lot-boxes').addClass('table-visible');
-  $('#pick-sales-lot-boxes_wrapper').css('display', 'block');
-  $('#pick-sales-lot-devices_wrapper').css('display', 'none');
-  $('#showscanboxdiv div').removeClass('btn-blue');
-  $('#buildsaleslot-scandevicediv').addClass('buildsaleslot-hidden');
-  $('#buildsaleslot-scandevicediv').removeClass('buildsaleslot-active');
-  $('#showscandevicediv div').addClass('btn-blue');
-});
+
+function fetchSaleLotData(id) {
+  $.ajax({
+    url: "/portal/warehouse-management/picking-despatch/getsalelotdata/" + id,
+    type: "GET",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(response) {
+      $('#salelotcontent-table-container').empty();
+      $('#salelotcontent-table-container').append('<table class="portal-table w-100" id="salelotcontent-table"><thead><td><div class="table-element">Lot Number</div></td><td><div class="table-element">Box Number</div></td><td><div class="table-element">Bay Location</div></td><td><div class="table-element">QTY</div></td></thead><tfoot><td><div class="table-element">Lot Number</div></td><td><div class="table-element">Box Number</div></td><td><div class="table-element">Bay Location</div></td><td><div class="table-element">QTY</div></td></tfoot><tbody></tbody></table>');
+      $('#salelotcontent-table_wrapper').addClass('w-100');
+      var t = $('#salelotcontent-table').DataTable({
+        "oLanguage": {
+          "sInfo": "Showing _START_ to _END_"
+        },
+        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+        "pageLength": -1
+      });
+      $('#salelotcontent-table tfoot td').each(function () {
+        var title = $(this).text();
+        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+      });
+      t.columns().every(function () {
+        var that = this;
+        $('input', this.footer()).on('keyup change', function () {
+          if (that.search() !== this.value) {
+            that.search(this.value).draw();
+          }
+        });
+      });
+
+      for (var i = 1; i < response.length; i++) {
+        t.row.add(response[i]).draw(true);
+      }
+    },
+    error: function error(response) {
+      alert('Something went wrong. Please try again.');
+    }
+  });
+}
 
 /***/ }),
 
@@ -58076,6 +58095,10 @@ $('.saleslots').on('click', function () {
   });
   $(this).addClass('saleslot-active');
   $('#saleslot-option-buttons button').prop('disabled', false);
+
+  if ($('.saleslot-active').data('editable') == false) {
+    $('#edit-lot-btn').prop('disabled', true);
+  }
 });
 $('#view-sales-lot-btn').on('click', function () {
   var selectedid = $('.saleslot-active').attr('id');
@@ -58161,26 +58184,32 @@ $(document).ready(function () {
       }
     });
   });
-  $('#saleslotboxes tfoot td').each(function () {
-    var title = $(this).text();
-    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  /*$('#saleslotboxes tfoot td').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
   });
-  var salelotitems = $('#saleslotboxes').DataTable({
-    "oLanguage": {
-      "sInfo": "Showing _START_ to _END_"
-    },
-    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": -1
-  }); // Apply the search
-
+    var salelotitems = $('#saleslotboxes').DataTable({
+      "oLanguage": {
+          "sInfo": "Showing _START_ to _END_",
+      },
+      "lengthMenu": [
+          [10, 25, 50, 100, -1],
+          [10, 25, 50, 100, "All"]
+      ],
+      "pageLength": -1,
+  });
+    // Apply the search
   salelotitems.columns().every(function () {
-    var that = this;
-    $('input', this.footer()).on('keyup change', function () {
-      if (that.search() !== this.value) {
-        that.search(this.value).draw();
-      }
-    });
-  });
+        var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+          if (that.search() !== this.value) {
+              that
+                  .search(this.value)
+                  .draw();
+          }
+      });
+  });*/
+
   $('#closedboxtable tfoot td').each(function () {
     var title = $(this).text();
     $(this).html('<input type="text" placeholder="Search ' + title + '" />');
@@ -58954,14 +58983,20 @@ function handleShownData(data) {
       $('#closedboxtable tbody tr#' + item.id).hide();
 
       if (item.number_of_devices !== 0) {
-        $('#closedboxtable tbody').append('<tr id="' + item.id + '"> <td><div class="table-element"> ' + item.tray_name + ' </div></td><td><div class="table-element">' + item.tray_grade + '</div></td> <td><div class="table-element">' + item.tray_network + '</div></td><td><div class="table-element"> ' + item.number_of_devices + ' / ' + item.max_number_of_devices + '</div></td> <td><div class="table-element">£' + item.total_cost + '</div></td> <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="' + item.id + '"></div></td> </tr>');
+        $('#closedboxtable tbody').append('<tr id="' + item.id + '"> <td><div class="table-element"> ' + item.tray_name + ' </div></td><td><div class="table-element">' + item.tray_grade + '</div></td> <td><div class="table-element">' + item.tray_network + '</div></td><td><div class="table-element"> ' + item.number_of_devices + '</div></td> <td><div class="table-element">£' + Math.round(item.total_cost * 100) / 100 + '</div></td> <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="' + item.id + '"></div></td> </tr>');
       }
     }
   }
 
   if (data.tradeins) {
     //$('#saleslotboxes tbody').empty();
-    var table = $('#saleslotboxes').DataTable();
+    var table = $('#saleslotboxes').DataTable({
+      "oLanguage": {
+        "sInfo": "Showing _START_ to _END_"
+      },
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "pageLength": -1
+    });
     table.rows().remove();
 
     for (var _i2 = 0, _Object$entries2 = Object.entries(data.tradeins); _i2 < _Object$entries2.length; _i2++) {
@@ -58984,14 +59019,27 @@ function handleShownData(data) {
         4: '£' + _item.total_cost,
         5: '<input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + _item.id + '">'
       }).node().id = _item.id;
-      table.draw(false);
+      table.draw(true);
       $('#exportxls').prop('disabled', false);
       $('#completelot').prop('disabled', false);
     }
+
+    $('#saleslotboxes tfoot td').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    table.columns().every(function () {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+        if (that.search() !== this.value) {
+          that.search(this.value, true, false).draw();
+        }
+      });
+    });
   }
 
   $('#total_qty').html(total_quantity);
-  $('#total_cost').html('£' + total_price);
+  $('#total_cost').html('£' + Math.round(total_price * 100) / 100);
 }
 
 $('#exportxls').on('click', function () {
@@ -59038,7 +59086,6 @@ $('#completelot').on('click', function () {
 });
 
 function completeLotFunction() {
-  console.log(2);
   var url = $(location).attr('href');
   var rest = url.substring(0, url.lastIndexOf("/") + 1);
   var last = url.substring(url.lastIndexOf("/") + 1, url.length);
@@ -59080,12 +59127,15 @@ $('#removefromlot').on('click', function () {
       removedTradeins: removedTradeins
     },
     success: function success(response) {
-      for (var i = 0; i < response.length; i++) {
+      for (var i = 0; i < response[0].length; i++) {
         $('#boxedtradeinstable tbody tr#' + response[i]).show(); //$('#saleslotboxes tr#'+response[i]).hide();
 
         var table = $('#saleslotboxes').DataTable();
         table.row('#' + response[i]).remove().draw();
       }
+
+      $('#total_qty').html(response[2]);
+      $('#total_cost').html('£' + Math.round(response[1] * 100) / 100);
     }
   });
 });

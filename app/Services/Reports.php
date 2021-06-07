@@ -46,6 +46,9 @@ class Reports{
         $sheet->setCellValue('AC1', 'Quarantine');
         $sheet->setCellValue('AD1', 'FMIP');
         $sheet->setCellValue('AE1', 'Stock Location');
+        $sheet->setCellValue('AF1', 'Paid Date');
+        $sheet->setCellValue('AG1', 'Cancellation Date');
+        $sheet->setCellValue('AH1', 'Sales Lot Number');
 
         $from = "";
         $to = "";
@@ -76,19 +79,7 @@ class Reports{
                 $correctMemory = $tradein->correct_network;
             }
 
-            $fullyFunctional = '';
-            if($tradein->hasDeviceBeenReceived() && $tradein->hasBeenTested()){
-                if($tradein->isFullyFunctional()){
-                    $fullyFunctional = "Yes";
-                }
-                else{
-                    $fullyFunctional = "No";
-                }
-            }
-            else{
-                $fullyFunctional = 'N/A';
-            }
-
+            $fullyFunctional = $tradein->fullyFunctional();
 
             $fimp = '';
             if($tradein->isFimpLocked()){
@@ -177,7 +168,7 @@ class Reports{
             $sheet->setCellValue('L'.$index, '£' . $total);
             $sheet->setCellValue('M'.$index, $tradein->customer_grade);
             $sheet->setCellValue('N'.$index, $tradein->bamboo_grade);
-            $sheet->setCellValue('O'.$index, $tradein->cosmetic_condition);
+            $sheet->setCellValue('O'.$index, $tradein->getDeviceBambooGrade());
             $sheet->setCellValue('P'.$index, $tradein->getCustomerStatus());
             $sheet->setCellValue('Q'.$index, $tradein->getBambooStatus());
             $sheet->setCellValue('R'.$index, $fullyFunctional);
@@ -194,6 +185,9 @@ class Reports{
             $sheet->setCellValue('AC'.$index, $quarantine);
             $sheet->setCellValue('AD'.$index, $fimp);
             $sheet->setCellValue('AE'.$index, $tradein->getTrayName($tradein->id));
+            $sheet->setCellValue('AF'.$index, $tradein->getDatePaid());
+            $sheet->setCellValue('AG'.$index, $tradein->getCancellationDate());
+            $sheet->setCellValue('AH'.$index, $tradein->getSalesLotNumber());
         }
 
         if(!is_dir(public_path() . '/reports/overview')){
@@ -270,13 +264,7 @@ class Reports{
                     $correctMemory = $tradein->correct_network;
                 }
 
-                $fullyFunctional = '';
-                if($tradein->isFullyFunctional()){
-                    $fullyFunctional = "Yes";
-                }
-                else{
-                    $fullyFunctional = "No";
-                }
+                $fullyFunctional = $tradein->fullyFunctional();
 
                 $fimp = '';
                 if($tradein->isFimpLocked()){
@@ -429,13 +417,7 @@ class Reports{
                     $correctNetwork = $tradein->correct_network;
                 }
 
-                $fullyFunctional = '';
-                if($tradein->isFullyFunctional()){
-                    $fullyFunctional = "Yes";
-                }
-                else{
-                    $fullyFunctional = "No";
-                }
+                $fullyFunctional = $tradein->fullyFunctional();
 
                 $fimp = '';
                 if($tradein->isFimpLocked()){
@@ -595,13 +577,7 @@ class Reports{
                     $correct_network = $tradein->correct_network;
                 }
 
-                $fullyFunctional = '';
-                if($tradein->isFullyFunctional()){
-                    $fullyFunctional = "Yes";
-                }
-                else{
-                    $fullyFunctional = "No";
-                }
+                $fullyFunctional = $tradein->fullyFunctional();
 
                 $fimpOrGoogle = 'NO';
                 if($tradein->isFimpLocked() || $tradein->isGoogleLocked()){

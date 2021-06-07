@@ -72,7 +72,7 @@ class TestingController extends Controller
         if($tradein == null){
             return redirect()->back()->with('error', 'There is no such device');
         }
-        if($tradein->job_state === "9" || $tradein->job_state === "9a" || $tradein->job_state === "10" || $tradein->job_state === "13" || $tradein->job_state === "14"){
+        if($tradein->job_state === "9" || $tradein->job_state === "9a" || $tradein->job_state === "13" || $tradein->job_state === "14"){
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
             $product_networks = ProductNetworks::where('product_id', $tradein->product_id)->get()->pluck('network_id');

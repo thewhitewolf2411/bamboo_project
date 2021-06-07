@@ -214,6 +214,7 @@
                         </tfoot>
                         <tbody>
                             @foreach ($boxedTradeIns as $boxedTradein)
+                            @if(!$boxedTradein->isPicked())
                             <tr>
                                 <td><div class="table-element">{{$boxedTradein->getTrayName($boxedTradein->id)}}</div></td>
                                 <td><div class="table-element">{{$boxedTradein->barcode}}</div></td>
@@ -223,6 +224,7 @@
                                 @else<td><div class="table-element">N/A</div></td>@endif
                                 <td><div class="table-element">{{$boxedTradein->getProductName()}}</div></td>
                             </tr>
+                            @endif
                             @endforeach
                         </tbody>
                     </table>
@@ -249,24 +251,26 @@
                         <tbody>
                             
                             @foreach ($boxes as $test)
-                                <tr>
-                                    <td><div class="table-element">{{$test->tray_name}}</div></td>
-                                    <td><div class="table-element">{{$test->number_of_devices}}</div></td>
-                                    <td><div class="table-element">{{$test->getBoxStatus()}}</div></td>
-                                    <td><div class="table-element">
-                                        <a role="button" class="printboxlabel" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Label</a> / 
-                                        <a role="button" class="printboxmanifest" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Manifest</a> / 
-                                        <a role="button" class="printboxsummary" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Summary</a> / 
-                                        @if(!$test->isBoxInSaleLot() && $test->trolley_id === null) <a href="/portal/warehouse-management/box-management/{{$test->id}}" id="{{$test->tray_name}}">Re-open Box</a> 
-                                        @else 
-                                            @if($test->trolley_id !== null)
-                                            <a href="/portal/warehouse-management/bay-overview/bay/?bay_id_scan={{$test->getTrolleyName($test->trolley_id)}}" target="_blank">Box in a bay. </a>
-                                            @else
-                                            <a href="" >Box part of sales lot </a>
+                                @if($test->status !== 10)
+                                    <tr>
+                                        <td><div class="table-element">{{$test->tray_name}}</div></td>
+                                        <td><div class="table-element">{{$test->number_of_devices}}</div></td>
+                                        <td><div class="table-element">{{$test->getBoxStatus()}}</div></td>
+                                        <td><div class="table-element">
+                                            <a role="button" class="printboxlabel" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Label</a> / 
+                                            <a role="button" class="printboxmanifest" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Manifest</a> / 
+                                            <a role="button" class="printboxsummary" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Summary</a> / 
+                                            @if(!$test->isBoxInSaleLot() && $test->trolley_id === null) <a href="/portal/warehouse-management/box-management/{{$test->id}}" id="{{$test->tray_name}}">Re-open Box</a> 
+                                            @else 
+                                                @if($test->trolley_id !== null)
+                                                <a href="/portal/warehouse-management/bay-overview/bay/?bay_id_scan={{$test->getTrolleyName($test->trolley_id)}}" target="_blank">Box in a bay. </a>
+                                                @else
+                                                <a href="" >Box part of sales lot </a>
+                                                @endif
                                             @endif
-                                        @endif
-                                    </div></td>
-                                </tr>
+                                        </div></td>
+                                    </tr>
+                                @endif
                             @endforeach
                         </tbody>
 

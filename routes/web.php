@@ -461,6 +461,7 @@ Route::group(['prefix'=>'portal/warehouse-management'], function(){
 
     Route::get('/picking-despatch', 'Portal\WarehouseManagementController@showPickingDespatchPage');
     Route::get('/picking-despatch/pick-lot/{id}', 'Portal\WarehouseManagementController@showPickLotPage');
+    Route::get('/picking-despatch/getsalelotdata/{id}', 'Portal\WarehouseManagementController@getSaleLotData');
     Route::post('/picking-despatch/print-pick-note','Portal\WarehouseManagementController@printPickNote');
     Route::post('/picking-despatch/pick-lot/checkboxstatus', 'Portal\WarehouseManagementController@checkBoxStatusOfLot');
     Route::post('/picking-despatch/pick-lot/checkdevicestatus', 'Portal\WarehouseManagementController@checkDeviceStatusOfLot');

@@ -190,6 +190,14 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <div class="table-element">
+                                            <div class="mr-auto"><strong>Sales Lot #:</strong></div>
+                                            <div class="ml-auto">{{$tradein->getSalesLotNumber()}}</div>
+                                        </div>
+                                    </td>
+                                </tr>
 
                                 @if($testingfaults !== null)
                                     {{-- <div class="portal-table-container">

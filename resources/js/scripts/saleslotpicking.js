@@ -73,14 +73,23 @@ function handleShownData(data){
         for(const [key, item] of Object.entries(data.boxes)){
             $('#closedboxtable tbody tr#'+item.id).hide();  
             if(item.number_of_devices !== 0){
-                $('#closedboxtable tbody').append('<tr id="' + item.id + '"> <td><div class="table-element"> ' + item.tray_name + ' </div></td><td><div class="table-element">' + item.tray_grade + '</div></td> <td><div class="table-element">' + item.tray_network + '</div></td><td><div class="table-element"> ' + item.number_of_devices + ' / ' + item.max_number_of_devices + '</div></td> <td><div class="table-element">£' + item.total_cost + '</div></td> <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="' + item.id + '"></div></td> </tr>');
+                $('#closedboxtable tbody').append('<tr id="' + item.id + '"> <td><div class="table-element"> ' + item.tray_name + ' </div></td><td><div class="table-element">' + item.tray_grade + '</div></td> <td><div class="table-element">' + item.tray_network + '</div></td><td><div class="table-element"> ' + item.number_of_devices + '</div></td> <td><div class="table-element">£' + Math.round(item.total_cost * 100)/100 + '</div></td> <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="' + item.id + '"></div></td> </tr>');
             }          
         }
     }
 
     if(data.tradeins){
         //$('#saleslotboxes tbody').empty();
-        var table = $('#saleslotboxes').DataTable();
+        var table = $('#saleslotboxes').DataTable({
+            "oLanguage": {
+                "sInfo": "Showing _START_ to _END_",
+            },
+            "lengthMenu": [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            "pageLength": -1,
+        });
 
         table.rows().remove();
 
@@ -104,14 +113,33 @@ function handleShownData(data){
                 4:      '£' + item.total_cost,
                 5:      '<input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + item.id + '">',
             }).node().id = item.id;
-            table.draw(false);
+            table.draw(true);
             $('#exportxls').prop('disabled', false);
             $('#completelot').prop('disabled', false);
         }
+
+        $('#saleslotboxes tfoot td').each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+        });
+
+        table.columns().every(function () {
+
+            var that = this;
+            $('input', this.footer()).on('keyup change', function () {
+                if (that.search() !== this.value) {
+                    that
+                        .search( this.value , true, false)
+                        .draw();
+                }
+            });
+        });
     }
 
+    
+
     $('#total_qty').html(total_quantity);
-    $('#total_cost').html('£' + total_price);
+    $('#total_cost').html('£' + Math.round(total_price * 100)/100);
 }
 
 $('#exportxls').on('click', function(){
@@ -176,8 +204,6 @@ $('#completelot').on('click', function(){
 
 function completeLotFunction(){
 
-    console.log(2);
-
     var url = $(location).attr('href');
     var rest = url.substring(0, url.lastIndexOf("/") + 1);
     var last = url.substring(url.lastIndexOf("/") + 1, url.length);
@@ -227,13 +253,16 @@ $('#removefromlot').on('click', function(){
             removedTradeins:removedTradeins,
         },
         success:function(response){
-            for(var i = 0; i<response.length; i++){
+            for(var i = 0; i<response[0].length; i++){
                 
                 $('#boxedtradeinstable tbody tr#'+response[i]).show();
                 //$('#saleslotboxes tr#'+response[i]).hide();
                 var table = $('#saleslotboxes').DataTable();
                 table.row('#' + response[i]).remove().draw();
             }
+
+            $('#total_qty').html(response[2]);
+            $('#total_cost').html('£' + Math.round(response[1] * 100)/100);
         },
     });
 });
