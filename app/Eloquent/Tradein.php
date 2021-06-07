@@ -1193,6 +1193,15 @@ class Tradein extends Model
         return false;
     }
 
+    public function getSalesLotNumber(){
+        $saleLotContent = SalesLotContent::where('device_id', $this->id)->first();
+        if($saleLotContent){
+            return $saleLotContent->sales_lot_id;
+        }
+
+        return "N/A";
+    }
+
     public function isPicked(){
 
         $saleLotContent = SalesLotContent::where('device_id', $this->id)->first();

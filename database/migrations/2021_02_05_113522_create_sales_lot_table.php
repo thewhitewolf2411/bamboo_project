@@ -20,6 +20,8 @@ class CreateSalesLotTable extends Migration
             $table->date('date_sold')->nullable();
             $table->string('sold_value')->nullable();
             $table->date('payment_date')->nullable();
+            $table->string('carrier')->nullable();
+            $table->string('manifest_number')->nullable();
             $table->timestamps();
         });
     }

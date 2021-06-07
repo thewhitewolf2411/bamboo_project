@@ -130,7 +130,7 @@ $(document).ready(function () {
         });
     });
 
-    $('#saleslotboxes tfoot td').each(function () {
+    /*$('#saleslotboxes tfoot td').each(function () {
         var title = $(this).text();
         $(this).html('<input type="text" placeholder="Search ' + title + '" />');
     });
@@ -157,7 +157,7 @@ $(document).ready(function () {
                     .draw();
             }
         });
-    });
+    });*/
 
 
     $('#closedboxtable tfoot td').each(function () {

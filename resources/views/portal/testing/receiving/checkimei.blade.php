@@ -57,8 +57,8 @@
                                         <p class="mr-0 ml-0">GB Size: {{$tradein->getDeviceMemory()}}</p><br>
                                         <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
                                     </div>
-                                    <div class="d-flex w-25 border p-3"><label for="visible_imei_yes">Yes.</label><input id="visible_imei_yes" type="radio" name="visible_imei" value="yes" required></div>
-                                    <div class="d-flex w-25 border p-3"><label for="visible_imei_no">No.</label><input id="visible_imei_no" type="radio" name="visible_imei" value="no"></div>
+                                    <div class="d-flex flex-column justify-content-center align-items-center w-25 border p-3"><label for="visible_imei_yes" class="mx-0 my-3">Yes.</label><input id="visible_imei_yes" type="radio" class="select-input-fixed" name="visible_imei" value="yes" required></div>
+                                    <div class="d-flex flex-column justify-content-center align-items-center w-25 border p-3"><label for="visible_imei_no" class="mx-0 my-3">No.</label><input id="visible_imei_no" type="radio" class="select-input-fixed" name="visible_imei" value="no"></div>
                                 </div>
                                 
                             </div>

@@ -156,36 +156,38 @@ class ReportsController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
 
         $sheet->setCellValue('A1', 'Order ref');
-        $sheet->setCellValue('B1', 'Make');
-        $sheet->setCellValue('C1', 'Model');
-        $sheet->setCellValue('D1', 'Grade');
-        $sheet->setCellValue('E1', 'IMEI');
-        $sheet->setCellValue('F1', 'Cost');
-        $sheet->setCellValue('G1', 'Carriage');
-        $sheet->setCellValue('H1', 'Total Cost');
-        $sheet->setCellValue('I1', 'Date in');
-        $sheet->setCellValue('J1', 'Date passed');
-        $sheet->setCellValue('K1', 'Time passed');
-        $sheet->setCellValue('L1', 'Date Paid');
-        $sheet->setCellValue('M1', 'Location');
+        $sheet->setCellValue('B1', 'Trade-in ID');
+        $sheet->setCellValue('C1', 'Make');
+        $sheet->setCellValue('D1', 'Model');
+        $sheet->setCellValue('E1', 'Grade');
+        $sheet->setCellValue('F1', 'IMEI');
+        $sheet->setCellValue('G1', 'Cost');
+        $sheet->setCellValue('H1', 'Carriage');
+        $sheet->setCellValue('I1', 'Total Cost');
+        $sheet->setCellValue('J1', 'Date in');
+        $sheet->setCellValue('K1', 'Date passed');
+        $sheet->setCellValue('L1', 'Time passed');
+        $sheet->setCellValue('M1', 'Date Paid');
+        $sheet->setCellValue('N1', 'Location');
 
         $index = 2;
         foreach($tradeins as $key=>$tradein){
             
 
-            $sheet->setCellValue('A'.$index, $tradein->barcode);
-            $sheet->setCellValue('B'.$index, $tradein->getBrandName($tradein->product_id));
-            $sheet->setCellValue('C'.$index, $tradein->getProductName($tradein->product_id));
-            $sheet->setCellValue('D'.$index, $tradein->cosmetic_condition);
-            $sheet->setCellValue('E'.$index, ($tradein->imei_number === null) ? $tradein->serial_number : $tradein->imei_number);
-            $sheet->setCellValue('F'.$index, $tradein->bamboo_price);
-            $sheet->setCellValue('G'.$index, $tradein->carriage_cost);
-            $sheet->setCellValue('H'.$index, $tradein->bamboo_price + $tradein->carriage_cost);
-            $sheet->setCellValue('I'.$index, $tradein->created_at);
-            $sheet->setCellValue('J'.$index, $tradein->getDatePassed());
-            $sheet->setCellValue('K'.$index, $tradein->getTimePassed());
-            $sheet->setCellValue('L'.$index, $tradein->getDatePaid());
-            $sheet->setCellValue('M'.$index, $tradein->getTrayName($tradein->id));
+            $sheet->setCellValue('A'.$index, $tradein->barcode_original);
+            $sheet->setCellValue('B'.$index, $tradein->barcode);
+            $sheet->setCellValue('C'.$index, $tradein->getBrandName($tradein->product_id));
+            $sheet->setCellValue('D'.$index, $tradein->getProductName($tradein->product_id));
+            $sheet->setCellValue('E'.$index, $tradein->cosmetic_condition);
+            $sheet->setCellValue('F'.$index, ($tradein->imei_number === null) ? $tradein->serial_number : $tradein->imei_number);
+            $sheet->setCellValue('G'.$index, $tradein->bamboo_price);
+            $sheet->setCellValue('H'.$index, $tradein->carriage_cost);
+            $sheet->setCellValue('I'.$index, $tradein->bamboo_price + $tradein->carriage_cost);
+            $sheet->setCellValue('J'.$index, $tradein->created_at);
+            $sheet->setCellValue('K'.$index, $tradein->getDatePassed());
+            $sheet->setCellValue('L'.$index, $tradein->getTimePassed());
+            $sheet->setCellValue('M'.$index, $tradein->getDatePaid());
+            $sheet->setCellValue('N'.$index, $tradein->getTrayName($tradein->id));
             $index++;
         }
 

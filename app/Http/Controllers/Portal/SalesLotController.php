@@ -177,7 +177,7 @@ class SalesLotController extends Controller
                 }
                 $brand = Brand::find($product->brand_id)->brand_name;
     
-                $cost = $tradein->bamboo_price + $tradein->admin_cost + (2 * $tradein->carriage_costs) + $tradein->misc_cost;
+                $cost = $tradein->getDeviceCost();
                 // price = bamboo_price + administration costs + 2 * carriage cost per device
                 $isFimpLocked = $tradein->isFimpLocked() ? 'Yes' : 'No';
     
@@ -553,7 +553,7 @@ class SalesLotController extends Controller
         $tradeins = Tradein::whereIn('id', $deviceIds)->get();
         
         // header just in case
-        $data = array(["Ext Job Ref ID", "Manufacturer", "Model Number", "GB", "COLOUR", "IMEI", "Grade", "Network", "FMIP", "Cost"]);
+        $data = array(["Ext Job Ref ID", "Individual Device job ref", "Manufacturer", "Model Number", "GB", "COLOUR", "IMEI", "Grade", "Network", "FMIP", "Cost"]);
         #$data = array();
 
         foreach($tradeins as $tradein){
@@ -566,11 +566,12 @@ class SalesLotController extends Controller
             $productInfo = ProductInformation::where('product_id', $product->id)->first();
             $additionalCost = AdditionalCosts::first();
 
-            $cost = $tradein->bamboo_price + $tradein->admin_cost + (2 * $tradein->carriage_costs);
+            $cost = $tradein->getDeviceCost();
             // price = bamboo_price + administration costs + 2 * carriage cost per device
             $isFimpLocked = $tradein->isFimpLocked() ? 'Yes' : 'No';
 
             $tradein_info = [
+                $lot_id, 
                 $tradein->barcode, 
                 $brand,
                 $product->product_name,
@@ -617,7 +618,7 @@ class SalesLotController extends Controller
             $productInfo = ProductInformation::where('product_id', $product->id)->first();
             $additionalCost = AdditionalCosts::first();
 
-            $cost = $tradein->bamboo_price + $tradein->admin_cost + (2 * $tradein->carriage_costs) + $tradein->misc_cost;
+            $cost = $tradein->getDeviceCost();
             // price = bamboo_price + administration costs + 2 * carriage cost per device
             $isFimpLocked = $tradein->isFimpLocked() ? 'Yes' : 'No';
 

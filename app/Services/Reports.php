@@ -48,6 +48,7 @@ class Reports{
         $sheet->setCellValue('AE1', 'Stock Location');
         $sheet->setCellValue('AF1', 'Paid Date');
         $sheet->setCellValue('AG1', 'Cancellation Date');
+        $sheet->setCellValue('AH1', 'Sales Lot Number');
 
         $from = "";
         $to = "";
@@ -167,7 +168,7 @@ class Reports{
             $sheet->setCellValue('L'.$index, '£' . $total);
             $sheet->setCellValue('M'.$index, $tradein->customer_grade);
             $sheet->setCellValue('N'.$index, $tradein->bamboo_grade);
-            $sheet->setCellValue('O'.$index, $tradein->cosmetic_condition);
+            $sheet->setCellValue('O'.$index, $tradein->getDeviceBambooGrade());
             $sheet->setCellValue('P'.$index, $tradein->getCustomerStatus());
             $sheet->setCellValue('Q'.$index, $tradein->getBambooStatus());
             $sheet->setCellValue('R'.$index, $fullyFunctional);
@@ -186,6 +187,7 @@ class Reports{
             $sheet->setCellValue('AE'.$index, $tradein->getTrayName($tradein->id));
             $sheet->setCellValue('AF'.$index, $tradein->getDatePaid());
             $sheet->setCellValue('AG'.$index, $tradein->getCancellationDate());
+            $sheet->setCellValue('AH'.$index, $tradein->getSalesLotNumber());
         }
 
         if(!is_dir(public_path() . '/reports/overview')){

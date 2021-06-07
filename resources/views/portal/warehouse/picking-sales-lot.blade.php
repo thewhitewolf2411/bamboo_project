@@ -106,13 +106,11 @@
                         </form>
                     </div>
                     <div class="col-md-4 px-1">
-                        <form action="/portal/warehouse-management/picking-despatch/pick-lot/complete-picking" method="POST">
+                        <div>
                         
-                            @csrf
-                            <input type="hidden" name="buildsaleslot_salelot" value="{{$saleLot->id}}">
-                            <input type="submit" id="completepickingsaleslot" class="btn btn-primary btn-blue mx-auto w-100" value="Complete" @if(count($devices) - count($picked) !== 0) disabled @endif>
+                            <input type="submit" id="completepickingsaleslot" class="btn btn-primary btn-blue mx-auto w-100" value="Complete" @if(count($devices) - count($picked) !== 0) disabled @endif data-toggle="modal" data-target="#submitpickingmodal">
 
-                        </form>
+                        </div>
                     </div>
 
                 </div>
@@ -158,6 +156,45 @@
 
         </div>
 
+    </div>
+</div>
+
+<div class="modal fade" id="submitpickingmodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            
+            <div class="modal-header">
+                <h5 class="modal-title">How it works</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/portal/warehouse-management/picking-despatch/pick-lot/complete-picking" method="POST">
+                <div class="modal-body p-5">
+                    @csrf
+                    <input type="hidden" name="buildsaleslot_salelot" value="{{$saleLot->id}}">
+                    <div class="form-group w-100">
+                        <label for="select_carrier">Carrier:</label>
+                        <select class="form-control w-100" id="select_carrier" name="carrier" required>
+                            <option selected disabled>Select carrier</option>
+                            <option value="Customer collected">Customer collected</option>
+                            <option value="DHL">DHL</option>
+                            <option value="Transfer">Transfer</option>
+                            <option value="TNT">TNT</option>
+                            <option value="FEDEX">FEDEX</option>
+                        </select>
+                    </div>
+                    <div class="form-group w-100">
+                        <label for="manifest_number">Manifest Number</label>
+                        <input type="text" class="form-control w-100" id="manifest_number" name="manifest_number">
+                    </div>
+                </div>
+                <div class="modal-footer d-flex flex-row">
+                    <input type="submit" class="btn btn-primary w-25" value="Submit">
+                    <button type="button" class="btn btn-secondary w-25" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+      </div>
     </div>
 </div>
 

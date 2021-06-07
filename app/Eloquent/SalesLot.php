@@ -18,7 +18,7 @@ class SalesLot extends Model
 
 
     protected $fillable = [
-        'sales_lot_status', 'sold_to', 'date_sold','sold_to', 'sold_value', 'payment_date'
+        'sales_lot_status', 'sold_to', 'date_sold','sold_to', 'sold_value', 'payment_date', 'carrier', 'manifest_number'
     ];
 
     public function getSalesLotQuantity(){
@@ -65,7 +65,7 @@ class SalesLot extends Model
         foreach($salesLotContent as $sLC){
             if($sLC->device_id !== null){
                 $tradein = Tradein::where('id', $sLC->device_id)->first();
-                $price += $tradein->bamboo_price;
+                $price += $tradein->getDeviceCost();
             }
         }
 

@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="portal-app-container">
+<div class="container-fluid">
     <div class="portal-title-container">
         <div class="portal-title">
             <p>Picking / Despatch Management </p>
@@ -14,24 +14,11 @@
         <div class="alert alert-success" role="alert">
             {{Session::get('success')}}
         </div>
-        @endif
-
-        <div class="row mb-5">
-            <div class="col-md-3">
-                <button type="submit" id="starttopicklot" class="btn btn-primary btn-blue mx-auto w-100" disabled>Start to pick lot</button>
-            </div>
-            <div class="col-md-3">
-                <button type="submit" id="despatchpickingsaleslot" class="btn btn-primary btn-blue mx-auto w-100" disabled>Despatch</button>
-            </div>
-            <div class="col-md-3">
-                <button type="submit" id="printpicknote" class="btn btn-primary btn-blue mx-auto w-100" disabled>Print Pick Note</button>
-            </div>
-        </div>
-        
+        @endif      
 
         <div class="row">
 
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <table class="portal-table" id="saleslot-table">
                     <thead>
                         <tr>
@@ -71,7 +58,22 @@
                 </table>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
+                <div class="row mb-5">
+                    <div class="col-md-3">
+                        <button type="submit" id="starttopicklot" class="btn btn-primary btn-blue mx-auto w-100" disabled>Start to pick lot</button>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" id="despatchpickingsaleslot" class="btn btn-primary btn-blue mx-auto w-100" disabled>Despatch</button>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" id="printpicknote" class="btn btn-primary btn-blue mx-auto w-100" disabled>Print Pick Note</button>
+                    </div>
+                </div>
+
+                <div class="row" id="salelotcontent-table-container">
+
+                </div>
 
             </div>
 

@@ -35,6 +35,9 @@ $('.saleslotpicking').on('click', function(){
     } else {
         $('#starttopicklot').prop('disabled', true);
     }
+
+    let id = $(this).prop('id');
+    fetchSaleLotData(id);
 });
 
 $('#starttopicklot').on('click', function(){
@@ -146,3 +149,55 @@ $(document).ready(function(){
         } );
     });
 });
+
+
+function fetchSaleLotData(id){
+    $.ajax({
+        url: "/portal/warehouse-management/picking-despatch/getsalelotdata/" + id,
+        type:"GET",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(response){
+
+            $('#salelotcontent-table-container').empty();
+
+            $('#salelotcontent-table-container').append('<table class="portal-table w-100" id="salelotcontent-table"><thead><td><div class="table-element">Lot Number</div></td><td><div class="table-element">Box Number</div></td><td><div class="table-element">Bay Location</div></td><td><div class="table-element">QTY</div></td></thead><tfoot><td><div class="table-element">Lot Number</div></td><td><div class="table-element">Box Number</div></td><td><div class="table-element">Bay Location</div></td><td><div class="table-element">QTY</div></td></tfoot><tbody></tbody></table>');
+
+            $('#salelotcontent-table_wrapper').addClass('w-100');
+
+            var t = $('#salelotcontent-table').DataTable({
+                "oLanguage" : {
+                    "sInfo" : "Showing _START_ to _END_",
+                 },
+                 "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                 "pageLength":-1,
+            });
+
+            $('#salelotcontent-table tfoot td').each( function () {
+                var title = $(this).text();
+                $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+            } );    
+
+            t.columns().every( function () {
+    
+                var that = this;
+                $( 'input', this.footer() ).on( 'keyup change', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            });
+
+            for(var i = 1; i < response.length; i++){
+                t.row.add(response[i]).draw(true);
+            }
+
+        },
+        error:function(response){
+            alert('Something went wrong. Please try again.');
+        }
+    });
+}

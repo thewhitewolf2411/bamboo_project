@@ -251,8 +251,9 @@ class CustomerCareController extends Controller
             $delAdress = \explode('<br>', $delAdress);
 
             $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
-            $pdf = PDF::loadView('portal.labels.tradeinlabel', 
-                array('user'=>$user, 'deladdress'=>$delAdress, 'tradein'=>$tradein, 'barcode'=>$barcode))
+            $pdf = PDF::loadView('portal.labels.orderlabel', ['tradeins'=>$tradeins])
+                ->setPaper('a4', 'portrait')
+                ->setWarnings(false)
                 ->save('pdf/tradeinlabel-'. $tradein->barcode .'.pdf');
 
             array_push($labels, 'pdf/tradeinlabel-'. $tradein->barcode .'.pdf');
@@ -302,7 +303,7 @@ class CustomerCareController extends Controller
         $delAdress = strtr($user->delivery_address, array(', '=>'<br>'));
         $delAdress = \explode('<br>', $delAdress);
 
-        $pdf = PDF::loadView('portal.labels.tradeinlabel', array('user'=>$user, 'deladdress'=>$delAdress, 'tradein'=>$tradein, 'barcode'=>$barcode))->save('pdf/tradeinlabel-'. $request->hidden_print_trade_pack_trade_in_id .'.pdf');
+        $pdf = PDF::loadView('portal.labels.orderlabel', ['tradeins'=>$tradeins])->setPaper('a4', 'portrait')->setWarnings(false)->save('pdf/tradeinlabel-'. $request->hidden_print_trade_pack_trade_in_id .'.pdf');
 
         return redirect()->back()->with('success', 'pdf/tradeinlabel-'. $request->hidden_print_trade_pack_trade_in_id .'.pdf');
     

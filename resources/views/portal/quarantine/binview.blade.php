@@ -125,6 +125,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="{{asset('js\scanner\scannerdetection.js')}}"></script>
     <script>
 
         $(document).ready(function(){
@@ -190,6 +191,26 @@
 
         });
 
+        $(document).scannerDetection({
+	   
+       //https://github.com/kabachello/jQuery-Scanner-Detection
+       
+       timeBeforeScanTest: 200, // wait for the next character for upto 200ms
+       avgTimeByChar: 40, // it's not a barcode if a character takes longer than 100ms
+       preventDefault: true,
+   
+       endChar: [13],
+       onComplete: function(barcode, qty){
+           //validScan = true;
+           //$('#search_id').val (barcode);
+       }, // main callback function	,
+       onError: function(string, qty) {
+           $('#checkdevice').val (string);
+           document.getElementById('checkdevicesubmit').click();
+       }
+            
+            
+    });
 
     </script>
     @endif

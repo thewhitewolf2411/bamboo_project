@@ -873,6 +873,8 @@ class WarehouseManagementController extends Controller
 
     public function completePickingLot(Request $request){
 
+
+
         $salesLot = SalesLot::where('id', $request->buildsaleslot_salelot)->first();
 
         if($salesLot->sales_lot_status === 4){
@@ -880,6 +882,8 @@ class WarehouseManagementController extends Controller
         }
 
         $salesLot->sales_lot_status = 3;
+        $salesLot->carrier = $request->carrier;
+        $salesLot->manifest_number = $request->manifest_number;
         $salesLot->save();
 
         $salesLotContent = SalesLotContent::where('sales_lot_id', $salesLot->id)->get();
@@ -980,6 +984,26 @@ class WarehouseManagementController extends Controller
         $boxes = Tray::where('tray_type', 'Bo')->where('tray_brand', $brand)->where('tray_grade', strtoupper($request->reference))->get();
 
         return response(count($boxes), 200);
+    }
+
+
+    public function getSaleLotData($id){
+        $salelot = SalesLot::find($id);
+        $salelotContent = SalesLotContent::where('sales_lot_id', $id)->get();
+        
+        $dataheaders = [
+            ['Lot Number', 'Box Number', 'Bay location', 'QTY']
+        ];
+
+        foreach($salelotContent as $saleLotContent){
+            $tradein = Tradein::find($saleLotContent->device_id);
+
+            $data = [$id, $tradein->getTrayName($tradein->id), $tradein->getBayName(), 1];
+
+            array_push($dataheaders, $data);
+        }
+
+        return response()->json($dataheaders);
     }
 
 }

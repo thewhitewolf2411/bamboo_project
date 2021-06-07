@@ -18862,6 +18862,14 @@ input[type=number] {
   width: 100% !important;
 }
 
+#salelotcontent-table_wrapper {
+  width: 100% !important;
+}
+
+#salelotcontent-table tfoot {
+  display: table-header-group !important;
+}
+
 .box-table-show tfoot {
   display: table-header-group;
 }
@@ -19119,6 +19127,12 @@ input[type=number] {
 
 .feed-container {
   cursor: pointer;
+}
+
+.select-input-fixed {
+  margin: 0 !important;
+  width: 20px;
+  height: 20px;
 }
 
 @media only screen and (max-width: 1720px) {
