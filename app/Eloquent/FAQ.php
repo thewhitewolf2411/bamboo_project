@@ -22,7 +22,5 @@ class FAQ extends Model
         'question',
         'answer',
         'link',
-        'link_text',
-        'link_color'
     ];
 }

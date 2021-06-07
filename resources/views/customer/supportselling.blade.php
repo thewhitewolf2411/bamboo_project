@@ -378,7 +378,7 @@
     <div id="support-question-answers-container">
         @foreach($faq as $question_answer)
             <div class="support-question-answers">
-                <div class="support-question-answers-title" id="collapse{!!$question_answer->id!!}">
+                <div class="support-question-answers-title" id="collapse{!!$question_answer->id!!}" onclick="toggleCollapse({!!$question_answer->id!!})">
                     <button class="btn btn-link collapsed toggle-collapse-answer" data-toggle="collapse" data-target="#{!!$question_answer->id!!}" aria-expanded="false" aria-controls="collapse{!!$question_answer->id!!}">
                         {!!$question_answer->question!!}
                     </button>
@@ -386,7 +386,7 @@
                 <div id="{!!$question_answer->id!!}" class="collapse" aria-labelledby="heading{!!$question_answer->id!!}" data-parent="#support-question-answers-container">
                     <div class="card-body">
                         <p class="answer-text">{!!$question_answer->answer!!}</p>
-                        @if($question_answer->link)<a class="btn mt-4 btn-{!!$question_answer->link_color!!}" href="{!!$question_answer->link!!}">{!!$question_answer->link_text!!}</a>@endif
+                        {{-- @if($question_answer->link)<a class="btn mt-4 btn-{!!$question_answer->link_color!!}" href="{!!$question_answer->link!!}">{!!$question_answer->link_text!!}</a>@endif --}}
                     </div>
                 </div>
             </div>
@@ -394,15 +394,15 @@
         @endforeach
     </div>
 
-    @include('partial.supportsearch')
+    {{-- @include('partial.supportsearch') --}}
 
-    <div class="support-titles-container">
+    {{-- <div class="support-titles-container">
         <div class="support-row">
-            {{-- <a href="">
+            <!--<a href="">
                 <div class="btn btn-primary btn-blue btn-font-white">
                     <p>Buying a device</p>
                 </div>
-            </a> --}}
+            </a>-->
             <a href="/support/selling" class="support-btn orange ml-auto mr-auto mt-2 mb-2 w-100">
                 <p class="support-btn-text">Selling a device</p>
             </a>
@@ -430,7 +430,7 @@
             </a>
         </div>
 
-    </div>
+    </div> --}}
 
 </div>
 

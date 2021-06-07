@@ -144,6 +144,9 @@ class PagesController extends Controller
     }
 
     public function showSupportAndServicePage(){
+        // phase #1
+        return redirect('/support/selling');
+
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
 
@@ -158,8 +161,8 @@ class PagesController extends Controller
         }
         $buyingProducts = BuyingProduct::all();
         $sellingProducts = SellingProduct::all();
+        $all_faq = FAQ::all();
         $faq = FAQ::all();
-        $all_faq = $faq;
 
         $chunk = $faq->splice(0,ceil($faq->count() / 2));
         $first_faq = $faq;

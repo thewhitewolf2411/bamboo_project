@@ -26,7 +26,9 @@ class RecycleOffers{
     public static function getSellBanner(){
         $offer = RecycleOffer::where('status', 1)->first();
         if($offer){
-            return $offer->getSellingBanner();
+            // return $offer->getSellingBanner();
+            return json_encode(['desktop' => $offer->getSellingBanner(), 'mobile' => $offer->getMobileSellingBanner()]);
+
         }
         return null;
     }

@@ -70,7 +70,7 @@
     {{-- <div class="url-header-container" id="start-selling"> --}}
     <a href="/sell" class="btn start-selling-button-header">
         <p id="start-selling-button-text">Start Selling</p> 
-        <img id="start-selling-button-img-down" class="invisible" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White.svg')}}">
+        {{-- <img id="start-selling-button-img-down" class="invisible" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White.svg')}}"> --}}
     </a>
     {{-- </div> --}}
     <div class="url-header-container how">

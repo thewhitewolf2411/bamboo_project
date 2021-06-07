@@ -465,37 +465,20 @@
 
     {{-- {{dd(App\Helpers\RecycleOffers::check())}} --}}
 
+    <script src="{{asset('/js/isMobile.js')}}"></script>
+
     <script>
          (function() {
             let offerbanner = JSON.parse('{!!App\Helpers\RecycleOffers::check()!!}');
             if(offerbanner){
-                var isMobile = {
-                    Android: function() {
-                        return navigator.userAgent.match(/Android/i);
-                    },
-                    BlackBerry: function() {
-                        return navigator.userAgent.match(/BlackBerry/i);
-                    },
-                    iOS: function() {
-                        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-                    },
-                    Opera: function() {
-                        return navigator.userAgent.match(/Opera Mini/i);
-                    },
-                    Windows: function() {
-                        return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
-                    },
-                    any: function() {
-                        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-                    }
-                };
-
+                var isMobile = checkIsMobile();
+                
                 document.getElementById('home-left-container').classList.add('w-50');
                 document.getElementById('offers-texts').classList.remove('hidden');
                 document.getElementById('regular-title').classList.add('hidden');
                 document.getElementById('startbuttons').classList.add('hidden');
 
-                if(isMobile.any()){
+                if(isMobile){
                     document.getElementById("main-home-image").style.backgroundImage = "url('"+offerbanner.mobile+"')";
                     document.getElementById("main-home-image").style.padding = '30px 150px'; 
                     document.getElementById("main-home-image").style.backgroundPosition = '0 0'; 

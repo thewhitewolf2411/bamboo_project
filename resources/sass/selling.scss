@@ -1273,17 +1273,17 @@ input.lookup-delivery-basket::placeholder{
 
 // about us page sell categories
 .sell-category-device-image.about.mobile{
-    left: 0;
-    top: -75px;
+    // left: 0;
+    // top: -75px;
 }
 .sell-category-device-image.about.tablet{
-    top: 10px;
-    left: 0;
+    // top: 10px;
+    // left: 0;
 }
 .sell-category-device-image.about.watch{
-    top: -25px;
-    left: 20px;
-    max-width: 260px;
+    // top: -25px;
+    // left: 20px;
+    // max-width: 260px;
 }
 
 // breakpoint about us page
@@ -1299,7 +1299,7 @@ input.lookup-delivery-basket::placeholder{
     .sell-category-device-image.about.watch{
         top: -17px;
         left: 45px;
-        max-width: 210px;
+        //max-width: 210px;
     }
 }
 
@@ -1371,7 +1371,7 @@ input.lookup-delivery-basket::placeholder{
 }
 
 .single-sell-category.about{
-    width: 300px;
+    width: 400px;
 }
 
 .single-sell-category.faded{

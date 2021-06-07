@@ -53,7 +53,7 @@
       let logo_container = document.getElementById('full-logo-container');
       let logo_full = document.getElementById('full-logo-img');
       let logo_mobile = document.getElementById('mobile-logo-img');
-      let selling_arrow = document.getElementById('start-selling-button-img-down');
+      //let selling_arrow = document.getElementById('start-selling-button-img-down');
       let sell_mobile_submenu = document.getElementById('sellmobilephones-header-hover');
       let sell_tablets_submenu = document.getElementById('selltablets-header-hover');
       let sell_watches_submenu = document.getElementById('sellwatches-header-hover');
@@ -111,11 +111,11 @@
         logo_mobile.classList.remove('invisible');
       }
 
-      if(selling_arrow.classList.contains('invisible')){
-        document.getElementById('start-selling').classList.add('large');
-        document.getElementById('start-selling-button-text').classList.add('margin-b');
-        selling_arrow.classList.remove('invisible');
-      }
+      // if(selling_arrow.classList.contains('invisible')){
+      //   document.getElementById('start-selling').classList.add('large');
+      //   document.getElementById('start-selling-button-text').classList.add('margin-b');
+      //   selling_arrow.classList.remove('invisible');
+      // }
 
     } else {
       // enlarge header
@@ -126,7 +126,7 @@
       let logo_container = document.getElementById('full-logo-container');
       let logo_full = document.getElementById('full-logo-img');
       let logo_mobile = document.getElementById('mobile-logo-img');
-      let selling_arrow = document.getElementById('start-selling-button-img-down');
+      //let selling_arrow = document.getElementById('start-selling-button-img-down');
       let sell_mobile_submenu = document.getElementById('sellmobilephones-header-hover');
       let sell_tablets_submenu = document.getElementById('selltablets-header-hover');
       let sell_watches_submenu = document.getElementById('sellwatches-header-hover');
@@ -176,12 +176,12 @@
         logo_full.classList.remove('hidden');
       }
 
-      if(!selling_arrow.classList.contains('invisible')){
-        document.getElementById('start-selling').classList.remove('large');
-        document.getElementById('start-selling-button-text').classList.remove('margin-b');
+      // if(!selling_arrow.classList.contains('invisible')){
+      //   document.getElementById('start-selling').classList.remove('large');
+      //   document.getElementById('start-selling-button-text').classList.remove('margin-b');
 
-        selling_arrow.classList.add('invisible');
-      }
+      //   selling_arrow.classList.add('invisible');
+      // }
 
       if(window.innerWidth > 625){
         if(!logo_mobile.classList.contains('invisible')){

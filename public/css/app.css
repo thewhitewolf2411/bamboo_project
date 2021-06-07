@@ -17182,22 +17182,6 @@ input.lookup-delivery-basket::placeholder {
   left: 15px;
 }
 
-.sell-category-device-image.about.mobile {
-  left: 0;
-  top: -75px;
-}
-
-.sell-category-device-image.about.tablet {
-  top: 10px;
-  left: 0;
-}
-
-.sell-category-device-image.about.watch {
-  top: -25px;
-  left: 20px;
-  max-width: 260px;
-}
-
 @media only screen and (max-width: 625px) {
   .sell-category-device-image.about.mobile {
     left: 40px;
@@ -17212,7 +17196,6 @@ input.lookup-delivery-basket::placeholder {
   .sell-category-device-image.about.watch {
     top: -17px;
     left: 45px;
-    max-width: 210px;
   }
 }
 .device-shadow {
@@ -17277,7 +17260,7 @@ input.lookup-delivery-basket::placeholder {
 }
 
 .single-sell-category.about {
-  width: 300px;
+  width: 400px;
 }
 
 .single-sell-category.faded {
@@ -21405,6 +21388,11 @@ input[type=submit] {
   color: #000000;
   opacity: 1;
   margin: 0;
+}
+
+.answer-text.link {
+  color: var(--sell-–-orange);
+  font: normal normal normal 20px/28px Sharp Sans No1 Bold;
 }
 
 .support-question-toggle-icon {

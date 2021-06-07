@@ -122,7 +122,9 @@
             </div>
 
             @if(App\Helpers\RecycleOffers::getSellBanner() !== null)
-                <a href="{{App\Helpers\RecycleOffers::getLink()}}"><img class="w-100" style="max-height: 320px;" src="{!!App\Helpers\RecycleOffers::getSellBanner()!!}"></a>
+                <a href="{{App\Helpers\RecycleOffers::getLink()}}">
+                    <img class="w-100" style="max-height: 320px;" id="selling_banner">
+                </a>
             @endif
 
             <div class="selling-info-items-container">
@@ -189,9 +191,22 @@
 
         <footer>@include('customer.layouts.footer', ['showGetstarted' => false])</footer>
         <script src="{{asset('/js/SellingPage.js')}}"></script>
+        <script src="{{asset('/js/isMobile.js')}}"></script>
         <script>
 
             window.addEventListener('DOMContentLoaded', function(){
+
+                if('{!!App\Helpers\RecycleOffers::getSellBanner()!!}'){
+                    let selling_banner = JSON.parse('{!!App\Helpers\RecycleOffers::getSellBanner()!!}');
+                    if(selling_banner){
+                        var isMobile = checkIsMobile();
+                        if(isMobile){
+                            document.getElementById('selling_banner').src = selling_banner.mobile;
+                        } else {
+                            document.getElementById('selling_banner').src = selling_banner.desktop;
+                        }
+                    }
+                }
 
                 let preselectedCategory = localStorage.getItem('preselectedSellCategory');
                 if(preselectedCategory){
