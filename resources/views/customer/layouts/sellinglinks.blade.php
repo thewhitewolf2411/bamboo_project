@@ -121,9 +121,10 @@
             </a>
 
             @foreach(App\Helpers\MenuHelper::getApplePhones() as $apple_phone)
-                <a class="mobile-phone-submenu-item" href="/sell/sellitem/{{$apple_phone->id}}" title="{{$apple_phone->product_name}}">
+                <a class="mobile-phone-submenu-item custom-tooltip" href="/sell/sellitem/{{$apple_phone->id}}">
                     <p>{{$apple_phone->product_name}}</p>
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    <span class="tooltiptext"><p>{{$apple_phone->product_name}}</p></span>
                 </a>
             @endforeach
 
@@ -136,9 +137,10 @@
             </a>
 
             @foreach(App\Helpers\MenuHelper::getSamsungPhones() as $samsung_phone)
-                <a class="mobile-phone-submenu-item" href="/sell/sellitem/{{$samsung_phone->id}}" title="{{$samsung_phone->product_name}}">
+                <a class="mobile-phone-submenu-item custom-tooltip" href="/sell/sellitem/{{$samsung_phone->id}}">
                     <p>{{$samsung_phone->product_name}}</p>
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    <span class="tooltiptext"><p>{{$samsung_phone->product_name}}</p></span>
                 </a>
             @endforeach
             
@@ -182,9 +184,10 @@
             </a>
 
             @foreach(App\Helpers\MenuHelper::getAppleTablets() as $apple_tablet)
-                <a class="mobile-phone-submenu-item" href="/sell/sellitem/{{$apple_tablet->id}}" title="{{$apple_tablet->product_name}}">
+                <a class="mobile-phone-submenu-item custom-tooltip" href="/sell/sellitem/{{$apple_tablet->id}}">
                     <p>{{$apple_tablet->product_name}}</p>
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    <span class="tooltiptext"><p>{{$apple_tablet->product_name}}</p></span>
                 </a>
             @endforeach
         </div>
@@ -196,9 +199,10 @@
             </a>
 
             @foreach(App\Helpers\MenuHelper::getSamsungTablets() as $samsung_tablet)
-                <a class="mobile-phone-submenu-item" href="/sell/sellitem/{{$samsung_tablet->id}}" title="{{$samsung_tablet->product_name}}">
+                <a class="mobile-phone-submenu-item custom-tooltip" href="/sell/sellitem/{{$samsung_tablet->id}}">
                     <p>{{$samsung_tablet->product_name}}</p>
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    <span class="tooltiptext"><p>{{$samsung_tablet->product_name}}</p></span>
                 </a>
             @endforeach
 
@@ -242,9 +246,10 @@
             </a>
 
             @foreach(App\Helpers\MenuHelper::getAppleWatches() as $apple_watch)
-                <a class="mobile-phone-submenu-item" href="/sell/sellitem/{{$apple_watch->id}}" title="{{$apple_watch->product_name}}">
+                <a class="mobile-phone-submenu-item custom-tooltip" href="/sell/sellitem/{{$apple_watch->id}}">
                     <p>{{$apple_watch->product_name}}</p>
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    <span class="tooltiptext"><p>{{$apple_watch->product_name}}</p></span>
                 </a>
             @endforeach
         </div>
@@ -256,9 +261,10 @@
             </a>
 
             @foreach(App\Helpers\MenuHelper::getSamsungWatches() as $samsung_watch)
-                <a class="mobile-phone-submenu-item" href="/sell/sellitem/{{$samsung_watch->id}}" title="{{$samsung_watch->product_name}}">
+                <a class="mobile-phone-submenu-item custom-tooltip" href="/sell/sellitem/{{$samsung_watch->id}}">
                     <p>{{$samsung_watch->product_name}}</p>
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    <span class="tooltiptext"><p>{{$samsung_watch->product_name}}</p></span>
                 </a>
             @endforeach
         </div>
@@ -286,3 +292,12 @@
 
     </div>
 </div>
+
+<script type="application/javascript">
+    window.addEventListener('DOMContentLoaded', function(){
+        let cookie_bar_visible = document.getElementById('cookie-container');
+        if(cookie_bar_visible){
+            document.getElementById('selling-subheader-links').classList.add('margin-with-cookiebar');
+        }
+    });
+</script>

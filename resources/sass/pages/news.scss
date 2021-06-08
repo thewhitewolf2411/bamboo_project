@@ -15,6 +15,11 @@
     text-shadow: 0px 3px 20px rgb(0 0 0 / 20%);
 }
 
+.news-page-container{
+    padding: 140px;
+    padding-bottom: 0;
+}
+
 .news-main-row{
     display: flex;
     flex-direction: row;
@@ -34,11 +39,16 @@
 }
 
 .news-primary{
-    width: 66%;
+    // width: 66%;
+    width: 100%;
+    max-width: 1088px;
+    height: auto;
+    max-height: 857px;
+    margin-right: 16px;
 }
 
 .news-secondary{
-    width: 31%;
+    // width: 31%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -50,6 +60,20 @@
     // height: 48%;
     height: auto;
     max-height: 250px;
+}
+
+.news-secondary-item.first{
+    width: 100%;
+    max-width: 536px;
+    height: auto;
+    max-height: 538px;
+}
+
+.news-secondary-item.second{
+    width: 100%;
+    max-width: 536px;
+    height: auto;
+    height: 270px;
 }
 
 .news-image, .news-image .main{
@@ -73,12 +97,17 @@
 .news-content-container{
     position: absolute;
     bottom: 0;
-    padding: 30px;
+    // padding: 30px;
+    padding: 30px 40px;
     width: 100%;
 }
 
 .news-content-container.bottom-centered{
-    bottom: -0.9rem;
+    //bottom: -0.9rem;
+}
+
+.news-content-container.smaller-pad{
+    padding: 30px 25px;
 }
 
 .news-tag, .blog-tag, .how-to-tag{
@@ -99,7 +128,16 @@
 }
 
 .news-tag > p, .blog-tag > p, .how-to-tag > p{
-    font-family: Sharp Sans No1 Bold;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 24px/26px var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 24px/26px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+    line-height: 1;
 }
 
 .news-title{
@@ -107,12 +145,40 @@
 }
 
 .news-title > p{
-    font-family: Sharp Sans No1 Bold;
-    font-size: 1.4rem;
-    color: white;
-    max-height: 30px;
-    overflow-y: hidden;
-    overflow-x: hidden;
+    // font-family: Sharp Sans No1 Bold;
+    // font-size: 1.4rem;
+    // color: white;
+    // max-height: 30px;
+    // overflow-y: hidden;
+    // overflow-x: hidden;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-50)/var(--unnamed-line-spacing-58) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: left;
+    font: normal normal normal 50px/58px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+
+    margin: 0;
+    height: auto;
+    max-height: 126px;
+    margin-bottom: 20px;
+}
+
+.news-smaller-title > p{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-30)/var(--unnamed-line-spacing-38) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: left;
+    font: normal normal normal 30px/38px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    margin: 0;
+    height: auto;
+    max-height: 119px;
+    margin-bottom: 20px;
 }
 
 .news-author-row, .news-created-at-row{
@@ -122,28 +188,79 @@
 }
 
 .author-p, .created-at-p{
-    font-family: Sharp Sans No1 Semibold;
-    color: white;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/var(--unnamed-line-spacing-34) var(--unnamed-font-family-sharp-sans-no1-medium);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: left;
+    font: normal normal normal 25px/34px Sharp Sans No1 Medium;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    margin: auto;
+    line-height: 1;
+    margin-left: 16px;
+}
+
+.author-smaller-p, .created-at-smaller-p{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: left;
+    font: normal normal normal 20px/28px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    // margin: auto;
+    margin: 0;
+    line-height: 1;
+    margin-left: 7px;
 }
 
 .news-user-icon, .news-created-icon{
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 28px;
+}
+
+.news-user-smaller-icon, .news-created-smaller-icon{
+    width: 25px;
+    height: 23px;
 }
 
 
 .latest-news, .latest-blogs, .latest-howto{
     display: flex;
-    flex-direction: row;
+    // flex-direction: row;
+    flex-direction: column;
 }
 
+.latest-blogs{
+    margin-top: 181px;
+    background: var(--celebrate-–-mustard) 0% 0% no-repeat padding-box;
+    background: #FCC44C 0% 0% no-repeat padding-box;
+    padding: 126px 140px 220px 140px;
+}
+
+.latest-news{
+    margin-top: 181px;
+    padding: 0 140px;
+}
 
 .latest-news > div.title, .latest-blogs > div.title, .latest-howto > div.title{
-    font-family: Sharp Sans No1 Bold;
-    font-size: 2rem;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 37px/40px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
     //max-height: 45px;
     overflow-y: hidden;
     overflow-x: hidden;
+}
+
+.latest-blogs > div.title, .latest-news > div.title{
+    margin-bottom: 20px;
 }
 
 .latest-news > div.news-row, .latest-blogs > div.blogs-row, .latest-howto > div.howto-row{
@@ -154,8 +271,13 @@
 .all-news-item, .all-blogs-item, .all-howto-item{
     position: relative;
     display: block;
-    width: 23%;
-    height: 250px;
+    // width: 23%;
+    // height: 250px;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    max-height: 385px;
+    margin: 0 6px;
 }
 
 .all-news-item > img, .all-blogs-item > img, .all-howto-item > img {
@@ -166,39 +288,86 @@
     background: #59DDC1;
     left: 0;
     width: 100%;
-    height: 400px;
+    height: 618px;
 }
 
 .howto-transparent{
     height: 400px;
+    background-color: #eefcf9;
 }
 
 .howto-top-two > p{
-    color: black;
+    // color: black;
+    // text-align: center;
+    // margin-top: 150px;
+    // font-family: Sharp Sans No1 Semibold;
+    // font-size: 2rem;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-80)/var(--unnamed-line-spacing-90) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
     text-align: center;
+    font: normal normal normal 80px/90px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
     margin-top: 150px;
-    font-family: Sharp Sans No1 Semibold;
-    font-size: 2rem;
 }
+
+.latest-howto-bottom{
+    display: flex;
+    flex-direction: column;
+    padding: 0 140px;
+    background: #eefcf9;
+    padding-bottom: 180px;
+}
+
+.latest-howto-bottom > div.title{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 37px/40px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+
+.howto-row{
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+
 
 .main-howto-row{
     display: flex;
     flex-direction: row;
-    margin-top: 40px;
+    margin-top: 110px;
     justify-content: center;
 }
 
 .main-howto-item{
     position: relative;
     display: block;
-    width: 50%;
-    margin: 1%;
+    // width: 50%;
+    width: auto;
+    max-width: 813px;
+    height: auto;
+    max-height: 457px;
+    // margin: 1%;
     overflow: hidden;
     border-radius: 10px;
+    margin: 0 8px;
 }
 
 .main-howto-item > .news-image.main{
-    max-height: 300px;
+    //max-height: 300px;
 }
 
 .container.view-blog{
@@ -207,39 +376,69 @@
 
 .view-blog-tag{
     width: fit-content;
-    padding: 5px;
+    padding: 4px 0;
     text-align: center;
     border-radius: 4px;
+    height: 30px;
+    margin-bottom: 15px;
 }
 
 .view-blog-tag.news{
     background: #A3D147;
+    width: 59px;
 }
 .view-blog-tag.blog{
     background: #FCC44C;
+    width: 59px;
 }
 
 .view-blog-tag.howto{
     background: #59DDC1;
+    width: 145px;
 }
 
 .view-blog-tag > p{
-    font-family: Sharp Sans No1 Bold;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 24px/26px var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 24px/26px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
 }
 
 .view-blog-title{
-    font-family: Sharp Sans No1 Semibold;
-    font-size: 2rem;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-50)/var(--unnamed-line-spacing-58) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 50px/58px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+    margin-bottom: 49px;
 }
 
 .info-row-view-blog{
     display: flex;
     flex-direction: row;
+    margin-bottom: 52px;
 }
 
 .view-blog-author, .view-blog-date{
-    font-family: Sharp Sans No1 Semibold;
-    font-size: 1rem;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/28px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: auto;
+    line-height: 1;
+    margin-left: 11px;
 }
 
 .article-image{
@@ -249,12 +448,25 @@
 }
 
 .view-blog-paragraph{
-    font-size: 1.2rem;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/35px var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/35px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    margin: 0;
 }
 
 .view-blog-paragraph.bold{
-    font-family: Sharp Sans No1 Semibold;
-    font-size: 1.2rem;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/35px Sharp Sans No1 Semibold;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 25px/35px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #000000;
+    margin: 0;
 }
 
 .blog-horizontal-line{
@@ -264,13 +476,25 @@
     margin: auto;
 }
 
+.blog-horizontal-line.latest{
+    margin-top: 108px;
+    margin-bottom: 35px;
+}
+
 .blog-read-more, .view-blog-howto {
     width: 80%;
 }
 
 .readmore-view-blog{
-    font-family: Sharp Sans No1 Bold;
-    font-size: 2rem;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 37px/40px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
 }
 
 

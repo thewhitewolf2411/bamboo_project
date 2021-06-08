@@ -80,11 +80,11 @@
         <a href="/about" class="header-url-link" @if(request()->path() === 'about') style="font-family: Sharp Sans No1 Bold;" @endif>About</a>
     </div>
     <div class="url-header-container">
-        <a href="/news" class="header-url-link" @if(request()->path() === 'news') style="font-family: Sharp Sans No1 Bold;" @endif>News & Blog</a>
+        <a href="/news" class="header-url-link" @if(str_contains(request()->path(), 'news')) style="font-family: Sharp Sans No1 Bold;" @endif>News & Blog</a>
     </div>
     <div class="url-header-container">
         {{-- <a href="/support" class="header-url-link" @if(request()->path() === 'support') style="font-family: Sharp Sans No1 Bold;" @endif>Service & Support</a> --}}
-        <a href="/support" class="header-url-link" @if(request()->path() === 'support') style="font-family: Sharp Sans No1 Bold;" @endif>FAQ’s</a>
+        <a href="/support" class="header-url-link" @if(request()->path() === 'support/selling') style="font-family: Sharp Sans No1 Bold;" @endif>FAQ’s</a>
     </div>
     <div class="url-header-container mr-0">
         <a href="/contact" class="header-url-link" @if(request()->path() === 'contact') style="font-family: Sharp Sans No1 Bold;" @endif>Contact Us</a>

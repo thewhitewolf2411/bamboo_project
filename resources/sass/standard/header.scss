@@ -308,9 +308,12 @@ header{
     // height: 76px;
     // min-height: 76px;
     // background-size: 50px;
-    height: 50px;
-    min-height: 50px;
-    background-size: 35px;
+    // height: 50px;
+    // min-height: 50px;
+    // background-size: 35px;
+    height: 55px;
+    min-height: 55px;
+    background-size: 37px;
 }
 
 #card-hover-link:hover .img{
@@ -346,10 +349,18 @@ header{
 
 #card-hover-link:hover{
     // height: 120px;
-    height: 80px;
+    //height: 80px;
+    height: 85px;
 }
 
 #card-hover-link:hover .showhover{
+    // opacity: 1;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 18px/25px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 18px/25px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
     opacity: 1;
 }
 
@@ -690,10 +701,16 @@ header{
 }
 
 .mobile-phone-submenu-item{
+    // max-width: 320px;
+    // overflow-y: hidden;
+    // max-height: 35px;
+    margin: 0;
+}
+
+.mobile-phone-submenu-item > p {
     max-width: 320px;
     overflow-y: hidden;
     max-height: 35px;
-    margin: 0;
 }
 
 .mobile-phone-submenu-title{
@@ -718,7 +735,6 @@ header{
     color: #000000;
     margin: 0;
     margin-bottom: 6px;
-
 }
 
 .mobile-phone-submenu-title > img, .mobile-phone-submenu-item > img {

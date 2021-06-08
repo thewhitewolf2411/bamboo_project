@@ -293,7 +293,12 @@ class SellController extends Controller
      * @param string $brand_id
      */
     public function getDevicesByBrand($brand_id, $category_id){
-        $devices = SellingProduct::where('brand_id', $brand_id)->where('category_id', $category_id)->take(4)->get();
+        $brandName = Brand::find($brand_id)->brand_name;
+        $sorting = new Sorting($brand_id, $category_id);
+        $devices = $sorting->sortDevices()->take(4);
+        // dd($devices);
+
+        //$devices = SellingProduct::where('brand_id', $brand_id)->where('category_id', $category_id)->take(4)->get();
         return response($devices, 200);
     }
 

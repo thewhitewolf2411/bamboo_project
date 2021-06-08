@@ -109,7 +109,7 @@
                     <div class="selling-with-element selling-with-right">
                         <div class="selling-text-column">
                             <p class="selling-section-title-orange">Bamboo Price or your device back for free</p>
-                            <p class="selling-section-text-description">We at bamboo mobile understand that used devices will come in all kinds of conditions - so we have a simple guide that will help describe the condition of your device so we can offer you the best possible price. We are so confident of our grading that if you are unhappy with the price offered, we will send your device back to you for FREE - what have you got to lose!</p>
+                            <p class="selling-section-text-description">We at Bamboo Mobile understand that used devices will come in all kinds of conditions - so we have a simple guide that will help describe the condition of your device so we can offer you the best possible price. We are so confident of our grading that if you are unhappy with the price offered, we will send your device back to you for FREE - what have you got to lose!</p>
                         </div>
                         <div class="selling-img-container">
                             <img src="{{asset('/sell_images/why_images/image-6.svg')}}">
@@ -122,7 +122,7 @@
                         Start Selling
                     </a>
                 </div> --}}
-                <a href="/sell" class="btn start-selling howitworks mt-5 mb-5"><p>Start Selling</p></a>
+                {{-- <a href="/sell" class="btn start-selling howitworks mt-5 mb-5"><p>Start Selling</p></a> --}}
             </div>
         
         </div>
@@ -174,7 +174,7 @@
 
         @include('partial.newsletter')
 
-        @include('customer.layouts.footer', ['showGetstarted' => true])
+        @include('customer.layouts.footer', ['showGetstarted' => false])
 
     </main>
 

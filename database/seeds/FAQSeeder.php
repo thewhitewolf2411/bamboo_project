@@ -69,7 +69,7 @@ class FAQSeeder extends Seeder
         #9
         FAQ::create([
             'question' => 'What do I do with iCloud?',
-            'answer' => 'It would be best if you canIt would be best if you can remove your device from your iCloud account before sending the device to us. 
+            'answer' => 'It would be best if you can remove your device from your iCloud account before sending the device to us. 
             This is really quick and easy to do, please <a href="/instructions/icloud" target="_blank" class="answer-text link">click</a> for a simple guide…',
         ]);
 

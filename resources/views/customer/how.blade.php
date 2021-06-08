@@ -20,9 +20,12 @@
         <div class="howitworks-container how-column howitworks-col-text">
             <p class="howitworks-title">Sell easily <br> with just a few clicks</p>
             <p class="howitworks-description">
-                We pride ourselves in offering a smart simple way to shop and sell mobile devices. With Boo, all it takes is just a few clicks to buy and sell the devices of your choice. 
+                {{-- We pride ourselves in offering a smart simple way to shop and sell mobile devices. With Boo, all it takes is just a few clicks to buy and sell the devices of your choice. 
                 In just a few simple steps you can either trade in or trade up your mobile tech for unbeatable prices, while doing your bit for the environment.   
-                Watch our quick video that explains how our meticulous grading system works. We guarantee you’ll be pleasantly surprised at just how thorough and exhaustive our grading system is. 
+                Watch our quick video that explains how our meticulous grading system works. We guarantee you’ll be pleasantly surprised at just how thorough and exhaustive our grading system is.  --}}
+                We pride ourselves in offering a smart simple way to sell your mobile devices. With Boo, all it takes is just a few clicks to find how much your device is worth, 
+                send it to us for free and get paid directly into your bank account. In just a few simple steps you can trade in your mobile tech for unbeatable prices, 
+                while doing your bit for the environment – Don’t make Earth pay for your tech, let Bamboo pay you for it.
             </p>
         </div>
 

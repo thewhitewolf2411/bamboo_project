@@ -627,6 +627,12 @@
     width: 100%;
 }
 
+.product-data-container > h5 {
+    max-width: 300px;
+    max-height: 50px;
+    overflow-y: hidden;
+}
+
 .product-data-container img{
     width: 100%;
     height: 70%;
