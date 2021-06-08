@@ -1,55 +1,180 @@
-<!DOCTYPE html>
+@extends('portal.layouts.portal')
 
-<html>
-
-<head>
-
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-
-    <title>Bamboo Recycle::Receive Trade-In</title>
-</head>
-
-<body class="portal-body">
-
-    <header>@include('portal.layouts.header')</header>
-
-    <main class="portal-main">
-        <div class="app">
-            <div class="portal-app-container">
-                <div class="portal-title-container">
-                    <div class="portal-title">
-                        <p>Receive Trade-In</p>
-                    </div>
-                </div>
-                <div class="portal-search-form-container">
-                    
-                    <div class="d-flex flex-wrap">
-                    @foreach($tradeins as $tradein)
-                        <a href="/portal/testing/receive/{{$tradein->id}}" class="p-3 ml-0 mr-0"><div class="d-flex flex-column shadow bg-white rounded ml-5 mr-5 p-3">
-                            <div class="" style="width:200px;">Product name: {{$tradein->getProductName($tradein->product_id)}}</div>
-                            <div class="" style="width:200px;">Customer grade: {{$tradein->customer_grade}}</div>
-                            <div class="" style="width:200px;">GB Size: {{$tradein->getDeviceMemory()}}</div>
-                            <div class="" style="width:200px;">Price: £{{$tradein->order_price}}</div>
-                        </div></a>
-                    @endforeach
-                    </div>
-
-                </div>
-
+@section('content')
+    <div class="portal-app-container">
+        <div class="portal-title-container">
+            <div class="portal-title">
+                <p>Receive Trade-In</p>
             </div>
         </div>
-    </main>
+        <div class="portal-search-form-container">
+            
+            <div class="d-flex flex-wrap">
+            @foreach($tradeins as $tradein)
+                <a role="button" data-toggle="modal" data-target="#tradein-{{$tradein->id}}" class="p-3 ml-0 mr-0">
+                    <div class="d-flex flex-column shadow bg-white rounded ml-5 mr-5 p-3">
+                        <div class="" style="width:200px;">Product name: {{$tradein->getProductName($tradein->product_id)}}</div>
+                        <div class="" style="width:200px;">Customer grade: {{$tradein->customer_grade}}</div>
+                        <div class="" style="width:200px;">GB Size: {{$tradein->getDeviceMemory()}}</div>
+                        <div class="" style="width:200px;">Price: £{{$tradein->order_price}}</div>
+                    </div>
+                </a>
+            @endforeach
+            </div>
 
-</body>
+        </div>
 
-</html>
+    </div>
+
+    @foreach($tradeins as $tradein)
+
+        <div id="tradein-{{$tradein->id}}" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Proceess Tradein: {{$tradein->barcode}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-{{$tradein->id}}" action="/portal/testing/receive/receivingresults" method="POST" enctype="multipart/form-data">
+                        @csrf
+
+                        <input type="hidden" name="tradeinid" value="{{$tradein->id}}">
+                        
+                        <div id="question-one-{{$tradein->id}}" class="question-one">
+                            <div class="w-100 p-3">
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Is device present?</p></div>
+                                </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                        <p class="mr-0 ml-0">Product: {{$tradein->getProductName()}} - ID {{$tradein->barcode}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
+                                        <p class="mr-0 ml-0">GB Size: {{$tradein->getDeviceMemory()}}</p><br>
+                                        <p class="mr-0 ml-0">User: {{$tradein->customerName()}}</p><br>
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center align-items-center w-25 border p-3"><label for="missing-yes" class="mx-0 my-3">Device is present.</label><input id="missing-yes-{{$tradein->id}}" class="select-input-fixed" type="radio" name="missing" value="present" data-value="{{$tradein->id}}"></div>
+                                    <div class="d-flex flex-column justify-content-center align-items-center w-25 border p-3"><label for="missing-no" class="mx-0 my-3">Device is not present</label><input id="missing-no-{{$tradein->id}}" class="select-input-fixed" type="radio" name="missing" value="missing" data-value="{{$tradein->id}}"></div>
+                                </div>
+                                <div class="d-flex w-100 hidden" id="missing_image_div_{{$tradein->id}}">
+                                    <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Image proof that device is missing</p></div>
+                                    <div class="d-flex w-50 border p-3"><p><input type="file" id="missing_image_{{$tradein->id}}" name="missing_image" accept="image/x-png,image/gif,image/jpeg"></p></div>
+                                </div>
+                            </div>
+
+                            <div class="w-100 d-flex justify-content-end px-3 my-3">
+                                <button type="button" onclick="changeQuestion(2, 1, {{$tradein->id}})" id="question-one-next-button-{{$tradein->id}}" class="btn btn-primary" disabled>Next</button>
+                            </div>
+                            
+                        </div>
+                        <div id="question-two-{{$tradein->id}}" class="question-two">
+                            @if($tradein->getCategoryId($tradein->product_id) > 1 && is_null($tradein->customer_network))
+                            <div class="w-100 p-3">
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Please enter serial number</p></div>
+                                </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                        <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
+                                        <p class="mr-0 ml-0">GB Size: {{$tradein->getDeviceMemory()}}</p><br>
+                                        <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
+                                    </div>
+                                    <div class="d-flex w-50 border p-3">
+                                        <input id="serial_number" type="text" name="serial_number" title="15 characters required">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            @else
+                            <div class="w-100 p-3">
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Is device IMEI number visible?</p></div>
+                                </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                        <p class="mr-0 ml-0">Product: {{$tradein->getProductName()}} - ID {{$tradein->barcode}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
+                                        <p class="mr-0 ml-0">GB Size: {{$tradein->getDeviceMemory()}}</p><br>
+                                        <p class="mr-0 ml-0">User: {{$tradein->customerName()}}</p><br>
+                                    </div>
+                                    <div class="d-flex flex-column justify-content-center align-items-center w-25 border p-3"><label for="visible_imei_yes" class="mx-0 my-3">Yes.</label><input id="visible_imei_yes" type="radio" class="select-input-fixed" name="visible_imei" value="yes" data-value="{{$tradein->id}}"></div>
+                                    <div class="d-flex flex-column justify-content-center align-items-center w-25 border p-3"><label for="visible_imei_no" class="mx-0 my-3">No.</label><input id="visible_imei_no_{{$tradein->id}}" type="radio" class="select-input-fixed" name="visible_imei" value="no" data-value="{{$tradein->id}}"></div>
+                                </div>
+                            </div>
+                            @endif
+                            <div class="w-100 d-flex justify-content-between px-3 my-3">
+                                <button type="button" onclick="changeQuestion(1, 2, {{$tradein->id}})" class="btn btn-primary">Back</button>
+                                <button type="button" onclick="changeQuestion(3, 2, {{$tradein->id}})" id="question-two-next-button-{{$tradein->id}}" class="btn btn-primary" disabled>Next</button>
+                            </div>
+                        </div>
+                        <div id="question-three-{{$tradein->id}}" class="question-three">
+                            @if($tradein->getCategoryId($tradein->product_id) > 1 && is_null($tradein->customer_network))
+                            <div class="w-100 p-3">
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Please enter serial number</p></div>
+                                </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                        <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
+                                        <p class="mr-0 ml-0">GB Size: {{$tradein->getDeviceMemory()}}</p><br>
+                                        <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
+                                    </div>
+                                    <div class="d-flex w-50 border p-3">
+                                        <input id="serial_number" type="text" name="serial_number" title="15 characters required">
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            @else
+                            <div class="w-100 p-3">
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Please enter IMEI number</p></div>
+                                </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                        <p class="mr-0 ml-0">Product: {{$tradein->getProductName()}} - ID {{$tradein->barcode}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
+                                        <p class="mr-0 ml-0">GB Size: {{$tradein->getDeviceMemory()}}</p><br>
+                                        <p class="mr-0 ml-0">User: {{$tradein->customerName()}}</p><br>
+                                    </div>
+                                    <div class="d-flex flex-column w-50 border p-3">
+                                        <input id="imei_number" class="imei_number" size="15" type="number" name="imei_number" title="15 characters required">
+                                        @if(Session::has('error'))
+                                        <div class="alert alert-danger" role="alert">
+                                            {{Session::get('error')}}
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            @endif
+                            <div class="w-100 d-flex justify-content-between px-3 my-3">
+                                <button type="button" onclick="changeQuestion(2, 3, {{$tradein->id}})" class="btn btn-primary">Back</button>
+                                <button id="imei_submit" type="submit" class="btn btn-primary imei_submit" disabled>Submit</button>
+                            </div>
+                        </div>
+                        <div id="result-page-{{$tradein->id}}" class="question-four">
+                            <div class="w-100 d-flex justify-content-between px-3 my-3">
+                                <button type="button" onclick="changeQuestion(undefined, 4, {{$tradein->id}})" class="btn btn-primary">Back</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    
+    @endforeach
+    
+@endsection

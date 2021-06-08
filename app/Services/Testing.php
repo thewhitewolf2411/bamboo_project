@@ -133,8 +133,6 @@ class Testing{
         $bambooprice = $this->generateDevicePrice($tradein->correct_product_id, $tradein->correct_memory, $tradein->correct_network, $bambogradeval);
         $tradein->bamboo_price = $bambooprice;
 
-        #dd($tradein);
-
         if($bambooprice < $tradein->order_price){
             if(!($tradein->job_state === "15c" || $tradein->job_state === "15b" || $tradein->job_state === "15a")){
                 #dd($tradein->job_state !== "15c", $tradein->job_state !== "15b", $tradein->job_state !== "15a");
@@ -153,7 +151,7 @@ class Testing{
                 }
             }
         }
-        #dd("");
+
 
         $quarantineTrays = "";
         $quarantineName = "";
@@ -312,9 +310,6 @@ class Testing{
 
         $quarantineName = $quarantineTrays->tray_name;
 
-        // check for testing faults to send notification
-        //$this->checkForNotifications($tradein);
-
         return ['tray_name'=>$quarantineName, 'tray'=>$quarantineTrays];
 
     }
@@ -348,35 +343,16 @@ class Testing{
                 break;
         }
 
-
-        #dd($price);
         $deviceNetworks = ProductNetworks::where('product_id', $deviceID)->get();
 
         foreach($deviceNetworks as $dN){
-            #dd($dN->getNetWorkName($dN->network_id) === $deviceNetwork);
             if($dN->getNetWorkName($dN->network_id) === $deviceNetwork ){
                 $price = $price - $dN->knockoff_price;
             }
         }
 
-        //dd($price);
-
         return $price;
     }
-
-    /*
-    public function checkForNotifications($tradein){
-        $notificationService = new NotificationService();
-        // dd($tradein, $data);
-
-        switch ($tradein->job_state) {
-
-            default:
-                # code...
-                break;
-        }
-    }
-    */
 }
 
 

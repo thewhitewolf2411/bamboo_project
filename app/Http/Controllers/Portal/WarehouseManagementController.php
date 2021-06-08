@@ -24,6 +24,7 @@ use DNS1D;
 use DNS2D;
 use Session;
 use App\Services\GetLabel;
+use App\Services\PickNoteService;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 
 class WarehouseManagementController extends Controller
@@ -218,13 +219,13 @@ class WarehouseManagementController extends Controller
             $box->status = 3;
             
             $boxContent = TrayContent::where('pseudo_tray_id', $box->id)->get();
-
+            #dd($boxContent);
             foreach($boxContent as $bC){
-                $oldTray = Tray::where('id', $bC->tray_id)->orWhere('id', $bC->pseudo_tray_id)->first();
-                if($oldTray->tray_id !== $oldTray->pseudo_tray_id){
-                    $oldTray->number_of_devices = $bC->number_of_devices - 1;
+                $oldTray = Tray::where('id', $bC->tray_id)->first();//->orWhere('id', $bC->pseudo_tray_id)->first();
+                //if($oldTray->tray_id !== $oldTray->pseudo_tray_id){
+                    $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
                     $box->number_of_devices = $box->number_of_devices + 1;
-                }
+                //}
                 $oldTray->save();
     
                 $bC->tray_id = $request->boxid;
@@ -272,8 +273,8 @@ class WarehouseManagementController extends Controller
     public function completeBox(Request $request){
         #dd($request->all());
         
-        $boxname = $request->boxid;
-        $tray = Tray::where('id', $boxname)->first();
+        $boxid = $request->boxid;
+        $tray = Tray::where('id', $boxid)->first();
         
 
         $boxContent = TrayContent::where('pseudo_tray_id', $request->boxid)->get();
@@ -284,12 +285,15 @@ class WarehouseManagementController extends Controller
         $tray->status = 3;
         $tradeins = $boxContent->pluck('trade_in_id')->toArray();
 
+        #dd($tradeins);
+
         foreach($boxContent as $bC){
-            $oldTray = Tray::where('id', $bC->tray_id)->orWhere('id', $bC->pseudo_tray_id)->first();
-            if($oldTray->tray_id !== $oldTray->pseudo_tray_id){
-                $oldTray->number_of_devices = $bC->number_of_devices - 1;
-                $tray->number_of_devices = $tray->number_of_devices + 1;
-            }
+            $oldTray = Tray::where('id', $bC->tray_id)->first();//->orWhere('id', $bC->pseudo_tray_id)->first();
+            #dd($oldTray);
+            //if($oldTray->tray_id !== $oldTray->pseudo_tray_id){
+            $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+            $tray->number_of_devices = $tray->number_of_devices + 1;
+            //}
             $oldTray->save();
 
             $bC->tray_id = $request->boxid;
@@ -715,43 +719,12 @@ class WarehouseManagementController extends Controller
     }
 
     public function printPickNote(Request $request){
-        $salesLotDevices = SalesLotContent::where('sales_lot_id', $request->saleslotid)->get();
-        $device_ids = $salesLotDevices->pluck('device_id')->toArray();
-        $tradeins = Tradein::whereIn('id', $device_ids)->get();
 
-        foreach($tradeins as $device){
-            $device->product_name = $device->getProductName($device->product_id);
-            $device->box_location = $device->getTrayName($device->id);
-            $device->bay_location = $device->getBayName();
-        }
+        $salelot_id = $request->saleslotid;
 
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        $sheet->setCellValue('A1', 'Trade in barcode');
-        $sheet->setCellValue('B1', 'Model');
-        $sheet->setCellValue('C1', 'IMEI');
-        $sheet->setCellValue('D1', 'Bay Location');
-        $sheet->setCellValue('E1', 'Box Name');
-
-        $pos = 2;
-        foreach($tradeins as $key=>$tradein){
-            $sheet->setCellValue('A'.$pos, $tradein->barcode);
-            $sheet->setCellValue('B'.$pos, $tradein->product_name);
-            $sheet->setCellValueExplicit('C'.$pos, (string)$tradein->imei_number, DataType::TYPE_STRING);
-            $sheet->setCellValue('D'.$pos, $tradein->bay_location);
-            $sheet->setCellValue('E'.$pos, $tradein->box_location);
-            $pos++;
-        }
-
+        $pickNoteService = new PickNoteService($salelot_id);
         
-        $filename = 'pick_note_'.$request->saleslotid.'_' . \Carbon\Carbon::now()->format('Y_m_d_h_i');
-
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet); 
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
-        header('Cache-Control: max-age=0');
-        $writer->save('php://output');
+        $pickNoteService->generatePrintNote();
     }
 
     public function checkBoxStatusOfLot(Request $request){
@@ -872,8 +845,6 @@ class WarehouseManagementController extends Controller
     }
 
     public function completePickingLot(Request $request){
-
-
 
         $salesLot = SalesLot::where('id', $request->buildsaleslot_salelot)->first();
 

@@ -312,7 +312,7 @@ $('#complete-box').on('click', function(){
             },
             success:function(response){
                 window.open(response);
-                location.href = '/portal/warehouse-management/box-management/';
+                //location.href = '/portal/warehouse-management/box-management/';
             },
             error:function(response){
                 console.log(response);
