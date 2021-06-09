@@ -15,9 +15,9 @@
     </div>
 
     @if(Session::get('_previous') !== null)
-        <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+        <a class="back-to-home-footer padded mt-3" href="{{Session::get('_previous')['url']}}">
     @else
-        <a class="back-to-home-footer mt-3" href="/">
+        <a class="back-to-home-footer padded mt-3" href="/">
     @endif
         <p class="back-home-text"><img class="back-home-icon mr-2" alt="Back" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
     </a>

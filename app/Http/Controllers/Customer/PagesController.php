@@ -136,7 +136,8 @@ class PagesController extends Controller
 
         $products = $buyingProducts->merge($sellingProducts);
 
-        $blog = Blog::where('id', $id)->first();
+        // $blog = Blog::where('id', $id)->first();
+        $blog = Blog::findOrFail($id);
         $other = Blog::all()->except($id)->take(3);
         $howto = Blog::where('cms_type',2)->where('id', '!=', $id)->get()->take(2);
 

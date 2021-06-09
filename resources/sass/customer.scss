@@ -60,12 +60,17 @@ main p, a, span{
 }
 
 .back-to-home-footer{
-    width: 90%;
+    // width: 90%;
+    width: 100%;
     display: flex;
     justify-content: start;
     margin: auto;
     // max-width: 1150px;
-    max-width: 1600px;
+    //max-width: 1600px;
+}
+
+.back-to-home-footer.padded{
+    padding: 0 140px;
 }
 
 .back-home-text{
@@ -1234,6 +1239,17 @@ main p, a, span{
 
 .hovercart-hide{
     display: none;
+}
+
+
+
+
+
+
+
+// sitemap
+.sitemap-container{
+    padding: 0 140px;
 }
 
 .sitemap-title{

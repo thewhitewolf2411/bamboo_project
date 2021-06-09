@@ -23,7 +23,7 @@
             </div>
         </div> --}}
         <div class="col text-center back-results-selling">
-            @if(Session::get('_previous') !== null)
+            {{-- @if(Session::get('_previous') !== null)
                 <a class="back-results-sell ml-5" href="{{Session::get('_previous')['url']}}">
                     <img class="back-icon-results" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
                     <p class="results-back">Back</p>
@@ -33,7 +33,14 @@
                     <img class="back-icon-results" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
                     <p class="results-back">Back</p>
                 </a>
+            @endif --}}
+            @if(Session::get('_previous') !== null)
+            <a class="back-to-home-footer padded mt-3 pt-2" href="{{Session::get('_previous')['url']}}">
+            @else
+                <a class="back-to-home-footer padded mt-3 pt-2" href="/">
             @endif
+                <p class="back-home-text pt-2"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
+            </a>
             @if($topResults)
                 <p class="results-upper mb-2">search results</p>
                 <p class="results-found mb-3">Matching devices found</p>

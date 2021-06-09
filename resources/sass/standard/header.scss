@@ -708,7 +708,8 @@ header{
 }
 
 .mobile-phone-submenu-item > p {
-    max-width: 320px;
+    // max-width: 320px;
+    width: 250px;
     overflow-y: hidden;
     max-height: 35px;
 }
@@ -977,6 +978,24 @@ header{
     flex-direction: row;
 }
 
+
+
+@media screen and (max-width: 496px){
+    #full-bamboo-logo{
+        width: 283px;
+        height: auto;
+    }
+
+    .header-container{
+        padding: 0 22px 22px 22px;
+    }
+
+    .full-logo > img {
+        padding: 0;
+    }
+}
+
+
 // large breakpoint
 @media (max-width: 1400px){
     .logo-header-container{
@@ -986,7 +1005,7 @@ header{
         margin-left: 0px;
     }
     .header-container{
-        padding: 0 60px;
+        //padding: 0 60px;
     }
 }
 
@@ -994,7 +1013,7 @@ header{
 @media (max-width: 1130px){
     .header-container{
         // padding: 0 60px 60px;
-        padding: 0 60px 0px;
+        //padding: 0 60px 0px;
     }
     #full-logo-container.resized{
         margin-left: 40px;
@@ -1017,7 +1036,7 @@ header{
     }
     .full-logo > img{
         width: 400px;
-        padding: 10px;
+        // padding: 10px;
     }
     main{
         margin-top: 100px;
@@ -1027,7 +1046,7 @@ header{
     }
     .header-container{
         height: 100px;
-        padding: 0 25px 25px;
+        //padding: 0 25px 25px;
     }
     .hover-link{
         width: 60px;
@@ -1059,12 +1078,12 @@ header{
 
 // tablets - regular
 @media (max-width: 625px){
-    .full-logo{
-        display: none;
-    }
-    .mobile-logo{
-        display: block !important;
-    }
+    // .full-logo{
+    //     display: none;
+    // }
+    // .mobile-logo{
+    //     display: block !important;
+    // }
     .logo-header-container{
         margin-top: 20px;
     }

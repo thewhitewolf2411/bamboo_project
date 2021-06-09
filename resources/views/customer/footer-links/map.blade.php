@@ -30,8 +30,7 @@
                 <p class="page-header-text">Sitemap</p>
             </div>
 
-            <div class="container">
-
+            <div class="sitemap-container">
                 @if(Session::get('_previous') !== null)
                     <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
                 @else
@@ -131,7 +130,7 @@
                     <p class="sitemap-section-title ml-1 mt-4">Selling</p>
                 </div>
 
-                <div class="row m-0 map-row justify-content-between">
+                <div class="row m-0 map-row">
 
                     <div class="map-col">
                         <p class="sitemap-title">Sell Mobile Phones</p>

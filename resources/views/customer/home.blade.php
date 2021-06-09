@@ -149,20 +149,18 @@
             </div>
             <div class="how-images-container">
                 <div class="back-line-container"></div>
-                <div class="how-image-container">
+                <div class="how-image-container first">
                     <img src="{{asset('/customer_page_images/body/How-Icon-4.svg')}}">
                 </div>
-                <div class="how-image-container">
-                    <img src="{{asset('/customer_page_images/body/How-Icon-5.svg')}}">
+                <div class="how-image-container second">
+                    <img src="{{asset('/customer_page_images/body/final_free_trade_pack.svg')}}">
                 </div>
-                <div class="how-image-container">
+                <div class="how-image-container third">
                     <img src="{{asset('/customer_page_images/body/How-Icon-6.svg')}}">
-                </div>
-                <div class="url-footer-container" id="start-selling">
-                    <a href="/sell">Start Selling</a>
                 </div>
             </div>
         </div>
+        <a href="/sell" class="btn start-selling howitworks mt-4"><p>Start Selling</p></a>
     </div>
 
     {{-- <div class="home-element grading-container">
@@ -275,36 +273,6 @@
                 @endforeach
             </div>
 
-            {{-- <div class="devices-container">
-                <div class="device-container">
-                    <img src="{{asset('/customer_page_images/body/mobile-images/Image 3.png')}}">
-                    <div class="category-text">
-                        <p class="category-title">Apple</p>
-                        <p class="model-title">iPhone X</p>
-                    </div>
-                </div>
-                <div class="device-container">
-                    <img src="{{asset('/customer_page_images/body/mobile-images/Image 4.png')}}">
-                    <div class="category-text">
-                        <p class="category-title">Apple</p>
-                        <p class="model-title">iPad Pro 11 inch 2020</p>
-                    </div>
-                </div>
-                <div class="device-container">
-                    <img src="{{asset('/customer_page_images/body/mobile-images/Image 5.png')}}">
-                    <div class="category-text">
-                        <p class="category-title">Samsung</p>
-                        <p class="model-title">Galaxy A10</p>
-                    </div>
-                </div>
-                <div class="device-container">
-                    <img src="{{asset('/customer_page_images/body/mobile-images/Image 6.png')}}">
-                    <div class="category-text">
-                        <p class="category-title">Apple</p>
-                        <p class="model-title">Watch Series 5 44mm</p>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     @endif
 

@@ -3,7 +3,7 @@
     <div class="footer-row" id="footer-row-1">
 
         @if($showGetstarted)
-            <div class="footer-row-2">
+            <div class="footer-row-2 start-selling-section-footer">
                 <span>Get Started</span>
                     {{-- <div class="url-footer-container" id="start-shopping">
                         <a href="/shop">Start Shopping</a>

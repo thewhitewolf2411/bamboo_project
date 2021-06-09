@@ -158,6 +158,10 @@
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                 </a>
             @endforeach
+            <a class="mobile-phone-submenu-item" href="/sell">
+                <p>See more</p>
+                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+            </a>
         </div>
 
         <a class="whysell-banner-container" href="/sell/why">
@@ -220,6 +224,10 @@
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                 </a>
             @endforeach
+            <a class="mobile-phone-submenu-item" href="/sell">
+                <p>See more</p>
+                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+            </a>
         </div>
 
         <a class="whysell-banner-container" href="/sell/why">
@@ -281,6 +289,10 @@
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                 </a>
             @endforeach
+            <a class="mobile-phone-submenu-item" href="/sell">
+                <p>See more</p>
+                <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+            </a>
         </div>
 
         <a class="whysell-banner-container" href="/sell/why">

@@ -4,7 +4,7 @@
 
     <main class="selling-margin">
         @include('customer.layouts.sellinglinks')
-        <div class="col text-center sell-item">
+        {{-- <div class="col text-center sell-item">
             @if(Session::get('_previous') !== null)
                 <a class="back-results-sell sell-item-back  ml-5" href="{{Session::get('_previous')['url']}}">
             @else
@@ -13,7 +13,14 @@
                 <img class="back-icon-results" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
                 <p class="results-back selling">Back to Search</p>
             </a>
-        </div>
+        </div> --}}
+        @if(Session::get('_previous') !== null)
+            <a class="back-to-home-footer padded mt-3 pt-2" href="{{Session::get('_previous')['url']}}">
+        @else
+            <a class="back-to-home-footer padded mt-3 pt-2" href="/">
+        @endif
+            <p class="back-home-text pt-2"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
+        </a>
 
         <div class="single-product-container">
             {{-- {!!dd($product)!!} --}}

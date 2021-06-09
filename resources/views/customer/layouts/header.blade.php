@@ -11,6 +11,7 @@
             </a>
             <a href="/" class="mobile-logo invisible" id="mobile-logo-img">
                 <img id="mobile-bamboo-logo" src="{{asset('/customer_page_images/body/emoji_emotionless.svg')}}">
+                {{-- <img id="mobile-bamboo-logo" src="{{asset('/customer_page_images/header/Bamboo Logo.svg')}}"> --}}
             </a>
         </div>
 

@@ -24,11 +24,11 @@
         }
     };
 
-    if(window.innerWidth <= 625){
-      if(logo_mobile.classList.contains('invisible')){
-        logo_mobile.classList.remove('invisible');
-      }
-    }
+    // if(window.innerWidth <= 625){
+    //   if(logo_mobile.classList.contains('invisible')){
+    //     logo_mobile.classList.remove('invisible');
+    //   }
+    // }
 
     if(isMobile.any()){
       return;

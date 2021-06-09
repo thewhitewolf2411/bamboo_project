@@ -10,11 +10,11 @@
     </div>
     
     @if(Session::get('_previous') !== null)
-    <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+        <a class="back-to-home-footer padded mt-3 pt-2" href="{{Session::get('_previous')['url']}}">
     @else
-    <a class="back-to-home-footer mt-3" href="/">
+        <a class="back-to-home-footer padded mt-3 pt-2" href="/">
     @endif
-        <p class="back-home-text support"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back to previous page</p>
+        <p class="back-home-text pt-2"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
     </a>
 
     <div class="support-search-element height-100">

@@ -34,7 +34,7 @@
 
         <img class="article-image" src="/storage/news_images/{{$blog->image_1}}">
 
-        <p class="view-blog-paragraph bold mt-4">{!!$blog->cms_parg_1!!}</p>
+        <p class="view-blog-paragraph bold">{!!$blog->cms_parg_1!!}</p>
         <br>
 
         <p class="view-blog-paragraph">{!!$blog->cms_parg_2!!}</p>
@@ -214,9 +214,8 @@
 
         </div>
     </div>
-    @endif
-
     <div class="blog-horizontal-line latest"></div>
+    @endif
 
     @include('partial.newscontactsupport')
 

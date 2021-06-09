@@ -344,6 +344,45 @@
     }
 }
 
+@media (max-width: 496px){
+    .sustainability-large, .whathappensnext-large{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-65) var(--unnamed-font-family-sharp-sans-no1-bold);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: left;
+        font: normal normal normal 60px/65px Sharp Sans No1 Bold;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+    }
+
+    .sustainability-small{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/var(--unnamed-line-spacing-34) var(--unnamed-font-family-sharp-sans-no1-medium);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: left;
+        font: normal normal normal 25px/34px Sharp Sans No1 Medium;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+        max-width: 402px;
+    }
+
+    .sustainability-container{
+        padding: 20px;
+    }
+
+    .sustainability-about-row{
+        margin-top: 132px;
+        margin-bottom: 0;
+    }
+
+    .sustainability-row{
+        margin-top: 158px;
+        margin-bottom: 112px;
+    }
+}
+
 .laughing-gif{
     width: 350px;
     height: auto;
@@ -779,6 +818,71 @@
     opacity: 1;
 }
 
+#newsletter-description{
+    margin-top: 20px;
+}
+
+
+@media (max-width: 496px){
+    .newsletter-container{
+        padding: 77px 22px;
+    }
+
+    .newsletter-large-text{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-65) var(--unnamed-font-family-sharp-sans-no1-bold);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: center;
+        font: normal normal normal 60px/65px Sharp Sans No1 Bold;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+    }
+
+    .newsletter-small-text{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: center;
+        font: normal normal normal 37px/40px Bebas Neue;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+        max-width: 406px;
+    }
+
+    #newsletter-description{
+        margin-top: 37px;
+        margin-bottom: 14px;
+    }
+
+    .email-input{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: left;
+        font: normal normal normal 20px/28px Sharp Sans No1 Book;
+        letter-spacing: 0px;
+        color: #000000;
+    }
+
+    .newsletter-terms-text{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 15px/20px var(--unnamed-font-family-sharp-sans-no1-book);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: left;
+        font: normal normal normal 15px/20px Sharp Sans No1 Book;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+    }
+
+    .newsletter-signupbtn{
+        width: 100%;
+        max-width: 406px;
+        height: 72px;
+    }
+}
 
 
 @media screen and (max-width: 890px){
@@ -902,6 +1006,78 @@
     background: #A3D147;
 }
 
+@media (max-width: 496px){
+    .newscontactsupport-container{
+        padding: 45px 0 45px 0;
+    }
+    .newscontactsupport-item.news, .newscontactsupport-item.service{
+        width: 100%;
+        max-width: 222px;
+        height: 220px;
+    }
+
+    .newscontactsupport-item.support{
+        width: 100%;
+        max-width: 452px;
+        height: 139px;
+    }
+
+    .newscontactsupport-item > p {
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/var(--unnamed-line-spacing-34) var(--unnamed-font-family-sharp-sans-no1-bold);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: center;
+        font: normal normal normal 25px/34px Sharp Sans No1 Bold;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+    }
+
+    .newscontactsupport-item {
+        padding: 25px;
+    }
+
+    .newscontactsupport-item > img{
+        padding-top: 0;
+        margin: auto;
+    }
+
+    .newscontactsupport-item > img.news, .newscontactsupport-item > img.servicesupport{
+        margin-top: auto;
+        margin-bottom: 0;
+    }
+
+    .newscontactsupport-item > img.news{
+        margin-bottom: 12px;
+    }
+
+    .newscontactsupport-item > img.news {
+        width: 100%;
+        max-width: 177px;
+        height: 65px;
+        margin-left: auto;
+    }
+    
+    .newscontactsupport-item > img.servicesupport{
+        width: 100%;
+        max-width: 105px;
+        height: 176px;
+    }
+
+    .newscontactsupport-item.support{
+        flex-direction: row;
+        margin-top: 12px;
+    }
+    
+    .newscontactsupport-item > img.contactus{
+        width: 100%;
+        max-width: 110px;
+        height: 83px;
+        margin-left: auto;
+        margin-right: 0;
+    }
+}
+
 
 
 
@@ -969,9 +1145,9 @@
         font-size: 1.5em;
     }
     
-    .newscontactsupport-item{
-        padding: 20px;
-    }
+    // .newscontactsupport-item{
+    //     padding: 20px;
+    // }
 }
 
 // mobile
@@ -982,15 +1158,15 @@
     .sustainability-images-overlay{
         margin-top: 0;
     }
-    .sustainability-about-row{
-        margin-bottom: 50px;
-    }
+    // .sustainability-about-row{
+    //     margin-bottom: 50px;
+    // }
 
-    .sustainability-about-col > a, .text-buttons-sustainability > a{
-        min-width: 150px;
-    }
+    // .sustainability-about-col > a, .text-buttons-sustainability > a{
+    //     min-width: 150px;
+    // }
 
-    .sustainability-container{
-        padding: 40px;
-    }
+    // .sustainability-container{
+    //     padding: 40px;
+    // }
 }

@@ -22,53 +22,74 @@ class MenuHelper {
     //     return $sorting->sortDevices();
 
     public static function getApplePhones(){
-        $sorting = new Sorting('1', '1', 13);
+        $sorting = new Sorting('1', '1', 6);
         return $sorting->sortDevices();
     }
 
     public static function getSamsungPhones(){
-        $sorting = new Sorting('2', '1', 13);
+        $sorting = new Sorting('2', '1', 6);
         return $sorting->sortDevices();
     }
 
     public static function getMobileBrands(){
-        $mobile = SellingProduct::where('category_id', 1)->get()->pluck('brand_id')->toArray();
-        $unique = array_unique($mobile);
-        $brands = Brand::whereIn('id', $unique)->get();
+        // $mobile = SellingProduct::where('category_id', 1)->get()->pluck('brand_id')->toArray();
+        // $unique = array_unique($mobile);
+        // $brands = Brand::whereIn('id', $unique)->get();
+        $brands = Brand::all();
+        $featured = ['Apple','Samsung', 'Huawei', 'OnePlus'];
+        $brands = $brands->filter(function($brand) use ($featured){
+            if(in_array($brand->brand_name, $featured)){
+                return $brand;
+            }
+        });
         return $brands;
     }
 
     public static function getAppleTablets(){
-        $sorting = new Sorting('1', '2', 13);
+        $sorting = new Sorting('1', '2', 6);
         return $sorting->sortDevices();
     }
 
     public static function getSamsungTablets(){
-        $sorting = new Sorting('2', '2', 13);
+        $sorting = new Sorting('2', '2', 6);
         return $sorting->sortDevices();
     }
 
     public static function getTabletBrands(){
-        $tablets = SellingProduct::where('category_id', 2)->get()->pluck('brand_id')->toArray();
-        $unique = array_unique($tablets);
-        $brands = Brand::whereIn('id', $unique)->get();
+        // $tablets = SellingProduct::where('category_id', 2)->get()->pluck('brand_id')->toArray();
+        // $unique = array_unique($tablets);
+        // $brands = Brand::whereIn('id', $unique)->get();
+        $brands = Brand::all();
+        $featured = ['Apple','Samsung', 'Huawei', 'OnePlus'];
+        $brands = $brands->filter(function($brand) use ($featured){
+            if(in_array($brand->brand_name, $featured)){
+                return $brand;
+            }
+        });
         return $brands;
     }
 
     public static function getAppleWatches(){
-        $sorting = new Sorting('1', '3', 13);
+        $sorting = new Sorting('1', '3', 6);
         return $sorting->sortDevices();
     }
 
     public static function getSamsungWatches(){
-        $sorting = new Sorting('2', '3', 13);
+        $sorting = new Sorting('2', '3', 6);
         return $sorting->sortDevices();
     }
 
     public static function getWatchesBrands(){
-        $watches = SellingProduct::where('category_id', 3)->get()->pluck('brand_id')->toArray();
-        $unique = array_unique($watches);
-        $brands = Brand::whereIn('id', $unique)->get();
+        // $watches = SellingProduct::where('category_id', 3)->get()->pluck('brand_id')->toArray();
+        // $unique = array_unique($watches);
+        // $brands = Brand::whereIn('id', $unique)->get();
+        $brands = Brand::all();
+        $featured = ['Apple','Samsung', 'Huawei', 'OnePlus'];
+        $brands = $brands->filter(function($brand) use ($featured){
+            if(in_array($brand->brand_name, $featured)){
+                return $brand;
+            }
+        });
         return $brands;
     }
 
