@@ -57668,10 +57668,7 @@ $(document).ready(function () {
   !*** ./resources/js/scripts/Receiving.js ***!
   \*******************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
-    isInteger = _require.isInteger;
+/***/ (function(module, exports) {
 
 $('input[type=radio][name=missing]').on('change', function () {
   var id = $(this).data('value');
@@ -57710,6 +57707,8 @@ $(document).ready(function () {
 });
 
 window.changeQuestion = function (question_number, current_question_number, tradein_id) {
+  var result = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+
   if (question_number === 1 && current_question_number === 2) {
     $('#question-two-' + tradein_id).hide();
     $('#question-one-' + tradein_id).show();
@@ -57719,6 +57718,7 @@ window.changeQuestion = function (question_number, current_question_number, trad
     if ($('#missing-no-' + tradein_id).is(':checked')) {
       $('#question-one-' + tradein_id).hide();
       $('#result-page-' + tradein_id).show();
+      $('#receiving-result-' + tradein_id).html('<p>Device is missing from package.</p><br>');
     } else {
       $('#question-one-' + tradein_id).hide();
       $('#question-two-' + tradein_id).show();
@@ -57734,21 +57734,59 @@ window.changeQuestion = function (question_number, current_question_number, trad
     if ($('#visible_imei_no_' + tradein_id).is(':checked')) {
       $('#question-two-' + tradein_id).hide();
       $('#result-page-' + tradein_id).show();
+      $('#receiving-result-' + tradein_id).html('<p>Device has no visible IMEI number.</p><br>');
     } else {
       $('#question-two-' + tradein_id).hide();
       $('#question-three-' + tradein_id).show();
     }
   }
 
-  if (current_question_number === 4) {
+  if (question_number === 4 && current_question_number === 3) {
+    $('#result-page-' + tradein_id).show();
+    $('#question-three-' + tradein_id).hide();
+
+    if (result !== null && result.RawResponse.blackliststatus === 'No') {
+      $('#receiving-result-' + tradein_id).html('<p>This device has passed receiving part of the testing.</p><br>');
+    } else if (result !== null) {
+      $('#receiving-result-' + tradein_id).html('<p>This device is blacklisted in ' + result.RawResponse.imeihistory[0].Country + '.</p><br>');
+    }
+  }
+
+  if (question_number === undefined && current_question_number === 4) {
     if ($('#missing-no-' + tradein_id).is(':checked')) {
       $('#result-page-' + tradein_id).hide();
       $('#question-one-' + tradein_id).show();
     } else if ($('#visible_imei_no_' + tradein_id).is(':checked')) {
       $('#result-page-' + tradein_id).hide();
       $('#question-two-' + tradein_id).show();
+    } else {
+      $('#result-page-' + tradein_id).hide();
+      $('#question-three-' + tradein_id).show();
     }
   }
+
+  if (question_number === 3 && current_question_number === 4) {
+    $('#result-page-' + tradein_id).hide();
+    $('#question-three-' + tradein_id).show();
+  }
+};
+
+window.checkImeiNumber = function (tradein_id) {
+  var imeinumber = $('#imei_number_' + tradein_id).val();
+  $.ajax({
+    url: "/portal/testing/receive/checkimei",
+    type: "POST",
+    data: {
+      "imei_number": imeinumber,
+      "tradein_id": tradein_id
+    },
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(response) {
+      changeQuestion(4, 3, tradein_id, response);
+    }
+  });
 };
 
 $('.imei_number').on('input', function (e) {

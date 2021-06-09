@@ -1,5 +1,3 @@
-const { isInteger } = require("lodash");
-
 $('input[type=radio][name=missing]').on('change', function(){
 
     var id = $(this).data('value');
@@ -52,7 +50,7 @@ $(document).ready(function(){
 });
 
 
-window.changeQuestion = function(question_number, current_question_number, tradein_id){
+window.changeQuestion = function(question_number, current_question_number, tradein_id, result = null){
 
     if(question_number === 1 && current_question_number === 2){
 
@@ -66,6 +64,7 @@ window.changeQuestion = function(question_number, current_question_number, trade
         if($('#missing-no-'+tradein_id).is(':checked')){
             $('#question-one-'+tradein_id).hide();
             $('#result-page-'+tradein_id).show();
+            $('#receiving-result-'+tradein_id).html('<p>Device is missing from package.</p><br>');
         }
         else{
             $('#question-one-'+tradein_id).hide();
@@ -83,6 +82,7 @@ window.changeQuestion = function(question_number, current_question_number, trade
         if($('#visible_imei_no_'+tradein_id).is(':checked')){
             $('#question-two-'+tradein_id).hide();
             $('#result-page-'+tradein_id).show();
+            $('#receiving-result-'+tradein_id).html('<p>Device has no visible IMEI number.</p><br>');
         }
         else{
             $('#question-two-'+tradein_id).hide();
@@ -91,7 +91,21 @@ window.changeQuestion = function(question_number, current_question_number, trade
 
     }
 
-    if(current_question_number === 4){
+    if(question_number === 4 && current_question_number === 3){
+
+        $('#result-page-'+tradein_id).show();
+        $('#question-three-'+tradein_id).hide();
+
+        if(result !== null && result.RawResponse.blackliststatus === 'No'){
+            $('#receiving-result-'+tradein_id).html('<p>This device has passed receiving part of the testing.</p><br>');
+        }
+        else if(result !== null){
+            $('#receiving-result-'+tradein_id).html('<p>This device is blacklisted in ' + result.RawResponse.imeihistory[0].Country + '.</p><br>');
+        }
+        
+    }
+
+    if(question_number === undefined && current_question_number === 4){
 
         if($('#missing-no-'+tradein_id).is(':checked')){
             $('#result-page-'+tradein_id).hide();
@@ -101,8 +115,38 @@ window.changeQuestion = function(question_number, current_question_number, trade
             $('#result-page-'+tradein_id).hide();
             $('#question-two-'+tradein_id).show();
         }
+        else{
+            $('#result-page-'+tradein_id).hide();
+            $('#question-three-'+tradein_id).show();
+        }
 
     }
+    if(question_number === 3 && current_question_number === 4){
+
+        $('#result-page-'+tradein_id).hide();
+        $('#question-three-'+tradein_id).show();
+    }
+
+}
+
+window.checkImeiNumber = function(tradein_id){
+
+    var imeinumber = $('#imei_number_'+tradein_id).val();
+
+    $.ajax({
+        url: "/portal/testing/receive/checkimei",
+        type:"POST",
+        data:{
+            "imei_number": imeinumber,
+            "tradein_id": tradein_id
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(response){
+            changeQuestion(4, 3, tradein_id, response);
+        },
+    });
 
 }
 

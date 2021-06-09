@@ -292,6 +292,7 @@ Route::post('/portal/testing/receive/checkimei', 'Portal\TestingController@check
 Route::post('/portal/testing/receive/usercheckimei', 'Portal\TestingController@userCheckImei');
 Route::post('/portal/testing/receive/printnewlabel', 'Portal\TestingController@printNewLabel');
 Route::post('/portal/testing/receive/sendtotray', 'Portal\TestingController@sendtotray');
+Route::post('portal/testing/receive/receivingresults', 'Portal\TestingController@receivingResults');
 Route::post('/portal/receiving/printnewlabel' , 'Portal\TestingController@downloadSingleFile');
 
 Route::get('/portal/testing/checkforserial/{id}', 'Portal\TestingController@showCheckForSerialPage');

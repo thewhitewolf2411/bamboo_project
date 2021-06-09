@@ -147,7 +147,7 @@
                                         <p class="mr-0 ml-0">User: {{$tradein->customerName()}}</p><br>
                                     </div>
                                     <div class="d-flex flex-column w-50 border p-3">
-                                        <input id="imei_number" class="imei_number" size="15" type="number" name="imei_number" title="15 characters required">
+                                        <input id="imei_number_{{$tradein->id}}" class="imei_number" size="15" type="number" name="imei_number" title="15 characters required">
                                         @if(Session::has('error'))
                                         <div class="alert alert-danger" role="alert">
                                             {{Session::get('error')}}
@@ -160,10 +160,29 @@
                             @endif
                             <div class="w-100 d-flex justify-content-between px-3 my-3">
                                 <button type="button" onclick="changeQuestion(2, 3, {{$tradein->id}})" class="btn btn-primary">Back</button>
-                                <button id="imei_submit" type="submit" class="btn btn-primary imei_submit" disabled>Submit</button>
+                                <button id="imei_submit" onclick="checkImeiNumber({{$tradein->id}})" type="button" class="btn btn-primary imei_submit" disabled>Submit</button>
                             </div>
                         </div>
                         <div id="result-page-{{$tradein->id}}" class="question-four">
+                            <div class="w-100 p-3">
+                                <div class="d-flex w-100">
+                                    <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Status</p></div>
+                                </div>
+                                <div class="d-flex w-100">
+                                    <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
+                                        <p class="mr-0 ml-0">Product: {{$tradein->getProductName()}} - ID {{$tradein->barcode}}</p><br>
+                                        <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
+                                        <p class="mr-0 ml-0">User: {{$tradein->customerName()}}</p><br>
+                                    </div>
+
+                                    <div class="d-flex w-50 border p-3" id="receiving-result-{{$tradein->id}}">
+                                    
+                                        <p></p>
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="w-100 d-flex justify-content-between px-3 my-3">
                                 <button type="button" onclick="changeQuestion(undefined, 4, {{$tradein->id}})" class="btn btn-primary">Back</button>
                                 <button type="submit" class="btn btn-primary">Submit</button>
