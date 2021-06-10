@@ -1,3 +1,4 @@
+{{-- {{dd(config('session.same_site'))}} --}}
 @if($cookieConsentConfig['enabled'] && ! $alreadyConsentedWithCookies)
 
     @include('cookieConsent::dialogContents')

@@ -36,7 +36,8 @@
                 @else
                     <a class="back-to-home-footer mt-3" href="/">
                 @endif
-                    <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
+                    <img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">
+                    <p class="back-home-text">Back</p>
                 </a>
 
                 <div class="row m-0 map-row mt-5">
@@ -56,11 +57,11 @@
                     <div class="map-col">
                         <p class="sitemap-title">Service & Support</p>
                         <a class="sitemap-text" href="/support/selling">Selling a device</a>
-                        <a class="sitemap-text" href="/support">Tech</a>
+                        {{-- <a class="sitemap-text" href="/support">Tech</a>
                         <a class="sitemap-text" href="/support">Delivery</a>
                         <a class="sitemap-text" href="/support">Your Order</a>
                         <a class="sitemap-text" href="/support">Your Account</a>
-                        <a class="sitemap-text" href="/support">General Questions</a>
+                        <a class="sitemap-text" href="/support">General Questions</a> --}}
                     </div>
                     <div class="map-col">
                         <p class="sitemap-title">Contact Us</p>
@@ -71,13 +72,13 @@
                         <p class="sitemap-title">My Bamboo</p>
                     </div>
                     <div class="map-col">
-                        <p class="sitemap-title">Responsibilities</p>
+                        {{-- <p class="sitemap-title">Responsibilities</p> --}}
                         <a class="sitemap-text" href="/environment">Environment</a>
                     </div>
                     <div class="map-col">
                         <p class="sitemap-title">Legal</p>
                         <a class="sitemap-text" href="/privacy">Privacy Policy</a>
-                        <a class="sitemap-text" href="/terms">Terms & Condition</a>
+                        <a class="sitemap-text" href="/terms">Terms & Conditions</a>
                         <a class="sitemap-text" href="/map">Site map</a>
                         <a class="sitemap-text" href="/cookies">Cookies</a>
                         <a class="sitemap-text" href="/slavery">Modern Slavery Statement</a>

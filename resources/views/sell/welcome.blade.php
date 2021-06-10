@@ -10,7 +10,8 @@
             @else
                 <a class="back-to-home-footer padded mt-3 pt-2" href="/">
             @endif
-                <p class="back-home-text pt-2"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
+                <img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">
+                <p class="back-home-text">Back</p>
             </a>
 
             @include('partial.sellsearch', ['title' => 'What do you want to sell?', 'info' => 'Please use the search bar below or follow the steps to find your device'])

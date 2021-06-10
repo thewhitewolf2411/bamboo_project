@@ -9,7 +9,7 @@
                 <div class="start-selling-whysell">
                     <a href="/about" class="btn read-more sustainability"><p>Read More</p></a>
                     @if(isset($showStartSelling))
-                        <a href="/sell" class="btn start-selling howitworks mt-auto ml-3"><p>Start Selling</p></a>
+                        <a href="/sell" class="btn start-selling howitworks margin-left"><p>Start Selling</p></a>
                     @endif
                 </div>
             </div>

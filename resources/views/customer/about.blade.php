@@ -19,7 +19,8 @@
     @else
         <a class="back-to-home-footer padded mt-3" href="/">
     @endif
-        <p class="back-home-text"><img class="back-home-icon mr-2" alt="Back" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
+        <img class="back-home-icon mr-2" alt="Back" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">
+        <p class="back-home-text">Back</p>
     </a>
 
     <div class="about-intro-panel">
@@ -29,10 +30,10 @@
         <div class="about-intro-column">
             <p class="about-intro-title">ABOUT BAMBOO</p>
 
-            <p class="about-intro-subtitle">Hello and welcome to Bamboo Mobile - aka 'Boo'</p>
+            <p class="about-intro-subtitle">Hello! And welcome to Bamboo Mobile - aka 'Boo'</p>
 
             <p class="about-intro-text">
-                Hello and welcome to Bamboo Mobile – aka ‘Boo’. In a nutshell, Bamboo Mobile offers a smart way for you to Shop and sell mobile 
+                In a nutshell, Bamboo Mobile offers a smart way for you to Shop and sell mobile 
                 phones and/or devices. With the help of Bamboo Mobile, you can trade in and trade up your mobile, quickly, safely, 
                 and simply – not to mention for a great price! <br><br>
                 So, who are we? We are the daughter company of Bamboo Distribution, a global leader in the recovery, 
@@ -197,7 +198,7 @@
     <div class="sell-categories-container pt-5">
 
         <div class="single-sell-category about" id="mobile-category">
-            <p class="sell-about-category-subtitle">Sell</p>
+            {{-- <p class="sell-about-category-subtitle">Sell</p> --}}
             <p class="sell-category-title">Mobile Phones</p>
 
             <div class="sell-category-wrapper" id="sell-mobile-phones">
@@ -210,7 +211,7 @@
         </div>
 
         <div class="single-sell-category about" id="tablets-category">
-            <p class="sell-about-category-subtitle">Sell</p>
+            {{-- <p class="sell-about-category-subtitle">Sell</p> --}}
             <p class="sell-category-title">Tablets</p>
 
             <div class="sell-category-wrapper" id="sell-tablets">
@@ -223,7 +224,7 @@
         </div>
 
         <div class="single-sell-category about" id="watches-category">
-            <p class="sell-about-category-subtitle">Sell</p>
+            {{-- <p class="sell-about-category-subtitle">Sell</p> --}}
             <p class="sell-category-title">Watches</p>
 
             <div class="sell-category-wrapper" id="sell-watches">

@@ -982,7 +982,8 @@ header{
 
 @media screen and (max-width: 496px){
     #full-bamboo-logo{
-        width: 283px;
+        width: 100%;
+        max-width: 283px;
         height: auto;
     }
 

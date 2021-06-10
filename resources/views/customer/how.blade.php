@@ -12,7 +12,8 @@
     @else
         <a class="back-to-home-footer padded mt-3" href="/">
     @endif
-        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
+        <img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">
+        <p class="back-home-text">Back</p>
     </a>
 
     <div class="howitworks-container how-row justify-content-center howitworks-top-element">
@@ -59,7 +60,7 @@
     <div class="howitworks-selling-sections">
         <div class="howitworks-container how-row justify-content-center selling-section-item">
             <div class="howitworks-container how-column text-description">
-                <p class="howitworks-selling-title">1. Search for a new device</p>
+                <p class="howitworks-selling-title">1. Search for your device</p>
                 <p class="howitworks-selling-desc">
                     Search your old device and find out how much its worth. If you are happy with the price , simply register the device, provide us with your details and we’ll get the ball rolling.
                 </p>

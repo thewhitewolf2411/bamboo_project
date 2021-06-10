@@ -49,3 +49,21 @@
     text-shadow: 0px 3px 6px #00000066;
     opacity: 1;
 }
+
+
+@media (max-width: 496px){
+    .page-header-container{
+        height: 138px;
+    }
+    .page-header-text{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-30)/var(--unnamed-line-spacing-38) var(--unnamed-font-family-sharp-sans-no1-bold);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--unnamed-color-ffffff);
+        text-align: center;
+        font: normal normal normal 30px/38px Sharp Sans No1 Bold;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        text-shadow: 0px 3px 6px #00000066;
+        opacity: 1;
+    }
+}

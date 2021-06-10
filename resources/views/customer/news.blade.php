@@ -12,7 +12,8 @@
     @else
         <a class="back-to-home-footer padded mt-3" href="/">
     @endif
-        <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
+        <img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">
+        <p class="back-home-text">Back</p>
     </a>
 
     <div class="news-page-container">
