@@ -168,3 +168,23 @@ $('.imei_number').on('input', function(e){
     }
 
 });
+
+$('.serial_number').on('input', function(e){
+
+    var number = parseInt($(this).val());
+    var numberLength = $(this).val().length;
+
+    console.log(numberLength);
+
+    if(numberLength >5){
+        $('.serial_submit').each(function(){
+            $(this).prop('disabled', false);
+        });
+    }
+    else{
+        $('.serial_submit').each(function(){
+            $(this).prop('disabled', true);
+        });
+    }
+
+});

@@ -75,20 +75,24 @@
                             <div class="w-100 p-3">
                                 <div class="d-flex w-100">
                                     <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
-                                    <div class="d-flex w-50 border p-3"><p>Please enter serial number</p></div>
+                                    <div class="d-flex w-50 border p-3"><p>Enter device serial number:</p></div>
                                 </div>
                                 <div class="d-flex w-100">
                                     <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
-                                        <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
+                                        <p class="mr-0 ml-0">Product: {{$tradein->getProductName()}} - ID {{$tradein->barcode}}</p><br>
                                         <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
                                         <p class="mr-0 ml-0">GB Size: {{$tradein->getDeviceMemory()}}</p><br>
-                                        <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
+                                        <p class="mr-0 ml-0">User: {{$tradein->customerName()}}</p><br>
                                     </div>
+                                    
                                     <div class="d-flex w-50 border p-3">
-                                        <input id="serial_number" type="text" name="serial_number" title="15 characters required">
+                                        <input id="serial_number" class="serial_number" type="text" name="serial_number" title="15 characters required">
                                     </div>
                                 </div>
-                                
+                                <div class="w-100 d-flex justify-content-between px-3 my-3">
+                                    <button type="button" onclick="changeQuestion(2, 3, {{$tradein->id}})" class="btn btn-primary">Back</button>
+                                    <button id="serial_submit" type="submit" class="btn btn-primary serial_submit" disabled>Submit</button>
+                                </div>
                             </div>
                             @else
                             <div class="w-100 p-3">
@@ -107,32 +111,16 @@
                                     <div class="d-flex flex-column justify-content-center align-items-center w-25 border p-3"><label for="visible_imei_no" class="mx-0 my-3">No.</label><input id="visible_imei_no_{{$tradein->id}}" type="radio" class="select-input-fixed" name="visible_imei" value="no" data-value="{{$tradein->id}}"></div>
                                 </div>
                             </div>
-                            @endif
                             <div class="w-100 d-flex justify-content-between px-3 my-3">
                                 <button type="button" onclick="changeQuestion(1, 2, {{$tradein->id}})" class="btn btn-primary">Back</button>
                                 <button type="button" onclick="changeQuestion(3, 2, {{$tradein->id}})" id="question-two-next-button-{{$tradein->id}}" class="btn btn-primary" disabled>Next</button>
                             </div>
+                            @endif
+
                         </div>
                         <div id="question-three-{{$tradein->id}}" class="question-three">
                             @if($tradein->getCategoryId($tradein->product_id) > 1 && is_null($tradein->customer_network))
-                            <div class="w-100 p-3">
-                                <div class="d-flex w-100">
-                                    <div class="d-flex w-50 border p-3"><p class="mr-0 ml-0">Product</p></div>
-                                    <div class="d-flex w-50 border p-3"><p>Please enter serial number</p></div>
-                                </div>
-                                <div class="d-flex w-100">
-                                    <div class="d-flex flex-column w-50 border p-3 align-items-baseline">
-                                        <p class="mr-0 ml-0">Product: {{$product->product_name}} - ID {{$tradein->barcode}}</p><br>
-                                        <p class="mr-0 ml-0">User grade: {{$tradein->customer_grade}}</p><br>
-                                        <p class="mr-0 ml-0">GB Size: {{$tradein->getDeviceMemory()}}</p><br>
-                                        <p class="mr-0 ml-0">User: {{$user->first_name}} {{$user->last_name}}</p><br>
-                                    </div>
-                                    <div class="d-flex w-50 border p-3">
-                                        <input id="serial_number" type="text" name="serial_number" title="15 characters required">
-                                    </div>
-                                </div>
-                                
-                            </div>
+
                             @else
                             <div class="w-100 p-3">
                                 <div class="d-flex w-100">
@@ -157,11 +145,12 @@
                                 </div>
                                 
                             </div>
-                            @endif
                             <div class="w-100 d-flex justify-content-between px-3 my-3">
                                 <button type="button" onclick="changeQuestion(2, 3, {{$tradein->id}})" class="btn btn-primary">Back</button>
                                 <button id="imei_submit" onclick="checkImeiNumber({{$tradein->id}})" type="button" class="btn btn-primary imei_submit" disabled>Submit</button>
                             </div>
+                            @endif
+
                         </div>
                         <div id="result-page-{{$tradein->id}}" class="question-four">
                             <div class="w-100 p-3">

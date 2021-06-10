@@ -471,7 +471,7 @@ class TestingController extends Controller
 
         $mti = false;
 
-        if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>1){
+        if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>0){
             $mti = true;
         }
 

@@ -37,9 +37,17 @@ class ReceivingService{
 
         self::deviceMissing($receivingData);
 
-        self::hasImei($receivingData['visible_imei'], $receivingData['tradeinid']);
+        if(array_key_exists('visible_imei', $receivingData)){
+            self::hasImei($receivingData['visible_imei'], $receivingData['tradeinid']);
+        }
 
-        self::checkImei($receivingData['imei_number'], $receivingData['tradeinid']);
+        if(array_key_exists('serial_number', $receivingData)){
+            self::saveSerial($receivingData['serial_number'], $receivingData['tradeinid']);
+        }
+        
+        if(array_key_exists('visible_imei', $receivingData)){
+            self::checkImei($receivingData['imei_number'], $receivingData['tradeinid']);
+        }
 
         return true;
     }
@@ -254,6 +262,14 @@ class ReceivingService{
         $tradein->save();
 
         return $quarantineTrays->tray_name;
+    }
+
+    private static function saveSerial($serialNumber, $tradeinid){
+        $tradein = Tradein::find($tradeinid);
+
+        $tradein->serial_number = $serialNumber;
+        $tradein->save();
+
     }
 
 }
