@@ -12,15 +12,11 @@ require('jquery');
 
 require('./scripts/quarantinemanagement');
 require('./scripts/bayoverview');
-require('./scripts/buildingsaleslot');
-require('./scripts/completedsaleslot');
-require('./scripts/saleslotpicking');
 require('./scripts/PrintTradeIn');
 require('./scripts/dates');
 require('./scripts/Reports');
 require('./scripts/BoxManagement');
 require('./scripts/Settings');
-require('./scripts/SalesLotDespatch');
 require('./scripts/Messages');
 require('./scripts/Blogs');
 require('./scripts/AddUser');
@@ -35,6 +31,10 @@ require('./scripts/Costs');
 require('./scripts/FeedsScript');
 require('./scripts/CustomerCare');
 require('./scripts/Receiving');
+
+//Sales Lot
+require('./scripts/saleslot/BuildingSalesLot');
+require('./scripts/saleslot/CompletedSalesLot');
 
 "use strict";
 

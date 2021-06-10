@@ -483,13 +483,16 @@ Route::group(['prefix'=>'portal/sales-lot'], function(){
     Route::get('/', 'Portal\SalesLotController@showSalesLotPage');
 
     Route::get('/building-sales-lot/{id?}', 'Portal\SalesLotController@showBuildingSalesLotPage');
-    Route::post('/building-sales-lot/build-lot', 'Portal\SalesLotController@buildSalesLot');
     Route::post('/building-sales-lot/build-lot/has-data', 'Portal\SalesLotController@checkHasData');
     Route::get('/building-sales-lot/build-lot/generate-xls', 'Portal\SalesLotController@generateXlsReport');
     Route::post('/building-sales-lot/build-lot/getboxdata', 'Portal\SalesLotController@getBoxData');
     Route::post('/building-sales-lot/build-lot/remove', 'Portal\SalesLotController@removeFromSaleLot');
     Route::post('/building-sales-lot/create-lot', 'Portal\SalesLotController@createNewLot');
 
+    Route::post('/building-sales-lot/build-lot', 'Portal\SalesLotController@buildSalesLot');
+    Route::post('/building-sales-lot/remove-from-lot', 'Portal\SalesLotController@removeFromLot');
+    Route::get('/building-sales-lot/build-lot/getBoxes', 'Portal\SalesLotController@getBoxes');
+    Route::get('/building-sales-lot/build-lot/getTradeins', 'Portal\SalesLotController@getTradeins');
     
     Route::get('/completed-sales-lots', 'Portal\SalesLotController@showCompletedSalesLotPage');
     Route::get('/completed-sales-lots/get-saleslot-content', 'Portal\SalesLotController@getSalesLotContent');

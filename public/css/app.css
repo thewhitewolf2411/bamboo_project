@@ -18401,6 +18401,28 @@ input.lookup-delivery-basket::placeholder {
   padding: 8px 10px;
 }
 
+.sales-lot-table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #dddddd;
+}
+
+.sales-lot-table tfoot {
+  display: table-header-group !important;
+}
+
+.sales-lot-table td, th {
+  padding: 0 !important;
+  font-size: 10pt;
+  border: 1px solid #dddddd;
+  text-align: center;
+}
+
+.sales-lot-table thead {
+  height: 80px !important;
+  min-height: 80px !important;
+}
+
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
@@ -18860,6 +18882,10 @@ input[type=number] {
 
 #box-summary-table tfoot td input {
   margin: 0 !important;
+}
+
+.dataTables_filter {
+  display: none !important;
 }
 
 .sortable:hover {

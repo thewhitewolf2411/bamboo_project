@@ -85,7 +85,7 @@ class Tray extends Model
         $traycontent = TrayContent::where('tray_id', $this->id)->get();
         foreach($traycontent as $tc){
             $tradein = Tradein::where('id', $tc->trade_in_id)->first();
-            $price += $tradein->bamboo_price + $tradein->carriage_cost + $tradein->admin_cost + $tradein->misc_cost;
+            $price += $tradein->getDeviceCost();
         }
 
         return $price;
@@ -170,6 +170,19 @@ class Tray extends Model
         }
 
         return false;
+    }
+
+    public function getNumberOfDevicesInSaleLot(){
+        $traycontent = TrayContent::where('tray_id', $this->id)->get();
+        $number = 0;
+        foreach($traycontent as $tc){
+            if(SalesLotContent::where('box_id', $this->id)->where('device_id', $tc->trade_in_id)->first()){
+                $number++;
+            }
+            
+        }
+
+        return $number;
     }
 
 }

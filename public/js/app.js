@@ -56404,12 +56404,6 @@ __webpack_require__(/*! ./scripts/quarantinemanagement */ "./resources/js/script
 
 __webpack_require__(/*! ./scripts/bayoverview */ "./resources/js/scripts/bayoverview.js");
 
-__webpack_require__(/*! ./scripts/buildingsaleslot */ "./resources/js/scripts/buildingsaleslot.js");
-
-__webpack_require__(/*! ./scripts/completedsaleslot */ "./resources/js/scripts/completedsaleslot.js");
-
-__webpack_require__(/*! ./scripts/saleslotpicking */ "./resources/js/scripts/saleslotpicking.js");
-
 __webpack_require__(/*! ./scripts/PrintTradeIn */ "./resources/js/scripts/PrintTradeIn.js");
 
 __webpack_require__(/*! ./scripts/dates */ "./resources/js/scripts/dates.js");
@@ -56419,8 +56413,6 @@ __webpack_require__(/*! ./scripts/Reports */ "./resources/js/scripts/Reports.js"
 __webpack_require__(/*! ./scripts/BoxManagement */ "./resources/js/scripts/BoxManagement.js");
 
 __webpack_require__(/*! ./scripts/Settings */ "./resources/js/scripts/Settings.js");
-
-__webpack_require__(/*! ./scripts/SalesLotDespatch */ "./resources/js/scripts/SalesLotDespatch.js");
 
 __webpack_require__(/*! ./scripts/Messages */ "./resources/js/scripts/Messages.js");
 
@@ -56448,7 +56440,12 @@ __webpack_require__(/*! ./scripts/FeedsScript */ "./resources/js/scripts/FeedsSc
 
 __webpack_require__(/*! ./scripts/CustomerCare */ "./resources/js/scripts/CustomerCare.js");
 
-__webpack_require__(/*! ./scripts/Receiving */ "./resources/js/scripts/Receiving.js");
+__webpack_require__(/*! ./scripts/Receiving */ "./resources/js/scripts/Receiving.js"); //Sales Lot
+
+
+__webpack_require__(/*! ./scripts/saleslot/BuildingSalesLot */ "./resources/js/scripts/saleslot/BuildingSalesLot.js");
+
+__webpack_require__(/*! ./scripts/saleslot/CompletedSalesLot */ "./resources/js/scripts/saleslot/CompletedSalesLot.js");
 
 "use strict";
 /*
@@ -57854,176 +57851,6 @@ $('#generate-recycle-report-btn').on('click', function () {
 
 /***/ }),
 
-/***/ "./resources/js/scripts/SalesLotDespatch.js":
-/*!**************************************************!*\
-  !*** ./resources/js/scripts/SalesLotDespatch.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var _require = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"),
-    each = _require.each;
-
-$('.tagfordespatch').on('change', function () {
-  if ($('.tagfordespatch:checked').length > 0) {
-    $('#despatchpickingsaleslot').prop('disabled', false);
-  } else {
-    $('#despatchpickingsaleslot').prop('disabled', true);
-  }
-});
-$('.saleslotpicking').on('click', function () {
-  if ($(this).hasClass('saleslot-active')) {
-    $(this).removeClass('saleslot-active');
-  } else {
-    $('.saleslotpicking').each(function () {
-      $(this).stop(false, false);
-      $(this).removeClass('saleslot-active');
-    });
-    $(this).toggleClass('saleslot-active');
-  }
-
-  if ($(this).hasClass('saleslot-active')) {
-    $('#starttopicklot').prop('disabled', false);
-  } else {
-    $('#starttopicklot').prop('disabled', true);
-  }
-
-  if ($(this).hasClass('saleslot-active')) {
-    $('#printpicknote').prop('disabled', false);
-  } else {
-    $('#starttopicklot').prop('disabled', true);
-  }
-
-  var id = $(this).prop('id');
-  fetchSaleLotData(id);
-});
-$('#starttopicklot').on('click', function () {
-  var status = $('.saleslot-active').data('status');
-  var id = $('.saleslot-active').prop('id');
-
-  if (status === 2 || status === 6) {
-    window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');
-  } else {
-    alert("This lot cannot be picked yet.");
-  }
-});
-$('#despatchpickingsaleslot').on('click', function () {
-  var c = confirm("Are you sure you want to mark " + $('.tagfordespatch:checked').length + " sales lots as despatched?");
-
-  if (c) {
-    var _$$ajax;
-
-    var salesLotIds = [];
-    $('.tagfordespatch:checked').each(function () {
-      var salelotid = $(this).data('value');
-      salesLotIds.push(salelotid);
-    });
-    $.ajax((_$$ajax = {
-      url: "/portal/warehouse-management/picking-despatch/pick-lot/despatch-picking",
-      type: "POST",
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      data: {
-        salesLotIds: salesLotIds
-      }
-    }, _defineProperty(_$$ajax, "headers", {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }), _defineProperty(_$$ajax, "success", function success(response) {
-      location.reload();
-    }), _$$ajax));
-  }
-});
-$('#printpicknote').on('click', function () {
-  var id = $('.saleslot-active').prop('id');
-  window.open('/portal/warehouse-management/picking-despatch/print-pick-note/' + id, '_blank');
-});
-$(document).ready(function () {
-  $('#pick-sales-lot-boxes tfoot td').each(function () {
-    var title = $(this).text();
-    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-  });
-  var quarantineTable = $('#pick-sales-lot-boxes').DataTable({
-    "oLanguage": {
-      "sInfo": "Showing _START_ to _END_"
-    },
-    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": -1
-  });
-  quarantineTable.columns().every(function () {
-    var that = this;
-    $('input', this.footer()).on('keyup change', function () {
-      if (that.search() !== this.value) {
-        that.search(this.value).draw();
-      }
-    });
-  });
-  $('#pick-sales-lot-devices tfoot td').each(function () {
-    var title = $(this).text();
-    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-  });
-  var quarantineTable = $('#pick-sales-lot-devices').DataTable({
-    "oLanguage": {
-      "sInfo": "Showing _START_ to _END_"
-    },
-    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": -1
-  });
-  quarantineTable.columns().every(function () {
-    var that = this;
-    $('input', this.footer()).on('keyup change', function () {
-      if (that.search() !== this.value) {
-        that.search(this.value).draw();
-      }
-    });
-  });
-});
-
-function fetchSaleLotData(id) {
-  $.ajax({
-    url: "/portal/warehouse-management/picking-despatch/getsalelotdata/" + id,
-    type: "GET",
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    success: function success(response) {
-      $('#salelotcontent-table-container').empty();
-      $('#salelotcontent-table-container').append('<table class="portal-table w-100" id="salelotcontent-table"><thead><td><div class="table-element">Lot Number</div></td><td><div class="table-element">Box Number</div></td><td><div class="table-element">Bay Location</div></td><td><div class="table-element">QTY</div></td></thead><tfoot><td><div class="table-element">Lot Number</div></td><td><div class="table-element">Box Number</div></td><td><div class="table-element">Bay Location</div></td><td><div class="table-element">QTY</div></td></tfoot><tbody></tbody></table>');
-      $('#salelotcontent-table_wrapper').addClass('w-100');
-      var t = $('#salelotcontent-table').DataTable({
-        "oLanguage": {
-          "sInfo": "Showing _START_ to _END_"
-        },
-        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-        "pageLength": -1
-      });
-      $('#salelotcontent-table tfoot td').each(function () {
-        var title = $(this).text();
-        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-      });
-      t.columns().every(function () {
-        var that = this;
-        $('input', this.footer()).on('keyup change', function () {
-          if (that.search() !== this.value) {
-            that.search(this.value).draw();
-          }
-        });
-      });
-
-      for (var i = 1; i < response.length; i++) {
-        t.row.add(response[i]).draw(true);
-      }
-    },
-    error: function error(response) {
-      alert('Something went wrong. Please try again.');
-    }
-  });
-}
-
-/***/ }),
-
 /***/ "./resources/js/scripts/Settings.js":
 /*!******************************************!*\
   !*** ./resources/js/scripts/Settings.js ***!
@@ -58119,300 +57946,6 @@ $('#allocateboxtobaymodal').on('hide.bs.modal', function () {
       }
     });
   }
-});
-
-/***/ }),
-
-/***/ "./resources/js/scripts/buildingsaleslot.js":
-/*!**************************************************!*\
-  !*** ./resources/js/scripts/buildingsaleslot.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
-    isEmpty = _require.isEmpty;
-/*$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});*/
-
-
-$(document).ready(function () {});
-$('#changetoviewtradeins').on('click', function () {
-  if (!$('#boxedtradeinstable_wrapper').hasClass('table-visible')) {
-    $('#boxedtradeinstable_wrapper').addClass('table-visible');
-    $('#closedboxtable_wrapper').addClass('table-invisible');
-    $('#boxedtradeinstable_wrapper').removeClass('table-invisible');
-    $('#closedboxtable_wrapper').removeClass('table-visible');
-    $('#changetoviewtradeins div').removeClass('btn-primary-nonactive');
-    $('#changetoviewtradeins div').addClass('btn-primary-active');
-    $('#changetoviewboxes div').addClass('btn-primary-nonactive');
-    $('#changetoviewboxes div').removeClass('btn-primary-active');
-  }
-});
-$('#changetoviewboxes').on('click', function () {
-  if (!$('#closedboxtable_wrapper').hasClass('table-visible')) {
-    $('#closedboxtable_wrapper').addClass('table-visible');
-    $('#boxedtradeinstable_wrapper').addClass('table-invisible');
-    $('#closedboxtable_wrapper').removeClass('table-invisible');
-    $('#boxedtradeinstable_wrapper').removeClass('table-visible');
-    $('#changetoviewboxes div').removeClass('btn-primary-nonactive');
-    $('#changetoviewboxes div').addClass('btn-primary-active');
-    $('#changetoviewtradeins div').addClass('btn-primary-nonactive');
-    $('#changetoviewtradeins div').removeClass('btn-primary-active');
-  }
-});
-$('.clickable').on('click', function () {
-  var k = 0;
-  var chckbox = $('.clickable');
-
-  for (var i = 0; i < chckbox.length; i++) {
-    if (chckbox[i].checked) {
-      k++;
-    }
-  }
-
-  if (k > 0) {
-    $('#addtolot').css("opacity", 1);
-  } else {
-    $('#addtolot').css("opacity", 0.65);
-  }
-});
-$('#buildalot').on('click', function () {
-  if (confirm("Are you sure that you want to build a lot with selected tradeins/boxes?")) {
-    var checkedtradeins = $('#selected-tradeins tr');
-    var checkedtradeinsid = [];
-
-    for (var i = 0; i < checkedtradeins.length; i++) {
-      if (!isEmpty(checkedtradeins[i].id)) {
-        checkedtradeinsid.push(checkedtradeins[i].id);
-      }
-    }
-
-    var checkedboxes = $('#selected-boxes tr');
-    var checkedboxesid = [];
-
-    for (var i = 0; i < checkedboxes.length; i++) {
-      if (!isEmpty(checkedboxes[i].id)) {
-        checkedboxesid.push(checkedboxes[i].id);
-      }
-    }
-
-    $.ajax({
-      url: "/portal/sales-lot/building-sales-lot/build-lot",
-      type: "POST",
-      data: {
-        checkedtradeinsid: checkedtradeinsid,
-        checkedboxesid: checkedboxesid
-      },
-      success: function success(response) {
-        location.reload(true);
-      }
-    });
-  }
-});
-$('#saleslotboxes-selectall').on('click', function () {
-  if (this.checked) {
-    $('.buildingsaleslot-remove-checkbox').prop('checked', true);
-  } else {
-    $('.buildingsaleslot-remove-checkbox').prop('checked', false);
-  }
-});
-$('#boxedtradeinstable-selectall').on('click', function () {
-  if (this.checked) {
-    $('.tradein-sales-lot').prop('checked', true);
-  } else {
-    $('.tradein-sales-lot').prop('checked', false);
-  }
-});
-$('#closedboxtable-selectall').on('click', function () {
-  if (this.checked) {
-    $('.box-sales-lot').prop('checked', true);
-  } else {
-    $('.box-sales-lot').prop('checked', false);
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/scripts/completedsaleslot.js":
-/*!***************************************************!*\
-  !*** ./resources/js/scripts/completedsaleslot.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/*$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});*/
-$('.saleslots').on('click', function () {
-  $('.saleslots').each(function () {
-    $(this).removeClass('saleslot-active');
-  });
-  $(this).addClass('saleslot-active');
-  $('#saleslot-option-buttons button').prop('disabled', false);
-
-  if ($('.saleslot-active').data('editable') == false) {
-    $('#edit-lot-btn').prop('disabled', true);
-  }
-});
-$('#view-sales-lot-btn').on('click', function () {
-  var selectedid = $('.saleslot-active').attr('id');
-  window.open('/portal/sales-lot/completed-sales-lot/view-lot/' + selectedid, '_self');
-});
-$('#edit-lot-btn').on('click', function () {
-  var selectedid = $('.saleslot-active').attr('id');
-
-  if ($('.saleslot-active').data('editable') == false) {
-    alert("This lot cannot be edited.");
-  } else {
-    window.open('/portal/sales-lot/building-sales-lot/' + selectedid, '_self');
-  }
-});
-$('#sell-lot-btn').on('click', function () {
-  $('#salelot-action').modal('show');
-  var selectedid = $('.saleslot-active').attr('id');
-  var selectedquantity = $('.saleslot-active td:nth-child(3) > div:nth-child(1)').html(); //console.log(selectedquantity);
-
-  $('#salelot-action #salelot-number').html(selectedid);
-  $('#salelot-action #salelot-number-value').val(selectedid);
-  $('#salelot-action #device-qty').html(selectedquantity);
-});
-$('#payment-received-btn').on('click', function () {
-  var selectedid = $('.saleslot-active').attr('id');
-
-  if (confirm("Do you want to mark Lot " + selectedid + " as 'Payment Recieved?")) {
-    // Save it!
-    $.ajax({
-      type: "POST",
-      url: "/portal/sales-lot/completed-sales-lot/markaspaymentrecieved",
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      data: {
-        lot_id: selectedid
-      },
-      success: function success(data) {
-        if (data.success) {
-          if (data.success === 200) {
-            window.location.reload();
-          }
-        }
-
-        location.reload();
-      },
-      error: function error(data) {
-        alert(data.responseText);
-      }
-    });
-  }
-});
-$('#sales-export-btn').on('click', function () {
-  var selectedid = $('.saleslot-active').attr('id');
-  window.open("/portal/sales-lot/completed-sales-lot/clientsalesexport/" + selectedid);
-});
-$('#ism-pre-alert').on('click', function () {
-  var selectedid = $('.saleslot-active').attr('id');
-  window.open("/portal/sales-lot/completed-sales-lot/ismprealert/" + selectedid);
-});
-$('#export-xls-data').on('click', function () {
-  var selectedid = $('.saleslot-active').attr('id');
-  window.open("/portal/sales-lot/completed-sales-lot/exportxls/" + selectedid);
-});
-$(document).ready(function () {
-  $('#boxedtradeinstable tfoot td').each(function () {
-    var title = $(this).text();
-    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-  });
-  var boxsummarytable = $('#boxedtradeinstable').DataTable({
-    "oLanguage": {
-      "sInfo": "Showing _START_ to _END_"
-    },
-    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": -1
-  }); // Apply the search
-
-  boxsummarytable.columns().every(function () {
-    var that = this;
-    $('input', this.footer()).on('keyup change', function () {
-      if (that.search() !== this.value) {
-        that.search(this.value).draw();
-      }
-    });
-  });
-  /*$('#saleslotboxes tfoot td').each(function () {
-      var title = $(this).text();
-      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-  });
-    var salelotitems = $('#saleslotboxes').DataTable({
-      "oLanguage": {
-          "sInfo": "Showing _START_ to _END_",
-      },
-      "lengthMenu": [
-          [10, 25, 50, 100, -1],
-          [10, 25, 50, 100, "All"]
-      ],
-      "pageLength": -1,
-  });
-    // Apply the search
-  salelotitems.columns().every(function () {
-        var that = this;
-      $('input', this.footer()).on('keyup change', function () {
-          if (that.search() !== this.value) {
-              that
-                  .search(this.value)
-                  .draw();
-          }
-      });
-  });*/
-
-  $('#closedboxtable tfoot td').each(function () {
-    var title = $(this).text();
-    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-  });
-  var closedboxtable = $('#closedboxtable').DataTable({
-    "oLanguage": {
-      "sInfo": "Showing _START_ to _END_"
-    },
-    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": -1
-  }); // Apply the search
-
-  closedboxtable.columns().every(function () {
-    var that = this;
-    $('input', this.footer()).on('keyup change', function () {
-      if (that.search() !== this.value) {
-        that.search(this.value).draw();
-      }
-    });
-  });
-  $('#completed-sales-lots-table tfoot td').each(function () {
-    var title = $(this).text();
-    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-  });
-  var completedsaleslottable = $('#completed-sales-lots-table').DataTable({
-    "oLanguage": {
-      "sInfo": "Showing _START_ to _END_"
-    },
-    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-    "pageLength": -1,
-    "ordering": false
-  }); // Apply the search
-
-  completedsaleslottable.columns().every(function () {
-    var that = this;
-    $('input', this.footer()).on('keyup change', function () {
-      if (that.search() !== this.value) {
-        that.search(this.value).draw();
-      }
-    });
-  });
-  $('#boxedtradeinstable_wrapper').addClass('table-visible');
-  $('#closedboxtable_wrapper').addClass('table-invisible');
 });
 
 /***/ }),
@@ -59055,249 +58588,286 @@ $('#newtray').on('change', function () {
 
 /***/ }),
 
-/***/ "./resources/js/scripts/saleslotpicking.js":
-/*!*************************************************!*\
-  !*** ./resources/js/scripts/saleslotpicking.js ***!
-  \*************************************************/
+/***/ "./resources/js/scripts/saleslot/BuildingSalesLot.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/scripts/saleslot/BuildingSalesLot.js ***!
+  \***********************************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-var _require = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"),
-    get = _require.get;
-/*$.ajaxSetup({
-    headers: {
+$(document).ready(function () {
+  if (document.getElementById('boxed-tradeins')) {
+    $.ajax({
+      url: "/portal/sales-lot/building-sales-lot/build-lot/getTradeins",
+      type: "GET",
+      headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success: function success(response) {
+        setBoxedTradeinsDataTable(response);
+      }
+    });
+  }
+
+  if (document.getElementById('bayed-boxes')) {
+    $.ajax({
+      url: "/portal/sales-lot/building-sales-lot/build-lot/getBoxes",
+      type: "GET",
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success: function success(response) {
+        setBayedBoxesDataTable(response);
+      }
+    });
+  }
+
+  if (document.getElementById('added-tradeins-building-lot')) {
+    $('#added-tradeins-building-lot tfoot td').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    var addedtradeinstable = $('#added-tradeins-building-lot').DataTable({
+      "oLanguage": {
+        "sInfo": "Showing _START_ to _END_"
+      },
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "pageLength": -1,
+      "ordering": false,
+      paging: false,
+      info: false
+    });
+    addedtradeinstable.columns().every(function () {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+        if (that.search() !== this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
+  }
+
+  $('input:checkbox').change(function () {
+    //Check and uncheck all left side tradeins
+    if ($(this).prop('id') === 'select_all_tradeins_building_lot') {
+      $('.boxed_tradeins').each(function () {
+        $(this).prop('checked', $('#select_all_tradeins_building_lot').prop('checked'));
+      });
+    } //Check and uncheck all left side boxes
+
+
+    if ($(this).prop('id') === 'select_all_boxes_building_lot') {
+      $('.bayed_boxes').each(function () {
+        $(this).prop('checked', $('#select_all_boxes_building_lot').prop('checked'));
+      });
+    } //Check and uncheck all right side tradeins
+
+
+    if ($(this).prop('id') === 'select_all_added_tradeins_building_lot') {
+      $('.added_tradeins').each(function () {
+        $(this).prop('checked', $('#select_all_added_tradeins_building_lot').prop('checked'));
+      });
     }
-});*/
-
-
+  });
+});
 $(document).on('change', function () {
-  if ($('#boxedtradeinstable .tradein-sales-lot:checked').length + $('#closedboxtable .box-sales-lot:checked').length > 0) {
+  var numberOfCheckedLeft = $('.bayed_boxes:checked').length + $('.boxed_tradeins:checked').length;
+
+  if (numberOfCheckedLeft > 0) {
     $('#addtolot').prop('disabled', false);
   } else {
     $('#addtolot').prop('disabled', true);
   }
 
-  if ($('#saleslotboxes tr').length > 1) {
-    $('#completelot').prop('disabled', false);
-  } else {
-    $('#completelot').prop('disabled', true);
-  }
+  var numberOfCheckedRight = $('.added_tradeins:checked').length;
 
-  if ($('.buildingsaleslot-remove-checkbox:checked').length > 0) {
+  if (numberOfCheckedRight > 0) {
     $('#removefromlot').prop('disabled', false);
   } else {
     $('#removefromlot').prop('disabled', true);
   }
 });
+$('#changetoviewboxes').on('change', function () {
+  if ($(this).attr('checked', true)) {
+    $('#boxed-tradeins_wrapper').hide();
+    $('#bayed-boxes_wrapper').show();
+    $('.boxed_tradeins').each(function () {
+      $(this).prop('checked', false);
+    });
+    $('#select_all_tradeins_building_lot').prop('checked', false);
+  }
+});
+$('#changetoviewtradeins').on('change', function () {
+  if ($(this).attr('checked', true)) {
+    $('#boxed-tradeins_wrapper').show();
+    $('#bayed-boxes_wrapper').hide();
+    $('.bayed_boxes').each(function () {
+      $(this).prop('checked', false);
+    });
+    $('#select_all_boxes_building_lot').prop('checked', false);
+  }
+});
 $('#addtolot').on('click', function () {
-  var tradeins = $('.tradein-sales-lot:checked');
-  var boxes = $('.box-sales-lot:checked');
-  var selectedTradeIns = [];
-  var selectedBoxes = [];
-  $('.tradein-sales-lot:checked').each(function () {
-    selectedTradeIns.push($(this).attr('data-value'));
+  var addedTradeins = [];
+  var addedBoxes = [];
+  $('.bayed_boxes:checked').each(function () {
+    addedBoxes.push($(this).data('id'));
   });
-  $('.box-sales-lot:checked').each(function () {
-    selectedBoxes.push($(this).attr('data-value'));
+  $('.boxed_tradeins:checked').each(function () {
+    addedTradeins.push($(this).data('id'));
   });
   $.ajax({
     url: "/portal/sales-lot/building-sales-lot/build-lot",
     type: "POST",
+    data: {
+      addedTradeins: addedTradeins,
+      addedBoxes: addedBoxes
+    },
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
-    data: {
-      selectedTradeIns: selectedTradeIns,
-      selectedBoxes: selectedBoxes
-    },
     success: function success(response) {
-      handleShownData(response);
+      hideLeftTradeins(response[1]);
+      handleLeftBoxes(response[0]);
     }
   });
+  $(this).prop('disabled', true);
 });
-
-function handleShownData(data) {
-  var total_price = 0;
-  var total_quantity = 0;
-
-  if (data.boxes) {
-    for (var _i = 0, _Object$entries = Object.entries(data.boxes); _i < _Object$entries.length; _i++) {
-      var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
-          key = _Object$entries$_i[0],
-          item = _Object$entries$_i[1];
-
-      $('#closedboxtable tbody tr#' + item.id).hide();
-
-      if (item.number_of_devices !== 0) {
-        $('#closedboxtable tbody').append('<tr id="' + item.id + '"> <td><div class="table-element"> ' + item.tray_name + ' </div></td><td><div class="table-element">' + item.tray_grade + '</div></td> <td><div class="table-element">' + item.tray_network + '</div></td><td><div class="table-element"> ' + item.number_of_devices + '</div></td> <td><div class="table-element">£' + Math.round(item.total_cost * 100) / 100 + '</div></td> <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="' + item.id + '"></div></td> </tr>');
-      }
-    }
-  }
-
-  if (data.tradeins) {
-    //$('#saleslotboxes tbody').empty();
-    var table = $('#saleslotboxes').DataTable({
-      "oLanguage": {
-        "sInfo": "Showing _START_ to _END_"
-      },
-      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-      "pageLength": -1
-    });
-    table.rows().remove();
-
-    for (var _i2 = 0, _Object$entries2 = Object.entries(data.tradeins); _i2 < _Object$entries2.length; _i2++) {
-      var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 2),
-          _key = _Object$entries2$_i[0],
-          _item = _Object$entries2$_i[1];
-
-      $('#boxedtradeinstable tbody tr#' + _item.id).hide();
-      $('.tradein-sales-lot:checkbox:checked').each(function () {
-        $(this).prop('checked', false);
-      });
-      total_price += _item.total_cost;
-      total_quantity++; //$('#saleslotboxes tbody').append('<tr id="' + item.id + '"> <td><div class="table-element">' + item.box_name + '</div></td><td><div class="table-element">' + item.bamboo_grade + '</div></td><td><div class="table-element">' + item.model + '</div></td><td><div class="table-element">' + item.correct_memory + '</div></td><td><div class="table-element" >£' + item.total_cost + '</div></td><td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + item.id + '"></div></td> </tr>');
-
-      table.row.add({
-        0: _item.box_name,
-        1: _item.bamboo_grade,
-        2: _item.model,
-        3: _item.correct_memory,
-        4: '£' + _item.total_cost,
-        5: '<input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="' + _item.id + '">'
-      }).node().id = _item.id;
-      table.draw(true);
-      $('#exportxls').prop('disabled', false);
-      $('#completelot').prop('disabled', false);
-    }
-
-    $('#saleslotboxes tfoot td').each(function () {
-      var title = $(this).text();
-      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-    });
-    table.columns().every(function () {
-      var that = this;
-      $('input', this.footer()).on('keyup change', function () {
-        if (that.search() !== this.value) {
-          that.search(this.value, true, false).draw();
-        }
-      });
-    });
-  }
-
-  $('#total_qty').html(total_quantity);
-  $('#total_cost').html('£' + Math.round(total_price * 100) / 100);
-}
-
-$('#exportxls').on('click', function () {
-  window.open('/portal/sales-lot/building-sales-lot/build-lot/generate-xls', '_blank');
-  /*$.ajax({
-      url: "/portal/sales-lot/building-sales-lot/build-lot/generate-xls",
-      type:"POST",
-      headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      success:function(response){
-          window.open('/portal/sales-lot/building-sales-lot/build-lot/generate-xls')
-      },
-      error:function(data){
-          alert("Something went wrong. Please try again");
-      }
-  });*/
-});
-$('#saleslotboxes').on('click', '.saleslotbox', function () {
-  var boxid = $(this).attr('data-value');
-  $('.appended-tradeins').remove();
-  $.ajax({
-    url: "/portal/sales-lot/building-sales-lot/build-lot/getboxdata",
-    type: "POST",
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    data: {
-      boxid: boxid
-    },
-    success: function success(response) {
-      for (var i = 0; i < response.length; i++) {
-        $('#saleslotboxes-content-table').append('<tr class="appended-tradeins" id="' + response[i].id + '"><td><div class="table-element">' + response[i].barcode + '</div></td><td><div class="table-element">' + response[i].box_location + '</div></td><td><div class="table-element">' + response[i].customer_grade + '</div></td><td><div class="table-element">' + response[i].bamboo_grade + '</div></td><td><div class="table-element">' + response[i].product_name + '</div></td><td><div class="table-element">' + response[i].correct_memory + '</div></td><td><div class="table-element">' + response[i].correct_network + '</div></td><td><div class="table-element">Colour</div></td><td><div class="table-element">£' + response[i].bamboo_price + '</div></td><td><div class="table-element"><input type="checkbox" class="selecteddevicesforremoval"></div></td></tr>');
-      }
-    }
-  });
-  $('#saleslotboxes-content .modal-header').empty();
-  $('#saleslotboxes-content .modal-header').append($(this).attr('data-value'));
-  $('#saleslotboxes-content .modal-header').append($(this).attr('<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><img src="{{ url(' + "/customer_page_images/body/modal-close.svg" + ') }}"></span></button>'));
-  $('#saleslotboxes-content').modal('show');
-});
-$('#completelot').on('click', function () {
-  completeLotFunction();
-});
-
-function completeLotFunction() {
-  var url = $(location).attr('href');
-  var rest = url.substring(0, url.lastIndexOf("/") + 1);
-  var last = url.substring(url.lastIndexOf("/") + 1, url.length);
-  var c = confirm('Are you sure you want to build a lot using selected items?');
-
-  if (c) {
-    $.ajax({
-      url: "/portal/sales-lot/building-sales-lot/create-lot",
-      type: "POST",
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      data: {
-        url: last
-      },
-      success: function success(response) {
-        if (response === "201") {
-          window.location = '/portal/sales-lot/completed-sales-lots';
-        } else {
-          location.reload();
-        }
-      }
-    });
-  }
-}
-
 $('#removefromlot').on('click', function () {
   var removedTradeins = [];
-  $('.buildingsaleslot-remove-checkbox:checkbox:checked').each(function () {
-    removedTradeins.push($(this).data('value'));
+  $('.added_tradeins:checked').each(function () {
+    removedTradeins.push($(this).data('id'));
   });
   $.ajax({
-    url: "/portal/sales-lot/building-sales-lot/build-lot/remove",
+    url: "/portal/sales-lot/building-sales-lot/remove-from-lot",
     type: "POST",
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
     data: {
       removedTradeins: removedTradeins
     },
-    success: function success(response) {
-      for (var i = 0; i < response[0].length; i++) {
-        $('#boxedtradeinstable tbody tr#' + response[i]).show(); //$('#saleslotboxes tr#'+response[i]).hide();
-
-        var table = $('#saleslotboxes').DataTable();
-        table.row('#' + response[i]).remove().draw();
-      }
-
-      $('#total_qty').html(response[2]);
-      $('#total_cost').html('£' + Math.round(response[1] * 100) / 100);
-    }
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(response) {}
   });
+  $(this).prop('disabled', true);
 });
+
+function setBayedBoxesDataTable(boxes) {
+  $('#bayed-boxes tfoot td').each(function () {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+  var bayedBoxesTable = $('#bayed-boxes').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    },
+    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+    "pageLength": -1,
+    "ordering": false,
+    paging: false,
+    info: false
+  });
+
+  for (var i = 0; i < boxes.length; i++) {
+    var row = '<input class="bayed_boxes" type="checkbox" id="box_"' + boxes[i].id + '" data-id="' + boxes[i].id + '">';
+    bayedBoxesTable.row.add([boxes[i].tray_name, boxes[i].tray_grade, boxes[i].tray_network, 0, boxes[i].number_of_devices, '£' + boxes[i].total_cost, row]).node().id = boxes[i].id;
+    bayedBoxesTable.draw(false);
+  }
+
+  bayedBoxesTable.columns().every(function () {
+    var that = this;
+    $('input', this.footer()).on('keyup change', function () {
+      if (that.search() !== this.value) {
+        that.search(this.value).draw();
+      }
+    });
+  });
+  $('#bayed-boxes_wrapper').hide();
+}
+
+function setBoxedTradeinsDataTable(tradeins) {
+  $('#boxed-tradeins tfoot td').each(function () {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+  var boxedTradeinTable = $('#boxed-tradeins').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    },
+    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+    "pageLength": -1,
+    "ordering": false,
+    paging: false,
+    info: false
+  });
+
+  for (var i = 0; i < tradeins.length; i++) {
+    var row = '<input class="boxed_tradeins" type="checkbox" id="tradein_"' + tradeins[i].id + '" data-id="' + tradeins[i].id + '">';
+    boxedTradeinTable.row.add([tradeins[i].barcode, tradeins[i].tray_name, tradeins[i].customer_grade, tradeins[i].bamboo_grade, tradeins[i].product_name, tradeins[i].device_memory, tradeins[i].device_network, tradeins[i].device_colour, '£' + tradeins[i].device_cost, row]).node().id = tradeins[i].id;
+    boxedTradeinTable.draw(false);
+  }
+
+  boxedTradeinTable.columns().every(function () {
+    var that = this;
+    $('input', this.footer()).on('keyup change', function () {
+      if (that.search() !== this.value) {
+        that.search(this.value).draw();
+      }
+    });
+  });
+}
+
+function hideLeftTradeins(ids) {
+  var boxedTradeinTable = $('#boxed-tradeins').DataTable();
+  var rowdata;
+
+  for (var i = 0; i < ids.length; i++) {
+    rowdata = boxedTradeinTable.row('#' + ids[i]).data();
+
+    if (rowdata && showRightTradeins(rowdata, ids[i])) {
+      boxedTradeinTable.row('#' + ids[i]).remove().draw(false);
+    }
+  }
+
+  $('#select_all_tradeins_building_lot').prop('checked', false);
+}
+
+function showRightTradeins(data, id) {
+  var addedTradeinTable = $('#added-tradeins-building-lot').DataTable();
+  var row = '<input class="added_tradeins" type="checkbox" id="tradein_' + id + '" data-id="' + id + '">';
+  addedTradeinTable.row.add([data[1], data[3], data[4], data[5], data[8], row]).node().id = id;
+  addedTradeinTable.draw(false);
+  return true;
+}
+
+function handleLeftBoxes(boxes) {
+  var boxids = Object.keys(boxes);
+  var number_of_devices = Object.values(boxes);
+  var bayedBoxesTable = $('#bayed-boxes').DataTable();
+  var rowdata;
+
+  for (var i = 0; i < boxids.length; i++) {
+    rowdata = bayedBoxesTable.row('#' + boxids[i]).data();
+    rowdata[3] += number_of_devices[i];
+
+    if (rowdata[3] >= rowdata[4]) {
+      bayedBoxesTable.row('#' + boxids[i]).remove().draw(false);
+    } else {
+      bayedBoxesTable.row('#' + boxids[i]).data(rowdata).draw(false);
+    }
+  }
+}
+
+/***/ }),
+
+/***/ "./resources/js/scripts/saleslot/CompletedSalesLot.js":
+/*!************************************************************!*\
+  !*** ./resources/js/scripts/saleslot/CompletedSalesLot.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
 
 /***/ }),
 

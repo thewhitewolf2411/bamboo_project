@@ -47,93 +47,95 @@
 
                 </div>
 
-
-
-                <table class="portal-table" id="boxedtradeinstable">
+                <table class="sales-lot-table" id="boxed-tradeins">
                     <thead>
                         <tr>
-                            <td><div class="table-element">Trade in Barcode numbers</div></td>
-                            <td><div class="table-element">Box number</div></td>
-                            {{--<td><div class="table-element">Customer Grade</div></td>--}}
-                            <td><div class="table-element">Bamboo Grade</div></td>
-                            <td><div class="table-element">Model/Manufacturer</div></td>
-                            <td><div class="table-element">Category</div></td>
-                            <td><div class="table-element">GB Size</div></td>
-                            <td><div class="table-element">Network</div></td>
-                            <td><div class="table-element">Colour</div></td>
-                            <td><div class="table-element">Cost</div></td>
-                            <td><div class="table-element"><input type="checkbox" id="boxedtradeinstable-selectall"></div></td>
+                            <td>Trade-in Barcode number</td>
+                            <td>Box Number</td>
+                            <td>Customer Grade</td>
+                            <td>Bamboo Grade</td>
+                            <td>Manufacturer Model</td>
+                            <td>GB Size</td>
+                            <td>Network</td>
+                            <td>Colour</td>
+                            <td>Cost</td>
+                            <td><input type="checkbox" id="select_all_tradeins_building_lot"></td>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <td><div class="table-element">Trade in Barcode numbers</div></td>
-                            <td><div class="table-element">Box number</div></td>
-                            <td><div class="table-element">Customer Grade</div></td>
-                            <td><div class="table-element">Bamboo Grade</div></td>
-                            <td><div class="table-element">Model/Manufacturer</div></td>
-                            <td><div class="table-element">GB Size</div></td>
-                            <td><div class="table-element">Network</div></td>
-                            <td><div class="table-element">Colour</div></td>
-                            <td><div class="table-element">Cost</div></td>
-                            <td><div class="table-element"></div></td>
+                            <td>Trade-in Barcode number</td>
+                            <td>Box Number</td>
+                            <td>Customer Grade</td>
+                            <td>Bamboo Grade</td>
+                            <td>Manufacturer Model</td>
+                            <td>GB Size</td>
+                            <td>Network</td>
+                            <td>Colour</td>
+                            <td>Cost</td>
+                            <td></td>
                         </tr>
                     </tfoot>
                     <tbody>
-                        @foreach ($tradeins as $key=>$tradein)
-                        <tr id="{{$tradein->id}}">
-                            <td><div class="table-element">{{$tradein->barcode ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">{{$tradein->getTrayName($tradein->id) ?? null ?: 'N/A'}}</div></td>
-                            {{--<td><div class="table-element">{{$tradein->customer_grade ?? null ?: 'N/A'}}</div></td>--}}
-                            <td><div class="table-element">{{$tradein->getDeviceBambooGrade() ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">{{$tradein->getProductName($tradein->product_id) ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">{{$tradein->getCategoryName($tradein->product_id) ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">{{$tradein->correct_memory ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">{{$tradein->correct_network ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">{{$tradein->product_colour ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">£{{$tradein->getDeviceCost() ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element"><input type="checkbox" class="tradein-sales-lot" data-value="{{$tradein->id}}"></div></td>
-                        </tr>
-                        @endforeach
+                        {{--@foreach ($tradeins as $tradein)
+                            @if($tradein->isBoxed() && !$tradein->isPartOfSalesLot())
+                            <tr>
+                                <td>{{$tradein->barcode}}</td>
+                                <td>{{$tradein->getTrayName($tradein->id)}}</td>
+                                <td>{{$tradein->customer_grade}}</td>
+                                <td>{{$tradein->getDeviceBambooGrade()}}</td>
+                                <td>{{$tradein->getProductName()}}</td>
+                                <td>{{$tradein->getDeviceMemory()}}</td>
+                                <td>{{$tradein->getDeviceNetwork()}}</td>
+                                <td>{{$tradein->getDeviceColour()}}</td>
+                                <td>£{{$tradein->getDeviceCost()}}</td>
+                                <td><input class="boxed_tradeins" type="checkbox" id="tradein_{{$tradein->id}}" data-id="{{$tradein->id}}"></td>
+                            </tr>
+                            @endif
+                        @endforeach--}}
                     </tbody>
                 </table>
-                <table class="portal-table" id="closedboxtable">
+
+                <table class="sales-lot-table" id="bayed-boxes">
                     <thead>
                         <tr>
-                            <td><div class="table-element">Box number</div></td>
-                            <td><div class="table-element">Bamboo Grade</div></td>
-                            <td><div class="table-element">Network</div></td>
-                            <td><div class="table-element">Total QTY</div></td>
-                            <td><div class="table-element">Total Cost</div></td>
-                            <td><div class="table-element"><input type="checkbox" id="closedboxtable-selectall"> </div></td>
-    
+                            <td>Box Number</td>
+                            <td>Bamboo Grade</td>
+                            <td>Network</td>
+                            <td>Added QTY</td>
+                            <td>Total QTY</td>
+                            <td>Total Cost</td>
+                            <td><input type="checkbox" id="select_all_boxes_building_lot"></td>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <td><div class="table-element">Box number</div></td>
-                            <td><div class="table-element">Bamboo Grade</div></td>
-                            <td><div class="table-element">Network</div></td>
-                            <td><div class="table-element">Total QTY</div></td>
-                            <td><div class="table-element">Total Cost</div></td>
-                            <td><div class="table-element"></div></td>
+                            <td>Box Number</td>
+                            <td>Bamboo Grade</td>
+                            <td>Network</td>
+                            <td>Added QTY</td>
+                            <td>Total QTY</td>
+                            <td>Total Cost</td>
+                            <td></td>
                         </tr>
                     </tfoot>
                     <tbody>
-                        @foreach ($boxes as $box)
-                        @if($box->isInBay())
-                        <tr id="{{$box->id}}">
-                            <td><div class="table-element">{{$box->tray_name ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">{{$box->tray_grade ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">{{$box->tray_network ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element">{{$box->number_of_devices }}</div></td>
-                            <td><div class="table-element">£{{$box->getBoxPrice() ?? null ?: 'N/A'}}</div></td>
-                            <td><div class="table-element"><input type="checkbox" class="box-sales-lot" data-value="{{$box->id}}"></div></td>
+                        {{--@foreach($boxes as $box)
+                        @if($box->isInBay() && $box->getNumberOfDevicesInSaleLot() === 0)
+                        <tr>
+                            <td>{{$box->tray_name}}</td>
+                            <td>{{$box->tray_grade}}</td>
+                            <td>{{$box->tray_network}}</td>
+                            <td>{{$box->getNumberOfDevices()}}</td>
+                            <td>{{$box->getNumberOfDevices()}}</td>
+                            <td>£{{$box->getBoxPrice()}}</td>
+                            <td><input class="bayed_boxes" type="checkbox" id="box_{{$box->id}}" data-id="{{$box->id}}"></td>
                         </tr>
                         @endif
-                        @endforeach
+                        @endforeach--}}
                     </tbody>
                 </table>
+
             </div>
 
 
@@ -149,43 +151,44 @@
                     </div>
                 </div>
 
-                <table class="portal-table" id="saleslotboxes">
+                <table class="sales-lot-table" id="added-tradeins-building-lot">
                     <thead>
                         <tr>
-                            <td><div class="table-element">Box number</div></td>
-                            <td><div class="table-element">Bamboo Grade</div></td>
-                            <td><div class="table-element">Manufacturer/Model</div></td>
-                            <td><div class="table-element">GB Size</div></td>
-                            <td><div class="table-element">Total Cost</div></td>
-                            <td><div class="table-element"><input type="checkbox" id="saleslotboxes-selectall"></div></td>
+                            <td>Box number</td>
+                            <td>Bamboo Grade</td>
+                            <td>Manifacturer/Model</td>
+                            <td>GB Size</td>
+                            <td>Total Cost</td>
+                            <td><input type="checkbox" id="select_all_added_tradeins_building_lot"></td>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <td><div class="table-element">Box number</div></td>
-                            <td><div class="table-element">Bamboo Grade</div></td>
-                            <td><div class="table-element">Manufacturer/Model</div></td>
-                            <td><div class="table-element">GB Size</div></td>
-                            <td><div class="table-element">Total Cost</div></td>
-                            <td><div class="table-element"><input type="checkbox" id="saleslotboxes-selectall"></div></td>
+                            <td>Box number</td>
+                            <td>Bamboo Grade</td>
+                            <td>Manifacturer/Model</td>
+                            <td>GB Size</td>
+                            <td>Total Cost</td>
+                            <td><input type="checkbox" id="select_all_added_tradeins_building_lot"></td>
                         </tr>
                     </tfoot>
                     <tbody>
-                        @if($completedTradeins)
-                            @foreach($completedTradeins as $completedTradein)
-                                <tr id="{{$completedTradein->id}}">
-                                    <td><div class="table-element">{{$completedTradein->box_name}}</div></td>
-                                    <td><div class="table-element">{{$completedTradein->bamboo_grade}}</div></td>
-                                    <td><div class="table-element">{{$completedTradein->model}}</div></td>
-                                    <td><div class="table-element">{{$completedTradein->correct_memory}}</div></td>
-                                    <td><div class="table-element">£{{$completedTradein->total_cost}}</div></td>
-                                    <td><div class="table-element"><input type="checkbox" class="buildingsaleslot-remove-checkbox" data-value="{{$completedTradein->id}}"></div></td>
-                                </tr>
-                            @endforeach
-                        @endif
+                        {{--@foreach ($tradeins as $tradein)
+                            @if($tradein->isBoxed() && !$tradein->isPartOfSalesLot())
+                            <tr id="added_tradeins_{{$tradein->id}}" class="added_tradeins">
+                                <td>{{$tradein->getTrayName($tradein->id)}}</td>
+                                <td>{{$tradein->getDeviceBambooGrade()}}</td>
+                                <td>{{$tradein->getProductName()}}</td>
+                                <td>{{$tradein->getDeviceMemory()}}</td>
+                                <td>£{{$tradein->getDeviceCost()}}</td>
+                                <td><input class="added_tradeins" type="checkbox" id="added_tradein_{{$tradein->id}}" data-id="{{$tradein->id}}"></td>
+                            </tr>
+                            @endif
+                        @endforeach--}}
                     </tbody>
 
                 </table>
+
             </div>
 
         </div>
@@ -222,16 +225,4 @@
         </div>
     </div>
 </div>
-
-
-@if(Session::has('tradeins'))
-<script>
-
-    window.addEventListener("beforeunload", function(e){
-        e.preventDefault();
-    });
-    
-</script>
-@endif
-
 @endsection
