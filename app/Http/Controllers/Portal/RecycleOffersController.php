@@ -43,8 +43,10 @@ class RecycleOffersController extends Controller
             // validation
             $validated = $request->validate([
                 'offer_image' => 'required|mimes:jpeg,png,svg|max:10000',
+                'offer_tablet_image' => 'required|mimes:jpeg,png,svg|max:10000',
                 'offer_mobile_image' => 'required|mimes:jpeg,png,svg|max:10000',
                 'offer_selling_banner_image' => 'required|mimes:jpeg,png,svg|max:10000',
+                'offer_selling_banner_tablet_image' => 'required|mimes:jpeg,png,svg|max:10000',
                 'offer_selling_banner_mobile_image' => 'required|mimes:jpeg,png,svg|max:10000',
                 'device' => 'required',
                 // 'offer_title' => 'required',
@@ -60,6 +62,11 @@ class RecycleOffersController extends Controller
             $image_extension = $request->offer_image->extension();
             Storage::put('public/recycle_offers_images/'.$image_filename.".".$image_extension, file_get_contents($request->offer_image));
 
+            $tablet_filename_withext = $validated['offer_tablet_image']->getClientOriginalName();
+            $tablet_filename = explode('.', $tablet_filename_withext)[0];
+            $tablet_extension = $request->offer_tablet_image->extension();
+            Storage::put('public/recycle_offers_images/'.$tablet_filename.".".$tablet_extension, file_get_contents($request->offer_tablet_image));
+
             $mobile_filename_withext = $validated['offer_mobile_image']->getClientOriginalName();
             $mobile_filename = explode('.', $mobile_filename_withext)[0];
             $mobile_extension = $request->offer_mobile_image->extension();
@@ -70,6 +77,11 @@ class RecycleOffersController extends Controller
             $banner_extension = $request->offer_selling_banner_image->extension();
             Storage::put('public/recycle_offers_images/'.$banner_filename.".".$banner_extension, file_get_contents($request->offer_selling_banner_image));
 
+            $tablet_banner_filename_withext = $validated['offer_selling_banner_tablet_image']->getClientOriginalName();
+            $tablet_banner_filename = explode('.', $tablet_banner_filename_withext)[0];
+            $tablet_banner_extension = $request->offer_selling_banner_tablet_image->extension();
+            Storage::put('public/recycle_offers_images/'.$tablet_banner_filename.".".$tablet_banner_extension, file_get_contents($request->offer_selling_banner_tablet_image));
+
             $mobile_banner_filename_withext = $validated['offer_selling_banner_mobile_image']->getClientOriginalName();
             $mobile_banner_filename = explode('.', $mobile_banner_filename_withext)[0];
             $mobile_banner_extension = $request->offer_selling_banner_mobile_image->extension();
@@ -78,8 +90,10 @@ class RecycleOffersController extends Controller
             RecycleOffer::create([
                 'device_id' => $request->device,
                 'offer_banner' => $image_filename.".".$image_extension,
+                'offer_tablet_banner' => $tablet_filename.".".$tablet_extension,
                 'offer_mobile_banner' => $mobile_filename.".".$mobile_extension,
                 'offer_selling_banner' => $banner_filename.".".$banner_extension,
+                'offer_selling_tablet_banner' => $tablet_banner_filename.".".$tablet_banner_extension,
                 'offer_selling_mobile_banner' => $mobile_banner_filename.".".$mobile_banner_extension
                 // 'offer_title' => $request->offer_title,
                 // 'offer_description' => $request->offer_description,
@@ -109,8 +123,10 @@ class RecycleOffersController extends Controller
 
         $imageWithExt = null;
         $sellBannerImageWithExt = null;
+        $tabletBannerImageWithExt = null;
         $mobileImageWithExt = null;
         $mobile_sellBannerImageWithExt = null;
+        $tablet_sellBannerImageWithExt = null;
 
         // main banner
         if($request->file('offer_image')) {
@@ -131,6 +147,25 @@ class RecycleOffersController extends Controller
             }
             
             $imageWithExt = $filename.".".$extension;
+        }
+
+        // tablet banner
+        if($request->file('offer_tablet_image')) {
+            // validation
+            $validated = $request->validate([
+                'offer_tablet_image' => 'required|mimes:jpeg,png,svg|max:10000',
+                'device' => 'required',
+            ]);
+
+            // delete previous image
+            Storage::delete('public/recycle_offers_images/'.$recycleOffer->offer_mobile_banner);
+
+            $tablet_filename_withext = $validated['offer_tablet_image']->getClientOriginalName();
+            $tablet_filename = explode('.', $tablet_filename_withext)[0];
+            $tablet_extension = $request->offer_tablet_image->extension();
+            Storage::put('public/recycle_offers_images/'.$tablet_filename.".".$tablet_extension, file_get_contents($request->offer_tablet_image));
+            
+            $tabletBannerImageWithExt = $tablet_filename.".".$tablet_extension;
         }
 
         // mobile banner
@@ -173,6 +208,25 @@ class RecycleOffersController extends Controller
             $sellBannerImageWithExt = $banner_filename.".".$banner_extension;
         }
 
+        // selling tablet banner
+        if($request->file('offer_selling_banner_tablet_image')){
+            // validation
+            $validated = $request->validate([
+                'offer_selling_banner_tablet_image' => 'required|mimes:jpeg,png,svg|max:10000',
+                'device' => 'required',
+            ]);
+
+            Storage::delete('public/recycle_offers_images/'.$recycleOffer->offer_selling_banner_tablet_image);
+
+            if($request->file('offer_selling_banner_tablet_image')->isValid()) {
+                $tablet_banner_filename_withext = $validated['offer_selling_banner_tablet_image']->getClientOriginalName();
+                $tablet_banner_filename = explode('.', $tablet_banner_filename_withext)[0];
+                $tablet_banner_extension = $request->offer_selling_banner_tablet_image->extension();
+                Storage::put('public/recycle_offers_images/'.$tablet_banner_filename.".".$tablet_banner_extension, file_get_contents($request->offer_selling_banner_tablet_image));
+            }
+            $tablet_sellBannerImageWithExt = $tablet_banner_filename.".".$tablet_banner_extension;
+
+        }
 
         // selling mobile banner
         if($request->file('offer_selling_banner_mobile_image')){
@@ -214,6 +268,11 @@ class RecycleOffersController extends Controller
             $recycleOffer->save();
         }
 
+        if($tabletBannerImageWithExt){
+            $recycleOffer->offer_tablet_banner = $tabletBannerImageWithExt;
+            $recycleOffer->save();
+        }
+
         if($mobileImageWithExt){
             $recycleOffer->offer_mobile_banner = $mobileImageWithExt;
             $recycleOffer->save();
@@ -221,6 +280,11 @@ class RecycleOffersController extends Controller
 
         if($sellBannerImageWithExt){
             $recycleOffer->offer_selling_banner = $sellBannerImageWithExt;
+            $recycleOffer->save();
+        }
+
+        if($tablet_sellBannerImageWithExt){
+            $recycleOffer->offer_selling_tablet_banner = $tablet_sellBannerImageWithExt;
             $recycleOffer->save();
         }
 
@@ -256,8 +320,10 @@ class RecycleOffersController extends Controller
     public function deleteOffer($id){
         $recycleOffer = RecycleOffer::findOrFail($id);
         Storage::delete('public/recycle_offers_images/'.$recycleOffer->offer_banner);
+        Storage::delete('public/recycle_offers_images/'.$recycleOffer->offer_tablet_banner);
         Storage::delete('public/recycle_offers_images/'.$recycleOffer->offer_mobile_banner);
         Storage::delete('public/recycle_offers_images/'.$recycleOffer->offer_selling_banner);
+        Storage::delete('public/recycle_offers_images/'.$recycleOffer->offer_selling_tablet_banner);
         Storage::delete('public/recycle_offers_images/'.$recycleOffer->offer_selling_banner_mobile_image);
         $recycleOffer->delete();
         return redirect()->back()->with('success', 'Recycle offer deleted successfully.');

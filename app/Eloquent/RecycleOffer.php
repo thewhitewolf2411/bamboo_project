@@ -23,8 +23,10 @@ class RecycleOffer extends Model
     protected $fillable = [
         'device_id', 
         'offer_banner', 
+        'offer_tablet_banner',
         'offer_mobile_banner',
         'offer_selling_banner', 
+        'offer_selling_tablet_banner',
         'offer_selling_mobile_banner',
         // 'offer_title', 
         // 'offer_description', 
@@ -58,6 +60,14 @@ class RecycleOffer extends Model
         return Storage::url('public/recycle_offers_images/'.$this->offer_banner);
     }
 
+    public function getTabletImage(){
+        // for seeded recycle tablet offer
+        if($this->offer_tablet_banner === 'recycle_offer_tablet.png'){
+            return '/'.$this->offer_tablet_banner;
+        }
+        return Storage::url('public/recycle_offers_images/'.$this->offer_tablet_banner);
+    }
+
     public function getMobileImage(){
         if($this->offer_mobile_banner === 'recycle_offer_mobile.png'){
             return '/'.$this->offer_mobile_banner;
@@ -71,6 +81,15 @@ class RecycleOffer extends Model
             return '/'.$this->offer_selling_banner;
         }
         return Storage::url('public/recycle_offers_images/'.$this->offer_selling_banner);
+    }
+
+    public function getTabletSellingBanner()
+    {
+       // for seeded recycle offer
+       if($this->offer_selling_tablet_banner === 'recycle_offer_selling_banner_tablet.png'){
+        return '/'.$this->offer_selling_tablet_banner;
+        }
+        return Storage::url('public/recycle_offers_images/'.$this->offer_selling_tablet_banner);
     }
 
     public function getMobileSellingBanner(){

@@ -178,20 +178,21 @@
                                         @if(Auth::user())
                                             <a href="/removefromcart/{{$cartitem->id}}" class="w-25 m-0">
                                                 <div class="">
-                                                    <p class="m-0 pl-2 summary-regular-text">REMOVE</p>
+                                                    <p class="m-0 summary-regular-text">REMOVE</p>
                                                 </div>
                                             </a>
                                         @else
                                             <a href="/removefromabandoned/{{$cartitem->id}}" class="w-25 m-0">
                                                 <div class="">
-                                                    <p class="m-0 pl-2 summary-regular-text">REMOVE</p>
+                                                    <p class="m-0 summary-regular-text">REMOVE</p>
                                                 </div>
                                             </a>
                                         @endif
 
                                         <div class="remove-from-cart-tohide"></div>
-                                        {{-- <div class=""></div> --}}
                                     </div>
+
+                                    <div class="remove-hr"></div>
 
                                 @endif
 

@@ -24,7 +24,13 @@
 
                 <div class="whysell-main-text d-flex flex-column">
                     <p class="whysell-page-title">The benefits of Selling <br> with Bamboo Mobile</p>
-                    <p class="whysell-page-description">Not only at Bamboo Mobile do we offer best prices for your devices, free postage, same day payment and data wipe guarantee, together we can help cut down tech waste and be part of the circular economy. Start now, find out how much your device is worth today.</p>
+                    <p class="whysell-page-description">
+                        Not only at Bamboo Mobile do we offer best prices for<br>
+                        your devices, free postage, same day payment and data<br>
+                        wipe guarantee, together we can help cut down tech waste<br>
+                        and be part of the circular economy. Start now, find out how<br>
+                        much your device is worth today.
+                    </p>
                 </div>
                 <div class="d-flex flex-column justify-content-between">
 
@@ -136,7 +142,7 @@
         
         </div>
 
-        @include('partial.sustainability', ['whySell' => false, 'about' => false])
+        @include('partial.sustainability', ['whySell' => false, 'about' => false, 'showStartSellingSustainability' => true])
 
         <div class="sell-categories-container pt-5">
 

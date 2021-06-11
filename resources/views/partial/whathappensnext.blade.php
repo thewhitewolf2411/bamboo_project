@@ -40,9 +40,10 @@
     </div> --}}
 
     @if(Auth::user())
+        <div class="btn read-more sustainability ml-auto mr-auto" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1"><p>Read More</p></div>
         <div class="hr-whathappens"></div>
 
-        <div class="image-whathappens-row">
+        <div class="image-whathappens-row collapse collapsed" id="multiCollapseExample1">
             <div class="image-whathappens-col">
                 <img class="whathappens-img" src="{{asset('/customer_page_images/body/free_print_own_label.svg')}}">
                 <p class="whathappens-large bold">Print your postage label and send your device to us</p>

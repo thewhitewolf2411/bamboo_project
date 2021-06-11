@@ -103,13 +103,13 @@
         logo_container.classList.add('resized');
       }
 
-      if(!logo_full.classList.contains('hidden')){
-        logo_full.classList.add('hidden');
-      }
+      // if(!logo_full.classList.contains('hidden')){
+      //   logo_full.classList.add('hidden');
+      // }
 
-      if(logo_mobile.classList.contains('invisible')){
-        logo_mobile.classList.remove('invisible');
-      }
+      // if(logo_mobile.classList.contains('invisible')){
+      //   logo_mobile.classList.remove('invisible');
+      // }
 
       // if(selling_arrow.classList.contains('invisible')){
       //   document.getElementById('start-selling').classList.add('large');
@@ -168,13 +168,13 @@
         urls.classList.remove('resized');
       }
 
-      if(logo_container.classList.contains('resized')){
-        logo_container.classList.remove('resized');
-      }
+      // if(logo_container.classList.contains('resized')){
+      //   logo_container.classList.remove('resized');
+      // }
 
-      if(logo_full.classList.contains('hidden')){
-        logo_full.classList.remove('hidden');
-      }
+      // if(logo_full.classList.contains('hidden')){
+      //   logo_full.classList.remove('hidden');
+      // }
 
       // if(!selling_arrow.classList.contains('invisible')){
       //   document.getElementById('start-selling').classList.remove('large');

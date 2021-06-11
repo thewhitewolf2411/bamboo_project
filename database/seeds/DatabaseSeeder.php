@@ -37,8 +37,10 @@ class DatabaseSeeder extends Seeder
         RecycleOffer::create([
             'device_id' => 35,
             'offer_banner' => 'recycle_offer_home.svg',
+            'offer_tablet_banner' => 'recycle_offer_tablet.png',
             'offer_mobile_banner' => 'recycle_offer_mobile.png',
             'offer_selling_banner' => 'recycle_offer_selling_banner.png',
+            'offer_selling_tablet_banner' => 'recycle_offer_selling_banner_tablet.png',
             'offer_selling_mobile_banner' => 'recycle_offer_selling_banner_mobile.png',
             'status' => true
         ]);

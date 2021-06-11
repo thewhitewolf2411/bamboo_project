@@ -160,7 +160,7 @@
                 </div>
             </div>
         </div>
-        <a href="/sell" class="btn start-selling howitworks mt-4"><p>Start Selling</p></a>
+        <a href="/sell" class="btn start-selling howitworks mt-4 mobile"><p>Start Selling</p></a>
     </div>
 
     {{-- <div class="home-element grading-container">
@@ -439,12 +439,25 @@
          (function() {
             let offerbanner = JSON.parse('{!!App\Helpers\RecycleOffers::check()!!}');
             if(offerbanner){
-                var isMobile = checkIsMobile();
+                const isMobile = checkIsMobile();
+                const userAgent = navigator.userAgent.toLowerCase();
+                const isTablet = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
                 
                 document.getElementById('home-left-container').classList.add('w-50');
                 document.getElementById('offers-texts').classList.remove('hidden');
                 document.getElementById('regular-title').classList.add('hidden');
                 document.getElementById('startbuttons').classList.add('hidden');
+
+                if(isTablet){
+                    document.getElementById("main-home-image").style.backgroundImage = "url('"+offerbanner.tablet+"')";
+                    document.getElementById("main-home-image").style.padding = '30px 150px'; 
+                    document.getElementById("main-home-image").style.backgroundPosition = '0 0'; 
+                    document.getElementById("main-home-image").onclick = function(){
+                        window.location = "{!!App\Helpers\RecycleOffers::getLink()!!}";
+                    }
+                    console.log(offerbanner);
+                    return;
+                }
 
                 if(isMobile){
                     document.getElementById("main-home-image").style.backgroundImage = "url('"+offerbanner.mobile+"')";
@@ -453,14 +466,15 @@
                     document.getElementById("main-home-image").onclick = function(){
                         window.location = "{!!App\Helpers\RecycleOffers::getLink()!!}";
                     }
-                } else {
-                    document.getElementById("main-home-image").style.backgroundImage = "url('"+offerbanner.desktop+"')";
-                    document.getElementById("main-home-image").style.padding = '30px 150px'; 
-                    document.getElementById("main-home-image").onclick = function(){
-                        window.location = "{!!App\Helpers\RecycleOffers::getLink()!!}";
-                    }
-                    document.getElementById("main-home-image").classList.add('cursor-pointer');
+                    return;
                 }
+
+                document.getElementById("main-home-image").style.backgroundImage = "url('"+offerbanner.desktop+"')";
+                document.getElementById("main-home-image").style.padding = '30px 150px'; 
+                document.getElementById("main-home-image").onclick = function(){
+                    window.location = "{!!App\Helpers\RecycleOffers::getLink()!!}";
+                }
+                document.getElementById("main-home-image").classList.add('cursor-pointer');
                 
             }
 

@@ -107,7 +107,7 @@
             <div id="sell-this" class="col mb-4 hidden">
                 <div class="see-more-sell-devices mb-5">
                     <div class="text-center" onclick="seeAll()">
-                        see all devices
+                        See all devices
                     </div>
                 </div>
 
@@ -200,12 +200,20 @@
                 if('{!!App\Helpers\RecycleOffers::getSellBanner()!!}'){
                     let selling_banner = JSON.parse('{!!App\Helpers\RecycleOffers::getSellBanner()!!}');
                     if(selling_banner){
-                        var isMobile = checkIsMobile();
+                        const isMobile = checkIsMobile();
+                        const userAgent = navigator.userAgent.toLowerCase();
+                        const isTablet = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
+
+                        if(isTablet){
+                            document.getElementById('selling_banner').src = selling_banner.tablet;
+                            return;
+                        }
                         if(isMobile){
                             document.getElementById('selling_banner').src = selling_banner.mobile;
-                        } else {
-                            document.getElementById('selling_banner').src = selling_banner.desktop;
+                            return;
                         }
+
+                        document.getElementById('selling_banner').src = selling_banner.desktop;
                     }
                 }
 
@@ -483,7 +491,7 @@
                                     selecttoggle.classList.add('mt-4');
 
                                     let infotext = document.createElement('p');
-                                    infotext.classList.add('mt-3');
+                                    infotext.classList.add('select-make-result');
                                     infotext.innerHTML = 'Select this model';
 
                                     singledeviceresult.onclick = function(){

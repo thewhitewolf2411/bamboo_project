@@ -1,5 +1,5 @@
 .whysell-page-container{
-    padding: 140px 140px 0 140px;
+    padding: 100px 140px 0 140px;
 }
 
 .whysell-page-title{
@@ -26,6 +26,7 @@
     letter-spacing: 0px;
     color: #000000;
     opacity: 1;
+    margin: 0;
 }
 
 .whysell-video-text{
@@ -39,8 +40,9 @@
 }
 
 .whysell-page-description.bottom{
-    padding-left: 50px;
+    padding-left: 0;
     margin-bottom: 120px;
+    max-width: 812px;
 }
 
 .why-title-container p{
@@ -48,6 +50,7 @@
 }
 
 .whysell-main-text{
+    width: 100%;
     max-width: 729px;
 }
 

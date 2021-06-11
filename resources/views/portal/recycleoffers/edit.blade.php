@@ -47,6 +47,16 @@
                     <input type="file" name="offer_image" accept="image/*" class="form-control">
                 </div>
 
+                <div class="d-flex flex-column p-0">
+                    <label class="h5 ml-auto mr-auto mt-2">Current banner tablet image:</label>
+                    <img class="offer-banner-preview" src="{{$recycleOffer->getTabletImage()}}">
+                </div>
+
+                <div class="d-flex flex-column p-0">
+                    <label for="offer_image" class="ml-1 mb-2">Choose new banner tablet image:</label>
+                    <input type="file" name="offer_tablet_image" accept="image/*" class="form-control">
+                </div>
+
 
                 
                 <div class="d-flex flex-column p-0">
@@ -68,6 +78,16 @@
                 <div class="d-flex flex-column p-0">
                     <label for="offer_selling_banner_image" class="ml-1 mb-2">Choose new selling banner image:</label>
                     <input type="file" name="offer_selling_banner_image" accept="image/*" class="form-control">
+                </div>
+
+                <div class="d-flex flex-column p-0">
+                    <label class="h5 ml-auto mr-auto mt-2">Current selling banner tablet image:</label>
+                    <img class="offer-banner-preview" src="{{$recycleOffer->getTabletSellingBanner()}}">
+                </div>
+
+                <div class="d-flex flex-column p-0">
+                    <label for="offer_selling_banner_image" class="ml-1 mb-2">Choose new selling banner tablet image:</label>
+                    <input type="file" name="offer_selling_banner_tablet_image" accept="image/*" class="form-control">
                 </div>
 
 

@@ -104,6 +104,10 @@
 
 }
 
+.btn.start-selling.howitworks.mobile{
+    display: none;
+}
+
 @media screen and (max-width: 496px){
     .homepage-type-title{
         font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-30)/41px var(--unnamed-font-family-sharp-sans-no1-bold);
@@ -113,6 +117,9 @@
         letter-spacing: 0px;
         // color: #D0D0D0;
         opacity: 1;
+    }
+    .btn.start-selling.howitworks.mobile{
+        display: block;
     }
 
     .homepage-type-border.orange{

@@ -48,6 +48,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
         dates = JSON.parse('{!!App\Helpers\Dates::getDates()!!}');
+        document.getElementById('birth_day').addEventListener('change', function(){checkDays();});
         document.getElementById('birth_month').addEventListener('change', function(){checkDays();});
         document.getElementById('birth_year').addEventListener('change', function(){checkDays();});
     });

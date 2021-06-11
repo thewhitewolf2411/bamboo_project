@@ -10,7 +10,11 @@ class RecycleOffers{
     public static function check(){
         $offer = RecycleOffer::where('status', 1)->first();
         if($offer){
-            return json_encode(['desktop' => $offer->getImage(), 'mobile' => $offer->getMobileImage()]);
+            return json_encode([
+                'desktop' => $offer->getImage(), 
+                'mobile' => $offer->getMobileImage(), 
+                'tablet' =>  $offer->getTabletImage()
+            ]);
         }
         return null;
     }
@@ -26,9 +30,11 @@ class RecycleOffers{
     public static function getSellBanner(){
         $offer = RecycleOffer::where('status', 1)->first();
         if($offer){
-            // return $offer->getSellingBanner();
-            return json_encode(['desktop' => $offer->getSellingBanner(), 'mobile' => $offer->getMobileSellingBanner()]);
-
+            return json_encode([
+                'desktop' => $offer->getSellingBanner(), 
+                'mobile' => $offer->getMobileSellingBanner(), 
+                'tablet' =>  $offer->getTabletSellingBanner()
+            ]);
         }
         return null;
     }

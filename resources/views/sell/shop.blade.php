@@ -40,12 +40,14 @@
                 <a class="back-to-home-footer padded mt-3 pt-2" href="/">
             @endif
                 <img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">
-                <p class="back-home-text pt-2">Back</p>
+                <p class="back-home-text">Back</p>
             </a>
             @if($topResults)
                 <p class="results-upper mb-2">search results</p>
-                <p class="results-found mb-3">Matching devices found</p>
-                <p class="results-info mb-2">Click on one to see how much it is worth</p>
+                <p class="results-found mb-3">{{$products->count()}} Matching devices found</p>
+                @if($products->count() > 0)
+                    <p class="results-info mb-2">Click on one to see how much it is worth</p>
+                @endif
             @else
                 @if(!in_array($parameter, ['mobile', 'tablets', 'watches']))
                     <p class="results-upper mb-3">search results for "{!!$parameter!!}"</p>

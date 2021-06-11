@@ -13116,7 +13116,7 @@ header {
 }
 
 #full-bamboo-logo.resized {
-  height: 50px;
+  height: 60px;
   width: auto;
 }
 
@@ -13126,7 +13126,6 @@ header {
 
 #full-logo-container.resized {
   margin-top: 45px;
-  margin-left: 85px;
 }
 
 #full-bamboo-logo {
@@ -15811,6 +15810,7 @@ h3, h4, h5 {
   max-width: 300px;
   max-height: 50px;
   overflow-y: hidden;
+  margin-top: 34px;
 }
 
 .product-data-container img {
@@ -16262,13 +16262,22 @@ h3, h4, h5 {
   cursor: pointer;
   width: 160px;
   margin: auto;
+  margin-top: 32px;
 }
 
-.see-more-sell-devices > a {
-  font-size: 18px;
+.see-more-sell-devices > div {
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--black);
+  text-align: center;
+  text-decoration: underline;
+  font: normal normal normal 20px/28px Sharp Sans No1 Book;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
 }
 
-.see-more-sell-devices:hover > a {
+.see-more-sell-devices:hover > div {
   color: black;
   text-decoration: underline;
 }
@@ -16305,7 +16314,7 @@ h3, h4, h5 {
 
 .product-data {
   width: 50%;
-  margin-top: 120px;
+  margin-top: 100px;
   max-width: 1100px;
 }
 
@@ -16349,9 +16358,12 @@ h3, h4, h5 {
 }
 
 .product-image-container {
-  max-width: 670px;
+  width: 100%;
+  max-width: 450px;
   height: auto;
   margin: auto;
+  margin-left: 220px;
+  margin-top: 100px;
   margin-right: 140px;
 }
 
@@ -16359,7 +16371,6 @@ h3, h4, h5 {
   position: relative;
   display: block;
   width: 100%;
-  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 0;
@@ -17368,10 +17379,6 @@ input.lookup-delivery-basket::placeholder {
   margin-top: 0;
 }
 
-.device-make-result > p {
-  font-size: 14px;
-}
-
 .device-make-result-image {
   width: auto;
   max-width: 300px;
@@ -17386,6 +17393,7 @@ input.lookup-delivery-basket::placeholder {
   width: 240px;
   height: 75px;
   overflow-y: hidden;
+  margin-top: 34px;
 }
 
 .select-make-result-device {
@@ -17395,6 +17403,19 @@ input.lookup-delivery-basket::placeholder {
   margin: auto;
   margin-top: 0 !important;
   cursor: pointer;
+}
+
+.select-make-result {
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--black);
+  text-align: center;
+  font: normal normal normal 20px/28px Sharp Sans No1 Book;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  margin: 0;
+  margin-top: 7px;
 }
 
 .selling-info-items-container {
@@ -17452,7 +17473,7 @@ input.lookup-delivery-basket::placeholder {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  margin-bottom: 70px;
+  margin-bottom: 40px;
 }
 
 .basket-summary-icon {
@@ -17506,7 +17527,8 @@ input.lookup-delivery-basket::placeholder {
 
 .cart-product {
   border-top: 1px solid #000;
-  padding: 20px;
+  padding: 35px 0px;
+  justify-content: space-between;
 }
 
 .cart-productname-column {
@@ -17531,12 +17553,20 @@ input.lookup-delivery-basket::placeholder {
   width: 100%;
   min-width: 112px;
   max-width: 170px;
+  margin-right: auto;
 }
 
 .remove-cart-space {
   width: 100%;
   min-width: 240px;
   max-width: 500px;
+}
+
+.remove-hr {
+  width: 100%;
+  height: 1px;
+  background-color: #000;
+  margin-top: 44px;
 }
 
 .black-cart-info-text {
@@ -17573,7 +17603,7 @@ input.lookup-delivery-basket::placeholder {
 }
 
 .order-summary-cart.margin-top {
-  margin-top: 130px;
+  margin-top: 100px;
 }
 
 .order-summary-bold {
@@ -18076,6 +18106,11 @@ input.lookup-delivery-basket::placeholder {
   }
 }
 @media only screen and (max-width: 625px) {
+  .header-selling-links {
+    overflow-x: scroll;
+    padding: 0 30px;
+  }
+
   .device-brands-row {
     padding: 0 15px;
   }
@@ -18086,8 +18121,21 @@ input.lookup-delivery-basket::placeholder {
 
   .top-upper-elements-container {
     padding: 0;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow-x: scroll;
+    display: inline-flex;
+    box-shadow: none;
+  }
+
+  .top-element-container {
+    min-width: 200px;
+  }
+
+  .top-element-container.on-page > a > p {
+    padding: 0;
+  }
+
+  .top-element-container a {
+    padding: 0;
   }
 
   .top-upper-elements-container a {
@@ -18095,7 +18143,14 @@ input.lookup-delivery-basket::placeholder {
   }
 
   .top-upper-elements-container p {
-    font-size: 10pt !important;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) Sharp Sans No1 Semibold;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: left;
+    font: normal normal normal 20px/27px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
   }
 
   .products a {
@@ -19755,6 +19810,7 @@ input[type=number] {
   border-radius: 8px;
   opacity: 1;
   transition: all 0.3s linear;
+  border: 3px solid var(--technical-–-violet);
 }
 
 .newsletter-signupbtn > p {
@@ -19765,7 +19821,8 @@ input[type=number] {
   letter-spacing: 0px;
   color: #FFFFFF;
   opacity: 1;
-  padding-top: 10px;
+  padding-top: 11px;
+  transition: all 0.3s linear;
 }
 
 .newsletter-signupbtn:hover {
@@ -19774,6 +19831,17 @@ input[type=number] {
   background: #A375BC 0% 0% no-repeat padding-box;
   border: 3px solid #000000;
   border-radius: 8px;
+  opacity: 1;
+}
+
+.newsletter-signupbtn:hover > p {
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/35px var(--unnamed-font-family-sharp-sans-no1-bold);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--unnamed-color-ffffff);
+  text-align: center;
+  font: normal normal normal 25px/35px Sharp Sans No1 Bold;
+  letter-spacing: 0px;
+  color: #FFFFFF;
   opacity: 1;
 }
 
@@ -19881,7 +19949,7 @@ input[type=number] {
   margin-left: 5px;
   margin-right: 5px;
   cursor: pointer;
-  border: 2px solid #fff;
+  border: 3px solid #fff;
   transition: 0.2s linear;
 }
 
@@ -20435,6 +20503,7 @@ input[type=submit] {
   border-radius: 8px;
   opacity: 1;
   transition: all 0.3s linear;
+  border: 3px solid var(--sell-–-orange);
 }
 
 .btn.cart-purple {
@@ -20443,6 +20512,7 @@ input[type=submit] {
   border-radius: 8px;
   opacity: 1;
   transition: all 0.3s linear;
+  border: 3px solid var(--technical-–-violet);
 }
 
 .btn.cart-purple.basket {
@@ -20479,7 +20549,7 @@ input[type=submit] {
 }
 
 .btn.start-selling.howitworks > p {
-  padding-top: 10px;
+  padding-top: 11px;
 }
 
 .btn.start-selling.cart > p {
@@ -20593,6 +20663,7 @@ input[type=submit] {
   border-radius: 8px;
   opacity: 1;
   transition: all 0.3s linear;
+  border: 3px solid #FFFFFF;
 }
 
 .btn.read-more.sustainability {
@@ -21133,6 +21204,10 @@ input[type=submit] {
   margin-bottom: 200px;
 }
 
+.btn.start-selling.howitworks.mobile {
+  display: none;
+}
+
 @media screen and (max-width: 496px) {
   .homepage-type-title {
     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-30)/41px var(--unnamed-font-family-sharp-sans-no1-bold);
@@ -21141,6 +21216,10 @@ input[type=submit] {
     font: normal normal normal 30px/41px Sharp Sans No1 Bold;
     letter-spacing: 0px;
     opacity: 1;
+  }
+
+  .btn.start-selling.howitworks.mobile {
+    display: block;
   }
 
   .homepage-type-border.orange {
@@ -22868,7 +22947,7 @@ input[type=submit] {
 }
 
 .whysell-page-container {
-  padding: 140px 140px 0 140px;
+  padding: 100px 140px 0 140px;
 }
 
 .whysell-page-title {
@@ -22895,6 +22974,7 @@ input[type=submit] {
   letter-spacing: 0px;
   color: #000000;
   opacity: 1;
+  margin: 0;
 }
 
 .whysell-video-text {
@@ -22908,8 +22988,9 @@ input[type=submit] {
 }
 
 .whysell-page-description.bottom {
-  padding-left: 50px;
+  padding-left: 0;
   margin-bottom: 120px;
+  max-width: 812px;
 }
 
 .why-title-container p {
@@ -22917,6 +22998,7 @@ input[type=submit] {
 }
 
 .whysell-main-text {
+  width: 100%;
   max-width: 729px;
 }
 
