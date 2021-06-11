@@ -4,11 +4,13 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
 require('datatables.net');
 require('datatables.net-buttons');
 require('./bootstrap');
 require('easy-autocomplete');
 require('jquery');
+require('./DataTableSum');
 
 require('./scripts/quarantinemanagement');
 require('./scripts/bayoverview');

@@ -19,6 +19,7 @@ use App\Eloquent\Tradein;
 use App\Eloquent\SalesLotContent;
 use App\Eloquent\SoldTradeIns;
 use App\Services\Boxing;
+use App\Services\BuildingLotService;
 use PDF;
 use DNS1D;
 use DNS2D;
@@ -628,7 +629,7 @@ class WarehouseManagementController extends Controller
             }
         }
 
-        return response([$box->tray_name, $box->number_of_devices], 200);
+        return response([$box->tray_name, $box->getNumberOfDevices()], 200);
     }
 
     public function allocateBox(Request $request){
@@ -959,22 +960,7 @@ class WarehouseManagementController extends Controller
 
 
     public function getSaleLotData($id){
-        $salelot = SalesLot::find($id);
-        $salelotContent = SalesLotContent::where('sales_lot_id', $id)->get();
-        
-        $dataheaders = [
-            ['Lot Number', 'Box Number', 'Bay location', 'QTY']
-        ];
-
-        foreach($salelotContent as $saleLotContent){
-            $tradein = Tradein::find($saleLotContent->device_id);
-
-            $data = [$id, $tradein->getTrayName($tradein->id), $tradein->getBayName(), 1];
-
-            array_push($dataheaders, $data);
-        }
-
-        return response()->json($dataheaders);
+        return BuildingLotService::getSaleLotData($id);
     }
 
 }

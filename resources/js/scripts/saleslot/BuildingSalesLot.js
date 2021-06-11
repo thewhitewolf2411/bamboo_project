@@ -107,7 +107,6 @@ $(document).on('change', function(){
         $('#removefromlot').prop('disabled', true);
     }
 
-
 });
 
 $('#changetoviewboxes').on('change', function(){
@@ -168,8 +167,11 @@ $('#addtolot').on('click', function(){
 
             hideLeftTradeins(response[1]);
             handleLeftBoxes(response[0]);
+            handleRightButtons();
         }
     });
+
+
 
     $(this).prop('disabled', true);
 
@@ -192,12 +194,64 @@ $('#removefromlot').on('click', function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(response){
-            
+            handleRemoveDevices(response[0], response[1], response[2]);
         }
     });
 
-    $(this).prop('disabled', true);
 
+    handleRightButtons();
+
+});
+
+$('#completelot').on('click', function(){
+
+    var addedTradeins = [];
+
+    $('#added-tradeins-building-lot tbody tr').each(function(){
+        addedTradeins.push($(this).prop('id'));
+    });
+
+    $.ajax({
+        url: "/portal/sales-lot/building-sales-lot/create-lot",
+        type:"POST",
+        data:{
+            addedTradeins:addedTradeins,
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(response){
+            if(response){
+                alert("Lot has been created");
+                location.reload();
+            }
+        }
+    });
+
+
+});
+
+$('#exportxls').on('click', function(){
+
+    var addedTradeins = [];
+
+    $('#added-tradeins-building-lot tbody tr').each(function(){
+        addedTradeins.push($(this).prop('id'));
+    });
+
+    $.ajax({
+        url: "/portal/sales-lot/building-sales-lot/build-lot/generate-xls",
+        type:"POST",
+        data:{
+            addedTradeins:addedTradeins,
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(response){
+            window.open(response.url, '_blank');
+        }
+    });
 });
 
 function setBayedBoxesDataTable(boxes){
@@ -224,7 +278,7 @@ function setBayedBoxesDataTable(boxes){
             boxes[i].tray_name,
             boxes[i].tray_grade,
             boxes[i].tray_network,
-            0,
+            boxes[i].number_of_devices - boxes[i].added_qty,
             boxes[i].number_of_devices,
             '£' + boxes[i].total_cost,
             row,
@@ -359,4 +413,92 @@ function handleLeftBoxes(boxes){
         }
     }
 
+}
+
+function handleRightButtons(){
+    var addedTradeinTable = $('#added-tradeins-building-lot').DataTable();
+
+    if(! addedTradeinTable.data().count()){
+        $('#completelot').prop('disabled', true);
+        $('#exportxls').prop('disabled', true);
+    }
+    else{
+        $('#completelot').prop('disabled', false);
+        $('#exportxls').prop('disabled', false);
+    }
+
+    getTotalQty();
+    getTotalCost();
+}
+
+function handleRemoveDevices(boxes_ids, tradein_ids, boxes){
+    var boxids = Object.keys(boxes_ids);
+    var number_of_devices = Object.values(boxes_ids);
+
+    var boxedTradeinTable = $('#boxed-tradeins').DataTable();
+    var addedTradeinTable = $('#added-tradeins-building-lot').DataTable();
+    var bayedBoxesTable = $('#bayed-boxes').DataTable();
+
+    for(var i = 0; i<tradein_ids.length; i++){
+
+        var row = '<input class="boxed_tradeins" type="checkbox" id="tradein_"' + tradein_ids[i].id + '" data-id="' + tradein_ids[i].id + '">';
+        boxedTradeinTable.row.add([
+            tradein_ids[i].barcode,
+            tradein_ids[i].tray_name,
+            tradein_ids[i].customer_grade,
+            tradein_ids[i].bamboo_grade,
+            tradein_ids[i].product_name,
+            tradein_ids[i].device_memory,
+            tradein_ids[i].device_network,
+            tradein_ids[i].device_colour,
+            '£' + tradein_ids[i].device_cost,
+            row,
+        ]).node().id = tradein_ids[i].id;
+
+        boxedTradeinTable.draw(false);
+
+        addedTradeinTable.row('#' + tradein_ids[i].id).remove().draw(false);
+    }
+
+    for(var i=0; i<boxes.length; i++){
+
+        if(bayedBoxesTable.row('#' + boxes[i].id).length > 0){
+            rowdata = bayedBoxesTable.row('#' + boxes[i].id).data();
+    
+            rowdata[3] -= number_of_devices[i];
+
+            bayedBoxesTable.row('#' + boxes[i].id).data(rowdata).draw(false);
+            
+        }
+        else{
+            var row = '<input class="bayed_boxes" type="checkbox" id="box_"' + boxes[i].id + '" data-id="' + boxes[i].id + '">';
+            bayedBoxesTable.row.add([
+                boxes[i].tray_name,
+                boxes[i].tray_grade,
+                boxes[i].tray_network,
+                boxes[i].number_of_devices - number_of_devices[i],
+                boxes[i].number_of_devices,
+                '£' + boxes[i].total_cost,
+                row,
+            ]).node().id = boxes[i].id;
+            
+            bayedBoxesTable.draw(false);
+        }
+    }
+
+    $('#removefromlot').prop('disabled', true);
+    handleRightButtons();
+
+}
+
+function getTotalQty(){
+    var table = $('#added-tradeins-building-lot').DataTable();
+
+    $('#total_qty').html(table.data().count() / 6);
+}
+
+function getTotalCost(){
+    var table = $('#added-tradeins-building-lot').DataTable();
+
+    $('#total_cost').html( '£' + table.column(4).data().sum());
 }

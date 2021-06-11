@@ -56378,6 +56378,29 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/DataTableSum.js":
+/*!**************************************!*\
+  !*** ./resources/js/DataTableSum.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+jQuery.fn.dataTable.Api.register('sum()', function () {
+  return this.flatten().reduce(function (a, b) {
+    if (typeof a === 'string') {
+      a = a.replace(/[^\d.-]/g, '') * 1;
+    }
+
+    if (typeof b === 'string') {
+      b = b.replace(/[^\d.-]/g, '') * 1;
+    }
+
+    return a + b;
+  }, 0);
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -56399,6 +56422,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 __webpack_require__(/*! easy-autocomplete */ "./node_modules/easy-autocomplete/dist/jquery.easy-autocomplete.js");
 
 __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+__webpack_require__(/*! ./DataTableSum */ "./resources/js/DataTableSum.js");
 
 __webpack_require__(/*! ./scripts/quarantinemanagement */ "./resources/js/scripts/quarantinemanagement.js");
 
@@ -56870,18 +56895,6 @@ $('#boxes-summary').on('click', function () {
   $('#box-in-progress-table-container').removeClass('box-table-show');
   $('#boxed-devices-table-container').addClass('box-table-hidden');
   $('#boxed-devices-table-container').removeClass('box-table-show');
-}); //saleslot-table
-
-$('#saleslot-table tfoot td').each(function () {
-  var title = $(this).text();
-  $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-});
-var boxsummarytable = $('#saleslot-table').DataTable({
-  "oLanguage": {
-    "sInfo": "Showing _START_ to _END_"
-  },
-  "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-  "pageLength": -1
 });
 
 /***/ }),
@@ -58729,6 +58742,7 @@ $('#addtolot').on('click', function () {
     success: function success(response) {
       hideLeftTradeins(response[1]);
       handleLeftBoxes(response[0]);
+      handleRightButtons();
     }
   });
   $(this).prop('disabled', true);
@@ -58747,9 +58761,52 @@ $('#removefromlot').on('click', function () {
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
-    success: function success(response) {}
+    success: function success(response) {
+      handleRemoveDevices(response[0], response[1], response[2]);
+    }
   });
-  $(this).prop('disabled', true);
+  handleRightButtons();
+});
+$('#completelot').on('click', function () {
+  var addedTradeins = [];
+  $('#added-tradeins-building-lot tbody tr').each(function () {
+    addedTradeins.push($(this).prop('id'));
+  });
+  $.ajax({
+    url: "/portal/sales-lot/building-sales-lot/create-lot",
+    type: "POST",
+    data: {
+      addedTradeins: addedTradeins
+    },
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(response) {
+      if (response) {
+        alert("Lot has been created");
+        location.reload();
+      }
+    }
+  });
+});
+$('#exportxls').on('click', function () {
+  var addedTradeins = [];
+  $('#added-tradeins-building-lot tbody tr').each(function () {
+    addedTradeins.push($(this).prop('id'));
+  });
+  $.ajax({
+    url: "/portal/sales-lot/building-sales-lot/build-lot/generate-xls",
+    type: "POST",
+    data: {
+      addedTradeins: addedTradeins
+    },
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(response) {
+      window.open(response.url, '_blank');
+    }
+  });
 });
 
 function setBayedBoxesDataTable(boxes) {
@@ -58770,7 +58827,7 @@ function setBayedBoxesDataTable(boxes) {
 
   for (var i = 0; i < boxes.length; i++) {
     var row = '<input class="bayed_boxes" type="checkbox" id="box_"' + boxes[i].id + '" data-id="' + boxes[i].id + '">';
-    bayedBoxesTable.row.add([boxes[i].tray_name, boxes[i].tray_grade, boxes[i].tray_network, 0, boxes[i].number_of_devices, '£' + boxes[i].total_cost, row]).node().id = boxes[i].id;
+    bayedBoxesTable.row.add([boxes[i].tray_name, boxes[i].tray_grade, boxes[i].tray_network, boxes[i].number_of_devices - boxes[i].added_qty, boxes[i].number_of_devices, '£' + boxes[i].total_cost, row]).node().id = boxes[i].id;
     bayedBoxesTable.draw(false);
   }
 
@@ -58858,6 +58915,61 @@ function handleLeftBoxes(boxes) {
   }
 }
 
+function handleRightButtons() {
+  var addedTradeinTable = $('#added-tradeins-building-lot').DataTable();
+
+  if (!addedTradeinTable.data().count()) {
+    $('#completelot').prop('disabled', true);
+    $('#exportxls').prop('disabled', true);
+  } else {
+    $('#completelot').prop('disabled', false);
+    $('#exportxls').prop('disabled', false);
+  }
+
+  getTotalQty();
+  getTotalCost();
+}
+
+function handleRemoveDevices(boxes_ids, tradein_ids, boxes) {
+  var boxids = Object.keys(boxes_ids);
+  var number_of_devices = Object.values(boxes_ids);
+  var boxedTradeinTable = $('#boxed-tradeins').DataTable();
+  var addedTradeinTable = $('#added-tradeins-building-lot').DataTable();
+  var bayedBoxesTable = $('#bayed-boxes').DataTable();
+
+  for (var i = 0; i < tradein_ids.length; i++) {
+    var row = '<input class="boxed_tradeins" type="checkbox" id="tradein_"' + tradein_ids[i].id + '" data-id="' + tradein_ids[i].id + '">';
+    boxedTradeinTable.row.add([tradein_ids[i].barcode, tradein_ids[i].tray_name, tradein_ids[i].customer_grade, tradein_ids[i].bamboo_grade, tradein_ids[i].product_name, tradein_ids[i].device_memory, tradein_ids[i].device_network, tradein_ids[i].device_colour, '£' + tradein_ids[i].device_cost, row]).node().id = tradein_ids[i].id;
+    boxedTradeinTable.draw(false);
+    addedTradeinTable.row('#' + tradein_ids[i].id).remove().draw(false);
+  }
+
+  for (var i = 0; i < boxes.length; i++) {
+    if (bayedBoxesTable.row('#' + boxes[i].id).length > 0) {
+      rowdata = bayedBoxesTable.row('#' + boxes[i].id).data();
+      rowdata[3] -= number_of_devices[i];
+      bayedBoxesTable.row('#' + boxes[i].id).data(rowdata).draw(false);
+    } else {
+      var row = '<input class="bayed_boxes" type="checkbox" id="box_"' + boxes[i].id + '" data-id="' + boxes[i].id + '">';
+      bayedBoxesTable.row.add([boxes[i].tray_name, boxes[i].tray_grade, boxes[i].tray_network, boxes[i].number_of_devices - number_of_devices[i], boxes[i].number_of_devices, '£' + boxes[i].total_cost, row]).node().id = boxes[i].id;
+      bayedBoxesTable.draw(false);
+    }
+  }
+
+  $('#removefromlot').prop('disabled', true);
+  handleRightButtons();
+}
+
+function getTotalQty() {
+  var table = $('#added-tradeins-building-lot').DataTable();
+  $('#total_qty').html(table.data().count() / 6);
+}
+
+function getTotalCost() {
+  var table = $('#added-tradeins-building-lot').DataTable();
+  $('#total_cost').html('£' + table.column(4).data().sum());
+}
+
 /***/ }),
 
 /***/ "./resources/js/scripts/saleslot/CompletedSalesLot.js":
@@ -58867,7 +58979,274 @@ function handleLeftBoxes(boxes) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+$(document).ready(function () {
+  if (document.getElementById('completed-sales-lots-table')) {
+    $('#completed-sales-lots-table tfoot td').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    var completedSalesLotTable = $('#completed-sales-lots-table').DataTable({
+      "oLanguage": {
+        "sInfo": "Showing _START_ to _END_"
+      },
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "pageLength": -1,
+      "ordering": false,
+      paging: false,
+      info: false
+    });
+    completedSalesLotTable.columns().every(function () {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+        if (that.search() !== this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
+  }
+
+  if (document.getElementById('saleslot-table')) {
+    $('#saleslot-table tfoot td').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    var boxsummarytable = $('#saleslot-table').DataTable({
+      "oLanguage": {
+        "sInfo": "Showing _START_ to _END_"
+      },
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "pageLength": -1
+    });
+    boxsummarytable.columns().every(function () {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+        if (that.search() !== this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
+  }
+
+  if (document.getElementById('salelotcontent')) {
+    $('#salelotcontent tfoot td').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    var salelotcontenttable = $('#salelotcontent').DataTable({
+      "oLanguage": {
+        "sInfo": "Showing _START_ to _END_"
+      },
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "pageLength": -1
+    });
+    salelotcontenttable.columns().every(function () {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+        if (that.search() !== this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
+  }
+});
+$('.saleslots').on('click', function () {
+  $('.saleslots').each(function () {
+    $(this).removeClass('saleslot-active');
+  });
+  $(this).addClass('saleslot-active');
+
+  switch ($(this).data('status')) {
+    case 1:
+      $('#view-sales-lot-btn').prop('disabled', false);
+      $('#edit-lot-btn').prop('disabled', false);
+      $('#sell-lot-btn').prop('disabled', false);
+      break;
+
+    case 2:
+      $('#view-sales-lot-btn').prop('disabled', false);
+      $('#edit-lot-btn').prop('disabled', true);
+      $('#sell-lot-btn').prop('disabled', true);
+      $('#payment-received-btn').prop('disabled', true);
+      break;
+
+    case 3:
+      $('#view-sales-lot-btn').prop('disabled', false);
+      $('#edit-lot-btn').prop('disabled', true);
+      $('#sell-lot-btn').prop('disabled', true);
+      $('#payment-received-btn').prop('disabled', false);
+
+    case 4:
+    case 5:
+  }
+
+  $('#sales-export-btn').prop('disabled', false);
+  $('#ism-pre-alert').prop('disabled', false);
+});
+$('#view-sales-lot-btn').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+  window.open('/portal/sales-lot/completed-sales-lot/view-lot/' + selectedid, '_self');
+});
+$('#edit-lot-btn').on('click', function () {
+  alert("Currently disabled");
+});
+$('#sell-lot-btn').on('click', function () {
+  $('#salelot-action').modal('show');
+  var selectedid = $('.saleslot-active').attr('id');
+  var selectedquantity = $('.saleslot-active td:nth-child(3) > div:nth-child(1)').html(); //console.log(selectedquantity);
+
+  $('#salelot-action #salelot-number').html(selectedid);
+  $('#salelot-action #salelot-number-value').val(selectedid);
+  $('#salelot-action #device-qty').html(selectedquantity);
+});
+$('#payment-received-btn').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+
+  if (confirm("Do you want to mark Lot " + selectedid + " as 'Payment Recieved?")) {
+    // Save it!
+    $.ajax({
+      type: "POST",
+      url: "/portal/sales-lot/completed-sales-lot/markaspaymentrecieved",
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data: {
+        lot_id: selectedid
+      },
+      success: function success(data) {
+        if (data.success) {
+          if (data.success === 200) {
+            window.location.reload();
+          }
+        }
+
+        location.reload();
+      },
+      error: function error(data) {
+        alert(data.responseText);
+      }
+    });
+  }
+});
+$('#sales-export-btn').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+  window.open("/portal/sales-lot/completed-sales-lot/clientsalesexport/" + selectedid);
+});
+$('#ism-pre-alert').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+  window.open("/portal/sales-lot/completed-sales-lot/ismprealert/" + selectedid);
+});
+$('#export-xls-data').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+  window.open("/portal/sales-lot/completed-sales-lot/exportxls/" + selectedid);
+}); //picking despatch
+
+$('.salelotlist_picking').on('click', function () {
+  if ($(this).hasClass('salelotlist_picking_active')) {
+    $(this).removeClass('salelotlist_picking_active');
+  } else {
+    $('.saleslotpicking').each(function () {
+      $(this).stop(false, false);
+      $(this).removeClass('salelotlist_picking_active');
+    });
+    $(this).toggleClass('salelotlist_picking_active');
+  }
+
+  if ($(this).hasClass('salelotlist_picking_active')) {
+    $('#starttopicklot').prop('disabled', false);
+  } else {
+    $('#starttopicklot').prop('disabled', true);
+  }
+
+  if ($(this).hasClass('salelotlist_picking_active')) {
+    $('#printpicknote').prop('disabled', false);
+  } else {
+    $('#starttopicklot').prop('disabled', true);
+  }
+
+  if ($(this).hasClass('salelotlist_picking_active')) {
+    $('#despatchpickingsaleslot').prop('disabled', false);
+  } else {
+    $('#despatchpickingsaleslot').prop('disabled', true);
+  }
+
+  var id = $(this).prop('id');
+  fetchSaleLotData(id);
+});
+$('#starttopicklot').on('click', function () {
+  var status = $('.saleslot-active').data('status');
+  var id = $('.saleslot-active').prop('id');
+
+  if (status === 2 || status === 6) {
+    window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');
+  } else {
+    alert("This lot cannot be picked yet.");
+  }
+});
+$('#printpicknote').on('click', function () {
+  var id = $('.saleslot-active').prop('id');
+  window.open('/portal/warehouse-management/picking-despatch/print-pick-note/' + id, '_blank');
+});
+$('#despatchpickingsaleslot').on('click', function () {
+  var c = confirm("Are you sure you want to mark " + $('.tagfordespatch:checked').length + " sale lot as despatched?");
+
+  if (c) {
+    var _$$ajax;
+
+    var salesLotIds = [];
+    $('.tagfordespatch:checked').each(function () {
+      var salelotid = $(this).data('value');
+      salesLotIds.push(salelotid);
+    });
+    $.ajax((_$$ajax = {
+      url: "/portal/warehouse-management/picking-despatch/pick-lot/despatch-picking",
+      type: "POST",
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data: {
+        salesLotIds: salesLotIds
+      }
+    }, _defineProperty(_$$ajax, "headers", {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }), _defineProperty(_$$ajax, "success", function success(response) {
+      location.reload();
+    }), _$$ajax));
+  }
+});
+
+function fetchSaleLotData(id) {
+  $.ajax({
+    url: "/portal/warehouse-management/picking-despatch/getsalelotdata/" + id,
+    type: "GET",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(response) {
+      var salelotcontent = $('#salelotcontent').DataTable();
+      $('#salelotcontent tfoot td').each(function () {
+        var title = $(this).text();
+        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+      });
+      salelotcontent.columns().every(function () {
+        var that = this;
+        $('input', this.footer()).on('keyup change', function () {
+          if (that.search() !== this.value) {
+            that.search(this.value).draw();
+          }
+        });
+      });
+
+      for (var i = 1; i < response.length; i++) {
+        salelotcontent.row.add(response[i]).draw(true);
+      }
+    },
+    error: function error(response) {
+      alert('Something went wrong. Please try again.');
+    }
+  });
+}
 
 /***/ }),
 

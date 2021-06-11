@@ -17,47 +17,7 @@
         @endif      
 
         <div class="row">
-
-            <div class="col-md-6">
-                <table class="portal-table" id="saleslot-table">
-                    <thead>
-                        <tr>
-                            <td><div class="table-element">Lot Ref No.</div></td>
-                            <td><div class="table-element">Date raised</div></td>
-                            <td><div class="table-element">Sold to</div></td>
-                            <td><div class="table-element">Status</div></td>
-                            <td><div class="table-element">Suspended</div></td>
-                            <td><div class="table-element">Qty</div></td>
-                            <td><div class="table-element">Tag Box</div></td>
-                        </tr>
-                    </thead>
-                    <tfoot>
-                        <tr>
-                            <td><div class="table-element">Lot Ref No.</div></td>
-                            <td><div class="table-element">Date raised</div></td>
-                            <td><div class="table-element">Sold to</div></td>
-                            <td><div class="table-element">Status</div></td>
-                            <td><div class="table-element">Suspended</div></td>
-                            <td><div class="table-element">Qty</div></td>
-                            <td><div class="table-element">Tag Box</div></td>
-                        </tr>
-                    </tfoot>
-                    <tbody>
-                        @foreach ($salesLots as $salesLot)
-                        <tr class="saleslotpicking" id="{{$salesLot->id}}" data-status="{{$salesLot->sales_lot_status}}">
-                            <td><div class="table-element">{{$salesLot->id}}</div></td>
-                            <td><div class="table-element">{{$salesLot->created_at}}</div></td>
-                            <td><div class="table-element">{{$salesLot->getCustomerName()}}</div></td>
-                            <td><div class="table-element" id="saleslotstatus{{$salesLot->id}}" data-value="{{$salesLot->sales_lot_status}}">{{$salesLot->getStatus($salesLot->sales_lot_status)}}</div></td>
-                            <td><div class="table-element" data-value="{{$salesLot->sales_lot_status}}">@if($salesLot->sales_lot_status === 6) Yes @else No @endif</div></td>
-                            <td><div class="table-element">{{$salesLot->getSalesLotQuantity()}}</div></td>
-                            <td><div class="table-element">@if($salesLot->sales_lot_status === 4 || $salesLot->sales_lot_status === 2 || $salesLot->sales_lot_status == 6) <input type="checkbox" data-value="{{$salesLot->id}}"  class="tagfordespatch"> @endif</div></td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
+            <div class="col-md-6"></div>
             <div class="col-md-6">
                 <div class="row mb-5">
                     <div class="col-md-3">
@@ -70,9 +30,67 @@
                         <button type="submit" id="printpicknote" class="btn btn-primary btn-blue mx-auto w-100" disabled>Print Pick Note</button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <table class="sales-lot-table" id="saleslot-table">
+                    <thead>
+                        <tr>
+                            <td><div class="table-element">Lot Ref No.</div></td>
+                            <td><div class="table-element">Date raised</div></td>
+                            <td><div class="table-element">Sold to</div></td>
+                            <td><div class="table-element">Status</div></td>
+                            <td><div class="table-element">Suspended</div></td>
+                            <td><div class="table-element">Qty</div></td>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td><div class="table-element">Lot Ref No.</div></td>
+                            <td><div class="table-element">Date raised</div></td>
+                            <td><div class="table-element">Sold to</div></td>
+                            <td><div class="table-element">Status</div></td>
+                            <td><div class="table-element">Suspended</div></td>
+                            <td><div class="table-element">Qty</div></td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach ($salesLots as $salesLot)
+                        <tr class="salelotlist_picking" id="{{$salesLot->id}}" data-status="{{$salesLot->sales_lot_status}}">
+                            <td><div class="table-element">{{$salesLot->id}}</div></td>
+                            <td><div class="table-element">{{$salesLot->created_at}}</div></td>
+                            <td><div class="table-element">{{$salesLot->getCustomerName()}}</div></td>
+                            <td><div class="table-element" id="saleslotstatus{{$salesLot->id}}" data-value="{{$salesLot->sales_lot_status}}">{{$salesLot->getStatus($salesLot->sales_lot_status)}}</div></td>
+                            <td><div class="table-element" data-value="{{$salesLot->sales_lot_status}}">@if($salesLot->sales_lot_status === 6) Yes @else No @endif</div></td>
+                            <td><div class="table-element">{{$salesLot->getSalesLotQuantity()}}</div></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-6">
 
                 <div class="row" id="salelotcontent-table-container">
-
+                    <table class="sales-lot-table" id="salelotcontent">
+                        <thead>
+                            <td>Lot Number</td>
+                            <td>Box Number</td>
+                            <td>Bay Location</td>
+                            <td>QTY</td>
+                        </thead>
+                        <tfoot>
+                            <td>Lot Number</td>
+                            <td>Box Number</td>
+                            <td>Bay Location</td>
+                            <td>QTY</td>
+                        </tfoot>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
 
             </div>

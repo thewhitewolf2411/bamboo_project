@@ -710,9 +710,26 @@ input[type=number] {
     display: block;
 }
 
+.saleslots:hover{
+    cursor: pointer;
+}
+
 .saleslot-active{
     background-color: #d4edda !important;
     color: #155724;
+}
+
+.salelotlist_picking{
+    cursor: pointer;
+}
+
+.salelotlist_picking_active{
+    background-color: #d4edda !important;
+    color: #155724;
+}
+
+.dataTables_wrapper{
+    width: 100% !important;
 }
 
 .table-element > input{

@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Eloquent\SalesLot;
+use App\Eloquent\SalesLotContent;
 use App\Eloquent\Tradein;
 use App\Eloquent\Tray;
 use App\Eloquent\TrayContent;
@@ -34,6 +36,34 @@ class BuildingLotService{
         return $result;
     }
 
+    public static function createLot(array $data){
+
+        $result = null;
+
+        if(array_key_exists("addedTradeins", $data)){
+            $result = self::createNewLot($data["addedTradeins"]);
+        }
+
+        return $result;
+    }
+
+    private static function createNewLot($tradein_ids){
+        $tradeins = Tradein::find($tradein_ids);
+
+        $salelot = SalesLot::create([
+            'sales_lot_status'=>1,
+        ]);
+
+        foreach($tradeins as $tradein){
+            SalesLotContent::create([
+                'sales_lot_id'=>$salelot->id,
+                'box_id'=>$tradein->getTrayId(),
+                'device_id'=>$tradein->id
+            ]);
+        }
+
+        return true;
+    }
 
     private static function addTradeins($tradein_ids){
         #dd($tradein_ids);
@@ -86,7 +116,109 @@ class BuildingLotService{
     }
 
     private static function removeTradeins($tradein_ids){
-        dd($tradein_ids);
+        $tradeins = Tradein::find($tradein_ids);
+
+        $selectedBoxesids = [];
+        $selectedTradeins = [];
+        $selectedBoxes = [];
+        
+        foreach($tradeins as $tradein){
+            if(array_key_exists($tradein->getTrayid(), $selectedBoxesids)){
+                $selectedBoxesids[$tradein->getTrayId()] = $selectedBoxesids[$tradein->getTrayId()] + 1;
+            }
+            else{
+                $selectedBoxesids[$tradein->getTrayId()] = 1;
+            }
+        }
+
+        foreach($tradeins as $tradein){
+            $tradein->tray_name = $tradein->getTrayName($tradein->id);
+            $tradein->bamboo_grade = $tradein->getDeviceBambooGrade();
+            $tradein->product_name = $tradein->getProductName();
+            $tradein->device_memory = $tradein->getDeviceMemory();
+            $tradein->device_network = $tradein->getDeviceNetwork();
+            $tradein->device_colour = $tradein->getDeviceColour();
+            $tradein->device_cost = $tradein->getDeviceCost();
+            #$returnTradeins->push($tradein);
+
+            array_push($selectedTradeins, $tradein);
+        }
+
+        $boxes = Tray::find(array_keys($selectedBoxesids));
+
+        foreach($boxes as $box){
+            if($box->isInBay() && $box->getNumberOfDevicesInSaleLot() < $box->max_number_of_devices){
+                $box->number_of_devices = $box->getNumberOfDevices();
+                $box->total_cost = $box->getBoxPrice();
+                $box->added_qty = $box->getNumberOfDevices() - $box->getNumberOfDevicesInSaleLot();
+                array_push($selectedBoxes, $box);
+            }
+        }
+        
+
+        return [$selectedBoxesids, $selectedTradeins, $selectedBoxes];
+    }
+
+    public static function generateXls(array $data){
+        if(array_key_exists("addedTradeins", $data)){
+            $rows = [
+                ['Trade-in Barcode Number', 'Box Number', 'Customer Grade', 'Bamboo Grade', 'Manufacturer/Model', 'GB Size', 'Network', 'Colour', 'Cost']
+            ];
+
+            $tradeins = Tradein::find($data['addedTradeins']);
+
+            foreach($tradeins as $tradein){
+                array_push($rows, [
+                    $tradein->barcode,
+                    $tradein->getTrayName($tradein->id),
+                    $tradein->customer_grade,
+                    $tradein->getDeviceBambooGrade(),
+                    $tradein->getProductName(),
+                    $tradein->getDeviceMemory(),
+                    $tradein->getDeviceNetwork(),
+                    $tradein->getDeviceColour(),
+                    '£'.$tradein->getDeviceCost()
+                    ]);
+            }
+
+            $filename = 'build_lot_xls_' . \Carbon\Carbon::now()->format('Y_m_d_h_i');
+            $csv = fopen("php://output", 'w');
+    
+            $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+            $sheet->fromArray($rows, null, 'A1');
+
+            #return '/reports/overview/' . $filename;
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+            header('Cache-Control: max-age=0');
+
+            
+            if(!is_dir(public_path() . '/tmp/')){
+                mkdir(public_path() . '/tmp/', 0777, true);
+            }
+
+            $filePath = public_path() . '/tmp/' . $filename . '.xlsx';
+
+            $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+            $writer->save($filePath);
+
+            return '/tmp/' . $filename . '.xlsx';
+            
+            exit;
+
+        }
+
+    }
+
+    public static function getSaleLotData($salelot_id){
+        $salelot = SalesLot::find($salelot_id);
+        $saleLotContent = SalesLotContent::where('sales_lot_id', $salelot_id)->get();
+        
+        
+        $returnData = [];
+
+
     }
 
 }

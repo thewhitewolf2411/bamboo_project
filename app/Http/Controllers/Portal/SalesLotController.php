@@ -379,7 +379,6 @@ class SalesLotController extends Controller
     }
 
 
-
     //building sales lot
     public function buildSalesLot(Request $request){
 
@@ -394,6 +393,14 @@ class SalesLotController extends Controller
         return response()->json($result);
     }
 
+    public function buildingSalesLotGenerateXls(Request $request){
+        $xls = BuildingLotService::generateXls($request->all());
+
+        $response = ['url'=>$xls];
+
+        return $response;
+    }
+
     public function getBoxes(){
 
         $returnBoxes = collect();
@@ -401,9 +408,10 @@ class SalesLotController extends Controller
         $boxes = Tray::where('tray_type', 'Bo')->where('status', 3)->get();
 
         foreach($boxes as $box){
-            if($box->isInBay() && $box->getNumberOfDevicesInSaleLot() === 0){
+            if($box->isInBay() && $box->getNumberOfDevicesInSaleLot() < $box->max_number_of_devices){
                 $box->number_of_devices = $box->getNumberOfDevices();
                 $box->total_cost = $box->getBoxPrice();
+                $box->added_qty = $box->getNumberOfDevices() - $box->getNumberOfDevicesInSaleLot();
                 $returnBoxes->push($box);
             }
         }
@@ -433,5 +441,11 @@ class SalesLotController extends Controller
         }
 
         return $returnTradeins;
+    }
+
+    public function createLot(Request $request){
+        $result = BuildingLotService::createLot($request->all());
+
+        return $result;
     }
 }
