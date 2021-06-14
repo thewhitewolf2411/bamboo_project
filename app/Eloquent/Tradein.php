@@ -44,7 +44,7 @@ class Tradein extends Model
         'correct_memory','correct_network', 'product_colour', 'missing_image', 'imei_number', 'serial_number',
         'quarantine_reason', 'quarantine_date', 'offer_accepted', 'cosmetic_condition', 'cheque_number', 'tracking_reference', 
         'expiry_date', 'location_changed_at', 'trade_pack_send_by_customer', 'carriage_cost', 'admin_cost', 'misc_cost', 'pin_pattern_number',
-        'fmip', 'pin_locked', 'blacklisted'
+        'fmip', 'pin_locked', 'blacklisted', 'fully_functional'
     ];
 
 
@@ -186,19 +186,6 @@ class Tradein extends Model
         $trayid = TrayContent::where('trade_in_id', $id)->first();
 
         if($trayid !== null && TrayContent::where('trade_in_id', $id)->first()->tray_id !== 0){
-            /*if($trayid->pseudo_tray_id !== null){
-                $trayid = $trayid->pseudo_tray_id;
-                $tray = Tray::where('id', $trayid)->first();
-                /*if($tray->trolley_id !== null){
-                    $trolley = Trolley::where('id', $tray->trolley_id)->first();
-                    if($trolley->trolley_type === "B" || $trolley->trolley_type === "Bay"){
-                        return $trolley->trolley_name . " / " . $tray->tray_name;
-                    }
-                }
-                $trayname = $tray->tray_name;
-
-                return $trayname;
-            }*/
             $trayid = $trayid->tray_id;
             $tray = Tray::where('id', $trayid)->first();
 
@@ -227,6 +214,14 @@ class Tradein extends Model
 
     }
 
+    public function getBoxName(){
+        if($this->isBoxed()){
+            return $this->getTrayName($this->id);
+        }
+        
+        return 'N/A';
+    }
+
     public function getBayName(){
         $boxid = TrayContent::where('trade_in_id', $this->id)->first();
         if($boxid !== null){
@@ -242,6 +237,24 @@ class Tradein extends Model
         }
         else{
             return "Not in a box yet.";
+        }
+    }
+
+    public function getStockLocation(){
+        $trayid = TrayContent::where('trade_in_id', $this->id)->first();
+
+        if($trayid !== null && TrayContent::where('trade_in_id', $this->id)->first()->tray_id !== 0){
+            $trayid = $trayid->tray_id;
+            $tray = Tray::where('id', $trayid)->first();
+
+            if($tray->trolley_id !== null){
+                $trolley = Trolley::where('id', $tray->trolley_id)->first();
+                if($trolley->trolley_type === "B" || $trolley->trolley_type === "Bay"){
+                    //return $trolley->trolley_name;
+                    return $tray->tray_name;
+                }
+            }
+            return '';
         }
     }
 
@@ -308,6 +321,30 @@ class Tradein extends Model
         return false;
     }
 
+    public function quarantineReason(){
+
+        if($this->isInQuarantine()){
+            if($this->isGoogleLocked()){
+                return "Google/FMIP Locked";
+            }
+    
+            if($this->isPinLocked()){
+                return "Pin Locked";
+            }
+    
+            if($this->isBlacklisted()){
+                return $this->getBlacklistedIssue();
+            }
+    
+            if($this->isDowngraded()){
+                return "Downgraded";
+            }
+
+        }
+
+        return "N/A";
+    }
+
     public function getTestingQuarantineReason(){
         return $this->getDeviceStatus()[0];
     }
@@ -348,6 +385,17 @@ class Tradein extends Model
         return false;
     }
 
+    public function canBeDespatched(){
+        if(in_array($this->job_state, ['2', '3', '4', '5', '6', '7', '8a', '8b', '8c', '8d', '8e', '8f',
+                                        '9','10','11','11a','11b','11c','11d','11e','11f','11g','11h','11i',
+                                        '11j','12','13','14','15','15a','15b','15c','15d','15e','15f','15g',
+                                        '15h','15i','15j','16','17','18','22','23','24','25','26','27'
+        ])){
+            return true;
+        }
+        return false;
+    }
+
     public function deviceLocked(){
         if($this->correct_network === 'unlocked'){
             return false;
@@ -376,25 +424,9 @@ class Tradein extends Model
         return false;
     }
 
-    public function isFullyFunctional(){
-        $matches = ["11e", "15e", "11i", "15i"];
-
-        if(in_array($this->job_state, $matches)){
-            return false;
-        }
-        return true;
-    }
 
     public function fullyFunctional(){
-        $receivingStates = ["1", "2", "3", "4", "5", "6", "7", "8a", "8b", "8c", "8d", "8e", "8f", "9", "9a"];
-        if(in_array($this->job_state, $receivingStates)){
-            return 'N/A';
-        }
-        $quarantineStates = ["11e", "15e", "11i", "15i"];
-        if(in_array($this->job_state, $quarantineStates)){
-            return 'No';
-        }
-        return 'Yes';
+        return $this->fully_functional;
     }
 
     public function isFimpLocked(){
@@ -937,11 +969,17 @@ class Tradein extends Model
     }
 
     public function getDevicePrice(){
-        if($this->bamboo_price > $this->order_price){
+        /*if($this->bamboo_price > $this->order_price){
             return $this->order_price;
         }
 
-        return $this->bamboo_price;
+        return $this->bamboo_price;*/
+
+        if($this->bamboo_price){
+            return $this->bamboo_price;
+        }
+
+        return $this->order_price;
     }
 
     public function paymentFailed(){
@@ -1075,28 +1113,27 @@ class Tradein extends Model
         return $this->getDevicePrice() + $this->carriage_cost + $this->admin_cost + $this->misc_cost;
     }
 
+    public function getDeviceMiscCost(){
+        if($this->misc_cost){
+            return $this->misc_cost;
+        }
+        return 0;
+    }
+
     public function getDatePassed(){
-        $paymentBatchDevice = PaymentBatchDevice::where('tradein_id', $this->id)->first();
+        $tradeinauditTested = TradeinAudit::where('tradein_id', $this->id)->where('bamboo_status', 'Test Complete')->first();
 
-        $datework = Carbon::parse($paymentBatchDevice->updated_at);
-        $now = Carbon::now();
+        $datePassed = \Carbon\Carbon::parse($tradeinauditTested->created_at)->format('Y-M-D');
 
-        $dateTimeService = new DateTimeService();
-        $difference = $dateTimeService->timeDifference($datework, $now);
-
-        return $difference;
+        return $datePassed;
     }
 
     public function getTimePassed(){
-        $paymentBatchDevice = PaymentBatchDevice::where('tradein_id', $this->id)->first();
+        $tradeinauditTested = TradeinAudit::where('tradein_id', $this->id)->where('bamboo_status', 'Test Complete')->first();
 
-        $datework = Carbon::parse($paymentBatchDevice->updated_at);
-        $now = Carbon::now();
+        $datePassed = \Carbon\Carbon::parse($tradeinauditTested->created_at)->format('h-m-i');
 
-        $dateTimeService = new DateTimeService();
-        $difference = $dateTimeService->timeDifference($datework, $now);
-
-        return $difference;
+        return $datePassed;
     }
 
     public function getDatePaid(){

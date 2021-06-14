@@ -26,15 +26,16 @@
 
     </div>
 
+    <div id="receiving-modal-container">
     @foreach($tradeins as $tradein)
 
-        <div id="tradein-{{$tradein->id}}" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
+        <div id="tradein-{{$tradein->id}}" class="receiving-modal modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Proceess Tradein: {{$tradein->barcode}}</h5>
+                    <h5 class="modal-title">Proccess Tradein: {{$tradein->barcode}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true" style="color: #000">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -184,5 +185,7 @@
         </div>
     
     @endforeach
+
+    </div>
     
 @endsection

@@ -150,6 +150,20 @@
             </button>
         </div>
         <div class="modal-body p-5">
+            @if(Session::has('error'))
+            <div class="alert alert-danger" role="alert">
+                {{Session::get('error')}}
+    
+                @if(Session::has('notallocated'))
+                Barcode numbers of the devices that hasn't been allocated to new trays:
+                <ul>
+                    @foreach(Session::get('notallocated') as $notAssigned)
+                        <li>{{$notAssigned}}</li>
+                    @endforeach
+                </ul>
+                @endif
+            </div>
+            @endif
 
             <form action="/portal/quarantine/return-to-customer" method="POST">
                 @csrf

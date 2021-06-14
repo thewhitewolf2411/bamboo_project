@@ -587,6 +587,7 @@ class WarehouseManagementController extends Controller
     }
 
     public function deleteBay(Request $request){
+
         $bay = Trolley::where('trolley_name', $request->bayname)->first();
         $bay->delete();
 
@@ -878,58 +879,31 @@ class WarehouseManagementController extends Controller
 
         #dd($request->all());
 
-        foreach($request->salesLotIds as $salelotid){
-            $salesLot = SalesLot::where('id', $salelotid)->first();
 
-            $salesLot->sales_lot_status = 5;
-            $salesLot->save();
-    
-            $salesLotContentBoxes = SalesLotContent::where('sales_lot_id', $salelotid)->where('device_id', null)->get();
-            $salesLotContentDevices = SalesLotContent::where('sales_lot_id', $salelotid)->where('box_id', null)->get();
-    
-            foreach($salesLotContentBoxes as $sLCB){
-                $box = Tray::where('id', $sLCB->box_id)->first();
-                $boxContent = TrayContent::where('tray_id', $box->id)->get();
-    
-                foreach($boxContent as $bC){
-                    $tradein = Tradein::where('id', $bC->trade_in_id)->first();
-                    
-                    SoldTradeIns::create([
-                        'device_barcode'=>$tradein->barcode,
-                        'user_id'=>$tradein->user_id,
-                        'product_id'=>$tradein->product_id,
-                        'sales_lot_id'=>$salesLot->id,
-                        'bamboo_price'=>$tradein->bamboo_price,
-                        'bamboo_grade'=>$tradein->bamboo_grade,
-                        'cosmetic_condition'=>$tradein->cosmetic_condition,
-                        'sold_to'=>$salesLot->sold_to
-                    ]);
-    
-                    //$tradein->delete();
-                }
-                //$box->delete();
-            }
-    
-            foreach($salesLotContentDevices as $sLCD){
-                $device = Tradein::where('id', $sLCD->device_id)->first();
-    
-                SoldTradeIns::create([
-                    'device_barcode'=>$tradein->barcode,
-                    'user_id'=>$tradein->user_id,
-                    'product_id'=>$tradein->product_id,
-                    'sales_lot_id'=>$salesLot->id,
-                    'bamboo_price'=>$tradein->bamboo_price,
-                    'bamboo_grade'=>$tradein->bamboo_grade,
-                    'cosmetic_condition'=>$tradein->cosmetic_condition,
-                    'sold_to'=>$salesLot->sold_to
-                ]);
-    
-                //$device->delete();
-            }
-    
+        $salesLot = SalesLot::where('id', $request->salesLotId)->first();
+
+        $salesLot->sales_lot_status = 5;
+        $salesLot->save();
+
+        $salesLotContentDevices = SalesLotContent::where('sales_lot_id', $request->salesLotId)->where('box_id', null)->get();
+
+        foreach($salesLotContentDevices as $sLCD){
+            $device = Tradein::where('id', $sLCD->device_id)->first();
+
+            SoldTradeIns::create([
+                'device_barcode'=>$device->barcode,
+                'user_id'=>$device->user_id,
+                'product_id'=>$device->product_id,
+                'sales_lot_id'=>$salesLot->id,
+                'bamboo_price'=>$device->bamboo_price,
+                'bamboo_grade'=>$device->bamboo_grade,
+                'cosmetic_condition'=>$device->cosmetic_condition,
+                'sold_to'=>$salesLot->sold_to
+            ]);
+            //$device->delete();
         }
-
-
+    
+        
         return response('', 200);
     }
 

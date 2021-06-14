@@ -66,7 +66,7 @@
                     <td><div class="table-element">{{$tradein->correct_network ?? null ?: 'N/A'}}</div></td>
                     <td><div class="table-element">{{$tradein->product_colour ?? null ?: 'N/A'}}</div></td>
                     <td><div class="table-element">{{$tradein->imei_number ?? null ?: $tradein->serial_number}}</div></td>
-                    <td><div class="table-element">£{{$tradein->bamboo_price ?? null ?: 'N/A'}}</div></td>
+                    <td><div class="table-element">£{{$tradein->getDeviceCost() ?? null ?: 'N/A'}}</div></td>
                 </tr>
                 @endforeach
             </tbody>

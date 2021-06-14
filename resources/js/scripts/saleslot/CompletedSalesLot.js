@@ -257,19 +257,11 @@ $('#printpicknote').on('click', function(){
 $('#despatchpickingsaleslot').on('click', function(){
 
 
-    var c = confirm("Are you sure you want to mark " + $('.tagfordespatch:checked').length + " sale lot as despatched?");
+    var c = confirm("Are you sure you want to mark " + '' + " sale lot as despatched?");
 
     if(c){
 
-        var salesLotIds = [];
-
-        $('.tagfordespatch:checked').each(function(){
-
-            var salelotid = $(this).data('value');
-
-            salesLotIds.push(salelotid);
-
-        });
+        salesLotId = $('.salelotlist_picking_active').prop('id');
 
         $.ajax({
             url: "/portal/warehouse-management/picking-despatch/pick-lot/despatch-picking",
@@ -278,7 +270,7 @@ $('#despatchpickingsaleslot').on('click', function(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             data:{
-                salesLotIds:salesLotIds,
+                salesLotId:salesLotId,
             },
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -320,8 +312,9 @@ function fetchSaleLotData(id){
                 } );
             });
 
+            salelotcontent.clear().draw(true);
+
             for(var i = 0; i < response.length; i++){
-                console.log(response[i]);
                 salelotcontent.row.add(response[i]).draw(true);
             }
 

@@ -351,6 +351,8 @@ function setBoxedTradeinsDataTable(tradeins){
             }
         } );
     });
+
+    hideLoader();
 }
 
 function hideLeftTradeins(ids){
@@ -501,4 +503,9 @@ function getTotalCost(){
     var table = $('#added-tradeins-building-lot').DataTable();
 
     $('#total_cost').html( '£' + table.column(4).data().sum());
+}
+
+function hideLoader(){
+    $('#sales-lot-loader').addClass('invisible');
+    $('#sales-lot-content').removeClass('hidden');
 }

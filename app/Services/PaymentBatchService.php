@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Eloquent\AdditionalCosts;
 use App\Eloquent\Payment\PaymentBatch;
 use App\Eloquent\Payment\PaymentBatchDevice;
 use App\Eloquent\Payment\UserBankDetails;
@@ -79,6 +80,25 @@ class PaymentBatchService {
             foreach($payment_batch_devices as $payment_batch_device){
             
                 $tradein = Tradein::find($payment_batch_device->tradein_id);
+
+                $additionalCost = AdditionalCosts::where('id','>', 1)->first();
+
+                if($additionalCost){
+                    if($additionalCost->applied_to * $additionalCost->per_job_deduction >= $additionalCost->miscellaneous_costs){
+                        $additionalCost = AdditionalCosts::find($additionalCost->id+1);
+                    }
+                }
+
+                if($additionalCost){
+                    $tradein->misc_cost = $additionalCost->per_job_deduction;
+                    $additionalCost->applied_to += 1;
+                    $additionalCost->save();
+                }
+                else{
+                    $tradein->misc_cost = 0;
+                }
+
+
                 $user = User::find($tradein->user_id);
     
                 // choose csv preset for payment type
@@ -152,6 +172,8 @@ class PaymentBatchService {
                     ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,";
                 
                 array_push($payment_rows, $payment_row);
+
+                $tradein->save();
             }
             
             $payment_batch->exported = true;

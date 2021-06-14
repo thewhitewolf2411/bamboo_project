@@ -8,7 +8,12 @@
             <p>Building Sales Lot</p>
         </div>
     </div>
-    <div class="portal-table-container p-0">
+
+    <div class="loader" id="sales-lot-loader">
+            
+    </div>
+
+    <div class="portal-table-container p-0 hidden" id="sales-lot-content">
 
         <div class="d-flex flex-column">
 
@@ -29,7 +34,6 @@
 
         <div class="row">
 
-            
             <div class="col-md-6">
 
                 <div class="d-flex">
@@ -77,22 +81,7 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        {{--@foreach ($tradeins as $tradein)
-                            @if($tradein->isBoxed() && !$tradein->isPartOfSalesLot())
-                            <tr>
-                                <td>{{$tradein->barcode}}</td>
-                                <td>{{$tradein->getTrayName($tradein->id)}}</td>
-                                <td>{{$tradein->customer_grade}}</td>
-                                <td>{{$tradein->getDeviceBambooGrade()}}</td>
-                                <td>{{$tradein->getProductName()}}</td>
-                                <td>{{$tradein->getDeviceMemory()}}</td>
-                                <td>{{$tradein->getDeviceNetwork()}}</td>
-                                <td>{{$tradein->getDeviceColour()}}</td>
-                                <td>£{{$tradein->getDeviceCost()}}</td>
-                                <td><input class="boxed_tradeins" type="checkbox" id="tradein_{{$tradein->id}}" data-id="{{$tradein->id}}"></td>
-                            </tr>
-                            @endif
-                        @endforeach--}}
+
                     </tbody>
                 </table>
 

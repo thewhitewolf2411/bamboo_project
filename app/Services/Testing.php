@@ -31,6 +31,8 @@ class Testing{
         $user = User::where('id', $tradein->user_id)->first();
 
         if($request->device_fully_functional === 'false'){
+
+            $tradein->fully_functional = 'No';
             
             $testingFaults = new TestingFaults();
             $testingFaults->tradein_id = $request->tradein_id;
@@ -84,6 +86,9 @@ class Testing{
             }
 
             $testingFaults->save();
+        }
+        else{
+            $tradein->fully_functional = 'Yes';
         }
 
         if($request->pin_lock === "true"){

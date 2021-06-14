@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Eloquent\AdditionalCosts;
 use App\Eloquent\ImeiResult;
 use App\Eloquent\Tradein;
 use App\Eloquent\SellingProduct;
@@ -218,6 +219,11 @@ class ReceivingService{
         if($tradein->barcode == $tradein->barcode_original){
             $tradein->barcode = $newBarcode;
         }
+
+        $additionalCost = AdditionalCosts::find(1);
+
+        $tradein->carriage_cost = $additionalCost->carriage_costs;
+        $tradein->admin_cost = $additionalCost->administration_costs;
 
         $tradein->save();
 

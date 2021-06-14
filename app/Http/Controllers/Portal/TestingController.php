@@ -166,18 +166,7 @@ class TestingController extends Controller
         #dd($request);
 
         $tradein = Tradein::where('id', $request->tradein_id)->first();
-        $additionalCosts = AdditionalCosts::first();
-        $tradein->carriage_cost = $additionalCosts->carriage_costs;
-        $tradein->admin_cost = $additionalCosts->administration_costs;
-
-        /*$miscCost = AdditionalCosts::where('id', '!=', 1)->first();
-        if($miscCost !== null && $miscCost->miscellaneous_costs > 0){
-            $miscCost->miscellaneous_costs = $miscCost->miscellaneous_costs - $miscCost->per_job_deduction;
-            $miscCost->applied_to += 1;
-            $miscCost->save();
-
-            $tradein->misc_cost = $miscCost->per_job_deduction;
-        }*/
+        
         $notificationService = new NotificationService();
 
         $expiryDate = Carbon::parse($tradein->expiry_date);
@@ -316,115 +305,6 @@ class TestingController extends Controller
         return view('portal.testing.receiving.olderorder')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
     }
 
-    public function deviceImeiVisibility(Request $request){
-        #dd("here");
-        $tradein = Tradein::where('id', $request->tradein_id)->first();
-
-        if($request->visible_imei != "yes"){
-            if($tradein->customer_grade !== 'Faulty'){
-                $tradein->job_state = "6";
-
-                $user = User::where('id', $tradein->user_id)->first();
-
-                $newPrice = "";
-
-                $testing = new Testing();
-                $newPrice = $testing->generateDevicePrice($tradein->product_id, $tradein->customer_memory, $tradein->customer_network, 1);
-                
-                $tradein->bamboo_price = $newPrice;
-
-                //$klaviyoemail = new KlaviyoEmail();
-                //$klaviyoemail->noImei($user, $tradein);
-            }
-            else{
-                $tradein->job_state = "9";
-            }
-
-            // send notification - no imei
-            //$notificationService = new NotificationService();
-            //$notificationService->sendNoIMEI($tradein);
-        }
-        $tradein->save();
-
-        if($request->visible_imei != "yes"){
-            return redirect('/portal/testing/result/' . $tradein->id);
-        }
-
-        return redirect('/portal/testing/checkimei/' . $tradein->id);
-    }
-
-    /**
-     * Determine if device's serial is visible.
-     */
-    public function deviceSerialVisibility(Request $request){
-        $tradein = Tradein::where('id', $request->tradein_id)->first();
-
-        if($request->visible_serial == "no"){
-            $tradein->job_state = "6";
-            $user = User::where('id', $tradein->user_id)->first();
-
-            //$klaviyoemail = new KlaviyoEmail();
-            //$klaviyoemail->noImei($user, $tradein);
-            $tradein->save();
-            return redirect('/portal/testing/result/' . $tradein->id);
-        }
-        if($request->visible_serial === "yes"){
-            $portalUser = PortalUsers::where('user_id', Auth::user()->id)->first();
-            return view('portal.testing.receiving.checkserial', [
-                'tradein'       =>  $tradein, 
-                'product'       =>  $tradein, 
-                'user'          =>  Auth::user(),
-                'portalUser'    =>  $portalUser
-                ]
-            );
-        }
-    }
-
-    /**
-     * Save device serial number and finish receiving.
-     */
-    public function saveSerial(Request $request){
-        if(isset($request->tradein_id) && isset($request->serial_number)){
-            $tradein = Tradein::find($request->tradein_id);
-            $tradein->serial_number = $request->serial_number;
-            $tradein->save();
-            return redirect('/portal/testing/result/' . $tradein->id);
-        }
-    }
-
-    /**
-     * Show page for IMEI verification.
-     */
-    public function showCheckImeiPage($id){
-        //if(!$this->checkAuthLevel(5)){return redirect('/');}
-        $tradein = Tradein::where('id', $id)->first();
-        $user  = User::where('id', $tradein->user_id)->first();
-        $product = SellingProduct::where('id', $tradein->product_id)->first();
-
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-        return view('portal.testing.receiving.checkmend')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
-    }
-
-    /**
-     * Show page for serial verification.
-     */
-    public function showCheckSerialPage($id){
-        //if(!$this->checkAuthLevel(5)){return redirect('/');}
-        $tradein = Tradein::where('id', $id)->first();
-        $user  = User::where('id', $tradein->user_id)->first();
-        $product = SellingProduct::where('id', $tradein->product_id)->first();
-
-        $user_id = Auth::user()->id;
-        $portalUser = PortalUsers::where('user_id', $user_id)->first();
-
-        return view('portal.testing.receiving.checkserial')->with(['portalUser'=>$portalUser, 'tradein'=>$tradein, 'product'=>$product, 'user'=>$user]);
-    }
-
-    /**
-     * Verify device's IMEI number.
-     */
     public function checkimei(Request $request){
 
         $imei_number = request()->imei_number;

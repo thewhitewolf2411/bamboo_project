@@ -83,6 +83,15 @@ $('#tradein-checkallbtn').on('click', function(){
 
     $('.printcheckbox').slice(0, 30).prop('checked', this.checked);
 
+    var numberOfChecked = $('.printcheckbox:checked').length;
+
+    if(numberOfChecked > 0){
+        $('#print_trade_pack_bulk_form_trigger').prop('disabled', !this.checked);
+    }
+    else{
+        $('#print_trade_pack_bulk_form_trigger').prop('disabled', !this.checked);
+    }
+
 });
 
 $('.printcheckbox').on('click', function(){
@@ -90,18 +99,23 @@ $('.printcheckbox').on('click', function(){
     var numberOfChecked = $('.printcheckbox:checked').length;
 
     if($(this).is('checked')){
-        $(this).prop('checked', false);        
+        $(this).prop('checked', false);    
     }
     else{
         if(numberOfChecked >= 30){
             $(this).prop('checked', false);
             alert('Can\'t print more than 30 tradepacks at one time.');
         }
+
+        $('#print_trade_pack_bulk_form_trigger').prop('disabled', !this.checked);
     }
 
 });
 
 $('#print_trade_pack_bulk_form_trigger').on('click', function(){
+
+    $('#trade-pack-despatch-loader').removeClass('invisible');
+    $('#trade-pack-despatch').addClass('invisible');
 
     var selected = [];
     $('.printcheckbox:checked').each(function() {
@@ -124,7 +138,6 @@ $('#print_trade_pack_bulk_form_trigger').on('click', function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success:function(response){
-            console.log(response);
             window.open(response, '_blank');
             location.reload();
         }
@@ -183,8 +196,11 @@ $(document).ready(function(){
 
         var tradeintable = $('#trade-in-table').DataTable({
             "oLanguage" : {
-                "sInfo" : "Showing _START_ to _END_",
+                "sInfo" : "Showing _START_ of _END_",
              },
+             "lengthMenu": [[10, 30, 50, 100, -1], [10, 30, 50, 100, "All"]],
+             "pageLength":-1,
+             "ordering": false,
         });
     
         // Apply the search

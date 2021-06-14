@@ -25,10 +25,10 @@ class SalesLot extends Model
 
         $qty = 0;
 
-        if($this->sales_lot_status === 5){
+        /*if($this->sales_lot_status === 5){
             $soldDevices = SoldTradeIns::where('sales_lot_id', $this->id)->get();
             return count($soldDevices);
-        }
+        }*/
 
         $salesLotContent = SalesLotContent::where('sales_lot_id', $this->id)->get();
 
@@ -50,7 +50,7 @@ class SalesLot extends Model
     public function getSalesLotPrice(){
         $price = 0;
 
-        if($this->sales_lot_status === 5){
+        /*if($this->sales_lot_status === 5){
             $soldDevices = SoldTradeIns::where('sales_lot_id', $this->id)->get();
 
             foreach($soldDevices as $sD){
@@ -58,7 +58,7 @@ class SalesLot extends Model
             }
 
             return $price;
-        }
+        }*/
 
         $salesLotContent = SalesLotContent::where('sales_lot_id', $this->id)->get();
 

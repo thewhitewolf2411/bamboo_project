@@ -57544,6 +57544,13 @@ window.deleteTradeInDetailsFromSystem = function (id) {
 $('#tradein-checkallbtn').on('click', function () {
   $('.printcheckbox').prop('checked', false);
   $('.printcheckbox').slice(0, 30).prop('checked', this.checked);
+  var numberOfChecked = $('.printcheckbox:checked').length;
+
+  if (numberOfChecked > 0) {
+    $('#print_trade_pack_bulk_form_trigger').prop('disabled', !this.checked);
+  } else {
+    $('#print_trade_pack_bulk_form_trigger').prop('disabled', !this.checked);
+  }
 });
 $('.printcheckbox').on('click', function () {
   var numberOfChecked = $('.printcheckbox:checked').length;
@@ -57555,9 +57562,13 @@ $('.printcheckbox').on('click', function () {
       $(this).prop('checked', false);
       alert('Can\'t print more than 30 tradepacks at one time.');
     }
+
+    $('#print_trade_pack_bulk_form_trigger').prop('disabled', !this.checked);
   }
 });
 $('#print_trade_pack_bulk_form_trigger').on('click', function () {
+  $('#trade-pack-despatch-loader').removeClass('invisible');
+  $('#trade-pack-despatch').addClass('invisible');
   var selected = [];
   $('.printcheckbox:checked').each(function () {
     selected.push($(this).attr('name'));
@@ -57578,7 +57589,6 @@ $('#print_trade_pack_bulk_form_trigger').on('click', function () {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function success(response) {
-      console.log(response);
       window.open(response, '_blank');
       location.reload();
     }
@@ -57624,8 +57634,11 @@ $(document).ready(function () {
     });
     var tradeintable = $('#trade-in-table').DataTable({
       "oLanguage": {
-        "sInfo": "Showing _START_ to _END_"
-      }
+        "sInfo": "Showing _START_ of _END_"
+      },
+      "lengthMenu": [[10, 30, 50, 100, -1], [10, 30, 50, 100, "All"]],
+      "pageLength": -1,
+      "ordering": false
     }); // Apply the search
 
     tradeintable.columns().every(function () {
@@ -57911,6 +57924,9 @@ $('.baydelete').on('click', function () {
       type: "POST",
       data: {
         bayname: bayname
+      },
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       success: function success(response) {
         location.reload();
@@ -58872,6 +58888,7 @@ function setBoxedTradeinsDataTable(tradeins) {
       }
     });
   });
+  hideLoader();
 }
 
 function hideLeftTradeins(ids) {
@@ -58968,6 +58985,11 @@ function getTotalQty() {
 function getTotalCost() {
   var table = $('#added-tradeins-building-lot').DataTable();
   $('#total_cost').html('£' + table.column(4).data().sum());
+}
+
+function hideLoader() {
+  $('#sales-lot-loader').addClass('invisible');
+  $('#sales-lot-content').removeClass('hidden');
 }
 
 /***/ }),
@@ -59189,16 +59211,12 @@ $('#printpicknote').on('click', function () {
   window.open('/portal/warehouse-management/picking-despatch/print-pick-note/' + id, '_blank');
 });
 $('#despatchpickingsaleslot').on('click', function () {
-  var c = confirm("Are you sure you want to mark " + $('.tagfordespatch:checked').length + " sale lot as despatched?");
+  var c = confirm("Are you sure you want to mark " + '' + " sale lot as despatched?");
 
   if (c) {
     var _$$ajax;
 
-    var salesLotIds = [];
-    $('.tagfordespatch:checked').each(function () {
-      var salelotid = $(this).data('value');
-      salesLotIds.push(salelotid);
-    });
+    salesLotId = $('.salelotlist_picking_active').prop('id');
     $.ajax((_$$ajax = {
       url: "/portal/warehouse-management/picking-despatch/pick-lot/despatch-picking",
       type: "POST",
@@ -59206,7 +59224,7 @@ $('#despatchpickingsaleslot').on('click', function () {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       data: {
-        salesLotIds: salesLotIds
+        salesLotId: salesLotId
       }
     }, _defineProperty(_$$ajax, "headers", {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -59237,9 +59255,9 @@ function fetchSaleLotData(id) {
           }
         });
       });
+      salelotcontent.clear().draw(true);
 
       for (var i = 0; i < response.length; i++) {
-        console.log(response[i]);
         salelotcontent.row.add(response[i]).draw(true);
       }
     },
