@@ -18510,6 +18510,28 @@ input.lookup-delivery-basket::placeholder {
   padding: 8px 10px;
 }
 
+.sales-lot-table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #dddddd;
+}
+
+.sales-lot-table tfoot {
+  display: table-header-group !important;
+}
+
+.sales-lot-table td, th {
+  padding: 0 !important;
+  font-size: 10pt;
+  border: 1px solid #dddddd;
+  text-align: center;
+}
+
+.sales-lot-table thead {
+  height: 80px !important;
+  min-height: 80px !important;
+}
+
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
@@ -18971,6 +18993,10 @@ input[type=number] {
   margin: 0 !important;
 }
 
+.dataTables_filter {
+  display: none !important;
+}
+
 .sortable:hover {
   cursor: pointer;
 }
@@ -18983,9 +19009,26 @@ input[type=number] {
   display: block;
 }
 
+.saleslots:hover {
+  cursor: pointer;
+}
+
 .saleslot-active {
   background-color: #d4edda !important;
   color: #155724;
+}
+
+.salelotlist_picking {
+  cursor: pointer;
+}
+
+.salelotlist_picking_active {
+  background-color: #d4edda !important;
+  color: #155724;
+}
+
+.dataTables_wrapper {
+  width: 100% !important;
 }
 
 .table-element > input {

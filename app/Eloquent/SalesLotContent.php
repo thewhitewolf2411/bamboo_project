@@ -17,4 +17,14 @@ class SalesLotContent extends Model
     protected $fillable = [
         'sales_lot_id','box_id','device_id', 'picked'
     ];
+
+    public function getBoxName(){
+        $box = Tray::find($this->box_id);
+
+        if($box){
+            return $box->tray_name;
+        }
+
+        return null;
+    }
 }

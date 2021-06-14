@@ -29,6 +29,7 @@ use App\Services\NotificationService;
 use App\Services\Testing;
 use App\Eloquent\AdditionalCosts;
 use App\Services\GetLabel;
+use App\Services\ReceivingService;
 
 class TestingController extends Controller
 {
@@ -231,7 +232,6 @@ class TestingController extends Controller
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('missing_image')->getClientOriginalExtension();
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
-            //$path = $request->file('missing_image')->storeAs('public/missing_images',$fileNameToStore); AAAAAAAAAAAAA
             $request->file('missing_image')->storeAs('public/missing_images',$fileNameToStore);
             $path = $fileNameToStore;
 
@@ -426,14 +426,12 @@ class TestingController extends Controller
      * Verify device's IMEI number.
      */
     public function checkimei(Request $request){
-        $tradein = Tradein::where('id', $request->tradein_id)->first();
-        $imei_number = $request->imei_number;
 
-        #dd($imei_number);
+        $imei_number = request()->imei_number;
 
-        if(strlen($imei_number)>15 || strlen($imei_number)<15){
+        /*if(strlen($imei_number)>15 || strlen($imei_number)<15){
             return redirect()->back()->with('error', 'Incorrect IMEI number. Must be 15 characters');
-        }
+        }*/
 
         $url = 'https://clientapiv2.phonecheck.com/cloud/cloudDB/CheckEsn/';
 
@@ -459,45 +457,25 @@ class TestingController extends Controller
         $response = curl_exec($ch);
 
         $result = (json_decode($response));
-        if($result->RawResponse->blackliststatus == "Yes"){
-            $tradein->job_state = "7";
-            $tradein->blacklisted = true;
-            $tradein->save();
 
-            $user = User::where('id', $tradein->user_id)->first();
+        return response()->json($result);
+    }
 
-            //$klaviyomail = new KlaviyoEmail();
-            //$klaviyomail->blacklisted($user, $tradein);
-        }
+    public function receivingResults(Request $request){
 
+        $receivingService = ReceivingService::checkReceivingResaults($request);
 
-        $imeiResult = ImeiResult::where('tradein_id', $request->tradein_id)->first();
-
-        if($imeiResult == null){
-            $imeiResult = new ImeiResult();
-        }
-
-        $imeiResult->tradein_id = $request->tradein_id;
-        $imeiResult->API =  $result->API;
-        $imeiResult->remarks =  $result->Remarks;
-        $imeiResult->model_name =  $result->RawResponse->modelname;
-        $imeiResult->blackliststatus =  $result->RawResponse->blackliststatus;
-        $imeiResult->greyliststatus =  $result->RawResponse->greyliststatus;
-
-        $imeiResult->save();
-
-        $tradein->imei_number = $imei_number;
-        $tradein->save();
-
-        $user  = User::where('id', $tradein->user_id)->first();
-        $product = SellingProduct::where('id', $tradein->product_id)->first();
-
+        $tradein = Tradein::find($request->tradeinid);
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
-        #$this->showCheckImeiReultPage($tradein->barcode, $result);
+        $mti = false;
 
-        return redirect('/portal/testing/result/' . $tradein->id);
+        if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>0){
+            $mti = true;
+        }
+
+        return view('portal.testing.totray')->with(['tray_name'=>$receivingService[0],'pdf'=>$receivingService[1],'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein,'testing'=>false, 'mti'=>$mti]);
 
     }
 
