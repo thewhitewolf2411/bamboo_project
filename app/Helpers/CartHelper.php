@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use App\Eloquent\AbandonedCart;
 use App\Eloquent\Cart;
+use App\Eloquent\PromotionalCode;
 use Illuminate\Support\Facades\Auth;
 
 class CartHelper{
@@ -30,6 +31,14 @@ class CartHelper{
             }
         }
         return null;
+    }
+
+    public static function promocodesExist(){
+        $promocodes = PromotionalCode::all();
+        if($promocodes->count() > 0){
+            return true;
+        }
+        return false;
     }
 
 }

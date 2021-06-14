@@ -854,7 +854,22 @@
     margin-bottom: 5px;
 }
 
+.selling-disclaimer-cart{
+    margin-top: 95px;
+    margin-bottom: 95px;
+    margin-left: 0;
+}
+
 .newsletter-small-sell{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/28px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
     margin-top: auto;
     margin-bottom: auto;
 }
@@ -1946,8 +1961,16 @@ input.lookup-delivery-basket::placeholder{
     flex-direction: row;
 }
 
+.order-label-wrapper{
+    width: 291px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
 .order-label-print-type{
-    width: 200px;
+    // width: 200px;
+    width: 291px;
     text-align: center;
     cursor: pointer;
     padding: 10px;
@@ -1969,13 +1992,24 @@ input.lookup-delivery-basket::placeholder{
 }
 
 .order-label-print-text{
-    font-family: Sharp Sans No1 Bold;
-    font-size: 18px;
+    // font-family: Sharp Sans No1 Bold;
+    // font-size: 18px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 26px/36px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 26px/36px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
     margin: 0;
     margin-top: 12px;
 }
 
 .order-label-select-svg{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     width: 25px;
     margin-top: 10px;
 }
@@ -2023,6 +2057,11 @@ input.lookup-delivery-basket::placeholder{
     margin: 0;
 }
 
+.confirmation-info-text-bold-medium-large.on-top{
+    margin-bottom: 86px;
+    margin-top: 41px;
+}
+
 .confirmation-info-text-bold-smaller{
     // font-family: Sharp Sans No1 Bold;
     // font-size: 20px;
@@ -2035,6 +2074,15 @@ input.lookup-delivery-basket::placeholder{
     color: #000000;
     opacity: 1;
     margin: 0;
+}
+
+.confirmation-info-text-bold-smaller.fixed-height{
+    height: 76px;
+}
+
+.confirmation-info-text-bold-smaller.fixed-height.centered-vertically{
+    height: 76px;
+    line-height: 76px;
 }
 
 .confirmation-info-text-smaller{
@@ -2071,6 +2119,10 @@ input.lookup-delivery-basket::placeholder{
     margin: 0;
 }
 
+.confirmation-info-text.description{
+    height: 210px;
+}
+
 .confirmation-info-text.padded{
     padding: 0 40px !important;
 }
@@ -2088,13 +2140,16 @@ input.lookup-delivery-basket::placeholder{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    // justify-content: space-evenly;
+    justify-content: center;
 }
 
 .single-box-confirmation{
     display: flex;
     flex-direction: column;
     max-width: 400px;
+    margin-right: 40px;
+    margin-left: 40px;
 }
 
 .confirmation-image-wrapper{
@@ -2105,6 +2160,7 @@ input.lookup-delivery-basket::placeholder{
     display: block;
     width: 180px;
     height: auto;
+    // height: 180px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -2125,7 +2181,21 @@ input.lookup-delivery-basket::placeholder{
 
 
 .create-account-yourdetails{
-    background-color: #ffefcc;
+    background-color: #fff9ed;
+    padding: 57px 64px;
+}
+
+.basket-signup-label{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/28px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+    margin-bottom: 8px;
 }
 
 .create-account-container > h2{
@@ -2133,8 +2203,16 @@ input.lookup-delivery-basket::placeholder{
 }
 
 .create-account-yourdetails > p.create-title{
-    font-size: 20px;
-    font-family: Sharp Sans No1 Bold;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 32px/43px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 32px/43px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+    margin-bottom: 44px;
 }
 
 .password-input{

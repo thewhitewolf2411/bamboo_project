@@ -1,8 +1,28 @@
 <div class="cart-promotional-code">
-    <label for="promotional_code" class="mt-4 mb-2">Enter Promotional Code</label>
-    <div class="promotional-code-row">
+    <label 
+        for="promotional_code" 
+        @if(App\Helpers\CartHelper::promocodesExist()) 
+            data-toggle="collapse" 
+            href="#collapsePromocode" 
+            role="button" 
+            aria-expanded="false" 
+            aria-controls="collapsePromocode" 
+        @else
+            data-toggle="collapse" 
+            href="#collapsePromocodeMessage" 
+            role="button" 
+            aria-expanded="false" 
+            aria-controls="collapsePromocodeMessage" 
+        @endif
+        class="mt-4 mb-2">
+            Enter Promotional Code
+    </label>
+    <div class="promotional-code-row collapse" id="collapsePromocode">
         <input type="text" name="promotional_code" id="promotional_code" class="form-input promotional-code">
         <div class="btn btn-primary apply-promo-code" id="applyPromo">Apply</div>
+    </div>
+    <div class="collapse" id="collapsePromocodeMessage">
+        <div class="text-center">Boo's currently not running any promotions but soon will be! Check us out of FB, Insta and YouTube for details!</div>
     </div>
     <div class="promotional-code-message" id="promotional-code-info">
         <p id="promotional-code-info-text" class="text-center mt-1"></p>

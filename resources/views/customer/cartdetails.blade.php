@@ -53,20 +53,24 @@
 
                             <div class="select-pack-type mt-4">
 
-                                <div class="order-label-print-type m-2" id="bamboo-print-selected" onclick="selectType('bamboo')">
-                                    <div class="col p-0">
-                                        <img class="order-label-print-svg" src="{{asset('/customer_page_images/body/free_bamboo_trade_pack.svg')}}">
-                                        <p class="order-label-print-text">FREE bamboo <br>Trade Pack</p>
-                                        <img class="order-label-select-svg" id="bamboo-print-selected-tick" src="{{asset('/customer_page_images/body/orange_deselected.svg')}}">
+                                <div class="order-label-wrapper">
+                                    <div class="order-label-print-type m-2" id="bamboo-print-selected" onclick="selectType('bamboo')">
+                                        <div class="col p-0">
+                                            <img class="order-label-print-svg" src="{{asset('/customer_page_images/body/free_bamboo_trade_pack.svg')}}">
+                                            <p class="order-label-print-text">FREE Bamboo <br>Trade Pack</p>
+                                        </div>
                                     </div>
+                                    <img class="order-label-select-svg" id="bamboo-print-selected-tick" src="{{asset('/customer_page_images/body/orange_deselected.svg')}}">
                                 </div>
 
-                                <div class="order-label-print-type m-2" id="own-print-selected" onclick="selectType('own')">
-                                    <div class="col p-0">
-                                        <img class="order-label-print-svg" src="{{asset('/customer_page_images/body/free_print_own_label.svg')}}">
-                                        <p class="order-label-print-text">FREE print your <br>own label</p>
-                                        <img class="order-label-select-svg" id="own-print-selected-tick" src="{{asset('/customer_page_images/body/orange_deselected.svg')}}">
+                                <div class="order-label-wrapper">
+                                    <div class="order-label-print-type m-2" id="own-print-selected" onclick="selectType('own')">
+                                        <div class="col p-0">
+                                            <img class="order-label-print-svg" src="{{asset('/customer_page_images/body/free_print_own_label.svg')}}">
+                                            <p class="order-label-print-text">FREE print your <br>own label</p>
+                                        </div>
                                     </div>
+                                    <img class="order-label-select-svg" id="own-print-selected-tick" src="{{asset('/customer_page_images/body/orange_deselected.svg')}}">
                                 </div>
 
                                 <p class="title-trade-pack-type pack-instructions">Instructions on how to print your label at home will be given on the next page</p>
@@ -132,7 +136,7 @@
                         
                     @endif
 
-                    <div class="row m-0 w-75 mt-4">
+                    <div class="row w-75 selling-disclaimer-cart">
                         <div class="col-9">
                             <p class="newsletter-small-sell">
                                 I agree to Bamboo sending me a regular newsletter, carrying out market research, keeping 
@@ -211,50 +215,50 @@
 
 
             <div class="d-flex flex-column pb-3 ml-2 create-account-container w-75">
-                <h2>Your details</h2>
-                <div class="create-account-yourdetails mr-5 p-4">
-                    <p class="create-title mb-4">Create an account</p>
+                <p class="welcome-basket-details">Your details</p>
+                <div class="create-account-yourdetails mr-5">
+                    <p class="create-title">Create an account</p>
 
                     <form class="complete-registration-form" method="POST" action="{{route('completeRegistration')}}">
                         @csrf
 
                         <div class="row m-0">
                             <div class="col-4 p-0 m-0 mr-5">
-                                <label for="first_name">First Name*</label>
+                                <label for="first_name" class="basket-signup-label">First Name*</label>
                                 <input class="form-control" type="text" name="first_name" required>
                             </div>
                             <div class="col-4 p-0 m-0">
-                                <label for="last_name">Last Name*</label>
+                                <label for="last_name" class="basket-signup-label">Last Name*</label>
                                 <input class="form-control" type="text" name="last_name" required>
                             </div>
                         </div>
                         <div class="row m-0">
                             <div class="col-4 p-0 mb-4">
-                                <label>Date of Birth</label>
+                                <label class="basket-signup-label">Date of Birth</label>
                                 @include('partial.birthdate', ['required' => false])                                                        
                             </div>
                         </div>
                         <div class="row m-0">
                             <div class="col-4 p-0 m-0">
-                                <label for="first_name">Email address*</label>
+                                <label for="first_name" class="basket-signup-label">Email address*</label>
                                 <input class="form-control" type="text" name="email" value="{!!Session::get('session_email')!!}" required>
                             </div>
                         </div>
                         <div class="row m-0">
                             <div class="form-group col-8 p-0 m-0">
-                                <label for="delivery_address">Delivery Address</label>
+                                <label for="delivery_address" class="basket-signup-label">Delivery Address</label>
                                 <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" placeholder="Example delivery address" required>
                             </div>
                         </div>
                         <div class="row m-0">
                             <div class="form-group col-8 p-0 m-0">
-                                <label for="billing_address">Billing Address</label>
+                                <label for="billing_address" class="basket-signup-label">Billing Address</label>
                                 <input class="form-control js-typeahead" type="text" id="billing_address" name="billing_address" placeholder="Example billing address" required>
                             </div>
                         </div>
                         <div class="row m-0">
                             <div class="col-4 m-0 p-0 mr-5">
-                                <label for="first_name" class="mb-2">Current phone</label>
+                                <label for="first_name" class="mb-2 basket-signup-label">Current phone</label>
                                 <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" name="current-phone">
                                     <option value="" selected disabled>Your current phone</option>
                                     @foreach($products as $product)
@@ -263,7 +267,7 @@
                                 </select>
                             </div>
                             <div class="col-4 m-0 p-0">
-                                <label for="last_name" class="mb-2">Preffered OS</label>
+                                <label for="last_name" class="mb-2 basket-signup-label">Preffered OS</label>
                                 <select class="selectpicker form-control" name="preferred-os">
                                     <option value="" selected disabled>Preferred Operating System (OS)</option>
                                     <option>iOS</option>
@@ -274,7 +278,7 @@
                         </div>
                         <div class="row m-0 mt-2">
                             <div class="col-12 m-0 p-0">
-                                <label for="password_card" class="verify-label">Select password*</label>
+                                <label for="password_card" class="verify-label basket-signup-label">Select password*</label>
                                 <div class="row m-0 password-input">
                                     <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,50}$" class="form-control" name="password" id="password_card" required class="verification-input" required/>
                                     <img class="toggle-pass-visibility" id="pass-visibility-toggle" onclick="togglePassCardVisibility()" src="{{asset('/images/front-end-icons/pass_invisible.svg')}}">
@@ -294,7 +298,7 @@
                         </div>
                         <div class="row m-0 newsletter-singup-row">
                             <input type="checkbox" name="sub" id="newsletter-sub" class="hidden">
-                            <img class="newsletter-tick-black" id="newsletter-subscribe-check" onclick="toggleNewsletterSub()" src="{{asset('/images/front-end-icons/black_circle.svg')}}">
+                            <img class="newsletter-tick-black " id="newsletter-subscribe-check" onclick="toggleNewsletterSub()" src="{{asset('/images/front-end-icons/black_circle.svg')}}">
                             <p class="newsletter-terms-text">
                                 In addition to receiving an instant email when you open your account with Bamboo, I agree to Bamboo sending 
                                 me a regular newsletter, carrying out market research, keeping me informed with personalised news, offers, 
@@ -328,12 +332,16 @@
                     
                     @if($hasTradeIn)
                         <div class="summary-cart">
-                            <p class="summary-cart-text">Subtotal</p>
-                            <p class="summary-cart-text">£{{$sellPrice}}</p>
+                            <p class="summary-cart-details-text">Subtotal</p>
+                            <p class="summary-cart-details-text">£{{$sellPrice}}</p>
+                        </div>
+                        <div class="summary-cart promotional invisible" id="promotional-info">
+                            <p class="summary-cart-details-text m-0" id="promo-info">Promotional code</p>
+                            <p class="summary-cart-text-bold" id="promo-percentage"></p>
                         </div>
                         <div class="summary-cart">
                             <p class="summary-cart-text-bold">TOTAL</p>
-                            <p class="summary-cart-text-bold">£{{$sellPrice}}</p>
+                            <p class="summary-cart-text-bold" id="total-sell-price">£{{$sellPrice}}</p>
                         </div>
                         {{-- <select class="form-control my-3" onchange="changelabelstatus(this)">
                             <option value="1" selected>Make an order without printing label</option>
@@ -350,7 +358,7 @@
                 
                             <input type="hidden" id="label_status" name="label_status" value="1">
 
-                            <button type="submit" id="submit-sell" disabled class="btn btn-orange w-100 mt-2">Sell my device</button>
+                            <button type="submit" id="submit-sell" disabled class="btn start-selling cart-final w-100 mt-2"><p>Sell my device</p></button>
         
                         </form>
         

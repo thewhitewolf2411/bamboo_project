@@ -192,7 +192,9 @@
                                         <div class="remove-from-cart-tohide"></div>
                                     </div>
 
-                                    <div class="remove-hr"></div>
+                                    @if($cart->count() === 1)
+                                        <div class="remove-hr"></div>
+                                    @endif
 
                                 @endif
 

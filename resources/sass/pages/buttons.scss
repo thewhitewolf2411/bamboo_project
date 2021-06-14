@@ -1,6 +1,11 @@
+
+.btn{
+    border-radius: 8px;
+}
+
 .btn.start-selling{
     background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
-    background: #F28E33 0% 0% no-repeat padding-box;
+    // background: #F28E33 0% 0% no-repeat padding-box;
     border-radius: 8px;
     opacity: 1;
     transition: all 0.3s linear;
@@ -9,7 +14,7 @@
 
 .btn.cart-purple{
     background: var(--technical-–-violet) 0% 0% no-repeat padding-box;
-    background: #A375BC 0% 0% no-repeat padding-box;
+    // background: #A375BC 0% 0% no-repeat padding-box;
     border-radius: 8px;
     opacity: 1;
     transition: all 0.3s linear;
