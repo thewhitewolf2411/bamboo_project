@@ -1553,7 +1553,7 @@ input.lookup-delivery-basket::placeholder{
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    padding: 50px 150px;
+    padding: 80px 150px;
     background: #EFEFEF 0% 0% no-repeat padding-box;
 }
 
@@ -1561,23 +1561,37 @@ input.lookup-delivery-basket::placeholder{
 .selling-info-item{
     // width: 250px;
     width: 350px;
-    height: 200px;
+    // height: 200px;
+    height: auto;
     text-align: center;
 }
 
 .selling-info-img{
-    width: 120px;
-    height: 120px;
+    // width: 120px;
+    // height: 120px;
+    width: 173px;
+    height: 173px;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
 .selling-info-bold-text{
-    font-family: Bebas Neue;
-    font-size: 1.5em;
-    line-height: 1;
-    margin-top: auto;
+    // font-family: Bebas Neue;
+    // font-size: 1.5em;
+    // line-height: 1;
+    // margin-top: auto;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 37px/40px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+    margin-top: 30px;
+    margin-bottom: 40px;
 }
 
 .no-network{

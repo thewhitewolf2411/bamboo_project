@@ -17424,29 +17424,36 @@ input.lookup-delivery-basket::placeholder {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  padding: 50px 150px;
+  padding: 80px 150px;
   background: #EFEFEF 0% 0% no-repeat padding-box;
 }
 
 .selling-info-item {
   width: 350px;
-  height: 200px;
+  height: auto;
   text-align: center;
 }
 
 .selling-info-img {
-  width: 120px;
-  height: 120px;
+  width: 173px;
+  height: 173px;
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
 .selling-info-bold-text {
-  font-family: Bebas Neue;
-  font-size: 1.5em;
-  line-height: 1;
-  margin-top: auto;
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--black);
+  text-align: center;
+  font: normal normal normal 37px/40px Bebas Neue;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  margin: 0;
+  margin-top: 30px;
+  margin-bottom: 40px;
 }
 
 .no-network {
@@ -19741,6 +19748,8 @@ input[type=number] {
   height: 250px;
   transition: all 0.3s ease;
   overflow-y: hidden;
+  margin-top: 30px;
+  margin-bottom: 80px;
 }
 
 #newsletter-signup-success.invisible {
@@ -19757,8 +19766,16 @@ input[type=number] {
 }
 
 #newsletter-signup-success > p {
-  font-family: Sharp Sans No1 Bold;
-  font-size: 40px;
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-50)/var(--unnamed-line-spacing-58) var(--unnamed-font-family-sharp-sans-no1-bold);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--black);
+  text-align: center;
+  font: normal normal normal 50px/58px Sharp Sans No1 Bold;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  margin: 0;
+  height: 64px;
 }
 
 .newsletter-name-input {
@@ -19821,7 +19838,7 @@ input[type=number] {
   letter-spacing: 0px;
   color: #FFFFFF;
   opacity: 1;
-  padding-top: 11px;
+  padding-top: 10px;
   transition: all 0.3s linear;
 }
 
@@ -19843,6 +19860,7 @@ input[type=number] {
   letter-spacing: 0px;
   color: #FFFFFF;
   opacity: 1;
+  padding-top: 8px;
 }
 
 #newsletter-description {
@@ -21005,6 +21023,8 @@ input[type=submit] {
 .howitworks-container.how-column.text-description {
   width: 100%;
   max-width: 853px;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 @media (max-width: 496px) {
