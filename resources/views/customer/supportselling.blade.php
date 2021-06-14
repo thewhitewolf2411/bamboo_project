@@ -6,7 +6,7 @@
 
     <div class="page-header-container servicesupport">
         {{-- <p class="page-header-text">Service & Support</p> --}}
-        <p class="page-header-text">FAQ’s</p>
+        <p class="page-header-text">Frequently Asked Questions</p>
     </div>
     
     @if(Session::get('_previous') !== null)
@@ -359,7 +359,7 @@
 
     <div class="support-questions-row">
         <div class="support-questions-column margin-right">
-            @foreach($first_faq as $question)
+            @foreach($second_faq as $question)
                 <div class="support-question">
                     <p class="support-question-title">{!!$question->question!!}</p>
                     <img class="support-question-toggle-icon" src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}" onclick="toggleCollapse({!!$question->id!!})">
@@ -368,7 +368,7 @@
         </div>
 
         <div class="support-questions-column">
-            @foreach($second_faq as $question)
+            @foreach($first_faq as $question)
                 <div class="support-question">
                     <p class="support-question-title">{!!$question->question!!}</p>
                     <img class="support-question-toggle-icon" src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}" onclick="toggleCollapse({!!$question->id!!})">
@@ -384,9 +384,11 @@
                     <button class="btn btn-link collapsed toggle-collapse-answer" data-toggle="collapse" data-target="#{!!$question_answer->id!!}" aria-expanded="false" aria-controls="collapse{!!$question_answer->id!!}">
                         {!!$question_answer->question!!}
                     </button>
+
+                    <img class="support-question-toggle-icon" src="{{asset('/customer_page_images/body/Icon-Add@2x.png')}}" onclick="toggleCollapse({!!$question_answer->id!!})">
                 </div>
                 <div id="{!!$question_answer->id!!}" class="collapse" aria-labelledby="heading{!!$question_answer->id!!}" data-parent="#support-question-answers-container">
-                    <div class="card-body">
+                    <div class="card-body answer">
                         <p class="answer-text">{!!$question_answer->answer!!}</p>
                         {{-- @if($question_answer->link)<a class="btn mt-4 btn-{!!$question_answer->link_color!!}" href="{!!$question_answer->link!!}">{!!$question_answer->link_text!!}</a>@endif --}}
                     </div>

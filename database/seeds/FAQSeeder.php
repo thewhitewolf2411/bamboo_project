@@ -23,8 +23,8 @@ class FAQSeeder extends Seeder
         #2
         FAQ::create([
             'question' => 'What devices can I sell to Bamboo Mobile?',
-            'answer' => 'You can sell any mobile device from Apple to ZTE, both mobile phones and tablets. 
-            If your mobile device has no value, we are happy to help recycle the tech for free.'
+            'answer' => 'You can sell any mobile device from Apple to ZTE, both mobile phones and tablets, including watches. 
+            If your mobile device has no value, we are happy to help recycle the tech for free. - as per brief'
         ]);
 
         #3
@@ -45,13 +45,13 @@ class FAQSeeder extends Seeder
         FAQ::create([
             'question' => 'How long do I have to send in my device?',
             'answer' => 'The estimated trade-in value is valid for 14 days, and we encourage you to send the device to us within this timeframe to ensure getting this value. 
-            If you require additional time, please contact our support team at info@bamboomobile.co.uk'
+            If you require additional time, please contact our support team at customersupport@bamboomobile.co.uk'
         ]);
 
         #6
         FAQ::create([
             'question' => 'Is my personal data safe?',
-            'answer' => 'Absolutely! We will delete data on all devices using accredited software – PhoneCheck'
+            'answer' => 'Absolutely! We will delete data on all devices using accredited software – PhoneCheck.'
         ]);
 
         #7
@@ -69,7 +69,7 @@ class FAQSeeder extends Seeder
         #9
         FAQ::create([
             'question' => 'What do I do with iCloud?',
-            'answer' => 'It would be best if you can remove your device from your iCloud account before sending the device to us. 
+            'answer' => 'Remove your device from your iCloud account before sending the device to us. 
             This is really quick and easy to do, please <a href="/instructions/icloud" target="_blank" class="answer-text link">click</a> for a simple guide…',
         ]);
 
@@ -85,7 +85,7 @@ class FAQSeeder extends Seeder
             'question' => 'What if my device is reported blocked?',
             'answer' => 'If your device is blocked, it is likely it has been reported lost or stolen. 
             It is illegal for us to purchase any blocked devices. If you are the rightful owner of the device, you will need to contact your service provider,
-            insurance company or <a href="CheckMend" class="answer-text link="https://www.checkmend.com">CheckMend</a> to have the device unblocked within 28 days of us notifying you.  
+            insurance company or to have the device unblocked within 28 days of us notifying you.  
             Once 28 days has elapsed then the device will be destroyed.',
         ]);
 
@@ -99,7 +99,7 @@ class FAQSeeder extends Seeder
         #13
         FAQ::create([
             'question' => 'Any Other Questions?',
-            'answer' => 'You can contact us through our <a href="/contact?selected=message" class="answer-text link">Contact Us</a> Tab or telephone directly – don’t be shy give us a try!'
+            'answer' => 'You can contact us through our <a href="/contact" class="answer-text link">Contact Us</a> Tab or telephone directly – don’t be shy give us a try!'
         ]);
     }
 }

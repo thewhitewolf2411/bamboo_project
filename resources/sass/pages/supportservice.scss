@@ -428,6 +428,13 @@
     font: normal normal normal 20px/28px Sharp Sans No1 Bold;
 }
 
+.support-question-answers-title{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
 .support-question-toggle-icon{
     display: block;
     width: 25px;
@@ -435,6 +442,7 @@
     margin-bottom: auto;
     margin-top: auto;
     cursor: pointer;
+    margin-left: 14px;
 }
 
 #support-question-answers-container{
@@ -478,7 +486,7 @@
 .answer-separate{
     height: 1px;
     width: 100%;
-    background: rgba(#000000, 0.16);
+    background: rgba(#000000, 1);
     margin-top: 2.5rem;
     margin-bottom: 2.5rem;
 }
@@ -486,4 +494,9 @@
 .height-100{
     height: 150px !important;
     min-height: 150px !important;
+}
+
+.card-body.answer{
+    padding: 45px;
+    padding-top: 20px;
 }

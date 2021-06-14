@@ -12,12 +12,12 @@
 
         <div class="newsletter-row full-width-newsletter justify-content-center">
             <div class="newsletter-column newsletter-name-input newsletter-mr">
-                <div class="form-group">
+                <div class="form-group m-0">
                     <input class="email-input mt-0" name="first_name" type="text" placeholder="First Name">
                 </div>
             </div>
             <div class="newsletter-column newsletter-name-input">
-                <div class="form-group">
+                <div class="form-group m-0">
                     <input class="email-input mt-0" name="last_name" type="text" placeholder="Last Name">
                 </div>
             </div>
