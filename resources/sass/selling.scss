@@ -1161,9 +1161,9 @@ input.lookup-delivery-basket::placeholder{
 }
 
 
-#selling-search-results.nomatches{
+//#selling-search-results.nomatches{
     //height: 0;
-}
+//
 
 .loader {
     border: 16px solid #f3f3f3; /* Light grey */
@@ -1305,19 +1305,19 @@ input.lookup-delivery-basket::placeholder{
 }
 
 // about us page sell categories
-.sell-category-device-image.about.mobile{
+//.sell-category-device-image.about.mobile{
     // left: 0;
     // top: -75px;
-}
-.sell-category-device-image.about.tablet{
+//}
+//.sell-category-device-image.about.tablet{
     // top: 10px;
     // left: 0;
-}
-.sell-category-device-image.about.watch{
+//}
+//.sell-category-device-image.about.watch{
     // top: -25px;
     // left: 20px;
     // max-width: 260px;
-}
+//}
 
 // breakpoint about us page
 @media only screen and (max-width: 625px){
@@ -1524,9 +1524,9 @@ input.lookup-delivery-basket::placeholder{
     margin-top: 0;
 }
 
-.device-make-result > p{
+//.device-make-result > p{
     //font-size: 14px;
-}
+//}
 
 .device-make-result-image{
     width: auto;
@@ -2340,10 +2340,10 @@ input.lookup-delivery-basket::placeholder{
         height: 50px;
         min-height: 50px;
     }
-    .top-upper-elements-container a {
+    //.top-upper-elements-container a {
         //min-width: 200px;
         //width: 150px;
-    }
+    //}
     .top-element-container p {
         font-size: 12pt;
     }
@@ -2566,9 +2566,9 @@ input.lookup-delivery-basket::placeholder{
         opacity: 1;
     }
 
-    .sell-categories-container{
+    //.sell-categories-container{
 
-    }
+    //}
 }
 
 // mobile - small
