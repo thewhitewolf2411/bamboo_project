@@ -237,20 +237,20 @@ $('.salelotlist_picking').on('click', function(){
 
 $('#starttopicklot').on('click', function(){
 
-    var status = $('.saleslot-active').data('status');
-    var id = $('.saleslot-active').prop('id');
+    var status = $('.salelotlist_picking').data('status');
+    var id = $('.salelotlist_picking').prop('id');
 
-    if(status === 2 || status === 6){
+    if(status === 2){
         window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');
     }
     else{
-        alert("This lot cannot be picked yet.");
+        alert("This lot cannot be picked.");
     }
 
 });
 
 $('#printpicknote').on('click', function(){
-    var id = $('.saleslot-active').prop('id');
+    var id = $('.salelotlist_picking_active').prop('id');
     window.open('/portal/warehouse-management/picking-despatch/print-pick-note/' + id, '_blank');
 });
 
@@ -320,7 +320,8 @@ function fetchSaleLotData(id){
                 } );
             });
 
-            for(var i = 1; i < response.length; i++){
+            for(var i = 0; i < response.length; i++){
+                console.log(response[i]);
                 salelotcontent.row.add(response[i]).draw(true);
             }
 

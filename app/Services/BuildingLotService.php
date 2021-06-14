@@ -213,11 +213,25 @@ class BuildingLotService{
 
     public static function getSaleLotData($salelot_id){
         $salelot = SalesLot::find($salelot_id);
-        $saleLotContent = SalesLotContent::where('sales_lot_id', $salelot_id)->get();
-        
-        
-        $returnData = [];
+        $saleLotContent = SalesLotContent::where('sales_lot_id', $salelot_id)->get()->groupBy('box_id');;
 
+        #dd($saleLotContent);
+
+        $returnData = [];
+        
+        foreach($saleLotContent as $boxid => $saleLotDevice){
+
+
+            $box = Tray::find($boxid);
+            $bayname = $box->getTrolleyName();
+
+            array_push($returnData, [$salelot_id, $box->tray_name, $bayname, count($saleLotDevice)]);
+        }
+
+
+        return $returnData;
+        
+        
 
     }
 

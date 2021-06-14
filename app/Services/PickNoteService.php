@@ -25,7 +25,8 @@ class PickNoteService{
 
     private function _generatePrintNote(array $data){
 
-        $filename = 'pick_note_'.$this->salelotid.'_' . \Carbon\Carbon::now()->format('Y_m_d_h_i').".csv";
+        #dd($data);
+
         //\fputcsv($fp, $headers);
         $csv = fopen("php://output", 'w');
 
@@ -47,12 +48,14 @@ class PickNoteService{
         \fclose($csv);
 
         $filename = 'PickNote' . $this->salelotid . \Carbon\Carbon::now()->format('Y_m_d_h_i') . '.csv';
-        echo "\xef\xbb\xbf";
-        header("Content-type: text/csv; charset=UTF-8");
+
+        header("Content-type: application/octet-stream; charset=UTF-8");
         header('Content-Encoding: UTF-8');
         header("Content-Disposition: attachment; filename=".$filename);
+        header('Content-Transfer-Encoding: binary');
         header("Pragma: no-cache");
         header("Expires: 0");
+        echo "\xef\xbb\xbf";
 
     }
 
