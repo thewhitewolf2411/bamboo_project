@@ -195,7 +195,7 @@
     </div> --}}
 
 
-    <div class="sell-categories-container pt-5">
+    <div class="sell-categories-container about-page">
 
         <div class="single-sell-category about" id="mobile-category">
             {{-- <p class="sell-about-category-subtitle">Sell</p> --}}
