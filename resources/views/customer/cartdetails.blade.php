@@ -233,30 +233,12 @@
                             </div>
                         </div>
                         <div class="row m-0">
-                            <div class="col-4 p-0 mb-4">
+                            <div class="col-4 p-0">
                                 <label class="basket-signup-label">Date of Birth</label>
                                 @include('partial.birthdate', ['required' => false])                                                        
                             </div>
                         </div>
-                        <div class="row m-0">
-                            <div class="col-4 p-0 m-0">
-                                <label for="first_name" class="basket-signup-label">Email address*</label>
-                                <input class="form-control" type="text" name="email" value="{!!Session::get('session_email')!!}" required>
-                            </div>
-                        </div>
-                        <div class="row m-0">
-                            <div class="form-group col-8 p-0 m-0">
-                                <label for="delivery_address" class="basket-signup-label">Delivery Address</label>
-                                <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" placeholder="Example delivery address" required>
-                            </div>
-                        </div>
-                        <div class="row m-0">
-                            <div class="form-group col-8 p-0 m-0">
-                                <label for="billing_address" class="basket-signup-label">Billing Address</label>
-                                <input class="form-control js-typeahead" type="text" id="billing_address" name="billing_address" placeholder="Example billing address" required>
-                            </div>
-                        </div>
-                        <div class="row m-0">
+                        <div class="row m-0 mt-2">
                             <div class="col-4 m-0 p-0 mr-5">
                                 <label for="first_name" class="mb-2 basket-signup-label">Current phone</label>
                                 <select class="selectpicker form-control" data-show-subtext="true" data-live-search="true" name="current-phone">
@@ -276,12 +258,34 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="row m-0 mt-4">
+                            <div class="col-4 p-0 m-0">
+                                <label for="first_name" class="basket-signup-label">Email address*</label>
+                                <div class="d-flex flex-row">
+                                    <input class="form-control" type="text" name="email" id="email_basket" onkeydown="validateEmail()" value="{!!Session::get('session_email')!!}" required>
+                                    <img id="valid-email-icon" src="{{asset('/customer_page_images/body/orange_selected.svg')}}" class="valid-field-confirmation">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-0 mt-2">
+                            <div class="form-group col-8 p-0 m-0">
+                                <label for="delivery_address" class="basket-signup-label">Delivery Address</label>
+                                <input class="form-control js-typeahead" type="text" id="delivery_address" name="delivery_address" placeholder="Example delivery address" required>
+                            </div>
+                        </div>
+                        <div class="row m-0 mt-2">
+                            <div class="form-group col-8 p-0 m-0">
+                                <label for="billing_address" class="basket-signup-label">Billing Address</label>
+                                <input class="form-control js-typeahead" type="text" id="billing_address" name="billing_address" placeholder="Example billing address" required>
+                            </div>
+                        </div>
                         <div class="row m-0 mt-2">
                             <div class="col-12 m-0 p-0">
                                 <label for="password_card" class="verify-label basket-signup-label">Select password*</label>
-                                <div class="row m-0 password-input">
+                                <div class="row m-0 password-input basket">
                                     <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,50}$" class="form-control" name="password" id="password_card" required class="verification-input" required/>
                                     <img class="toggle-pass-visibility" id="pass-visibility-toggle" onclick="togglePassCardVisibility()" src="{{asset('/images/front-end-icons/pass_invisible.svg')}}">
+                                    <img id="valid-password-icon" src="{{asset('/customer_page_images/body/orange_selected.svg')}}" class="valid-field-confirmation hidden">
                                 </div>
                                 <div class="pass-info-requirements mb-2">
                                     Your password needs to be at least 8 characters long, contain an uppercase letter, a number and a symbol.
@@ -298,8 +302,8 @@
                         </div>
                         <div class="row m-0 newsletter-singup-row">
                             <input type="checkbox" name="sub" id="newsletter-sub" class="hidden">
-                            <img class="newsletter-tick-black " id="newsletter-subscribe-check" onclick="toggleNewsletterSub()" src="{{asset('/images/front-end-icons/black_circle.svg')}}">
-                            <p class="newsletter-terms-text">
+                            <img class="newsletter-tick-black mt-auto mb-auto" id="newsletter-subscribe-check" onclick="toggleNewsletterSub()" src="{{asset('/images/front-end-icons/black_circle.svg')}}">
+                            <p class="newsletter-terms-text ml-0">
                                 In addition to receiving an instant email when you open your account with Bamboo, I agree to Bamboo sending 
                                 me a regular newsletter, carrying out market research, keeping me informed with personalised news, offers, 
                                 products and promotions it believes would be of interest to me through my preferred channel. 
@@ -477,6 +481,16 @@
             
         });
 
+        function validateEmail() {
+            const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            let email = document.getElementById('email_basket').value;
+            let isValid = re.test(String(email).toLowerCase());
+            if(isValid){
+                document.getElementById('valid-email-icon').classList.remove('hidden');
+            } else {
+                document.getElementById('valid-email-icon').classList.add('hidden');
+            }
+        }
         // var rand = Math.floor(10000000 + Math.random() * 900000);
         // document.getElementById('order_code').value = rand;
 

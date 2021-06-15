@@ -32,9 +32,9 @@
                 </div>
 
                 @if(Session::get('_previous') !== null)
-                    <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+                    <a class="back-to-home-footer padded mt-3" href="{{Session::get('_previous')['url']}}">
                 @else
-                    <a class="back-to-home-footer mt-3" href="/">
+                    <a class="back-to-home-footer padded mt-3" href="/">
                 @endif
                     <img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">
                     <p class="back-home-text">Back</p>
@@ -48,16 +48,17 @@
 
                     <div class="col-md-12">
                         <p class="footer-text-small">
-                            Bamboo Distribution Ltd (Bamboo) is a privately owned Limited Company. This Privacy Policy describes our practices related to Personal Information and how Bamboo applies the principles and rights afforded to individuals by the General Data Protection Regulation (GDPR). <br>
+                            {{-- Bamboo Distribution Ltd (Bamboo) is a privately owned Limited Company. This Privacy Policy describes our practices related to Personal Information and how Bamboo applies the principles and rights afforded to individuals by the General Data Protection Regulation (GDPR). <br>
                             As a business, we need to process information about our customers to monitor our performance and achievements, to facilitate deliveries, collections and payments, administrate accounts and keep customers informed of our activities. <br>
-                            Because of our commitment to the principles of GDPR, we will willingly give you access to any personal information we have about you. We aim to comply with requests to access personal information as quickly as possible so you can request your information be amended, erased, or not used for marketing purposes.
+                            Because of our commitment to the principles of GDPR, we will willingly give you access to any personal information we have about you. We aim to comply with requests to access personal information as quickly as possible so you can request your information be amended, erased, or not used for marketing purposes. --}}
+                            www.bamboomobile.co.uk is a site operated by our commitment to the principles of GDPR, adhere to the eight principles laid down by the regulation. We will be accountable for your data and will ensure our security keeps your data safe as possible.
                         </p>
                     </div>
                     <br>
                     <hr>
 
                     <div class="col-md-12">
-                        <p class="text-left footer-text-title">Legal Basis for Collecting and Processing your Personal Information </p>
+                        <p class="text-left footer-text-title">Legal Basis for Collecting and Processing your Personal Information</p>
                         <p class="footer-text-small">
                             The law on data protection sets out several different grounds on which we can collect and process your personal information. The information below sets out when we rely on these different grounds:
                         </p>

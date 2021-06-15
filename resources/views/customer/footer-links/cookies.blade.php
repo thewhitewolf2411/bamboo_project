@@ -34,9 +34,9 @@
                 </div>
                 
                 @if(Session::get('_previous') !== null)
-                    <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+                    <a class="back-to-home-footer padded mt-3" href="{{Session::get('_previous')['url']}}">
                 @else
-                    <a class="back-to-home-footer mt-3" href="/">
+                    <a class="back-to-home-footer padded mt-3" href="/">
                 @endif
                     <img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">
                     <p class="back-home-text">Back</p>
@@ -85,7 +85,7 @@
                         <p class="footer-text-small">
                             This site offers newsletter or email subscription services and cookies may be used to remember if you are already registered and whether to show certain notifications which might only be valid to subscribed/unsubscribed users.<br><br>
 
-                            When you submit data to through a form such as those found on contact pages or comment forms, cookies may be set to remember your user details for future correspondence.
+                            When you submit data to through a form such as those found on <strong class="bold">contact pages</strong> or <strong class="bold">comment forms</strong>, cookies may be set to remember your user details for future correspondence.
                         </p>
                     </div>
                     <br>
@@ -96,10 +96,16 @@
                         <p class="text-left footer-text-title">Third Party Cookies</p>
                         <br>
                         <p class="footer-text-small">
-                            In some special cases we also use cookies provided by trusted third parties. The following section details which third party cookies you might encounter through this site.
+                            {{-- In some special cases we also use cookies provided by trusted third parties. The following section details which third party cookies you might encounter through this site.
                             This site uses Google Analytics which is one of the most widely used and trusted analytics solutions on the web, for helping us to understand how you use the site and ways that we can improve your experience. These cookies may track things such as how long you spend on the site and the pages that you visit which will enable us to continue to produce engaging content.<br>
                             For more information on Google Analytics cookies, see the official Google Analytics page.<br><br>
-                            We also use social media buttons and/or plugins on this site that allow you to connect with your social network in various ways. For these to work the following social media sites including; Facebook, Twitter, LinkedIn, Google Plus, will set cookies through our site which may be used to enhance your profile on their site or contribute to the data they hold for various purposes outlined in their respective privacy policies.
+                            We also use social media buttons and/or plugins on this site that allow you to connect with your social network in various ways. For these to work the following social media sites including; Facebook, Twitter, LinkedIn, Google Plus, will set cookies through our site which may be used to enhance your profile on their site or contribute to the data they hold for various purposes outlined in their respective privacy policies. --}}
+                            When using our website, you may encounter embedded content or be directed to other websites for certain activities. These websites and embedded content may use their own cookies. We do not control the placement of cookies by other websites, even if you are directed to them from our website.
+                            <br>
+                            Our cookie preferences tool can be used to personalise your cookie preferences. The tool will record your consent to our cookie policy and will ask you again every 12 months in order to keep you informed of changes to our cookie policy. Our tool controls performance, functionality and targeted advertising cookies that we have set. Strictly Necessary Cookies cannot be disabled, and the tool cannot be used to block cookies from third-party sites linked to our website.
+                            <br>
+                            Many of the cookies used on our website can also be enabled or disabled through your browser. To do this, follow the instructions which generally appear in the "Help", "Tools" or "Edit" menus of your browser. Please note that disabling a cookie or a category of cookies does not remove the cookie from your browser, unless it is manually completed through your browser function.
+
                         </p>
                     </div>
                     <br>
@@ -110,9 +116,9 @@
                         <p class="text-left footer-text-title">More Information</p>
                         <br>
                         <p class="footer-text-small">
-                            Hopefully we have provided relevant information regarding cookies, however if there is something that you aren’t sure whether you need or not, it’s usually sounder to leave cookies enabled in case it does interact with one of the features you use on our site. However, if you are still looking for more information then you can contact us through one of our preferred contact methods.<br>
-                            Email: info@bamboomobile.co.uk<br>
-                            Phone: +44 (0)345 582 0511<br>
+                            Hopefully we have provided relevant information regarding cookies, however if there is something that you aren’t sure whether you need or not, it’s usually sounder to leave cookies enabled in case it does interact with one of the features you use on our site. However, if you are still looking for more information then you can contact us<br>
+                            email: info@bamboomobile.co.uk<br> or 
+                            call: +44 (0)345 582 0511<br>
                         </p>
                     </div>
                     <br>

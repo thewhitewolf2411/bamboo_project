@@ -3,6 +3,11 @@
     border-radius: 8px;
 }
 
+.btn:focus, .btn.focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 .btn.start-selling{
     background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
     // background: #F28E33 0% 0% no-repeat padding-box;

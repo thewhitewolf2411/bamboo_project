@@ -173,6 +173,11 @@
                 <p class="contact-form-header">TELEPHONE</p>
                 {{-- <p class="contact-form-desc">Call the number opposite to talk to our friendly and professional team of mobile specialists.</p> --}}
                 <p class="contact-form-desc telephone">To contact a member of the bamboo team, please use the number opposite</p>
+
+                <div class="d-flex flex-column justify-content-center">
+                    <p class="get-started-contact">Get Started</p>
+                    <a href="/sell" class="btn start-selling howitworks d-block ml-auto mr-auto"><p>Start Selling</p></a>
+                </div>
             </div>
  
             <div class="telephone-contact-container">
@@ -203,9 +208,9 @@
                     <p style="opacity: 0.5; margin: 0;" class="worktime-text mt-2">Calls are charged at local rate.</p>
                     <p class="worktime-text mt-2 disclaimer">Please note calls are recorded for monitoring and are used for ongoing training purposes.</p>
 
-                    <a href="/sell" class="btn btn-primary m-0 mt-4" style="background: #A3D147 !important; border: #A3D147 !important">
+                    {{-- <a href="/sell" class="btn btn-primary m-0 mt-4" style="background: #A3D147 !important; border: #A3D147 !important">
                         Start Selling
-                    </a>
+                    </a> --}}
                 </div>
             </div>
         </div>
@@ -272,6 +277,6 @@
 
 @endif
 
-@include('customer.layouts.footer', ['showGetstarted' => true, 'getStartedColor' => '#A3D147'])
+@include('customer.layouts.footer', ['showGetstarted' => false, 'getStartedColor' => '#A3D147'])
 
 @endsection

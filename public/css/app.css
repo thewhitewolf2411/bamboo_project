@@ -11566,6 +11566,11 @@ main p, a, span {
   margin-top: 5px;
 }
 
+.footer-text-small.hyperlink {
+  color: #A3D147 !important;
+  font-family: Sharp Sans No1 Bold;
+}
+
 .environment-first-element {
   padding: 50px 150px;
 }
@@ -13105,6 +13110,10 @@ header {
   background: white;
 }
 
+.navbar-toggler {
+  padding-right: 0;
+}
+
 .header-container {
   display: flex;
   flex-direction: row;
@@ -13988,8 +13997,17 @@ header {
     height: auto;
   }
 
+  .left-header {
+    width: 55%;
+  }
+
+  .right-header {
+    width: 55%;
+  }
+
   .header-container {
     padding: 0 22px 22px 22px;
+    padding-right: 5px;
   }
 
   .full-logo > img {
@@ -18057,9 +18075,26 @@ input.lookup-delivery-basket::placeholder {
   margin-bottom: 44px;
 }
 
+.valid-field-confirmation {
+  width: 40px;
+  height: 40px;
+  margin-top: 5px;
+  margin-left: 14px;
+}
+
 .password-input {
   position: relative;
   width: 200px;
+}
+
+.password-input.basket {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.password-input.basket > input {
+  width: 300px;
 }
 
 .toggle-pass-visibility {
@@ -20652,6 +20687,11 @@ input[type=submit] {
   border-radius: 8px;
 }
 
+.btn:focus, .btn.focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 .btn.start-selling {
   background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
   border-radius: 8px;
@@ -22243,6 +22283,46 @@ input[type=submit] {
   padding-top: 20px;
 }
 
+@media screen and (max-width: 496px) {
+  .support-questions-row {
+    flex-direction: column;
+  }
+
+  .support-questions-column.margin-right {
+    margin-right: 0;
+  }
+
+  .support-questions-column {
+    padding: 0 24px;
+  }
+
+  .title-supportselling {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-60)/75px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    font: normal normal normal 60px/75px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    opacity: 1;
+    padding: 0 15px;
+    text-align: center;
+  }
+
+  .support-question-title {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-sharp-sans-no1-medium);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    font: normal normal normal 20px/27px Sharp Sans No1 Medium;
+    letter-spacing: 0px;
+    opacity: 1;
+  }
+
+  #support-question-answers-container {
+    padding: 0 24px;
+  }
+
+  .card-body.answer {
+    padding: 25px;
+  }
+}
 .news-title-container {
   background: url("/customer_page_images/body/Jade-Salmon.png");
   height: 250px;
@@ -22925,8 +23005,14 @@ input[type=submit] {
 }
 
 .contact-form-desc {
-  font-family: Sharp Sans No1 Book;
-  font-size: 20px;
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--black);
+  text-align: left;
+  font: normal normal normal 20px/28px Sharp Sans No1 Book;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
   margin-left: 0;
 }
 
@@ -23031,6 +23117,20 @@ input[type=submit] {
 .contact-form-desc.telephone {
   width: 100%;
   max-width: 480px;
+  color: var(--bamboo-green);
+}
+
+.get-started-contact {
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-50)/var(--unnamed-line-spacing-58) var(--unnamed-font-family-sharp-sans-no1-bold);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--unnamed-color-ffffff);
+  text-align: center;
+  font: normal normal normal 50px/58px Sharp Sans No1 Bold;
+  letter-spacing: 0px;
+  color: var(--bamboo-green);
+  opacity: 1;
+  margin-bottom: 50px;
+  margin-top: 35px;
 }
 
 .worktime-container {

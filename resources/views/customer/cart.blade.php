@@ -43,7 +43,7 @@
 
             @if(Session::has('success'))
 
-                <div class="alert alert-success w-50 m-auto text-center" role="alert">
+                <div class="alert alert-success w-50 ml-auto mr-auto mt-4 mb-4 text-center" role="alert">
                     {{Session::get('success')}}
                 </div>
 

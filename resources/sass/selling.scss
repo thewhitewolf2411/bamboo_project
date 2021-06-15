@@ -2215,9 +2215,26 @@ input.lookup-delivery-basket::placeholder{
     margin-bottom: 44px;
 }
 
+.valid-field-confirmation{
+    width: 40px;
+    height: 40px;
+    margin-top: 5px;
+    margin-left: 14px;
+}
+
 .password-input{
     position: relative;
     width: 200px;
+}
+
+.password-input.basket{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.password-input.basket > input{
+    width: 300px;
 }
 
 .toggle-pass-visibility{

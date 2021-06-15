@@ -5,7 +5,9 @@ header{
     z-index: 50;
     background: white;
 }
-
+.navbar-toggler{
+    padding-right: 0;
+}
 .header-container{
     display: flex;
     flex-direction: row;
@@ -987,8 +989,17 @@ header{
         height: auto;
     }
 
+    .left-header{
+        width: 55%;
+    }
+
+    .right-header{
+        width: 55%;
+    }
+
     .header-container{
         padding: 0 22px 22px 22px;
+        padding-right: 5px;
     }
 
     .full-logo > img {

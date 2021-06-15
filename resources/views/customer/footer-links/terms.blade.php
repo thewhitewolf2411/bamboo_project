@@ -32,9 +32,9 @@
                     </div>
                 </div>
                 @if(Session::get('_previous') !== null)
-                    <a class="back-to-home-footer mt-3" href="{{Session::get('_previous')['url']}}">
+                    <a class="back-to-home-footer padded mt-3" href="{{Session::get('_previous')['url']}}">
                 @else
-                    <a class="back-to-home-footer mt-3" href="/">
+                    <a class="back-to-home-footer padded mt-3" href="/">
                 @endif
                     <img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">
                     <p class="back-home-text">Back</p>
@@ -44,7 +44,7 @@
 
                     <div class="col-md-12">
                         <p class="footer-text-small">
-                            Please read these terms and conditions carefully before submitting your sell order from our site. You should understand that by submitting an order, you agree to be bound by these terms and conditions and our terms of use.
+                            Please read these terms and conditions carefully before submitting your sell order from our site. You should understand that by submitting an order, you agree to be bound by these terms and conditions and our terms of use.                        
                         </p>
                     </div>
                     <br>
@@ -68,10 +68,12 @@
                             <li>the contract was negotiated and concluded exclusively by means of distance communication (including, but not limited to, telephone, letter, fax or email); and</li>
                             <li>you are a natural person acting outside the purposes of any business.</li>
                         </ul>
+                        <br>
                         <p class="footer-text-small">
-                            When cancelling during the cooling-off period, you need not give us any reason for cancelling the contract, nor will you have to pay any administration charges.<br>
-                            To cancel the contract you must login into your account at bamboomobile.co.uk, please do not send the device(s) to us during your “cooling off period”.<br>
-                            Other than if the device does not meet our terms and conditions (see below), this contract cannot be cancelled after you have sent your device(s) to us (outside the "cooling-off period").<br>
+                            When cancelling during the cooling-off period, you need not give us any reason for cancelling the contract, nor will you have to pay any administration charges.
+                            To cancel the contract you must login into your account at bamboomobile.co.uk, please do not send the device(s) to us during your “cooling off period”.
+                            Other than if the device does not meet our terms and conditions (see below), this contract cannot be cancelled after you have sent your device(s) to us (outside the "cooling-off period").
+
                         </p>
                     </div>
 
@@ -202,7 +204,7 @@
                         <p class="footer-text-small">
                             We accept phone battery chargers and accessories. But, these do not increase the value of your order. We may not be able to return accessories or original packaging (box) if you request your phone to be returned.<br>
                             By submitting an order through our site you warrant that the phone(s) and/or devices(s) comply with these terms.<br>
-                            If a phone/device fails to meet our terms and conditions, we will offer an adjusted price by email. If you choose to decline our new offer, we are happy to return the phone. We have the final decision on all phone values. Adjusted orders will be automatically processed for payment if you do not reply to our proposed offer email within 7 days.
+                            If a phone/device fails to meet our terms and conditions, we will offer an adjusted. If you choose to decline our new offer, we are happy to return the phone. We have the final decision on all phone values. Adjusted orders will be automatically processed for payment if you do not reply to our proposed offer email within 7 days.
                         </p>
                     </div>
                     <br>
@@ -288,7 +290,7 @@
                         <p class="text-left footer-text-title">Postage & Packaging</p>
                         <br>
                         <p class="footer-text-small">
-                            If you have more than 2 devices to SELL to us please contact our customer support team at 0345 582 0511 or email customersupport@bamboo.co.uk<br><br>
+                            If you have more than 2 devices to SELL to us please place a new order or contact our customer support team at *0345 582 0511 or email customersupport@bamboo.co.uk<br><br>
                             Phones and devices must be packaged in accordance with our packaging instructions to ensure safe and successful delivery to us.<br><br>
                             Unfortunately, other than when we arrange courier collections, for the avoidance of doubt this does not include Royal Mail special delivery. We do not accept responsibility.<br>
                             Please note you will be covered up to:
@@ -304,7 +306,7 @@
                         <p><strong>Waltham Abbey</strong></p>
                         <p><strong>Hertfordshire</strong></p>
                         <p><strong>EN9 1AS</strong></p>
-                        <p class="footer-text-small">Please see <a href="https://www.mazumamobile.com/printPostingInstructions.html" target="blank">posting options</a> and <a href="https://www.mazumamobile.com/printPackingInstructions.html" target="_blank">packaging instructions</a> for further details.</p>
+                        <p class="footer-text-small">Please see <a class="footer-text-small hyperlink" href="https://www.mazumamobile.com/printPostingInstructions.html" target="blank">posting options</a> and <a class="footer-text-small hyperlink" href="https://www.mazumamobile.com/printPackingInstructions.html" target="_blank">packaging instructions</a> for further details.</p>
                     </div>
                     <br>
                     <hr>
@@ -347,7 +349,7 @@
                     <div class="col-md-12">
                         <p class="text-left footer-text-title">Rejected offers</p>
                         <p class="footer-text-small">
-                            If you reject an amended offer for your order we will return your device/s. Please allow 3-5 working days. If the delivery is failed on the first attempt we will contact you by phone and email before returning for a second time. If the second attempt is failed you the customer must contact our office to arrange a third delivery at your own cost. If there is no contact for 7 days we will automatically process your payment at the amended price.
+                            If you reject an amended offer for your order we will return your device/s. Please allow 3-5 working days. If the delivery is failed on the first attempt we will contact you by phone and email before returning for a second time. If the second attempt is failed you the customer must contact our office to arrange a third delivery at your own cost. If you do not contact us, we will automatically process your payment at the amended price after 7 days.
                         </p>
                     </div>
                     <br>
@@ -414,7 +416,7 @@
                         <div>
                             <p class="text-left footer-text-title">3. Intellectual Property Rights</p>
                         </div>
-                        <p>
+                        <p class="footer-text-small">
                             <strong>3.1</strong> We are the owner or the licensee of all intellectual property rights in our site, and in the material published on it. Those works are protected by copyright laws and treaties around the world. All such rights are reserved.
                         </p>
                         <p class="footer-text-small">
@@ -481,7 +483,7 @@
                             <p class="text-left footer-text-title">7. Information About You and Your Visits to Our Site</p>
                         </div>
                         <p class="footer-text-small">
-                            We process information about you in accordance with our privacy policy. By using our site, you consent to such processing and you warrant that all data provided by you is accurate.
+                            We process information about you in accordance with our <a class="footer-text-small hyperlink" href="/privacy">privacy policy</a>. By using our site, you consent to such processing and you warrant that all data provided by you is accurate.
                         </p>
                     </div>
                     <br>
@@ -563,6 +565,19 @@
                         </div>
                         <p class="footer-text-small">
                             We reserve the rights to revise these terms of use at any time by amending this page. You are expected to check this page from time to time to take notice of any changes that we have made, as they are binding on you. Some of the provisions contained in these terms of use may also be superseded by provisions or notices published elsewhere on our site.
+                        </p>
+                    </div>
+                    <br>
+
+                    <div class="col-md-12">
+                        <div>
+                            <p class="text-left footer-text-title">13. Large print, audio, braille</p>
+                        </div>
+                        <p class="footer-text-small">
+                            All documentation is available in large print, audio or braille.  If you require any of these formats then please contact us on customersupport@bamboomobile.co.uk or call *0345 582 0511.                         
+                        </p>
+                        <p class="footer-text-small">
+                            * Calls may be recorded and/or monitored. Price of call will incur roaming charges if calling from abroad. Check with your operator for details. 
                         </p>
                     </div>
                     <br>

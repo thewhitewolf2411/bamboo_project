@@ -143,7 +143,7 @@
         
 
         </main>
-        @include('customer.layouts.footer', ['showGetstarted' => true])
+        @include('customer.layouts.footer', ['showGetstarted' => false])
 
     </body>
     <script>

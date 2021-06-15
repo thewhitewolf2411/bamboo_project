@@ -118,6 +118,7 @@ window.checkNewPass = function(select){
         if(has_ten_characters && has_number && has_symbol && has_uppercase_letter){
             if(select == "password_card"){
                 document.getElementById("pass-strength-card").innerHTML = 'Strong';
+                document.getElementById('valid-password-icon').classList.remove('hidden');                
             }
             else{
                 document.getElementById("pass-strength").innerHTML = 'Strong';
@@ -148,6 +149,7 @@ window.checkNewPass = function(select){
 
             if(select == "password_card"){
                 document.getElementById("pass-strength-card").innerHTML = 'Unsecure';
+                document.getElementById('valid-password-icon').classList.add('hidden');
             }
             else{
                 document.getElementById("pass-strength").innerHTML = 'Unsecure';
