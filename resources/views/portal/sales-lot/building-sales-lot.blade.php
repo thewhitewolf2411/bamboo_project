@@ -108,8 +108,7 @@
                             <td>Box Number</td>
                             <td>Bamboo Grade</td>
                             <td>Network</td>
-                            <td>Added QTY</td>
-                            <td>Total QTY</td>
+                            <td>Avaliable QTY</td>
                             <td>Total Cost</td>
                             <td><input type="checkbox" id="select_all_boxes_building_lot"></td>
                         </tr>
@@ -119,8 +118,7 @@
                             <td>Box Number</td>
                             <td>Bamboo Grade</td>
                             <td>Network</td>
-                            <td>Added QTY</td>
-                            <td>Total QTY</td>
+                            <td>Avaliable QTY</td>
                             <td>Total Cost</td>
                             <td></td>
                         </tr>

@@ -58847,7 +58847,8 @@ function setBayedBoxesDataTable(boxes) {
 
   for (var i = 0; i < boxes.length; i++) {
     var row = '<input class="bayed_boxes" type="checkbox" id="box_"' + boxes[i].id + '" data-id="' + boxes[i].id + '">';
-    bayedBoxesTable.row.add([boxes[i].tray_name, boxes[i].tray_grade, boxes[i].tray_network, boxes[i].number_of_devices - boxes[i].added_qty, boxes[i].number_of_devices, '£' + boxes[i].total_cost, row]).node().id = boxes[i].id;
+    bayedBoxesTable.row.add([boxes[i].tray_name, boxes[i].tray_grade, boxes[i].tray_network, boxes[i].number_of_devices - (boxes[i].number_of_devices - boxes[i].added_qty), //boxes[i].number_of_devices,
+    '£' + boxes[i].total_cost, row]).node().id = boxes[i].id;
     bayedBoxesTable.draw(false);
   }
 
@@ -58926,9 +58927,9 @@ function handleLeftBoxes(boxes) {
 
   for (var i = 0; i < boxids.length; i++) {
     rowdata = bayedBoxesTable.row('#' + boxids[i]).data();
-    rowdata[3] += number_of_devices[i];
+    rowdata[3] -= number_of_devices[i];
 
-    if (rowdata[3] >= rowdata[4]) {
+    if (rowdata[3] == 0) {
       bayedBoxesTable.row('#' + boxids[i]).remove().draw(false);
     } else {
       bayedBoxesTable.row('#' + boxids[i]).data(rowdata).draw(false);

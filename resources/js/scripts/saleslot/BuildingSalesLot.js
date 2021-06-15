@@ -280,8 +280,8 @@ function setBayedBoxesDataTable(boxes){
             boxes[i].tray_name,
             boxes[i].tray_grade,
             boxes[i].tray_network,
-            boxes[i].number_of_devices - boxes[i].added_qty,
-            boxes[i].number_of_devices,
+            boxes[i].number_of_devices - (boxes[i].number_of_devices - boxes[i].added_qty),
+            //boxes[i].number_of_devices,
             '£' + boxes[i].total_cost,
             row,
         ]).node().id = boxes[i].id;
@@ -405,11 +405,12 @@ function handleLeftBoxes(boxes){
     var rowdata;
 
     for(var i = 0; i<boxids.length; i++){
+
         rowdata = bayedBoxesTable.row('#' + boxids[i]).data();
 
-        rowdata[3] += number_of_devices[i];
+        rowdata[3] -= number_of_devices[i];
 
-        if(rowdata[3] >= rowdata[4]){
+        if(rowdata[3] == 0){
             bayedBoxesTable.row('#' + boxids[i]).remove().draw(false);
         }
         else{
