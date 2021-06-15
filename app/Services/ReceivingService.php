@@ -46,7 +46,7 @@ class ReceivingService{
             self::saveSerial($receivingData['serial_number'], $receivingData['tradeinid']);
         }
         
-        if(array_key_exists('visible_imei', $receivingData)){
+        if(array_key_exists('visible_imei', $receivingData) && $receivingData['visible_imei'] !== 'no'){
             self::checkImei($receivingData['imei_number'], $receivingData['tradeinid']);
         }
 

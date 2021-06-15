@@ -578,7 +578,7 @@ class Reports{
 
         foreach($tradeins as $key=>$tradein){
 
-            if($tradein->isInTesting()){
+            if($tradein->hasBeenTested()){
 
                 $correct_network = '';
                 if($tradein->correct_network === null){

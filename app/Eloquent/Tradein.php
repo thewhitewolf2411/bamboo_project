@@ -1264,4 +1264,12 @@ class Tradein extends Model
         return false;
     }
 
+    public function wasInQuarantine(){
+        if($this->quarantine_date !== null){
+            return true;
+        }
+
+        return false;
+    }
+
 }

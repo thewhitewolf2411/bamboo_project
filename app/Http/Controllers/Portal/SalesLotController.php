@@ -174,11 +174,13 @@ class SalesLotController extends Controller
 
         $tradeins = Tradein::whereIn('id', $deviceIds)->get();
         $grouped = $tradeins->groupBy(['product_id', 'correct_memory', 'product_colour', 'correct_network']);
+        #dd($grouped);
 
         foreach($grouped as $device_id => $devices){
+            #dd($device_id);
 
-            $dev = Tradein::find($device_id);
-            $product = SellingProduct::find($dev->product_id);
+            #$dev = Tradein::find($device_id);
+            $product = SellingProduct::find($device_id);
 
             $brand = Brand::find($product->brand_id)->brand_name;
             $product = SellingProduct::find($device_id);
