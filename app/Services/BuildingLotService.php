@@ -259,7 +259,7 @@ class BuildingLotService{
             $tradein->device_cost = $tradein->getDeviceCost();
             $returnTradeins->push($tradein);
 
-            $tradein->save();
+            //$tradein->save();
         }
 
         return $returnTradeins;
