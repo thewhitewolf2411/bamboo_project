@@ -1,89 +1,91 @@
 $(document).ready(function(){
 
-    if(document.getElementById('boxed-tradeins')){
+    if(!document.getElementById('edit_lot_id')){
+        if(document.getElementById('boxed-tradeins')){
 
-        $.ajax({
-            url: "/portal/sales-lot/building-sales-lot/build-lot/getTradeins",
-            type:"GET",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success:function(response){
-    
-                setBoxedTradeinsDataTable(response);
-            }
-        });
-
-    }
-
-    if(document.getElementById('bayed-boxes')){
-
-        $.ajax({
-            url: "/portal/sales-lot/building-sales-lot/build-lot/getBoxes",
-            type:"GET",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success:function(response){
-    
-                setBayedBoxesDataTable(response);
-            }
-        });
-
-    }
-
-    if(document.getElementById('added-tradeins-building-lot')){
-        $('#added-tradeins-building-lot tfoot td').each( function () {
-            var title = $(this).text();
-            $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
-        } );    
-
-        var addedtradeinstable = $('#added-tradeins-building-lot').DataTable({
-            "oLanguage" : {
-                "sInfo" : "Showing _START_ to _END_",
-             },
-             "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-             "pageLength":-1,
-             "ordering": false,
-             paging: false,
-             info: false
-        });
-
-        addedtradeinstable.columns().every( function () {
+            $.ajax({
+                url: "/portal/sales-lot/building-sales-lot/build-lot/getTradeins",
+                type:"GET",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success:function(response){
         
-            var that = this;
-            $( 'input', this.footer() ).on( 'keyup change', function () {
-                if ( that.search() !== this.value ) {
-                    that
-                        .search( this.value )
-                        .draw();
+                    setBoxedTradeinsDataTable(response);
                 }
-            } );
+            });
+    
+        }
+    
+        if(document.getElementById('bayed-boxes')){
+    
+            $.ajax({
+                url: "/portal/sales-lot/building-sales-lot/build-lot/getBoxes",
+                type:"GET",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success:function(response){
+        
+                    setBayedBoxesDataTable(response);
+                }
+            });
+    
+        }
+    
+        if(document.getElementById('added-tradeins-building-lot')){
+            $('#added-tradeins-building-lot tfoot td').each( function () {
+                var title = $(this).text();
+                $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+            } );    
+    
+            var addedtradeinstable = $('#added-tradeins-building-lot').DataTable({
+                "oLanguage" : {
+                    "sInfo" : "Showing _START_ to _END_",
+                 },
+                 "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                 "pageLength":-1,
+                 "ordering": false,
+                 paging: false,
+                 info: false
+            });
+    
+            addedtradeinstable.columns().every( function () {
+            
+                var that = this;
+                $( 'input', this.footer() ).on( 'keyup change', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            });
+        }
+    
+        $('input:checkbox').change(function(){
+            //Check and uncheck all left side tradeins
+            if($(this).prop('id') === 'select_all_tradeins_building_lot'){
+                $('.boxed_tradeins').each(function(){
+                    $(this).prop('checked', $('#select_all_tradeins_building_lot').prop('checked'));
+                });
+            }
+            //Check and uncheck all left side boxes
+            if($(this).prop('id') === 'select_all_boxes_building_lot'){
+                $('.bayed_boxes').each(function(){
+                    $(this).prop('checked', $('#select_all_boxes_building_lot').prop('checked'));
+                });
+            }
+            //Check and uncheck all right side tradeins
+            if($(this).prop('id') === 'select_all_added_tradeins_building_lot'){
+                $('.added_tradeins').each(function(){
+                    $(this).prop('checked', $('#select_all_added_tradeins_building_lot').prop('checked'));
+                });
+            }
+    
         });
     }
 
-    $('input:checkbox').change(function(){
-        //Check and uncheck all left side tradeins
-        if($(this).prop('id') === 'select_all_tradeins_building_lot'){
-            $('.boxed_tradeins').each(function(){
-                $(this).prop('checked', $('#select_all_tradeins_building_lot').prop('checked'));
-            });
-        }
-        //Check and uncheck all left side boxes
-        if($(this).prop('id') === 'select_all_boxes_building_lot'){
-            $('.bayed_boxes').each(function(){
-                $(this).prop('checked', $('#select_all_boxes_building_lot').prop('checked'));
-            });
-        }
-        //Check and uncheck all right side tradeins
-        if($(this).prop('id') === 'select_all_added_tradeins_building_lot'){
-            $('.added_tradeins').each(function(){
-                $(this).prop('checked', $('#select_all_added_tradeins_building_lot').prop('checked'));
-            });
-        }
-
-    });
-    
 });
 
 

@@ -134,7 +134,9 @@ $('#view-sales-lot-btn').on('click', function () {
 
 $('#edit-lot-btn').on('click', function(){
 
-    alert("Currently disabled");
+    var selectedid = $('.saleslot-active').attr('id');
+
+    window.open('/portal/sales-lot/building-sales-lot/' + selectedid, '_self');
 
 });
 

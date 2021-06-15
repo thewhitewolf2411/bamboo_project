@@ -28,7 +28,8 @@ class SalesLotController extends Controller
         return view('portal.sales-lot.sales-lot', ['portalUser'=>$portalUser]);
     }
 
-    public function showBuildingSalesLotPage(){
+    public function showBuildingSalesLotPage($id = null){
+
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
 
@@ -37,9 +38,24 @@ class SalesLotController extends Controller
 
         $completedTradeins = array();
 
-        $totalSalesLots = count(SalesLot::all());
+        $totalSalesLots = null;
+        $salelot = null;
+        $edit = false;
 
-        return view('portal.sales-lot.building-sales-lot', ['portalUser'=>$portalUser, 'tradeins'=>$tradeins, 'boxes'=>$boxes, 'completedTradeins'=>$completedTradeins, 'totalSalesLots'=>$totalSalesLots]);
+        if($id !== null){
+            $totalSalesLots = SalesLot::find($id)->id;
+            $edit = true;
+            $salelot = SalesLot::find($id);
+        }
+        else{
+            $totalSalesLots = count(SalesLot::all());
+        }
+
+        
+
+        return view('portal.sales-lot.building-sales-lot', 
+                ['portalUser'=>$portalUser, 'tradeins'=>$tradeins, 'boxes'=>$boxes, 
+                'completedTradeins'=>$completedTradeins, 'totalSalesLots'=>$totalSalesLots, 'edit'=>$edit, 'salelot'=>$salelot]);
     }
 
 
@@ -445,8 +461,20 @@ class SalesLotController extends Controller
         return $returnTradeins;
     }
 
+    public function getSaleLotTradeins(Request $request){
+        $result = BuildingLotService::getSaleLotTradeins($request->sale_lot_id);
+
+        return $result;
+    }
+
     public function createLot(Request $request){
         $result = BuildingLotService::createLot($request->all());
+
+        return $result;
+    }
+
+    public function editSaleLot(Request $request){
+        $result = BuildingLotService::editLot($request->all());
 
         return $result;
     }
