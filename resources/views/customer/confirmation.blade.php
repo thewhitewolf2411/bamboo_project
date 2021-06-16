@@ -44,7 +44,7 @@
                 <div class="confirmation-info-col">
                     <img class="confirmation-woohoo-img" src="{{asset('/customer_page_images/body/emoji_winking.svg')}}">
                     <p class="confirmation-info-text-bold-large mt-2 mb-2 pl-2 pr-2 text-center">Wohoo! Your device is sold</p>
-                    <p class="confirmation-info-text-bold-smaller mb-2 pl-2 pr-2 text-center">Thanks for your sale! Your order number is {!!$tradein->barcode!!}</p>
+                    <p class="confirmation-info-text-bold-smaller thx mb-2 pl-2 pr-2 text-center">Thanks for your sale! Your order number is {!!$tradein->barcode!!}</p>
                     <p class="confirmation-info-text-smaller mt-2 pl-2 pr-2 text-center padded">
                         An email order confirmation has been sent which will include all the order details.
                     </p>
@@ -61,7 +61,7 @@
                                     <div class="confirmation-image-wrapper">
                                         <img class="confirmation-info-img" src="{{asset('/customer_page_images/body/final_free_trade_pack.svg')}}">
                                     </div>
-                                    <p class="confirmation-info-text-bold-smaller mt-4 ml-0 fixed-height">Hold tight! Your Free Trade Pack is on its way to you:</p>
+                                    <p class="confirmation-info-text-bold-smaller mt-4 ml-0 fixed-height">Hold tight! Your Free Trade Pack is on its way to you</p>
                                     <p class="confirmation-info-text description mt-2">
                                         Thank you for selling your device with us and ordering a Free Trade Pack – this will be posted via 1st Class post via Royal Mail.<br>
                                     </p>
@@ -71,7 +71,7 @@
                                     <div class="confirmation-image-wrapper">
                                         <img class="confirmation-info-img" src="{{asset('/customer_page_images/body/free_print_own_label.svg')}}">
                                     </div>
-                                    <p class="confirmation-info-text-bold-smaller mt-4 ml-0 fixed-height">Print your postage label and send your device to us:</p>
+                                    <p class="confirmation-info-text-bold-smaller mt-4 ml-0 fixed-height">Print your postage label and send your device to us</p>
                                     <p class="confirmation-info-text description mt-2">
                                         Please click on the link below to create and print off a FREE postage label to affix to your securely packed device with the delivery note.<br>
                                         Packing and Posting Instructions are also available here.
@@ -99,7 +99,7 @@
                                 <p class="confirmation-info-text-bold-smaller mt-4 ml-0 fixed-height centered-vertically">Get Paid! Woohoo!</p>
                                 <p class="confirmation-info-text description mt-2">
                                     Here's the best bit!! Once your device has tested successfully we promise to pay you directly into your bank account on the same day!!<br>
-                                    *Mon-Fri, excluding public holidays. Same day payment does not apply to orders received after 2pm 
+                                    *Mon-Fri, excluding public holidays. Same day payment does not apply to orders received after 2pm
                                 </p>
                             </div>
                         </div>

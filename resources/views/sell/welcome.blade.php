@@ -105,7 +105,7 @@
             </div>
 
             <div id="sell-this" class="col mb-4 hidden">
-                <div class="see-more-sell-devices mb-5">
+                <div class="see-more-sell-devices mb-4">
                     <div class="text-center" onclick="seeAll()">
                         See all devices
                     </div>

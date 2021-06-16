@@ -70,6 +70,9 @@ class RegisterController extends Controller
      */
     protected function checkBirthDate($data){
         if(isset($data['birth_day']) && isset($data['birth_month']) && isset($data['birth_year'])){
+            if(($data['birth_day'] === "--") && ($data['birth_month'] == "--") && ($data['birth_year'] == "----")){
+                return true;
+            }
             try{
                 $date = Carbon::parse($data['birth_day'].'.'.$data['birth_month'].'.'.$data['birth_year']);
                 return true;
@@ -134,7 +137,9 @@ class RegisterController extends Controller
         $user->email = $data['email'];
         $user->password = Crypt::encrypt($data['password']);
         if(isset($data['birth_day']) && isset($data['birth_month']) && isset($data['birth_year'])){
-            $user->birth_date = Carbon::parse($data['birth_day'].'.'.$data['birth_month'].'.'.$data['birth_year']);
+            if(($data['birth_day'] != "--") && ($data['birth_month'] != "--") && ($data['birth_year'] != "----")){
+                $user->birth_date = Carbon::parse($data['birth_day'].'.'.$data['birth_month'].'.'.$data['birth_year']);
+            }
         }
         
         $user->delivery_address = $data['delivery_address'];
