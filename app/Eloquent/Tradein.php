@@ -386,7 +386,7 @@ class Tradein extends Model
     }
 
     public function canBeDespatched(){
-        if(in_array($this->job_state, ['2', '3', '4', '5', '6', '7', '8a', '8b', '8c', '8d', '8e', '8f',
+        if(in_array($this->job_state, ['5', '6', '7', '8a', '8b', '8c', '8d', '8e', '8f',
                                         '9','10','11','11a','11b','11c','11d','11e','11f','11g','11h','11i',
                                         '11j','12','13','14','15','15a','15b','15c','15d','15e','15f','15g',
                                         '15h','15i','15j','16','17','18','22','23','24','25','26','27'
@@ -422,6 +422,24 @@ class Tradein extends Model
         }
 
         return false;
+    }
+
+    public function isBoxedInBay(){
+        $trayid = TrayContent::where('trade_in_id', $this->id)->first();
+
+        if($trayid !== null && TrayContent::where('trade_in_id', $this->id)->first()->tray_id !== 0){
+            $trayid = $trayid->tray_id;
+            $tray = Tray::where('id', $trayid)->first();
+
+            if($tray->trolley_id !== null){
+                $trolley = Trolley::where('id', $tray->trolley_id)->first();
+                if($trolley->trolley_type === "B" || $trolley->trolley_type === "Bay"){
+                    //return $trolley->trolley_name;
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
 
@@ -1080,6 +1098,11 @@ class Tradein extends Model
     }
 
     public function getDeviceBambooGrade(){
+
+        if($this->bamboo_grade === 'Catastrophic'){
+            return $this->bamboo_grade;
+        }
+
         switch($this->cosmetic_condition){
             case 'A':
                 return 'Grade A';

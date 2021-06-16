@@ -330,13 +330,23 @@ class Reports{
                     $tradeinauditReturned = $tradeinauditReturned->created_at;
                 }
 
+                $number = "";
+
+                if($tradein->imei_number === null){
+                    $number = $tradein->serial_number;
+                }
+                else{
+                    $number = $tradein->imei_number;
+                }
+    
+
                 #$index = $key+2;
 
                 $sheet->setCellValue('A'.$i, $tradein->barcode_original);
                 $sheet->setCellValue('B'.$i, $tradein->barcode);
                 $sheet->setCellValue('C'.$i, $tradein->getBrandName($tradein->product_id));
                 $sheet->setCellValue('D'.$i, $tradein->getProductName($tradein->product_id));
-                $sheet->setCellValue('E'.$i, $tradein->imei_number);
+                $sheet->setCellValue('E'.$i, $number);
                 $sheet->setCellValue('F'.$i, $correctMemory);
                 $sheet->setCellValue('G'.$i, $tradein->product_colour);
                 $sheet->setCellValue('H'.$i, $tradein->customer_grade);
@@ -484,13 +494,23 @@ class Reports{
                     $tradeinauditReturned = $tradeinauditReturned->created_at;
                 }
 
+                $number = "";
+
+                if($tradein->imei_number === null){
+                    $number = $tradein->serial_number;
+                }
+                else{
+                    $number = $tradein->imei_number;
+                }
+    
+
                 #$index = $key+2;
 
                 $sheet->setCellValue('A'.$i, $tradein->barcode_original);
                 $sheet->setCellValue('B'.$i, $tradein->barcode);
                 $sheet->setCellValue('C'.$i, $tradein->getBrandName($tradein->product_id));
                 $sheet->setCellValue('D'.$i, $tradein->getProductName($tradein->product_id));
-                $sheet->setCellValue('E'.$i, $tradein->imei_number);
+                $sheet->setCellValue('E'.$i, $number);
                 $sheet->setCellValue('F'.$i, $correctNetwork);
                 $sheet->setCellValue('G'.$i, $tradein->customer_grade);
                 $sheet->setCellValue('H'.$i, $tradein->created_at);
@@ -682,11 +702,20 @@ class Reports{
                     }
                 }
 
+                $number = "N/A";
+
+                if($tradein->imei_number === null){
+                    $number = $tradein->serial_number;
+                }
+                else{
+                    $number = $tradein->imei_number;
+                }
+
                 $sheet->setCellValue('A'.$i, $tradein->barcode_original);
                 $sheet->setCellValue('B'.$i, $tradein->barcode);
                 $sheet->setCellValue('C'.$i, $tradein->getBrandName($tradein->product_id));
                 $sheet->setCellValue('D'.$i, $tradein->getProductName($tradein->product_id));
-                $sheet->setCellValueExplicit('E'.$i, (string)$tradein->imei_number, DataType::TYPE_STRING);
+                $sheet->setCellValueExplicit('E'.$i, (string)$number, DataType::TYPE_STRING);
                 $sheet->setCellValue('F'.$i, $correct_network);
                 $sheet->setCellValue('G'.$i, $tradein->product_colour);
                 $sheet->setCellValue('H'.$i, $tradein->customer_grade);

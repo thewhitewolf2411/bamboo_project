@@ -445,7 +445,7 @@ class SalesLotController extends Controller
         $tradeins = Tradein::all();
 
         foreach($tradeins as $tradein){
-            if($tradein->isBoxed() && !$tradein->isPartOfSalesLot()){
+            if($tradein->isBoxed() && $tradein->isBoxedInBay() && !$tradein->isPartOfSalesLot()){
 
                 $tradein->tray_name = $tradein->getTrayName($tradein->id);
                 $tradein->bamboo_grade = $tradein->getDeviceBambooGrade();

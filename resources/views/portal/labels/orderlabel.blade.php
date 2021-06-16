@@ -100,7 +100,7 @@
    
     <table class="first-table">
       <tr>
-        <td></td>
+        <td>Bla</td>
         <td></td>
         <td><p class="header-text-right">{{Carbon\Carbon::now()->format('d/m/Y')}}</p></td>
       </tr>

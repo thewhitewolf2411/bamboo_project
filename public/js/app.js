@@ -58412,10 +58412,10 @@ $('#complete-box').on('click', function () {
         boxid: boxid
       },
       success: function success(response) {
-        window.open(response); //location.href = '/portal/warehouse-management/box-management/';
+        window.open(response);
+        location.href = '/portal/warehouse-management/box-management/';
       },
       error: function error(response) {
-        console.log(response);
         alert(response.responseText);
       }
     });
