@@ -14,7 +14,7 @@
         font-family: "Sharp Sans No1 Medium"; 
         font-style: normal;
         font-weight: 400;
-        src: url( {{public_path('/css/fonts/SharpSansMedium/30bb285a0c5e40fc620a793eff494dfd.eot')}}; 
+        src: url( "{{public_path('/css/fonts/SharpSansMedium/30bb285a0c5e40fc620a793eff494dfd.eot')}}" ); 
 
     }
 
