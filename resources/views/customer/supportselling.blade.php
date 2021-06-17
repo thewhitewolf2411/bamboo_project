@@ -381,7 +381,7 @@
         @foreach($faq as $question_answer)
             <div class="support-question-answers">
                 <div class="support-question-answers-title" id="collapse{!!$question_answer->id!!}" onclick="toggleCollapse({!!$question_answer->id!!})">
-                    <button class="btn btn-link collapsed toggle-collapse-answer" data-toggle="collapse" data-target="#{!!$question_answer->id!!}" aria-expanded="false" aria-controls="collapse{!!$question_answer->id!!}">
+                    <button class="btn btn-link collapsed toggle-collapse-answer pl-0" data-toggle="collapse" data-target="#{!!$question_answer->id!!}" aria-expanded="false" aria-controls="collapse{!!$question_answer->id!!}">
                         {!!$question_answer->question!!}
                     </button>
 
