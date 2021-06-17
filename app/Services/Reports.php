@@ -103,13 +103,15 @@ class Reports{
             $tradeinauditBoxed = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Awaiting Box build')->first();
             $tradeinauditReturned = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Device requested by customer')->first();
             if($tradeinauditTPDespatched === null){
-                $tradeinauditTPDespatched = '';
+                $tradeinauditTPDespatched = 'N/A';
             }
             else{
-                if($tradein->trade_pack_send_by_customer){
+                if(!$tradein->trade_pack_send_by_customer){
                     $tradeinauditTPDespatched = $tradeinauditTPDespatched->created_at;
                 }
-                $tradeinauditTPDespatched = 'N/A';
+                else{
+                    $tradeinauditTPDespatched = 'N/A';
+                }
                 
             }
             $tradeinauditUser = '';
@@ -294,7 +296,7 @@ class Reports{
                     $tradeinauditTPDespatched = '';
                 }
                 else{
-                    if($tradein->trade_pack_send_by_customer){
+                    if(!$tradein->trade_pack_send_by_customer){
                         $tradeinauditTPDespatched = $tradeinauditTPDespatched->created_at;
                     }
                     else{

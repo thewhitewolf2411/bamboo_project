@@ -226,7 +226,7 @@ class CustomerCareController extends Controller
             return \redirect()->back()->with('error', 'You can\'t print more than 30 tradeins in one go.');
         }
 
-        /*foreach($barcodes as $barcode){
+        foreach($barcodes as $barcode){
             $tiarr = Tradein::where('barcode', $barcode)->get();
             foreach($tiarr as $tradein){
                 $tradein->job_state = 3;
@@ -237,7 +237,7 @@ class CustomerCareController extends Controller
                 $klaviyoEmail = new KlaviyoEmail();
                 $klaviyoEmail->TradePackSent($user, $tradein);
             }
-        }*/
+        }
 
         $labels = array();
 

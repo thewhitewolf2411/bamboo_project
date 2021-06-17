@@ -254,7 +254,7 @@ class Tradein extends Model
                     return $tray->tray_name;
                 }
             }
-            return '';
+            return 'N/A';
         }
     }
 
@@ -341,8 +341,11 @@ class Tradein extends Model
             }
 
         }
+        else{
+            return "N/A";
+        }
 
-        return "N/A";
+        return "Downgraded";
     }
 
     public function getTestingQuarantineReason(){

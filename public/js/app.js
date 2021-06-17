@@ -59217,8 +59217,7 @@ $('#printpicknote').on('click', function () {
   window.open('/portal/warehouse-management/picking-despatch/print-pick-note/' + id, '_blank');
 });
 $('#despatchpickingsaleslot').on('click', function () {
-  var c = confirm("Are you sure you want to mark " + '' + " sale lot as despatched?");
-
+  
   if (c) {
     var _$$ajax;
 
