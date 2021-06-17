@@ -12,12 +12,27 @@ document.addEventListener("DOMContentLoaded", function(e) {
     if(memory_available.length === 1){
         // preselect it if not N/A
         memory_available[0].childNodes[0].click();
+    } else {
+        // preselect lowest memory size
+        if(memory_available.length > 1){
+            memory_available[0].childNodes[0].click();
+        }
     }
 
     let network_available = document.getElementsByClassName('device-network');
     if(network_available.length === 1){
         // preselect it
         network_available[0].click();
+    } else {
+        // preselect unlocked
+        if(network_available.length > 1){
+            network_available[0].click();
+        }
+    }
+
+    let grades_available = document.getElementsByName('grade');
+    if(grades_available.length >= 1){
+        grades_available[0].click();
     }
 
     // frontend validation

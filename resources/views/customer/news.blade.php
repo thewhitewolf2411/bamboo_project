@@ -26,8 +26,8 @@
 
                 <div class="news-primary">
                     <a class="news-main-item" href="/news/{{$blogs->first()->id}}">
-                        {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                        <img class="news-image main" src="/storage/news_images/{{$blogs->first()->image_1}}">
+                        {{-- <img class="news-image main" src="/storage/news_images/{{$blogs->first()->image_1}}"> --}}
+                        <img class="news-image main" src="{{$blogs->first()->getFirstImage()}}">
                         <div class="news-content-container">
                             <div @if($blogs->first()->cms_type === 0) class="news-tag" @elseif($blogs->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
                                 <p class="tag-content">@if($blogs->first()->cms_type === 0) NEWS @elseif($blogs->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
@@ -53,8 +53,9 @@
                     <div class="news-secondary">
                         @if($blogs->count() >= 3)
                             <a class="news-secondary-item first" href="/news/{{$blogs->skip(1)->first()->id}}">
-                                {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                                <img class="news-image main" src="/storage/news_images/{{$blogs->skip(1)->first()->image_1}}">
+                                {{-- <img class="news-image main" src="/storage/news_images/{{$blogs->skip(1)->first()->image_1}}"> --}}
+                                <img class="news-image main" src="{{$blogs->skip(1)->first()->getFirstImage()}}">
+
                                 <div class="news-content-container smaller-pad">
                                     <div @if($blogs->skip(1)->first()->cms_type === 0) class="news-tag" @elseif($blogs->skip(1)->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
                                         <p class="tag-content">@if($blogs->skip(1)->first()->cms_type === 0) NEWS @elseif($blogs->skip(1)->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
@@ -76,8 +77,9 @@
                             </a>
 
                             <a class="news-secondary-item second" href="/news/{{$blogs->skip(2)->first()->id}}">
-                                {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                                <img class="news-image main" src="/storage/news_images/{{$blogs->skip(2)->first()->image_1}}">
+                                {{-- <img class="news-image main" src="/storage/news_images/{{$blogs->skip(2)->first()->image_1}}"> --}}
+                                <img class="news-image main" src="{{$blogs->skip(2)->first()->getFirstImage()}}">
+
                                 <div class="news-content-container smaller-pad">
                                     <div @if($blogs->skip(2)->first()->cms_type === 0) class="news-tag" @elseif($blogs->skip(2)->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
                                         <p class="tag-content">@if($blogs->skip(2)->first()->cms_type === 0) NEWS @elseif($blogs->skip(2)->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
@@ -140,7 +142,9 @@
                 @foreach($all_news as $news)
                     <a class="all-news-item" href="/news/{{$news->id}}">
                         {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                        <img class="news-image main" src="/storage/news_images/{{$news->image_1}}">
+                        {{-- <img class="news-image main" src="/storage/news_images/{{$news->image_1}}"> --}}
+                        <img class="news-image main" src="{{$news->getFirstImage()}}">
+
                         <div class="news-content-container bottom-centered smaller-pad">
                             <div class="news-tag">
                                 <p class="tag-content">NEWS</p>
@@ -172,8 +176,8 @@
             <div class="blogs-row mt-2">
                 @foreach($all_blogs as $blog)
                     <a class="all-blogs-item" href="/news/{{$blog->id}}">
-                        {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                        <img class="news-image main" src="/storage/news_images/{{$blog->image_1}}">
+                        {{-- <img class="news-image main" src="/storage/news_images/{{$blog->image_1}}"> --}}
+                        <img class="news-image main" src="{{$blog->getFirstImage()}}">
                         <div class="news-content-container bottom-centered smaller-pad">
                             <div class="blog-tag">
                                 <p class="tag-content">BLOG</p>
@@ -208,8 +212,8 @@
                 <div class="main-howto-row">
 
                     <a class="main-howto-item" href="/news/{{$all_howto->first()->id}}">
-                        {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                        <img class="news-image main" src="/storage/news_images/{{$all_howto->first()->image_1}}">
+                        {{-- <img class="news-image main" src="/storage/news_images/{{$all_howto->first()->image_1}}"> --}}
+                        <img class="news-image main" src="{{$all_howto->first()->getFirstImage()}}">
                         <div class="news-content-container bottom-centered">
                             <div class="how-to-tag">
                                 <p class="tag-content">HOW TO, WITH BOO</p>
@@ -232,7 +236,8 @@
 
                     <a class="main-howto-item" href="/news/{{$all_howto->skip(1)->first()->id}}">
                         {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                        <img class="news-image main" src="/storage/news_images/{{$all_howto->skip(1)->first()->image_1}}">
+                        {{-- <img class="news-image main" src="/storage/news_images/{{$all_howto->skip(1)->first()->image_1}}"> --}}
+                        <img class="news-image main" src="{{$all_howto->skip(1)->first()->getFirstImage()}}">
                         <div class="news-content-container bottom-centered">
                             <div class="how-to-tag">
                                 <p class="tag-content">HOW TO, WITH BOO</p>
@@ -267,8 +272,9 @@
                 <div class="howto-row transparent-bg">
                     @foreach($all_howto as $howto)
                         <a class="all-howto-item" href="/news/{{$howto->id}}">
-                            {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                            <img class="news-image main" src="/storage/news_images/{{$howto->image_1}}">
+                            {{-- <img class="news-image main" src="/storage/news_images/{{$howto->image_1}}"> --}}
+                            <img class="news-image main" src="{{$howto->getFirstImage()}}">
+
                             <div class="news-content-container bottom-centered smaller-pad">
                                 <div class="how-to-tag">
                                     <p class="tag-content">HOW TO, WITH BOO</p>

@@ -71,10 +71,10 @@
                     <div class="map-col">
                         <p class="sitemap-title">My Bamboo</p>
                     </div>
-                    <div class="map-col">
-                        {{-- <p class="sitemap-title">Responsibilities</p> --}}
+                    {{-- <div class="map-col">
+                        <p class="sitemap-title">Responsibilities</p>
                         <a class="sitemap-text" href="/environment">Environment</a>
-                    </div>
+                    </div> --}}
                     <div class="map-col">
                         <p class="sitemap-title">Legal</p>
                         <a class="sitemap-text" href="/privacy">Privacy Policy</a>
@@ -146,6 +146,7 @@
                     </div>
                     <div class="map-col">
                         <p class="sitemap-title">Sell Tablets</p>
+                        <a class="sitemap-text" href="/sell/shop/tablets/all">Search All</a>
                         @foreach($tablets as $tablet)
                             @if(isset($tablet->id))
                                 <a class="sitemap-text" href="/sell/sellitem/{{$tablet->id}}">{{$tablet->product_name}}</a>
@@ -156,6 +157,7 @@
                     </div>
                     <div class="map-col">
                         <p class="sitemap-title">Sell Watches</p>
+                        <a class="sitemap-text" href="/sell/shop/watches/all">Search All</a>
                         @foreach($watches as $watch)
                             @if(isset($watch->id))
                                 <a class="sitemap-text" href="/sell/sellitem/{{$watch->id}}">{{$watch->product_name}}</a>

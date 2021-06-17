@@ -63,7 +63,8 @@
                                     </div>
                                     <p class="confirmation-info-text-bold-smaller mt-4 ml-0 fixed-height">Hold tight! Your Free Trade Pack is on its way to you</p>
                                     <p class="confirmation-info-text description mt-2">
-                                        Thank you for selling your device with us and ordering a Free Trade Pack – this will be posted via 1st Class post via Royal Mail.<br>
+                                        {{-- Thank you for selling your device with us and ordering a Free Trade Pack – this will be posted via 1st Class post via Royal Mail.<br> --}}
+                                        Thank you for selling your device with us and ordering a Free Trade Pack – this will be posted via 1st Class post Royal Mail.<br>
                                     </p>
                                 </div>
                             @else

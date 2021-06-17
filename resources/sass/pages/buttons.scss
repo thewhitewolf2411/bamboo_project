@@ -336,7 +336,7 @@
 }
 
 .btn.btn.sell-this-device.btn-light > p{
-    color: black !important;
+    color: white !important;
 }
 
 .btn.sell-this-device.active:hover{
@@ -349,10 +349,12 @@
 }
 
 .btn.sell-this-device.btn-light:hover{
-    border: 3px solid var(--black) !important;
-    border: 3px solid #000000 !important;
+    background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
+    border: 3px solid var(--black);
+    background: #F28E33 0% 0% no-repeat padding-box;
+    border: 3px solid #000000;
     border-radius: 8px;
-    opacity: 1;
+    opacity: 0.25;
 }
 
 .btn.sell-this-device:hover > p{
@@ -366,9 +368,12 @@
 }
 
 .btn.sell-this-device.btn-light{
-    color: #212529;
-    background-color: #f8f9fa;
-    border-color: #f8f9fa;
+    color: #FFFFFF;
+    // background-color: #f8f9fa;
+    // border-color: #f8f9fa;
+    background: var(--sell-–-orange) 0% 0% no-repeat padding-box !important;
+    background: #F28E33 0% 0% no-repeat padding-box !important;
+    opacity: 0.25;
 }
 
 .btn.sell-this-device.btn-active{

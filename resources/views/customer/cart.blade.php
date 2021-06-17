@@ -161,6 +161,21 @@
                                         <div class="d-flex flex-column cart-itemprice-column cart-product-single-column">
                                             <h6 class="m-0 mb-3 summary-cart-text-bold">Item price</h6>
                                             <p class="m-0 summary-regular-text">£{{$cartitem->price}}</p>
+
+                                            @if(Auth::user())
+                                                <a href="/removefromcart/{{$cartitem->id}}" class="w-25 removefromcart-link">
+                                                    <div class="">
+                                                        <p class="m-0 summary-regular-text">REMOVE</p>
+                                                    </div>
+                                                </a>
+                                            @else
+                                                <a href="/removefromabandoned/{{$cartitem->id}}" class="w-25 removefromcart-link">
+                                                    <div class="">
+                                                        <p class="m-0 summary-regular-text">REMOVE</p>
+                                                    </div>
+                                                </a>
+                                            @endif
+
                                         </div>
                                         <div class="d-flex flex-column cart-quantity-column cart-product-single-column">
                                             <h6 class="m-0 mb-3 summary-cart-text-bold">Quantity</h6>
@@ -174,20 +189,6 @@
 
                                     <div class="d-flex">
                                         <div class="remove-cart-space"></div>
-
-                                        @if(Auth::user())
-                                            <a href="/removefromcart/{{$cartitem->id}}" class="w-25 m-0">
-                                                <div class="">
-                                                    <p class="m-0 summary-regular-text">REMOVE</p>
-                                                </div>
-                                            </a>
-                                        @else
-                                            <a href="/removefromabandoned/{{$cartitem->id}}" class="w-25 m-0">
-                                                <div class="">
-                                                    <p class="m-0 summary-regular-text">REMOVE</p>
-                                                </div>
-                                            </a>
-                                        @endif
 
                                         <div class="remove-from-cart-tohide"></div>
                                     </div>

@@ -14754,16 +14754,14 @@ h3, h4, h5 {
   padding: 20px 70px;
   text-align: center;
   flex-grow: 1;
-  transition: transform 0.2s;
   flex-direction: column;
   align-items: center;
   justify-content: start;
   max-width: 400px;
   position: relative;
-  transition: transform 0.2s;
 }
 
-.popular-product:hover {
+.popular-product:hover > .popular-product-wrapper > .popular-product-image-container > img {
   transform: scale(1.1);
 }
 
@@ -14786,6 +14784,7 @@ h3, h4, h5 {
   width: 100%;
   max-width: 250px;
   height: 100%;
+  transition: transform 0.3s;
 }
 
 .popular-product-name-model {
@@ -16232,7 +16231,6 @@ h3, h4, h5 {
   padding: 20px;
   text-align: center;
   flex-grow: 1;
-  transition: transform 0.2s;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -16242,7 +16240,7 @@ h3, h4, h5 {
   flex: 1 0 21%;
 }
 
-.product:hover {
+.product:hover > .selling-product-image-container > img {
   transform: scale(1.1);
 }
 
@@ -16253,6 +16251,7 @@ h3, h4, h5 {
 }
 
 .selling-product-image-container img {
+  transition: transform 0.2s;
   width: 100%;
   height: auto;
 }
@@ -17757,6 +17756,11 @@ input.lookup-delivery-basket::placeholder {
   color: #000000;
   opacity: 1;
   margin: 0;
+}
+
+.removefromcart-link {
+  margin-top: 120px;
+  margin-left: 0;
 }
 
 .cartdetails-container {
@@ -20629,6 +20633,7 @@ input[type=submit] {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-size: cover !important;
 }
 
 .page-header-container.howitworks {
@@ -21000,7 +21005,7 @@ input[type=submit] {
 }
 
 .btn.btn.sell-this-device.btn-light > p {
-  color: black !important;
+  color: white !important;
 }
 
 .btn.sell-this-device.active:hover {
@@ -21013,10 +21018,12 @@ input[type=submit] {
 }
 
 .btn.sell-this-device.btn-light:hover {
-  border: 3px solid var(--black) !important;
-  border: 3px solid #000000 !important;
+  background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
+  border: 3px solid var(--black);
+  background: #F28E33 0% 0% no-repeat padding-box;
+  border: 3px solid #000000;
   border-radius: 8px;
-  opacity: 1;
+  opacity: 0.25;
 }
 
 .btn.sell-this-device:hover > p {
@@ -21030,9 +21037,10 @@ input[type=submit] {
 }
 
 .btn.sell-this-device.btn-light {
-  color: #212529;
-  background-color: #f8f9fa;
-  border-color: #f8f9fa;
+  color: #FFFFFF;
+  background: var(--sell-–-orange) 0% 0% no-repeat padding-box !important;
+  background: #F28E33 0% 0% no-repeat padding-box !important;
+  opacity: 0.25;
 }
 
 .btn.sell-this-device.btn-active {
@@ -22356,7 +22364,8 @@ input[type=submit] {
 .news-main-row {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
+  max-height: 676px;
 }
 
 .news-main-item {
@@ -22373,7 +22382,7 @@ input[type=submit] {
 .news-primary {
   width: 100%;
   margin-right: 16px;
-  max-width: 1088px;
+  max-width: 1020px;
 }
 
 .news-main-item {
@@ -22390,20 +22399,20 @@ input[type=submit] {
 .news-secondary-item {
   display: block;
   position: relative;
+  width: 100%;
+  max-width: 604px;
 }
 
 .news-secondary-item.first {
-  width: 100%;
-  max-width: 536px;
   height: auto;
   max-height: 538px;
 }
 
 .news-secondary-item.second {
-  width: 100%;
-  max-width: 536px;
   height: auto;
-  height: 270px;
+  max-height: 270px;
+  margin-top: 10px;
+  max-height: 331px;
 }
 
 .news-image, .news-image .main {
@@ -22735,6 +22744,20 @@ input[type=submit] {
   margin-left: 11px;
 }
 
+.sharelinks {
+  display: flex;
+  flex-direction: row;
+  width: 166px;
+  justify-content: space-around;
+}
+
+.sharelinks > img {
+  display: block;
+  width: 26px;
+  height: 21px;
+  cursor: pointer;
+}
+
 .article-image {
   border-radius: 10px;
   width: 100%;
@@ -22794,6 +22817,34 @@ input[type=submit] {
   margin: 0;
 }
 
+@media (max-width: 1510px) {
+  .news-main-row {
+    flex-direction: column;
+    max-height: 100%;
+  }
+
+  .news-primary {
+    max-width: initial;
+  }
+
+  .news-main-item {
+    max-height: 668px;
+    margin-bottom: 20px;
+  }
+
+  .news-secondary {
+    flex-direction: row;
+  }
+
+  .news-secondary-item {
+    margin-top: 0 !important;
+    max-height: initial !important;
+  }
+
+  .news-secondary-item.second {
+    margin-left: 20px;
+  }
+}
 @media (max-width: 1300px) {
   .news-main-row {
     flex-direction: column;

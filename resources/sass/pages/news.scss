@@ -23,7 +23,9 @@
 .news-main-row{
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    // justify-content: space-around;
+    justify-content: center;
+    max-height: 676px;
 }
 
 .news-main-item{
@@ -42,12 +44,14 @@
     // width: 66%;
     width: 100%;
     margin-right: 16px;
-    max-width: 1088px;
+    // max-width: 1088px;
+    max-width: 1020px;
 }
 
 .news-main-item{
     //max-width: 1088px;
     height: auto;
+    // max-height: 857px;
     max-height: 857px;
 }
 
@@ -56,6 +60,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    // justify-content: start;
 }
 
 .news-secondary-item{
@@ -64,20 +69,23 @@
     // height: 48%;
     // height: auto;
     // max-height: 250px;
+    width: 100%;
+    max-width: 604px;
 }
 
 .news-secondary-item.first{
-    width: 100%;
-    max-width: 536px;
     height: auto;
     max-height: 538px;
 }
 
 .news-secondary-item.second{
-    width: 100%;
-    max-width: 536px;
+    // width: 100%;
+    // max-width: 536px;
     height: auto;
-    height: 270px;
+    max-height: 270px;
+    margin-top: 10px;
+    // overflow: initial;
+    max-height: 331px;
 }
 
 .news-image, .news-image .main{
@@ -446,6 +454,20 @@
     margin-left: 11px;
 }
 
+.sharelinks{
+    display: flex;
+    flex-direction: row;
+    width: 166px;
+    justify-content: space-around;
+}
+
+.sharelinks > img {
+    display: block;
+    width: 26px;
+    height: 21px;
+    cursor: pointer;
+}
+
 .article-image{
     border-radius: 10px;
     width: 100%;
@@ -507,8 +529,33 @@
 
 
 // image breakpoint
-@media (max-width: 1420px){
+@media (max-width: 1510px){
+    .news-main-row{
+        flex-direction: column;
+        max-height: 100%;
+    }
 
+    .news-primary{
+        max-width: initial;
+    }
+
+    .news-main-item{
+        max-height: 668px;
+        margin-bottom: 20px;
+    }
+
+    .news-secondary{
+        flex-direction: row;
+    }
+
+    .news-secondary-item{
+        margin-top: 0 !important;
+        max-height: initial !important;
+    }
+
+    .news-secondary-item.second{
+        margin-left: 20px;
+    }
 }
 
 // image breakpoint 2

@@ -6,7 +6,7 @@
         <p class="page-header-text">News & Blog</p>
     </div>
 
-    <a class="back-to-home-footer mt-3" href="/news">
+    <a class="back-to-home-footer mt-3 padded" href="/news">
         <p class="back-home-text"><img class="back-home-icon mr-2" src="{{asset('images/front-end-icons/black_arrow_left.svg')}}">Back</p>
     </a>
 
@@ -29,10 +29,16 @@
             <p class="view-blog-author ml-1 mr-4">{{$blog->author}}</p>
             <img class="news-created-icon mr-2" src="{{asset('/images/front-end-icons/time_icon_black.svg')}}">
             <p class="view-blog-date ml-1">{{$blog->created_at->format('F d, Y')}}</p>
-            <div class="sharelinks"></div>
+            <div class="sharelinks">
+                <a href="#"><img src="{{asset('/images/front-end-icons/twitter_share.svg')}}"></a>
+                <a href="#"><img src="{{asset('/images/front-end-icons/instagram_share.svg')}}"></a>
+                <a href="#"><img src="{{asset('/images/front-end-icons/facebook_share.svg')}}"></a>
+                <a href="#"><img src="{{asset('/images/front-end-icons/news_share.svg')}}"></a>
+            </div>
         </div>
 
-        <img class="article-image" src="/storage/news_images/{{$blog->image_1}}">
+        {{-- <img class="article-image" src="/storage/news_images/{{$blog->image_1}}"> --}}
+        <img class="article-image" src="{{$blog->getFirstImage()}}">
 
         <p class="view-blog-paragraph bold">{!!$blog->cms_parg_1!!}</p>
         <br>
@@ -56,8 +62,7 @@
 
                 <div class="news-primary">
                     <a class="news-main-item" href="/news/{{$blogs->first()->id}}">
-                        {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                        <img class="news-image main" src="/storage/news_images/{{$blogs->first()->image_1}}">
+                        <img class="news-image main" src="{{$blogs->first()->getFirstImage()}}">
                         <div class="news-content-container">
                             <div @if($blogs->first()->cms_type === 0) class="news-tag" @elseif($blogs->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
                                 <p class="tag-content">@if($blogs->first()->cms_type === 0) NEWS @elseif($blogs->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
@@ -71,7 +76,7 @@
                                     <p class="author-p">{{$blogs->first()->author}}</p>
                                 </div>
                                 <div class="news-created-at-row ml-4">
-                                    <img class="news-created-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                    <img class="news-created-icon ml-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
                                     <p class="created-at-p">{{$blogs->first()->created_at->format('F d, Y')}}</p>
                                 </div>
                             </div>
@@ -82,8 +87,7 @@
                 <div class="news-secondary">
                     @if($blogs->count() >= 3)
                         <a class="news-secondary-item first" href="/news/{{$blogs->skip(1)->first()->id}}">
-                            {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                            <img class="news-image main" src="/storage/news_images/{{$blogs->skip(1)->first()->image_1}}">
+                            <img class="news-image main" src="{{$blogs->skip(1)->first()->getFirstImage()}}">
                             <div class="news-content-container smaller-pad">
                                 <div @if($blogs->skip(1)->first()->cms_type === 0) class="news-tag" @elseif($blogs->skip(1)->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
                                     <p class="tag-content">@if($blogs->skip(1)->first()->cms_type === 0) NEWS @elseif($blogs->skip(1)->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
@@ -97,7 +101,7 @@
                                         <p class="author-smaller-p">{{$blogs->skip(1)->first()->author}}</p>
                                     </div>
                                     <div class="news-created-at-row">
-                                        <img class="news-created-smaller-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                        <img class="news-created-smaller-icon ml-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
                                         <p class="created-at-smaller-p">{{$blogs->skip(1)->first()->created_at->format('F d, Y')}}</p>
                                     </div>
                                 </div>
@@ -105,8 +109,7 @@
                         </a>
 
                         <a class="news-secondary-item second" href="/news/{{$blogs->skip(2)->first()->id}}">
-                            {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                            <img class="news-image main" src="/storage/news_images/{{$blogs->skip(2)->first()->image_1}}">
+                            <img class="news-image main" src="{{$blogs->skip(2)->first()->getFirstImage()}}">
                             <div class="news-content-container smaller-pad">
                                 <div @if($blogs->skip(2)->first()->cms_type === 0) class="news-tag" @elseif($blogs->skip(2)->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
                                     <p class="tag-content">@if($blogs->skip(2)->first()->cms_type === 0) NEWS @elseif($blogs->skip(2)->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
@@ -120,7 +123,7 @@
                                         <p class="author-smaller-p">{{$blogs->skip(2)->first()->author}}</p>
                                     </div>
                                     <div class="news-created-at-row">
-                                        <img class="news-created-smaller-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                        <img class="news-created-smaller-icon ml-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
                                         <p class="created-at-smaller-p">{{$blogs->skip(2)->first()->created_at->format('F d, Y')}}</p>
                                     </div>
                                 </div>
@@ -131,8 +134,7 @@
 
                     @if($blogs->count() == 2)
                         <a class="news-main-item first-full-height" href="/news/{{$blogs->skip(1)->first()->id}}">
-                            {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                            <img class="news-image main" src="/storage/news_images/{{$blogs->skip(1)->first()->image_1}}">
+                            <img class="news-image main" src="{{$blogs->skip(1)->first()->getFirstImage()}}">
                             <div class="news-content-container">
                                 <div @if($blogs->skip(1)->first()->cms_type === 0) class="news-tag" @elseif($blogs->skip(1)->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
                                     <p class="tag-content">@if($blogs->skip(1)->first()->cms_type === 0) NEWS @elseif($blogs->skip(1)->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
@@ -146,7 +148,7 @@
                                         <p class="author-p">{{$blogs->skip(1)->first()->author}}</p>
                                     </div>
                                     <div class="news-created-at-row ml-4">
-                                        <img class="news-created-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                        <img class="news-created-icon ml-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
                                         <p class="created-at-p">{{$blogs->skip(1)->first()->created_at->format('F d, Y')}}</p>
                                     </div>
                                 </div>
@@ -167,8 +169,7 @@
         <div class="main-howto-row">
 
             <a class="main-howto-item" href="/news/{{$howto->first()->id}}">
-                {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                <img class="news-image main" src="/storage/news_images/{{$howto->first()->image_1}}">
+                <img class="news-image main" src="{{$howto->first()->getFirstImage()}}">
                 <div class="news-content-container bottom-centered smaller-pad">
                     <div class="how-to-tag">
                         <p class="tag-content">HOW TO, WITH BOO</p>
@@ -190,8 +191,7 @@
             </a>
 
             <a class="main-howto-item" href="/news/{{$howto->skip(1)->first()->id}}">
-                {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                <img class="news-image main" src="/storage/news_images/{{$howto->skip(1)->first()->image_1}}">
+                <img class="news-image main" src="{{$howto->skip(1)->first()->getFirstImage()}}">
                 <div class="news-content-container bottom-centered smaller-pad">
                     <div class="how-to-tag">
                         <p class="tag-content">HOW TO, WITH BOO</p>
@@ -205,7 +205,7 @@
                             <p class="author-smaller-p">{{$howto->skip(1)->first()->author}}</p>
                         </div>
                         <div class="news-created-at-row ml-4">
-                            <img class="news-created-smaller-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                            <img class="news-created-smaller-icon ml-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
                             <p class="created-at-smaller-p">{{$howto->skip(1)->first()->created_at->format('F d, Y')}}</p>
                         </div>
                     </div>
