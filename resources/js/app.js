@@ -38,6 +38,7 @@ require('./scripts/Receiving');
 require('./scripts/saleslot/BuildingSalesLot');
 require('./scripts/saleslot/CompletedSalesLot');
 require('./scripts/saleslot/EditingSalesLot');
+require('./scripts/saleslot/PickingSalesLot');
 
 "use strict";
 

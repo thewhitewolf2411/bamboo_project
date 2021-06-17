@@ -848,15 +848,15 @@ class WarehouseManagementController extends Controller
 
     public function completePickingLot(Request $request){
 
-        $salesLot = SalesLot::where('id', $request->buildsaleslot_salelot)->first();
+        #dd($request->all());
+
+        $salesLot = SalesLot::find($request->salelotid);
 
         if($salesLot->sales_lot_status === 4){
             return redirect()->back()->with(['error'=>'This sales lot was already completed.']);
         }
 
         $salesLot->sales_lot_status = 3;
-        $salesLot->carrier = $request->carrier;
-        $salesLot->manifest_number = $request->manifest_number;
         $salesLot->save();
 
         $salesLotContent = SalesLotContent::where('sales_lot_id', $salesLot->id)->get();
@@ -872,6 +872,8 @@ class WarehouseManagementController extends Controller
             $box->save();
         }
 
+        return response('', 200);
+
         return redirect('/portal/warehouse-management/picking-despatch')->with(['success'=>'Picking succesfully completed']);
     }
 
@@ -879,13 +881,16 @@ class WarehouseManagementController extends Controller
 
         #dd($request->all());
 
-
-        $salesLot = SalesLot::where('id', $request->salesLotId)->first();
+        $salesLot = SalesLot::where('id', $request->buildsaleslot_salelot)->first();
 
         $salesLot->sales_lot_status = 5;
+        if($request->carrier){
+            $salesLot->carrier = $request->carrier;
+            $salesLot->manifest_number = $request->manifest_number;
+        }
         $salesLot->save();
 
-        $salesLotContentDevices = SalesLotContent::where('sales_lot_id', $request->salesLotId)->where('box_id', null)->get();
+        $salesLotContentDevices = SalesLotContent::where('sales_lot_id', $request->buildsaleslot_salelot)->where('box_id', null)->get();
 
         foreach($salesLotContentDevices as $sLCD){
             $device = Tradein::where('id', $sLCD->device_id)->first();
@@ -904,7 +909,7 @@ class WarehouseManagementController extends Controller
         }
     
         
-        return response('', 200);
+        return redirect()->back()->with(['success'=>'Sale Lot Despatched']);
     }
 
     public function getBoxNumber(Request $request){

@@ -1,170 +1,183 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style type="text/css" media="all">
+    <meta http-equiv="Content-Type" content="charset=utf-8" />
+    <style type="text/css">
 
-    @page{
-        margin: 10mm;
-        font-size: 10px;
-        width: 100%;
-        text-align: left;
-    }
+        @page{
+            margin: 10mm;
+            font-size: 10px;
+            width: 100%;
+            text-align: left;
+        }
 
-    @font-face {
-        font-family: "Sharp Sans No1 Medium"; 
-        font-style: normal;
-        font-weight: 400;
-        src: url( "{{public_path('/css/fonts/SharpSansMedium/30bb285a0c5e40fc620a793eff494dfd.eot')}}" ); 
+        @font-face {
+            font-family: "Sharp Sans No1 Medium"; 
+            font-style: normal;
+            font-weight: 400;
+            src: url({{ storage_path('fonts/sansmedium.ttf') }}) format('truetype');
+        }
 
-    }
+        @font-face {
+            font-family: "Sharp Sans No1 Bold"; 
+            font-style: normal;
+            font-weight: 400;
+            src: url({{ storage_path('fonts/SharpSansNo1-Bold.ttf') }}) format('truetype');
+        }
 
-    span, p{
-        margin: 0;
-        font-family: "Sharp Sans No1 Medium";
-    }
+        span, p{
+            margin: 0;
+            font-family: "Sharp Sans No1 Medium";
+            line-height: 10px !important;
+        }
 
-    body{
-        width: 541px;
-        height: 727px;
-    }
+        .bold{
+            font-family: "Sharp Sans No1 Bold" !important;
+        }
 
-    #user-data{
-        position: absolute;
-        top: 140px;
-        left: 67px;
-    }
+        body{
+            width: 541px;
+            height: 727px;
+            font-family: "Sharp Sans No1 Medium" ;
+        }
 
-    #date-data{
-        position: absolute;
-        top: 91px;
-        left: 483px;
-        text-align: right;
-    }
+        #user-data{
+            position: absolute;
+            top: 140px;
+            left: 67px;
+        }
 
-    #barcode-data{
-        position: absolute;
-        top: 148px;
-        left: 484px;
-        widows: 87px;
-        height: 62px;
-    }
+        #date-data{
+            position: absolute;
+            top: 91px;
+            left: 483px;
+            text-align: right;
+        }
 
-    #hi-name{
-        position: absolute;
-        top: 206px;
-        left: 66px;
-    }
+        #barcode-data{
+            position: absolute;
+            top: 148px;
+            left: 484px;
+            widows: 87px;
+            height: 62px;
+        }
 
-    #expiry-date{
-        position: absolute;
-        top: 242px;
-        left: 232px;
-    }
+        #hi-name{
+            position: absolute;
+            top: 206px;
+            left: 66px;
+        }
 
-    .product-data-class{
-        position: absolute;
-        top: 276px;
-        left: 67px;
-    }
+        #expiry-date{
+            position: absolute;
+            top: 242px;
+            left: 232px;
+        }
 
-    #product-price-p{
-        left: 237px;
-    }
+        .product-data-class{
+            position: absolute;
+            top: 276px;
+            left: 67px;
+        }
 
-    #product-quantity-p{
-        left: 329px;
-    }
+        #product-price-p{
+            left: 237px;
+        }
 
-    #total-price-p{
-        left: 424px;
-    }
+        #product-quantity-p{
+            left: 329px;
+        }
 
-    #total-order-price{
-        position: absolute;
-        top: 394px;
-        left: 424px;
-    }
+        #total-price-p{
+            left: 424px;
+        }
 
-    #total-order-data{
-        position: absolute;
-        top: 394px;
-        left: 67px;
-    }
+        #total-order-price{
+            position: absolute;
+            top: 394px;
+            left: 424px;
+        }
 
-    #vertical-barcode{
-        position: absolute;
-        transform: rotate(90deg);
-        left: 130px;
-        bottom: 150px;
-        width: 44px;
-        height: 146px;
-    }
+        #total-order-data{
+            position: absolute;
+            top: 394px;
+            left: 67px;
+        }
 
-    #delivery-note-image{
-        position: absolute;
-        top: 68px;
-        left: 30px;
-        width: 27px;
-        height: 21px;
-    }
+        #vertical-barcode{
+            position: absolute;
+            transform: rotate(90deg);
+            left: 130px;
+            bottom: 150px;
+            width: 60px;
+            height: 146px;
+        }
 
-    #delivery-note-text{
-        position: absolute;
-        top: 68px;
-        left: 66px;
-        font-size: 18px;
-    }
+        #delivery-note-image{
+            position: absolute;
+            top: 68px;
+            left: 30px;
+            width: 27px;
+            height: 21px;
+        }
 
-    #pre-date-data{
-        position: absolute;
-        top: 91px;
-        left: 349px;
-    }
+        #delivery-note-text{
+            position: absolute;
+            top: 68px;
+            left: 66px;
+            font-size: 18px;
+        }
 
-    .black-line{
-        border-bottom: 1px solid #000;
-        position: absolute;
-        width: 408px;
-        left: 67px;
-    }
+        #pre-date-data{
+            position: absolute;
+            top: 91px;
+            left: 349px;
+        }
 
-    #black-line-1{
-        top: 262px;
-    }
+        .black-line{
+            border-bottom: 1px solid #000;
+            position: absolute;
+            width: 408px;
+            left: 67px;
+        }
 
-    #black-line-2{
-        top: 391px;
-    }
+        #black-line-1{
+            top: 262px;
+        }
 
-    #black-line-3{
-        top: 408px;
-    }
+        #black-line-2{
+            top: 391px;
+        }
 
-    #product-data-price-template{
-        position: absolute;
-        left: 237px;
-        top: 264px;
-    }
+        #black-line-3{
+            top: 408px;
+        }
 
-    #product-data-quantity-template{
-        position: absolute;
-        left: 329px;
-        top: 264px;
-    }
+        #product-data-price-template{
+            position: absolute;
+            left: 237px;
+            top: 264px;
+        }
 
-    #product-data-total-price-template{
-        position: absolute;
-        left: 424px;
-        top: 264px;
-    }
+        #product-data-quantity-template{
+            position: absolute;
+            left: 329px;
+            top: 264px;
+        }
 
-    #thank-you-note{
-        position: absolute;
-        top: 412px;
-        left: 67px;
-    }
+        #product-data-total-price-template{
+            position: absolute;
+            left: 424px;
+            top: 264px;
+        }
 
-</style>
+        #thank-you-note{
+            position: absolute;
+            top: 412px;
+            left: 67px;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -190,7 +203,7 @@
 
     </div>
 
-    <div id="pre-date-data">
+    <div id="pre-date-data" class="bold">
 
         <p>Order Date:<br>Trade-in ID:<br>Order Expiry date:</p>
 
@@ -222,15 +235,15 @@
 
     <div id="product-data">
 
-        <div id="product-data-price-template">
+        <div id="product-data-price-template" class="bold">
             <p>Item Price</p>
         </div>
 
-        <div id="product-data-quantity-template">
+        <div id="product-data-quantity-template" class="bold">
             <p>Quantity</p>
         </div>
 
-        <div id="product-data-total-price-template">
+        <div id="product-data-total-price-template" class="bold">
             <p>Total Price</p>
         </div>
 
@@ -282,7 +295,7 @@
         </p>
 
         <div id="vertical-barcode">
-            <p>Trade in-ID<br>
+            <p>Trade in-ID:
                 {{$tradeins[0]->barcode_original}}
             </p>
             <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($tradeins[0]->barcode_original,'C128') }}" height="30" width="150" style="margin: 0" />
