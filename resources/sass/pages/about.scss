@@ -251,6 +251,113 @@
     top: -200px;
 }
 
-@media (max-width: 496px){
-    
+@media (max-width: 768px){
+    .about-intro-panel{
+        flex-direction: column;
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+    .about-intro-image{
+        margin: 0 auto;
+        width: 216px;
+        height: 217px;
+        margin-bottom: 60px;
+    }
+
+    .about-intro-column{
+        margin-left: 0;
+    }
+
+    .about-section-column.padded{
+        padding: 0 20px;
+    }
+
+    .about-something-row{
+        flex-direction: column;
+    }
+
+    .about-section-column.margin-left{
+        margin-left: 0;
+        margin-top: 30px;
+    }
+
+    .about-main-image{
+        width: 451px;
+        height: 508px;
+    }
+
+    .about-section-main-text{
+        margin-top: 70px;
+    }
+
+    .about-section-row-sustainability{
+        flex-direction: column-reverse;
+    }
+
+    .about-section-row-sustainability.padded{
+        padding: 0 20px;
+    }
+
+    .about-section-row-sustainability.margin-top{
+        margin-top: 79px;
+    }
+
+    .about-section-images{
+        margin: 0 auto;
+        margin-top: 160px;
+        height: auto;
+    }
+
+    .about-section-images > .image-1{
+        width: 269px;
+        height: 271px;
+    }
+
+    .about-section-images > .image-2{
+        width: 217px;
+        height: 244px;
+        left: 100px;
+        top: -150px;
+    }
+
+    .about-intro-title{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: left;
+        font: normal normal normal 37px/40px Bebas Neue;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+        //margin: 0;
+    }
+
+    .about-intro-subtitle{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-30)/var(--unnamed-line-spacing-38) var(--unnamed-font-family-sharp-sans-no1-bold);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: left;
+        font: normal normal normal 30px/38px Sharp Sans No1 Bold;
+        letter-spacing: 0px;
+        color: #000000;
+        //margin: 0;
+    }
+
+    .about-intro-text, .about-rest-text, .about-bamboo-text-desc{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-38) var(--unnamed-font-family-sharp-sans-no1-book);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: left;
+        font: normal normal normal 20px/38px Sharp Sans No1 Book;
+        letter-spacing: 0px;
+        color: #000000;
+    }
+
+    .about-bamboo-text-desc{
+        margin-bottom: 40px;
+    }
+
+    .about-hr{
+        margin-top: 40px;
+    }
 }
