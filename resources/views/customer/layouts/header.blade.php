@@ -63,6 +63,13 @@
 
 </div>
 
+<div class="sell-submenu">
+    <a href="/sell" class="selling">
+        <p>Sell</p>
+        <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+    </a>
+</div>
+
 <div class="urls-header" id="header-urls">
 
     {{-- <div class="url-header-container" id="start-shopping">
@@ -100,6 +107,7 @@
         </div> --}}
         <div class="url-header-container mobile mobile-orange" id="start-selling">
             <a href="/sell" class="mobilemenu-bold white">Start Selling</a>
+            <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White.svg')}}">
         </div>
         <div class="url-header-container mobile">
             <a href="/how" class="mobilemenu-medium">How it works</a>

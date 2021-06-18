@@ -238,7 +238,7 @@
     </div> --}}
     @include('partial.paymentpostagebanner')
 
-    @if(!empty($popular))
+    @if($popular->count() > 0)
         <div class="home-element popular-devices">
             <div class="text-center mb-5">
                 <p class="large-bold-text">Popular devices</p>

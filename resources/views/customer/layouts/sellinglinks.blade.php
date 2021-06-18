@@ -96,9 +96,6 @@
 </div>
 
 
-{{-- {!!dd(App\Helpers\MenuHelper::getTabletBrands())!!} --}}
-
-
 <div id="sellmobilephones-header-hover" class="not-visible">
     {{-- <a href="/sell/devices/mobile/1" class="sell-links-sublink-item">
         <p>Apple Devices</p>
@@ -174,9 +171,6 @@
     </div>
 </div>
 
-
-
-
 <div id="selltablets-header-hover" class="not-visible">
 
     <div class="tablets-submenu">
@@ -240,9 +234,6 @@
     </div>
 </div>
 
-
-
-
 <div id="sellwatches-header-hover" class="not-visible">
 
     <div class="watches-submenu">
@@ -305,11 +296,366 @@
     </div>
 </div>
 
+
+
+
+
+
+<div class="mobile-header-selling-links">
+    <div class="mobile-top-element-container @if(App\Helpers\MenuHelper::urlMatchesMobile())on-page @endif" id="mobile-phones-dropdown">
+        <div class="mobile-sell-links-item">
+            <p>Sell Mobile Phones</p>
+            <span id="dropdown-mobile-icon" class="down"></span>
+        </div>
+    </div>
+    <div class="mobile-top-element-container @if(App\Helpers\MenuHelper::urlMatchesMobile())on-page @endif" id="mobile-tablets-dropdown">
+        <div class="mobile-sell-links-item">
+            <p>Sell Tablets</p>
+            <span id="dropdown-tablets-icon" class="down"></span>
+        </div>
+    </div>
+    <div class="mobile-top-element-container @if(App\Helpers\MenuHelper::urlMatchesMobile())on-page @endif" id="mobile-watches-dropdown">
+        <div class="mobile-sell-links-item">
+            <p>Sell Watches</p>
+            <span id="dropdown-watches-icon" class="down"></span>
+        </div>
+    </div>
+    <div class="mobile-top-element-container @if(App\Helpers\MenuHelper::urlMatchesMobile())on-page @endif">
+        <div class="mobile-sell-links-item">
+            <p>Why Sell With Us</p>
+        </div>
+    </div>
+</div>
+
+<div id="mobile-phones-mobile-dropdown" class="not-visible">
+
+    <div class="white-wrapper">
+
+        <div class="dropdown-column">
+
+            <div class="mobile-dropdown-toggle" id="toggleApplePhones" data-toggle="collapse" href="#collapseAppleMobilePhones" role="button" aria-expanded="false" aria-controls="collapseMobilePhones">
+                <p>Apple iPhone</p> 
+                <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+            </div>
+            <div class="dropdown-phones-list collapse" id="collapseAppleMobilePhones">
+                @foreach(App\Helpers\MenuHelper::getApplePhones() as $apple_phone)
+                    <a href="/sell/sellitem/{{$apple_phone->id}}">
+                        <p>{{$apple_phone->product_name}}</p>
+                        <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    </a>
+                    <div class="hr-dropdown"></div>
+                @endforeach
+                <a href="/sell/devices/mobile/1">
+                    <p>Show all iPhones</p>
+                    <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                </a>
+            </div>
+
+            <div class="hr-dropdown"></div>
+
+            <div class="mobile-dropdown-toggle" id="toggleSamsungPhones" data-toggle="collapse" href="#collapseSamsungMobilePhones" role="button" aria-expanded="false" aria-controls="collapseSamsungMobilePhones">
+                <p>Samsung Galaxy</p> 
+                <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+            </div>
+            <div class="dropdown-phones-list collapse" id="collapseSamsungMobilePhones">
+                @foreach(App\Helpers\MenuHelper::getSamsungPhones() as $samsung_phone)
+                    <a href="/sell/sellitem/{{$samsung_phone->id}}">
+                        <p>{{$samsung_phone->product_name}}</p>
+                        <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    </a>
+                    <div class="hr-dropdown"></div>
+                @endforeach
+                <a href="/sell/devices/mobile/2">
+                    <p>Show all Samsung Galaxy phones</p>
+                    <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                </a>
+            </div>
+            <div class="hr-dropdown"></div>
+
+
+            <div class="mobile-dropdown-toggle" id="toggleMobileBrands" data-toggle="collapse" href="#collapseMobileBrands" role="button" aria-expanded="false" aria-controls="collapseMobileBrands">
+                <p>Sell By Brand</p> 
+                <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+            </div>
+
+            <div class="dropdown-phones-list collapse" id="collapseMobileBrands">
+                @foreach(App\Helpers\MenuHelper::getMobileBrands() as $brand)
+                    <a href="/sell/devices/mobile/{{$brand->id}}">
+                        <p>{{$brand->brand_name}}</p>
+                        <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    </a>
+                    <div class="hr-dropdown"></div>
+                @endforeach
+            </div> 
+
+        </div>
+
+        </div>
+    </div>
+
+</div>
+
+<div id="tablets-mobile-dropdown" class="not-visible">
+    <div class="white-wrapper">
+
+        <div class="dropdown-column">
+
+            <div class="mobile-dropdown-toggle" id="toggleAppleTablets" data-toggle="collapse" href="#collapseAppleTablets" role="button" aria-expanded="false" aria-controls="collapseAppleTablets">
+                <p>Apple iPad</p> 
+                <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+            </div>
+            <div class="dropdown-phones-list collapse" id="collapseAppleTablets">
+                @foreach(App\Helpers\MenuHelper::getAppleTablets() as $apple_tablet)
+                    <a href="/sell/sellitem/{{$apple_tablet->id}}">
+                        <p>{{$apple_tablet->product_name}}</p>
+                        <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    </a>
+                    <div class="hr-dropdown"></div>
+                @endforeach
+                <a href="/sell/devices/tablets/1">
+                    <p>Show all Apple Tablets</p>
+                    <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                </a>
+            </div>
+
+            <div class="hr-dropdown"></div>
+
+            <div class="mobile-dropdown-toggle" id="toggleSamsungTablets" data-toggle="collapse" href="#collapseSamsungTablets" role="button" aria-expanded="false" aria-controls="collapseSamsungTablets">
+                <p>Samsung Galaxy Tab</p> 
+                <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+            </div>
+            <div class="dropdown-phones-list collapse" id="collapseSamsungTablets">
+                @foreach(App\Helpers\MenuHelper::getSamsungTablets() as $samsung_tablet)
+                    <a href="/sell/sellitem/{{$samsung_tablet->id}}">
+                        <p>{{$samsung_tablet->product_name}}</p>
+                        <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    </a>
+                    <div class="hr-dropdown"></div>
+                @endforeach
+                <a href="/sell/devices/tablets/2">
+                    <p>Show all Samsung Galaxy Tablets</p>
+                    <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                </a>
+            </div>
+            <div class="hr-dropdown"></div>
+
+
+            <div class="mobile-dropdown-toggle" id="toggleMobileBrands" data-toggle="collapse" href="#collapseMobileBrands" role="button" aria-expanded="false" aria-controls="collapseMobileBrands">
+                <p>Sell By Brand</p> 
+                <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+            </div>
+
+            <div class="dropdown-phones-list collapse" id="collapseMobileBrands">
+                @foreach(App\Helpers\MenuHelper::getTabletBrands() as $tablet_brand)
+                    <a href="/sell/devices/tablets/{{$tablet_brand->id}}">
+                        <p>{{$tablet_brand->brand_name}}</p>
+                        <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    </a>
+                    <div class="hr-dropdown"></div>
+                @endforeach
+            </div> 
+
+        </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="watches-mobile-dropdown" class="not-visible">
+    <div class="white-wrapper">
+
+        <div class="dropdown-column">
+
+            <div class="mobile-dropdown-toggle" id="toggleAppleWatches" data-toggle="collapse" href="#collapseAppleWatches" role="button" aria-expanded="false" aria-controls="collapseAppleWatches">
+                <p>Apple Watches</p> 
+                <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+            </div>
+            <div class="dropdown-phones-list collapse" id="collapseAppleWatches">
+                @foreach(App\Helpers\MenuHelper::getAppleWatches() as $apple_watches)
+                    <a href="/sell/sellitem/{{$apple_watches->id}}">
+                        <p>{{$apple_watches->product_name}}</p>
+                        <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    </a>
+                    <div class="hr-dropdown"></div>
+                @endforeach
+                <a href="/sell/devices/watches/1">
+                    <p>Show all Apple Watches</p>
+                    <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                </a>
+            </div>
+
+            <div class="hr-dropdown"></div>
+
+            <div class="mobile-dropdown-toggle" id="toggleSamsungWatches" data-toggle="collapse" href="#collapseSamsungWatches" role="button" aria-expanded="false" aria-controls="collapseSamsungWatches">
+                <p>Samsung Galaxy Watch</p> 
+                <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+            </div>
+            <div class="dropdown-phones-list collapse" id="collapseSamsungWatches">
+                @foreach(App\Helpers\MenuHelper::getSamsungWatches() as $samsung_watch)
+                    <a href="/sell/sellitem/{{$samsung_watch->id}}">
+                        <p>{{$samsung_watch->product_name}}</p>
+                        <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    </a>
+                    <div class="hr-dropdown"></div>
+                @endforeach
+                <a href="/sell/devices/watches/2">
+                    <p>Show all Samsung Galaxy Watches</p>
+                    <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                </a>
+            </div>
+            <div class="hr-dropdown"></div>
+
+
+            <div class="mobile-dropdown-toggle" id="toggleWatchesBrands" data-toggle="collapse" href="#collapseWatchesBrands" role="button" aria-expanded="false" aria-controls="collapseWatchesBrands">
+                <p>Sell By Brand</p> 
+                <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+            </div>
+
+            <div class="dropdown-phones-list collapse" id="collapseWatchesBrands">
+                @foreach(App\Helpers\MenuHelper::getWatchesBrands() as $watch_brand)
+                    <a href="/sell/devices/watches/{{$watch_brand->id}}">
+                        <p>{{$watch_brand->brand_name}}</p>
+                        <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
+                    </a>
+                    <div class="hr-dropdown"></div>
+                @endforeach
+            </div> 
+
+        </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
 <script type="application/javascript">
+
     window.addEventListener('DOMContentLoaded', function(){
+
         let cookie_bar_visible = document.getElementById('cookie-container');
         if(cookie_bar_visible){
             document.getElementById('selling-subheader-links').classList.add('margin-with-cookiebar');
         }
+
+        document.getElementById('mobile-phones-dropdown').addEventListener('click', function(){
+            let mobile_dropdown =  document.getElementById("mobile-phones-mobile-dropdown");
+            let tablets_dropdown = document.getElementById("tablets-mobile-dropdown");
+            let watches_dropdown = document.getElementById("watches-mobile-dropdown");
+            tablets_dropdown.classList.add('not-visible');
+            watches_dropdown.classList.add('not-visible');
+
+            if(mobile_dropdown.classList.contains('not-visible')){
+                document.body.style = "overflow-y: hidden";
+                mobile_dropdown.classList.remove('not-visible');
+            } else {
+                document.body.style = "overflow-y: initial";
+                mobile_dropdown.classList.add('not-visible');
+            }
+        });
+
+        document.getElementById('mobile-tablets-dropdown').addEventListener('click', function(){
+            let mobile_dropdown =  document.getElementById("mobile-phones-mobile-dropdown");
+            let tablets_dropdown = document.getElementById("tablets-mobile-dropdown");
+            let watches_dropdown = document.getElementById("watches-mobile-dropdown");
+            mobile_dropdown.classList.add('not-visible');
+            watches_dropdown.classList.add('not-visible');
+
+            if(tablets_dropdown.classList.contains('not-visible')){
+                document.body.style = "overflow-y: hidden";
+                tablets_dropdown.classList.remove('not-visible');
+            } else {
+                document.body.style = "overflow-y: initial";
+                tablets_dropdown.classList.add('not-visible');
+            }
+        });
+
+        document.getElementById('mobile-watches-dropdown').addEventListener('click', function(){
+            let mobile_dropdown =  document.getElementById("mobile-phones-mobile-dropdown");
+            let tablets_dropdown = document.getElementById("tablets-mobile-dropdown");
+            let watches_dropdown = document.getElementById("watches-mobile-dropdown");
+            mobile_dropdown.classList.add('not-visible');
+            tablets_dropdown.classList.add('not-visible');
+
+            if(watches_dropdown.classList.contains('not-visible')){
+                document.body.style = "overflow-y: hidden";
+                watches_dropdown.classList.remove('not-visible');
+            } else {
+                document.body.style = "overflow-y: initial";
+                watches_dropdown.classList.add('not-visible');
+            }
+        });
+
+        // mobile dropdowns
+        $('#collapseAppleMobilePhones').on('hidden.bs.collapse', function () {
+            $('#toggleApplePhones').removeClass('open')
+        });
+        $('#collapseAppleMobilePhones').on('shown.bs.collapse', function () {
+            $('#toggleApplePhones').addClass('open')
+        });
+
+        $('#collapseSamsungMobilePhones').on('hidden.bs.collapse', function () {
+            $('#toggleSamsungPhones').removeClass('open')
+        });
+        $('#collapseSamsungMobilePhones').on('shown.bs.collapse', function () {
+            $('#toggleSamsungPhones').addClass('open')
+        });
+
+        $('#collapseMobileBrands').on('hidden.bs.collapse', function () {
+            $('#toggleMobileBrands').removeClass('open');
+        });
+        $('#collapseMobileBrands').on('shown.bs.collapse', function () {
+            $('#toggleMobileBrands').addClass('open');
+        });
+
+        // tablet dropdowns
+        $('#collapseAppleTablets').on('hidden.bs.collapse', function () {
+            $('#toggleAppleTablets').removeClass('open')
+        });
+        $('#collapseAppleTablets').on('shown.bs.collapse', function () {
+            $('#toggleAppleTablets').addClass('open')
+        });
+
+        $('#collapseSamsungTablets').on('hidden.bs.collapse', function () {
+            $('#toggleSamsungTablets').removeClass('open')
+        });
+        $('#collapseSamsungTablets').on('shown.bs.collapse', function () {
+            $('#toggleSamsungTablets').addClass('open')
+        });
+
+        $('#collapseTabletBrands').on('hidden.bs.collapse', function () {
+            $('#toggleTabletBrands').removeClass('open');
+        });
+        $('#collapseTabletBrands').on('shown.bs.collapse', function () {
+            $('#toggleTabletBrands').addClass('open');
+        });
+
+        // watches dropdowns
+        $('#collapseAppleWatches').on('hidden.bs.collapse', function () {
+            $('#toggleAppleWatches').removeClass('open')
+        });
+        $('#collapseAppleWatches').on('shown.bs.collapse', function () {
+            $('#toggleAppleWatches').addClass('open')
+        });
+
+        $('#collapseSamsungWatches').on('hidden.bs.collapse', function () {
+            $('#toggleSamsungWatches').removeClass('open')
+        });
+        $('#collapseSamsungWatches').on('shown.bs.collapse', function () {
+            $('#toggleSamsungWatches').addClass('open')
+        });
+
+        $('#collapseWatchesBrands').on('hidden.bs.collapse', function () {
+            $('#toggleWatchesBrands').removeClass('open');
+        });
+        $('#collapseWatchesBrands').on('shown.bs.collapse', function () {
+            $('#toggleWatchesBrands').addClass('open');
+        });
     });
+
 </script>

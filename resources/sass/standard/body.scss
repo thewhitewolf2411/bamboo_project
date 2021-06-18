@@ -528,7 +528,7 @@ h3, h4, h5{
 
 
 
-@media screen and (max-width: 496px){
+@media screen and (max-width: 768px){
     .large-bold-text{
         font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-65) var(--unnamed-font-family-sharp-sans-no1-bold);
         letter-spacing: var(--unnamed-character-spacing-0);
@@ -566,9 +566,9 @@ h3, h4, h5{
 
 
 // tablets - large
-@media (max-width: 890px){
+@media (max-width: 768px){
     main.selling-margin{
-        margin-top: 170px;
+        margin-top: 230px !important;
     }
 }
 
@@ -576,13 +576,13 @@ h3, h4, h5{
 @media screen and (max-width: 740px) and (min-width: 325px){
 
     main{
-        margin-top: 100px !important;
+        //margin-top: 100px !important;
     }
 
-    main.selling-margin{
+    //main.selling-margin{
         //margin-top: 170px !important;
-        margin-top: 160px !important;
-    }
+        //margin-top: 160px !important;
+    //}
 
     // .home-element{
     //     padding: 1rem;

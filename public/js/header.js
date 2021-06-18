@@ -39,8 +39,8 @@
   window.onscroll = function() {scrollFunction()};
 
   function scrollFunction() {
-
-    if(window.innerWidth <= 625){
+    // if(window.innerWidth <= 625){
+    if(window.innerWidth <= 768){
       return;
     }
 

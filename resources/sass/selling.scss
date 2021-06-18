@@ -2398,18 +2398,65 @@ input.lookup-delivery-basket::placeholder{
     }
 }
 
-// tablets - breakpoint
-@media (max-width: 690px){
-    // .sell-item{
-
-    // }
-}
-
 // tablets - regular
-@media only screen and (max-width: 625px){
+@media only screen and (max-width: 768px){
+    .device-brand {
+        flex: 1 0 40%;
+    }
+
+    .sell-title{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-65) var(--unnamed-font-family-sharp-sans-no1-bold);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: center;
+        font: normal normal normal 60px/65px Sharp Sans No1 Bold;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+    }
+
+    .sell-subtitle{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-30)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: center;
+        font: normal normal normal 30px/40px Bebas Neue;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+    }
+
+    .search-sell-input{
+        height: 60px;
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/var(--unnamed-line-spacing-34) var(--unnamed-font-family-sharp-sans-no1-medium);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: left;
+        font: normal normal normal 25px/34px Sharp Sans No1 Medium;
+        letter-spacing: 0px;
+    }
+
+    .search-sell-btn > img {
+        width: 60px;
+        height: 60px;
+        padding: 13px;
+    }
+
+    .sell-category-title{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 22px/var(--unnamed-line-spacing-27) var(--unnamed-font-family-sharp-sans-no1-bold);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: center;
+        font: normal normal normal 22px/27px Sharp Sans No1 Bold;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+    }
+
     .header-selling-links{
         overflow-x: scroll;
         padding: 0 30px;
+        top: 145px;
     }
     .device-brands-row{
         padding: 0 15px;
@@ -2542,66 +2589,6 @@ input.lookup-delivery-basket::placeholder{
     }
 }
 
-// mobile
-// only screen and
-@media (max-width: 768px){
-    .device-brand {
-        flex: 1 0 40%;
-    }
-
-    .sell-title{
-        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-65) var(--unnamed-font-family-sharp-sans-no1-bold);
-        letter-spacing: var(--unnamed-character-spacing-0);
-        color: var(--black);
-        text-align: center;
-        font: normal normal normal 60px/65px Sharp Sans No1 Bold;
-        letter-spacing: 0px;
-        color: #000000;
-        opacity: 1;
-    }
-
-    .sell-subtitle{
-        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-30)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
-        letter-spacing: var(--unnamed-character-spacing-0);
-        color: var(--black);
-        text-align: center;
-        font: normal normal normal 30px/40px Bebas Neue;
-        letter-spacing: 0px;
-        color: #000000;
-        opacity: 1;
-    }
-
-    .search-sell-input{
-        height: 60px;
-        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/var(--unnamed-line-spacing-34) var(--unnamed-font-family-sharp-sans-no1-medium);
-        letter-spacing: var(--unnamed-character-spacing-0);
-        color: var(--black);
-        text-align: left;
-        font: normal normal normal 25px/34px Sharp Sans No1 Medium;
-        letter-spacing: 0px;
-    }
-
-    .search-sell-btn > img {
-        width: 60px;
-        height: 60px;
-        padding: 13px;
-    }
-
-    .sell-category-title{
-        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 22px/var(--unnamed-line-spacing-27) var(--unnamed-font-family-sharp-sans-no1-bold);
-        letter-spacing: var(--unnamed-character-spacing-0);
-        color: var(--black);
-        text-align: center;
-        font: normal normal normal 22px/27px Sharp Sans No1 Bold;
-        letter-spacing: 0px;
-        color: #000000;
-        opacity: 1;
-    }
-
-    //.sell-categories-container{
-
-    //}
-}
 
 // mobile - small
 @media (max-width: 380px){
