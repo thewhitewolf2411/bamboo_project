@@ -149,7 +149,8 @@
 
                                 <div class="product">
                                     <div class="selling-product-image-container">
-                                        <img src="{{asset('/storage/product_images').'/'.$product->product_image}}">
+                                        {{-- <img src="{{asset('/storage/product_images').'/'.$product->product_image}}"> --}}
+                                        <img src="{{$product->getImage()}}">
                                     </div>
                                     <div class="product-data-container">
                                         <h5>{{$product->product_name}}</h5>

@@ -191,4 +191,16 @@
     }
   }
 
+
+  $('#navbarSupportedContent').on('show.bs.collapse', function () {
+    let icon = document.getElementById('navbar-mobile-icon');
+    icon.classList.add('open');
+  })
+
+  $('#navbarSupportedContent').on('hide.bs.collapse', function () {
+    let icon = document.getElementById('navbar-mobile-icon');
+    icon.classList.remove('open');
+  })
+
+
 })();

@@ -446,7 +446,7 @@
     justify-content: space-around;
 }
 
-.toggle-grade-section{
+.toggle-grade-section, .toggle-instruction-section{
     // font-family:Sharp Sans No1 Bold;
     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
     letter-spacing: var(--unnamed-character-spacing-0);
@@ -470,7 +470,7 @@
     text-align: center;
 }
 
-.toggle-grade-section.selected-grade{
+.toggle-grade-section.selected-grade, .toggle-instruction-section.selected-instruction{
     background-color: #A375BC;
     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-sharp-sans-no1-bold);
     letter-spacing: var(--unnamed-character-spacing-0);
@@ -487,7 +487,7 @@
     height: 50px;
 }
 
-.grade-section-description{
+.grade-section-description, .instruction-section-description{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -1307,33 +1307,33 @@ input.lookup-delivery-basket::placeholder{
 }
 
 // about us page sell categories
-//.sell-category-device-image.about.mobile{
-    // left: 0;
-    // top: -75px;
-//}
-//.sell-category-device-image.about.tablet{
-    // top: 10px;
-    // left: 0;
-//}
-//.sell-category-device-image.about.watch{
-    // top: -25px;
-    // left: 20px;
-    // max-width: 260px;
-//}
+// .sell-category-device-image.about.mobile{
+//     left: 0;
+//     top: -75px;
+// }
+// .sell-category-device-image.about.tablet{
+//     top: 10px;
+//     left: 0;
+// }
+// .sell-category-device-image.about.watch{
+//     top: -25px;
+//     left: 20px;
+//     max-width: 260px;
+// }
 
 // breakpoint about us page
-@media only screen and (max-width: 625px){
+@media (max-width: 768px){
     .sell-category-device-image.about.mobile{
-        left: 40px;
+        left: 85px;
         top: -55px;
     }
     .sell-category-device-image.about.tablet{
         top: 10px;
-        left: 40px;
+        left: 95px;
     }
     .sell-category-device-image.about.watch{
         top: -17px;
-        left: 45px;
+        left: 85px;
         //max-width: 210px;
     }
 }
@@ -2286,9 +2286,18 @@ input.lookup-delivery-basket::placeholder{
 }
 
 // tablets - large
-@media (max-width: 990px){
+@media (max-width: 768px){
     .selling-info-item{
         height: 250px;
+    }
+    .email-abandoned-basket{
+        flex-direction: column !important;
+    }
+    .btn.start-selling.sellitem-small{
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-top: 15px !important;
+        width: 100% !important;
     }
     .single-product-container{
         flex-direction: column;
@@ -2296,6 +2305,13 @@ input.lookup-delivery-basket::placeholder{
     .product-data{
         width: auto;
         margin: auto;
+        padding: 0 25px;
+    }
+
+    .product-image-container{
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 20px;
     }
 
     .back-results-sell{

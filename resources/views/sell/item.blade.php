@@ -29,7 +29,8 @@
                 @if($product->product_image === 'default_image')
                     <img src="{{asset('/images/placeholder_phone_image.png')}}">
                 @else
-                    <img src="{{asset('/storage/product_images').'/'.$product->product_image}}">
+                    {{-- <img src="{{asset('/storage/product_images').'/'.$product->product_image}}"> --}}
+                    <img src="{{$product->getImage()}}">
                 @endif
             </div>
             <div class="product-data">
@@ -190,7 +191,7 @@
                             <input type="hidden" name="price" id="price"></input>
                             <input type="hidden" name="type" value="tradein"></input>
 
-                            <div class="row m-0">
+                            <div class="row m-0 email-abandoned-basket">
                                 <div class="col p-0">
                                     <label for="email_address" class="select-shopping-option-title m-0 mb-1">Email address*</label>
                                     @if(Session::has('session_email'))
@@ -290,29 +291,6 @@
 
         function showModal(){
             $('#loginModal').modal('show');
-        }
-
-
-        let buttons = document.getElementsByClassName('toggle-grade-section');
-        for (let index = 0; index < buttons.length; index++) {
-            let button = buttons[index];
-            button.onclick = function() {changeGradeSection(button.id)};
-        }
-
-        function changeGradeSection(id){
-            let btn = document.getElementById(id);
-            let splitted = id.split('-');
-            let section = splitted[1];
-            let section_container = document.getElementById(section+'-description')
-            if(btn.classList.contains('selected-grade')){
-                
-            } else {
-                $('.toggle-grade-section').removeClass('selected-grade');
-                $('.grade-section-description').addClass('hidden');
-
-                btn.classList.add('selected-grade');
-                section_container.classList.remove('hidden');
-            }
         }
 
     </script>

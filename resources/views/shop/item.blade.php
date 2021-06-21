@@ -96,7 +96,8 @@
                 <div class="single-product-container">
 
                     <div class="product-image-container">
-                        <img src="{{asset('/storage/product_images').'/'.$product->product_image}}">
+                        {{-- <img src="{{asset('/storage/product_images').'/'.$product->product_image}}"> --}}
+                        <img src="{{$product->getImage()}}">
                     </div>
                     <div class="product-data">
                         <div class="product-selected product-name-container">

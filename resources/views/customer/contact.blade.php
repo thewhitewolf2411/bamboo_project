@@ -176,7 +176,7 @@
 
                 <div class="d-flex flex-column justify-content-center">
                     <p class="get-started-contact">Get Started</p>
-                    <a href="/sell" class="btn start-selling howitworks d-block ml-auto mr-auto"><p>Start Selling</p></a>
+                    <a href="/sell" class="btn start-selling howitworks d-block ml-auto mr-auto contact-page-btn"><p>Start Selling</p></a>
                 </div>
             </div>
  

@@ -374,3 +374,83 @@
     text-align: left;
     margin-left: 0;
 }
+
+@media (max-width: 768px){
+    .contact-text-title{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-40)/var(--unnamed-line-spacing-48) var(--unnamed-font-family-sharp-sans-no1-bold);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: center;
+        font: normal normal normal 40px/48px Sharp Sans No1 Bold;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+        margin-bottom: 50px;
+    }
+    .ways-element{
+        width: initial;
+        height: initial;
+        margin: 0;
+    }
+    .contact-div{
+        width: 222px;
+        height: 199px;
+        padding: 20px;
+        padding-bottom: 15px;
+        padding-right: 15px;
+    }
+
+    .contact-div img {
+        width: 108px;
+        height: 87px;
+    }
+
+    .contact-text{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-30)/32px var(--unnamed-font-family-sharp-sans-no1-bold);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: left;
+        font: normal normal normal 30px/32px Sharp Sans No1 Bold;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+    }
+    
+    .contact-form-message-row{
+        flex-direction: column;   
+    }
+
+    .telephone-header, .telephone-contact-container{
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    .get-started-contact{
+        margin-left: 0;
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        text-align: left;
+        font: normal normal normal 20px/28px Sharp Sans No1 Bold;
+        letter-spacing: 0px;
+        opacity: 1;
+    }
+
+    .contact-page-btn{
+        margin-left: 0 !important;
+    }
+
+    .telnumber{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-40)/var(--unnamed-line-spacing-90) var(--unnamed-font-family-sharp-sans-no1-bold) !important;
+        letter-spacing: var(--unnamed-character-spacing-0) !important;
+        color: var(--bamboo-green) !important;
+        text-align: left !important;
+        font: normal normal normal 40px/90px Sharp Sans No1 Bold !important;
+        letter-spacing: 0px;
+        color: #A3D147;
+        opacity: 1;
+    }
+
+    .worktime-text.disclaimer{
+        margin-top: 40px !important;
+    }
+}

@@ -296,6 +296,9 @@ class SellController extends Controller
         $brandName = Brand::find($brand_id)->brand_name;
         $sorting = new Sorting($brand_id, $category_id);
         $devices = $sorting->sortDevices()->take(4);
+        foreach($devices as $device){
+            $device->device_image = $device->getImage();
+        }
         // dd($devices);
 
         //$devices = SellingProduct::where('brand_id', $brand_id)->where('category_id', $category_id)->take(4)->get();

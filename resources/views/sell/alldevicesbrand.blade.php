@@ -91,7 +91,8 @@
                                 @if($product->product_image === 'default_image')
                                     <img src="{{asset('/images/placeholder_phone_image.png')}}">
                                 @else
-                                    <img src="{{asset('/storage/product_images').'/'.$product->product_image}}">
+                                    {{-- <img src="{{asset('/storage/product_images').'/'.$product->product_image}}"> --}}
+                                    <img src="{{$product->getImage()}}">
                                 @endif
                             </div>
                             <div class="product-data-container">

@@ -255,7 +255,8 @@
                                     @if($device->product_image === 'default_image')
                                         <img src="{{asset('/images/placeholder_phone_image.png')}}">
                                     @else
-                                        <img src="{{asset('/storage/product_images').'/'.$device->product_image}}">
+                                        <img src="{{$device->getImage()}}">
+                                        {{-- <img src="{{asset('/storage/product_images').'/'.$device->product_image}}"> --}}
                                     @endif
                                 </div>
                                 <div class="popular-product-name-model mt-4">

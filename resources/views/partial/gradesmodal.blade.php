@@ -108,3 +108,29 @@
         </div>
     </div>
 </div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', function(){
+        let buttons = document.getElementsByClassName('toggle-grade-section');
+        for (let index = 0; index < buttons.length; index++) {
+            let button = buttons[index];
+            button.onclick = function() {changeGradeSection(button.id)};
+        }
+
+        function changeGradeSection(id){
+            let btn = document.getElementById(id);
+            let splitted = id.split('-');
+            let section = splitted[1];
+            let section_container = document.getElementById(section+'-description')
+            if(btn.classList.contains('selected-grade')){
+                
+            } else {
+                $('.toggle-grade-section').removeClass('selected-grade');
+                $('.grade-section-description').addClass('hidden');
+
+                btn.classList.add('selected-grade');
+                section_container.classList.remove('hidden');
+            }
+        }
+    });
+</script>

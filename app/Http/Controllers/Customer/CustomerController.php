@@ -180,7 +180,7 @@ class CustomerController extends Controller
     public function removeFromCart($parameter){
         $cart = Cart::where('id', $parameter)->first();
         $cart->delete();
-        return redirect('/cart')->with('success', 'We’ve successfully removed your device from the basket.');
+        return redirect('/cart')->with('success', 'You successfully removed your device from the basket.');
     }
 
     /**
@@ -190,7 +190,7 @@ class CustomerController extends Controller
     public function removeFromAbandonedCart($id){
         $abandoned_cart = AbandonedCart::where('id', $id)->first();
         $abandoned_cart->delete();
-        return redirect('/cart')->with('success', 'We’ve successfully removed your device from the basket.');
+        return redirect('/cart')->with('success', 'You successfully removed your device from the basket.');
     }
 
     /**

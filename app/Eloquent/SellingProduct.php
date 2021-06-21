@@ -3,6 +3,7 @@
 namespace App\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\URL;
 
 class SellingProduct extends Model
 {
@@ -35,5 +36,25 @@ class SellingProduct extends Model
     public function getCategory($category_id){
         $categoryName = Category::where('id', $category_id)->get('category_name');
         return $categoryName[0]->category_name;
+    }
+
+    public function getImage(){
+        // DEVELOPMENT ONLY
+        // if(URL::to('/') === 'http://127.0.0.1:8000'){
+        //     switch ($this->category_id) {
+        //         case 1:
+        //             return asset('example_phone_image.jpg');
+        //             break;
+        //         case 2:
+        //             return asset('example_tablet_image.png');
+        //             break;
+        //         case 3:
+        //             return asset('example_watch_image.png');
+        //             break;
+        //         default:
+        //             break;
+        //     }
+        // }
+        return asset('/storage/product_images').'/'.$this->product_image;
     }
 }

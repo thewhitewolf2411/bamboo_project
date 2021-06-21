@@ -69,15 +69,17 @@ class FAQSeeder extends Seeder
         #9
         FAQ::create([
             'question' => 'What do I do with iCloud?',
-            'answer' => 'Remove your device from your iCloud account before sending the device to us. 
-            This is really quick and easy to do, please <a href="/instructions/icloud" target="_blank" class="answer-text link">click</a> for a simple guide…',
+            // 'answer' => 'Remove your device from your iCloud account before sending the device to us. 
+            // This is really quick and easy to do, please <a href="/instructions/icloud" target="_blank" class="answer-text link">click</a> for a simple guide…',
+            'answer' => 'appleInstructions'
         ]);
 
         #10
         FAQ::create([
             'question' => 'What do I do with Google lock?',
-            'answer' => 'It would be best if you can remove your device from your Google account before sending the device to us. 
-            This is really quick and easy to do, please <a href="/instructions/google" target="_blank" class="answer-text link">click</a> for a simple guide…',
+            // 'answer' => 'It would be best if you can remove your device from your Google account before sending the device to us. 
+            // This is really quick and easy to do, please <a href="/instructions/google" target="_blank" class="answer-text link">click</a> for a simple guide…',
+            'answer' => 'googleInstructions'
         ]);
 
         #11

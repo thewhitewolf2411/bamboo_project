@@ -573,7 +573,7 @@ h3, h4, h5{
 }
 
 // global breakpoint 
-@media screen and (max-width: 740px) and (min-width: 325px){
+@media (max-width: 768px){
 
     main{
         //margin-top: 100px !important;
@@ -676,10 +676,10 @@ h3, h4, h5{
     }
 
     .contact-footer{
-        padding: 30px !important;
+        padding: 60px 22px !important;
         flex-direction: column;
         // margin-top: 20px;
-        height: auto;
+        height: initial !important;
     }
 
     .service-header-1, .service-header-2{
@@ -688,22 +688,46 @@ h3, h4, h5{
         width: 100%;
     }
 
+    .service-header-1{
+        margin-top: 40px;
+    }
+
+    .service-header-2{
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
     .contact-footer-image{
         //margin-bottom: 20px;
-        margin: auto;
+        margin: auto !important;
+    }
+
+    .contact-footer-image > img {
+        width: 211px !important;
+        height: 211px !important;
     }
 
     .contact-footer-text{
         width: 100%;
-        margin-right: 0;
+        margin-right: 0 !important;
+    }
+
+    .service-header-2{
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .service-header-1, .service-header-2{
+        text-align: center !important;
     }
 
     .contact-footer-arrow{
         margin-top: 20px;
     }
 
-    .contact-form-container-active{
-        padding: 15px !important;
+    .contact-form-container{
+        // padding: 15px !important;
+        padding: 35px !important;
     }
 
     .contact-form-container-active .row{

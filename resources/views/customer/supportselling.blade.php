@@ -389,7 +389,11 @@
                 </div>
                 <div id="{!!$question_answer->id!!}" class="collapse" aria-labelledby="heading{!!$question_answer->id!!}" data-parent="#support-question-answers-container">
                     <div class="card-body answer">
-                        <p class="answer-text">{!!$question_answer->answer!!}</p>
+                        @if($question_answer->answer === 'googleInstructions' || $question_answer->answer === 'appleInstructions')
+                            @include('partial.faq.instructionsmodal', ['type' => $question_answer->answer])
+                        @else
+                            <p class="answer-text">{!!$question_answer->answer!!}</p>
+                        @endif
                         {{-- @if($question_answer->link)<a class="btn mt-4 btn-{!!$question_answer->link_color!!}" href="{!!$question_answer->link!!}">{!!$question_answer->link_text!!}</a>@endif --}}
                     </div>
                 </div>

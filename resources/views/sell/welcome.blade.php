@@ -474,10 +474,11 @@
 
                                     let deviceimg = document.createElement('img');
                                     deviceimg.classList.add('device-make-result-image');
-                                    if(singleresult.product_image === 'default_image'){
+                                    if(singleresult.device_image === 'default_image'){
                                         deviceimg.src = '/images/placeholder_phone_image.png';
                                     } else {
-                                        deviceimg.src = '/storage/product_images/'+singleresult.product_image;
+                                        deviceimg.src = singleresult.device_image;
+                                        //deviceimg.src = '/storage/product_images/'+singleresult.product_image;
                                     }
 
                                     let devicename = document.createElement('p');
