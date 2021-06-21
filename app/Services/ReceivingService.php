@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Eloquent\AdditionalCosts;
 use App\Eloquent\ImeiResult;
 use App\Eloquent\Tradein;
 use App\Eloquent\SellingProduct;
@@ -21,11 +22,11 @@ class ReceivingService{
 
         $results = self::_checkReceivingResaults($request->all());
 
-        if($results){
-            $trayname = self::allocateToTray(Tradein::find($request->tradeinid));
-            $pdf = self::generateBarcode(Tradein::find($request->tradeinid));
+        if($results){  
+            $tradein = self::allocateToTray(Tradein::find($request->tradeinid));
+            $pdf = self::generateBarcode(Tradein::find($tradein->id));
             
-            return [$trayname, $pdf];
+            return [$tradein->getTrayName($tradein->id), $pdf];
         }
 
         return false;
@@ -45,7 +46,7 @@ class ReceivingService{
             self::saveSerial($receivingData['serial_number'], $receivingData['tradeinid']);
         }
         
-        if(array_key_exists('visible_imei', $receivingData)){
+        if(array_key_exists('visible_imei', $receivingData) && $receivingData['visible_imei'] !== 'no'){
             self::checkImei($receivingData['imei_number'], $receivingData['tradeinid']);
         }
 
@@ -114,6 +115,8 @@ class ReceivingService{
 
             $tradein->missing_image = $path;
             $tradein->job_state = 4;
+
+            $tradein->save();
 
             return false;
         }
@@ -219,6 +222,11 @@ class ReceivingService{
             $tradein->barcode = $newBarcode;
         }
 
+        $additionalCost = AdditionalCosts::find(1);
+
+        $tradein->carriage_cost = $additionalCost->carriage_costs;
+        $tradein->admin_cost = $additionalCost->administration_costs;
+
         $tradein->save();
 
         $getLabel = new GetLabel();
@@ -259,9 +267,11 @@ class ReceivingService{
         $traycontent->trade_in_id = $tradein->id;
         $traycontent->save();
 
-        $tradein->save();
+        return $tradein;
 
-        return $quarantineTrays->tray_name;
+        #$tradein->save();
+
+        #return $quarantineTrays->tray_name;
     }
 
     private static function saveSerial($serialNumber, $tradeinid){

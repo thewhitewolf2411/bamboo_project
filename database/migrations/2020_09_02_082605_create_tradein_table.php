@@ -49,6 +49,7 @@ class CreateTradeinTable extends Migration
             $table->boolean('fmip_gock')->nullable();
             $table->boolean('pin_locked')->nullable();
             $table->boolean('blacklisted')->default(false);
+            $table->string('fully_functional')->default('N/A');
             $table->timestamps();
         });
     }

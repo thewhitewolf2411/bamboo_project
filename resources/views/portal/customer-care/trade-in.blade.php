@@ -7,7 +7,12 @@
                 <p>Trade-pack Despatch</p>
             </div>
         </div>
-        <div class="portal-table-container">
+
+        <div class="loader invisible" id="trade-pack-despatch-loader">
+            
+        </div>    
+
+        <div class="portal-table-container" id="trade-pack-despatch">
 
             @if(Session::has('error'))
             <div class="alert alert-danger" role="alert">
@@ -90,7 +95,7 @@
                         @endif
 
                     @endforeach
-                <a role="button" id="print_trade_pack_bulk_form_trigger" class="btn btn-primary mb-5" disabled>Print Trade Pack Trade-In Bulk</a>
+                <button role="button" id="print_trade_pack_bulk_form_trigger" class="btn btn-primary mb-5" disabled>Print Trade Pack Trade-In Bulk</button>
                 </tbody>
 
 

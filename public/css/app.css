@@ -18857,7 +18857,7 @@ input.lookup-delivery-basket::placeholder {
 
 .sales-lot-table {
   border-collapse: collapse;
-  width: 100%;
+  width: 100% !important;
   border: 1px solid #dddddd;
 }
 
@@ -19433,6 +19433,25 @@ input[type=number] {
   margin: 0 !important;
   width: 20px;
   height: 20px;
+}
+
+#receiving-modal-container .receiving-modal {
+  padding: 0 !important;
+}
+
+.receiving-modal {
+  padding: 0 !important;
+  margin-top: 104px;
+}
+
+.receiving-modal .modal-dialog {
+  max-width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+}
+
+.receiving-modal .modal-dialog .modal-content {
+  height: 100%;
 }
 
 @media only screen and (max-width: 1720px) {

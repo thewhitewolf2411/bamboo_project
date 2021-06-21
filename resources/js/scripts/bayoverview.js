@@ -11,6 +11,9 @@ $('.baydelete').on('click', function(){
             data:{
                 bayname:bayname,
             },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             success:function(response){
                 location.reload();
             },

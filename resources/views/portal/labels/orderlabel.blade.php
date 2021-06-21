@@ -1,188 +1,313 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style type="text/css" media="all">
+    <meta http-equiv="Content-Type" content="charset=utf-8" />
+    <style type="text/css">
 
-    @page{
-        margin: 10mm;
-        font-size: 12pt;
-        width: 100%;
-        text-align: center;
-    }
+        @page{
+            margin: 10mm;
+            font-size: 10px;
+            width: 100%;
+            text-align: left;
+        }
 
-    p{
-        margin: 0  !important;
-    }
+        @font-face {
+            font-family: "Sharp Sans No1 Medium"; 
+            font-style: normal;
+            font-weight: 400;
+            src: url({{ storage_path('fonts/sansmedium.ttf') }}) format('truetype');
+        }
 
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
+        @font-face {
+            font-family: "Sharp Sans No1 Bold"; 
+            font-style: normal;
+            font-weight: 400;
+            src: url({{ storage_path('fonts/SharpSansNo1-Bold.ttf') }}) format('truetype');
+        }
 
-    .gray-text{
-        color: gray;
-    }
+        span, p{
+            margin: 0;
+            font-family: "Sharp Sans No1 Medium";
+            line-height: 10px !important;
+        }
 
-    .header-text-right{
-        text-align: right;
-    }
+        .bold{
+            font-family: "Sharp Sans No1 Bold" !important;
+        }
 
-    .header-text-left{
-        text-align: left;
-    }
+        body{
+            width: 541px;
+            height: 727px;
+            font-family: "Sharp Sans No1 Medium" ;
+        }
 
-    .header-text-center{
-        text-align: center;
-    }
+        #user-data{
+            position: absolute;
+            top: 140px;
+            left: 67px;
+        }
 
-    .first-table td{
-        padding: 0 !important;
-    }
+        #date-data{
+            position: absolute;
+            top: 91px;
+            left: 483px;
+            text-align: right;
+        }
 
-    .margin-30{
-        margin-top: 30px;
-    }
+        #barcode-data{
+            position: absolute;
+            top: 148px;
+            left: 484px;
+            widows: 87px;
+            height: 62px;
+        }
 
-    .ml-0{
-        margin-left: 0 !important
-    }
+        #hi-name{
+            position: absolute;
+            top: 206px;
+            left: 66px;
+        }
 
-    .second-table tr{
-        padding: 0 !important;
-        width: 100% !important;
-    }
+        #expiry-date{
+            position: absolute;
+            top: 242px;
+            left: 232px;
+        }
 
-    .second-table td{
-        padding: 0 !important;
-        width: 20% !important;
-    }
+        .product-data-class{
+            position: absolute;
+            top: 276px;
+            left: 67px;
+        }
 
-    .w-75{
-        max-width: 75%;
-        width: 75%;
-    }
+        #product-price-p{
+            left: 237px;
+        }
 
-    .mb-0{
-        margin-bottom: 0 !important;
-    }
+        #product-quantity-p{
+            left: 329px;
+        }
 
-    .mb-5{
-        margin-bottom: 5px !important;
-    }
+        #total-price-p{
+            left: 424px;
+        }
 
-    .third-table{
-        border: none !important;
-        border-top: 1px solid #000;
-        border-bottom: 1px solid #000;
-    }
+        #total-order-price{
+            position: absolute;
+            top: 414px;
+            left: 424px;
+        }
 
-    .third-table tfoot{
-        width: 100%;
-    }
+        #total-order-data{
+            position: absolute;
+            top: 414px;
+            left: 67px;
+        }
 
-    .third-table td{
-        border:none;
-    }
+        #vertical-barcode{
+            position: absolute;
+            transform: rotate(90deg);
+            left: 130px;
+            bottom: 150px;
+            width: 60px;
+            height: 146px;
+        }
 
-    .third-table tfoot{
-        border-top: 1px solid #000;
-        border-bottom: 1px solid #000;
-    }
+        #delivery-note-image{
+            position: absolute;
+            top: 68px;
+            left: 30px;
+            width: 27px;
+            height: 21px;
+        }
 
-    .bold{
-        font-weight: 600;
-    }
+        #delivery-note-text{
+            position: absolute;
+            top: 68px;
+            left: 66px;
+            font-size: 18px;
+        }
 
-</style>
+        #pre-date-data{
+            position: absolute;
+            top: 91px;
+            left: 349px;
+        }
+
+        .black-line{
+            border-bottom: 1px solid #000;
+            position: absolute;
+            width: 408px;
+            left: 67px;
+        }
+
+        #black-line-1{
+            top: 262px;
+        }
+
+        #black-line-2{
+            top: 414px;
+        }
+
+        #black-line-3{
+            top: 428px;
+        }
+
+        #product-data-price-template{
+            position: absolute;
+            left: 237px;
+            top: 264px;
+        }
+
+        #product-data-quantity-template{
+            position: absolute;
+            left: 329px;
+            top: 264px;
+        }
+
+        #product-data-total-price-template{
+            position: absolute;
+            left: 424px;
+            top: 264px;
+        }
+
+        #thank-you-note{
+            position: absolute;
+            top: 430px;
+            left: 67px;
+        }
+
+    </style>
 </head>
 
 <body>
-   
-    <table class="first-table">
-      <tr>
-        <td></td>
-        <td></td>
-        <td><p class="header-text-right">{{Carbon\Carbon::now()->format('d/m/Y')}}</p></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td><p class="header-text-right">{{$tradeins[0]->barcode_original}}</p></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td><p class="header-text-right">{{Carbon\Carbon::parse($tradeins[0]->expiry_date)->format('d/m/Y')}}</p></td>
-      </tr>
-    </table>
-    <table class="second-table margin-30">
-        <tr>
-          <td><p class="header-text-left">{{$tradeins[0]->customerName()}}<br>{{$tradeins[0]->addressLastLine()}}<br>{{$tradeins[0]->addressLine()}}</p></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td><img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($tradeins[0]->barcode_original,'C128') }}" height="80" width="100%" /><br><p class="header-text-center">{{ $tradeins[0]->barcode_original,'C128' }}</p></td>
-        </tr>
-    </table>
 
-    <div class="margin-30 w-75">
-
-        <p class="header-text-left ml-0">Hi {{$tradeins[0]->customerFirstName()}}</p>
-        <p class="header-text-left ml-0">Thank you for choosing Bamboo Mobile to SELL your device! Don’t delay in sending your device(s). It must reach us by {{Carbon\Carbon::parse($tradeins[0]->expiry_date)->format('d/m/Y')}} or the price offered to you could change.</p>
-
+    <div id="delivery-note-image">
+        <img src="{{public_path() . '/images/Group5.png'}}" width="27" height="21">
+    </div>
+    <div id="delivery-note-text">
+        <p>Delivery Note</p>
     </div>
 
     <p style="display: none">
         {{$price = 0}}
+
+        @foreach ($tradeins as $tradein)
+            {{$price += $tradein->order_price}}
+        @endforeach
     </p>
-    
-    <table class="third-table margin-30">
-        <thead>
-            <tr>
-                <th style="width: 40%;" class="header-text-center"></th>
-                <th style="width: 20%;" class="header-text-center">Item Price</th>
-                <th style="width: 20%;" class="header-text-center">Quantity</th>
-                <th style="width: 20%;" class="header-text-center">Total price</th>
-            </tr>
+   
+    <div id="user-data">
 
-        </thead>
-        <tbody>
-            @foreach ($tradeins as $tradein)
-                <tr class="mb-5">
-                    <td style="width: 40%;"><p class="bold header-text-left mb-0">{{$tradein->getProductName()}}</p><p class="header-text-left mb-0">Network:{{$tradein->getDeviceNetwork()}}</p><p class="header-text-left mb-0">Memory:{{$tradein->getDeviceMemory()}}</p><p class="header-text-left mb-0">Grade:{{$tradein->customer_grade}}</p></td>
-                    <td style="width: 20%;"><p class="header-text-center">£{{$tradein->order_price}}</p></td>
-                    <td style="width: 20%;"><p class="header-text-center">1</p></td>
-                    <td style="width: 20%;"><p class="header-text-center">£{{$tradein->order_price}}</p></td>
-                    {{$price += $tradein->order_price}}
-                </tr>
+        <p>{{$tradeins[0]->customerName()}}<br>{{$tradeins[0]->addressLine()}}<br>{{$tradeins[0]->addressLastLine()}}</p>
+
+    </div>
+
+    <div id="pre-date-data" class="bold">
+
+        <p>Order Date:<br>Trade-in ID:<br>Order Expiry date:</p>
+
+    </div>
+
+
+    <div id="date-data">
+
+        <p>{{\Carbon\Carbon::parse($tradeins[0]->created_at)->format('d/m/y')}}<br>{{$tradeins[0]->barcode}}<br>{{\Carbon\Carbon::parse($tradeins[0]->expiry_date)->format('d/m/y')}}</p>
+
+    </div>
+
+    <div id="barcode-data">
+
+        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($tradeins[0]->barcode_original,'C128') }}" height="62" width="88" style="margin: 0" />
+        <p style="width:88px; text-align: center; margin:0 auto;">{{$tradeins[0]->barcode_original}}</p>
+
+    </div>
+
+    <div id="hi-name">
+        <p>Hi {{$tradeins[0]->customerFirstName()}}</p><br>
+        <p>Thank you for choosing Bamboo Mobile to SELL your device! Don’t delay in sending <br> your device(s). It must reach us by {{\Carbon\Carbon::parse($tradeins[0]->expiry_date)->format('d/m/y')}}  or the price offered to you could change.</p>
+    </div>
+
+    <div id="black-line-1" class="black-line"></div>
+    <div id="black-line-2" class="black-line"></div>
+    <div id="black-line-3" class="black-line"></div>
+
+
+    <div id="product-data">
+
+        <div id="product-data-price-template" class="bold">
+            <p>Item Price</p>
+        </div>
+
+        <div id="product-data-quantity-template" class="bold">
+            <p>Quantity</p>
+        </div>
+
+        <div id="product-data-total-price-template" class="bold">
+            <p>Total Price</p>
+        </div>
+
+        <p id="product-data-p" class="product-data-class">
+        @foreach($tradeins as $tradein)
+
+           
+                {{$tradein->getProductName()}}<br>
+                Network:{{$tradein->getDeviceNetwork()}}<br>
+                Memory:{{$tradein->getDeviceMemory()}}<br>
+                Grade:{{$tradein->customer_grade}}<br><br>
+
+        @endforeach
+        </p>
+
+        <p id="product-price-p" class="product-data-class">
+        @foreach($tradeins as $tradein)
+            <br><br>
+            £{{$tradein->order_price}}<br><br><br><br>
+
+        @endforeach
+        </p>
+
+        <p id="product-quantity-p" class="product-data-class">
+            @foreach($tradeins as $tradein)
+            <br><br>
+            1<br><br><br><br>
             @endforeach
-        </tbody>
+        </p>
+        
 
-        <tfoot>
-            <td style="width: 40%;"><span class="bold header-text-center">TOTAL </span><span>SELL value</span></td>
-            <td style="width: 20%;"></td>
-            <td style="width: 20%;"></td>
-            <td style="width: 20%;"><p class="header-text-center">£ {{$price}}</p></td>
-        </tfoot>
-
-    </table>
-
-    <table class="fourth-table margin-30">
-        <tr>
-            <td><img src="./sell_images/image-3-bw.png" width="80px" height="80px"></td>
-            <td><h1>Remember to</h1>
-                <ul>
-                    <li>Erase all contents and factory reset your device(s)</li>
-                    <li>Remove iCloud or Google accounts from your device(s)</li>
-                    <li>Remove your SIM and memory card</li>
-                    <li>Remove any security PIN or pattern locks</li>
-                </ul>
-            </td>
-        </tr>
-    </table>
+        <p id="total-price-p" class="product-data-class">
+            @foreach($tradeins as $tradein)
+                <br><br>
+                £{{$tradein->order_price}}<br><br><br><br>
     
-    <div class="margin-30 w-75 header-text-left">
-        <span class="header-text-left">Thanks </span><span class="header-text-left bold">Bamboo Mobile</span>
+            @endforeach
+        </p>
+
+        <p id="total-order-data">
+            <span class="bold">
+                TOTAL
+            </span>
+            <span>SELL VALUE</span>
+        </p>
+
+        <p id="total-order-price">
+            £{{$price}}
+        </p>
+
+        <div id="vertical-barcode">
+            <p>Trade in-ID:
+                {{$tradeins[0]->barcode_original}}
+            </p>
+            <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($tradeins[0]->barcode_original,'C128') }}" height="30" width="150" style="margin: 0" />
+        </div>
+
+        <div id="thank-you-note">
+            <span>
+                Thanks
+            </span>
+            <span class="bold">Bamboo Mobile</span>
+        </div>
+
     </div>
 
 </body>

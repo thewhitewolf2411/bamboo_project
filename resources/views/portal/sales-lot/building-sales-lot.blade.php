@@ -5,31 +5,52 @@
 <div class="container-fluid">
     <div class="portal-title-container">
         <div class="portal-title">
+            @if($edit)
+            <p>Edit Sales lot</p>
+            @else
             <p>Building Sales Lot</p>
+            @endif
         </div>
     </div>
-    <div class="portal-table-container p-0">
+
+    <div class="loader" id="sales-lot-loader">
+            
+    </div>
+
+    <div class="portal-table-container p-0 hidden" id="sales-lot-content">
 
         <div class="d-flex flex-column">
 
-            <div class="row">
-                <div class="col-md-6">Lot No.</div>
+            <div class="row justify-content-end">
+                <div class="col-md-1">Lot No.</div>
+                @if($edit)
+                <div class="col-md-6">{{$salelot->id}}</div>
+                @else
                 <div class="col-md-6">{{$totalSalesLots + 1}}</div>
+                @endif
             </div>
-            <div class="row">
-                <div class="col-md-6">Total Qty.</div>
+            <div class="row justify-content-end">
+                <div class="col-md-1">Total Qty.</div>
+                @if($edit)
+                <div class="col-md-6" id="total_qty">{{$salelot->getSalesLotQuantity()}}</div>
+                @else
                 <div class="col-md-6" id="total_qty">0</div>
+                @endif
+                
             </div>
-            <div class="row">
-                <div class="col-md-6">Total Cost</div>
+            <div class="row justify-content-end">
+                <div class="col-md-1">Total Cost</div>
+                @if($edit)
+                <div class="col-md-6" id="total_cost">{{$salelot->getSalesLotPrice()}}</div>
+                @else
                 <div class="col-md-6" id="total_cost">0</div>
+                @endif
             </div>
 
         </div>
 
         <div class="row">
 
-            
             <div class="col-md-6">
 
                 <div class="d-flex">
@@ -77,22 +98,7 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        {{--@foreach ($tradeins as $tradein)
-                            @if($tradein->isBoxed() && !$tradein->isPartOfSalesLot())
-                            <tr>
-                                <td>{{$tradein->barcode}}</td>
-                                <td>{{$tradein->getTrayName($tradein->id)}}</td>
-                                <td>{{$tradein->customer_grade}}</td>
-                                <td>{{$tradein->getDeviceBambooGrade()}}</td>
-                                <td>{{$tradein->getProductName()}}</td>
-                                <td>{{$tradein->getDeviceMemory()}}</td>
-                                <td>{{$tradein->getDeviceNetwork()}}</td>
-                                <td>{{$tradein->getDeviceColour()}}</td>
-                                <td>£{{$tradein->getDeviceCost()}}</td>
-                                <td><input class="boxed_tradeins" type="checkbox" id="tradein_{{$tradein->id}}" data-id="{{$tradein->id}}"></td>
-                            </tr>
-                            @endif
-                        @endforeach--}}
+
                     </tbody>
                 </table>
 
@@ -102,8 +108,7 @@
                             <td>Box Number</td>
                             <td>Bamboo Grade</td>
                             <td>Network</td>
-                            <td>Added QTY</td>
-                            <td>Total QTY</td>
+                            <td>Avaliable QTY</td>
                             <td>Total Cost</td>
                             <td><input type="checkbox" id="select_all_boxes_building_lot"></td>
                         </tr>
@@ -113,26 +118,13 @@
                             <td>Box Number</td>
                             <td>Bamboo Grade</td>
                             <td>Network</td>
-                            <td>Added QTY</td>
-                            <td>Total QTY</td>
+                            <td>Avaliable QTY</td>
                             <td>Total Cost</td>
                             <td></td>
                         </tr>
                     </tfoot>
                     <tbody>
-                        {{--@foreach($boxes as $box)
-                        @if($box->isInBay() && $box->getNumberOfDevicesInSaleLot() === 0)
-                        <tr>
-                            <td>{{$box->tray_name}}</td>
-                            <td>{{$box->tray_grade}}</td>
-                            <td>{{$box->tray_network}}</td>
-                            <td>{{$box->getNumberOfDevices()}}</td>
-                            <td>{{$box->getNumberOfDevices()}}</td>
-                            <td>£{{$box->getBoxPrice()}}</td>
-                            <td><input class="bayed_boxes" type="checkbox" id="box_{{$box->id}}" data-id="{{$box->id}}"></td>
-                        </tr>
-                        @endif
-                        @endforeach--}}
+
                     </tbody>
                 </table>
 
@@ -143,7 +135,12 @@
                 <div class="d-flex">
                     <div class="button-box col-lg-8 my-3 d-flex" data-toggle="buttons">
                         <button id="removefromlot" class="btn btn-danger mx-2" role="button" disabled>Remove from Lot</button>
+                        @if($edit)
+                        <button id="editlot" class="btn btn-success mx-2" role="button">Finish Editing Lot</button>
+                        <input type="hidden" id="edit_lot_id" value="{{$salelot->id}}">
+                        @else
                         <button id="completelot" class="btn btn-success mx-2" role="button" disabled>Lot complete</button>
+                        @endif
                         <button id="exportxls" class="btn btn-success mx-2" role="button" disabled>Export XLS</button>
                     </div>
                     <div class="col-lg-4 d-flex align-items-center justify-content-center">
@@ -156,7 +153,7 @@
                         <tr>
                             <td>Box number</td>
                             <td>Bamboo Grade</td>
-                            <td>Manifacturer/Model</td>
+                            <td>Manufacturer/Model</td>
                             <td>GB Size</td>
                             <td>Total Cost</td>
                             <td><input type="checkbox" id="select_all_added_tradeins_building_lot"></td>
@@ -173,18 +170,7 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        {{--@foreach ($tradeins as $tradein)
-                            @if($tradein->isBoxed() && !$tradein->isPartOfSalesLot())
-                            <tr id="added_tradeins_{{$tradein->id}}" class="added_tradeins">
-                                <td>{{$tradein->getTrayName($tradein->id)}}</td>
-                                <td>{{$tradein->getDeviceBambooGrade()}}</td>
-                                <td>{{$tradein->getProductName()}}</td>
-                                <td>{{$tradein->getDeviceMemory()}}</td>
-                                <td>£{{$tradein->getDeviceCost()}}</td>
-                                <td><input class="added_tradeins" type="checkbox" id="added_tradein_{{$tradein->id}}" data-id="{{$tradein->id}}"></td>
-                            </tr>
-                            @endif
-                        @endforeach--}}
+
                     </tbody>
 
                 </table>

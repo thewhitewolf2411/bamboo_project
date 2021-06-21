@@ -182,8 +182,8 @@ class ReportsController extends Controller
             $sheet->setCellValue('F'.$index, ($tradein->imei_number === null) ? $tradein->serial_number : $tradein->imei_number);
             $sheet->setCellValue('G'.$index, $tradein->bamboo_price);
             $sheet->setCellValue('H'.$index, $tradein->carriage_cost);
-            $sheet->setCellValue('I'.$index, $tradein->bamboo_price + $tradein->carriage_cost);
-            $sheet->setCellValue('J'.$index, $tradein->created_at);
+            $sheet->setCellValue('I'.$index, $tradein->getDeviceCost());
+            $sheet->setCellValue('J'.$index, \Carbon\Carbon::parse($tradein->created_at)->format('d/m/y'));
             $sheet->setCellValue('K'.$index, $tradein->getDatePassed());
             $sheet->setCellValue('L'.$index, $tradein->getTimePassed());
             $sheet->setCellValue('M'.$index, $tradein->getDatePaid());
@@ -284,7 +284,7 @@ class ReportsController extends Controller
             $sheet->setCellValue('E'.$index, ($tradein->imei_number === null) ? $tradein->serial_number : $tradein->imei_number);
             $sheet->setCellValue('F'.$index, $tradein->bamboo_price);
             $sheet->setCellValue('G'.$index, $tradein->carriage_cost);
-            $sheet->setCellValue('H'.$index, $tradein->bamboo_price + $tradein->carriage_cost);
+            $sheet->setCellValue('H'.$index, $tradein->getDeviceCost());
             $sheet->setCellValue('I'.$index, $tradein->created_at);
             $sheet->setCellValue('J'.$index, $tradein->getBambooStatus());
             $sheet->setCellValue('K'.$index, $tradein->getTimeIn());

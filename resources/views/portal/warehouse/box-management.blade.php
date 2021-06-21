@@ -254,7 +254,7 @@
                                 @if($test->status !== 10)
                                     <tr>
                                         <td><div class="table-element">{{$test->tray_name}}</div></td>
-                                        <td><div class="table-element">{{$test->number_of_devices}}</div></td>
+                                        <td><div class="table-element">{{$test->getNumberOfDevices()}}</div></td>
                                         <td><div class="table-element">{{$test->getBoxStatus()}}</div></td>
                                         <td><div class="table-element">
                                             <a role="button" class="printboxlabel" data-value="{{$test->tray_name}}" id="{{$test->tray_name}}">Label</a> / 

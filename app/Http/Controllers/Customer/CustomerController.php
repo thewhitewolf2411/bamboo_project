@@ -667,8 +667,10 @@ class CustomerController extends Controller
             case '6':
                 // set notification as resolved
                 $notification = Notification::where('tradein_id', $tradein->id)->where('type', 7)->first();
-                $notification->resolved = true;
-                $notification->save();
+                if($notification){
+                    $notification->resolved = true;
+                    $notification->save();
+                }
 
                 // set state to test complete
                 $tradein->job_state = '12';

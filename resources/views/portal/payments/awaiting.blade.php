@@ -214,7 +214,7 @@ function toggleScanOption(option){
 }
 
 
-$(document).scannerDetection({
+$('#search_id').scannerDetection({
 	   
     //https://github.com/kabachello/jQuery-Scanner-Detection
     

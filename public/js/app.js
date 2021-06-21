@@ -56472,6 +56472,10 @@ __webpack_require__(/*! ./scripts/saleslot/BuildingSalesLot */ "./resources/js/s
 
 __webpack_require__(/*! ./scripts/saleslot/CompletedSalesLot */ "./resources/js/scripts/saleslot/CompletedSalesLot.js");
 
+__webpack_require__(/*! ./scripts/saleslot/EditingSalesLot */ "./resources/js/scripts/saleslot/EditingSalesLot.js");
+
+__webpack_require__(/*! ./scripts/saleslot/PickingSalesLot */ "./resources/js/scripts/saleslot/PickingSalesLot.js");
+
 "use strict";
 /*
 window.Vue = require('vue');
@@ -57546,6 +57550,13 @@ window.deleteTradeInDetailsFromSystem = function (id) {
 $('#tradein-checkallbtn').on('click', function () {
   $('.printcheckbox').prop('checked', false);
   $('.printcheckbox').slice(0, 30).prop('checked', this.checked);
+  var numberOfChecked = $('.printcheckbox:checked').length;
+
+  if (numberOfChecked > 0) {
+    $('#print_trade_pack_bulk_form_trigger').prop('disabled', !this.checked);
+  } else {
+    $('#print_trade_pack_bulk_form_trigger').prop('disabled', !this.checked);
+  }
 });
 $('.printcheckbox').on('click', function () {
   var numberOfChecked = $('.printcheckbox:checked').length;
@@ -57557,9 +57568,13 @@ $('.printcheckbox').on('click', function () {
       $(this).prop('checked', false);
       alert('Can\'t print more than 30 tradepacks at one time.');
     }
+
+    $('#print_trade_pack_bulk_form_trigger').prop('disabled', !this.checked);
   }
 });
 $('#print_trade_pack_bulk_form_trigger').on('click', function () {
+  $('#trade-pack-despatch-loader').removeClass('invisible');
+  $('#trade-pack-despatch').addClass('invisible');
   var selected = [];
   $('.printcheckbox:checked').each(function () {
     selected.push($(this).attr('name'));
@@ -57580,7 +57595,6 @@ $('#print_trade_pack_bulk_form_trigger').on('click', function () {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function success(response) {
-      console.log(response);
       window.open(response, '_blank');
       location.reload();
     }
@@ -57626,8 +57640,11 @@ $(document).ready(function () {
     });
     var tradeintable = $('#trade-in-table').DataTable({
       "oLanguage": {
-        "sInfo": "Showing _START_ to _END_"
-      }
+        "sInfo": "Showing _START_ of _END_"
+      },
+      "lengthMenu": [[10, 30, 50, 100, -1], [10, 30, 50, 100, "All"]],
+      "pageLength": -1,
+      "ordering": false
     }); // Apply the search
 
     tradeintable.columns().every(function () {
@@ -57913,6 +57930,9 @@ $('.baydelete').on('click', function () {
       type: "POST",
       data: {
         bayname: bayname
+      },
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       success: function success(response) {
         location.reload();
@@ -58396,10 +58416,10 @@ $('#complete-box').on('click', function () {
         boxid: boxid
       },
       success: function success(response) {
-        window.open(response); //location.href = '/portal/warehouse-management/box-management/';
+        window.open(response);
+        location.href = '/portal/warehouse-management/box-management/';
       },
       error: function error(response) {
-        console.log(response);
         alert(response.responseText);
       }
     });
@@ -58611,79 +58631,81 @@ $('#newtray').on('change', function () {
 /***/ (function(module, exports) {
 
 $(document).ready(function () {
-  if (document.getElementById('boxed-tradeins')) {
-    $.ajax({
-      url: "/portal/sales-lot/building-sales-lot/build-lot/getTradeins",
-      type: "GET",
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      success: function success(response) {
-        setBoxedTradeinsDataTable(response);
-      }
-    });
-  }
-
-  if (document.getElementById('bayed-boxes')) {
-    $.ajax({
-      url: "/portal/sales-lot/building-sales-lot/build-lot/getBoxes",
-      type: "GET",
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      success: function success(response) {
-        setBayedBoxesDataTable(response);
-      }
-    });
-  }
-
-  if (document.getElementById('added-tradeins-building-lot')) {
-    $('#added-tradeins-building-lot tfoot td').each(function () {
-      var title = $(this).text();
-      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-    });
-    var addedtradeinstable = $('#added-tradeins-building-lot').DataTable({
-      "oLanguage": {
-        "sInfo": "Showing _START_ to _END_"
-      },
-      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-      "pageLength": -1,
-      "ordering": false,
-      paging: false,
-      info: false
-    });
-    addedtradeinstable.columns().every(function () {
-      var that = this;
-      $('input', this.footer()).on('keyup change', function () {
-        if (that.search() !== this.value) {
-          that.search(this.value).draw();
+  if (!document.getElementById('edit_lot_id')) {
+    if (document.getElementById('boxed-tradeins')) {
+      $.ajax({
+        url: "/portal/sales-lot/building-sales-lot/build-lot/getTradeins",
+        type: "GET",
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function success(response) {
+          setBoxedTradeinsDataTable(response);
         }
       });
-    });
-  }
+    }
 
-  $('input:checkbox').change(function () {
-    //Check and uncheck all left side tradeins
-    if ($(this).prop('id') === 'select_all_tradeins_building_lot') {
-      $('.boxed_tradeins').each(function () {
-        $(this).prop('checked', $('#select_all_tradeins_building_lot').prop('checked'));
-      });
-    } //Check and uncheck all left side boxes
-
-
-    if ($(this).prop('id') === 'select_all_boxes_building_lot') {
-      $('.bayed_boxes').each(function () {
-        $(this).prop('checked', $('#select_all_boxes_building_lot').prop('checked'));
-      });
-    } //Check and uncheck all right side tradeins
-
-
-    if ($(this).prop('id') === 'select_all_added_tradeins_building_lot') {
-      $('.added_tradeins').each(function () {
-        $(this).prop('checked', $('#select_all_added_tradeins_building_lot').prop('checked'));
+    if (document.getElementById('bayed-boxes')) {
+      $.ajax({
+        url: "/portal/sales-lot/building-sales-lot/build-lot/getBoxes",
+        type: "GET",
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function success(response) {
+          setBayedBoxesDataTable(response);
+        }
       });
     }
-  });
+
+    if (document.getElementById('added-tradeins-building-lot')) {
+      $('#added-tradeins-building-lot tfoot td').each(function () {
+        var title = $(this).text();
+        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+      });
+      var addedtradeinstable = $('#added-tradeins-building-lot').DataTable({
+        "oLanguage": {
+          "sInfo": "Showing _START_ to _END_"
+        },
+        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+        "pageLength": -1,
+        "ordering": false,
+        paging: false,
+        info: false
+      });
+      addedtradeinstable.columns().every(function () {
+        var that = this;
+        $('input', this.footer()).on('keyup change', function () {
+          if (that.search() !== this.value) {
+            that.search(this.value).draw();
+          }
+        });
+      });
+    }
+
+    $('input:checkbox').change(function () {
+      //Check and uncheck all left side tradeins
+      if ($(this).prop('id') === 'select_all_tradeins_building_lot') {
+        $('.boxed_tradeins').each(function () {
+          $(this).prop('checked', $('#select_all_tradeins_building_lot').prop('checked'));
+        });
+      } //Check and uncheck all left side boxes
+
+
+      if ($(this).prop('id') === 'select_all_boxes_building_lot') {
+        $('.bayed_boxes').each(function () {
+          $(this).prop('checked', $('#select_all_boxes_building_lot').prop('checked'));
+        });
+      } //Check and uncheck all right side tradeins
+
+
+      if ($(this).prop('id') === 'select_all_added_tradeins_building_lot') {
+        $('.added_tradeins').each(function () {
+          $(this).prop('checked', $('#select_all_added_tradeins_building_lot').prop('checked'));
+        });
+      }
+    });
+  }
 });
 $(document).on('change', function () {
   var numberOfCheckedLeft = $('.bayed_boxes:checked').length + $('.boxed_tradeins:checked').length;
@@ -58785,7 +58807,6 @@ $('#completelot').on('click', function () {
     },
     success: function success(response) {
       if (response) {
-        alert("Lot has been created");
         location.reload();
       }
     }
@@ -58810,6 +58831,528 @@ $('#exportxls').on('click', function () {
     }
   });
 });
+
+function setBayedBoxesDataTable(boxes) {
+  $('#bayed-boxes tfoot td').each(function () {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+  var bayedBoxesTable = $('#bayed-boxes').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    },
+    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+    "pageLength": -1,
+    "ordering": false,
+    paging: false,
+    info: false
+  });
+
+  for (var i = 0; i < boxes.length; i++) {
+    var row = '<input class="bayed_boxes" type="checkbox" id="box_"' + boxes[i].id + '" data-id="' + boxes[i].id + '">';
+    bayedBoxesTable.row.add([boxes[i].tray_name, boxes[i].tray_grade, boxes[i].tray_network, boxes[i].number_of_devices - (boxes[i].number_of_devices - boxes[i].added_qty), //boxes[i].number_of_devices,
+    '£' + boxes[i].total_cost, row]).node().id = boxes[i].id;
+    bayedBoxesTable.draw(false);
+  }
+
+  bayedBoxesTable.columns().every(function () {
+    var that = this;
+    $('input', this.footer()).on('keyup change', function () {
+      if (that.search() !== this.value) {
+        that.search(this.value).draw();
+      }
+    });
+  });
+  $('#bayed-boxes_wrapper').hide();
+}
+
+function setBoxedTradeinsDataTable(tradeins) {
+  $('#boxed-tradeins tfoot td').each(function () {
+    var title = $(this).text();
+    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+  });
+  var boxedTradeinTable = $('#boxed-tradeins').DataTable({
+    "oLanguage": {
+      "sInfo": "Showing _START_ to _END_"
+    },
+    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+    "pageLength": -1,
+    "ordering": false,
+    paging: false,
+    info: false
+  });
+
+  for (var i = 0; i < tradeins.length; i++) {
+    var row = '<input class="boxed_tradeins" type="checkbox" id="tradein_"' + tradeins[i].id + '" data-id="' + tradeins[i].id + '">';
+    boxedTradeinTable.row.add([tradeins[i].barcode, tradeins[i].tray_name, tradeins[i].customer_grade, tradeins[i].bamboo_grade, tradeins[i].product_name, tradeins[i].device_memory, tradeins[i].device_network, tradeins[i].device_colour, '£' + tradeins[i].device_cost, row]).node().id = tradeins[i].id;
+    boxedTradeinTable.draw(false);
+  }
+
+  boxedTradeinTable.columns().every(function () {
+    var that = this;
+    $('input', this.footer()).on('keyup change', function () {
+      if (that.search() !== this.value) {
+        that.search(this.value).draw();
+      }
+    });
+  });
+  hideLoader();
+}
+
+function hideLeftTradeins(ids) {
+  var boxedTradeinTable = $('#boxed-tradeins').DataTable();
+  var rowdata;
+
+  for (var i = 0; i < ids.length; i++) {
+    rowdata = boxedTradeinTable.row('#' + ids[i]).data();
+
+    if (rowdata && showRightTradeins(rowdata, ids[i])) {
+      boxedTradeinTable.row('#' + ids[i]).remove().draw(false);
+    }
+  }
+
+  $('#select_all_tradeins_building_lot').prop('checked', false);
+}
+
+function showRightTradeins(data, id) {
+  var addedTradeinTable = $('#added-tradeins-building-lot').DataTable();
+  var row = '<input class="added_tradeins" type="checkbox" id="tradein_' + id + '" data-id="' + id + '">';
+  addedTradeinTable.row.add([data[1], data[3], data[4], data[5], data[8], row]).node().id = id;
+  addedTradeinTable.draw(false);
+  return true;
+}
+
+function handleLeftBoxes(boxes) {
+  var boxids = Object.keys(boxes);
+  var number_of_devices = Object.values(boxes);
+  var bayedBoxesTable = $('#bayed-boxes').DataTable();
+  var rowdata;
+
+  for (var i = 0; i < boxids.length; i++) {
+    rowdata = bayedBoxesTable.row('#' + boxids[i]).data();
+    rowdata[3] -= number_of_devices[i];
+
+    if (rowdata[3] == 0) {
+      bayedBoxesTable.row('#' + boxids[i]).remove().draw(false);
+    } else {
+      bayedBoxesTable.row('#' + boxids[i]).data(rowdata).draw(false);
+    }
+  }
+}
+
+function handleRightButtons() {
+  var addedTradeinTable = $('#added-tradeins-building-lot').DataTable();
+
+  if (!addedTradeinTable.data().count()) {
+    $('#completelot').prop('disabled', true);
+    $('#exportxls').prop('disabled', true);
+  } else {
+    $('#completelot').prop('disabled', false);
+    $('#exportxls').prop('disabled', false);
+  }
+
+  getTotalQty();
+  getTotalCost();
+}
+
+function handleRemoveDevices(boxes_ids, tradein_ids, boxes) {
+  var boxids = Object.keys(boxes_ids);
+  var number_of_devices = Object.values(boxes_ids);
+  var boxedTradeinTable = $('#boxed-tradeins').DataTable();
+  var addedTradeinTable = $('#added-tradeins-building-lot').DataTable();
+  var bayedBoxesTable = $('#bayed-boxes').DataTable();
+
+  for (var i = 0; i < tradein_ids.length; i++) {
+    var row = '<input class="boxed_tradeins" type="checkbox" id="tradein_"' + tradein_ids[i].id + '" data-id="' + tradein_ids[i].id + '">';
+    boxedTradeinTable.row.add([tradein_ids[i].barcode, tradein_ids[i].tray_name, tradein_ids[i].customer_grade, tradein_ids[i].bamboo_grade, tradein_ids[i].product_name, tradein_ids[i].device_memory, tradein_ids[i].device_network, tradein_ids[i].device_colour, '£' + tradein_ids[i].device_cost, row]).node().id = tradein_ids[i].id;
+    boxedTradeinTable.draw(false);
+    addedTradeinTable.row('#' + tradein_ids[i].id).remove().draw(false);
+  }
+
+  for (var i = 0; i < boxes.length; i++) {
+    if (bayedBoxesTable.row('#' + boxes[i].id).length > 0) {
+      rowdata = bayedBoxesTable.row('#' + boxes[i].id).data();
+      rowdata[3] -= number_of_devices[i];
+      bayedBoxesTable.row('#' + boxes[i].id).data(rowdata).draw(false);
+    } else {
+      var row = '<input class="bayed_boxes" type="checkbox" id="box_"' + boxes[i].id + '" data-id="' + boxes[i].id + '">';
+      bayedBoxesTable.row.add([boxes[i].tray_name, boxes[i].tray_grade, boxes[i].tray_network, boxes[i].number_of_devices - number_of_devices[i], boxes[i].number_of_devices, '£' + boxes[i].total_cost, row]).node().id = boxes[i].id;
+      bayedBoxesTable.draw(false);
+    }
+  }
+
+  $('#removefromlot').prop('disabled', true);
+  handleRightButtons();
+}
+
+function getTotalQty() {
+  var table = $('#added-tradeins-building-lot').DataTable();
+  $('#total_qty').html(table.data().count() / 6);
+}
+
+function getTotalCost() {
+  var table = $('#added-tradeins-building-lot').DataTable();
+  $('#total_cost').html('£' + table.column(4).data().sum());
+}
+
+function hideLoader() {
+  $('#sales-lot-loader').addClass('invisible');
+  $('#sales-lot-content').removeClass('hidden');
+}
+
+/***/ }),
+
+/***/ "./resources/js/scripts/saleslot/CompletedSalesLot.js":
+/*!************************************************************!*\
+  !*** ./resources/js/scripts/saleslot/CompletedSalesLot.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  if (document.getElementById('completed-sales-lots-table')) {
+    $('#completed-sales-lots-table tfoot td').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    var completedSalesLotTable = $('#completed-sales-lots-table').DataTable({
+      "oLanguage": {
+        "sInfo": "Showing _START_ to _END_"
+      },
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "pageLength": -1,
+      "ordering": false,
+      paging: false,
+      info: false
+    });
+    completedSalesLotTable.columns().every(function () {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+        if (that.search() !== this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
+  }
+
+  if (document.getElementById('saleslot-table')) {
+    $('#saleslot-table tfoot td').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    var boxsummarytable = $('#saleslot-table').DataTable({
+      "oLanguage": {
+        "sInfo": "Showing _START_ of _END_"
+      },
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "pageLength": -1
+    });
+    boxsummarytable.columns().every(function () {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+        if (that.search() !== this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
+  }
+
+  if (document.getElementById('salelotcontent')) {
+    $('#salelotcontent tfoot td').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    var salelotcontenttable = $('#salelotcontent').DataTable();
+    /*salelotcontenttable.columns().every( function () {
+        
+        var that = this;
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    });*/
+  }
+});
+$('.saleslots').on('click', function () {
+  $('.saleslots').each(function () {
+    $(this).removeClass('saleslot-active');
+  });
+  $(this).addClass('saleslot-active');
+
+  switch ($(this).data('status')) {
+    case 1:
+      $('#view-sales-lot-btn').prop('disabled', false);
+      $('#edit-lot-btn').prop('disabled', false);
+      $('#sell-lot-btn').prop('disabled', false);
+      break;
+
+    case 2:
+      $('#view-sales-lot-btn').prop('disabled', false);
+      $('#edit-lot-btn').prop('disabled', true);
+      $('#sell-lot-btn').prop('disabled', true);
+      $('#payment-received-btn').prop('disabled', true);
+      break;
+
+    case 3:
+      $('#view-sales-lot-btn').prop('disabled', false);
+      $('#edit-lot-btn').prop('disabled', true);
+      $('#sell-lot-btn').prop('disabled', true);
+      $('#payment-received-btn').prop('disabled', false);
+
+    case 4:
+    case 5:
+  }
+
+  $('#sales-export-btn').prop('disabled', false);
+  $('#ism-pre-alert').prop('disabled', false);
+});
+$('#view-sales-lot-btn').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+  window.open('/portal/sales-lot/completed-sales-lot/view-lot/' + selectedid, '_self');
+});
+$('#edit-lot-btn').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+  window.open('/portal/sales-lot/building-sales-lot/' + selectedid, '_self');
+});
+$('#sell-lot-btn').on('click', function () {
+  $('#salelot-action').modal('show');
+  var selectedid = $('.saleslot-active').attr('id');
+  var selectedquantity = $('.saleslot-active td:nth-child(3) > div:nth-child(1)').html(); //console.log(selectedquantity);
+
+  $('#salelot-action #salelot-number').html(selectedid);
+  $('#salelot-action #salelot-number-value').val(selectedid);
+  $('#salelot-action #device-qty').html(selectedquantity);
+});
+$('#payment-received-btn').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+
+  if (confirm("Do you want to mark Lot " + selectedid + " as 'Payment Recieved?")) {
+    // Save it!
+    $.ajax({
+      type: "POST",
+      url: "/portal/sales-lot/completed-sales-lot/markaspaymentrecieved",
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data: {
+        lot_id: selectedid
+      },
+      success: function success(data) {
+        if (data.success) {
+          if (data.success === 200) {
+            window.location.reload();
+          }
+        }
+
+        location.reload();
+      },
+      error: function error(data) {
+        alert(data.responseText);
+      }
+    });
+  }
+});
+$('#sales-export-btn').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+  window.open("/portal/sales-lot/completed-sales-lot/clientsalesexport/" + selectedid);
+});
+$('#ism-pre-alert').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+  window.open("/portal/sales-lot/completed-sales-lot/ismprealert/" + selectedid);
+});
+$('#export-xls-data').on('click', function () {
+  var selectedid = $('.saleslot-active').attr('id');
+  window.open("/portal/sales-lot/completed-sales-lot/exportxls/" + selectedid);
+}); //picking despatch
+
+$('.salelotlist_picking').on('click', function () {
+  if ($(this).hasClass('salelotlist_picking_active')) {
+    $(this).removeClass('salelotlist_picking_active');
+  } else {
+    $('.salelotlist_picking').each(function () {
+      $(this).stop(false, false);
+      $(this).removeClass('salelotlist_picking_active');
+    });
+    $(this).toggleClass('salelotlist_picking_active');
+  }
+
+  if ($(this).hasClass('salelotlist_picking_active')) {
+    $('#starttopicklot').prop('disabled', false);
+  } else {
+    $('#starttopicklot').prop('disabled', true);
+  }
+
+  if ($(this).hasClass('salelotlist_picking_active')) {
+    $('#printpicknote').prop('disabled', false);
+  } else {
+    $('#starttopicklot').prop('disabled', true);
+  }
+
+  if ($(this).hasClass('salelotlist_picking_active')) {
+    if ($(this).data('status') === 4) {
+      $('#despatchpickingsaleslot').prop('disabled', false);
+    } else {
+      $('#despatchpickingsaleslot').prop('disabled', true);
+    }
+  } else {
+    $('#despatchpickingsaleslot').prop('disabled', true);
+  }
+
+  var id = $(this).prop('id');
+  fetchSaleLotData(id);
+});
+$('#starttopicklot').on('click', function () {
+  var status = $('.salelotlist_picking_active').data('status');
+  var id = $('.salelotlist_picking_active').prop('id');
+
+  if (status === 2 || status === 6) {
+    window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');
+  } else {
+    alert("This lot cannot be picked.");
+  }
+});
+$('#printpicknote').on('click', function () {
+  var id = $('.salelotlist_picking_active').prop('id');
+  window.open('/portal/warehouse-management/picking-despatch/print-pick-note/' + id, '_blank');
+});
+$('#despatchpickingsaleslot').on('click', function () {
+  salesLotId = $('.salelotlist_picking_active').prop('id');
+  $('#buildsaleslot_salelot').val(salesLotId);
+  /*
+  $.ajax({
+      url: "/portal/warehouse-management/picking-despatch/pick-lot/despatch-picking",
+      type:"POST",
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data:{
+          salesLotId:salesLotId,
+      },
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success:function(response){
+          location.reload();
+      },
+  });*/
+});
+
+function fetchSaleLotData(id) {
+  $.ajax({
+    url: "/portal/warehouse-management/picking-despatch/getsalelotdata/" + id,
+    type: "GET",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(response) {
+      var test = $('#salelotcontent').DataTable();
+      test.destroy();
+      var salelotcontent = $('#salelotcontent').DataTable({
+        "oLanguage": {
+          "sInfo": "Showing _START_ of _END_"
+        },
+        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+        "pageLength": -1
+      });
+      $('#salelotcontent tfoot td').each(function () {
+        var title = $(this).text();
+        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+      });
+      salelotcontent.columns().every(function () {
+        var that = this;
+        $('input', this.footer()).on('keyup change', function () {
+          if (that.search() !== this.value) {
+            that.search(this.value).draw();
+          }
+        });
+      });
+      salelotcontent.clear().draw(true);
+
+      for (var i = 0; i < response.length; i++) {
+        salelotcontent.row.add(response[i]).draw(true);
+      }
+    },
+    error: function error(response) {
+      alert('Something went wrong. Please try again.');
+    }
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/scripts/saleslot/EditingSalesLot.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/scripts/saleslot/EditingSalesLot.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  if (document.getElementById('edit_lot_id')) {
+    $('#added-tradeins-building-lot tfoot td').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    var addedtradeinstable = $('#added-tradeins-building-lot').DataTable({
+      "oLanguage": {
+        "sInfo": "Showing _START_ to _END_"
+      },
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "pageLength": -1,
+      "ordering": false,
+      paging: false,
+      info: false
+    });
+    addedtradeinstable.columns().every(function () {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+        if (that.search() !== this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
+    fetchSaleLotData($('#edit_lot_id').val());
+  }
+});
+
+function fetchSaleLotData(sale_lot_id) {
+  $.ajax({
+    url: "/portal/sales-lot/building-sales-lot/build-lot/getTradeins",
+    type: "GET",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(response) {
+      setBoxedTradeinsDataTable(response);
+    }
+  });
+  $.ajax({
+    url: "/portal/sales-lot/building-sales-lot/build-lot/getBoxes",
+    type: "GET",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    success: function success(response) {
+      setBayedBoxesDataTable(response);
+    }
+  });
+  $.ajax({
+    url: "/portal/sales-lot/building-sales-lot/build-lot/getSaleLotTradeins",
+    type: "GET",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    data: {
+      sale_lot_id: sale_lot_id
+    },
+    success: function success(response) {
+      setSaleLotTradeins(response);
+    }
+  });
+}
 
 function setBayedBoxesDataTable(boxes) {
   $('#bayed-boxes tfoot td').each(function () {
@@ -58876,380 +59419,98 @@ function setBoxedTradeinsDataTable(tradeins) {
   });
 }
 
-function hideLeftTradeins(ids) {
-  var boxedTradeinTable = $('#boxed-tradeins').DataTable();
-  var rowdata;
+function setSaleLotTradeins(tradeins) {
+  var addedTradeinTable = $('#added-tradeins-building-lot').DataTable(); //
 
-  for (var i = 0; i < ids.length; i++) {
-    rowdata = boxedTradeinTable.row('#' + ids[i]).data();
-
-    if (rowdata && showRightTradeins(rowdata, ids[i])) {
-      boxedTradeinTable.row('#' + ids[i]).remove().draw(false);
-    }
+  for (var i = 0; i < tradeins.length; i++) {
+    var row = '<input class="added_tradeins" type="checkbox" id="tradein_' + tradeins[i].id + '" data-id="' + tradeins[i].id + '">';
+    addedTradeinTable.row.add([tradeins[i].tray_name, tradeins[i].bamboo_grade, tradeins[i].product_name, tradeins[i].correct_memory, '£' + tradeins[i].device_cost, row]).node().id = tradeins[i].id;
   }
 
-  $('#select_all_tradeins_building_lot').prop('checked', false);
-}
-
-function showRightTradeins(data, id) {
-  var addedTradeinTable = $('#added-tradeins-building-lot').DataTable();
-  var row = '<input class="added_tradeins" type="checkbox" id="tradein_' + id + '" data-id="' + id + '">';
-  addedTradeinTable.row.add([data[1], data[3], data[4], data[5], data[8], row]).node().id = id;
   addedTradeinTable.draw(false);
-  return true;
+  hideLoader();
 }
 
-function handleLeftBoxes(boxes) {
-  var boxids = Object.keys(boxes);
-  var number_of_devices = Object.values(boxes);
-  var bayedBoxesTable = $('#bayed-boxes').DataTable();
-  var rowdata;
-
-  for (var i = 0; i < boxids.length; i++) {
-    rowdata = bayedBoxesTable.row('#' + boxids[i]).data();
-    rowdata[3] += number_of_devices[i];
-
-    if (rowdata[3] >= rowdata[4]) {
-      bayedBoxesTable.row('#' + boxids[i]).remove().draw(false);
-    } else {
-      bayedBoxesTable.row('#' + boxids[i]).data(rowdata).draw(false);
-    }
-  }
+function hideLoader() {
+  $('#sales-lot-loader').addClass('invisible');
+  $('#sales-lot-content').removeClass('hidden');
 }
 
-function handleRightButtons() {
-  var addedTradeinTable = $('#added-tradeins-building-lot').DataTable();
-
-  if (!addedTradeinTable.data().count()) {
-    $('#completelot').prop('disabled', true);
-    $('#exportxls').prop('disabled', true);
-  } else {
-    $('#completelot').prop('disabled', false);
-    $('#exportxls').prop('disabled', false);
-  }
-
-  getTotalQty();
-  getTotalCost();
-}
-
-function handleRemoveDevices(boxes_ids, tradein_ids, boxes) {
-  var boxids = Object.keys(boxes_ids);
-  var number_of_devices = Object.values(boxes_ids);
-  var boxedTradeinTable = $('#boxed-tradeins').DataTable();
-  var addedTradeinTable = $('#added-tradeins-building-lot').DataTable();
-  var bayedBoxesTable = $('#bayed-boxes').DataTable();
-
-  for (var i = 0; i < tradein_ids.length; i++) {
-    var row = '<input class="boxed_tradeins" type="checkbox" id="tradein_"' + tradein_ids[i].id + '" data-id="' + tradein_ids[i].id + '">';
-    boxedTradeinTable.row.add([tradein_ids[i].barcode, tradein_ids[i].tray_name, tradein_ids[i].customer_grade, tradein_ids[i].bamboo_grade, tradein_ids[i].product_name, tradein_ids[i].device_memory, tradein_ids[i].device_network, tradein_ids[i].device_colour, '£' + tradein_ids[i].device_cost, row]).node().id = tradein_ids[i].id;
-    boxedTradeinTable.draw(false);
-    addedTradeinTable.row('#' + tradein_ids[i].id).remove().draw(false);
-  }
-
-  for (var i = 0; i < boxes.length; i++) {
-    if (bayedBoxesTable.row('#' + boxes[i].id).length > 0) {
-      rowdata = bayedBoxesTable.row('#' + boxes[i].id).data();
-      rowdata[3] -= number_of_devices[i];
-      bayedBoxesTable.row('#' + boxes[i].id).data(rowdata).draw(false);
-    } else {
-      var row = '<input class="bayed_boxes" type="checkbox" id="box_"' + boxes[i].id + '" data-id="' + boxes[i].id + '">';
-      bayedBoxesTable.row.add([boxes[i].tray_name, boxes[i].tray_grade, boxes[i].tray_network, boxes[i].number_of_devices - number_of_devices[i], boxes[i].number_of_devices, '£' + boxes[i].total_cost, row]).node().id = boxes[i].id;
-      bayedBoxesTable.draw(false);
-    }
-  }
-
-  $('#removefromlot').prop('disabled', true);
-  handleRightButtons();
-}
-
-function getTotalQty() {
-  var table = $('#added-tradeins-building-lot').DataTable();
-  $('#total_qty').html(table.data().count() / 6);
-}
-
-function getTotalCost() {
-  var table = $('#added-tradeins-building-lot').DataTable();
-  $('#total_cost').html('£' + table.column(4).data().sum());
-}
-
-/***/ }),
-
-/***/ "./resources/js/scripts/saleslot/CompletedSalesLot.js":
-/*!************************************************************!*\
-  !*** ./resources/js/scripts/saleslot/CompletedSalesLot.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-$(document).ready(function () {
-  if (document.getElementById('completed-sales-lots-table')) {
-    $('#completed-sales-lots-table tfoot td').each(function () {
-      var title = $(this).text();
-      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-    });
-    var completedSalesLotTable = $('#completed-sales-lots-table').DataTable({
-      "oLanguage": {
-        "sInfo": "Showing _START_ to _END_"
-      },
-      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-      "pageLength": -1,
-      "ordering": false,
-      paging: false,
-      info: false
-    });
-    completedSalesLotTable.columns().every(function () {
-      var that = this;
-      $('input', this.footer()).on('keyup change', function () {
-        if (that.search() !== this.value) {
-          that.search(this.value).draw();
-        }
-      });
-    });
-  }
-
-  if (document.getElementById('saleslot-table')) {
-    $('#saleslot-table tfoot td').each(function () {
-      var title = $(this).text();
-      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-    });
-    var boxsummarytable = $('#saleslot-table').DataTable({
-      "oLanguage": {
-        "sInfo": "Showing _START_ to _END_"
-      },
-      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-      "pageLength": -1
-    });
-    boxsummarytable.columns().every(function () {
-      var that = this;
-      $('input', this.footer()).on('keyup change', function () {
-        if (that.search() !== this.value) {
-          that.search(this.value).draw();
-        }
-      });
-    });
-  }
-
-  if (document.getElementById('salelotcontent')) {
-    $('#salelotcontent tfoot td').each(function () {
-      var title = $(this).text();
-      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-    });
-    var salelotcontenttable = $('#salelotcontent').DataTable({
-      "oLanguage": {
-        "sInfo": "Showing _START_ to _END_"
-      },
-      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-      "pageLength": -1
-    });
-    salelotcontenttable.columns().every(function () {
-      var that = this;
-      $('input', this.footer()).on('keyup change', function () {
-        if (that.search() !== this.value) {
-          that.search(this.value).draw();
-        }
-      });
-    });
-  }
-});
-$('.saleslots').on('click', function () {
-  $('.saleslots').each(function () {
-    $(this).removeClass('saleslot-active');
+$('#editlot').on('click', function () {
+  var addedTradeins = [];
+  var edit_lot_id = $('#edit_lot_id').val();
+  $('#added-tradeins-building-lot tbody tr').each(function () {
+    addedTradeins.push($(this).prop('id'));
   });
-  $(this).addClass('saleslot-active');
-
-  switch ($(this).data('status')) {
-    case 1:
-      $('#view-sales-lot-btn').prop('disabled', false);
-      $('#edit-lot-btn').prop('disabled', false);
-      $('#sell-lot-btn').prop('disabled', false);
-      break;
-
-    case 2:
-      $('#view-sales-lot-btn').prop('disabled', false);
-      $('#edit-lot-btn').prop('disabled', true);
-      $('#sell-lot-btn').prop('disabled', true);
-      $('#payment-received-btn').prop('disabled', true);
-      break;
-
-    case 3:
-      $('#view-sales-lot-btn').prop('disabled', false);
-      $('#edit-lot-btn').prop('disabled', true);
-      $('#sell-lot-btn').prop('disabled', true);
-      $('#payment-received-btn').prop('disabled', false);
-
-    case 4:
-    case 5:
-  }
-
-  $('#sales-export-btn').prop('disabled', false);
-  $('#ism-pre-alert').prop('disabled', false);
-});
-$('#view-sales-lot-btn').on('click', function () {
-  var selectedid = $('.saleslot-active').attr('id');
-  window.open('/portal/sales-lot/completed-sales-lot/view-lot/' + selectedid, '_self');
-});
-$('#edit-lot-btn').on('click', function () {
-  alert("Currently disabled");
-});
-$('#sell-lot-btn').on('click', function () {
-  $('#salelot-action').modal('show');
-  var selectedid = $('.saleslot-active').attr('id');
-  var selectedquantity = $('.saleslot-active td:nth-child(3) > div:nth-child(1)').html(); //console.log(selectedquantity);
-
-  $('#salelot-action #salelot-number').html(selectedid);
-  $('#salelot-action #salelot-number-value').val(selectedid);
-  $('#salelot-action #device-qty').html(selectedquantity);
-});
-$('#payment-received-btn').on('click', function () {
-  var selectedid = $('.saleslot-active').attr('id');
-
-  if (confirm("Do you want to mark Lot " + selectedid + " as 'Payment Recieved?")) {
-    // Save it!
-    $.ajax({
-      type: "POST",
-      url: "/portal/sales-lot/completed-sales-lot/markaspaymentrecieved",
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      data: {
-        lot_id: selectedid
-      },
-      success: function success(data) {
-        if (data.success) {
-          if (data.success === 200) {
-            window.location.reload();
-          }
-        }
-
-        location.reload();
-      },
-      error: function error(data) {
-        alert(data.responseText);
-      }
-    });
-  }
-});
-$('#sales-export-btn').on('click', function () {
-  var selectedid = $('.saleslot-active').attr('id');
-  window.open("/portal/sales-lot/completed-sales-lot/clientsalesexport/" + selectedid);
-});
-$('#ism-pre-alert').on('click', function () {
-  var selectedid = $('.saleslot-active').attr('id');
-  window.open("/portal/sales-lot/completed-sales-lot/ismprealert/" + selectedid);
-});
-$('#export-xls-data').on('click', function () {
-  var selectedid = $('.saleslot-active').attr('id');
-  window.open("/portal/sales-lot/completed-sales-lot/exportxls/" + selectedid);
-}); //picking despatch
-
-$('.salelotlist_picking').on('click', function () {
-  if ($(this).hasClass('salelotlist_picking_active')) {
-    $(this).removeClass('salelotlist_picking_active');
-  } else {
-    $('.saleslotpicking').each(function () {
-      $(this).stop(false, false);
-      $(this).removeClass('salelotlist_picking_active');
-    });
-    $(this).toggleClass('salelotlist_picking_active');
-  }
-
-  if ($(this).hasClass('salelotlist_picking_active')) {
-    $('#starttopicklot').prop('disabled', false);
-  } else {
-    $('#starttopicklot').prop('disabled', true);
-  }
-
-  if ($(this).hasClass('salelotlist_picking_active')) {
-    $('#printpicknote').prop('disabled', false);
-  } else {
-    $('#starttopicklot').prop('disabled', true);
-  }
-
-  if ($(this).hasClass('salelotlist_picking_active')) {
-    $('#despatchpickingsaleslot').prop('disabled', false);
-  } else {
-    $('#despatchpickingsaleslot').prop('disabled', true);
-  }
-
-  var id = $(this).prop('id');
-  fetchSaleLotData(id);
-});
-$('#starttopicklot').on('click', function () {
-  var status = $('.salelotlist_picking').data('status');
-  var id = $('.salelotlist_picking').prop('id');
-
-  if (status === 2) {
-    window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');
-  } else {
-    alert("This lot cannot be picked.");
-  }
-});
-$('#printpicknote').on('click', function () {
-  var id = $('.salelotlist_picking_active').prop('id');
-  window.open('/portal/warehouse-management/picking-despatch/print-pick-note/' + id, '_blank');
-});
-$('#despatchpickingsaleslot').on('click', function () {
-  var c = confirm("Are you sure you want to mark " + $('.tagfordespatch:checked').length + " sale lot as despatched?");
-
-  if (c) {
-    var _$$ajax;
-
-    var salesLotIds = [];
-    $('.tagfordespatch:checked').each(function () {
-      var salelotid = $(this).data('value');
-      salesLotIds.push(salelotid);
-    });
-    $.ajax((_$$ajax = {
-      url: "/portal/warehouse-management/picking-despatch/pick-lot/despatch-picking",
-      type: "POST",
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      data: {
-        salesLotIds: salesLotIds
-      }
-    }, _defineProperty(_$$ajax, "headers", {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }), _defineProperty(_$$ajax, "success", function success(response) {
-      location.reload();
-    }), _$$ajax));
-  }
-});
-
-function fetchSaleLotData(id) {
   $.ajax({
-    url: "/portal/warehouse-management/picking-despatch/getsalelotdata/" + id,
-    type: "GET",
+    url: "/portal/sales-lot/building-sales-lot/edit-lot",
+    type: "POST",
+    data: {
+      addedTradeins: addedTradeins,
+      edit_lot_id: edit_lot_id
+    },
     headers: {
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function success(response) {
-      var salelotcontent = $('#salelotcontent').DataTable();
-      $('#salelotcontent tfoot td').each(function () {
-        var title = $(this).text();
-        $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-      });
-      salelotcontent.columns().every(function () {
-        var that = this;
-        $('input', this.footer()).on('keyup change', function () {
-          if (that.search() !== this.value) {
-            that.search(this.value).draw();
-          }
-        });
-      });
-
-      for (var i = 0; i < response.length; i++) {
-        console.log(response[i]);
-        salelotcontent.row.add(response[i]).draw(true);
+      if (response) {
+        alert("Lot has been Edited");
+        window.open('/portal/sales-lot/completed-sales-lots/', '_self');
       }
-    },
-    error: function error(response) {
-      alert('Something went wrong. Please try again.');
     }
   });
-}
+});
+
+/***/ }),
+
+/***/ "./resources/js/scripts/saleslot/PickingSalesLot.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/scripts/saleslot/PickingSalesLot.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  if (document.getElementById('pick-sales-lot-devices')) {
+    $('#pick-sales-lot-devices tfoot td').each(function () {
+      var title = $(this).text();
+      $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+    });
+    var pickdevicestable = $('#pick-sales-lot-devices').DataTable({
+      "oLanguage": {
+        "sInfo": "Showing _START_ to _END_"
+      },
+      "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+      "pageLength": -1
+    }); // Apply the search
+
+    pickdevicestable.columns().every(function () {
+      var that = this;
+      $('input', this.footer()).on('keyup change', function () {
+        if (that.search() !== this.value) {
+          that.search(this.value).draw();
+        }
+      });
+    });
+  }
+
+  $('#completepickingsaleslot').on('click', function () {
+    var salelotid = $('#buildsaleslot_salelot').val();
+    $.ajax({
+      url: "/portal/warehouse-management/picking-despatch/pick-lot/complete-picking",
+      type: "POST",
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data: {
+        salelotid: salelotid
+      },
+      success: function success(response) {
+        window.location.href = '/portal/warehouse-management/picking-despatch';
+      }
+    });
+  });
+});
 
 /***/ }),
 

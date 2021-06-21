@@ -26,29 +26,30 @@ class Reports{
         $sheet->setCellValue('I1', 'Paid Price');
         $sheet->setCellValue('J1', 'Admin');
         $sheet->setCellValue('K1', 'Logistics');
-        $sheet->setCellValue('L1', 'Total');
-        $sheet->setCellValue('M1', 'Customer Grade');
-        $sheet->setCellValue('N1', 'Customer Grade after testing');
-        $sheet->setCellValue('O1', 'Bamboo Grade');
-        $sheet->setCellValue('P1', 'Customer Status');
-        $sheet->setCellValue('Q1', 'Bamboo Status');
-        $sheet->setCellValue('R1', 'Fully Functional');
-        $sheet->setCellValue('S1', 'Date Order Placed');
-        $sheet->setCellValue('T1', 'TP Despatch Date');
-        $sheet->setCellValue('U1', 'Date Received');
-        $sheet->setCellValue('V1', 'Expiry Date');
-        $sheet->setCellValue('W1', 'Date Tested');
-        $sheet->setCellValue('X1', 'Return Date');
-        $sheet->setCellValue('Y1', 'Quarantine Date');
-        $sheet->setCellValue('Z1', 'Quarantine Reason');
-        $sheet->setCellValue('AA1', 'Box Date');
-        $sheet->setCellValue('AB1', 'Processor Name');
-        $sheet->setCellValue('AC1', 'Quarantine');
-        $sheet->setCellValue('AD1', 'FMIP');
-        $sheet->setCellValue('AE1', 'Stock Location');
-        $sheet->setCellValue('AF1', 'Paid Date');
-        $sheet->setCellValue('AG1', 'Cancellation Date');
-        $sheet->setCellValue('AH1', 'Sales Lot Number');
+        $sheet->setCellValue('L1', 'Miscellaneous');
+        $sheet->setCellValue('M1', 'Total');
+        $sheet->setCellValue('N1', 'Customer Grade');
+        $sheet->setCellValue('O1', 'Customer Grade after testing');
+        $sheet->setCellValue('P1', 'Bamboo Grade');
+        $sheet->setCellValue('Q1', 'Customer Status');
+        $sheet->setCellValue('R1', 'Bamboo Status');
+        $sheet->setCellValue('S1', 'Fully Functional');
+        $sheet->setCellValue('T1', 'Date Order Placed');
+        $sheet->setCellValue('U1', 'TP Despatch Date');
+        $sheet->setCellValue('V1', 'Date Received');
+        $sheet->setCellValue('W1', 'Expiry Date');
+        $sheet->setCellValue('X1', 'Date Tested');
+        $sheet->setCellValue('Y1', 'Return Date');
+        $sheet->setCellValue('Z1', 'Quarantine Date');
+        $sheet->setCellValue('AA1', 'Quarantine Reason');
+        $sheet->setCellValue('AB1', 'Box Date');
+        $sheet->setCellValue('AC1', 'Processor Name');
+        $sheet->setCellValue('AD1', 'Quarantine');
+        $sheet->setCellValue('AE1', 'FMIP');
+        $sheet->setCellValue('AF1', 'Stock Location');
+        $sheet->setCellValue('AG1', 'Paid Date');
+        $sheet->setCellValue('AH1', 'Cancellation Date');
+        $sheet->setCellValue('AI1', 'Sales Lot Number');
 
         $from = "";
         $to = "";
@@ -98,14 +99,20 @@ class Reports{
 
             $tradeinauditTPDespatched = TradeinAudit::where('tradein_id', $tradein->id)->where('customer_status', 'Trade Pack Despatched')->first();
             $tradeinauditReceived = TradeinAudit::where('tradein_id', $tradein->id)->where('stock_location', '!=' ,'Not received yet.')->first();
-            $tradeinauditTested = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Device has passed testing')->first();
+            $tradeinauditTested = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Test Complete')->first();
             $tradeinauditBoxed = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Awaiting Box build')->first();
             $tradeinauditReturned = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Device requested by customer')->first();
             if($tradeinauditTPDespatched === null){
-                $tradeinauditTPDespatched = '';
+                $tradeinauditTPDespatched = 'N/A';
             }
             else{
-                $tradeinauditTPDespatched = $tradeinauditTPDespatched->created_at;
+                if(!$tradein->trade_pack_send_by_customer){
+                    $tradeinauditTPDespatched = $tradeinauditTPDespatched->created_at;
+                }
+                else{
+                    $tradeinauditTPDespatched = 'N/A';
+                }
+                
             }
             $tradeinauditUser = '';
             if($tradeinauditReceived === null){
@@ -126,7 +133,12 @@ class Reports{
                 $tradeinauditBoxed = '';
             }
             else{
-                $tradeinauditBoxed = $tradeinauditBoxed->created_at;
+                if($tradein->isBoxed()){
+                    $tradeinauditBoxed = $tradeinauditBoxed->created_at;
+                }
+                else{
+                    $tradeinauditBoxed = '';
+                }
             }
             if($tradeinauditReturned === null){
                 $tradeinauditReturned = '';
@@ -137,14 +149,6 @@ class Reports{
 
             $index = $key+2;
 
-            $total = "";
-            if($tradein->bamboo_price === null){
-                $total = $tradein->order_price + $tradein->admin_cost +  $tradein->carriage_cost + $additionalCosts->miscellaneous_costs_individual;
-            }
-            else{
-                $total = $tradein->bamboo_price + $tradein->admin_cost +  $tradein->carriage_cost + $additionalCosts->miscellaneous_costs_individual;
-            }
-
             $number = "";
 
             if($tradein->imei_number === null){
@@ -154,6 +158,8 @@ class Reports{
                 $number = $tradein->imei_number;
             }
 
+            #dd($tradein->quarantineReason());
+
             $sheet->setCellValue('A'.$index, $tradein->barcode_original);
             $sheet->setCellValue('B'.$index, $tradein->barcode);
             $sheet->setCellValue('C'.$index, $tradein->getBrandName($tradein->product_id));
@@ -161,33 +167,34 @@ class Reports{
             $sheet->setCellValue('E'.$index, $number);
             $sheet->setCellValue('F'.$index, $correctMemory);
             $sheet->setCellValue('G'.$index, $tradein->product_colour);
-            $sheet->setCellValue('H'.$index, $tradein->order_price);
-            $sheet->setCellValue('I'.$index, $tradein->bamboo_price);
-            $sheet->setCellValue('J'.$index, $tradein->admin_cost);
-            $sheet->setCellValue('K'.$index, $tradein->carriage_cost + $additionalCosts->miscellaneous_costs_individual);
-            $sheet->setCellValue('L'.$index, '£' . $total);
-            $sheet->setCellValue('M'.$index, $tradein->customer_grade);
-            $sheet->setCellValue('N'.$index, $tradein->bamboo_grade);
-            $sheet->setCellValue('O'.$index, $tradein->getDeviceBambooGrade());
-            $sheet->setCellValue('P'.$index, $tradein->getCustomerStatus());
-            $sheet->setCellValue('Q'.$index, $tradein->getBambooStatus());
-            $sheet->setCellValue('R'.$index, $fullyFunctional);
-            $sheet->setCellValue('S'.$index, $tradein->created_at);
-            $sheet->setCellValue('T'.$index, $tradeinauditTPDespatched);
-            $sheet->setCellValue('U'.$index, $tradeinauditReceived);
-            $sheet->setCellValue('V'.$index, $tradein->expiry_date);
-            $sheet->setCellValue('W'.$index, $tradeinauditTested);
-            $sheet->setCellValue('X'.$index, $tradeinauditReturned);
-            $sheet->setCellValue('Y'.$index, $tradein->quarantine_date);
-            $sheet->setCellValue('Z'.$index, $tradein->getBambooStatus());
-            $sheet->setCellValue('AA'.$index, $tradeinauditBoxed);
-            $sheet->setCellValue('AB'.$index, $tradeinauditUser);
-            $sheet->setCellValue('AC'.$index, $quarantine);
-            $sheet->setCellValue('AD'.$index, $fimp);
-            $sheet->setCellValue('AE'.$index, $tradein->getTrayName($tradein->id));
-            $sheet->setCellValue('AF'.$index, $tradein->getDatePaid());
-            $sheet->setCellValue('AG'.$index, $tradein->getCancellationDate());
-            $sheet->setCellValue('AH'.$index, $tradein->getSalesLotNumber());
+            $sheet->setCellValue('H'.$index, '£' . $tradein->order_price);
+            $sheet->setCellValue('I'.$index, '£' . $tradein->getPaidPrice());
+            $sheet->setCellValue('J'.$index, '£' . $tradein->admin_cost);
+            $sheet->setCellValue('K'.$index, '£' . $tradein->carriage_cost);
+            $sheet->setCellValue('L'.$index, '£' . $tradein->getDeviceMiscCost());
+            $sheet->setCellValue('M'.$index, '£' . $tradein->getDeviceCost());
+            $sheet->setCellValue('N'.$index, $tradein->customer_grade);
+            $sheet->setCellValue('O'.$index, $tradein->bamboo_grade);
+            $sheet->setCellValue('P'.$index, $tradein->getDeviceBambooGrade());
+            $sheet->setCellValue('Q'.$index, $tradein->getCustomerStatus());
+            $sheet->setCellValue('R'.$index, $tradein->getBambooStatus());
+            $sheet->setCellValue('S'.$index, $fullyFunctional);
+            $sheet->setCellValue('T'.$index, $tradein->created_at);
+            $sheet->setCellValue('U'.$index, $tradeinauditTPDespatched);
+            $sheet->setCellValue('V'.$index, $tradeinauditReceived);
+            $sheet->setCellValue('W'.$index, $tradein->expiry_date);
+            $sheet->setCellValue('X'.$index, $tradeinauditTested);
+            $sheet->setCellValue('Y'.$index, $tradeinauditReturned);
+            $sheet->setCellValue('Z'.$index, $tradein->quarantine_date);
+            $sheet->setCellValue('AA'.$index, $tradein->quarantineReason());
+            $sheet->setCellValue('AB'.$index, $tradeinauditBoxed);
+            $sheet->setCellValue('AC'.$index, $tradeinauditUser);
+            $sheet->setCellValue('AD'.$index, $quarantine);
+            $sheet->setCellValue('AE'.$index, $fimp);
+            $sheet->setCellValue('AF'.$index, $tradein->getTrayName($tradein->id));
+            $sheet->setCellValue('AG'.$index, $tradein->getDatePaid());
+            $sheet->setCellValue('AH'.$index, $tradein->getCancellationDate());
+            $sheet->setCellValue('AI'.$index, $tradein->getSalesLotNumber());
         }
 
         if(!is_dir(public_path() . '/reports/overview')){
@@ -233,6 +240,7 @@ class Reports{
         $sheet->setCellValue('U1', 'Quarantine');
         $sheet->setCellValue('V1', 'FMIP');
         $sheet->setCellValue('W1', 'Stock Location');
+        $sheet->setCellValue('X1', 'Box Name');
 
         $from = "";
         $to = "";
@@ -283,14 +291,20 @@ class Reports{
 
                 $tradeinauditTPDespatched = TradeinAudit::where('tradein_id', $tradein->id)->where('customer_status', 'Trade Pack Despatched')->first();
                 $tradeinauditReceived = TradeinAudit::where('tradein_id', $tradein->id)->where('stock_location', '!=' ,'Not received yet.')->first();
-                $tradeinauditTested = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Device has passed testing')->first();
+                $tradeinauditTested = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Test Complete')->first();
                 $tradeinauditBoxed = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Awaiting Box build')->first();
                 $tradeinauditReturned = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Device requested by customer')->first();
                 if($tradeinauditTPDespatched === null){
                     $tradeinauditTPDespatched = '';
                 }
                 else{
-                    $tradeinauditTPDespatched = $tradeinauditTPDespatched->created_at;
+                    if(!$tradein->trade_pack_send_by_customer){
+                        $tradeinauditTPDespatched = $tradeinauditTPDespatched->created_at;
+                    }
+                    else{
+                        $tradeinauditTPDespatched = 'N/A';
+                    }
+                    
                 }
                 $tradeinauditUser = '';
                 if($tradeinauditReceived === null){
@@ -320,13 +334,23 @@ class Reports{
                     $tradeinauditReturned = $tradeinauditReturned->created_at;
                 }
 
+                $number = "";
+
+                if($tradein->imei_number === null){
+                    $number = $tradein->serial_number;
+                }
+                else{
+                    $number = $tradein->imei_number;
+                }
+    
+
                 #$index = $key+2;
 
                 $sheet->setCellValue('A'.$i, $tradein->barcode_original);
                 $sheet->setCellValue('B'.$i, $tradein->barcode);
                 $sheet->setCellValue('C'.$i, $tradein->getBrandName($tradein->product_id));
                 $sheet->setCellValue('D'.$i, $tradein->getProductName($tradein->product_id));
-                $sheet->setCellValue('E'.$i, $tradein->imei_number);
+                $sheet->setCellValue('E'.$i, $number);
                 $sheet->setCellValue('F'.$i, $correctMemory);
                 $sheet->setCellValue('G'.$i, $tradein->product_colour);
                 $sheet->setCellValue('H'.$i, $tradein->customer_grade);
@@ -344,7 +368,8 @@ class Reports{
                 $sheet->setCellValue('T'.$i, $tradeinauditUser);
                 $sheet->setCellValue('U'.$i, $quarantine);
                 $sheet->setCellValue('V'.$i, $fimp);
-                $sheet->setCellValue('W'.$i, $tradein->getTrayName($tradein->id));
+                $sheet->setCellValue('W'.$i, $tradein->getStockLocation());
+                $sheet->setCellValue('X'.$i, $tradein->getBoxName());
 
                 $i++;
             }
@@ -436,7 +461,7 @@ class Reports{
 
                 $tradeinauditTPDespatched = TradeinAudit::where('tradein_id', $tradein->id)->where('customer_status', 'Trade Pack Despatched')->first();
                 $tradeinauditReceived = TradeinAudit::where('tradein_id', $tradein->id)->where('stock_location', '!=' ,'Not received yet.')->first();
-                $tradeinauditTested = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Device has passed testing')->first();
+                $tradeinauditTested = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Test Complete')->first();
                 $tradeinauditBoxed = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Awaiting Box build')->first();
                 $tradeinauditReturned = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Device requested by customer')->first();
                 if($tradeinauditTPDespatched === null){
@@ -473,13 +498,23 @@ class Reports{
                     $tradeinauditReturned = $tradeinauditReturned->created_at;
                 }
 
+                $number = "";
+
+                if($tradein->imei_number === null){
+                    $number = $tradein->serial_number;
+                }
+                else{
+                    $number = $tradein->imei_number;
+                }
+    
+
                 #$index = $key+2;
 
                 $sheet->setCellValue('A'.$i, $tradein->barcode_original);
                 $sheet->setCellValue('B'.$i, $tradein->barcode);
                 $sheet->setCellValue('C'.$i, $tradein->getBrandName($tradein->product_id));
                 $sheet->setCellValue('D'.$i, $tradein->getProductName($tradein->product_id));
-                $sheet->setCellValue('E'.$i, $tradein->imei_number);
+                $sheet->setCellValue('E'.$i, $number);
                 $sheet->setCellValue('F'.$i, $correctNetwork);
                 $sheet->setCellValue('G'.$i, $tradein->customer_grade);
                 $sheet->setCellValue('H'.$i, $tradein->created_at);
@@ -567,7 +602,7 @@ class Reports{
 
         foreach($tradeins as $key=>$tradein){
 
-            if($tradein->isInTesting()){
+            if($tradein->hasBeenTested()){
 
                 $correct_network = '';
                 if($tradein->correct_network === null){
@@ -594,7 +629,7 @@ class Reports{
 
                 $tradeinauditTPDespatched = TradeinAudit::where('tradein_id', $tradein->id)->where('customer_status', 'Trade Pack Despatched')->first();
                 $tradeinauditReceived = TradeinAudit::where('tradein_id', $tradein->id)->where('stock_location', '!=' ,'Not received yet.')->first();
-                $tradeinauditTested = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Device has passed testing')->first();
+                $tradeinauditTested = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Test Complete')->first();
                 $tradeinauditBoxed = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Awaiting Box build')->first();
                 $tradeinauditReturned = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Device requested by customer')->first();
                 if($tradeinauditTPDespatched === null){
@@ -671,11 +706,20 @@ class Reports{
                     }
                 }
 
+                $number = "N/A";
+
+                if($tradein->imei_number === null){
+                    $number = $tradein->serial_number;
+                }
+                else{
+                    $number = $tradein->imei_number;
+                }
+
                 $sheet->setCellValue('A'.$i, $tradein->barcode_original);
                 $sheet->setCellValue('B'.$i, $tradein->barcode);
                 $sheet->setCellValue('C'.$i, $tradein->getBrandName($tradein->product_id));
                 $sheet->setCellValue('D'.$i, $tradein->getProductName($tradein->product_id));
-                $sheet->setCellValueExplicit('E'.$i, (string)$tradein->imei_number, DataType::TYPE_STRING);
+                $sheet->setCellValueExplicit('E'.$i, (string)$number, DataType::TYPE_STRING);
                 $sheet->setCellValue('F'.$i, $correct_network);
                 $sheet->setCellValue('G'.$i, $tradein->product_colour);
                 $sheet->setCellValue('H'.$i, $tradein->customer_grade);
@@ -737,7 +781,7 @@ class Reports{
 
             $tradeinauditTPDespatched = TradeinAudit::where('tradein_id', $tradein->id)->where('customer_status', 'Trade Pack Despatched')->first();
             $tradeinauditReceived = TradeinAudit::where('tradein_id', $tradein->id)->where('stock_location', '!=' ,'Not received yet.')->first();
-            $tradeinauditTested = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Device has passed testing')->first();
+            $tradeinauditTested = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Test Complete')->first();
             $tradeinauditBoxed = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Awaiting Box build')->first();
             $tradeinauditReturned = TradeinAudit::where('tradein_id', $tradein->id)->where('bamboo_status', 'Return to customer')->first();
             if($tradeinauditTPDespatched === null){

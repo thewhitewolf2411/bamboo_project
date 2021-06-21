@@ -291,6 +291,9 @@ class DespatchService {
         curl_close($ch);
 
         $response = json_decode($result,true);
+
+        #dd($response);
+
         $success_msg = [];
         $error_msg = [];
         if($response === null){

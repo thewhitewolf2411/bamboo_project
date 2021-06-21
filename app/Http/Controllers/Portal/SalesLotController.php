@@ -28,7 +28,8 @@ class SalesLotController extends Controller
         return view('portal.sales-lot.sales-lot', ['portalUser'=>$portalUser]);
     }
 
-    public function showBuildingSalesLotPage(){
+    public function showBuildingSalesLotPage($id = null){
+
         $user = Auth::user();
         $portalUser = PortalUsers::where('user_id', $user->id)->first();
 
@@ -37,9 +38,24 @@ class SalesLotController extends Controller
 
         $completedTradeins = array();
 
-        $totalSalesLots = count(SalesLot::all());
+        $totalSalesLots = null;
+        $salelot = null;
+        $edit = false;
 
-        return view('portal.sales-lot.building-sales-lot', ['portalUser'=>$portalUser, 'tradeins'=>$tradeins, 'boxes'=>$boxes, 'completedTradeins'=>$completedTradeins, 'totalSalesLots'=>$totalSalesLots]);
+        if($id !== null){
+            $totalSalesLots = SalesLot::find($id)->id;
+            $edit = true;
+            $salelot = SalesLot::find($id);
+        }
+        else{
+            $totalSalesLots = count(SalesLot::all());
+        }
+
+        
+
+        return view('portal.sales-lot.building-sales-lot', 
+                ['portalUser'=>$portalUser, 'tradeins'=>$tradeins, 'boxes'=>$boxes, 
+                'completedTradeins'=>$completedTradeins, 'totalSalesLots'=>$totalSalesLots, 'edit'=>$edit, 'salelot'=>$salelot]);
     }
 
 
@@ -174,29 +190,32 @@ class SalesLotController extends Controller
 
         $tradeins = Tradein::whereIn('id', $deviceIds)->get();
         $grouped = $tradeins->groupBy(['product_id', 'correct_memory', 'product_colour', 'correct_network']);
+        #dd($grouped);
 
+        $key = 2;
         foreach($grouped as $device_id => $devices){
+            #dd($device_id);
 
-            $dev = Tradein::find($device_id);
-            $product = SellingProduct::find($dev->product_id);
+            #$dev = Tradein::find($device_id);
+            $product = SellingProduct::find($device_id);
 
             $brand = Brand::find($product->brand_id)->brand_name;
             $product = SellingProduct::find($device_id);
             $model = $product->product_name;
 
-            $gradeA = 0;
-            $gradeBplus = 0;
-            $gradeB = 0;
-            $gradeC = 0;
-            $wsi = 0;
-            $wsd = 0;
-            $nwsi = 0;
-            $nwsd = 0;
-            $grandTotal = 0;
-
-            $key = 2;
+            
             foreach($devices as $memory => $memory_group){
+                $gradeA = 0;
+                $gradeBplus = 0;
+                $gradeB = 0;
+                $gradeC = 0;
+                $wsi = 0;
+                $wsd = 0;
+                $nwsi = 0;
+                $nwsd = 0;
+                $grandTotal = 0;
 
+                
                 $gb = $memory;
 
                 foreach($memory_group as $color => $color_group){
@@ -245,23 +264,23 @@ class SalesLotController extends Controller
                     }
                 }
 
-            }
+                $sheet->setCellValue('A'.$key, $brand);
+                $sheet->setCellValue('B'.$key, $model);
+                $sheet->setCellValue('C'.$key, $gb);
+                $sheet->setCellValue('D'.$key, $colour);
+                $sheet->setCellValue('E'.$key, $network_name);
+                $sheet->setCellValue('F'.$key, $gradeA);
+                $sheet->setCellValue('G'.$key, $gradeBplus);
+                $sheet->setCellValue('H'.$key, $gradeB);
+                $sheet->setCellValue('I'.$key, $gradeC);
+                $sheet->setCellValue('J'.$key, $wsi);
+                $sheet->setCellValue('K'.$key, $wsd);
+                $sheet->setCellValue('L'.$key, $nwsi);
+                $sheet->setCellValue('M'.$key, $nwsd);
+                $sheet->setCellValue('N'.$key, $grandTotal);
+                $key++;
 
-            $sheet->setCellValue('A'.$key, $brand);
-            $sheet->setCellValue('B'.$key, $model);
-            $sheet->setCellValue('C'.$key, $gb);
-            $sheet->setCellValue('D'.$key, $colour);
-            $sheet->setCellValue('E'.$key, $network_name);
-            $sheet->setCellValue('F'.$key, $gradeA);
-            $sheet->setCellValue('G'.$key, $gradeBplus);
-            $sheet->setCellValue('H'.$key, $gradeB);
-            $sheet->setCellValue('I'.$key, $gradeC);
-            $sheet->setCellValue('J'.$key, $wsi);
-            $sheet->setCellValue('K'.$key, $wsd);
-            $sheet->setCellValue('L'.$key, $nwsi);
-            $sheet->setCellValue('M'.$key, $nwsd);
-            $sheet->setCellValue('N'.$key, $grandTotal);
-            $key++;
+            }
             
         }
 
@@ -427,7 +446,7 @@ class SalesLotController extends Controller
         $tradeins = Tradein::all();
 
         foreach($tradeins as $tradein){
-            if($tradein->isBoxed() && !$tradein->isPartOfSalesLot()){
+            if($tradein->isBoxed() && $tradein->isBoxedInBay() && !$tradein->isPartOfSalesLot()){
 
                 $tradein->tray_name = $tradein->getTrayName($tradein->id);
                 $tradein->bamboo_grade = $tradein->getDeviceBambooGrade();
@@ -443,8 +462,20 @@ class SalesLotController extends Controller
         return $returnTradeins;
     }
 
+    public function getSaleLotTradeins(Request $request){
+        $result = BuildingLotService::getSaleLotTradeins($request->sale_lot_id);
+
+        return $result;
+    }
+
     public function createLot(Request $request){
         $result = BuildingLotService::createLot($request->all());
+
+        return $result;
+    }
+
+    public function editSaleLot(Request $request){
+        $result = BuildingLotService::editLot($request->all());
 
         return $result;
     }

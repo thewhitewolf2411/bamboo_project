@@ -124,9 +124,8 @@ class GetLabel{
         }
 
         //post quarantine label
-
         $matches = ["13", "14", "19", "20", "21"];
-        if(in_array($tradein->job_state, $matches)){
+        if($tradein->wasInQuarantine()){
             $barcodenumber = $tradein->barcode;
             $makeModel = $tradein->getProductName($tradein->product_id) . " " . $tradein->getDeviceMemory();
             $imei = $tradein->imei_number;

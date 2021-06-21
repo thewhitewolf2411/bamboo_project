@@ -79,7 +79,7 @@
                             </tr>
                             <tr>
                                 <td>Delivery Method: </td>
-                                <td>Tracking Reference: </td>
+                                <td>Tracking Reference: {{$tradeins[0]->tracking_reference}}</td>
                             </tr>
                         </tbody>
                       </table>

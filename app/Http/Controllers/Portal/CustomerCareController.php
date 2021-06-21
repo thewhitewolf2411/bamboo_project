@@ -217,9 +217,10 @@ class CustomerCareController extends Controller
         $tradeins = array();
 
         foreach($barcodes as $barcode){
-            $tradein = Tradein::where('barcode', $barcode)->first();
-            array_push($tradeins, $tradein);
+            $tradein_by_barcode = Tradein::where('barcode_original', $barcode)->get();
+            array_push($tradeins, $tradein_by_barcode);
         }
+
 
         if(count($tradeins)>30){
             return \redirect()->back()->with('error', 'You can\'t print more than 30 tradeins in one go.');
@@ -244,19 +245,19 @@ class CustomerCareController extends Controller
 
         foreach($tradeins as $tradein){
 
-            $user = User::where('id',$tradein->user_id)->first();
-            $product = SellingProduct::where('id', $tradein->product_id);
-            $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
+            $user = User::where('id',$tradein[0]->user_id)->first();
+            $product = SellingProduct::where('id', $tradein[0]->product_id);
+            $barcode = DNS1D::getBarcodeHTML($tradein[0]->barcode, 'C128');
             $delAdress = strtr($user->delivery_address, array(', '=>'<br>'));
             $delAdress = \explode('<br>', $delAdress);
 
-            $filename = "labeltradeout-" . $tradein->barcode . ".pdf";
-            $pdf = PDF::loadView('portal.labels.orderlabel', ['tradeins'=>$tradeins])
+            $filename = "labeltradeout-" . $tradein[0]->barcode . ".pdf";
+            $pdf = PDF::loadView('portal.labels.orderlabel', ['tradeins'=>$tradein])
                 ->setPaper('a4', 'portrait')
                 ->setWarnings(false)
-                ->save('pdf/tradeinlabel-'. $tradein->barcode .'.pdf');
+                ->save('pdf/tradeinlabel-'. $tradein[0]->barcode .'.pdf');
 
-            array_push($labels, 'pdf/tradeinlabel-'. $tradein->barcode .'.pdf');
+            array_push($labels, 'pdf/tradeinlabel-'. $tradein[0]->barcode .'.pdf');
 
         }
 

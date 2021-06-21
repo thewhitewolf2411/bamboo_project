@@ -39,7 +39,7 @@ $(document).ready(function(){
         
         var boxsummarytable = $('#saleslot-table').DataTable({
             "oLanguage" : {
-                "sInfo" : "Showing _START_ to _END_",
+                "sInfo" : "Showing _START_ of _END_",
              },
              "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
              "pageLength":-1,
@@ -63,18 +63,12 @@ $(document).ready(function(){
         $('#salelotcontent tfoot td').each( function () {
             var title = $(this).text();
             $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
-        } );    
+        } ); 
         
-        var salelotcontenttable = $('#salelotcontent').DataTable({
-            "oLanguage" : {
-                "sInfo" : "Showing _START_ to _END_",
-             },
-             "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-             "pageLength":-1,
-        });
+        var salelotcontenttable = $('#salelotcontent').DataTable();
         
         
-        salelotcontenttable.columns().every( function () {
+        /*salelotcontenttable.columns().every( function () {
             
             var that = this;
             $( 'input', this.footer() ).on( 'keyup change', function () {
@@ -84,7 +78,7 @@ $(document).ready(function(){
                         .draw();
                 }
             } );
-        });
+        });*/
     }
 
 });
@@ -134,7 +128,9 @@ $('#view-sales-lot-btn').on('click', function () {
 
 $('#edit-lot-btn').on('click', function(){
 
-    alert("Currently disabled");
+    var selectedid = $('.saleslot-active').attr('id');
+
+    window.open('/portal/sales-lot/building-sales-lot/' + selectedid, '_self');
 
 });
 
@@ -204,7 +200,7 @@ $('.salelotlist_picking').on('click', function(){
         $(this).removeClass('salelotlist_picking_active');
     }
     else{
-        $('.saleslotpicking').each(function(){
+        $('.salelotlist_picking').each(function(){
             $(this).stop(false, false);
             $(this).removeClass('salelotlist_picking_active');
         });
@@ -225,7 +221,13 @@ $('.salelotlist_picking').on('click', function(){
     }
 
     if ($(this).hasClass('salelotlist_picking_active')) {
-        $('#despatchpickingsaleslot').prop('disabled', false);
+        if($(this).data('status') === 4){
+            $('#despatchpickingsaleslot').prop('disabled', false);
+        }
+        else{
+            $('#despatchpickingsaleslot').prop('disabled', true);
+        }
+        
     } else {
         $('#despatchpickingsaleslot').prop('disabled', true);
     }
@@ -237,10 +239,10 @@ $('.salelotlist_picking').on('click', function(){
 
 $('#starttopicklot').on('click', function(){
 
-    var status = $('.salelotlist_picking').data('status');
-    var id = $('.salelotlist_picking').prop('id');
+    var status = $('.salelotlist_picking_active').data('status');
+    var id = $('.salelotlist_picking_active').prop('id');
 
-    if(status === 2){
+    if(status === 2 || status === 6){
         window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');
     }
     else{
@@ -256,39 +258,25 @@ $('#printpicknote').on('click', function(){
 
 $('#despatchpickingsaleslot').on('click', function(){
 
-
-    var c = confirm("Are you sure you want to mark " + $('.tagfordespatch:checked').length + " sale lot as despatched?");
-
-    if(c){
-
-        var salesLotIds = [];
-
-        $('.tagfordespatch:checked').each(function(){
-
-            var salelotid = $(this).data('value');
-
-            salesLotIds.push(salelotid);
-
-        });
-
-        $.ajax({
-            url: "/portal/warehouse-management/picking-despatch/pick-lot/despatch-picking",
-            type:"POST",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data:{
-                salesLotIds:salesLotIds,
-            },
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success:function(response){
-                location.reload();
-            },
-        });
-    }
-
+    salesLotId = $('.salelotlist_picking_active').prop('id');
+    $('#buildsaleslot_salelot').val(salesLotId);
+    /*
+    $.ajax({
+        url: "/portal/warehouse-management/picking-despatch/pick-lot/despatch-picking",
+        type:"POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data:{
+            salesLotId:salesLotId,
+        },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success:function(response){
+            location.reload();
+        },
+    });*/
 });
 
 
@@ -301,7 +289,17 @@ function fetchSaleLotData(id){
         },
         success:function(response){
 
-            var salelotcontent = $('#salelotcontent').DataTable();
+            var test = $('#salelotcontent').DataTable();
+
+            test.destroy();
+
+            var salelotcontent = $('#salelotcontent').DataTable({
+                "oLanguage" : {
+                    "sInfo" : "Showing _START_ of _END_",
+                 },
+                 "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                 "pageLength":-1,
+            });
 
             $('#salelotcontent tfoot td').each( function () {
                 var title = $(this).text();
@@ -320,8 +318,9 @@ function fetchSaleLotData(id){
                 } );
             });
 
+            salelotcontent.clear().draw(true);
+
             for(var i = 0; i < response.length; i++){
-                console.log(response[i]);
                 salelotcontent.row.add(response[i]).draw(true);
             }
 

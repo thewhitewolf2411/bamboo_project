@@ -213,7 +213,7 @@ class BuildingLotService{
 
     public static function getSaleLotData($salelot_id){
         $salelot = SalesLot::find($salelot_id);
-        $saleLotContent = SalesLotContent::where('sales_lot_id', $salelot_id)->get()->groupBy('box_id');;
+        $saleLotContent = SalesLotContent::where('sales_lot_id', $salelot_id)->get()->groupBy('box_id');
 
         #dd($saleLotContent);
 
@@ -235,4 +235,80 @@ class BuildingLotService{
 
     }
 
+
+    //Editing Sales Lot
+
+    public static function getSaleLotTradeins($sale_lot_id){
+        $salelot = SalesLot::find($sale_lot_id);
+        $saleLotContentIds = SalesLotContent::where('sales_lot_id', $sale_lot_id)->get();
+
+        $tradeinsids = $saleLotContentIds->pluck('device_id');
+
+        $tradeins = Tradein::find($tradeinsids);
+
+        $returnTradeins = collect();
+
+        foreach($tradeins as $tradein){
+
+            $tradein->tray_name = $tradein->getTrayName($tradein->id);
+            $tradein->bamboo_grade = $tradein->getDeviceBambooGrade();
+            $tradein->product_name = $tradein->getProductName();
+            $tradein->device_memory = $tradein->getDeviceMemory();
+            $tradein->device_network = $tradein->getDeviceNetwork();
+            $tradein->device_colour = $tradein->getDeviceColour();
+            $tradein->device_cost = $tradein->getDeviceCost();
+            $returnTradeins->push($tradein);
+
+            //$tradein->save();
+        }
+
+        return $returnTradeins;
+
+
+    }
+
+    public static function editLot(array $data){
+
+        $salelot_id = null;
+        $tradein_ids = null;
+
+        if(array_key_exists('edit_lot_id', $data)){
+            $salelot_id = $data['edit_lot_id'];
+        }
+
+        if(array_key_exists('addedTradeins', $data)){
+            $tradein_ids = $data['addedTradeins'];
+        }
+
+        $result = null;
+
+        if($salelot_id !== null && $tradein_ids !== null){
+            $result = self::_editLot($salelot_id, $tradein_ids);
+        }
+        
+        return $result;
+    }
+
+    private static function _editLot($salelot_id, $tradein_ids){
+        $salelot = SalesLot::find($salelot_id);
+        $salelotCurrentContent = SalesLotContent::where('sales_lot_id', $salelot_id)->get();
+
+        foreach($salelotCurrentContent as $currentContent){
+            $currentContent->delete();
+        }
+
+        $tradeins = Tradein::find($tradein_ids);
+
+        foreach($tradeins as $tradein){
+            SalesLotContent::create([
+                'sales_lot_id'=>$salelot->id,
+                'box_id'=>$tradein->getTrayId(),
+                'device_id'=>$tradein->id
+            ]);
+
+            $tradein->save();
+        }
+
+        return true;
+    }
 }

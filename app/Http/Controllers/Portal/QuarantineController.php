@@ -38,19 +38,15 @@ class QuarantineController extends Controller
         $portalUser = PortalUsers::where('user_id', $user_id)->first();
 
         $tradeins = Tradein::all();
+        $quarantineTradeins = collect();
 
-        $matches = ["4","5","6","7","8a","8b","8c","8d","8e","8f","11","11a","11b","11c","11d","11e","11f","11g","11h","11i","11j","13","15","15a","15b","15c","15d","15e",
-        "15f","15g","15h","15i"];
-
-
-        $tradeins = $tradeins->filter(function($tradein) use ($matches){
-            if(in_array($tradein->job_state, $matches) && $tradein->isInQuarantineTrayBin()){
-                return $tradein;
+        foreach($tradeins as $tradein){
+            if($tradein->isInQuarantineTrayBin()){
+                $quarantineTradeins->push($tradein);
             }
-            return null;
-        });
+        }
         
-        return view('portal.quarantine.quarantine-overview')->with(['portalUser'=>$portalUser, 'tradeins'=>$tradeins]);
+        return view('portal.quarantine.quarantine-overview')->with(['portalUser'=>$portalUser, 'tradeins'=>$quarantineTradeins]);
     }
 
     public function showQuarantineBinsPage(){
@@ -152,7 +148,7 @@ class QuarantineController extends Controller
             #$matches = ["4","5","6","7","8a","8b","8c","8d","8e","8f","11","11a","11b","11c","11d","11e","11f","11g","11h","11i","11j","15","15a","15b","15c","15d","15e",
             #"15f","15g","15h","15i"];
 
-            $matches = ["13"];
+            $matches = ["9", "13"];
 
             $tradein = Tradein::where('barcode', $request->submitscannedid_allocatetotray)->first();
 
@@ -281,7 +277,7 @@ class QuarantineController extends Controller
                     array_push($tradeins, $tradein);
                 }
                 else{
-                    return redirect()->back()->with(['error'=>'This device is not in quarantine']);
+                    return redirect()->back()->with(['error'=>'This device is not in quarantine', 'hasTradeIns'=>true]);
                 }
                 
             }

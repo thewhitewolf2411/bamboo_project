@@ -491,8 +491,10 @@ Route::group(['prefix'=>'portal/sales-lot'], function(){
     Route::post('/building-sales-lot/build-lot', 'Portal\SalesLotController@buildSalesLot');
     Route::post('/building-sales-lot/remove-from-lot', 'Portal\SalesLotController@removeFromLot');
     Route::post('/building-sales-lot/build-lot/generate-xls', 'Portal\SalesLotController@buildingSalesLotGenerateXls');
+    Route::post('/building-sales-lot/edit-lot', 'Portal\SalesLotController@editSaleLot');
     Route::get('/building-sales-lot/build-lot/getBoxes', 'Portal\SalesLotController@getBoxes');
     Route::get('/building-sales-lot/build-lot/getTradeins', 'Portal\SalesLotController@getTradeins');
+    Route::get('/building-sales-lot/build-lot/getSaleLotTradeins', 'Portal\SalesLotController@getSaleLotTradeins');
     
     Route::get('/completed-sales-lots', 'Portal\SalesLotController@showCompletedSalesLotPage');
     Route::get('/completed-sales-lots/get-saleslot-content', 'Portal\SalesLotController@getSalesLotContent');
