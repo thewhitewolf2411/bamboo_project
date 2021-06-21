@@ -158,6 +158,8 @@ class Reports{
                 $number = $tradein->imei_number;
             }
 
+            #dd($tradein->quarantineReason());
+
             $sheet->setCellValue('A'.$index, $tradein->barcode_original);
             $sheet->setCellValue('B'.$index, $tradein->barcode);
             $sheet->setCellValue('C'.$index, $tradein->getBrandName($tradein->product_id));
@@ -166,7 +168,7 @@ class Reports{
             $sheet->setCellValue('F'.$index, $correctMemory);
             $sheet->setCellValue('G'.$index, $tradein->product_colour);
             $sheet->setCellValue('H'.$index, '£' . $tradein->order_price);
-            $sheet->setCellValue('I'.$index, '£' . $tradein->bamboo_price);
+            $sheet->setCellValue('I'.$index, '£' . $tradein->getPaidPrice());
             $sheet->setCellValue('J'.$index, '£' . $tradein->admin_cost);
             $sheet->setCellValue('K'.$index, '£' . $tradein->carriage_cost);
             $sheet->setCellValue('L'.$index, '£' . $tradein->getDeviceMiscCost());

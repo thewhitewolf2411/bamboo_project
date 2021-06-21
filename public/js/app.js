@@ -58805,7 +58805,6 @@ $('#completelot').on('click', function () {
     },
     success: function success(response) {
       if (response) {
-        alert("Lot has been created");
         location.reload();
       }
     }
@@ -59171,7 +59170,7 @@ $('.salelotlist_picking').on('click', function () {
   if ($(this).hasClass('salelotlist_picking_active')) {
     $(this).removeClass('salelotlist_picking_active');
   } else {
-    $('.saleslotpicking').each(function () {
+    $('.salelotlist_picking').each(function () {
       $(this).stop(false, false);
       $(this).removeClass('salelotlist_picking_active');
     });
@@ -59191,7 +59190,7 @@ $('.salelotlist_picking').on('click', function () {
   }
 
   if ($(this).hasClass('salelotlist_picking_active')) {
-    if ($(this).data('status') === 3) {
+    if ($(this).data('status') === 4) {
       $('#despatchpickingsaleslot').prop('disabled', false);
     } else {
       $('#despatchpickingsaleslot').prop('disabled', true);
@@ -59204,8 +59203,8 @@ $('.salelotlist_picking').on('click', function () {
   fetchSaleLotData(id);
 });
 $('#starttopicklot').on('click', function () {
-  var status = $('.salelotlist_picking').data('status');
-  var id = $('.salelotlist_picking').prop('id');
+  var status = $('.salelotlist_picking_active').data('status');
+  var id = $('.salelotlist_picking_active').prop('id');
 
   if (status === 2 || status === 6) {
     window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');

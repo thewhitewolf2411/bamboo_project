@@ -94,13 +94,13 @@
 
         #total-order-price{
             position: absolute;
-            top: 394px;
+            top: 414px;
             left: 424px;
         }
 
         #total-order-data{
             position: absolute;
-            top: 394px;
+            top: 414px;
             left: 67px;
         }
 
@@ -146,11 +146,11 @@
         }
 
         #black-line-2{
-            top: 391px;
+            top: 414px;
         }
 
         #black-line-3{
-            top: 408px;
+            top: 428px;
         }
 
         #product-data-price-template{
@@ -173,7 +173,7 @@
 
         #thank-you-note{
             position: absolute;
-            top: 412px;
+            top: 430px;
             left: 67px;
         }
 
@@ -254,7 +254,7 @@
                 {{$tradein->getProductName()}}<br>
                 Network:{{$tradein->getDeviceNetwork()}}<br>
                 Memory:{{$tradein->getDeviceMemory()}}<br>
-                Grade:{{$tradein->customer_grade}}<br><br><br>
+                Grade:{{$tradein->customer_grade}}<br><br>
 
         @endforeach
         </p>

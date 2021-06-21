@@ -224,7 +224,6 @@ $('#completelot').on('click', function(){
         },
         success:function(response){
             if(response){
-                alert("Lot has been created");
                 location.reload();
             }
         }

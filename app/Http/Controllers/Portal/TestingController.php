@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Portal;
 
+use App\Audits\TradeinAudit;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -354,6 +355,8 @@ class TestingController extends Controller
         if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>0){
             $mti = true;
         }
+
+        $lastTradeinAudit = TradeinAudit::where('tradein_id', $tradein->id)->where('stock_location', 'Not received yet.')->latest('created_at')->first()->delete();
 
         return view('portal.testing.totray')->with(['tray_name'=>$receivingService[0],'pdf'=>$receivingService[1],'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein,'testing'=>false, 'mti'=>$mti]);
 

@@ -192,6 +192,7 @@ class SalesLotController extends Controller
         $grouped = $tradeins->groupBy(['product_id', 'correct_memory', 'product_colour', 'correct_network']);
         #dd($grouped);
 
+        $key = 2;
         foreach($grouped as $device_id => $devices){
             #dd($device_id);
 
@@ -202,19 +203,19 @@ class SalesLotController extends Controller
             $product = SellingProduct::find($device_id);
             $model = $product->product_name;
 
-            $gradeA = 0;
-            $gradeBplus = 0;
-            $gradeB = 0;
-            $gradeC = 0;
-            $wsi = 0;
-            $wsd = 0;
-            $nwsi = 0;
-            $nwsd = 0;
-            $grandTotal = 0;
-
-            $key = 2;
+            
             foreach($devices as $memory => $memory_group){
+                $gradeA = 0;
+                $gradeBplus = 0;
+                $gradeB = 0;
+                $gradeC = 0;
+                $wsi = 0;
+                $wsd = 0;
+                $nwsi = 0;
+                $nwsd = 0;
+                $grandTotal = 0;
 
+                
                 $gb = $memory;
 
                 foreach($memory_group as $color => $color_group){
@@ -263,23 +264,23 @@ class SalesLotController extends Controller
                     }
                 }
 
-            }
+                $sheet->setCellValue('A'.$key, $brand);
+                $sheet->setCellValue('B'.$key, $model);
+                $sheet->setCellValue('C'.$key, $gb);
+                $sheet->setCellValue('D'.$key, $colour);
+                $sheet->setCellValue('E'.$key, $network_name);
+                $sheet->setCellValue('F'.$key, $gradeA);
+                $sheet->setCellValue('G'.$key, $gradeBplus);
+                $sheet->setCellValue('H'.$key, $gradeB);
+                $sheet->setCellValue('I'.$key, $gradeC);
+                $sheet->setCellValue('J'.$key, $wsi);
+                $sheet->setCellValue('K'.$key, $wsd);
+                $sheet->setCellValue('L'.$key, $nwsi);
+                $sheet->setCellValue('M'.$key, $nwsd);
+                $sheet->setCellValue('N'.$key, $grandTotal);
+                $key++;
 
-            $sheet->setCellValue('A'.$key, $brand);
-            $sheet->setCellValue('B'.$key, $model);
-            $sheet->setCellValue('C'.$key, $gb);
-            $sheet->setCellValue('D'.$key, $colour);
-            $sheet->setCellValue('E'.$key, $network_name);
-            $sheet->setCellValue('F'.$key, $gradeA);
-            $sheet->setCellValue('G'.$key, $gradeBplus);
-            $sheet->setCellValue('H'.$key, $gradeB);
-            $sheet->setCellValue('I'.$key, $gradeC);
-            $sheet->setCellValue('J'.$key, $wsi);
-            $sheet->setCellValue('K'.$key, $wsd);
-            $sheet->setCellValue('L'.$key, $nwsi);
-            $sheet->setCellValue('M'.$key, $nwsd);
-            $sheet->setCellValue('N'.$key, $grandTotal);
-            $key++;
+            }
             
         }
 

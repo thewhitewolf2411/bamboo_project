@@ -183,7 +183,7 @@ class ReportsController extends Controller
             $sheet->setCellValue('G'.$index, $tradein->bamboo_price);
             $sheet->setCellValue('H'.$index, $tradein->carriage_cost);
             $sheet->setCellValue('I'.$index, $tradein->getDeviceCost());
-            $sheet->setCellValue('J'.$index, $tradein->created_at);
+            $sheet->setCellValue('J'.$index, \Carbon\Carbon::parse($tradein->created_at)->format('d/m/y'));
             $sheet->setCellValue('K'.$index, $tradein->getDatePassed());
             $sheet->setCellValue('L'.$index, $tradein->getTimePassed());
             $sheet->setCellValue('M'.$index, $tradein->getDatePaid());

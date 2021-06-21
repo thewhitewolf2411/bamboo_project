@@ -22,11 +22,11 @@ class ReceivingService{
 
         $results = self::_checkReceivingResaults($request->all());
 
-        if($results){
-            $trayname = self::allocateToTray(Tradein::find($request->tradeinid));
-            $pdf = self::generateBarcode(Tradein::find($request->tradeinid));
+        if($results){  
+            $tradein = self::allocateToTray(Tradein::find($request->tradeinid));
+            $pdf = self::generateBarcode(Tradein::find($tradein->id));
             
-            return [$trayname, $pdf];
+            return [$tradein->getTrayName($tradein->id), $pdf];
         }
 
         return false;
@@ -115,6 +115,8 @@ class ReceivingService{
 
             $tradein->missing_image = $path;
             $tradein->job_state = 4;
+
+            $tradein->save();
 
             return false;
         }
@@ -265,9 +267,11 @@ class ReceivingService{
         $traycontent->trade_in_id = $tradein->id;
         $traycontent->save();
 
-        $tradein->save();
+        return $tradein;
 
-        return $quarantineTrays->tray_name;
+        #$tradein->save();
+
+        #return $quarantineTrays->tray_name;
     }
 
     private static function saveSerial($serialNumber, $tradeinid){

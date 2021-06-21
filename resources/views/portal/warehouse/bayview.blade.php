@@ -53,7 +53,7 @@
                         <td><div class="table-element">Device Qty</div></td>
                     </tr>
                     @foreach ($bayboxes as $baybox)
-                        @if($baybox->status !== 10)
+                        @if($baybox->status !== 10 && $baybox->getNumberOfDevices() !== 0)
                         <tr>
                             <td><div class="table-element">{{$baybox->tray_name}}</div></td>
                             <td><div class="table-element">{{$baybox->getNumberOfDevices()}}</div></td>

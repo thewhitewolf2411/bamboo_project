@@ -251,7 +251,7 @@ class Tradein extends Model
                 $trolley = Trolley::where('id', $tray->trolley_id)->first();
                 if($trolley->trolley_type === "B" || $trolley->trolley_type === "Bay"){
                     //return $trolley->trolley_name;
-                    return $tray->tray_name;
+                    return $trolley->trolley_name;
                 }
             }
             return 'N/A';
@@ -281,7 +281,8 @@ class Tradein extends Model
     }
 
     public function isGoogleLocked(){
-        if($this->fmip_gock && $this->getBrandId($this->product_id) !== 1){
+
+        if($this->fmip_gock){
             return true;
         }
         return false;
@@ -324,8 +325,12 @@ class Tradein extends Model
     public function quarantineReason(){
 
         if($this->isInQuarantine()){
+
             if($this->isGoogleLocked()){
-                return "Google/FMIP Locked";
+                if($this->getBrandId($this->product_id) === 1){
+                    return "FMIP Locked";
+                }
+                return "Google Locked";
             }
     
             if($this->isPinLocked()){
@@ -364,7 +369,7 @@ class Tradein extends Model
     }
 
     public function hasBeenTested(){
-        $matches = ["10","11","11a","11b","11c", "11d", "11e", "11f", "11g", "11h", "11i", "11j", "12", '15a', '15b', '15c', '15d', '15e', '15f', '15g', '15h', '15i', '15j'];
+        $matches = ["10","11","11a","11b","11c", "11d", "11e", "11f", "11g", "11h", "11i", "11j", "12", '15a', '15b', '15c', '15d', '15e', '15f', '15g', '15h', '15i', '15j', '16', '22', '23', '24', '25', '26', '27', '28', '29'];
 
         if(in_array($this->job_state, $matches)){
             return true;
@@ -389,11 +394,15 @@ class Tradein extends Model
     }
 
     public function canBeDespatched(){
-        if(in_array($this->job_state, ['5', '6', '7', '8a', '8b', '8c', '8d', '8e', '8f',
+
+        if(in_array($this->job_state, ['2','3','5', '6', '7', '8a', '8b', '8c', '8d', '8e', '8f',
                                         '9','10','11','11a','11b','11c','11d','11e','11f','11g','11h','11i',
                                         '11j','12','13','14','15','15a','15b','15c','15d','15e','15f','15g',
                                         '15h','15i','15j','16','17','18','22','23','24','25','26','27'
         ])){
+            if($this->deviceInPaymentProcess()){
+                return false;
+            }
             return true;
         }
         return false;
@@ -1037,7 +1046,7 @@ class Tradein extends Model
                 return 'Blacklisted.';
                 break;
             case '8a':
-                return 'This device has been reported as stolen.';
+                return 'Lost.';
                 break;
             case '8b':
                 return 'Insurance claim.';
@@ -1149,7 +1158,7 @@ class Tradein extends Model
     public function getDatePassed(){
         $tradeinauditTested = TradeinAudit::where('tradein_id', $this->id)->where('bamboo_status', 'Test Complete')->first();
 
-        $datePassed = \Carbon\Carbon::parse($tradeinauditTested->created_at)->format('Y-M-D');
+        $datePassed = \Carbon\Carbon::parse($tradeinauditTested->created_at)->format('d/m/Y');
 
         return $datePassed;
     }
@@ -1157,7 +1166,7 @@ class Tradein extends Model
     public function getTimePassed(){
         $tradeinauditTested = TradeinAudit::where('tradein_id', $this->id)->where('bamboo_status', 'Test Complete')->first();
 
-        $datePassed = \Carbon\Carbon::parse($tradeinauditTested->created_at)->format('h-m-i');
+        $datePassed = \Carbon\Carbon::parse($tradeinauditTested->created_at)->format('h:m:i');
 
         return $datePassed;
     }
@@ -1166,7 +1175,7 @@ class Tradein extends Model
         $paymentBatchDevice = PaymentBatchDevice::where('tradein_id', $this->id)->first();
 
         if($paymentBatchDevice && $paymentBatchDevice->payment_state === 1){
-            return $paymentBatchDevice->updated_at;
+            return \Carbon\Carbon::parse($paymentBatchDevice->updated_at)->format('d/m/Y');
         }
         return 'N/A';
     }
@@ -1296,6 +1305,17 @@ class Tradein extends Model
         }
 
         return false;
+    }
+
+    public function getPaidPrice(){
+        $orderPrice = $this->order_price;
+        $bambooPrice = $this->bamboo_price;
+
+        $prices = [$orderPrice, $bambooPrice];
+
+        return min($prices);
+
+
     }
 
 }
