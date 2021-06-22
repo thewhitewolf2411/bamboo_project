@@ -28,14 +28,32 @@
                     <a class="news-main-item" href="/news/{{$blogs->first()->id}}">
                         {{-- <img class="news-image main" src="/storage/news_images/{{$blogs->first()->image_1}}"> --}}
                         <img class="news-image main" src="{{$blogs->first()->getFirstImage()}}">
+
+                        <div class="mobile-author-tag">
+                            <div @if($blogs->skip(1)->first()->cms_type === 0) class="news-tag" @elseif($blogs->skip(1)->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
+                                <p class="tag-content">@if($blogs->skip(1)->first()->cms_type === 0) NEWS @elseif($blogs->skip(1)->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
+                            </div>
+                            <div class="row m-0 mt-2">
+                                <div class="news-author-row mr-2">
+                                    <img class="news-user-smaller-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
+                                    <p class="author-smaller-p">{{$blogs->skip(1)->first()->author}}</p>
+                                </div>
+                                <div class="news-created-at-row ml-4">
+                                    <img class="news-created-smaller-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                    <p class="created-at-smaller-p">{{$blogs->skip(1)->first()->created_at->format('F d, Y')}}</p>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="news-content-container">
-                            <div @if($blogs->first()->cms_type === 0) class="news-tag" @elseif($blogs->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
+                            <div @if($blogs->first()->cms_type === 0) class="news-tag mobile-hidden" @elseif($blogs->first()->cms_type === 1) class="blog-tag mobile-hidden" @else class="how-to-tag mobile-hidden" @endif>
                                 <p class="tag-content">@if($blogs->first()->cms_type === 0) NEWS @elseif($blogs->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
                             </div>
                             <div class="news-title main mt-2">
                                 <p>{{$blogs->first()->cms_title}}</p>
                             </div>
-                            <div class="row m-0 mt-2">
+                            <div class="row m-0 mt-2 mobile-hidden">
                                 <div class="news-author-row mr-2">
                                     <img class="news-user-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
                                     <p class="author-p">{{$blogs->first()->author}}</p>
@@ -56,14 +74,30 @@
                                 {{-- <img class="news-image main" src="/storage/news_images/{{$blogs->skip(1)->first()->image_1}}"> --}}
                                 <img class="news-image main" src="{{$blogs->skip(1)->first()->getFirstImage()}}">
 
-                                <div class="news-content-container smaller-pad">
+                                <div class="mobile-author-tag">
                                     <div @if($blogs->skip(1)->first()->cms_type === 0) class="news-tag" @elseif($blogs->skip(1)->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
+                                        <p class="tag-content">@if($blogs->skip(1)->first()->cms_type === 0) NEWS @elseif($blogs->skip(1)->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
+                                    </div>
+                                    <div class="row m-0 mt-2">
+                                        <div class="news-author-row mr-2">
+                                            <img class="news-user-smaller-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
+                                            <p class="author-smaller-p">{{$blogs->skip(1)->first()->author}}</p>
+                                        </div>
+                                        <div class="news-created-at-row ml-4">
+                                            <img class="news-created-smaller-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                            <p class="created-at-smaller-p">{{$blogs->skip(1)->first()->created_at->format('F d, Y')}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="news-content-container smaller-pad">
+                                    <div @if($blogs->skip(1)->first()->cms_type === 0) class="news-tag mobile-hidden" @elseif($blogs->skip(1)->first()->cms_type === 1) class="blog-tag mobile-hidden" @else class="how-to-tag mobile-hidden" @endif>
                                         <p class="tag-content">@if($blogs->skip(1)->first()->cms_type === 0) NEWS @elseif($blogs->skip(1)->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
                                     </div>
                                     <div class="news-smaller-title main mt-2">
                                         <p>{{$blogs->skip(1)->first()->cms_title}}</p>
                                     </div>
-                                    <div class="row m-0 mt-2">
+                                    <div class="row m-0 mt-2 mobile-hidden">
                                         <div class="news-author-row mr-2">
                                             <img class="news-user-smaller-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
                                             <p class="author-smaller-p">{{$blogs->skip(1)->first()->author}}</p>
@@ -80,14 +114,31 @@
                                 {{-- <img class="news-image main" src="/storage/news_images/{{$blogs->skip(2)->first()->image_1}}"> --}}
                                 <img class="news-image main" src="{{$blogs->skip(2)->first()->getFirstImage()}}">
 
+                                <div class="mobile-author-tag">
+                                    <div @if($blogs->skip(1)->first()->cms_type === 0) class="news-tag" @elseif($blogs->skip(1)->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
+                                        <p class="tag-content">@if($blogs->skip(1)->first()->cms_type === 0) NEWS @elseif($blogs->skip(1)->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
+                                    </div>
+                                    <div class="row m-0 mt-2">
+                                        <div class="news-author-row mr-2">
+                                            <img class="news-user-smaller-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
+                                            <p class="author-smaller-p">{{$blogs->skip(1)->first()->author}}</p>
+                                        </div>
+                                        <div class="news-created-at-row ml-4">
+                                            <img class="news-created-smaller-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Time@2x.png')}}">
+                                            <p class="created-at-smaller-p">{{$blogs->skip(1)->first()->created_at->format('F d, Y')}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                                 <div class="news-content-container smaller-pad">
-                                    <div @if($blogs->skip(2)->first()->cms_type === 0) class="news-tag" @elseif($blogs->skip(2)->first()->cms_type === 1) class="blog-tag" @else class="how-to-tag" @endif>
+                                    <div @if($blogs->skip(2)->first()->cms_type === 0) class="news-tag mobile-hidden" @elseif($blogs->skip(2)->first()->cms_type === 1) class="blog-tag mobile-hidden" @else class="how-to-tag mobile-hidden" @endif>
                                         <p class="tag-content">@if($blogs->skip(2)->first()->cms_type === 0) NEWS @elseif($blogs->skip(2)->first()->cms_type === 1) BLOG @else HOW TO, WITH BOO @endif</p>
                                     </div>
                                     <div class="news-smaller-title main mt-2">
                                         <p>{{$blogs->skip(2)->first()->cms_title}}</p>
                                     </div>
-                                    <div class="row m-0 mt-2">
+                                    <div class="row m-0 mt-2 mobile-hidden">
                                         <div class="news-author-row mr-2">
                                             <img class="news-user-icon mr-2" src="{{asset('/images/front-end-icons/Icon-Account@2x.png')}}">
                                             <p class="author-smaller-p">{{$blogs->skip(2)->first()->author}}</p>

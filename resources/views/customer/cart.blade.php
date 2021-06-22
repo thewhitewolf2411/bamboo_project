@@ -187,13 +187,57 @@
                                         </div>
                                     </div>
 
-                                    <div class="d-flex">
+                                    <div class="cart-product-mobile">
+                                        <div class="cart-product-mobile-row">
+                                            <h6 class="m-0 mb-3 summary-cart-text-bold-large">{{$cartitem->getProductName($cartitem->id)}}</h6>
+                                        </div>
+                                        <div class="cart-product-mobile-row justify-content-between">
+                                            <p class="m-0 summary-regular-text">Network: {{$cartitem->network}}</p>
+                                            <p class="m-0 summary-regular-text">Grade: {{$cartitem->grade}}</p>
+                                        </div>
+
+
+                                        <div class="cart-product-mobile-row justify-content-between">
+                                            <p class="m-0 summary-regular-text">Memory: {{$cartitem->memory}}</p>
+                                        </div>
+
+                                        <div class="cart-product-mobile-row justify-content-between mt-4">
+                                            <div class="cart-product-mobile-col">
+                                                <h6 class="m-0 mb-3 summary-cart-text-bold">Item price</h6>
+                                                <p class="m-0 summary-regular-text">£{{$cartitem->price}}</p>
+                                            </div>
+
+                                            <div class="cart-product-mobile-col">
+                                                <h6 class="m-0 mb-3 summary-cart-text-bold">Quantity</h6>
+                                                <p class="m-0 summary-cart-text-bold-quantity-price">1</p>
+
+                                                @if(Auth::user())
+                                                    <a href="/removefromcart/{{$cartitem->id}}" class="removefromcart-link ml-0 mr-auto">
+                                                        <p class="ml-auto mr-auto summary-regular-text">REMOVE</p>
+                                                    </a>
+                                                @else
+                                                    <a href="/removefromabandoned/{{$cartitem->id}}" class="removefromcart-link ml-0 mr-auto">
+                                                        <p class="ml-auto mr-auto summary-regular-text">REMOVE</p>
+                                                    </a>
+                                                @endif
+                                            </div>
+
+                                            <div class="cart-product-mobile-col">
+                                                <h6 class="m-0 mb-3 summary-cart-text-bold">Total Price</h6>
+                                                <p class="m-0 summary-cart-text-bold-quantity-price">£{{$cartitem->price}}</p>
+                                            </div>
+
+                                        </div>
+                                        
+                                    </div>
+
+                                    {{-- <div class="d-flex">
                                         <div class="remove-cart-space"></div>
 
                                         <div class="remove-from-cart-tohide"></div>
-                                    </div>
+                                    </div> --}}
 
-                                    @if($cart->count() === 1)
+                                    @if($cart->count() > 1)
                                         <div class="remove-hr"></div>
                                     @endif
 

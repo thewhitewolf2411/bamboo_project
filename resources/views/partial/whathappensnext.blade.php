@@ -48,23 +48,26 @@
                 <img class="whathappens-img" src="{{asset('/customer_page_images/body/free_print_own_label.svg')}}">
                 <p class="whathappens-large bold">Print your postage label and send your device to us</p>
                 <p class="whathappens-small">
-                    Please click on the link below to create and print off a FREE postage label to affix to your securely packed device with the delivery note.
-                    Packing and Posting Instructions are also available here.
+                    {{-- Please click on the link below to create and print off a FREE postage label to affix to your securely packed device with the delivery note.
+                    Packing and Posting Instructions are also available here. --}}
+                    To SELL your device you can send it to us for FREE by Printing your own label, or we can send out a FREE Trade Pack - the choice is yours!
                 </p>
             </div>
             <div class="image-whathappens-col">
                 <img class="whathappens-img" src="{{asset('/customer_page_images/body/Icon-Trust.svg')}}">
                 <p class="whathappens-large bold">Verification process</p>
                 <p class="whathappens-small">
-                    You can check the status of your SELL order at any time using ‘My Bamboo’ section.  Click below to take your straight there.
+                    {{-- You can check the status of your SELL order at any time using ‘My Bamboo’ section.  Click below to take your straight there. --}}
+                    Once we've received your device, you can track the status of your SELL order by logging into your account any time. We'll also email regularly so you're kept up to date!
                 </p>
             </div>
             <div class="image-whathappens-col">
                 <img class="whathappens-img" src="{{asset('/customer_page_images/body/How-Icon-6.svg')}}">
                 <p class="whathappens-large bold">Get paid! Woohoo!</p>
                 <p class="whathappens-small">
-                    Here's the best bit!! Once your device has tested successfully we promise to pay you directly into your bank account on the same day!!
-                    *Mon-Fri, excluding public holidays. Same day payment does not apply to orders received after 2pm.
+                    {{-- Here's the best bit!! Once your device has tested successfully we promise to pay you directly into your bank account on the same day!!
+                    *Mon-Fri, excluding public holidays. Same day payment does not apply to orders received after 2pm. --}}
+                    Here's the best bit!! Once your device has successfully passed all our tests, we promise to pay you directly into your bank account on the same day!!
                 </p>
             </div>
         </div>

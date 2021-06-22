@@ -109,20 +109,20 @@
 
                             <div class="col p-0 mt-4">
                                 <label for="account_name">Name on account</label>
-                                <input class="form-control small-input" name="account_name" required>
+                                <input class="form-control small-input bankdetails-name" name="account_name" required>
                             </div>
                             <div class="col p-0">
                                 <label for="account_name">Account number</label>
-                                <input class="form-control small-input" name="account_number" required>
+                                <input class="form-control small-input bankdetails-number" name="account_number" required>
                             </div>
                             <div class="col p-0">
                                 <label>Sort code</label>
-                                <div class="row m-0">
-                                    <input class="form-control text-center width-60px" type="number" name="sort_code_1" required>
+                                <div class="row bankdetails-strict-row m-0">
+                                    <input class="form-control text-center width-60px bankdetails-sortcode" type="number" name="sort_code_1" required>
                                     <p class="m-3 bold">-</p>
-                                    <input class="form-control text-center width-60px" type="number" name="sort_code_2" required>
+                                    <input class="form-control text-center width-60px bankdetails-sortcode" type="number" name="sort_code_2" required>
                                     <p class="m-3 bold">-</p>
-                                    <input class="form-control text-center width-60px" type="number" name="sort_code_3" required>
+                                    <input class="form-control text-center width-60px bankdetails-sortcode" type="number" name="sort_code_3" required>
                                 </div>
                             </div>
                             @if(Session::has('bank_details_error'))
@@ -179,6 +179,32 @@
                                 <option value="1" selected>Make an order without printing label</option>
                                 <option value="2">Print and send trade label yourself</option>
                             </select> --}}
+
+                            <div class="selling-disclaimer-cart-mobile">
+                                <p class="newsletter-small-sell">
+                                    I agree to Bamboo sending me a regular newsletter, carrying out market research, keeping 
+                                    me informed with personalised news, offers, products and promotions it believes would be 
+                                    of interest to me through my preferred channel. 
+                                </p>
+                                <div class="disclaimer-checkboxes-row">
+                                    <div class="disclaimer-input">
+                                        <label for="email_newsletter">Email</label>
+                                        <input type="checkbox" class="checkbox-input" name="email_newsletter">
+                                    </div>
+                                    <div class="disclaimer-input">
+                                        <label for="sms_newsletter">SMS / Text Message</label>
+                                        <input type="checkbox" class="checkbox-input" name="sms_newsletter">
+                                    </div>
+                                    <div class="disclaimer-input">
+                                        <label for="telephone_newsletter">Telephone</label>
+                                        <input type="checkbox" class="checkbox-input" name="telephone_newsletter">
+                                    </div>
+                                    <div class="disclaimer-input">
+                                        <label for="post_newsletter">Post</label>
+                                        <input type="checkbox" class="checkbox-input" name="post_newsletter">
+                                    </div>
+                                </div>
+                            </div>
                         @endif   
                     </div>
 

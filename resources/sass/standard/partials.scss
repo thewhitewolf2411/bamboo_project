@@ -376,6 +376,7 @@
 
     .sustainability-container{
         padding: 20px;
+        padding-top: 120px;
     }
 
     .sustainability-about-row{
@@ -390,6 +391,14 @@
     
     .start-selling-whysell{
         flex-direction: column;
+    }
+
+    .sustainability-whysell > .sustainability-whysell-col > .start-selling-whysell{
+        margin-bottom: 150px;
+    }
+
+    .text-buttons-sustainability > .start-selling-whysell{
+        margin-bottom: 0;
     }
 
     .start-selling.howitworks.margin-left{

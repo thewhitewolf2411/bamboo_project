@@ -168,7 +168,7 @@
                             <input type="hidden" name="memory" id="memory"></input>
                             <input type="hidden" name="price" id="price"></input>
                             <input type="hidden" name="type" value="tradein"></input>
-                            <button id="addToCart" type="submit" class="btn start-selling sellitem"><p>Sell my device</p></button>
+                            <button id="addToCart" type="submit" class="btn start-selling sellitem fullwidth"><p>Sell my device</p></button>
                         </div>
                     </form>
 

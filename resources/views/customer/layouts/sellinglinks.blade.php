@@ -590,6 +590,38 @@
             }
         });
 
+
+        // close on out-click
+        // mobile dropdown
+        document.getElementById('mobile-phones-mobile-dropdown').addEventListener('click', function(e){
+            if(e.target.id == 'mobile-phones-mobile-dropdown'){
+                if(!document.getElementById('mobile-phones-mobile-dropdown').classList.contains('not-visible')){
+                    document.getElementById('mobile-phones-mobile-dropdown').classList.add('not-visible');
+                    document.body.style = "";
+                }
+            }
+        });
+        // tablets dropdown
+        document.getElementById('tablets-mobile-dropdown').addEventListener('click', function(e){
+            if(e.target.id == 'tablets-mobile-dropdown'){
+                if(!document.getElementById('tablets-mobile-dropdown').classList.contains('not-visible')){
+                    document.getElementById('tablets-mobile-dropdown').classList.add('not-visible');
+                    document.body.style = "";
+                }
+            }
+        });
+        // watches dropdown
+        document.getElementById('watches-mobile-dropdown').addEventListener('click', function(e){
+            if(e.target.id == 'watches-mobile-dropdown'){
+                if(!document.getElementById('watches-mobile-dropdown').classList.contains('not-visible')){
+                    document.getElementById('watches-mobile-dropdown').classList.add('not-visible');
+                    document.body.style = "";
+                }
+            }
+        });
+
+
+
         // mobile dropdowns
         // mobile phones - apple
         $('#collapseAppleMobilePhones').on('hidden.bs.collapse', function () {

@@ -64,7 +64,7 @@
                                     <p class="confirmation-info-text-bold-smaller mt-4 ml-0 fixed-height">Hold tight! Your Free Trade Pack is on its way to you</p>
                                     <p class="confirmation-info-text description mt-2">
                                         {{-- Thank you for selling your device with us and ordering a Free Trade Pack – this will be posted via 1st Class post via Royal Mail.<br> --}}
-                                        Thank you for selling your device with us and ordering a Free Trade Pack – this will be posted via 1st Class post Royal Mail.<br>
+                                        Thank you for selling your device with us and ordering a Free Trade Pack - this will be posted 1st Class via Royal Mail.<br>
                                     </p>
                                 </div>
                             @else
@@ -99,7 +99,7 @@
                                 </div>
                                 <p class="confirmation-info-text-bold-smaller mt-4 ml-0 fixed-height centered-vertically">Get Paid! Woohoo!</p>
                                 <p class="confirmation-info-text description mt-2">
-                                    Here's the best bit!! Once your device has tested successfully we promise to pay you directly into your bank account on the same day!!<br>
+                                    Here's the best bit!! Once your device has tested successfully, we promise to pay you directly into your bank account on the same day!!<br>
                                     *Mon-Fri, excluding public holidays. Same day payment does not apply to orders received after 2pm
                                 </p>
                             </div>
