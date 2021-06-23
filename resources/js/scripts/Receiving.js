@@ -49,7 +49,6 @@ $(document).ready(function(){
 
 });
 
-
 window.changeQuestion = function(question_number, current_question_number, tradein_id, result = null){
 
     if(question_number === 1 && current_question_number === 2){
@@ -62,6 +61,8 @@ window.changeQuestion = function(question_number, current_question_number, trade
     if(question_number === 2 && current_question_number === 1){
 
         if($('#missing-no-'+tradein_id).is(':checked')){
+            $('.send-to-quarantine').show();
+            $('.send-to-testing').hide();
             $('#question-one-'+tradein_id).hide();
             $('#result-page-'+tradein_id).show();
             $('#receiving-result-'+tradein_id).html('<p>Device is missing from package.</p><br>');
@@ -80,6 +81,8 @@ window.changeQuestion = function(question_number, current_question_number, trade
     if(question_number === 3 && current_question_number === 2){
 
         if($('#visible_imei_no_'+tradein_id).is(':checked')){
+            $('.send-to-quarantine').show();
+            $('.send-to-testing').hide();
             $('#question-two-'+tradein_id).hide();
             $('#result-page-'+tradein_id).show();
             $('#receiving-result-'+tradein_id).html('<p>Device has no visible IMEI number.</p><br>');
@@ -96,11 +99,26 @@ window.changeQuestion = function(question_number, current_question_number, trade
         $('#result-page-'+tradein_id).show();
         $('#question-three-'+tradein_id).hide();
 
+        $('.send-to-quarantine').hide();
+
         if(result !== null && result.RawResponse.blackliststatus === 'No'){
             $('#receiving-result-'+tradein_id).html('<p>This device has passed receiving part of the testing.</p><br>');
+
+            $('.send-to-quarantine').hide();
         }
         else if(result !== null){
             $('#receiving-result-'+tradein_id).html('<p>This device is blacklisted in ' + result.RawResponse.imeihistory[0].Country + '.</p><br>');
+
+            $('.send-to-quarantine').each(function(){
+                if($(this).data('id') === tradein_id){
+                    $(this).show();
+                }
+                else{
+                    $(this).hide();
+                }
+            });
+
+            $('.send-to-testing').show();
         }
         
     }
@@ -114,6 +132,7 @@ window.changeQuestion = function(question_number, current_question_number, trade
         else if($('#visible_imei_no_'+tradein_id).is(':checked')){
             $('#result-page-'+tradein_id).hide();
             $('#question-two-'+tradein_id).show();
+
         }
         else{
             $('#result-page-'+tradein_id).hide();

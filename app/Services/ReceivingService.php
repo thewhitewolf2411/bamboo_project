@@ -34,6 +34,8 @@ class ReceivingService{
 
     private static function _checkReceivingResaults(array $receivingData){
 
+        #dd($receivingData);
+
         self::orderExpired($receivingData['tradeinid']);
 
         self::deviceMissing($receivingData);
@@ -45,6 +47,53 @@ class ReceivingService{
         if(array_key_exists('serial_number', $receivingData)){
             self::saveSerial($receivingData['serial_number'], $receivingData['tradeinid']);
         }
+
+        if(array_key_exists('visible_imei', $receivingData) && $receivingData['visible_imei'] !== 'no'){
+            $tradein = Tradein::find($receivingData['tradeinid']);
+            $tradein->imei_number = $receivingData['imei_number'];
+            $tradein->save();
+        }
+        
+        //if(array_key_exists('visible_imei', $receivingData) && $receivingData['visible_imei'] !== 'no'){
+        //    self::checkImei($receivingData['imei_number'], $receivingData['tradeinid']);
+        //}
+
+        return true;
+    }
+
+    public static function checkBlacklistedReceivingResaults(Request $request){
+        $results = self::_checkBlacklistedReceivingResaults($request->all());
+
+        if($results){  
+            $tradein = self::allocateToTray(Tradein::find($request->tradeinid));
+            $pdf = self::generateBarcode(Tradein::find($tradein->id));
+            
+            return [$tradein->getTrayName($tradein->id), $pdf];
+        }
+
+        return false;
+    }
+
+    private static function _checkBlacklistedReceivingResaults(array $receivingData){
+        #dd($receivingData);
+
+        self::orderExpired($receivingData['tradeinid']);
+
+        self::deviceMissing($receivingData);
+
+        if(array_key_exists('visible_imei', $receivingData)){
+            self::hasImei($receivingData['visible_imei'], $receivingData['tradeinid']);
+        }
+
+        if(array_key_exists('serial_number', $receivingData)){
+            self::saveSerial($receivingData['serial_number'], $receivingData['tradeinid']);
+        }
+
+        //if(array_key_exists('visible_imei', $receivingData) && $receivingData['visible_imei'] !== 'no'){
+        //    $tradein = Tradein::find($receivingData['tradeinid']);
+        //    $tradein->imei_number = $receivingData['imei_number'];
+        //    $tradein->save();
+        //}
         
         if(array_key_exists('visible_imei', $receivingData) && $receivingData['visible_imei'] !== 'no'){
             self::checkImei($receivingData['imei_number'], $receivingData['tradeinid']);

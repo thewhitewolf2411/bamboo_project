@@ -1166,9 +1166,11 @@ class Tradein extends Model
     public function getTimePassed(){
         $tradeinauditTested = TradeinAudit::where('tradein_id', $this->id)->where('bamboo_status', 'Test Complete')->first();
 
-        $datePassed = \Carbon\Carbon::parse($tradeinauditTested->created_at)->format('h:m:i');
+        $timePassed = \Carbon\Carbon::now()->diffInSeconds(\Carbon\Carbon::parse($tradeinauditTested->created_at));
 
-        return $datePassed;
+        $timePassed = gmdate('H:i:s', $timePassed);
+
+        return $timePassed;
     }
 
     public function getDatePaid(){

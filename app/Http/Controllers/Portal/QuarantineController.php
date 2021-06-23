@@ -148,7 +148,7 @@ class QuarantineController extends Controller
             #$matches = ["4","5","6","7","8a","8b","8c","8d","8e","8f","11","11a","11b","11c","11d","11e","11f","11g","11h","11i","11j","15","15a","15b","15c","15d","15e",
             #"15f","15g","15h","15i"];
 
-            $matches = ["9", "13"];
+            $matches = ["9a", "10", "13"];
 
             $tradein = Tradein::where('barcode', $request->submitscannedid_allocatetotray)->first();
 

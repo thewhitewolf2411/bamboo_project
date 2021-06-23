@@ -39,7 +39,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="form-{{$tradein->id}}" action="/portal/testing/receive/receivingresults" method="POST" enctype="multipart/form-data">
+                    <form id="form-{{$tradein->id}}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <input type="hidden" name="tradeinid" value="{{$tradein->id}}">
@@ -175,7 +175,11 @@
                             </div>
                             <div class="w-100 d-flex justify-content-between px-3 my-3">
                                 <button type="button" onclick="changeQuestion(undefined, 4, {{$tradein->id}})" class="btn btn-primary">Back</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <div class="w-50 d-flex justify-content-between">
+                                    <button type="submit" data-id="{{$tradein->id}}" onclick="javascript: form.action='/portal/testing/receive/toquarantineblacklisted'" class="send-to-quarantine btn btn-primary">Send to quarantine</button>
+                                    <button type="submit" class="send-to-testing btn btn-primary" onclick="javascript: form.action='/portal/testing/receive/receivingresults'" style="margin-left:auto; margin-right:0;">Send to testing</button>
+                                </div>
+                                
                             </div>
                         </div>
                     </form>

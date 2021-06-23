@@ -293,6 +293,7 @@ Route::post('/portal/testing/receive/usercheckimei', 'Portal\TestingController@u
 Route::post('/portal/testing/receive/printnewlabel', 'Portal\TestingController@printNewLabel');
 Route::post('/portal/testing/receive/sendtotray', 'Portal\TestingController@sendtotray');
 Route::post('portal/testing/receive/receivingresults', 'Portal\TestingController@receivingResults');
+Route::post('portal/testing/receive/toquarantineblacklisted', 'Portal\TestingController@toQuarantineBlacklisted');
 Route::post('/portal/receiving/printnewlabel' , 'Portal\TestingController@downloadSingleFile');
 
 Route::get('/portal/testing/checkforserial/{id}', 'Portal\TestingController@showCheckForSerialPage');
