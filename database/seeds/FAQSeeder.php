@@ -24,7 +24,7 @@ class FAQSeeder extends Seeder
         FAQ::create([
             'question' => 'What devices can I sell to Bamboo Mobile?',
             'answer' => 'You can sell any mobile device from Apple to ZTE, both mobile phones and tablets, including watches. 
-            If your mobile device has no value, we are happy to help recycle the tech for free. - as per brief'
+            If your mobile device has no value, we are happy to help recycle the tech for free.'
         ]);
 
         #3
@@ -86,8 +86,9 @@ class FAQSeeder extends Seeder
         FAQ::create([
             'question' => 'What if my device is reported blocked?',
             'answer' => 'If your device is blocked, it is likely it has been reported lost or stolen. 
-            It is illegal for us to purchase any blocked devices. If you are the rightful owner of the device, you will need to contact your service provider,
-            insurance company or to have the device unblocked within 28 days of us notifying you.  
+            It is illegal for us to purchase any blocked devices. 
+            If you are the rightful owner of the device, you will need to contact your service provider 
+            or insurance company to have the device unblocked within 28 days of us notifying you..
             Once 28 days has elapsed then the device will be destroyed.',
         ]);
 

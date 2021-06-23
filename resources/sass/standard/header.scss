@@ -849,6 +849,8 @@ header{
     padding: 40px 80px 80px 40px;
     max-width: 1742px;
     margin: auto;
+
+    flex-wrap: wrap;
 }
 
 .whysell-banner-container{
@@ -863,6 +865,12 @@ header{
     flex-direction: column;
     flex-wrap: nowrap;
     margin: 0;
+}
+
+@media (max-width:1245px) {
+    .whysell-banner-container{
+        margin-left: auto;
+    }
 }
 
 .whysell-banner-container > p.title{
@@ -900,6 +908,8 @@ header{
 .mobile-phones-submenu-column{
     display: flex;
     flex-direction: column;
+
+    margin-bottom: 40px;
 }
 
 .mobile-phone-submenu-title, .mobile-phone-submenu-item{
@@ -1137,8 +1147,25 @@ header{
     margin-left: 13px;
 }
 
+@media (min-width: 768px) and (max-width: 1090px) {
+    .header-container{
+        padding: 0 80px 0 80px;
+    }
+    .logo-header-container, #full-logo-container.resized{
+        margin-top: 5px;
+    }
+    .urls-header, #header-urls.resized{
+        padding: 0;
+        justify-content: center;
+    }
 
-@media screen and (max-width: 768px){
+    .top-element-container > a {
+        padding: 20px 0 !important;
+    }
+}
+
+
+@media (max-width: 768px){
     .header-selling-links{
         display: none;
     }

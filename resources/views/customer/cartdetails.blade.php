@@ -362,16 +362,16 @@
                     
                     @if($hasTradeIn)
                         <div class="summary-cart">
-                            <p class="summary-cart-details-text">Subtotal</p>
-                            <p class="summary-cart-details-text">£{{$sellPrice}}</p>
+                            <p class="summary-cart-text-total">Subtotal</p>
+                            <p class="summary-cart-text-total">£{{$sellPrice}}</p>
                         </div>
                         <div class="summary-cart promotional invisible" id="promotional-info">
                             <p class="summary-cart-details-text m-0" id="promo-info">Promotional code</p>
                             <p class="summary-cart-text-bold" id="promo-percentage"></p>
                         </div>
                         <div class="summary-cart">
-                            <p class="summary-cart-text-bold">TOTAL</p>
-                            <p class="summary-cart-text-bold" id="total-sell-price">£{{$sellPrice}}</p>
+                            <p class="summary-cart-text-bold-total">TOTAL</p>
+                            <p class="summary-cart-text-bold-total" id="total-sell-price">£{{$sellPrice}}</p>
                         </div>
                         {{-- <select class="form-control my-3" onchange="changelabelstatus(this)">
                             <option value="1" selected>Make an order without printing label</option>

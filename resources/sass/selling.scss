@@ -1908,6 +1908,64 @@ input.lookup-delivery-basket::placeholder{
     margin-bottom: 33px;
 }
 
+// cardetails breakpoints
+// breakpoint 1
+@media (max-width: 1360px){
+    .cartdetails-container{
+        margin-left: 0 !important;
+    }
+
+    .cartdetails-type{
+        width: 100% !important;
+        //margin-right: 100px;
+    }
+
+    .welcome-user-container, .trade-pack-type.cartdetails-type-subcontainer, .selling-disclaimer-cart{
+        width: 100% !important;
+    }
+
+    .complete-registration-form > div.row{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .complete-registration-form > div.row > div.col-4{
+        flex: 1 !important;
+        max-width: 100% !important;
+    }
+
+    .newsletter-singup-row > .newsletter-tick-black{
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px !important;
+    }
+}
+
+// breakpoint 2
+@media (max-width: 1100px){
+    .cartdetails-container{
+        flex-direction: column !important;
+    }
+
+    .create-account-container{
+        width: 100% !important;
+    }
+
+    .create-account-yourdetails{
+        margin-right: 0 !important;
+    }
+
+    .cartdetails-summary{
+        width: 100% !important;
+        max-width: 100%;
+    }
+
+    .btn.start-selling.cart-final{
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
 
 
 
@@ -2371,15 +2429,58 @@ input.lookup-delivery-basket::placeholder{
     .selllinks-sublink{
         top: 50px;
     }
+
+    main.selling-margin{
+        margin-top: 230px;
+    }
+    
+    #sellmobilephones-header-hover, #selltablets-header-hover, #sellwatches-header-hover{
+        top: 230px;
+    }
+}
+
+// cart first breakpoint
+@media (max-width:1590px){
+    .basket-details-container{
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+// cart second breakpoint
+@media (max-width:1406px){
+    .basket-device-details{
+        margin-right: 0;
+    }
+}
+
+// cart third breakpoint
+@media (max-width: 1260px){
+    .basket-details-container{
+        flex-direction: column;
+    }
+
+    .basket-device-details{
+        width: 100% !important;
+    }
+
+    .basket-summary{
+        width: 100% !important;
+        max-width: initial;
+    }
 }
 
 // tablets - breakpoint
 @media only screen and (max-width: 740px){
-    .products a {
-        flex: 1 0 50%;
+}
+
+@media (min-width: 768px) and (max-width: 1090px) {
+    .top-upper-elements-container{
+        padding: 0;
     }
-    .product-data-container > h5 {
-        color: black;
+
+    .top-upper-elements-container > a, .top-upper-elements-container > a:hover {
+        padding: 20px 0 !important;
     }
 }
 
@@ -2601,6 +2702,12 @@ input.lookup-delivery-basket::placeholder{
     }
 
 
+    .products a {
+        flex: 1 0 50%;
+    }
+    .product-data-container > h5 {
+        color: black;
+    }
 
     .device-brand {
         flex: 1 0 40%;

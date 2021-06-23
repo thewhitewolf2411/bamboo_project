@@ -87,8 +87,10 @@
 
 
 @if($type === 'appleInstructions')
-    <p class="answer-text">Remove your device from your iCloud account before sending the device to us. 
-        This is really quick and easy to do, please 
+    <p class="answer-text">
+        {{-- Remove your device from your iCloud account before sending the device to us. 
+        This is really quick and easy to do, please  --}}
+        It would be best if you can remove your device from your iCloud account before sending the device to us. This is really quick and easy to do, please
         <a role="button" class="answer-text link" data-toggle="modal" data-target="#{{$type}}Modal">click</a>
         for a simple guide…
     </p>

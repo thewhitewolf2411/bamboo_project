@@ -349,6 +349,47 @@
     }
 }
 
+@media (min-width: 768px) and (max-width: 1090px) {
+    .laughing-gif{
+        width: 275px !important;
+        margin-top: 40px !important;
+    }
+
+    .sustainability-img {
+        width: 272px;
+        height: auto;
+    }
+
+    .sustainability-images-overlay{
+        width: 350px;
+    }
+
+    .sustainability-img.two{
+        right: -25px;
+        top: -130px;
+    }
+
+    .sustainability-container > .sustainability-about-row{
+        margin-bottom: 100px;
+    }
+
+    .sustainability-container{
+        padding-bottom: 0;
+    }
+
+    .text-buttons-sustainability{
+        max-width: 555px;
+    }
+
+    .start-selling-whysell{
+        margin-bottom: 80px;
+    }
+
+    .sustainability-whysell-col.whysellwithus{
+        margin-bottom: 80px;
+    }
+}
+
 @media (max-width: 768px){
     .sustainability-large, .whathappensnext-large{
         font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-65) var(--unnamed-font-family-sharp-sans-no1-bold);
