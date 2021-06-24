@@ -181,6 +181,36 @@ class GetLabel{
         return $pdf;
     }
 
+    public function getPostQuarantineLabel(Tradein $tradein){
+        $barcodenumber = $tradein->barcode;
+        $makeModel = $tradein->getProductName($tradein->product_id) . " " . $tradein->getDeviceMemory();
+        $imei = $tradein->imei_number;
+        $sn = $tradein->serial_number;
+        $location = $tradein->getTrayName($tradein->id);
+        $barcode = DNS1D::getBarcodePNG($tradein->barcode, 'C128');
+        $quarantineReason = $tradein->getBambooStatus();
+        $grade = $tradein->cosmetic_condition;
+        $network = $tradein->getDeviceNetwork();
+        $quarantineReason = $tradein->getTestingQuarantineReason();
+        $bambooGrade = $tradein->getDeviceBambooGrade();
+
+        $pdf = PDF::loadView('portal.labels.devicelabels.postquarantinelabel', 
+        array(
+            'barcode'=>$barcode,
+            'barcodenumber'=>$barcodenumber,
+            'makeModel'=>$makeModel,
+            'imei'=>$imei,
+            'serial'=>$sn,
+            'location'=>$location,
+            'quarantinereason'=>$quarantineReason,
+            'bambooGrade'=>$bambooGrade,
+            'network'=>$network
+            ))
+        ->setPaper($this->customPaper, 'landscape')
+        ->save('pdf/devicelabel-'.$barcodenumber.'.pdf');
+
+        return $pdf;
+    }
 
     public function getTrayLabel(Tray $tray){
 

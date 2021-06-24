@@ -18,6 +18,9 @@ use App\Services\MoveToTray;
 use App\Services\Testing;
 use App\User;
 use App\Services\GetLabel;
+use DNS1D;
+use DNS2D;
+use PDF;
 
 class QuarantineController extends Controller
 {
@@ -173,6 +176,8 @@ class QuarantineController extends Controller
             Session::forget('allocateToTrays');
         }
 
+
+
         #dd($tradeins);
         $request->session()->put('allocateToTrays', $tradeins);
 
@@ -206,6 +211,8 @@ class QuarantineController extends Controller
 
         $data = $request->all();
         array_shift($data);
+
+        $pdfs = [];
 
         foreach($data as $key=>$trayid){
             $tradeinid = explode('-',$key)[1];
@@ -244,16 +251,38 @@ class QuarantineController extends Controller
                 }
                 $tradein->location_changed_at = \Carbon\Carbon::now();
                 $tradein->save();
+
+                //Print pdfs
+
+                $getLabel = new GetLabel();
+
+                $pdf = $getLabel->getPostQuarantineLabel($tradein);
+
+                /*$filename = "postquarantinelabel-" . $tradein->barcode . ".pdf";
+                $pdf = PDF::loadView('portal.labels.devicelabels.postquarantinelabel', ['tradeins'=>$tradein])
+                    ->setPaper('a4', 'portrait')
+                    ->setWarnings(false)
+                    ->save('pdf/postquarantinelabel-'. $tradein->barcode .'.pdf');*/
+    
+                array_push($pdfs, 'pdf/devicelabel-'. $tradein->barcode .'.pdf');
             }
 
         }
 
-        if(empty($response)){
-            return redirect()->back()->with(['success'=>'All devices have been succesfully reallocated to new trays.']);
+        $pdfMerger = \LynX39\LaraPdfMerger\Facades\PdfMerger::init();
+    
+        foreach($pdfs as $label){
+            $pdfMerger->addPDF($label, 1);
         }
-        else{
-            return redirect()->back()->with(['error'=>'Some devices are allocated to new trays.', 'notallocated'=>$response]);
-        }
+
+        $pdfMerger->merge();
+
+        $mergedname = '/pdf/postquarantine-' . date('Y-m-d') . '.pdf';
+
+        $pdfMerger->save( public_path() . $mergedname);
+
+        return redirect()->back()->with(['success'=>'All devices have been succesfully reallocated to new trays.', 'postquarantinelabel'=>$mergedname]);
+        
 
     }
 

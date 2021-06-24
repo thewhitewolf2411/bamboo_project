@@ -311,7 +311,7 @@ class SalesLotController extends Controller
             $productInfo = ProductInformation::where('product_id', $product->id)->first();
             $additionalCost = AdditionalCosts::first();
 
-            $cost = $tradein->getDeviceCost();
+            $cost = $tradein->getPaidPrice();
             // price = bamboo_price + administration costs + 2 * carriage cost per device
             $isFimpLocked = $tradein->isFimpLocked() ? 'Yes' : 'No';
 
@@ -453,7 +453,7 @@ class SalesLotController extends Controller
                 $tradein->device_memory = $tradein->getDeviceMemory();
                 $tradein->device_network = $tradein->getDeviceNetwork();
                 $tradein->device_colour = $tradein->getDeviceColour();
-                $tradein->device_cost = $tradein->getDeviceCost();
+                $tradein->device_cost = $tradein->getPaidPrice();
                 $returnTradeins->push($tradein);
             }
         }

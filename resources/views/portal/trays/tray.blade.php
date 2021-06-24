@@ -60,13 +60,15 @@
 
             <table class="portal-table sortable" id="categories-table">
                 <tr>
+                    <td><div class="table-element">No.</div></td>
                     <td><div class="table-element">Trade-in ID</div></td>
                     <td><div class="table-element">Tradein Barcode</div></td>
                     <td><div class="table-element">Product name</div></td>
                     <td><div class="table-element">IMEI Number</div></td>
                 </tr>
-                @foreach($tradeins as $tradein)
+                @foreach($tradeins as $key => $tradein)
                 <tr>
+                    <td><div class="table-element">{{$key + 1}}</div></td>
                     <td><div class="table-element">{{$tradein->barcode_original}}</div></td>
                     <td><div class="table-element">{{$tradein->barcode}}</div></td>
                     <td><div class="table-element">{{$tradein->getProductName($tradein->product_id)}}</div></td>
