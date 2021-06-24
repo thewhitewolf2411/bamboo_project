@@ -74,8 +74,8 @@
                                             placeholder="Username or Email" 
                                             name="login" 
                                             {{-- value="{{ old('username') ?: old('email') }}"  --}}
-                                            @if(Session::has('useralreadyexists')) value="{!!Session::get('session_email')!!}" @else {{old('username') ?: old('email') }} @endif
-                                            required 
+                                            @if(Session::has('useralreadyexists')) value="{!!Session::get('abandoned_email')!!}" @else {{old('username') ?: old('email') }} @endif
+                                            required q
                                             autofocus>
             
                                             @error('email')
@@ -147,13 +147,15 @@
         @endif
 
         @if(session('showLogin') || $errors->all())
-            <script>
-                window.addEventListener('DOMContentLoaded', function(){
-                    $(window).on('load',function(){
-                        $('#loginModal').modal('show');
+            @if(!$errors->has('abandoned_email'))
+                <script>
+                    window.addEventListener('DOMContentLoaded', function(){
+                        $(window).on('load',function(){
+                            $('#loginModal').modal('show');
+                        });
                     });
-                });
-            </script>
+                </script>
+            @endif
         @endif
         <script>
             function showRegistrationForm(){

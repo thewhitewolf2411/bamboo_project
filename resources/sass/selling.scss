@@ -221,8 +221,10 @@
 .selling-product-image-container{
     width: 100%;
     max-width: 300px;
-    // height: auto;
-    height: 400px;
+    //// height: auto;
+    //height: 400px;
+    height: auto;
+    max-height: 400px;
 }
 
 .selling-product-image-container img{
@@ -248,14 +250,20 @@
     background: #F28E33;
     border-radius: 50%;
 
-    width: 50px;
-    height: 50px;
+    width: 58px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 14pt;
-    font-weight: 600;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: left;
+    font: normal normal normal 37px/40px Bebas Neue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
 }
 
 .see-more-sell-devices{
@@ -283,18 +291,37 @@
 }
 
 .page-number{
-    width: 5px;
+    width: 30px;
     height: 50px;
     color:#F28E33;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform .2s;
-    font-size: 12pt;
+    transition: transform .3s linear;
+    
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    font: normal normal normal 37px/40px Bebas Neue;
+    letter-spacing: 0px;
+    opacity: 1;
+
+    padding-top: 12px;
+}
+
+.pagination-icon{
+    display: block;
+    width: 60px;
+    height: 60px;
+}
+
+.pagination-icon.disabled{
+    opacity: 0.5;
 }
 
 .page-number:hover{
-    font-size: 14pt;
+    transform: scale(1.1);
+    color: #F28E33 !important;
 }
 
 .sidebar-element{
@@ -684,6 +711,16 @@
     height: auto;
     // max-width: 501px;
     // min-width: 350px;
+}
+
+.memory-options-container{
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: auto;
+}
+
+.device-memory{
+    margin-bottom: 10px;
 }
 
 .elem-grade-container{
@@ -2024,6 +2061,8 @@ input.lookup-delivery-basket::placeholder{
 .select-pack-type{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .order-label-wrapper{
@@ -2377,14 +2416,6 @@ input.lookup-delivery-basket::placeholder{
     margin-left: 20px;
 }
 
-.bankdetails-name, .bankdetails-number{
-    max-width: 100%;
-}
-
-.bankdetails-sortcode{
-    width: 74px;
-}
-
 
 .cart-product-mobile{
     display: none;
@@ -2481,6 +2512,18 @@ input.lookup-delivery-basket::placeholder{
 
     .top-upper-elements-container > a, .top-upper-elements-container > a:hover {
         padding: 20px 0 !important;
+    }
+
+    .bankdetails-name, .bankdetails-number{
+        max-width: 100%;
+    }
+    
+    .bankdetails-sortcode{
+        width: 74px;
+    }
+
+    .bank-account-details{
+        width: 100% !important;
     }
 }
 

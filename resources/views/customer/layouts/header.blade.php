@@ -63,12 +63,14 @@
 
 </div>
 
-<div class="sell-submenu">
-    <a href="/sell" class="selling">
-        <p>Sell</p>
-        <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
-    </a>
-</div>
+@if(!App\Helpers\MenuHelper::isInSelling())
+    <div class="sell-submenu">
+        <a href="/sell" class="selling">
+            <p>Sell</p>
+            <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+        </a>
+    </div>
+@endif
 
 <div class="urls-header" id="header-urls">
 
@@ -100,7 +102,7 @@
 
 </div>
 
-<div class="urls-header-mobile navbar-collapse collapse" id="navbarSupportedContent">
+<div class="urls-header-mobile navbar-collapse collapse @if(App\Helpers\MenuHelper::isInSelling())withoutstartsell @endif" id="navbarSupportedContent">
     <div class="mobile-menu-wrapper">
         {{-- <div class="url-header-container" id="start-shopping">
             <a href="/shop">Start Shopping</a>

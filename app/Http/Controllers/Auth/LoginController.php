@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Eloquent\Cart;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -54,6 +55,26 @@ class LoginController extends Controller
         if($user) {
             if (Crypt::decrypt($user->password) == $decrypted) {
                 Auth::login($user);
+
+                // add item to cart after login if any data is selected
+                if($request->session()->has('user_selection')){
+                    $data = $request->session()->get('user_selection');
+
+                    $cart = new Cart();
+    
+                    $cart->user_id = $user->id;
+                    $cart->price = $data['price'];
+                    $cart->product_id = $data['productid'];
+                    $cart->type = $data['type'];
+                    $cart->network = $data['network'];
+                    $cart->memory = $data['memory'];
+                    $cart->grade = $data['grade'];
+                    $cart->save();
+                    $request->session()->forget('user_selection');
+
+                    $request->session()->flash('productaddedtocart', true);
+                }
+
                 //return $this->sendLoginResponse($request);
                 #return $next($request);
                 //return redirect()->back();

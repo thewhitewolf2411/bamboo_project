@@ -114,9 +114,9 @@
     width: 100%;
 }
 
-.news-content-container.bottom-centered{
-    //bottom: -0.9rem;
-}
+// .news-content-container.bottom-centered{
+//     //bottom: -0.9rem;
+// }
 
 .news-content-container.smaller-pad{
     padding: 30px 25px;
@@ -152,9 +152,9 @@
     line-height: 1;
 }
 
-.news-title{
+// .news-title{
     
-}
+// }
 
 .news-title > p{
     // font-family: Sharp Sans No1 Bold;
@@ -371,17 +371,19 @@
     // width: 50%;
     width: auto;
     max-width: 813px;
-    height: auto;
     max-height: 457px;
     // margin: 1%;
     overflow: hidden;
     border-radius: 10px;
     margin: 0 8px;
+
+    // height: auto;
+    height: 100%;
 }
 
-.main-howto-item > .news-image.main{
-    //max-height: 300px;
-}
+// .main-howto-item > .news-image.main{
+//     //max-height: 300px;
+// }
 
 .container.view-blog{
     width: 50%;

@@ -18,8 +18,8 @@ class CartHelper{
                 return null;
             }
         } else {
-            if(request()->session()->has('session_email')){
-                $email = request()->session()->get('session_email', null);
+            if(request()->session()->has('abandoned_email')){
+                $email = request()->session()->get('abandoned_email', null);
                 if($email){
                     $abandoned_cart = AbandonedCart::where('user_email', $email)->get();
                     if($abandoned_cart){

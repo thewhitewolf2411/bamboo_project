@@ -12,12 +12,12 @@ class NewsBlogSeeder extends Seeder
      */
     public function run()
     {
-        $n = 0;
-        while($n < 4){
+        $n = 1;
+        while($n <= 4){
             Blog::create([
                 'cms_type' => 0,
                 'cms_title' => "This is an example of a featured article heading. More space if needed.",
-                'image_1' => 'news_stock_image.png',
+                'image_1' => 'news_stock_image_'.$n.'.png',
                 'cms_parg_1' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                 Curabitur accumsan tortor eget mauris euismod aliquam. 
                 Praesent rhoncus, tellus nec molestie venenatis, tortor mi placerat orci, euismod tincidunt quam purus nec sapien. 
@@ -50,12 +50,12 @@ class NewsBlogSeeder extends Seeder
             $n++;
         }
 
-        $b = 0;
-        while($b < 4){
+        $b = 1;
+        while($b <= 4){
             Blog::create([
                 'cms_type' => 1,
                 'cms_title' => "This is an example of a featured article heading. More space if needed.",
-                'image_1' => 'news_stock_image.png',
+                'image_1' => 'news_stock_image_'.$b.'.png',
                 'cms_parg_1' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                 Curabitur accumsan tortor eget mauris euismod aliquam. 
                 Praesent rhoncus, tellus nec molestie venenatis, tortor mi placerat orci, euismod tincidunt quam purus nec sapien. 
@@ -88,12 +88,12 @@ class NewsBlogSeeder extends Seeder
             $b++;
         }
 
-        $h = 0;
-        while($h < 4){
+        $h = 1;
+        while($h <= 4){
             Blog::create([
                 'cms_type' => 2,
                 'cms_title' => "This is an example of a featured article heading. More space if needed.",
-                'image_1' => 'news_stock_image.png',
+                'image_1' => 'news_stock_image_'.$h.'.png',
                 'cms_parg_1' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                 Curabitur accumsan tortor eget mauris euismod aliquam. 
                 Praesent rhoncus, tellus nec molestie venenatis, tortor mi placerat orci, euismod tincidunt quam purus nec sapien. 

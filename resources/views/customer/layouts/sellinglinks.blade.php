@@ -300,8 +300,7 @@
 
 
 
-
-<div class="mobile-header-selling-links">
+<div class="mobile-header-selling-links @if(App\Helpers\MenuHelper::isInSelling())withoutstartsell @endif">
     <div class="mobile-top-element-container @if(App\Helpers\MenuHelper::urlMatchesMobile())on-page @endif" id="mobile-phones-dropdown">
         <div class="mobile-sell-links-item">
             <p>Sell Mobile Phones</p>
@@ -321,13 +320,13 @@
         </div>
     </div>
     <div class="mobile-top-element-container @if(App\Helpers\MenuHelper::urlMatchesMobile())on-page @endif">
-        <div class="mobile-sell-links-item">
+        <a class="mobile-sell-links-item" href="/sell/why">
             <p>Why Sell With Us</p>
-        </div>
+        </a>
     </div>
 </div>
 
-<div id="mobile-phones-mobile-dropdown" class="not-visible">
+<div id="mobile-phones-mobile-dropdown" class="not-visible @if(App\Helpers\MenuHelper::isInSelling())withoutstartsell @endif">
 
     <div class="white-wrapper">
 
@@ -395,7 +394,7 @@
 
 </div>
 
-<div id="tablets-mobile-dropdown" class="not-visible">
+<div id="tablets-mobile-dropdown" class="not-visible @if(App\Helpers\MenuHelper::isInSelling())withoutstartsell @endif">
     <div class="white-wrapper">
 
         <div class="dropdown-column">
@@ -461,7 +460,7 @@
     </div>
 </div>
 
-<div id="watches-mobile-dropdown" class="not-visible">
+<div id="watches-mobile-dropdown" class="not-visible @if(App\Helpers\MenuHelper::isInSelling())withoutstartsell @endif">
     <div class="white-wrapper">
 
         <div class="dropdown-column">

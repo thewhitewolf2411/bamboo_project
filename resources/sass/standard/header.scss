@@ -592,6 +592,10 @@ header{
     overflow-y: scroll;
 }
 
+.mobile-header-selling-links.withoutstartsell{
+    top: 85px;
+}
+
 .mobile-top-element-container{
     margin: 0;
     height: 100%;
@@ -666,6 +670,10 @@ header{
     // overflow-y: hidden;
     overflow-y: scroll;
     transition: height 0.3s linear;
+}
+
+#mobile-phones-mobile-dropdown.withoutstartsell, #tablets-mobile-dropdown.withoutstartsell, #watches-mobile-dropdown.withoutstartsell{
+    top: 150px;
 }
 
 #mobile-phones-mobile-dropdown.not-visible, #tablets-mobile-dropdown.not-visible, #watches-mobile-dropdown.not-visible{
@@ -1147,7 +1155,7 @@ header{
     margin-left: 13px;
 }
 
-@media (min-width: 768px) and (max-width: 1090px) {
+@media (min-width: 768px) and (max-width: 1280px) {
     .header-container{
         padding: 0 80px 0 80px;
     }
@@ -1164,6 +1172,15 @@ header{
     }
 }
 
+
+@media (min-width: 1280px) and (max-width: 1440px){
+    .logo-header-container{
+        margin-top: 10px !important;
+    }
+    #header-urls{
+        padding: 0 40px 0 40px;
+    }
+}
 
 @media (max-width: 768px){
     .header-selling-links{
@@ -1276,6 +1293,9 @@ header{
     }
     .urls-header-mobile{
         margin-top: -60px;
+    }
+    .urls-header-mobile.withoutstartsell{
+        margin-top: 0 !important;
     }
     #full-bamboo-logo{
         width: 100%;

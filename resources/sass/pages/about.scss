@@ -186,8 +186,10 @@
 
 .about-main-image{
     display: block;
-    width: 570px;
-    height: auto;
+    // width: 570px;
+    // height: auto;
+    width: auto;
+    height: 640px;
 }
 
 .about-bamboo-text-desc{
@@ -251,6 +253,50 @@
     top: -200px;
 }
 
+@media (min-width: 768px) and (max-width:1440px){
+    .about-intro-panel, .about-section-column.padded, .about-section-row-sustainability.padded{
+        padding-left: 140px;
+        padding-right: 140px;
+    }
+}
+
+@media (min-width:768px) and (max-width: 1280px){
+    .about-something-row, .about-intro-panel{
+        flex-direction: column;
+    }
+
+    .about-intro-image{
+        margin-top: 40px;
+        margin-bottom: 40px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .about-main-image{
+        max-width: 700px;
+        margin-left: 0;
+        margin-right: auto;
+    }
+
+    .about-section-column .margin-left, .about-intro-column{
+        margin-left: 0;
+        margin-top: 40px;
+    }
+
+    .about-section-row-sustainability{
+        flex-direction: column;
+    }
+
+    .about-section-column.sustainability{
+        margin-bottom: 300px;
+    }
+
+    .about-section-images{
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
 @media (max-width: 768px){
     .about-intro-panel{
         flex-direction: column;
@@ -282,11 +328,12 @@
     }
 
     .about-main-image{
-        width: 100%;
-        max-width: 451px;
-        height: auto;
+        //max-width: 451px;
+        //height: auto;
         //width: 451px;
         // height: 508px;
+        width: 100%;
+        height: auto;
     }
 
     .about-section-main-text{

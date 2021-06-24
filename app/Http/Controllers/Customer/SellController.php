@@ -361,24 +361,30 @@ class SellController extends Controller
 
             return redirect()->back()->with('productaddedtocart', true);
         } else {
-            if($request->has('email')){
+            if($request->has('abandoned_email')){
 
-                $userExists = User::where('email', $request->email)->first();
+                $request->validate([
+                    'abandoned_email' => 'required|email',
+                ]);
+
+                $userExists = User::where('email', $request->abandoned_email)->first();
                 if($userExists){
-                    return redirect()->back()->with('useralreadyexists', true)->with('session_email', $request->email);
+                    $request->session()->put('user_selection', $request->except('_token', 'abandoned_email'));
+                    return redirect()->back()->with('useralreadyexists', true)->with('abandoned_email', $request->abandoned_email);
                 }
 
                 $abandoned_cart = new AbandonedCart([
-                    'user_email'    => $request->email,
+                    'user_email'    => $request->abandoned_email,
                     'price'         => $request->price,
                     'product_id'    => $request->productid,
                     'type'          => $request->type,
                     'memory'        => $request->memory,
                     'grade'         => $request->grade,
+                    'network'       => $request->network
                 ]);
 
-                if(!$request->session()->has('session_email')){
-                    $request->session()->put('session_email', $request->email);
+                if(!$request->session()->has('abandoned_email')){
+                    $request->session()->put('abandoned_email', $request->abandoned_email);
                 }
 
                 $abandoned_cart->save();

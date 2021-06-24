@@ -2,7 +2,7 @@
 
 @section('content')   
 
-    <main class="selling-margin">
+    <main class="selling-margin @if(App\Helpers\MenuHelper::isInSelling())withoutstartsell @endif">
         @include('customer.layouts.sellinglinks')
         {{-- <div class="assurance-container">
             <div class="assurance-element">

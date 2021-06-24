@@ -101,6 +101,7 @@
     width: 450px;
     margin-left: 50px;
     margin-right: 50px;
+    margin-bottom: 50px;
 }
 
 .whathappens-img{
@@ -1177,13 +1178,20 @@
 }
 
 
+// breakpoint
+@media (max-width: 463px){
+    .newscontactsupport-item.news, .newscontactsupport-item.service{
+        max-width: 100%;
+    }
+}
+
 
 
 
 // promocode partial
-.cart-promotional-code{
+// .cart-promotional-code{
 
-}
+// }
 
 .apply-promo-code{
     width: 125px;

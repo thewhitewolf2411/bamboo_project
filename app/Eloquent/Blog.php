@@ -39,7 +39,8 @@ class Blog extends Model
     }
 
     public function getFirstImage(){
-        if($this->image_1 === 'news_stock_image.png'){
+        if(in_array($this->image_1, ['news_stock_image_1.png', 'news_stock_image_2.png', 'news_stock_image_3.png', 'news_stock_image_4.png'])){
+        // if($this->image_1 === 'news_stock_image.png'){
             return asset($this->image_1);
         } else {
             return "/storage/news_images/".$this->image_1;

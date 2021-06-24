@@ -111,4 +111,11 @@ class MenuHelper {
         }
     }
 
+
+    public static function isInSelling(){
+        if(str_contains(request()->url(), '/sell')){
+            return true;
+        }
+        return false;
+    }
 }

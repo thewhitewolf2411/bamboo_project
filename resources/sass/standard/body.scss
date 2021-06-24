@@ -568,7 +568,10 @@ h3, h4, h5{
 // tablets - large
 @media (max-width: 768px){
     main.selling-margin{
-        margin-top: 230px !important;
+        margin-top: 230px;
+    }
+    main.selling-margin.withoutstartsell{
+        margin-top: 150px;
     }
 }
 

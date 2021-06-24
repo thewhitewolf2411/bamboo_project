@@ -172,8 +172,8 @@
                                 <p class="summary-cart-text-bold" id="promo-percentage"></p>
                             </div>
                             <div class="summary-cart">
-                                <p class="summary-cart-text-bold">TOTAL</p>
-                                <p class="summary-cart-text-bold" id="total-sell-price">£{{$sellPrice}}</p>
+                                <p class="summary-cart-text-bold-total">TOTAL</p>
+                                <p class="summary-cart-text-bold-total" id="total-sell-price">£{{$sellPrice}}</p>
                             </div>
                             {{-- <select class="form-control my-3" onchange="changelabelstatus(this)">
                                 <option value="1" selected>Make an order without printing label</option>
@@ -288,7 +288,7 @@
                             <div class="col-4 p-0 m-0">
                                 <label for="first_name" class="basket-signup-label">Email address*</label>
                                 <div class="d-flex flex-row">
-                                    <input class="form-control" type="text" name="email" id="email_basket" onkeydown="validateEmail()" value="{!!Session::get('session_email')!!}" required>
+                                    <input class="form-control" type="text" name="email" id="email_basket" onkeydown="validateEmail()" value="{!!Session::get('abandoned_email')!!}" required>
                                     <img id="valid-email-icon" src="{{asset('/customer_page_images/body/orange_selected.svg')}}" class="valid-field-confirmation">
                                 </div>
                             </div>

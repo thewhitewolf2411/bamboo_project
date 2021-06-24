@@ -2,7 +2,7 @@
 
 @section('content')        
 
-        <main class="selling-margin" id="top">
+        <main class="selling-margin @if(App\Helpers\MenuHelper::isInSelling())withoutstartsell @endif" id="top">
             @include('customer.layouts.sellinglinks')
 
             @if(Session::get('_previous') !== null)

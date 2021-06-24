@@ -2,7 +2,7 @@
 
 @section('content')        
 
-    <main class="selling-margin">
+    <main class="selling-margin @if(App\Helpers\MenuHelper::isInSelling())withoutstartsell @endif">
         @include('customer.layouts.sellinglinks')
         {{-- <div class="col text-center sell-item">
             @if(Session::get('_previous') !== null)
@@ -76,7 +76,7 @@
                             <p id="selected-gb"></p>                           
                         </div>
 
-                        <div class="d-flex">
+                        <div class="d-flex memory-options-container">
 
                         @foreach($productInformation as $info)
                             
@@ -194,10 +194,10 @@
                             <div class="row m-0 email-abandoned-basket">
                                 <div class="col p-0">
                                     <label for="email_address" class="select-shopping-option-title m-0 mb-1">Email address*</label>
-                                    @if(Session::has('session_email'))
-                                        <input type="email" id="basket_email" class="mb-0 sell-email-input" value="{!!Session::get('session_email')!!}" required name="email"/>
+                                    @if(Session::has('abandoned_email'))
+                                        <input type="email" id="basket_email" class="mb-0 sell-email-input" value="{!!Session::get('abandoned_email')!!}" required name="abandoned_email"/>
                                     @else
-                                        <input type="email" id="basket_email" class="mb-0 sell-email-input" required name="email"/>
+                                        <input type="email" id="basket_email" class="mb-0 sell-email-input" required name="abandoned_email"/>
                                     @endif
                                 </div>
                                 <button id="addToCart" type="submit" class="btn start-selling sellitem-small mt-auto ml-2"><p>Sell my device</p></button>
@@ -214,9 +214,17 @@
                     <p class="green-success mt-4">Product has been added to basket. </p>
                 @endif
 
+                @if($errors->has('abandoned_email'))
+                    @error('abandoned_email')
+                        <div class="alert alert-danger col-9">Please input valid email address.</div>
+                    @enderror
+                @endif
+
                 @endif
             </div>
         </div>
+
+        {{-- <pre>{{var_dump(request()->session()->all())}}</pre> --}}
         
         {{-- <div class="assurance-container">
             <div class="assurance-element">
@@ -266,11 +274,13 @@
         @endif
 
         @if(session('showLogin') || $errors->all())
-            <script>
-                window.addEventListener('DOMContentLoaded', function(){
-                    $('#loginModal').modal('show');
-                });
-            </script>
+            @if(!$errors->has('abandoned_email'))
+                <script>
+                    window.addEventListener('DOMContentLoaded', function(){
+                        $('#loginModal').modal('show');
+                    });
+                </script>
+            @endif
         @endif
 
     </main>

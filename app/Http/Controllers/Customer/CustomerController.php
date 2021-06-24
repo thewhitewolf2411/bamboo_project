@@ -179,8 +179,14 @@ class CustomerController extends Controller
      */
     public function removeFromCart($parameter){
         $cart = Cart::where('id', $parameter)->first();
+        $for_undo = $cart->toArray();
+        unset($for_undo['created_at']);
+        unset($for_undo['updated_at']);
+        unset($for_undo['id']);
+        $for_undo['cart_type'] = 'cart';
         $cart->delete();
-        return redirect('/cart')->with('success', 'You successfully removed your device from the basket.');
+        request()->session()->flash('cart_item', json_encode($for_undo));
+        return redirect('/cart')->with('success', 'You successfully removed your device from the basket.')->with('undo', true);
     }
 
     /**
@@ -189,8 +195,58 @@ class CustomerController extends Controller
      */
     public function removeFromAbandonedCart($id){
         $abandoned_cart = AbandonedCart::where('id', $id)->first();
+        $for_undo = $abandoned_cart->toArray();
+        unset($for_undo['created_at']);
+        unset($for_undo['updated_at']);
+        unset($for_undo['id']);
+        $for_undo['cart_type'] = 'abandoned';
         $abandoned_cart->delete();
-        return redirect('/cart')->with('success', 'You successfully removed your device from the basket.');
+        request()->session()->flash('cart_item', json_encode($for_undo));
+        return redirect('/cart')->with('success', 'You successfully removed your device from the basket.')->with('undo', true);
+    }
+
+
+    /**
+     * Undo delete item from cart.
+     * @param Request $request
+     */
+    public function undoCartDelete(Request $request){
+        if(isset($request->cart)){
+            $data = json_decode($request->cart, true);
+            switch ($data['cart_type']) {
+                case 'cart':
+
+                    Cart::create([
+                        'user_id' => $data['user_id'],
+                        'price' => $data['price'],
+                        'product_id' => $data['product_id'],
+                        'type' => $data['type'],
+                        'network' => $data['network'],
+                        'memory' => $data['memory'],
+                        'grade' => $data['grade']
+                    ]);
+
+                    return redirect('/cart');
+                    break;
+
+                case 'abandoned':
+                    AbandonedCart::create([
+                        'user_email'    => $request->session()->get('abandoned_email'),
+                        'price' => $data['price'],
+                        'product_id' => $data['product_id'],
+                        'type' => $data['type'],
+                        'network' => $data['network'],
+                        'memory' => $data['memory'],
+                        'grade' => $data['grade']
+                    ]);
+                    return redirect('/cart');
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+        }
     }
 
     /**
@@ -240,7 +296,7 @@ class CustomerController extends Controller
         }
         else{
             // show abandoned cart items
-            $email = request()->session()->get('session_email', null);
+            $email = request()->session()->get('abandoned_email', null);
             $abandoned_cart_items = null;
             $products = SellingProduct::all();
             $price = 0;
@@ -331,7 +387,7 @@ class CustomerController extends Controller
         }
         else{
             // show abandoned cart items
-            $email = request()->session()->get('session_email', null);
+            $email = request()->session()->get('abandoned_email', null);
             if($email){
                 $abandoned_cart_items = AbandonedCart::where('user_email', $email)->get();
                 if($abandoned_cart_items->isEmpty()){
@@ -460,7 +516,7 @@ class CustomerController extends Controller
             $device->delete();
         }
         
-        request()->session()->forget('session_email');
+        request()->session()->forget('abandoned_email');
 
         return redirect()->back()->with('success', 'Account successfully created. Enter remaining details to complete your sale.');
     }

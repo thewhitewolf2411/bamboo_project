@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <main class="selling-margin">
+    <main class="selling-margin @if(App\Helpers\MenuHelper::isInSelling())withoutstartsell @endif">
         @include('customer.layouts.sellinglinks')
 
         <div class="page-header-container whysell">
@@ -20,7 +20,7 @@
 
         <div class="whysell-page-container">
 
-            <div class="d-flex flex-row justify-content-around border-down">
+            <div class="whysell-row intro-panel justify-content-around border-down">
 
                 <div class="whysell-main-text d-flex flex-column">
                     <p class="whysell-page-title">The benefits of Selling <br> with Bamboo Mobile</p>
@@ -32,7 +32,7 @@
                         much your device is worth today.
                     </p>
                 </div>
-                <div class="d-flex flex-column justify-content-between">
+                <div class="whysell-column video justify-content-between">
 
                     <div class="main-whysell-video-container text-center ml-auto mr-auto">
                         <div class="mainWhySellVideoToggle" data-toggle="modal" data-target="#mainWhySellVideoModal">

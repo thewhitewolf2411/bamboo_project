@@ -127,6 +127,7 @@ Route::post('/printdeliverylabel/{type}', 'Customer\CustomerController@getLabel'
 Route::post('/addtocart', 'Customer\CustomerController@addProductToCart')->name('addproducttocart');
 Route::get('/removefromcart/{parameter}', 'Customer\CustomerController@removeFromCart')->name('removefromcart');
 Route::get('/removefromabandoned/{id}', 'Customer\CustomerController@removeFromAbandonedCart');
+Route::post('/cart/undo', 'Customer\CustomerController@undoCartDelete');
 Route::post('/checkoutcart', 'Customer\CustomerController@sheckoutcart')->name('sheckoutcart');
 Route::post('/completeregistration', 'Customer\CustomerController@completeRegistration')->name('completeRegistration');
 

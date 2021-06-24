@@ -45,6 +45,13 @@
 
                 <div class="alert alert-success w-50 ml-auto mr-auto mt-4 mb-4 text-center" role="alert">
                     {{Session::get('success')}}
+                    @if(Session::has('undo'))
+                        <form method="POST" action="/cart/undo">
+                            @csrf
+                            <input type="hidden" name="cart" value="{{Session::get('cart_item')}}">
+                            <button class="btn btn-light w-50 mt-2" type="submit">Undo</a>
+                        </form>
+                    @endif
                 </div>
 
             @endif
@@ -237,7 +244,7 @@
                                         <div class="remove-from-cart-tohide"></div>
                                     </div> --}}
 
-                                    @if($cart->count() > 1)
+                                    @if($cart->count() === 1)
                                         <div class="remove-hr"></div>
                                     @endif
 
