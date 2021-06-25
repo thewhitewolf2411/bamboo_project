@@ -362,6 +362,24 @@ class TestingController extends Controller
 
     }
 
+    public function toQuarantineBlacklisted(Request $request){
+        $receivingService = ReceivingService::checkBlacklistedReceivingResaults($request);
+
+        $tradein = Tradein::find($request->tradeinid);
+        $user_id = Auth::user()->id;
+        $portalUser = PortalUsers::where('user_id', $user_id)->first();
+
+        $mti = false;
+
+        if(count(Tradein::where('barcode', $tradein->barcode_original)->get())>0){
+            $mti = true;
+        }
+
+        $lastTradeinAudit = TradeinAudit::where('tradein_id', $tradein->id)->where('stock_location', 'Not received yet.')->latest('created_at')->first()->delete();
+
+        return view('portal.testing.totray')->with(['tray_name'=>$receivingService[0],'pdf'=>$receivingService[1],'barcode'=>$tradein->barcode, 'portalUser'=>$portalUser, 'tradein'=>$tradein,'testing'=>false, 'mti'=>$mti]);
+    }
+
 
     public function showReceivingResultPage($id){
         $tradein = Tradein::where('id', $id)->first();

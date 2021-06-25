@@ -188,8 +188,8 @@ class SalesLotController extends Controller
         $sheet->setCellValue('M1', 'NWSD');
         $sheet->setCellValue('N1', 'Grand Total');
 
-        $tradeins = Tradein::whereIn('id', $deviceIds)->get();
-        $grouped = $tradeins->groupBy(['product_id', 'correct_memory', 'product_colour', 'correct_network']);
+        $tradeins = Tradein::find($deviceIds);
+        $grouped = $tradeins->groupBy(['product_id', 'correct_memory', 'correct_network', 'product_colour']);
         #dd($grouped);
 
         $key = 2;
@@ -205,16 +205,6 @@ class SalesLotController extends Controller
 
             
             foreach($devices as $memory => $memory_group){
-                $gradeA = 0;
-                $gradeBplus = 0;
-                $gradeB = 0;
-                $gradeC = 0;
-                $wsi = 0;
-                $wsd = 0;
-                $nwsi = 0;
-                $nwsd = 0;
-                $grandTotal = 0;
-
                 
                 $gb = $memory;
 
@@ -227,6 +217,16 @@ class SalesLotController extends Controller
                         $network_name = $network;
 
                         foreach($network_group as $single_device){
+
+                            $gradeA = 0;
+                            $gradeBplus = 0;
+                            $gradeB = 0;
+                            $gradeC = 0;
+                            $wsi = 0;
+                            $wsd = 0;
+                            $nwsi = 0;
+                            $nwsd = 0;
+                            $grandTotal = 0;
 
                             if($single_device->cosmetic_condition === "A"){
                                 $gradeA++;
@@ -260,26 +260,25 @@ class SalesLotController extends Controller
                                 $nwsd++;
                                 $grandTotal++;
                             }
+
+                            $sheet->setCellValue('A'.$key, $brand);
+                            $sheet->setCellValue('B'.$key, $model);
+                            $sheet->setCellValue('C'.$key, $gb);
+                            $sheet->setCellValue('D'.$key, $colour);
+                            $sheet->setCellValue('E'.$key, $network_name);
+                            $sheet->setCellValue('F'.$key, $gradeA);
+                            $sheet->setCellValue('G'.$key, $gradeBplus);
+                            $sheet->setCellValue('H'.$key, $gradeB);
+                            $sheet->setCellValue('I'.$key, $gradeC);
+                            $sheet->setCellValue('J'.$key, $wsi);
+                            $sheet->setCellValue('K'.$key, $wsd);
+                            $sheet->setCellValue('L'.$key, $nwsi);
+                            $sheet->setCellValue('M'.$key, $nwsd);
+                            $sheet->setCellValue('N'.$key, $grandTotal);
+                            $key++;
                         }
                     }
                 }
-
-                $sheet->setCellValue('A'.$key, $brand);
-                $sheet->setCellValue('B'.$key, $model);
-                $sheet->setCellValue('C'.$key, $gb);
-                $sheet->setCellValue('D'.$key, $colour);
-                $sheet->setCellValue('E'.$key, $network_name);
-                $sheet->setCellValue('F'.$key, $gradeA);
-                $sheet->setCellValue('G'.$key, $gradeBplus);
-                $sheet->setCellValue('H'.$key, $gradeB);
-                $sheet->setCellValue('I'.$key, $gradeC);
-                $sheet->setCellValue('J'.$key, $wsi);
-                $sheet->setCellValue('K'.$key, $wsd);
-                $sheet->setCellValue('L'.$key, $nwsi);
-                $sheet->setCellValue('M'.$key, $nwsd);
-                $sheet->setCellValue('N'.$key, $grandTotal);
-                $key++;
-
             }
             
         }
@@ -312,7 +311,7 @@ class SalesLotController extends Controller
             $productInfo = ProductInformation::where('product_id', $product->id)->first();
             $additionalCost = AdditionalCosts::first();
 
-            $cost = $tradein->getDeviceCost();
+            $cost = $tradein->getPaidPrice();
             // price = bamboo_price + administration costs + 2 * carriage cost per device
             $isFimpLocked = $tradein->isFimpLocked() ? 'Yes' : 'No';
 
@@ -454,7 +453,7 @@ class SalesLotController extends Controller
                 $tradein->device_memory = $tradein->getDeviceMemory();
                 $tradein->device_network = $tradein->getDeviceNetwork();
                 $tradein->device_colour = $tradein->getDeviceColour();
-                $tradein->device_cost = $tradein->getDeviceCost();
+                $tradein->device_cost = $tradein->getPaidPrice();
                 $returnTradeins->push($tradein);
             }
         }

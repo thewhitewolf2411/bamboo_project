@@ -318,6 +318,35 @@
 </script>
 @endif
 
+@if(Session::has('postquarantinelabel'))
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    
+    <script>
+
+        $(document).ready(function(){
+            $('#post-quarantine-label-modal').modal('show');
+        });
+
+    </script>
+    <div id="post-quarantine-label-modal" class="modal fade" tabindex="-1" role="dialog" style="padding-right: 17px;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Post quarantine label</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <iframe id="tradein-iframe" src="{{Session::get('postquarantinelabel')}}"></iframe>
+
+            </div>
+            </div>
+        </div>
+    </div>
+@endif
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 <script>

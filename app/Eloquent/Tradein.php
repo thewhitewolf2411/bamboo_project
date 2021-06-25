@@ -354,7 +354,25 @@ class Tradein extends Model
     }
 
     public function getTestingQuarantineReason(){
-        return $this->getDeviceStatus()[0];
+        //return $this->getDeviceStatus()[0];
+        if($this->isGoogleLocked()){
+            if($this->getBrandId($this->product_id) === 1){
+                return "FMIP Locked";
+            }
+            return "Google Locked";
+        }
+
+        if($this->isPinLocked()){
+            return "Pin Locked";
+        }
+
+        if($this->isBlacklisted()){
+            return $this->getBlacklistedIssue();
+        }
+
+        if($this->isDowngraded()){
+            return "Downgraded";
+        }
     }
 
     public function hasDeviceBeenReceived(){
@@ -1166,9 +1184,11 @@ class Tradein extends Model
     public function getTimePassed(){
         $tradeinauditTested = TradeinAudit::where('tradein_id', $this->id)->where('bamboo_status', 'Test Complete')->first();
 
-        $datePassed = \Carbon\Carbon::parse($tradeinauditTested->created_at)->format('h:m:i');
+        $timePassed = \Carbon\Carbon::now()->diffInSeconds(\Carbon\Carbon::parse($tradeinauditTested->created_at));
 
-        return $datePassed;
+        $timePassed = gmdate('H:i:s', $timePassed);
+
+        return $timePassed;
     }
 
     public function getDatePaid(){
@@ -1308,14 +1328,19 @@ class Tradein extends Model
     }
 
     public function getPaidPrice(){
-        $orderPrice = $this->order_price;
-        $bambooPrice = $this->bamboo_price;
 
-        $prices = [$orderPrice, $bambooPrice];
+        $paymentBatchDevice = PaymentBatchDevice::where('tradein_id', $this->id)->first();
 
-        return min($prices);
+        if($paymentBatchDevice && $paymentBatchDevice->payment_state === 1){
+            $orderPrice = $this->order_price;
+            $bambooPrice = $this->bamboo_price;
+    
+            $prices = [$orderPrice, $bambooPrice];
+    
+            return min($prices) + $this->carriage_cost + $this->admin_cost + $this->misc_cost;
+        }
 
-
+        return "Not paid yet.";
     }
 
 }

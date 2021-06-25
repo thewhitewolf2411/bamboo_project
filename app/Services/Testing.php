@@ -27,8 +27,6 @@ class Testing{
         else{
             $tradein->bamboo_grade = $request->bamboo_final_grade;
         }
-        $product = SellingProduct::where('id', $tradein->product_id)->first();
-        $user = User::where('id', $tradein->user_id)->first();
 
         if($request->device_fully_functional === 'false'){
 

@@ -65,7 +65,7 @@ class SalesLot extends Model
         foreach($salesLotContent as $sLC){
             if($sLC->device_id !== null){
                 $tradein = Tradein::where('id', $sLC->device_id)->first();
-                $price += $tradein->getDeviceCost();
+                $price += $tradein->getPaidPrice();
             }
         }
 

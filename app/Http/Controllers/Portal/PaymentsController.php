@@ -407,9 +407,10 @@ class PaymentsController extends Controller
                 fclose($file);
                 ob_clean();
                 $file = $batch->csv_file;
+                $filename = \Carbon\Carbon::now()->format("Y-m-d_h-i-s") . ".txt";
                 header('Content-Description: File Transfer');
                 header('Content-Type: text/csv');
-                header('Content-Disposition: attachment; filename='.basename($file));
+                header('Content-Disposition: attachment; filename='.basename($filename));
                 header('Content-Transfer-Encoding: binary');
                 header('Expires: 0');
                 header('Cache-Control: must-revalidate');
