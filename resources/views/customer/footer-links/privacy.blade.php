@@ -53,59 +53,7 @@
                             Because of our commitment to the principles of GDPR, we will willingly give you access to any personal information we have about you. We aim to comply with requests to access personal information as quickly as possible so you can request your information be amended, erased, or not used for marketing purposes. --}}
                             www.bamboomobile.co.uk is a site operated by our commitment to the principles of GDPR, adhere to the eight principles laid down by the regulation. We will be accountable for your data and will ensure our security keeps your data safe as possible.
                         </p>
-                    </div>
-                    <br>
-                    <hr>
-
-                    <div class="col-md-12">
-                        <p class="text-left footer-text-title">Legal Basis for Collecting and Processing your Personal Information</p>
-                        <p class="footer-text-small">
-                            The law on data protection sets out several different grounds on which we can collect and process your personal information. The information below sets out when we rely on these different grounds:
-                        </p>
-                    </div>
-                    <br>
-                    <hr>
-
-                    <div class="col-md-12">
-                        <p class="text-left footer-text-title">Contractual Obligations</p>
-                        <p class="footer-text-small">
-                            When we enter into a contract with you, we need your personal data to be able to fulfil the contract. E.g. We will need your address to be able to deliver the item to you. We may also need your contact details such as email address to confirm the order to you.
-                        </p>
-                    </div>
-                    <br>
-                    <hr>
-
-                    <div class="col-md-12">
-                        <p class="text-left footer-text-title">Legal Compliance</p>
-                        <p class="footer-text-small">
-                            We may be required by law to retain some of your personal data e.g. fraud prevention. 
-                        </p>
-                    </div>
-                    <br>
-                    <hr>
-
-                    <div class="col-md-12">
-                        <p class="text-left footer-text-title">Legitimate interest</p>
-                        <p class="footer-text-small">
-                            We may use your personal data for our legitimate interests e.g. keeping details of your purchase history so that we can provide you with a personalised service.
-                        </p>
-                    </div>
-                    <br>
-                    <hr>
-
-                    <div class="col-md-12">
-                        <p class="text-left footer-text-title">Consent</p>
-                        <p class="footer-text-small">
-                            Where you have given us your consent e.g. where you have ticked a box to say you would like to hear from us.<br>
-
-                            Your rights over the way in which we use your data will vary depending on which ground we are relying upon. Please see the Withdrawing consent and Your rights sections.
-                        </p>
-                    </div>
-                    <br>
-                    <hr>
-
-                    <div class="col-md-12">
-                        <p class="text-left footer-text-title">Our Privacy Promise</p>
+                        <br>
                         <p class="footer-text-small">
                             We promise:
                         </p>
@@ -114,9 +62,11 @@
                             <li>Not to sell your data</li>
                             <li>Not to share your data, except where we have a legitimate business interest to do so. A legitimate interest is when we have a business reason to use your information, but even then, it must not unfairly go against what is right and best for you.</li>
                         </ul>
+
                     </div>
                     <br>
                     <hr>
+
 
                     <div class="col-md-12">
                         <p class="text-left footer-text-title">How the law protects you</p>
@@ -132,6 +82,82 @@
                     </div>
                     <br>
                     <hr>
+
+                    <div class="col-md-12">
+                        <p class="text-left footer-text-title">Legal Basis for Collecting and Processing your Personal Information</p>
+                        <p class="footer-text-small">
+                            The law on data protection sets out several different grounds on which we can collect and process your personal information. The information below sets out when we rely on these different grounds:
+                        </p>
+                    </div>
+                    <br>
+                    {{-- <hr> --}}
+
+                    <div class="col-md-12">
+                        <p class="text-left footer-text-title">1. Contractual Obligations</p>
+                        <p class="footer-text-small">
+                            When we enter into a contract with you, we need your personal data to be able to fulfil the contract. E.g. We will need your address to be able to deliver the item to you. We may also need your contact details such as email address to confirm the order to you.
+                        </p>
+                    </div>
+                    <br>
+                    {{-- <hr> --}}
+
+                    <div class="col-md-12">
+                        <p class="text-left footer-text-title">2. Legal Compliance</p>
+                        <p class="footer-text-small">
+                            We may be required by law to retain some of your personal data e.g. fraud prevention. 
+                        </p>
+                    </div>
+                    <br>
+                    {{-- <hr> --}}
+
+                    <div class="col-md-12">
+                        <p class="text-left footer-text-title">3. Legitimate interest</p>
+                        <p class="footer-text-small">
+                            We may use your personal data for our legitimate interests e.g. keeping details of your purchase history so that we can provide you with a personalised service.
+                        </p>
+                    </div>
+                    <br>
+                    {{-- <hr> --}}
+
+                    <div class="col-md-12">
+                        <p class="text-left footer-text-title">4. Consent</p>
+                        <p class="footer-text-small">
+                            Where you have given us your consent e.g. where you have ticked a box to say you would like to hear from us.<br>
+
+                            {{-- Your rights over the way in which we use your data will vary depending on which ground we are relying upon. Please see the Withdrawing consent and Your rights sections. --}}
+                        </p>
+                    </div>
+                    <br>
+                    <hr>
+
+                    {{-- <div class="col-md-12">
+                        <p class="text-left footer-text-title">Our Privacy Promise</p>
+                        <p class="footer-text-small">
+                            We promise:
+                        </p>
+                        <ul class="footer-text-small">
+                            <li>To keep your data safe and private</li>
+                            <li>Not to sell your data</li>
+                            <li>Not to share your data, except where we have a legitimate business interest to do so. A legitimate interest is when we have a business reason to use your information, but even then, it must not unfairly go against what is right and best for you.</li>
+                        </ul>
+                    </div>
+                    <br>
+                    <hr> --}}
+
+                    {{-- <div class="col-md-12">
+                        <p class="text-left footer-text-title">How the law protects you</p>
+                        <p class="footer-text-small">
+                            As well as our Privacy Promise, your privacy is protected by law, which says that we are allowed to use personal information only if we have a proper reason to do so. The law says that we must have one or more of these reasons: 
+                        </p>
+                        <ul class="footer-text-small">
+                            <li>To fulfil a contract we have with you, or </li>
+                            <li>When it is our legal duty, or </li>
+                            <li>When it is in our legitimate interest, or </li>
+                            <li>When you consent to it. </li>
+                        </ul>
+                    </div>
+                    <br>
+                    <hr> --}}
 
                     <div class="col-md-12">
                         <p class="text-left footer-text-title">Information Collected</p>
@@ -165,9 +191,9 @@
                             <li>Research and data analysis. </li>
                             <li>Developing new products and services.</li>
                         </ul>
-
+                        <br>
                         <p class="footer-text-small">
-                            We apply all the safeguards outlined in this policy when combining your personal information with your device information.<br>
+                            We apply all the safeguards outlined in this policy when combining your personal information with your device information.<br><br>
                             In some instances, we may provide third parties with aggregated information and analytics in order to deliver and improve our service. This information will be anonymised so it cannot be used to identify you.
                         </p>
                     </div>

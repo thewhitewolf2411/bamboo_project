@@ -45,7 +45,7 @@ class NewsBlogSeeder extends Seeder
                   dignissim. Nulla ut nisi porta, tristique dui id, pretium neque. Duis pharetra
                    ipsum in erat aliquam luctus. Phasellus cursus lacus eu risus blandit cursus.
                     Proin sed turpis elit.",
-                'author' => "admin"
+                'author' => "bamboo admin"
             ]);
             $n++;
         }
@@ -83,7 +83,7 @@ class NewsBlogSeeder extends Seeder
                   dignissim. Nulla ut nisi porta, tristique dui id, pretium neque. Duis pharetra
                    ipsum in erat aliquam luctus. Phasellus cursus lacus eu risus blandit cursus.
                     Proin sed turpis elit.",
-                'author' => "admin"
+                'author' => "bamboo admin"
             ]);
             $b++;
         }
@@ -121,7 +121,7 @@ class NewsBlogSeeder extends Seeder
                   dignissim. Nulla ut nisi porta, tristique dui id, pretium neque. Duis pharetra
                    ipsum in erat aliquam luctus. Phasellus cursus lacus eu risus blandit cursus.
                     Proin sed turpis elit.",
-                'author' => "admin"
+                'author' => "bamboo admin"
             ]);
             $h++;
         }

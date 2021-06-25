@@ -83,21 +83,21 @@
         {{-- <img id="start-selling-button-img-down" class="invisible" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White.svg')}}"> --}}
     </a>
     {{-- </div> --}}
-    <div class="url-header-container how">
-        <a href="/how" class="header-url-link" @if(request()->path() === 'how') style="font-family: Sharp Sans No1 Bold;" @endif>How it works</a>
+    <div class="url-header-container how" @if(request()->path() === 'how') style="border-bottom: 4px solid #A3D147;" @endif>
+        <a href="/how" class="header-url-link" @if(request()->path() === 'how') style="font-family: Sharp Sans No1 Bold; margin-bottom: 8px;" @endif>How it Works</a>
     </div>
-    <div class="url-header-container">
-        <a href="/about" class="header-url-link" @if(request()->path() === 'about') style="font-family: Sharp Sans No1 Bold;" @endif>About</a>
+    <div class="url-header-container" @if(request()->path() === 'about') style="border-bottom: 4px solid #A3D147;" @endif>
+        <a href="/about" class="header-url-link" @if(request()->path() === 'about') style="font-family: Sharp Sans No1 Bold; margin-bottom: 8px;" @endif>About</a>
     </div>
-    <div class="url-header-container">
-        <a href="/news" class="header-url-link" @if(str_contains(request()->path(), 'news')) style="font-family: Sharp Sans No1 Bold;" @endif>News & Blog</a>
+    <div class="url-header-container" @if(str_contains(request()->path(), 'news')) style="border-bottom: 4px solid #A3D147;" @endif>
+        <a href="/news" class="header-url-link" @if(str_contains(request()->path(), 'news')) style="font-family: Sharp Sans No1 Bold; margin-bottom: 8px;" @endif>News & Blog</a>
     </div>
-    <div class="url-header-container">
+    <div class="url-header-container" @if(request()->path() === 'support/selling') style="border-bottom: 4px solid #A3D147;" @endif>
         {{-- <a href="/support" class="header-url-link" @if(request()->path() === 'support') style="font-family: Sharp Sans No1 Bold;" @endif>Service & Support</a> --}}
-        <a href="/support" class="header-url-link" @if(request()->path() === 'support/selling') style="font-family: Sharp Sans No1 Bold;" @endif>FAQ’s</a>
+        <a href="/support" class="header-url-link" @if(request()->path() === 'support/selling') style="font-family: Sharp Sans No1 Bold; margin-bottom: 8px;" @endif>FAQ’s</a>
     </div>
-    <div class="url-header-container mr-0">
-        <a href="/contact" class="header-url-link" @if(request()->path() === 'contact') style="font-family: Sharp Sans No1 Bold;" @endif>Contact Us</a>
+    <div class="url-header-container mr-0" @if(request()->path() === 'contact') style="border-bottom: 4px solid #A3D147;" @endif>
+        <a href="/contact" class="header-url-link" @if(request()->path() === 'contact') style="font-family: Sharp Sans No1 Bold; margin-bottom: 8px;" @endif>Contact Us</a>
     </div>
 
 </div>
@@ -112,7 +112,7 @@
             <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White.svg')}}">
         </div>
         <div class="url-header-container mobile">
-            <a href="/how" class="mobilemenu-medium">How it works</a>
+            <a href="/how" class="mobilemenu-medium">How it Works</a>
         </div>
         <div class="url-header-container mobile">
             <a href="/about" class="mobilemenu-medium">About</a>

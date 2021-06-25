@@ -357,7 +357,7 @@
         </div>
     </div>--}}
 
-    <div class="support-questions-row">
+    <div class="support-questions-row" id="faq-questions">
         <div class="support-questions-column margin-right">
             @foreach($second_faq as $question)
                 <div class="support-question">
@@ -440,6 +440,8 @@
 
     </div> --}}
 
+    <button onclick="goToTop()" id="topScroll" title="Go to top"><p>Return to top</p><i class="fa fa-arrow-up"></i></button>
+
 </div>
 
     @include('customer.layouts.footer', ['showGetstarted' => false])
@@ -462,6 +464,28 @@
             }, 500);
         }, 500);
         
+    }
+
+    
+
+    mybutton = document.getElementById("topScroll");
+    window.addEventListener('scroll', function() { scroll() });
+
+    function scroll() {
+        var scrollTop = document.documentElement.scrollTop?
+                document.documentElement.scrollTop:document.body.scrollTop;
+
+        if (scrollTop > 1100 && scrollTop < 3112) {
+            mybutton.classList.add('visible');
+        } else {
+            mybutton.classList.remove('visible');
+        }
+    }
+
+    function goToTop() {
+        $('html, body').animate({
+            scrollTop: $('#faq-questions').offset().top - 170
+        }, 800);
     }
 </script>    
 <script src="{{asset('js/Customer.js')}}"></script>

@@ -254,7 +254,7 @@
     @endif
 
 
-    @if($all_howto->count() > 1)
+    {{-- @if($all_howto->count() > 1)
 
         <div class="latest-howto d-flex flex-column">
 
@@ -263,7 +263,6 @@
                 <div class="main-howto-row">
 
                     <a class="main-howto-item" href="/news/{{$all_howto->first()->id}}">
-                        {{-- <img class="news-image main" src="/storage/news_images/{{$all_howto->first()->image_1}}"> --}}
                         <img class="news-image main" src="{{$all_howto->first()->getFirstImage()}}">
                         <div class="news-content-container bottom-centered">
                             <div class="how-to-tag">
@@ -286,8 +285,6 @@
                     </a>
 
                     <a class="main-howto-item" href="/news/{{$all_howto->skip(1)->first()->id}}">
-                        {{-- <div class="news-1-container" style="background-image: url('/storage/news_images/{{$blogs->first()->image_1}}')"> --}}
-                        {{-- <img class="news-image main" src="/storage/news_images/{{$all_howto->skip(1)->first()->image_1}}"> --}}
                         <img class="news-image main" src="{{$all_howto->skip(1)->first()->getFirstImage()}}">
                         <div class="news-content-container bottom-centered">
                             <div class="how-to-tag">
@@ -323,7 +320,6 @@
                 <div class="howto-row transparent-bg">
                     @foreach($all_howto as $howto)
                         <a class="all-howto-item" href="/news/{{$howto->id}}">
-                            {{-- <img class="news-image main" src="/storage/news_images/{{$howto->image_1}}"> --}}
                             <img class="news-image main" src="{{$howto->getFirstImage()}}">
 
                             <div class="news-content-container bottom-centered smaller-pad">
@@ -351,12 +347,12 @@
             </div>
 
         </div>
-    @endif
+    @endif --}}
     
 
     @include('partial.newscontactsupport')
 
-    @include('customer.layouts.footer', ['showGetstarted' => false])
+    @include('customer.layouts.footer', ['showGetstarted' => true])
     
 </div>
 

@@ -17747,6 +17747,7 @@ input.lookup-delivery-basket::placeholder {
   width: 350px;
   height: auto;
   text-align: center;
+  margin-bottom: auto;
 }
 
 .selling-info-img {
@@ -23299,6 +23300,7 @@ input[type=submit] {
   height: auto;
   max-height: 119px;
   margin-bottom: 20px;
+  overflow-y: hidden;
 }
 
 .news-author-row, .news-created-at-row {
@@ -23332,6 +23334,12 @@ input[type=submit] {
   margin: 0;
   line-height: 1;
   margin-left: 7px;
+}
+
+.author-smaller-p {
+  max-width: 130px;
+  height: 23px;
+  overflow-y: hidden;
 }
 
 .news-user-icon, .news-created-icon {
@@ -23550,11 +23558,29 @@ input[type=submit] {
   margin-left: auto;
 }
 
-.sharelinks > img {
+.sharelinks > a > img, .sharelinks > div > img {
   display: block;
   width: 26px;
   height: 21px;
   cursor: pointer;
+}
+
+#success-copy {
+  height: 47px;
+  transition: all 0.3s ease;
+  overflow-y: hidden;
+  padding: 0;
+  border: none;
+}
+
+#success-copy.notvisible {
+  height: 0;
+}
+
+#success-copy > p {
+  font-size: 14px;
+  margin-top: 12px;
+  padding: 0;
 }
 
 .article-image {
@@ -23621,6 +23647,50 @@ input[type=submit] {
   position: absolute;
   bottom: 200px;
   left: 20px;
+}
+
+#topScroll {
+  display: flex;
+  position: fixed;
+  bottom: -100px;
+  right: 30px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  /* Remove outline */
+  background-color: #F28E33;
+  /* Set a background color */
+  color: white;
+  /* Text color */
+  cursor: pointer;
+  /* Add a mouse pointer on hover */
+  padding: 15px;
+  /* Some padding */
+  border-radius: 50px;
+  font-size: 18px;
+  /* Increase font size */
+  transition: all 1s ease;
+}
+
+#topScroll.visible {
+  bottom: 20px;
+  transition: all 1s ease;
+}
+
+#topScroll > p {
+  color: white;
+  font: normal normal normal 25px/35px Sharp Sans No1 Bold;
+  margin: auto 0;
+  margin-right: 14px;
+  margin-left: 14px;
+}
+
+#topScroll > i {
+  margin-right: 14px;
+}
+
+#topScroll:hover > i {
+  opacity: 1;
 }
 
 @media (max-width: 1510px) {
@@ -24127,7 +24197,6 @@ input[type=submit] {
 .contact-form-desc.telephone {
   width: 100%;
   max-width: 480px;
-  color: var(--bamboo-green);
 }
 
 .get-started-contact {

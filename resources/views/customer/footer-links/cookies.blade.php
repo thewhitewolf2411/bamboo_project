@@ -49,8 +49,9 @@
                         <br>
                         <p class="footer-text-small">
                             As is common practice with almost all professional websites this site uses cookies, which are tiny files that are downloaded to your computer, to improve your experience. This page describes what information they gather, how we use it and why we sometimes need to store these cookies. We will also share how you can prevent these cookies from being stored however this may downgrade or ‘break’ certain elements of the site’s functionality.
-
-                            For more general information on cookies, please refer to the Information Commissioner’s Office  and search ‘Cookies’
+                            <br>
+                            <br>
+                            For more general information on cookies, please refer to the Information Commissioner’s Office and search ‘Cookies’
                         </p>
                     </div>
                     <br>
@@ -105,7 +106,6 @@
                             Our cookie preferences tool can be used to personalise your cookie preferences. The tool will record your consent to our cookie policy and will ask you again every 12 months in order to keep you informed of changes to our cookie policy. Our tool controls performance, functionality and targeted advertising cookies that we have set. Strictly Necessary Cookies cannot be disabled, and the tool cannot be used to block cookies from third-party sites linked to our website.
                             <br>
                             Many of the cookies used on our website can also be enabled or disabled through your browser. To do this, follow the instructions which generally appear in the "Help", "Tools" or "Edit" menus of your browser. Please note that disabling a cookie or a category of cookies does not remove the cookie from your browser, unless it is manually completed through your browser function.
-
                         </p>
                     </div>
                     <br>

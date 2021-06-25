@@ -59,7 +59,7 @@
             <br><br>
 
             <div class="toggle-about-more" id="buttonAboutToggle" data-toggle="collapse" href="#collapseReadmore" role="button" aria-expanded="false" aria-controls="collapseReadmore">
-                Read more
+                Read more or for more info please visit BambooDistribution.com
             </div>
         </div>
     </div>
@@ -195,10 +195,9 @@
     </div> --}}
 
 
-    <div class="sell-categories-container about-page">
+    {{-- <div class="sell-categories-container about-page">
 
         <div class="single-sell-category about" id="mobile-category">
-            {{-- <p class="sell-about-category-subtitle">Sell</p> --}}
             <p class="sell-category-title">Mobile Phones</p>
 
             <div class="sell-category-wrapper" id="sell-mobile-phones">
@@ -211,7 +210,6 @@
         </div>
 
         <div class="single-sell-category about" id="tablets-category">
-            {{-- <p class="sell-about-category-subtitle">Sell</p> --}}
             <p class="sell-category-title">Tablets</p>
 
             <div class="sell-category-wrapper" id="sell-tablets">
@@ -224,7 +222,6 @@
         </div>
 
         <div class="single-sell-category about" id="watches-category">
-            {{-- <p class="sell-about-category-subtitle">Sell</p> --}}
             <p class="sell-category-title">Watches</p>
 
             <div class="sell-category-wrapper" id="sell-watches">
@@ -236,17 +233,19 @@
 
         </div>
 
-    </div>
+    </div> --}}
+
+    @include('partial.newscontactsupport')
 
     @include('partial.newsletter')
 
-    @include('customer.layouts.footer', ['showGetstarted' => false])
+    @include('customer.layouts.footer', ['showGetstarted' => true])
 
 </div>
 <script type="application/javascript">
     window.addEventListener('DOMContentLoaded', (event) => {
         $('#collapseReadmore').on('hidden.bs.collapse', function () {
-            $('#buttonAboutToggle').html("Read more");
+            $('#buttonAboutToggle').html("Read more or for more info please visit BambooDistribution.com");
         });
         $('#collapseReadmore').on('shown.bs.collapse', function () {
             $('#buttonAboutToggle').html("Read less");

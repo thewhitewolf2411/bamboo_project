@@ -26,7 +26,9 @@
                 Watch our quick video that explains how our meticulous grading system works. We guarantee you’ll be pleasantly surprised at just how thorough and exhaustive our grading system is.  --}}
                 We pride ourselves in offering a smart simple way to sell your mobile devices. With Boo, all it takes is just a few clicks to find how much your device is worth, 
                 send it to us for free and get paid directly into your bank account. In just a few simple steps you can trade in your mobile tech for unbeatable prices, 
-                while doing your bit for the environment – Don’t make Earth pay for your tech, let Bamboo pay you for it.
+                while doing your bit for the environment – 
+                {{-- Don’t make Earth pay for your tech, let Bamboo pay you for it. --}}
+                Let Bamboo pay for your old tech, so the earth doesn't have to!
             </p>
         </div>
 
@@ -65,7 +67,7 @@
                     Search your old device and find out how much its worth. If you are happy with the price , simply register the device, provide us with your details and we’ll get the ball rolling.
                 </p>
             </div>
-            <img class="howitworks-selling-image" src="{{ asset('/customer_page_images/body/hearts.svg') }}">
+            <img class="howitworks-selling-image" src="{{ asset('/customer_page_images/body/How-Icon-4.svg') }}">
         </div>
 
         <div class="howitworks-container how-row justify-content-center selling-section-item">
@@ -201,7 +203,7 @@
 
     @include('partial.newsletter')
 
-    @include('customer.layouts.footer', ['showGetstarted' => false, 'sellingurl'=>true])
+    @include('customer.layouts.footer', ['showGetstarted' => true, 'sellingurl'=>true])
 
     <script>
 

@@ -264,9 +264,11 @@
                         <p class="text-left footer-text-title">Mobile Phones and Devices with AssetWatch</p>
                         <br>
                         <p class="footer-text-small">
-                            We will check the IMEI/Serial number of all mobile phones and devices received on Phonecheck (www.phonecheck.com) to ensure it is not registered to AssetWatch.<br><br>
-                            If a mobile phone or device is found to have a record that indicates it is an AssetWatch item, we will notify the seller by email and quarantine the mobile phone or device for an initial period of 28 days ("the Quarantine Period"). Payment for the mobile phone or device will be withheld by us until Phonecheck does not show the mobile phone as AssetWatch.<br><br>
-                            In such circumstances you will be required to prove that you are the rightful owner of the mobile phone or device and to pay an administrative fee of £15.00 to Bamboo Mobile within the Quarantine Period before we can send the mobile phone or device back to you within 3 to 5 working days.
+                            We will check the IMEI/Serial number of all mobile phones and devices received on CheckMEND  (www.checkmend.com) to ensure it is not registered to AssetWatch<br><br>
+                            {{-- If a mobile phone or device is found to have a record that indicates it is an AssetWatch item, we will notify the seller by email and quarantine the mobile phone or device for an initial period of 28 days ("the Quarantine Period"). Payment for the mobile phone or device will be withheld by us until Phonecheck does not show the mobile phone as AssetWatch.<br><br>
+                            In such circumstances you will be required to prove that you are the rightful owner of the mobile phone or device and to pay an administrative fee of £15.00 to Bamboo Mobile within the Quarantine Period before we can send the mobile phone or device back to you within 3 to 5 working days. --}}
+                            If a mobile phone or device is found to have a record that indicates it is an AssetWatch item on CheckMEND, we will notify the seller by email and quarantine the mobile phone or device for an initial period of 28 days ("the Quarantine Period") and payment for the mobile phone or device will be withheld by us.<br><br>
+                            In such circumstances you or an organisation will be required to prove legal ownership of the mobile phone or device and to pay an administrative fee of £20.00 to Bamboo Mobile within the Quarantine Period before we can send the mobile phone or device back to you within 3 to 5 working days after receipt of cleared funds for the administrative fee.
                         </p>
                     </div>
                     <br>
@@ -517,8 +519,8 @@
                         <p class="footer-text-small">
                             <strong>9.3</strong> Our site must not be framed on any other site, nor may you create a link to any part of our site other than the home page. We reserve the right to withdraw linking permission without notice. The website from which you are linking must comply in all respects with the standards set out in these terms and conditions.
                         </p>
-                        <p>
-                            <strong>9.4</strong> If you wish to make any use of material on our site other than that set out above, please address your request to <a href="mailto:info@bamboomobile.co.uk">info@bamboomobile.co.uk</a>
+                        <p class="footer-text-small">
+                            <strong>9.4</strong> If you wish to make any use of material on our site other than that set out above, please address your request to <a class="footer-text-small" href="mailto:info@bamboomobile.co.uk">info@bamboomobile.co.uk</a>
                         </p>
                     </div>
                     <br>

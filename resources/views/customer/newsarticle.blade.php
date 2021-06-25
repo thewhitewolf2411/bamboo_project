@@ -1,5 +1,26 @@
 @extends('customer.layouts.layout')
 
+<head>
+    <meta charset="utf-8">
+    <title>{!!$blog->cms_title!!}</title>
+    <meta name="description" content="{!!$blog->cms_parg_1!!}">
+    <meta name="keywords" content="Mobile, Tablet, Sell, Recycle">
+    <meta name="author" content="Bamboorecycle">
+    <meta property="og:title" content="{!!$blog->cms_title!!}">
+    <meta property="og:description" content="{!!$blog->cms_parg_1!!}" />
+    <meta property="og:image" content="{{$blog->getFirstImage()}}">
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@">
+    <meta name="twitter:creator" content="bamboomobile.com">
+    <meta name="twitter:domain" content="">
+    <meta name="twitter:title" content="{!!$blog->cms_title!!}">
+    <meta name="twitter:description" content="{!!$blog->cms_parg_1!!}">
+    <meta name="twitter:image" content="{{$blog->getFirstImage()}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
 @section('content')
 <div class="app">
     <div class="page-header-container news">
@@ -32,10 +53,11 @@
                 <p class="view-blog-date ml-1">{{$blog->created_at->format('F d, Y')}}</p>
             </div>
             <div class="sharelinks">
-                <a href="#"><img src="{{asset('/images/front-end-icons/twitter_share.svg')}}"></a>
-                <a href="#"><img src="{{asset('/images/front-end-icons/instagram_share.svg')}}"></a>
-                <a href="#"><img src="{{asset('/images/front-end-icons/facebook_share.svg')}}"></a>
-                <a href="#"><img src="{{asset('/images/front-end-icons/news_share.svg')}}"></a>
+                {{-- <a href="#"><img src="{{asset('/images/front-end-icons/twitter_share.svg')}}"></a> --}}
+                <a href="https://www.youtube.com/channel/UCePgdCF8oCRXenvvLADp38w/featured" target="_blank"><img src="{{asset('/images/front-end-icons/youtube_share.svg')}}"></a>
+                <a href="https://www.instagram.com/mobileswithboo/" target="_blank"><img src="{{asset('/images/front-end-icons/instagram_share.svg')}}"></a>
+                <a href="https://www.facebook.com/BambooMobileTech/" target="_blank"><img src="{{asset('/images/front-end-icons/facebook_share.svg')}}"></a>
+                <div data-toggle="modal" data-target="#shareModal"><img src="{{asset('/images/front-end-icons/news_share.svg')}}"></div>
             </div>
         </div>
 
@@ -50,6 +72,31 @@
 
         <p class="view-blog-paragraph">{!!$blog->cms_parg_3!!}</p>
         <br>
+
+        <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                {{-- <div class="modal-header">
+                  <h5 class="modal-title" id="shareModalLabel">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div> --}}
+                <div class="modal-body">
+                    <div class="d-flex flex-row justify-content-center">
+                        <div class="btn btn-green w-25 m-4 ml-auto mr-auto" id="sendEmail">Share via Email</div>
+                        <div class="btn btn-orange w-25 m-4 mt-0 ml-auto mr-auto" id="copyLink">Copy link</div>
+                    </div>
+
+                    <div class="alert alert-success w-50 ml-auto mr-auto text-center notvisible" id="success-copy"><p>Link copied to clipboard.</p></div>
+                </div>
+                {{-- <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div> --}}
+              </div>
+            </div>
+          </div>
 
     </div>
 
@@ -215,7 +262,7 @@
 
     @endif
 
-    @if(count($howto) > 1)
+    {{-- @if(count($howto) > 1)
     <div class="view-blog-howto ml-auto mr-auto mt-5">
         <p class="readmore-view-blog mb-4 ml-2">HOW TO WITH BOO</p>
 
@@ -270,12 +317,13 @@
         </div>
     </div>
     <div class="blog-horizontal-line latest"></div>
-    @endif
+    @endif --}}
 
     @include('partial.newscontactsupport')
 
-    @include('customer.layouts.footer', ['showGetstarted' => true])
-    
+    @include('partial.newsletter')
+
+    @include('customer.layouts.footer', ['showGetstarted' => false])
 </div>
 
 <script>
@@ -349,6 +397,41 @@
             img.classList.remove('zoomed');
         }
     }
+
+    document.getElementById("copyLink").addEventListener('click', function(){
+        const dummy = document.createElement('p');
+        dummy.textContent = window.location.href;
+        document.body.appendChild(dummy);
+
+        const range = document.createRange();
+        range.setStartBefore(dummy);
+        range.setEndAfter(dummy);
+
+        const selection = window.getSelection();
+        // First clear, in case the user already selected some other text
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        document.execCommand('copy');
+        document.body.removeChild(dummy);
+
+        let infomsg = document.getElementById('success-copy');
+
+        infomsg.classList.remove('notvisible');
+        setTimeout(() => {
+            infomsg.classList.add('notvisible');
+        }, 3000);
+        setTimeout(() => {
+            $('#shareModal').modal('hide')
+        }, 3500);
+    });
+
+    document.getElementById('sendEmail').addEventListener('click', function(){
+        window.location.href = "mailto:?subject=Bamboo Mobile - {!!$blog->cms_title!!}&body="+window.location.href;
+        setTimeout(() => {
+            $('#shareModal').modal('hide')
+        }, 3000);
+    });
 </script>
 
 @endsection

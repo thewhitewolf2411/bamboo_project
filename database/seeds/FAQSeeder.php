@@ -17,14 +17,14 @@ class FAQSeeder extends Seeder
             'question' => 'How do I SELL to Bamboo Mobile?',
             'answer' => 'It couldn’t be simpler! Find your mobile device, receive a quote, send to Bamboo mobile for free and wait for your cash! 
             On the small occasion when your device received is not in the stated condition, we will send you a new quote. 
-            If you are not happy with the quote we can send the device back to you free of charge.'
+            If you are not happy with the quote we can send the device back to you free of charge. <a href="/sell" class="answer-text link">Start Selling now</a>'
         ]);
 
         #2
         FAQ::create([
             'question' => 'What devices can I sell to Bamboo Mobile?',
             'answer' => 'You can sell any mobile device from Apple to ZTE, both mobile phones and tablets, including watches. 
-            If your mobile device has no value, we are happy to help recycle the tech for free.'
+            If your mobile device has no value, we are happy to help recycle the tech for free. <a href="/sell" class="answer-text link">Start Selling now</a>'
         ]);
 
         #3
