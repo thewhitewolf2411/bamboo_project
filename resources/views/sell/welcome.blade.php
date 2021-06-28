@@ -194,6 +194,8 @@
         <script src="{{asset('/js/SellingPage.js')}}"></script>
         <script src="{{asset('/js/isMobile.js')}}"></script>
         <script>
+            var selected_category = null;
+            var selected_brand = null;
 
             window.addEventListener('DOMContentLoaded', function(){
 
@@ -218,11 +220,18 @@
                 }
 
                 let preselectedCategory = localStorage.getItem('preselectedSellCategory');
+                let preselectedBrand = localStorage.getItem('preselectedBrand');
                 if(preselectedCategory){
                     selectCategory(preselectedCategory);
                     localStorage.removeItem('preselectedSellCategory');
                     document.getElementById('all-selling-categories').scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
 
+                    if(preselectedBrand){
+                        localStorage.removeItem('preselectedBrand');
+                        setTimeout(() => {
+                            selectBrand(preselectedBrand)
+                        }, 1000);
+                    }
                 }
 
                 $(".sell-category-wrapper")
@@ -343,6 +352,7 @@
                         break;
                 }
 
+                selected_category = category;
                 getAvailableBrands(category);
                 document.getElementById('selling-category-brands-loader').classList.remove('invisible');
 
@@ -353,8 +363,6 @@
                 $([document.documentElement, document.body]).animate({
                     scrollTop: $("#all-selling-categories").offset().top + 250
                 }, 500);
-
-
             }
 
 
@@ -455,6 +463,8 @@
                 if(devicemakeresultstitle.classList.contains('hidden')){
                     devicemakeresultstitle.classList.remove('hidden');
                 }
+
+                selected_brand = id;
 
                 // show loader
                 document.getElementById('selling-brand-results-loader').classList.remove('invisible');
@@ -588,6 +598,12 @@
             function sellThis(){
                 let selected = $('.select-make-result-device.selected-device');
                 if(selected.length === 1){
+                    // previous
+                    // console.log(selected_category);
+                    // console.log(selected_brand);
+                    localStorage.setItem('preselectedSellCategory', selected_category);
+                    localStorage.setItem('preselectedBrand', selected_brand);
+
                     let splitted = selected[0].id.split('-');
                     let id = splitted[2];
                     window.location = '/sell/sellitem/'+id;

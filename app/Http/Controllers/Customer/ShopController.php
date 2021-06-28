@@ -46,6 +46,8 @@ class ShopController extends Controller
 
     public function showShopView(){
         $products = BuyingProduct::all();
+        return view ('shop.index', ['products' => $products]);
+        $products = BuyingProduct::all();
         $latestProducts = BuyingProduct::orderBy('id', 'desc')->take(3)->get();
         return view ('shop.welcome')->with('products', $products)->with('latestProducts', $latestProducts);
     }

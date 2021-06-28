@@ -451,8 +451,8 @@ header{
     background-color: #23AAF7;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    height: 50px;
-    max-height: 50px;
+    // height: 50px;
+    // max-height: 50px;
 
     transition: 0.2s linear;
 
@@ -491,15 +491,15 @@ header{
     transition: 0.2s linear;
 }
 
-#start-selling-button-text{
-    font-size: 16px;
-    font-family: Sharp Sans No1 Semibold;
-    transition: all 0.3s linear !important;
-}
+// #start-selling-button-text{
+//     font-size: 16px;
+//     font-family: Sharp Sans No1 Semibold;
+//     transition: all 0.3s linear !important;
+// }
 
-.start-selling-button-header:hover > #start-selling-button-text{
-    font-size: 17px;
-}
+// .start-selling-button-header:hover > #start-selling-button-text{
+//     font-size: 17px;
+// }
 
 #start-selling-button-text.margin-b{
     margin-bottom: 5px;
@@ -550,13 +550,13 @@ header{
     opacity: 1;
 }
 
-#start-shopping a:hover{
-    font-size: 18px !important;
-}
+// #start-shopping a:hover{
+//     font-size: 18px !important;
+// }
 
-#start- ing a:hover{
-    font-size: 18px !important;
-}
+// #start-shopping a:hover{
+//     font-size: 18px !important;
+// }
 
 .navbar-light .navbar-toggler{
     color: #000;
@@ -1121,9 +1121,23 @@ header{
 }
 
 .sell-submenu > a.selling{
-    height: 60px;
+    // height: 60px;
+    height: 61px;
     background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
     background: #F28E33 0% 0% no-repeat padding-box;
+    opacity: 1;
+    width: 100%;
+    // width: 248px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.sell-submenu > a.shopping{
+    // height: 60px;
+    height: 61px;
+    background: var(--shop-–-blue) 0% 0% no-repeat padding-box;
+    background: #23AAF7 0% 0% no-repeat padding-box;
     opacity: 1;
     width: 100%;
     // width: 248px;
@@ -1276,7 +1290,7 @@ header{
         max-height: 80px;
         height: 80px !important;
     }
-    #start-selling > a{
+    #start-selling > a, #start-shopping > a{
         font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/35px var(--unnamed-font-family-sharp-sans-no1-bold);
         letter-spacing: var(--unnamed-character-spacing-0);
         color: var(--unnamed-color-ffffff);
@@ -1287,7 +1301,7 @@ header{
         opacity: 1;
         margin: 0;
     }
-    #start-selling > img {
+    #start-selling > img, #start-shopping > img {
         margin-left: auto;
         margin-right: 22px;
     }

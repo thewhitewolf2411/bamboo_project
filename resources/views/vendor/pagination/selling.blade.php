@@ -27,12 +27,12 @@
                 @if (is_array($element))
 
                     @foreach ($element as $page => $url)
-                        <!--  Use three dots when current page is greater than 4.  -->
+                        {{-- Use three dots when current page is greater than 4. --}}
                         @if ($paginator->currentPage() > 4 && $page === 2)
                             <li class="d-flex px-2"><span class="page-number">...</span></li>
                         @endif
 
-                        <!--  Show active page else show the first and last two pages from current page.  -->
+                        {{-- Show active page else show the first and last two pages from current page. --}}
                         @if ($page == $paginator->currentPage())
                             <li class="d-flex px-2">
                                 <span class="page-number-active">{{ $page }}</span>
@@ -43,7 +43,7 @@
                             </li>
                         @endif
 
-                        <!--  Use three dots when current page is away from end.  -->
+                        {{-- Use three dots when current page is away from end. --}}
                         @if ($paginator->currentPage() < $paginator->lastPage() - 3 && $page === $paginator->lastPage() - 1)
                             <li class="d-flex px-2">
                                 <span class="page-number">...</span>

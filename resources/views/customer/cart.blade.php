@@ -235,7 +235,8 @@
                                             </div>
 
                                         </div>
-                                        
+                                        <div class="remove-hr mt-5"></div>
+
                                     </div>
 
                                     {{-- <div class="d-flex">
@@ -244,7 +245,7 @@
                                         <div class="remove-from-cart-tohide"></div>
                                     </div> --}}
 
-                                    @if($cart->count() === 1)
+                                    @if($cart->count() < 2)
                                         <div class="remove-hr"></div>
                                     @endif
 
