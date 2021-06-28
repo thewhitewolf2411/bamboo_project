@@ -77,7 +77,7 @@ class PickNoteService{
             $boxDevices = TrayContent::where('tray_id', $key)->get();
 
             if(count($boxDevices) === count($boxContent)){
-                $pseudoArray = [$box->tray_name, $box->getTrolleyName($box->trolley_id), $box->number_of_devices];
+                $pseudoArray = [$box->tray_name, $box->getTrolleyName($box->trolley_id), count($boxDevices)];
                 array_push($boxarray, $pseudoArray);
             }
             else{
@@ -90,7 +90,7 @@ class PickNoteService{
                     if($tradein->imei_number !== null && $tradein->serial_number === null){
                         $number = $tradein->imei_number;
                     }
-                    $pseudoArray = [$tradein->barcode, $tradein->getProductName(),  $number, $tradein->getTrayName($tradein->id), $tradein->getBayName()];
+                    $pseudoArray = [$tradein->barcode, $tradein->getProductName(),  $number, $tradein->getBayName(), $tradein->getTrayName($tradein->id)];
                     array_push($devicearray, $pseudoArray);
                 }
             }

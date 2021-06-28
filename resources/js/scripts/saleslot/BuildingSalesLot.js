@@ -469,7 +469,7 @@ function handleRemoveDevices(boxes_ids, tradein_ids, boxes){
         if(bayedBoxesTable.row('#' + boxes[i].id).length > 0){
             rowdata = bayedBoxesTable.row('#' + boxes[i].id).data();
     
-            rowdata[3] -= number_of_devices[i];
+            rowdata[3] += number_of_devices[i];
 
             bayedBoxesTable.row('#' + boxes[i].id).data(rowdata).draw(false);
             
@@ -480,8 +480,9 @@ function handleRemoveDevices(boxes_ids, tradein_ids, boxes){
                 boxes[i].tray_name,
                 boxes[i].tray_grade,
                 boxes[i].tray_network,
-                boxes[i].number_of_devices - number_of_devices[i],
-                boxes[i].number_of_devices,
+                //boxes[i].number_of_devices - number_of_devices[i],
+                number_of_devices[i],
+                //boxes[i].number_of_devices,
                 '£' + boxes[i].total_cost,
                 row,
             ]).node().id = boxes[i].id;

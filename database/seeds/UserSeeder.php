@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
 
             'first_name'=>'Eren',
             'last_name'=>'Yeager',
-            'email'=>'eren@yeager.com',
+            'email'=>'haris@intelligentvc.co.uk',
             'password'=>Crypt::encrypt('Lambda12'),
             'current_phone'=>'2',
             'preffered_os'=>'iOS',

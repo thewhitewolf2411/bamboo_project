@@ -75,7 +75,7 @@ class ReceivingService{
     }
 
     private static function _checkBlacklistedReceivingResaults(array $receivingData){
-        #dd($receivingData);
+        dd($receivingData);
 
         self::orderExpired($receivingData['tradeinid']);
 
@@ -94,6 +94,10 @@ class ReceivingService{
         //    $tradein->imei_number = $receivingData['imei_number'];
         //    $tradein->save();
         //}
+
+        if(array_key_exists('visible_serial', $receivingData) && $receivingData['visible_serial'] !== 'no'){
+            self::checkImei($receivingData['visible_serial'], $receivingData['tradeinid']);
+        }
         
         if(array_key_exists('visible_imei', $receivingData) && $receivingData['visible_imei'] !== 'no'){
             self::checkImei($receivingData['imei_number'], $receivingData['tradeinid']);
