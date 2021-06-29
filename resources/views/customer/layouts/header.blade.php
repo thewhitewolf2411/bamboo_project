@@ -65,7 +65,7 @@
 
 @if(!App\Helpers\MenuHelper::isInSelling())
     <div class="sell-submenu">
-        <a href="/sell" class="shopping">
+        <a href="/shop" class="shopping">
             <p>Shop</p>
             <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
         </a>
