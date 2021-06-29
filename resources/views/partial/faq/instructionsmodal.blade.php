@@ -1,5 +1,5 @@
 @if($type === 'googleInstructions')
-    @if($page)
+    @if(isset($page))
         <a role="button" class="answer-text link" data-toggle="modal" data-target="#{{$type}}Modal"><p class="infotext-sell-item bold hoverable">How to remove Google Lock</p></a>
     @else
         <p class="answer-text">It would be best if you can remove your device from your Google account before sending the device to us. 
@@ -90,7 +90,7 @@
 
 
 @if($type === 'appleInstructions')
-    @if($page)
+    @if(isset($page))
         <a role="button" class="answer-text link" data-toggle="modal" data-target="#{{$type}}Modal"><p class="infotext-sell-item bold hoverable">How to remove Find My iPhone</p></a>
     @else
         <p class="answer-text">
