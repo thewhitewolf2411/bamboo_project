@@ -22,7 +22,7 @@
         <div class="btn btn-primary apply-promo-code" id="applyPromo">Apply</div>
     </div>
     <div class="collapse" id="collapsePromocodeMessage">
-        <div class="text-center">Boo's currently not running any promotions but soon will be! Check us out of FB, Insta and YouTube for details!</div>
+        <div class="text-center">Boo's currently not running any promotions but soon will be! Check us out on FB, Insta and YouTube for details!</div>
     </div>
     <div class="promotional-code-message" id="promotional-code-info">
         <p id="promotional-code-info-text" class="text-center mt-1"></p>

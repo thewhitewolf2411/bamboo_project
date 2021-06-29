@@ -132,7 +132,7 @@
 
                 @if(str_contains(strtolower($product->product_name), 'samsung galaxy note'))
                     <div class="d-flex flex-column mb-2 samsung-note-alert">
-                        <p class="infotext-sell-item bold">Please remember to include your stylus with the Note></p>
+                        <p class="infotext-sell-item bold">Please remember to include your stylus with the Note</p>
                     </div>
                 @endif
 
@@ -154,6 +154,10 @@
                     <p id="product-price">
 
                     </p>
+                    <div class="tutorials">
+                        @include('partial.faq.instructionsmodal', ['type' => 'googleInstructions', 'page' => 'sellitem'])
+                        @include('partial.faq.instructionsmodal', ['type' => 'appleInstructions', 'page' => 'sellitem'])
+                    </div>
                 </div>
 
 
@@ -163,11 +167,11 @@
                         <div class="add-to-cart-container">
                             @csrf
                             <input type="hidden" name="productid" value="{{$product->id}}">
-                            <input type="hidden" name="grade" id="grade"></input>
-                            <input type="hidden" name="network" id="network"></input>
-                            <input type="hidden" name="memory" id="memory"></input>
-                            <input type="hidden" name="price" id="price"></input>
-                            <input type="hidden" name="type" value="tradein"></input>
+                            <input type="hidden" name="grade" id="grade">
+                            <input type="hidden" name="network" id="network">
+                            <input type="hidden" name="memory" id="memory">
+                            <input type="hidden" name="price" id="price">
+                            <input type="hidden" name="type" value="tradein">
                             <button id="addToCart" type="submit" class="btn start-selling sellitem fullwidth"><p>Sell my device</p></button>
                         </div>
                     </form>

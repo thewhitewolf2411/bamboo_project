@@ -133,7 +133,7 @@
         </div>
 
         <div class="mobile-phones-submenu-column">
-            <div class="mobile-phone-submenu-title" id="sellmobilebybrand">
+            <div class="mobile-phone-submenu-title cursor-pointer" id="sellmobilebybrand">
                 <p>Sell by Brand</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </div>
@@ -196,7 +196,7 @@
         </div>
 
         <div class="mobile-phones-submenu-column">
-            <div class="mobile-phone-submenu-title" id="selltabletsbybrand">
+            <div class="mobile-phone-submenu-title cursor-pointer" id="selltabletsbybrand">
                 <p>Sell by Brand</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </div>
@@ -258,7 +258,7 @@
         </div>
 
         <div class="mobile-phones-submenu-column">
-            <div class="mobile-phone-submenu-title" id="sellwatchesbybrand">
+            <div class="mobile-phone-submenu-title cursor-pointer" id="sellwatchesbybrand">
                 <p>Sell by Brand</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </div>

@@ -55,7 +55,7 @@
             </div>
             <div class="image-whathappens-col">
                 <img class="whathappens-img" src="{{asset('/customer_page_images/body/Icon-Trust.svg')}}">
-                <p class="whathappens-large bold">Verification process</p>
+                <p class="whathappens-large bold center">Verification<br> process</p>
                 <p class="whathappens-small">
                     {{-- You can check the status of your SELL order at any time using ‘My Bamboo’ section.  Click below to take your straight there. --}}
                     Once we've received your device, you can track the status of your SELL order by logging into your account any time. We'll also email regularly so you're kept up to date!
@@ -63,7 +63,7 @@
             </div>
             <div class="image-whathappens-col">
                 <img class="whathappens-img" src="{{asset('/customer_page_images/body/How-Icon-6.svg')}}">
-                <p class="whathappens-large bold">Get paid! Woohoo!</p>
+                <p class="whathappens-large bold center">Get paid!<br> Woohoo!</p>
                 <p class="whathappens-small">
                     {{-- Here's the best bit!! Once your device has tested successfully we promise to pay you directly into your bank account on the same day!!
                     *Mon-Fri, excluding public holidays. Same day payment does not apply to orders received after 2pm. --}}

@@ -81,12 +81,12 @@
     {{-- <div class="url-header-container" id="start-shopping">
         <a href="/shop">Start Shopping</a>
     </div> --}}
-    <a href="/shop" class="btn start-shopping-button-header mr-2">
+    <a href="/shop" class="btn start-shopping-button-header mr-2" @if(str_contains(Request::path(), 'sell')) style="opacity: 0.5;" @endif>
         <p id="start-shopping-button-text">Start Shopping</p> 
         {{-- <img id="start-selling-button-img-down" class="invisible" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White.svg')}}"> --}}
     </a>
     {{-- <div class="url-header-container" id="start-selling"> --}}
-    <a href="/sell" class="btn start-selling-button-header">
+    <a href="/sell" class="btn start-selling-button-header"  @if(Request::path() === 'shop') style="opacity: 0.5;" @endif>
         <p id="start-selling-button-text">Start Selling</p> 
         {{-- <img id="start-selling-button-img-down" class="invisible" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White.svg')}}"> --}}
     </a>

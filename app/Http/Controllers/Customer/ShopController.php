@@ -14,7 +14,7 @@ use App\Eloquent\BuyingProductInformation;
 use App\Eloquent\BuyingProductNetworks;
 use App\Eloquent\ProductData;
 use App\Eloquent\Brand;
-
+use App\Services\KlaviyoEmail;
 
 class ShopController extends Controller
 {
@@ -50,6 +50,16 @@ class ShopController extends Controller
         $products = BuyingProduct::all();
         $latestProducts = BuyingProduct::orderBy('id', 'desc')->take(3)->get();
         return view ('shop.welcome')->with('products', $products)->with('latestProducts', $latestProducts);
+    }
+
+    /**
+     * Sign up for shop newsletter.
+     */
+    public function signUp(Request $request){
+        if(isset($request->email_address)){
+            $klaviyo = new KlaviyoEmail();
+            $klaviyo->shopSignUp($request->email_address);
+        }
     }
 
     public function showLetView(){

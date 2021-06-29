@@ -16622,6 +16622,18 @@ h3, h4, h5 {
   margin-bottom: 15px;
 }
 
+.product-price-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.product-price-container > div.tutorials {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 40px;
+}
+
 .single-product-container {
   display: flex;
   flex-direction: row;
@@ -16902,6 +16914,14 @@ h3, h4, h5 {
   color: #000000;
   opacity: 1;
   margin: 0;
+}
+
+.infotext-sell-item.bold.hoverable {
+  transition: all 0.3s linear;
+}
+
+.infotext-sell-item.bold.hoverable:hover {
+  color: var(--sell-–-orange);
 }
 
 .infotext-sell-item.border-bottom {
@@ -18184,6 +18204,8 @@ input.lookup-delivery-basket::placeholder {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  height: 130px;
+  width: 130px;
 }
 
 .order-label-print-text {
@@ -18271,13 +18293,8 @@ input.lookup-delivery-basket::placeholder {
   font: normal normal normal 25px/35px Sharp Sans No1 Bold;
 }
 
-.confirmation-info-text-bold-smaller.fixed-height {
-  height: 76px;
-}
-
 .confirmation-info-text-bold-smaller.fixed-height.centered-vertically {
-  height: 76px;
-  line-height: 76px;
+  text-align: center;
 }
 
 .confirmation-info-text-smaller {
@@ -19876,7 +19893,8 @@ input[type=number] {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  width: 450px;
+  width: 100%;
+  max-width: 480px;
   margin-left: 50px;
   margin-right: 50px;
   margin-bottom: 50px;
@@ -19900,13 +19918,33 @@ input[type=number] {
 }
 
 .whathappens-large {
-  font-size: 2rem;
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-40)/var(--unnamed-line-spacing-48) var(--unnamed-font-family-sharp-sans-no1-bold);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--black);
+  text-align: left;
+  font: normal normal normal 40px/48px Sharp Sans No1 Bold;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  margin: 0;
   margin-top: 50px;
 }
 
+.whathappens-large.center {
+  text-align: center;
+}
+
 .whathappens-small {
-  font-size: 1rem;
-  margin-top: 15px;
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/var(--unnamed-line-spacing-34) var(--unnamed-font-family-sharp-sans-no1-medium);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--black);
+  text-align: left;
+  font: normal normal normal 25px/34px Sharp Sans No1 Medium;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  margin: 0;
+  margin-top: 28px;
 }
 
 .sustainability-container {
@@ -20396,7 +20434,7 @@ input[type=number] {
 
 .deliveryqualitybanner-img.larger {
   width: 145px;
-  margin-left: auto;
+  margin-left: 115px;
 }
 
 .deliveryqualitybanner-text {
@@ -21720,6 +21758,7 @@ input[type=submit] {
 .howitworks-container.how-row {
   display: flex;
   flex-direction: row;
+  padding: 0 140px;
 }
 
 .howitworks-container.how-column {
@@ -21839,7 +21878,7 @@ input[type=submit] {
 
 .selling-section-item {
   background: #fff6e4;
-  padding-bottom: 50px;
+  padding-bottom: 100px !important;
   padding-top: 50px;
 }
 
@@ -21877,7 +21916,7 @@ input[type=submit] {
 
 .howitworks-selling-image.post-pack {
   width: 315px;
-  height: auto;
+  height: 332px;
   margin-left: 70px;
 }
 
@@ -24780,6 +24819,10 @@ input[type=submit] {
   padding: 103px 0;
 }
 
+.shop-form.not-visible {
+  display: none;
+}
+
 .shop-form-title {
   font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-80)/var(--unnamed-line-spacing-90) var(--unnamed-font-family-sharp-sans-no1-bold);
   letter-spacing: var(--unnamed-character-spacing-0);
@@ -25072,6 +25115,50 @@ input[type=submit] {
   transform: scale(1.1);
 }
 
+#shopform-thankyou {
+  display: flex;
+  flex-direction: column;
+  padding: 103px 0;
+}
+
+#shopform-thankyou.not-visible {
+  display: none;
+}
+
+.shopform-thankyou-large {
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-80)/var(--unnamed-line-spacing-90) var(--unnamed-font-family-sharp-sans-no1-bold);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--black);
+  text-align: center;
+  font: normal normal normal 80px/90px Sharp Sans No1 Bold;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  margin: 0;
+}
+
+.shopform-thankyou-small {
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-50)/var(--unnamed-line-spacing-58) var(--unnamed-font-family-sharp-sans-no1-bold);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--black);
+  text-align: center;
+  font: normal normal normal 50px/58px Sharp Sans No1 Bold;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  margin: 0;
+}
+
+#shopform-thankyou > img {
+  display: block;
+  width: 153px;
+  height: 107px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  margin-bottom: 8px;
+}
+
 @media (max-width: 768px) {
   .shop-intro-container {
     padding: 22px;
@@ -25200,6 +25287,32 @@ input[type=submit] {
   .shopbanner-arrow-right {
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .shopform-thankyou-large {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-65) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 60px/65px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+  }
+
+  .shopform-thankyou-small {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 37px/40px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+  }
+
+  #shopform-thankyou > img {
+    margin-bottom: 40px;
   }
 }
 .mobile-phone-submenu-item.custom-tooltip {

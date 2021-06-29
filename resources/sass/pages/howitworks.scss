@@ -2,6 +2,7 @@
 .howitworks-container.how-row{
     display: flex;
     flex-direction: row;
+    padding: 0 140px;
 }
 
 .howitworks-container.how-column{
@@ -131,7 +132,8 @@
 
 .selling-section-item{
     background: #fff6e4;
-    padding-bottom: 50px;
+    // padding-bottom: 50px;
+    padding-bottom: 100px !important;
     padding-top: 50px;
 }
 
@@ -169,7 +171,8 @@
 
 .howitworks-selling-image.post-pack{
     width: 315px;
-    height: auto;
+    // height: auto;
+    height: 332px;
     margin-left: 70px;
 }
 

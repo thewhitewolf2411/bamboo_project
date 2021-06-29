@@ -87,7 +87,7 @@
                                 <div class="confirmation-image-wrapper">
                                     <img class="confirmation-info-img" src="{{asset('/customer_page_images/body/Icon-Trust.svg')}}">
                                 </div>
-                                <p class="confirmation-info-text-bold-smaller mt-4 ml-0 fixed-height centered-vertically">Verification process</p>
+                                <p class="confirmation-info-text-bold-smaller mt-4 ml-0 fixed-height centered-vertically">Verification<br> process</p>
                                 <p class="confirmation-info-text description mt-2">
                                     You can check the status of your SELL order at any time using ‘My Bamboo’ section. Click below to take you straight there.
                                 </p>
@@ -97,7 +97,7 @@
                                 <div class="confirmation-image-wrapper">
                                     <img class="confirmation-info-img" src="{{asset('/customer_page_images/body/How-Icon-6.svg')}}">
                                 </div>
-                                <p class="confirmation-info-text-bold-smaller mt-4 ml-0 fixed-height centered-vertically">Get Paid! Woohoo!</p>
+                                <p class="confirmation-info-text-bold-smaller mt-4 ml-0 fixed-height centered-vertically">Get Paid!<br> Woohoo!</p>
                                 <p class="confirmation-info-text description mt-2">
                                     Here's the best bit!! Once your device has tested successfully, we promise to pay you directly into your bank account on the same day!!<br>
                                     *Mon-Fri, excluding public holidays. Same day payment does not apply to orders received after 2pm

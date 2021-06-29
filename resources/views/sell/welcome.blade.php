@@ -190,7 +190,7 @@
             </div>
         </main>
 
-        <footer>@include('customer.layouts.footer', ['showGetstarted' => false])</footer>
+        <footer>@include('customer.layouts.footer', ['showGetstarted' => true])</footer>
         <script src="{{asset('/js/SellingPage.js')}}"></script>
         <script src="{{asset('/js/isMobile.js')}}"></script>
         <script>
