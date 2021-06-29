@@ -101,7 +101,7 @@ $('.saleslots').on('click', function(){
             $('#view-sales-lot-btn').prop('disabled', false);
             $('#edit-lot-btn').prop('disabled', true);
             $('#sell-lot-btn').prop('disabled', true);
-            $('#payment-received-btn').prop('disabled', true);
+            $('#payment-received-btn').prop('disabled', false);
             break;
         case 3:
             $('#view-sales-lot-btn').prop('disabled', false);

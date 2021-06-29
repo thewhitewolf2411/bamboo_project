@@ -468,6 +468,7 @@ class SellController extends Controller
                 $tradeinbarcode = 10000000 + rand(000000, 9000000);
             }
 
+            $tradeins = [];
             foreach($cart as $item){     
                 if($item->type === 'tradein'){
 
@@ -521,16 +522,18 @@ class SellController extends Controller
                         $tradein->job_state = 2;
 
                         $tradein->trade_pack_send_by_customer = true;
-                        $klaviyoEmail = new KlaviyoEmail();
-                        $klaviyoEmail->ItemSoldPrintOwnLabel(Auth::user(), $tradein);
+                        //$klaviyoEmail = new KlaviyoEmail();
+                        //$klaviyoEmail->ItemSoldPrintOwnLabel(Auth::user(), $tradein);
                     }
-                    else{
-                        $klaviyoEmail = new KlaviyoEmail();
-                        $klaviyoEmail->ItemSoldTradePack(Auth::user(), $tradein);
-                    }
+                    //else{
+                    //    $klaviyoEmail = new KlaviyoEmail();
+                    //    $klaviyoEmail->ItemSoldTradePack(Auth::user(), $tradein);
+                    //}
 
                     $tradein->save();
                     $tradeinexp = $tradein;
+
+                    array_push($tradeins, $tradein);
 
                     if($hasPromotionalCode){
                         UserPromotionalCode::create([
@@ -553,6 +556,18 @@ class SellController extends Controller
                     $item->delete();
 
                 }
+            }
+
+            if($labelstatus == "2"){
+                if(count($cart) === 1){
+                    $klaviyoEmail = new KlaviyoEmail();
+                    $klaviyoEmail->oneItemSoldPrintOwnLabel(Auth::user(), $tradeins[0]);
+                }
+                elseif(count($cart) === 2){
+                    $klaviyoEmail = new KlaviyoEmail();
+                    $klaviyoEmail->twoItemSoldPrintOwnLabel(Auth::user(), $tradeins);
+                }
+
             }
 
             // redirect to basket to prevent error

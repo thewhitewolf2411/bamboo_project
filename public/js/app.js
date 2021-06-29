@@ -57723,6 +57723,10 @@ $('input[type=radio][name=visible_imei]').on('change', function () {
   var id = $(this).data('value');
   $('#question-two-next-button-' + id).prop('disabled', false);
 });
+$('input[type=radio][name=visible_serial]').on('change', function () {
+  var id = $(this).data('value');
+  $('#question-two-next-button-' + id).prop('disabled', false);
+});
 $(document).ready(function () {
   $('.question-two').each(function () {
     $(this).hide();
@@ -57768,6 +57772,12 @@ window.changeQuestion = function (question_number, current_question_number, trad
       $('#question-two-' + tradein_id).hide();
       $('#result-page-' + tradein_id).show();
       $('#receiving-result-' + tradein_id).html('<p>Device has no visible IMEI number.</p><br>');
+    } else if ($('#visible_serial_no_' + tradein_id).is(':checked')) {
+      $('.send-to-quarantine').hide();
+      $('#question-two-' + tradein_id).hide();
+      $('#result-page-' + tradein_id).show();
+      $('#receiving-result-' + tradein_id).html('<p>Device has no visible serial number.</p><br>');
+      $('.send-to-testing').show();
     } else {
       $('#question-two-' + tradein_id).hide();
       $('#question-three-' + tradein_id).show();
@@ -57800,6 +57810,9 @@ window.changeQuestion = function (question_number, current_question_number, trad
       $('#result-page-' + tradein_id).hide();
       $('#question-one-' + tradein_id).show();
     } else if ($('#visible_imei_no_' + tradein_id).is(':checked')) {
+      $('#result-page-' + tradein_id).hide();
+      $('#question-two-' + tradein_id).show();
+    } else if ($('#visible_serial_no_' + tradein_id).is(':checked')) {
       $('#result-page-' + tradein_id).hide();
       $('#question-two-' + tradein_id).show();
     } else {
@@ -58990,11 +59003,13 @@ function handleRemoveDevices(boxes_ids, tradein_ids, boxes) {
   for (var i = 0; i < boxes.length; i++) {
     if (bayedBoxesTable.row('#' + boxes[i].id).length > 0) {
       rowdata = bayedBoxesTable.row('#' + boxes[i].id).data();
-      rowdata[3] -= number_of_devices[i];
+      rowdata[3] += number_of_devices[i];
       bayedBoxesTable.row('#' + boxes[i].id).data(rowdata).draw(false);
     } else {
       var row = '<input class="bayed_boxes" type="checkbox" id="box_"' + boxes[i].id + '" data-id="' + boxes[i].id + '">';
-      bayedBoxesTable.row.add([boxes[i].tray_name, boxes[i].tray_grade, boxes[i].tray_network, boxes[i].number_of_devices - number_of_devices[i], boxes[i].number_of_devices, '£' + boxes[i].total_cost, row]).node().id = boxes[i].id;
+      bayedBoxesTable.row.add([boxes[i].tray_name, boxes[i].tray_grade, boxes[i].tray_network, //boxes[i].number_of_devices - number_of_devices[i],
+      number_of_devices[i], //boxes[i].number_of_devices,
+      '£' + boxes[i].total_cost, row]).node().id = boxes[i].id;
       bayedBoxesTable.draw(false);
     }
   }
@@ -59111,7 +59126,7 @@ $('.saleslots').on('click', function () {
       $('#view-sales-lot-btn').prop('disabled', false);
       $('#edit-lot-btn').prop('disabled', true);
       $('#sell-lot-btn').prop('disabled', true);
-      $('#payment-received-btn').prop('disabled', true);
+      $('#payment-received-btn').prop('disabled', false);
       break;
 
     case 3:

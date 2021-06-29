@@ -194,7 +194,7 @@ class CmsController extends Controller
         }
         else{
             if($blog->image_3 !== null){
-                $fileNameToStore2 = $blog->image_3;
+                $fileNameToStore3 = $blog->image_3;
             }
         }
        
@@ -204,9 +204,17 @@ class CmsController extends Controller
         $blog->cms_parg_1=$cms_parag_1;
         $blog->cms_parg_2=$cms_parag_2;
         $blog->cms_parg_3=$cms_parag_3;
-        $blog->image_1=$fileNameToStore1;
-        $blog->image_2=$fileNameToStore2;
-        $blog->image_3=$fileNameToStore3;
+        if($fileNameToStore1){
+            $blog->image_1=$fileNameToStore1;
+        }
+        if($fileNameToStore2){
+            $blog->image_2=$fileNameToStore2;
+        }
+        if($fileNameToStore3){
+            $blog->image_3=$fileNameToStore3;
+        }
+        #$blog->image_2=$fileNameToStore2;
+        #$blog->image_3=$fileNameToStore3;
         $blog->author=Auth::user()->fullName();
         
         $blog->save();

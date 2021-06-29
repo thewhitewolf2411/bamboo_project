@@ -31,4 +31,9 @@ class JobStateChanged extends Model
     public function getUser(){
         return User::find($this->getTradein()->user_id);
     }
+
+    public function getTradeinsByBarcode(){
+        $tradeins = Tradein::where('barcode_original', $this->getTradein()->barcode_original)->get();
+        return $tradeins;
+    }
 }

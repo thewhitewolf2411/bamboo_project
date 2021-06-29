@@ -20,12 +20,11 @@ class KlaviyoEmail{
         $this->client = new Klaviyo( $this->klaviyokey, $this->userkey);
     }
 
-    //done
     public function AccountCreated($user){
 
         $event = new KlaviyoEvent(
             array(
-                'event' => 'Creation of account',
+                'event' => 'Registration',
                 'customer_properties' => array(
                     '$email' => $user->email,
                     '$first_name' => $user->first_name,
@@ -42,23 +41,211 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
   
-    //done
-    public function ItemSoldPrintOwnLabel($user, Tradein $tradein){
+    //Offer EM - 1  __One Device__
+    public function oneItemSoldPrintOwnLabel($user, $tradein){
 
         $event = new KlaviyoEvent(
             array(
-                'event' => 'Item Sold to Bamboo (Print own label)',
+                'event' => 'Offer EM - 1',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName(),
-                    '$tradein_id' => $tradein->barcode_original,
-                    '$proposed_price' => $tradein->order_price,
+                    '$em_1_device_1' => $tradein->getCustomerProductName(),
+                    '$em_1_tradein_id_1' => $tradein->barcode_original,
+                    '$em_1_proposed_price_1' => $tradein->order_price,
                 ),
                 'properties' => array(
                     'Item sold' => true
                 )
             )
         );
+
+        $this->sendEmail($event);
+    }
+
+    //Offer EM - 1  __Two Devices__
+    public function twoItemSoldPrintOwnLabel($user, $cart){
+
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Offer EM - 1',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$em_1_device_1' => $cart[0]->getCustomerProductName(),
+                    '$em_1_tradein_id_1' => $cart[0]->barcode_original,
+                    '$em_1_proposed_price_1' => $cart[0]->order_price,
+                    '$em_1_device_2' => $cart[1]->getCustomerProductName(),
+                    '$em_1_tradein_id_2' => $cart[1]->barcode_original,
+                    '$em_1_proposed_price_2' => $cart[1]->order_price,
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+
+    //Offer EM - 2
+    public function orderExpiresInSevenDays($user, $tradeins){
+        if(count($tradeins) === 1){
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Offer EM - 2',
+                    'customer_properties' => array(
+                        '$email' => $user->email,
+                        '$em_2_device_1' => $tradeins[0]->getCustomerProductName(),
+                        '$em_2_tradein_id_1' => $tradeins[0]->barcode_original,
+                        '$em_2_proposed_price_1' => '£' . $tradeins[0]->order_price,
+                    ),
+                    'properties' => array(
+                        'Item sold' => true
+                    )
+                )
+            );
+        }
+        if(count($tradeins) === 2){
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Offer EM - 2',
+                    'customer_properties' => array(
+                        '$email' => $user->email,
+                        '$em_2_device_1' => $tradeins[0]->getCustomerProductName(),
+                        '$em_2_tradein_id_1' => $tradeins[0]->barcode_original,
+                        '$em_2_proposed_price_1' => '£' . $tradeins[0]->order_price,
+                        '$em_2_device_2' => $tradeins[1]->getCustomerProductName(),
+                        '$em_2_tradein_id_2' => $tradeins[1]->barcode_original,
+                        '$em_2_proposed_price_2' => '£' . $tradeins[1]->order_price,
+                    ),
+                    'properties' => array(
+                        'Item sold' => true
+                    )
+                )
+            );
+        }
+
+        $this->sendEmail($event);
+    }
+
+    //Offer EM - 3
+    public function orderExpiresInFourDays($user, $tradeins){
+        if(count($tradeins) === 1){
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Offer EM - 3',
+                    'customer_properties' => array(
+                        '$email' => $user->email,
+                        '$em_3_device_1' => $tradeins[0]->getCustomerProductName(),
+                        '$em_3_tradein_id_1' => $tradeins[0]->barcode_original,
+                        '$em_3_proposed_price_1' => '£' . $tradeins[0]->order_price,
+                    ),
+                    'properties' => array(
+                        'Item sold' => true
+                    )
+                )
+            );
+        }
+        if(count($tradeins) === 2){
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Offer EM - 3',
+                    'customer_properties' => array(
+                        '$email' => $user->email,
+                        '$em_3_device_1' => $tradeins[0]->getCustomerProductName(),
+                        '$em_3_tradein_id_1' => $tradeins[0]->barcode_original,
+                        '$em_3_proposed_price_1' => '£' . $tradeins[0]->order_price,
+                        '$em_3_device_2' => $tradeins[1]->getCustomerProductName(),
+                        '$em_3_tradein_id_2' => $tradeins[1]->barcode_original,
+                        '$em_3_proposed_price_2' => '£' . $tradeins[1]->order_price,
+                    ),
+                    'properties' => array(
+                        'Item sold' => true
+                    )
+                )
+            );
+        }
+
+        $this->sendEmail($event);
+    }
+
+    //Offer EM - 12
+    public function orderExpired($user, $tradeins){
+        if(count($tradeins) === 1){
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Offer EM - 12',
+                    'customer_properties' => array(
+                        '$email' => $user->email,
+                        '$em_12_device_1' => $tradeins[0]->getCustomerProductName(),
+                        '$em_12_tradein_id_1' => $tradeins[0]->barcode_original,
+                        '$em_12_proposed_price_1' => '£' . $tradeins[0]->order_price,
+                    ),
+                    'properties' => array(
+                        'Item sold' => true
+                    )
+                )
+            );
+        }
+        if(count($tradeins) === 2){
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Offer EM - 3',
+                    'customer_properties' => array(
+                        '$email' => $user->email,
+                        '$em_12_device_1' => $tradeins[0]->getCustomerProductName(),
+                        '$em_12_tradein_id_1' => $tradeins[0]->barcode_original,
+                        '$em_12_proposed_price_1' => '£' . $tradeins[0]->order_price,
+                        '$em_12_device_2' => $tradeins[1]->getCustomerProductName(),
+                        '$em_12_tradein_id_2' => $tradeins[1]->barcode_original,
+                        '$em_12_proposed_price_2' => '£' . $tradeins[1]->order_price,
+                    ),
+                    'properties' => array(
+                        'Item sold' => true
+                    )
+                )
+            );
+        }
+
+        $this->sendEmail($event);
+    }
+
+    //Offer EM - 13
+    public function orderNeverReceived($user, $tradeins){
+        if(count($tradeins) === 1){
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Offer EM - 13',
+                    'customer_properties' => array(
+                        '$email' => $user->email,
+                        '$em_13_device_1' => $tradeins[0]->getCustomerProductName(),
+                        '$em_13_tradein_id_1' => $tradeins[0]->barcode_original,
+                        '$em_13_proposed_price_1' => '£' . $tradeins[0]->order_price,
+                    ),
+                    'properties' => array(
+                        'Item sold' => true
+                    )
+                )
+            );
+        }
+        if(count($tradeins) === 2){
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Offer EM - 13',
+                    'customer_properties' => array(
+                        '$email' => $user->email,
+                        '$em_13_device_1' => $tradeins[0]->getCustomerProductName(),
+                        '$em_13_tradein_id_1' => $tradeins[0]->barcode_original,
+                        '$em_13_proposed_price_1' => '£' . $tradeins[0]->order_price,
+                        '$em_13_device_2' => $tradeins[1]->getCustomerProductName(),
+                        '$em_13_tradein_id_2' => $tradeins[1]->barcode_original,
+                        '$em_13_proposed_price_2' => '£' . $tradeins[1]->order_price,
+                    ),
+                    'properties' => array(
+                        'Item sold' => true
+                    )
+                )
+            );
+        }
 
         $this->sendEmail($event);
     }

@@ -33,6 +33,14 @@ $('input[type=radio][name=visible_imei]').on('change', function(){
 
 });
 
+$('input[type=radio][name=visible_serial]').on('change', function(){
+
+    var id = $(this).data('value');
+
+    $('#question-two-next-button-'+id).prop('disabled', false);
+
+});
+
 $(document).ready(function(){
 
     $('.question-two').each(function(){
@@ -87,6 +95,13 @@ window.changeQuestion = function(question_number, current_question_number, trade
             $('#result-page-'+tradein_id).show();
             $('#receiving-result-'+tradein_id).html('<p>Device has no visible IMEI number.</p><br>');
         }
+        else if($('#visible_serial_no_'+tradein_id).is(':checked')){
+            $('.send-to-quarantine').hide();
+            $('#question-two-'+tradein_id).hide();
+            $('#result-page-'+tradein_id).show();
+            $('#receiving-result-'+tradein_id).html('<p>Device has no visible serial number.</p><br>');
+            $('.send-to-testing').show();
+        }
         else{
             $('#question-two-'+tradein_id).hide();
             $('#question-three-'+tradein_id).show();
@@ -133,6 +148,10 @@ window.changeQuestion = function(question_number, current_question_number, trade
             $('#result-page-'+tradein_id).hide();
             $('#question-two-'+tradein_id).show();
 
+        }
+        else if($('#visible_serial_no_'+tradein_id).is(':checked')){
+            $('#result-page-'+tradein_id).hide();
+            $('#question-two-'+tradein_id).show();
         }
         else{
             $('#result-page-'+tradein_id).hide();
