@@ -233,10 +233,10 @@ class CustomerCareController extends Controller
                 $tradein->save();
 
                 $user = User::where('id', $tradein->user_id)->first();
-
-                $klaviyoEmail = new KlaviyoEmail();
-                $klaviyoEmail->TradePackSent($user, $tradein);
             }
+
+            $klaviyoEmail = new KlaviyoEmail();
+            $klaviyoEmail->TradePackSent($user, $tiarr);
         }
 
         $labels = array();
@@ -295,7 +295,7 @@ class CustomerCareController extends Controller
         }
 
         $klaviyoEmail = new KlaviyoEmail();
-        $klaviyoEmail->TradePackSent($user, $tradein);
+        $klaviyoEmail->TradePackSent($user, $tradeins);
 
         $products = SellingProduct::whereIn('id', $productIds)->get();
         $tradein = Tradein::where('barcode',$request->hidden_print_trade_pack_trade_in_id)->first();
@@ -448,6 +448,7 @@ class CustomerCareController extends Controller
     public function setTradePackAsSent(Request $request){
         $tradein = Tradein::where('id', $request->set_trade_in_as_sent)->first();
         $tradein->job_state = 2;
+
         $tradein->save();
         return redirect()->back();
     }
