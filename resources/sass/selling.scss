@@ -380,6 +380,18 @@
     margin-bottom: 15px;
 }
 
+.product-price-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.product-price-container > div.tutorials{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 40px;
+}
+
 .single-product-container{
     display: flex;
     flex-direction: row;
@@ -690,6 +702,14 @@
     color: #000000;
     opacity: 1;
     margin: 0;
+}
+
+.infotext-sell-item.bold.hoverable{
+    transition: all .3s linear;
+}
+
+.infotext-sell-item.bold.hoverable:hover{
+    color: var(--sell-–-orange);
 }
 
 .infotext-sell-item.border-bottom{
@@ -2095,6 +2115,8 @@ input.lookup-delivery-basket::placeholder{
     display: block;
     margin-left: auto;
     margin-right: auto;
+    height: 130px;
+    width: 130px;
 }
 
 .order-label-print-text{
@@ -2190,13 +2212,17 @@ input.lookup-delivery-basket::placeholder{
     font: normal normal normal 25px/35px Sharp Sans No1 Bold;
 }
 
-.confirmation-info-text-bold-smaller.fixed-height{
-    height: 76px;
-}
+// .confirmation-info-text-bold-smaller.fixed-height{
+//     height: 76px;
+// }
+
+// .confirmation-info-text-bold-smaller.fixed-height.centered-vertically{
+//     height: 76px;
+//     line-height: 76px;
+// }
 
 .confirmation-info-text-bold-smaller.fixed-height.centered-vertically{
-    height: 76px;
-    line-height: 76px;
+    text-align: center;
 }
 
 .confirmation-info-text-smaller{

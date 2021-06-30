@@ -1,10 +1,13 @@
 @if($type === 'googleInstructions')
-
-    <p class="answer-text">It would be best if you can remove your device from your Google account before sending the device to us. 
-        This is really quick and easy to do, please 
-        <a role="button" class="answer-text link" data-toggle="modal" data-target="#{{$type}}Modal">click</a>
-        for a simple guide…
-    </p>
+    @if(isset($page))
+        <a role="button" class="answer-text link" data-toggle="modal" data-target="#{{$type}}Modal"><p class="infotext-sell-item bold hoverable">How to remove Google Lock</p></a>
+    @else
+        <p class="answer-text">It would be best if you can remove your device from your Google account before sending the device to us. 
+            This is really quick and easy to do, please 
+            <a role="button" class="answer-text link" data-toggle="modal" data-target="#{{$type}}Modal">click</a>
+            for a simple guide…
+        </p>
+    @endif
 
     <div class="modal fade" id="{{$type}}Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -87,13 +90,18 @@
 
 
 @if($type === 'appleInstructions')
-    <p class="answer-text">
-        {{-- Remove your device from your iCloud account before sending the device to us. 
-        This is really quick and easy to do, please  --}}
-        It would be best if you can remove your device from your iCloud account before sending the device to us. This is really quick and easy to do, please
-        <a role="button" class="answer-text link" data-toggle="modal" data-target="#{{$type}}Modal">click</a>
-        for a simple guide…
-    </p>
+    @if(isset($page))
+        <a role="button" class="answer-text link" data-toggle="modal" data-target="#{{$type}}Modal"><p class="infotext-sell-item bold hoverable">How to remove Find My iPhone</p></a>
+    @else
+        <p class="answer-text">
+            {{-- Remove your device from your iCloud account before sending the device to us. 
+            This is really quick and easy to do, please  --}}
+            It would be best if you can remove your device from your iCloud account before sending the device to us. This is really quick and easy to do, please
+            <a role="button" class="answer-text link" data-toggle="modal" data-target="#{{$type}}Modal">click</a>
+            for a simple guide…
+        </p>
+    @endif
+    
 
     <div class="modal fade" id="{{$type}}Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">

@@ -52,7 +52,8 @@
             @endif
         </div>
         <div class="footer-row-6">
-            <span>SERVICE & SUPPORT</span>
+            {{-- <span>SERVICE & SUPPORT</span> --}}
+            <span>Frequently asked questions</span>
             {{-- <a href="/setpage/support">Buying a device</a> --}}
             <a href="/support">Selling a device</a>
             <a href="/support">Tech</a>

@@ -97,18 +97,7 @@
 
 
 <div id="sellmobilephones-header-hover" class="not-visible">
-    {{-- <a href="/sell/devices/mobile/1" class="sell-links-sublink-item">
-        <p>Apple Devices</p>
-        <img src="{{asset('/images/front-end-icons/black_arrow_next.svg')}}" width="25px">
-    </a>
-    <a href="/sell/devices/mobile/2" class="sell-links-sublink-item">
-        <p>Samsung Devices</p>
-        <img src="{{asset('/images/front-end-icons/black_arrow_next.svg')}}" width="25px">
-    </a>
-    <a href="/sell/devices/mobile/3" class="sell-links-sublink-item">
-        <p>Huawei Devices</p>
-        <img src="{{asset('/images/front-end-icons/black_arrow_next.svg')}}" width="25px">
-    </a> --}}
+    
     <div class="mobile-phones-submenu">
 
         <div class="mobile-phones-submenu-column">
@@ -119,7 +108,7 @@
 
             @foreach(App\Helpers\MenuHelper::getApplePhones() as $apple_phone)
                 <a class="mobile-phone-submenu-item custom-tooltip" href="/sell/sellitem/{{$apple_phone->id}}">
-                    <p>{{$apple_phone->product_name}}</p>
+                    <p>{{App\Helpers\MenuHelper::formatDeviceName($apple_phone->product_name)}}</p>
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                     <span class="tooltiptext"><p>{{$apple_phone->product_name}}</p></span>
                 </a>
@@ -135,7 +124,7 @@
 
             @foreach(App\Helpers\MenuHelper::getSamsungPhones() as $samsung_phone)
                 <a class="mobile-phone-submenu-item custom-tooltip" href="/sell/sellitem/{{$samsung_phone->id}}">
-                    <p>{{$samsung_phone->product_name}}</p>
+                    <p>{{App\Helpers\MenuHelper::formatDeviceName($samsung_phone->product_name)}}</p>
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                     <span class="tooltiptext"><p>{{$samsung_phone->product_name}}</p></span>
                 </a>
@@ -144,7 +133,7 @@
         </div>
 
         <div class="mobile-phones-submenu-column">
-            <div class="mobile-phone-submenu-title">
+            <div class="mobile-phone-submenu-title cursor-pointer" id="sellmobilebybrand">
                 <p>Sell by Brand</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </div>
@@ -183,7 +172,7 @@
 
             @foreach(App\Helpers\MenuHelper::getAppleTablets() as $apple_tablet)
                 <a class="mobile-phone-submenu-item custom-tooltip" href="/sell/sellitem/{{$apple_tablet->id}}">
-                    <p>{{$apple_tablet->product_name}}</p>
+                    <p>{{App\Helpers\MenuHelper::formatDeviceName($apple_tablet->product_name)}}</p>
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                     <span class="tooltiptext"><p>{{$apple_tablet->product_name}}</p></span>
                 </a>
@@ -198,7 +187,7 @@
 
             @foreach(App\Helpers\MenuHelper::getSamsungTablets() as $samsung_tablet)
                 <a class="mobile-phone-submenu-item custom-tooltip" href="/sell/sellitem/{{$samsung_tablet->id}}">
-                    <p>{{$samsung_tablet->product_name}}</p>
+                    <p>{{App\Helpers\MenuHelper::formatDeviceName($samsung_tablet->product_name)}}</p>
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                     <span class="tooltiptext"><p>{{$samsung_tablet->product_name}}</p></span>
                 </a>
@@ -207,7 +196,7 @@
         </div>
 
         <div class="mobile-phones-submenu-column">
-            <div class="mobile-phone-submenu-title">
+            <div class="mobile-phone-submenu-title cursor-pointer" id="selltabletsbybrand">
                 <p>Sell by Brand</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </div>
@@ -246,7 +235,7 @@
 
             @foreach(App\Helpers\MenuHelper::getAppleWatches() as $apple_watch)
                 <a class="mobile-phone-submenu-item custom-tooltip" href="/sell/sellitem/{{$apple_watch->id}}">
-                    <p>{{$apple_watch->product_name}}</p>
+                    <p>{{App\Helpers\MenuHelper::formatDeviceName($apple_watch->product_name)}}</p>
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                     <span class="tooltiptext"><p>{{$apple_watch->product_name}}</p></span>
                 </a>
@@ -261,7 +250,7 @@
 
             @foreach(App\Helpers\MenuHelper::getSamsungWatches() as $samsung_watch)
                 <a class="mobile-phone-submenu-item custom-tooltip" href="/sell/sellitem/{{$samsung_watch->id}}">
-                    <p>{{$samsung_watch->product_name}}</p>
+                    <p>{{App\Helpers\MenuHelper::formatDeviceName($samsung_watch->product_name)}}</p>
                     <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                     <span class="tooltiptext"><p>{{$samsung_watch->product_name}}</p></span>
                 </a>
@@ -269,7 +258,7 @@
         </div>
 
         <div class="mobile-phones-submenu-column">
-            <div class="mobile-phone-submenu-title">
+            <div class="mobile-phone-submenu-title cursor-pointer" id="sellwatchesbybrand">
                 <p>Sell by Brand</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </div>
@@ -587,6 +576,22 @@
                 document.body.style = "overflow-y: initial";
                 watches_dropdown.classList.add('not-visible');
             }
+        });
+
+
+        document.getElementById('sellmobilebybrand').addEventListener('click', function(){
+            localStorage.setItem('preselectedSellCategory', 'mobile');
+            window.location = '/sell';
+        });
+
+        document.getElementById('selltabletsbybrand').addEventListener('click', function(){
+            localStorage.setItem('preselectedSellCategory', 'tablets');
+            window.location = '/sell';
+        });
+
+        document.getElementById('sellwatchesbybrand').addEventListener('click', function(){
+            localStorage.setItem('preselectedSellCategory', 'watches');
+            window.location = '/sell';
         });
 
 

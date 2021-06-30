@@ -56,7 +56,8 @@
                                 <div class="order-label-wrapper">
                                     <div class="order-label-print-type m-2" id="bamboo-print-selected" onclick="selectType('bamboo')">
                                         <div class="col p-0">
-                                            <img class="order-label-print-svg" src="{{asset('/customer_page_images/body/free_bamboo_trade_pack.svg')}}">
+                                            {{-- <img class="order-label-print-svg" src="{{asset('/customer_page_images/body/free_bamboo_trade_pack.svg')}}"> --}}
+                                            <img class="order-label-print-svg" src="{{asset('customer_page_images/body/final_free_trade_pack.svg')}}">
                                             <p class="order-label-print-text">FREE Bamboo <br>Trade Pack</p>
                                         </div>
                                     </div>

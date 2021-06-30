@@ -308,6 +308,24 @@ class KlaviyoEmail{
 
 
 
+    // send email for shop go live notify list TODO
+    public function shopSignUp($email){
+
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Shop Sign Up',
+                'customer_properties' => array(
+                    '$email' => $email,
+                ),
+                'properties' => array(
+                    'User Registered' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+
     public function sendEmail($event){
         $response =  $this->client->publicAPI->track( $event ); 
 

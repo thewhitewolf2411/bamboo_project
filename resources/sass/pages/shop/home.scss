@@ -1,0 +1,531 @@
+.shop-intro-container{
+    background: url("/images/shop_home.png");
+    height: 630px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.shop-intro-container{
+    padding: 140px 100px;
+}
+
+.intro-container-content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.intro-container-content > .text-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-intro-small{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 57px/63px var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: left;
+    font: normal normal normal 57px/63px Bebas Neue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    text-shadow: 0px 3px 20px #00000040;
+    opacity: 1;
+    margin: 0;
+}
+
+.shop-intro-large{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-80)/var(--unnamed-line-spacing-90) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: left;
+    font: normal normal normal 80px/90px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    text-shadow: 0px 3px 20px #00000040;
+    opacity: 1;
+    max-width: 721px;
+    margin: 0;
+    margin-top: 5px;
+}
+
+.coming-soon{
+    display: block;
+    width: 326px;
+    height: 362px;
+    margin-left: 125px;
+}
+
+
+.shop-form{
+    padding: 103px 0;
+}
+
+.shop-form.not-visible{
+    display: none;
+}
+
+.shop-form-title{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-80)/var(--unnamed-line-spacing-90) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 80px/90px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+}
+
+.shop-form-desc{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 37px/40px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+    margin-top: 20px;
+}
+
+.shop-form-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.shop-form-row.centered{
+    justify-content: center;
+}
+
+.shop-form-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-form-column.inputs{
+    margin-top: 40px;
+}
+
+.shop-form-input{
+    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+    border: 2px solid var(--black);
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    opacity: 1;
+
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/28px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    // color: #000000;
+    // opacity: 0.5;
+    margin-right: 20px;
+    height: 72px;
+    
+    outline: none;
+}
+
+.shop-form-input::placeholder { 
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/28px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 0.5;
+}
+
+.shop-form-input.first-name, .shop-form-input.last-name{
+    max-width: 577px;
+    padding-left: 40px;
+}
+
+.shop-form-input.age-range{
+    width: 100%;
+    max-width: 215px;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    padding-left: 31px;
+    padding-right: 21px;
+
+    appearance: none;
+    background-image: url("/images/blue_arrow_down.png");
+    background-repeat: no-repeat;
+    background-position-x: 90%;
+    background-position-y: center;
+    cursor: pointer;
+}
+
+/* CAUTION: IE hackery ahead */
+.shop-form-input.age-range::-ms-expand { 
+    display: none; /* remove default arrow on ie10 and ie11 */
+}
+
+/* target Internet Explorer 9 to undo the custom arrow */
+@media screen and (min-width:0\0) {
+    .shop-form-input.age-range {
+        background:none\9;
+        padding: 5px\9;
+    } 
+}
+
+.shop-form-input.email{
+    max-width: 941px;
+    padding-left: 40px;
+}
+
+.shop-form-terms{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+
+#shop_notify_terms{
+    display: none;
+}
+
+#shop-notify-terms-toggle{
+    cursor: pointer;
+    display: block;
+    width: 28px;
+    height: 28px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.shop-notify-terms-text{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 15px/20px var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 15px/20px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    max-width: 1133px;
+    margin: 0;
+    margin-left: 16px;
+}
+
+
+.btn.submit-shop-form{
+    display: block;
+    width: 260px;
+    height: 72px;
+    background: #23AAF7;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 51px;
+    border: 3px solid transparent;
+    transition: all .3s linear;
+}
+
+.btn.submit-shop-form:hover{
+    border: 3px solid var(--black);
+}
+
+.btn.submit-shop-form > p {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 24px/32px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: center;
+    font: normal normal normal 24px/32px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    padding-top: 11px;
+    transform: scale(0.98);
+    transition: all .3s linear;
+}
+
+.btn.submit-shop-form:hover > p {
+    transform: scale(1.0);
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    padding-top: 10px;
+}
+
+
+.sellwait-banner{
+    background: var(--sell-–-orange) 0% 0% no-repeat padding-box;
+    background: #F28E33 0% 0% no-repeat padding-box;
+    opacity: 1;
+    padding: 64px 0;
+    cursor: pointer;
+}
+
+.sellwait-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.sellwait-row.center{
+    justify-content: center;
+}
+
+.sellwait-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.sellwait-column.text{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 100px;
+}
+
+.sellwait-title{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 58px/var(--unnamed-line-spacing-65) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 58px/65px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+    transition: all 0.3s linear;
+}
+
+.sellwait-desc{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-40)/var(--unnamed-line-spacing-48) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 40px/48px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+    max-width: 628px;
+    margin-top: 20px;
+    transition: all 0.3s linear;
+}
+
+.shop-coins{
+    display: block;
+    width: 211px;
+    height: 211px;
+}
+
+.shopbanner-arrow-right{
+    display: block;
+    width: 100px;
+    height: 100px;  
+    margin-top: auto;
+    margin-bottom: auto;
+    transition: all .3s linear;
+}
+
+.shopbanner-arrow-right.zoomed{
+    transform: scale(1.1);
+}
+
+#shopform-thankyou{
+    display: flex;
+    flex-direction: column;
+    padding: 103px 0;
+}
+
+#shopform-thankyou.not-visible{
+    display: none;
+}
+
+.shopform-thankyou-large{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-80)/var(--unnamed-line-spacing-90) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 80px/90px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+}
+
+.shopform-thankyou-small{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-50)/var(--unnamed-line-spacing-58) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 50px/58px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+}
+
+#shopform-thankyou > img {
+    display: block;
+    width: 153px;
+    height: 107px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 768px){
+    .shop-intro-container{
+        padding: 22px;
+        padding-top: 90px;
+        padding-bottom: 75px;
+    }
+    .shop-intro-small{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 44px/49px var(--unnamed-font-family-bebas-neue);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--unnamed-color-ffffff);
+        text-align: left;
+        font: normal normal normal 44px/49px Bebas Neue;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        text-shadow: 0px 3px 20px #00000040;
+        opacity: 1;
+    }
+
+    .shop-intro-large{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 63px/71px var(--unnamed-font-family-sharp-sans-no1-bold);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--unnamed-color-ffffff);
+        text-align: left;
+        font: normal normal normal 63px/71px Sharp Sans No1 Bold;
+        letter-spacing: 0px;
+        color: #FFFFFF;
+        text-shadow: 0px 3px 20px #00000040;
+        opacity: 1;
+        max-width: 341px;
+    }
+
+    .coming-soon{
+        display: none;
+        width: 250px;
+        height: 250px;
+        margin-left: 60px;
+    }
+
+    .shop-form-title{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-65) var(--unnamed-font-family-sharp-sans-no1-bold);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: center;
+        font: normal normal normal 60px/65px Sharp Sans No1 Bold;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+    }
+
+    .shop-form-desc{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: center;
+        font: normal normal normal 37px/40px Bebas Neue;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+        margin: 0 auto;
+        margin-top: 40px;
+        max-width: 406px;
+    }
+
+    .shop-form-row{
+        flex-direction: column;
+        padding: 0 45px;
+    }
+
+    .shop-form-input.first-name, .shop-form-input.last-name, .shop-form-input.email, .shop-form-input.age-range{
+        max-width: 100%;
+    }
+
+    .shop-form-terms{
+        max-width: 100%;
+        margin: auto;
+        padding: 0 45px;
+    }
+
+    #shop-notify-terms-toggle{
+        margin-top: 4px;
+    }
+
+    .shop-notify-terms-text{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 15px/20px var(--unnamed-font-family-sharp-sans-no1-book);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: left;
+        font: normal normal normal 15px/20px Sharp Sans No1 Book;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+    }
+
+    .btn.submit-shop-form{
+        width: 85%;
+    }
+
+    .sellwait-banner{
+        padding: 64px 40px;
+    }
+
+    .sellwait-row{
+        flex-direction: column;
+    }
+
+    .sellwait-title{
+        margin-top: 40px;
+    }
+
+    .sellwait-desc{
+        margin-bottom: 40px;
+    }
+
+    .shop-coins{
+        width: 211px;
+        height: 211px;
+        margin: auto;
+    }
+
+    .sellwait-column.text{
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .shopbanner-arrow-right{
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .shopform-thankyou-large{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-65) var(--unnamed-font-family-sharp-sans-no1-bold);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: center;
+        font: normal normal normal 60px/65px Sharp Sans No1 Bold;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+    }
+
+    .shopform-thankyou-small{
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: center;
+        font: normal normal normal 37px/40px Bebas Neue;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+    }
+
+    #shopform-thankyou > img {
+        margin-bottom: 40px;
+    }
+}

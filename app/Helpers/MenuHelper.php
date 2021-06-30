@@ -118,4 +118,12 @@ class MenuHelper {
         }
         return false;
     }
+
+    public static function formatDeviceName($name){
+        $exploded = explode(' ', $name);
+        if(strlen($name) > 20){
+            return $exploded[0] .  " " . $exploded[1] . " " . $exploded[2] . " " .  $exploded[3] . "...";
+        }
+        return $name;
+    }
 }

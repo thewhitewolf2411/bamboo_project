@@ -98,7 +98,8 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
-    width: 450px;
+    width: 100%;
+    max-width: 480px;
     margin-left: 50px;
     margin-right: 50px;
     margin-bottom: 50px;
@@ -123,13 +124,35 @@
 }
 
 .whathappens-large{
-    font-size: 2rem;
+    //font-size: 2rem;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-40)/var(--unnamed-line-spacing-48) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 40px/48px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
     margin-top: 50px;
 }
 
+.whathappens-large.center{
+    text-align: center;
+}
+
 .whathappens-small{
-    font-size: 1rem;
-    margin-top: 15px;
+    // font-size: 1rem;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/var(--unnamed-line-spacing-34) var(--unnamed-font-family-sharp-sans-no1-medium);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 25px/34px Sharp Sans No1 Medium;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+    margin-top: 28px;
 }
 
 
@@ -636,8 +659,9 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 250px;
+    max-width: 347px;
     margin-bottom: 25px;
+    justify-content: center;
 }
 
 .deliveryqualitybanner-img{
@@ -650,15 +674,19 @@
 
 .deliveryqualitybanner-img.larger{
     width: 145px;
-    margin-left: 65px;
+    // margin-left: auto;
+    margin-left: 115px;
 }
 
 .deliveryqualitybanner-text{
-    font-size: 1.5rem;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-30)/var(--unnamed-line-spacing-33) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
     text-align: center;
-    text-transform: uppercase;
-    font-family: Bebas Neue, Helvetica, sans-serif;
-    line-height: 1;
+    font: normal normal normal 30px/33px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
 }
 
 

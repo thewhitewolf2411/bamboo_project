@@ -88,6 +88,8 @@ Route::get('/shop', 'Customer\ShopController@showShopView');
 Route::get('/shop/let','Customer\ShopController@showLetView');
 Route::get('/shop/why', 'Customer\ShopController@showWhyView');
 
+Route::post('/shopsignup', 'Customer\ShopController@signUp');
+
 Route::get('/shop/category/{category}', 'Customer\ShopController@showShop');
 Route::get('/shop/compare/', 'Customer\ShopController@showComparePage');
 Route::get('/shop/item/{id}', 'Customer\ShopController@showItem');
