@@ -209,6 +209,11 @@ class Tradein extends Model
 
                 return "Not assigned.";
             }
+
+            if($this->job_state == '20' || $this->job_state == '21'){
+                return "Dispatch.";
+            }
+
             return "Not received yet.";
         }
 
@@ -983,6 +988,7 @@ class Tradein extends Model
     }
 
     public function isDowngraded(){
+        #dd($this->customer_grade, $this->bamboo_grade);
         if($this->customer_grade !== $this->bamboo_grade){
             return true;
         }
@@ -1166,6 +1172,14 @@ class Tradein extends Model
         return $this->getDevicePrice() + $this->carriage_cost + $this->admin_cost + $this->misc_cost;
     }
 
+    public function getDeviceCustomerPrice(){
+        if($this->bamboo_price > $this->order_price){
+            return $this->order_price;
+        }
+
+        return $this->bamboo_price;
+    }
+
     public function getDeviceMiscCost(){
         if($this->misc_cost){
             return $this->misc_cost;
@@ -1337,10 +1351,10 @@ class Tradein extends Model
     
             $prices = [$orderPrice, $bambooPrice];
     
-            return min($prices) + $this->carriage_cost + $this->admin_cost + $this->misc_cost;
+            return min($prices);
         }
 
-        return "Not paid yet.";
+        return 0;
     }
 
 }

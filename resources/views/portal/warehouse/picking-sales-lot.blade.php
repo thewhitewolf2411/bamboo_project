@@ -48,7 +48,7 @@
 
                 <div class="border border-primary rounded p-3">
                     <input type="hidden" id="buildsaleslot-salelot" value="{{$saleLot->id}}">
-                    @if($saleLot->sales_lot_status === 2)
+                    @if($saleLot->sales_lot_status === 2 || $saleLot->sales_lot_status === 4)
 
                     <div id="buildsaleslot-scanboxdiv" class="buildsaleslot-active">
                         

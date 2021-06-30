@@ -177,7 +177,7 @@ class BuildingLotService{
                     $tradein->getDeviceMemory(),
                     $tradein->getDeviceNetwork(),
                     $tradein->getDeviceColour(),
-                    '£'.$tradein->getDeviceCost()
+                    '£'.$tradein->getPaidPrice()
                     ]);
             }
 
@@ -256,7 +256,7 @@ class BuildingLotService{
             $tradein->device_memory = $tradein->getDeviceMemory();
             $tradein->device_network = $tradein->getDeviceNetwork();
             $tradein->device_colour = $tradein->getDeviceColour();
-            $tradein->device_cost = $tradein->getDeviceCost();
+            $tradein->device_cost = $tradein->getDeviceCustomerPrice();
             $returnTradeins->push($tradein);
 
             //$tradein->save();

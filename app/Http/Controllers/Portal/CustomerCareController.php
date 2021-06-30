@@ -285,10 +285,14 @@ class CustomerCareController extends Controller
         $productIds = array();
 
         foreach($tradeins as $tradein){
-            
-            if($tradein->job_state < 4){
-                $tradein->job_state = 3;
-                $tradein->save();
+            if(isset($request->print_trade_pack_trade_in_order_management)){
+
+            }
+            else{
+                if($tradein->job_state < 4){
+                    $tradein->job_state = 3;
+                    $tradein->save();
+                }
             }
 
             array_push($productIds, $tradein->product_id);

@@ -186,7 +186,7 @@
         <img src="{{public_path() . '/images/Group5.png'}}" width="27" height="21">
     </div>
     <div id="delivery-note-text">
-        <p>Delivery Note</p>
+        <p class="bold">Delivery Note</p>
     </div>
 
     <p style="display: none">
@@ -298,7 +298,7 @@
             <p>Trade in-ID:
                 {{$tradeins[0]->barcode_original}}
             </p>
-            <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($tradeins[0]->barcode_original,'C128') }}" height="30" width="150" style="margin: 0" />
+            <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($tradeins[0]->barcode_original,'C128') }}" height="15" width="150" style="margin: 0" />
         </div>
 
         <div id="thank-you-note">

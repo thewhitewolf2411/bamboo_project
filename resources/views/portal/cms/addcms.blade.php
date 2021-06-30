@@ -59,12 +59,12 @@
     
                 <div class="form-group @if(isset($blog)) col-md-4 @endif">
                     <label for="add_image_2">@if(isset($blog)) <p>Click on image to change image 2.</p><img src="/storage/news_images/{{$blog->image_2}}" width="100%"> @else Add image 2: @endif</label>
-                    <input type="file" name="add_image_2" id="add_image_2" accept="image/*">
+                    <input type="file" name="add_image_2" id="add_image_2" accept="image/*" @if(isset($blog)) @else required @endif>
                 </div>
     
                 <div class="form-group @if(isset($blog)) col-md-4 @endif">
                     <label for="add_image_3">@if(isset($blog)) <p>Click on image to change image 3.</p><img src="/storage/news_images/{{$blog->image_3}}"  width="100%"> @else Add image 3: @endif</label>
-                    <input type="file" name="add_image_3" id="add_image_3" accept="image/*" >
+                    <input type="file" name="add_image_3" id="add_image_3" accept="image/*" @if(isset($blog)) @else required @endif>
                 </div>
             </div>
 

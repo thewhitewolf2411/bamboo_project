@@ -75,7 +75,6 @@ class ReceivingService{
     }
 
     private static function _checkBlacklistedReceivingResaults(array $receivingData){
-        dd($receivingData);
 
         self::orderExpired($receivingData['tradeinid']);
 

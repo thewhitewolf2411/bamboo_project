@@ -96,7 +96,7 @@
                                     <td><div class="table-element">{{$tradein->barcode}}</div></td>
                                     <td><div class="table-element">{{$tradein->getOrderDate()}}</div></td>
                                     <td><div class="table-element">{{$tradein->getProductName($tradein->id)}}</div></td>
-                                    <td><div class="table-element">£ {{$tradein->getDevicePrice()}}</div></td>
+                                    <td><div class="table-element">£{{$tradein->getDeviceCustomerPrice()}}</div></td>
                                     <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>
                                 </tr>
                             @endforeach

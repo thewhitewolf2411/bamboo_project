@@ -223,7 +223,6 @@ class FeedsController extends Controller
 
     }
 
-
     public function feedsImport(Request $request){
 
         $export_feed_parameter = $request->export_feed_parameter;
@@ -234,16 +233,6 @@ class FeedsController extends Controller
         # export feed parameters:
         # 1. - Sales products (SellingProduct model)
         # 2. - Recycle products (BuyingProduct model)
-
-        if($export_feed_parameter == 1){
-            DB::table('buying_products')->truncate();
-            DB::table('buying_products_colours')->truncate();
-            DB::table('buying_product_information')->truncate();
-            DB::table('buying_product_network')->truncate();
-        }
-        else if($export_feed_parameter == 2){
-
-        }
 
         $inputFileName = $request->file('imported_csv')->getClientOriginalName();
         $inputFileType = 'Xlsx';
@@ -397,6 +386,18 @@ class FeedsController extends Controller
                 }
             }
 
+            $numberofproductsInSystem = count(SellingProduct::all());
+            $numberofproductsInFeed = 0;
+
+            foreach($importeddata as $key=>$row){
+                if(!empty($row[1])){
+                    $numberofproductsInFeed++;
+                }
+            }
+
+            if($numberofproductsInFeed < $numberofproductsInSystem){
+                return \redirect()->back()->with('error','Number of products in spreadsheet is less than in system. Please check again.');
+            }
 
             if(count($missing_header_fields) > 0){
                 return \redirect()->back()->with('error','Error - check your import file. Missing fields: ' . implode(', ', $missing_header_fields));
