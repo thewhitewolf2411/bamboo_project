@@ -224,7 +224,7 @@ class PaymentBatchService {
                     ",,,01,,,,,,,,,".
                     env('BAMBOO_ACCOUNT_NUMBER').
                     ",,,,".
-                    $tradein->getDevicePrice().
+                    $tradein->getDeviceCustomerPrice().
                     ",,".
                     //Carbon::parse($payment_batch->arrive_at)->format('dmY').
                     Carbon::now()->format('dmY') . 
