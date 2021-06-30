@@ -119,10 +119,27 @@ class MenuHelper {
         return false;
     }
 
+    /**
+     * Format too long device names.
+     */
     public static function formatDeviceName($name){
         $exploded = explode(' ', $name);
-        if(strlen($name) > 20){
-            return $exploded[0] .  " " . $exploded[1] . " " . $exploded[2] . " " .  $exploded[3] . "...";
+        if(strlen($name) >= 20){
+            $conct_name = $exploded[0];
+            if(isset($exploded[1])){
+                $conct_name.= " " . $exploded[1];
+
+                if(isset($exploded[2])){
+                    $conct_name.= " " . $exploded[2];
+
+                    if(isset($exploded[3])){ 
+                        $conct_name.= " " . $exploded[3];
+                    }
+                }
+            }
+            $conct_name = substr($conct_name, 0, 20);
+            $conct_name.= "...";
+            return $conct_name;
         }
         return $name;
     }

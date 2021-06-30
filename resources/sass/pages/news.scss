@@ -619,7 +619,7 @@
 @media (max-width: 1510px){
     .news-main-row{
         flex-direction: column;
-        max-height: 100%;
+        max-height: initial;
     }
 
     .news-primary{

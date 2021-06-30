@@ -2588,13 +2588,21 @@ input.lookup-delivery-basket::placeholder{
     .product-data{
         width: auto;
         margin: auto;
-        padding: 0 25px;
+        // padding: 0 25px;
     }
 
     .product-image-container{
         margin-left: auto;
         margin-right: auto;
         margin-top: 20px;
+    }
+
+    .product-price-container{
+        flex-wrap: wrap;
+    }
+
+    .product-price-container > div.tutorials{
+        margin-left: 0;
     }
 
     .back-results-sell{

@@ -241,7 +241,8 @@
                 {{-- <p class="service-header-1" >Service & Support</p>
                 <p class="service-header-2">A lot of our queries can be found within our Service & Support section</p> --}}
                 <p class="service-header-1">FAQ’s</p>
-                <p class="service-header-2">A lot of our queries can be found within our FAQ’s section</p>
+                {{-- <p class="service-header-2">A lot of our queries can be found within our FAQ’s section</p> --}}
+                <p class="service-header-2">A lot of answers can be found within our FAQ’s section</p>
             </div>
             <div class="contact-footer-arrow">
                 <img src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">

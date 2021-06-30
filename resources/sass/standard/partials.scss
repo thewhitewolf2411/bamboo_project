@@ -58,7 +58,8 @@
 // }
 
 .whathappensvideocontainer{
-    width: 815px;
+    // width: 815px;
+    width: 100%;
     max-width: 600px;
     height: 400px;
     cursor: pointer;
@@ -1257,14 +1258,6 @@
 
 
 
-@media screen and (max-width: 740px) and (min-width: 325px){
-    .whathappensvideocontainer {
-        width: 100%;
-        padding: 1rem 2rem !important;
-    }
-}
-
-
 // mobile - xl 
 @media (max-width: 625px){
     .image-whathappens-col{
@@ -1303,4 +1296,64 @@
     // .sustainability-container{
     //     padding: 40px;
     // }
+}
+
+
+
+
+
+
+
+
+// faq instructions modal
+.remove-lock-button{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    // max-width: 280px;
+    height: 48px;
+    background: var(--technical-–-violet) 0% 0% no-repeat padding-box;
+    background: #A375BC 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    border: 3px solid transparent;
+    transition: all .3s linear;
+}
+
+.remove-lock-button > p {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-17)/var(--unnamed-line-spacing-23) Sharp Sans No1 Semibold;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: left;
+    font: normal normal normal 17px/23px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    padding: 15px;
+    padding-top: 8px;
+    transition: all .3s linear;
+}
+
+.remove-lock-button > img {
+    width: 23px;
+    height: 23px;
+    display: block;
+    margin-right: 14px;
+    margin-top: auto;
+    margin-bottom: auto;
+    transition: all .3s linear;
+    transform: scale(1);
+}
+
+.remove-lock-button:hover{
+    background: white;
+    border: 3px solid var(--technical-–-violet);
+}
+
+.remove-lock-button:hover > p {
+    color: var(--technical-–-violet);
+}
+
+.remove-lock-button:hover > img {
+    filter: contrast(0);
+    transform: scale(1.2);
 }

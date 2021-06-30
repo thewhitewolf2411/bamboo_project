@@ -155,8 +155,11 @@
 
                     </p>
                     <div class="tutorials">
-                        @include('partial.faq.instructionsmodal', ['type' => 'googleInstructions', 'page' => 'sellitem'])
-                        @include('partial.faq.instructionsmodal', ['type' => 'appleInstructions', 'page' => 'sellitem'])
+                        @if($product->brand_id === 1)
+                            @include('partial.faq.instructionsmodal', ['type' => 'appleInstructions', 'page' => 'sellitem'])
+                        @else
+                            @include('partial.faq.instructionsmodal', ['type' => 'googleInstructions', 'page' => 'sellitem'])
+                        @endif
                     </div>
                 </div>
 
