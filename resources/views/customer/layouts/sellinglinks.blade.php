@@ -594,6 +594,28 @@
             window.location = '/sell';
         });
 
+        // close submenus if they are out of focus
+        document.body.addEventListener('mouseover', function(event){
+            let mobile_sell_hovermenu = document.getElementById('sellmobilephones-header-hover');
+            let tablets_sell_hovermenu = document.getElementById('selltablets-header-hover');
+            let watches_sell_hovermenu = document.getElementById('sellwatches-header-hover');
+            if(!mobile_sell_hovermenu.classList.contains('not-visible')){
+                if(event.target.id && event.target.id === "sellmobilephones-header-hover"){
+                    mobile_sell_hovermenu.classList.add('not-visible');
+                }
+            }
+            if(!tablets_sell_hovermenu.classList.contains('not-visible')){
+                if(event.target.id && event.target.id === "selltablets-header-hover"){
+                    tablets_sell_hovermenu.classList.add('not-visible');
+                }
+            }
+            if(!watches_sell_hovermenu.classList.contains('not-visible')){
+                if(event.target.id && event.target.id === "sellwatches-header-hover"){
+                    watches_sell_hovermenu.classList.add('not-visible');
+                }
+            }
+        });
+
 
         // close on out-click
         // mobile dropdown

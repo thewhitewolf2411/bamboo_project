@@ -24,10 +24,16 @@
 }
 
 .top-text-shadow{
-    text-shadow: 0px 1px #798080;
-    font-size: 64px;
-    color: white;
-    font-family:Sharp Sans No1 Bold;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-80)/var(--unnamed-line-spacing-90) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: center;
+    font: normal normal normal 80px/90px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    text-shadow: 0px 3px 6px #00000066;
+    opacity: 1;
+    margin: 0;
 }
 
 .user-sections-container{
@@ -46,16 +52,24 @@
 .menu-item{
     background: white;
     height: 60px;
-    line-height: 3.6;
     padding-left: 20px;
     min-width: 220px;
-    font-family:Sharp Sans No1 Bold;
     margin-bottom: 2px;
     cursor: pointer;
     user-select: none;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-17)/var(--unnamed-line-spacing-23) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 17px/23px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    line-height: 3.5;
 }
 
 .menu-item.link-active{
@@ -85,10 +99,10 @@
 
 .section-item-preview{
     background: white;
-    padding-top: 20px;
+    padding-top: 25px;
     padding-left: 35px;
     padding-right: 35px;
-    padding-bottom: 20px;
+    padding-bottom: 25px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -96,8 +110,14 @@
 }
 
 .section-item-title{
-    font-size: 28px;
-    font-family: Bebas Neue;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 37px/40px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
     text-transform: uppercase;
     margin: 0;
 }
@@ -112,7 +132,15 @@
 
 .right-link-text{
     padding-top: 10px;
-    font-size: 14px;
+    //font-size: 14px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 18px/24px var(--unnamed-font-family-sharp-sans-no1-medium);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: right;
+    font: normal normal normal 18px/24px Sharp Sans No1 Medium;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
 }
 
 .right-link-box{
@@ -129,6 +157,9 @@
 .right-link-img{
     display: block;
     width: 25px;
+    margin: 17px;
+    margin-top: auto;
+    margin-bottom: auto;
     margin-left: 10px;
 }
 
@@ -152,7 +183,8 @@
 .action-button-right{
     display: flex;
     flex-direction: row;
-    width: 140px;
+    // width: 140px;
+    width: 200px;
     justify-content: space-around;
     margin-right: 0;
     padding: 5px;
@@ -165,7 +197,15 @@
 
 .action-button-right-text{
     color: white !important;
-    line-height: 2.5;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-17)/var(--unnamed-line-spacing-23) Sharp Sans No1 Semibold;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: left;
+    font: normal normal normal 17px/23px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    line-height: 2.4;
 }
 
 .action-button-right.purple{
@@ -185,7 +225,9 @@
     display: block;
     width: 25px;
     height: 25px;
-    margin: 3px;
+    margin: 17px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 
@@ -237,6 +279,29 @@
     background: #a9a9a9;
 }
 
+.notification-content{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 18px/24px var(--unnamed-font-family-sharp-sans-no1-medium);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 18px/24px Sharp Sans No1 Medium;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
+}
+
+.notification-content.bold{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 18px/25px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 18px/25px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+}
+
 .notification-error-img, .notification-green-img{
     width: 24px;
 }
@@ -286,6 +351,15 @@
 
 
 .validationModal-title{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-37)/var(--unnamed-line-spacing-40) var(--unnamed-font-family-bebas-neue);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 37px/40px Bebas Neue;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
     text-transform: uppercase;
     margin-bottom: 1rem;
 }
@@ -510,8 +584,14 @@
 }
 
 .communications-title{
-    font-family: Sharp Sans No1 Bold;
-    font-size: 18px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/35px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 25px/35px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
     margin: 0;
 }
 
@@ -539,13 +619,21 @@
 }
 
 .newsletter-text{
-    font-size: 17px;
-    width: 340px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/28px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
 }
 
-.newsletter-text.row{
+.newsletter-text-row{
     display: flex;
     flex-direction: row;
+    width: 100%;
+    max-width: 400px;
+    margin-right: 45px;
 }
 
 
@@ -657,7 +745,7 @@
 }
 
 // tablets - regular
-@media screen and (max-width: 740px) {
+@media (max-width: 768px) {
     .sections-menu, .page-sections{
         display: none;
     }

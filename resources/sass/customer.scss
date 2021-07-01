@@ -666,8 +666,8 @@ main p, a, span{
 
 //How it works
 .how-title-container{
-    background: url('/customer_page_images/body/Green-Purple.png');
-    height: 250px;
+    background: url('/customer_page_images/body/Green-Purple.png') 0% 0% no-repeat padding-box;
+    height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;

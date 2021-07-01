@@ -81,13 +81,13 @@
                         <div class="selling-text-column">
                             <p class="selling-section-title-orange">Same day payment</p>
                             <p class="selling-section-text-description">As soon as we receive your device, we'll carry out all the testing required and issue payment directly into your bank account the same day we receive it*. The sooner you send in your device, the sooner you'll get paid!
-                                *Subject to our testing terms and conditions.</p>
+                                <br><small class="small-text">*Subject to our <a class="small-text" href="/terms">testing terms and conditions.</a></small></p>
                         </div>
                     </div>
                     <div class="selling-with-element selling-with-right">
                         <div class="selling-text-column">
                             <p class="selling-section-title-orange">Free Postage</p>
-                            <p class="selling-section-text-description">We offer a Freepost service with Royal Mail which allows you to post up to 2 devices free of charge. It covers up to £100.00 and you will be able to track your delivery via <a class="bold" style="font-size: inherit;color: orange;" href="https://www.royalmail.com" target="_blank">www.royalmail.com</a>. If you have more than 2 devices to sell, feel free to place several orders of 2 devices per order.</p>
+                            <p class="selling-section-text-description">We offer a Freepost service with Royal Mail which allows you to post up to 2 devices free of charge. It covers up to £100 and you will be able to track your delivery via <a class="bold" style="font-size: inherit;color: orange;" href="https://www.royalmail.com" target="_blank">www.royalmail.com</a>. If you have more than 2 devices to sell, feel free to place several orders of 2 devices per order.</p>
                         </div>
                         <div class="selling-img-container">
                             <img src="{{asset('/sell_images/why_images/image-2.svg')}}">
@@ -189,7 +189,7 @@
 
         @include('partial.newsletter')
 
-        @include('customer.layouts.footer', ['showGetstarted' => false])
+        @include('customer.layouts.footer', ['showGetstarted' => true])
 
     </main>
 

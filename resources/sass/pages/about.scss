@@ -57,6 +57,17 @@
     color: #000000;
 }
 
+.about-rest-text > a {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-38) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/38px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    text-decoration: underline;
+}
+
 .toggle-about-more{
     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-25)/var(--unnamed-line-spacing-34) var(--unnamed-font-family-sharp-sans-no1-medium);
     letter-spacing: var(--unnamed-character-spacing-0);
@@ -253,6 +264,13 @@
     top: -200px;
 }
 
+.queens-award{
+    display: block;
+    width: 150px;
+    height: 250px;
+    margin-left: 20px;
+}
+
 @media (min-width: 768px) and (max-width:1440px){
     .about-intro-panel, .about-section-column.padded, .about-section-row-sustainability.padded{
         padding-left: 140px;
@@ -325,6 +343,15 @@
     .about-section-column.margin-left{
         margin-left: 0;
         margin-top: 30px;
+    }
+
+    .about-section-row.queens{
+        flex-direction: column;
+    }
+
+    .queens-award{
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .about-main-image{
@@ -409,6 +436,17 @@
         font: normal normal normal 20px/38px Sharp Sans No1 Book;
         letter-spacing: 0px;
         color: #000000;
+    }
+
+    .about-rest-text > a {
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-38) var(--unnamed-font-family-sharp-sans-no1-book);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--black);
+        text-align: left;
+        font: normal normal normal 20px/38px Sharp Sans No1 Bold;
+        letter-spacing: 0px;
+        color: #000000;
+        text-decoration: underline;
     }
 
     .about-bamboo-text-desc{

@@ -286,6 +286,8 @@
 .latest-news > div.news-row, .latest-blogs > div.blogs-row, .latest-howto > div.howto-row{
     display: flex;
     flex-direction: row;
+
+    justify-content: center;
 }
 
 .all-news-item, .all-blogs-item, .all-howto-item{

@@ -78,9 +78,9 @@
     'normal' => $rootDir . '/lib/fonts/DejaVuSerif',
   ),
   'sharp sans no1 medium' => array(
-    'normal' => $fontDir . '/sharp-sans-no1-medium-normal_537e182b957a3681f1c1ce3e8acea6a2',
+    'normal' => $fontDir . '/sharp-sans-no1-medium-normal_85c883238b2c61b0fda6196a75392755',
   ),
   'sharp sans no1 bold' => array(
-    'normal' => $fontDir . '/sharp-sans-no1-bold-normal_3aea79a55c822671daf59f8256968916',
+    'normal' => $fontDir . '/sharp-sans-no1-bold-normal_1fc4fa803a94a2bf84bbe8ee9add4c33',
   ),
 ) ?>

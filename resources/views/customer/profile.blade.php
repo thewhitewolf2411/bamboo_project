@@ -552,9 +552,10 @@
                                     </div>
                                     <div class="row m-0 mt-3 mb-3 justify-content-between">
                                         <div class="newsletter-box @if(Auth::user()->sub === 0)inactive @endif" id="yes-newsletterbox" onclick="chooseNewsletter('yes')">
-                                            <div class="newsletter-text row">
-                                                Yes, I would love to hear about the <br>
-                                                latest amazing offers, hints & tips.
+                                            <div class="newsletter-text-row">
+                                                <p class="newsletter-text">
+                                                <strong class="bold">Yes</strong>, I would love to hear about the <br>
+                                                latest amazing offers, hints & tips.</p>
                                             </div>
                                             @if(Auth::user()->sub === 1) 
                                                 <img class="tick-img" id="yes-newsletter" src="/customer_page_images/body/Icon-Tick-Selected.svg">
@@ -564,9 +565,10 @@
                                         </div>
 
                                         <div class="newsletter-box @if(Auth::user()->sub === 1)inactive @endif" id="no-newsletterbox" onclick="chooseNewsletter('no')">
-                                            <div class="newsletter-text row">
-                                                No, I would not love to hear about the <br>
-                                                latest amazing offers, hints & tips.
+                                            <div class="newsletter-text-row">
+                                                <p class="newsletter-text">
+                                                <strong class="bold">No,</strong> I would not love to hear about the <br>
+                                                latest amazing offers, hints & tips.</p>
                                             </div>
                                             @if(Auth::user()->sub === 0) 
                                                 <img class="tick-img" id="no-newsletter" src="/customer_page_images/body/Icon-Tick-Selected.svg">

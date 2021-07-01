@@ -16,7 +16,7 @@
             <div class="sale-status-col second">
                 <img src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" class="sale-status-img-mobile">
                 <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-                <p class="sale-status-text">Awaiting response</p>
+                <p class="sale-status-text bold">Awaiting response</p>
             </div>
             <div class="sale-status-grey-line"></div>
             <div class="sale-status-col third">
@@ -42,7 +42,7 @@
                 <div class="sale-status-col second">
                     <img src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" class="sale-status-img-mobile">
                     <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-                    <p class="sale-status-text">Awaiting receipt</p>
+                    <p class="sale-status-text bold">Awaiting receipt</p>
                 </div>
                 <div class="sale-status-grey-line"></div>
                 <div class="sale-status-col third">
@@ -62,7 +62,7 @@
                 <div class="sale-status-col second">
                     <img src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" class="sale-status-img-mobile">
                     <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-                    <p class="sale-status-text">Trade Pack Despatched</p>
+                    <p class="sale-status-text bold">Trade Pack Despatched</p>
                 </div>
                 <div class="sale-status-grey-line"></div>
                 <div class="sale-status-col third">
@@ -89,7 +89,7 @@
         <div class="sale-status-col second">
             <img src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" class="sale-status-img-mobile">
             <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-            <p class="sale-status-text">Testing</p>
+            <p class="sale-status-text bold">Testing</p>
         </div>
         <div class="sale-status-grey-line"></div>
         <div class="sale-status-col third">
@@ -113,7 +113,7 @@
         <div class="sale-status-col second">
             <img src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" class="sale-status-img-mobile">
             <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-            <p class="sale-status-text">Submitted for payment</p>
+            <p class="sale-status-text bold">Submitted for payment</p>
         </div>
         <div class="sale-status-grey-line"></div>
         <div class="sale-status-col third">
@@ -139,7 +139,7 @@
             <div class="sale-status-col second">
                 <img src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" class="sale-status-img-mobile">
                 <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
-                <p class="sale-status-text">Submitted for payment</p>
+                <p class="sale-status-text bold">Submitted for payment</p>
             </div>
             <div class="sale-status-purple-line"></div>
             <div class="sale-status-col third">
@@ -160,7 +160,7 @@
                 <div class="sale-status-col second">
                     <img src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" class="sale-status-img-mobile">
                     <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
-                    <p class="sale-status-text">Awaiting response</p>
+                    <p class="sale-status-text bold">Awaiting response</p>
                 </div>
                 <div class="sale-status-purple-line"></div>
                 <div class="sale-status-col third">
@@ -182,7 +182,7 @@
                 <div class="sale-status-col second">
                     <img src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" class="sale-status-img-mobile">
                     <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-                    <p class="sale-status-text">Payment confirmed</p>
+                    <p class="sale-status-text bold">Payment confirmed</p>
                 </div>
                 <div class="sale-status-grey-line"></div>
                 <div class="sale-status-col third">
@@ -211,7 +211,7 @@
             <div class="sale-status-col second">
                 <img src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" class="sale-status-img-mobile">
                 <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-                <p class="sale-status-text">Awaiting response</p>
+                <p class="sale-status-text bold">Awaiting response</p>
             </div>
             <div class="sale-status-grey-line"></div>
             <div class="sale-status-col third">
@@ -229,7 +229,7 @@
             <div class="sale-status-col second">
                 <img src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" class="sale-status-img-mobile">
                 <img class="sale-status-img" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
-                <p class="sale-status-text">Awaiting response</p>
+                <p class="sale-status-text bold">Awaiting response</p>
             </div>
             <div class="sale-status-grey-line"></div>
             <div class="sale-status-col third">
@@ -256,7 +256,7 @@
         <div class="sale-status-col second">
             <img src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" class="sale-status-img-mobile">
             <img class="sale-status-img" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
-            <p class="sale-status-text">Awaiting response</p>
+            <p class="sale-status-text bold">Awaiting response</p>
         </div>
         <div class="sale-status-grey-line"></div>
         <div class="sale-status-col third">
@@ -282,7 +282,7 @@
         <div class="sale-status-col second">
             <img src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" class="sale-status-img-mobile">
             <img class="sale-status-img" src="{{asset('/customer_page_images/body/grey_circle.png')}}">
-            <p class="sale-status-text">Testing</p>
+            <p class="sale-status-text bold">Testing</p>
         </div>
         <div class="sale-status-grey-line"></div>
         <div class="sale-status-col third">
@@ -304,7 +304,7 @@
         <div class="sale-status-col second">
             <img src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}" class="sale-status-img-mobile">
             <img class="sale-status-img" src="{{asset('/customer_page_images/body/Icon-Tick-Selected.svg')}}">
-            <p class="sale-status-text">Sent to despatch</p>
+            <p class="sale-status-text bold">Sent to despatch</p>
         </div>
         <div class="sale-status-purple-line"></div>
         <div class="sale-status-col third">

@@ -88,7 +88,7 @@ class FAQSeeder extends Seeder
             'answer' => 'If your device is blocked, it is likely it has been reported lost or stolen. 
             It is illegal for us to purchase any blocked devices. 
             If you are the rightful owner of the device, you will need to contact your service provider 
-            or insurance company to have the device unblocked within 28 days of us notifying you..
+            or insurance company to have the device unblocked within 28 days of us notifying you.
             Once 28 days has elapsed then the device will be destroyed.',
         ]);
 

@@ -127,15 +127,15 @@
 
         <div class="col-md-12">
             <p class="footer-text-small">
-                Please read these terms and conditions carefully before submitting your sell order from our site. You should understand that by submitting an order, you agree to be bound by these terms and conditions and our terms of use.
+                Please read these terms and conditions carefully before submitting your sell order from our site. You should understand that by submitting an order, you agree to be bound by these terms and conditions and our terms of use.                        
             </p>
         </div>
         <br>
+        <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
-                <p class="text-left footer-text-title">How The Contract Is Formed Between You And Us</p>
-            </div>
+            <p class="text-left footer-text-title">How The Contract Is Formed Between You And Us</p>
+            <br>
             <p class="footer-text-small">
                 Our site is only intended for use by people registered with us and resident in Great Britain and Northern Ireland. At our complete discretion we may accept or reject orders from people outside of these territories.<br>
                 Your contract with us will be formed when we receive your sell order. It will incorporate these terms and conditions and our terms of use. Please click on the "How It Works" page for more information.<br>
@@ -151,21 +151,24 @@
                 <li>the contract was negotiated and concluded exclusively by means of distance communication (including, but not limited to, telephone, letter, fax or email); and</li>
                 <li>you are a natural person acting outside the purposes of any business.</li>
             </ul>
+            <br>
             <p class="footer-text-small">
-                When cancelling during the cooling-off period, you need not give us any reason for cancelling the contract, nor will you have to pay any administration charges.<br>
-                To cancel the contract you must login into your account at bamboomobile.co.uk, please do not send the device(s) to us during your “cooling off period”.<br>
-                Other than if the device does not meet our terms and conditions (see below), this contract cannot be cancelled after you have sent your device(s) to us (outside the "cooling-off period").<br>
+                When cancelling during the cooling-off period, you need not give us any reason for cancelling the contract, nor will you have to pay any administration charges.
+                To cancel the contract you must login into your account at bamboomobile.co.uk, please do not send the device(s) to us during your “cooling off period”.
+                Other than if the device does not meet our terms and conditions (see below), this contract cannot be cancelled after you have sent your device(s) to us (outside the "cooling-off period").
+
             </p>
         </div>
 
         <br>
+        <hr>
+        <br>
+
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
-                <p class="text-left footer-text-title">PLEASE ENSURE THAT YOU ARE HAPPY TO SEND THE PHONE TO US AND THAT IT IS WITHIN YOUR RIGHTS TO DO SO.</p>
-            </div>
-            <div class="slavery-title-container-small">
-                <p class="text-left footer-text-title">Consumers</p>
-            </div>
+            <p class="text-left footer-text-title">PLEASE ENSURE THAT YOU ARE HAPPY TO SEND THE PHONE TO US AND THAT IT IS WITHIN YOUR RIGHTS TO DO SO.</p>
+            <br>
+            <p class="text-left footer-text-title">Consumers</p>
+            <br>
             <p class="footer-text-small">
                 By placing an order through our site, you warrant that:
             </p>
@@ -182,10 +185,12 @@
                 If you deal as a consumer any provision of this contract which is of no effect to a consumer shall not apply. Your statutory rights are not affected by this contract.<br>
                 For the purposes of these terms and conditions, "consumer" means an individual who neither makes this contract in the course of a business, nor holds himself out as doing so, as defined by the Unfair Contract Terms Act 1977.<br>
             </p>
+            <br>
+            <hr>
+            <br>
 
-            <div class="slavery-title-container-small">
-                <p class="text-left footer-text-title">Businesses</p>
-            </div>
+            <p class="text-left footer-text-title">Businesses</p>
+            <br>
             <p class="footer-text-small">
                 By placing an order through our site, you warrant that:
             </p>
@@ -197,16 +202,18 @@
             </ul>
         </div>
         <br>
+        <hr>
+        <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small title-red">
-                <p class="text-left footer-text-title">Phones and Devices</p>
-            </div>
+            <p class="text-left footer-text-title">Phones and Devices</p>
+            <br>
             <p class="footer-text-small">
                 Each mobile device(s) (inc. Mobile Phones, Tablets and Watches) sold should match the make and model in the sale order and meet the following conditions:
             </p>
-            <div class="slavery-title-container-small title-red">
-                <p class="text-left footer-text-title">Condition – Excellent Working</p>
+            <br>
+            <div class="title-red">
+                <p class="text-left footer-text-title terms-condition-title">Condition – Excellent Working</p>
             </div>
             <ul class="footer-text-small">
                 <li>Handset/Device is fully functional, working and complete</li>
@@ -218,8 +225,9 @@
                 <li>No Knox disabled</li>
                 <li>No Blocked, Stolen or fake items </li>
             </ul>
-            <div class="slavery-title-container-small title-red">
-                <p class="text-left footer-text-title">Condition – Good Working</p>
+            <br>
+            <div class="title-red">
+                <p class="text-left footer-text-title terms-condition-title">Condition – Good Working</p>
             </div>
             <ul class="footer-text-small">
                 <li>Handset/Device is fully functional, working and complete</li>
@@ -231,8 +239,9 @@
                 <li>No Knox disabled</li>
                 <li>No Blocked, Stolen or fake items </li>
             </ul>
-            <div class="slavery-title-container-small title-red">
-                <p class="text-left footer-text-title">Condition – Poor Working</p>
+            <br>
+            <div class="title-red">
+                <p class="text-left footer-text-title terms-condition-title">Condition – Poor Working</p>
             </div>
             <ul class="footer-text-small">
                 <li>Handset/Device is fully functional, working and complete</li>
@@ -244,8 +253,9 @@
                 <li>No Knox disabled</li>
                 <li>No Blocked, Stolen or fake items </li>
             </ul>
-            <div class="slavery-title-container-small title-red">
-                <p class="text-left footer-text-title">Condition – Damaged Working</p>
+            <br>
+            <div class="title-red">
+                <p class="text-left footer-text-title terms-condition-title">Condition – Damaged Working</p>
             </div>
             <ul class="footer-text-small">
                 <li>Handset/Device is fully functional, working and complete</li>
@@ -257,8 +267,9 @@
                 <li>No Knox disabled</li>
                 <li>No Blocked, Stolen or fake items </li>
             </ul>
-            <div class="slavery-title-container-small title-red">
-                <p class="text-left footer-text-title">Condition – Faulty</p>
+            <br>
+            <div class="title-red">
+                <p class="text-left footer-text-title terms-condition-title">Condition – Faulty</p>
             </div>
             <ul class="footer-text-small">
                 <li>Handset/Device is NOT fully functional</li>
@@ -272,18 +283,20 @@
                 <li>Accept Knox disabled </li>
                 <li>No Blocked, Stolen or fake items </li>
             </ul>
+            <br>
             <p class="footer-text-small">
                 We accept phone battery chargers and accessories. But, these do not increase the value of your order. We may not be able to return accessories or original packaging (box) if you request your phone to be returned.<br>
                 By submitting an order through our site you warrant that the phone(s) and/or devices(s) comply with these terms.<br>
-                If a phone/device fails to meet our terms and conditions, we will offer an adjusted price by email. If you choose to decline our new offer, we are happy to return the phone. We have the final decision on all phone values. Adjusted orders will be automatically processed for payment if you do not reply to our proposed offer email within 7 days.
+                If a phone/device fails to meet our terms and conditions, we will offer an adjusted. If you choose to decline our new offer, we are happy to return the phone. We have the final decision on all phone values. Adjusted orders will be automatically processed for payment if you do not reply to our proposed offer email within 7 days.
             </p>
         </div>
         <br>
+        <hr>
+        <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
-                <p class="text-left footer-text-title">Data Risks and Precautions - Important</p>
-            </div>
+            <p class="text-left footer-text-title">Data Risks and Precautions - Important</p>
+            <br>
             <p class="footer-text-small">
                 Please remember that by sending your device to us, you agree to release us from all and any claims, losses or damages with respect to the device, any data stored or contained therein or on any media used in conjunction with the device (whether in the form of personal details, SMS, photos, games, songs or other data ("Data")). We accept no responsibility in relation to the security, protection, confidentiality or use of such data and it is your responsibility to ensure so far as practicable that Data is removed from the device prior to you sending it to us.<br><br>
                 Although in our experience the risk of Data left on your device being accessed by us or by any third party to whom we subsequently sell the device are very low, we draw to your attention the following points which will help you decide whether to accept the risk of selling us a device which may contain accessible Data.<br><br>
@@ -295,28 +308,30 @@
             </p>
         </div>
         <br>
+        <hr>
+        <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
-                <p class="text-left footer-text-title">Sim Card and Memory Card removal – Important</p>
-            </div>
+            <p class="text-left footer-text-title">Sim Card and Memory Card removal – Important</p>
+            <br>
             <p class="footer-text-small">
                 You are responsible for cancelling any airtime contract linked to each device. We are not responsible for any call costs arising before, or after, receipt of your device, or arising from any other circumstances whatsoever.<br><br>
                 Please ensure you remove your SIM card and Memory card before sending us your device. We accept no liability in the event that a SIM card is sent with a device and charges are then incurred. You shall continue to be responsible for such charges. Any SIM cards and/or Memory cards received by us are non-returnable and will be destroyed.
             </p>
         </div>
         <br>
+        <hr>
+        <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
-                <p class="text-left footer-text-title">Lost or Stolen Mobile Phones and Devices</p>
-            </div>
+            <p class="text-left footer-text-title">Lost or Stolen Mobile Phones and Devices</p>
+            <br>
             <p class="footer-text-small">
-                Selling a mobile phone or device which you do not own may amount to a criminal offence. We will check the IMEI/Serial number of all mobile phones and devices received on Phonecheck (www.phonecheck.com) to ensure no lost or stolen items are purchased.<br><br>
-                If a mobile phone or device is found to have a record that indicates it has been lost or stolen or we become aware of any other issue relating to its ownership, we will notify the seller by email and quarantine the mobile phone or device for an initial period of 28 days ("the Quarantine Period"). Payment for the mobile phone or device will be withheld by us until the Phonecheck does not show the mobile phone as stolen or lost.<br><br>
+                Selling a mobile phone or device which you do not own may amount to a criminal offence. We will check the IMEI/Serial number of all mobile phones and devices received on CheckMEND (www.checkmend.com/uk) to ensure no lost or stolen items are purchased.<br><br>
+                If a mobile phone or device is found to have a record that indicates it has been lost or stolen or we become aware of any other issue relating to its ownership, we will notify the seller by email and quarantine the mobile phone or device for an initial period of 28 days ("the Quarantine Period"). Payment for the mobile phone or device will be withheld by us until the Checkmend does not show the mobile phone as stolen or lost.<br><br>
                 In such circumstances you will be required to prove that you are the rightful owner of the mobile phone or device and have the lost or stolen records associated with it cleared within the Quarantine Period and/or resolve any other issue relating to its ownership.<br><br>
-                If during the Quarantine Period the mobile phone or device is cleared on the Phonecheck database and any other issue relating to ownership of the same is resolved, your sale will be processed and paid for as normal.<br><br>
-                However, where the mobile phone or device is not cleared on Phonecheck within the Quarantine Period, we will be required by law to hold onto the mobile phone or device, pass it to the Police or other law enforcement body or dispose of it, and by entering into this contract, you expressly agree to this action. You will not receive any payment if such steps are taken.<br><br>
+                If during the Quarantine Period the mobile phone or device is cleared on the Checkmend database and any other issue relating to ownership of the same is resolved, your sale will be processed and paid for as normal.<br><br>
+                However, where the mobile phone or device is not cleared on Checkmend within the Quarantine Period, we will be required by law to hold onto the mobile phone or device, pass it to the Police or other law enforcement body or dispose of it, and by entering into this contract, you expressly agree to this action. You will not receive any payment if such steps are taken.<br><br>
                 UK legislation states that we cannot under any circumstances return or pay for a mobile phone or device which is lost, stolen or recorded as such.<br><br>
                 If you have received payment from us for a mobile phone or device which we subsequently become aware of an issue relating to ownership, you agree to immediately reimburse us in full, within 3 business days following a written request by us, for any such payment pending an investigation by us or any law enforcement body into ownership of the device or mobile phone.<br><br>
                 We shall be entitled to set-off any sums properly due and owing to us under any contract made between you and us incorporating these terms and conditions against any sums owed by us to you under the same or any other contract between us. We will inform you in writing of any set-off carried out by us pursuant to this provision.<br><br>
@@ -325,23 +340,27 @@
             </p>
         </div>
         <br>
-
-        <div class="col-md-12">
-            <div class="slavery-title-container-small">
-                <p class="text-left footer-text-title">Mobile Phones and Devices with AssetWatch</p>
-            </div>
-            <p class="footer-text-small">
-                We will check the IMEI/Serial number of all mobile phones and devices received on Phonecheck (www.phonecheck.com) to ensure it is not registered to AssetWatch.<br><br>
-                If a mobile phone or device is found to have a record that indicates it is an AssetWatch item, we will notify the seller by email and quarantine the mobile phone or device for an initial period of 28 days ("the Quarantine Period"). Payment for the mobile phone or device will be withheld by us until Phonecheck does not show the mobile phone as AssetWatch.<br><br>
-                In such circumstances you will be required to prove that you are the rightful owner of the mobile phone or device and to pay an administrative fee of £15.00 to Bamboo Mobile within the Quarantine Period before we can send the mobile phone or device back to you within 3 to 5 working days.
-            </p>
-        </div>
+        <hr>
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
-                <p class="text-left footer-text-title">Pricing</p>
-            </div>
+            <p class="text-left footer-text-title">Mobile Phones and Devices with AssetWatch</p>
+            <br>
+            <p class="footer-text-small">
+                We will check the IMEI/Serial number of all mobile phones and devices received on CheckMEND  (www.checkmend.com) to ensure it is not registered to AssetWatch<br><br>
+                {{-- If a mobile phone or device is found to have a record that indicates it is an AssetWatch item, we will notify the seller by email and quarantine the mobile phone or device for an initial period of 28 days ("the Quarantine Period"). Payment for the mobile phone or device will be withheld by us until Phonecheck does not show the mobile phone as AssetWatch.<br><br>
+                In such circumstances you will be required to prove that you are the rightful owner of the mobile phone or device and to pay an administrative fee of £15.00 to Bamboo Mobile within the Quarantine Period before we can send the mobile phone or device back to you within 3 to 5 working days. --}}
+                If a mobile phone or device is found to have a record that indicates it is an AssetWatch item on CheckMEND, we will notify the seller by email and quarantine the mobile phone or device for an initial period of 28 days ("the Quarantine Period") and payment for the mobile phone or device will be withheld by us.<br><br>
+                In such circumstances you or an organisation will be required to prove legal ownership of the mobile phone or device and to pay an administrative fee of £20.00 to Bamboo Mobile within the Quarantine Period before we can send the mobile phone or device back to you within 3 to 5 working days after receipt of cleared funds for the administrative fee.
+            </p>
+        </div>
+        <br>
+        <hr>
+        <br>
+
+        <div class="col-md-12">
+            <p class="text-left footer-text-title">Pricing</p>
+            <br>
             <p class="footer-text-small">
                 Prices offered on our website are subject to change at any time without notice.<br><br>
                 All prices include VAT (or other applicable tax).<br><br>
@@ -349,13 +368,14 @@
             </p>
         </div>
         <br>
+        <hr>
+        <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
-                <p class="text-left footer-text-title">Postage & Packaging</p>
-            </div>
+            <p class="text-left footer-text-title">Postage & Packaging</p>
+            <br>
             <p class="footer-text-small">
-                If you have more than 2 devices to SELL to us please contact our customer support team at 0345 582 0511 or email customersupport@bamboo.co.uk<br><br>
+                If you have more than 2 devices to SELL to us please place a new order or contact our customer support team at *0345 582 0511 or email customersupport@bamboo.co.uk<br><br>
                 Phones and devices must be packaged in accordance with our packaging instructions to ensure safe and successful delivery to us.<br><br>
                 Unfortunately, other than when we arrange courier collections, for the avoidance of doubt this does not include Royal Mail special delivery. We do not accept responsibility.<br>
                 Please note you will be covered up to:
@@ -371,60 +391,63 @@
             <p><strong>Waltham Abbey</strong></p>
             <p><strong>Hertfordshire</strong></p>
             <p><strong>EN9 1AS</strong></p>
-            <p class="footer-text-small">Please see <a href="https://www.mazumamobile.com/printPostingInstructions.html" target="blank">posting options</a> and <a href="https://www.mazumamobile.com/printPackingInstructions.html" target="_blank">packaging instructions</a> for further details.</p>
+            <p class="footer-text-small">Please see <a class="footer-text-small hyperlink" href="https://www.mazumamobile.com/printPostingInstructions.html" target="blank">posting options</a> and <a class="footer-text-small hyperlink" href="https://www.mazumamobile.com/printPackingInstructions.html" target="_blank">packaging instructions</a> for further details.</p>
         </div>
+        <br>
+        <hr>
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
-                <p class="text-left footer-text-title">Payments</p>
-            </div>
+            <p class="text-left footer-text-title">Payments</p>
+            <br>
             <p class="footer-text-small">
                 We offer bank transfer payment. You will be required to select a payment option when placing each online sell order. Unfortunately, this payment option cannot be changed once the order is placed.<br><br>
                 When we receive your sale items, we will check that the sale is complete, and that it meets our terms and conditions. Providing it does, we will make payment to you by bank transfer on the same day of receipt (Monday to Friday, excluding public holidays) of your mobile phone(s) and/or device(s). Same day payment does not apply to sale items received after 2pm and in events that are out of our control.
             </p>
         </div>
         <br>
+        <hr>
+        <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
-                <p class="text-left footer-text-title">Bank Transfer payments</p>
-            </div>
+            <p class="text-left footer-text-title">Bank Transfer payments</p>
+            <br>
             <p class="footer-text-small">
                 Bank Transfer payments can only be made to the account details given when placing the online order. We cannot, under any circumstances, recall or reissue bank transfer payments once they have been made.
             </p>
         </div>
         <br>
+        <hr>
+        <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
-                <p class="text-left footer-text-title">Events Outside of Our Control</p>
-            </div>
+            <p class="text-left footer-text-title">Events Outside of Our Control</p>
+            <br>
             <p class="footer-text-small">
                 We will not be liable or responsible for any failure to perform, or delay in performance of, any of our obligations under a contract that is caused by events outside our reasonable control or due to our compliance with any applicable laws or regulations.
             </p>
         </div>
         <br>
+        <hr>
+        <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
-                <p class="text-left footer-text-title">Rejected offers</p>
-            </div>
+            <p class="text-left footer-text-title">Rejected offers</p>
             <p class="footer-text-small">
-                If you reject an amended offer for your order we will return your device/s. Please allow 3-5 working days. If the delivery is failed on the first attempt we will contact you by phone and email before returning for a second time. If the second attempt is failed you the customer must contact our office to arrange a third delivery at your own cost. If there is no contact for 7 days we will automatically process your payment at the amended price.
+                If you reject an amended offer for your order we will return your device/s. Please allow 3-5 working days. If the delivery is failed on the first attempt we will contact you by phone and email before returning for a second time. If the second attempt is failed you the customer must contact our office to arrange a third delivery at your own cost. If you do not contact us, we will automatically process your payment at the amended price after 7 days.
             </p>
         </div>
         <br>
+        <hr>
+        <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small title-red">
-                <p class="text-left footer-text-title">Terms of Website Use</p>
-            </div>
+            <p class="text-left footer-text-title">Terms of Website Use</p>
         </div>
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
+            <div>
                 <p class="text-left footer-text-title">1. Information About Us</p>
             </div>
             <p class="footer-text-small">
@@ -434,7 +457,7 @@
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
+            <div>
                 <p class="text-left footer-text-title">2. Accessing Our Site</p>
             </div>
             <p class="footer-text-small">
@@ -475,10 +498,10 @@
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
+            <div>
                 <p class="text-left footer-text-title">3. Intellectual Property Rights</p>
             </div>
-            <p>
+            <p class="footer-text-small">
                 <strong>3.1</strong> We are the owner or the licensee of all intellectual property rights in our site, and in the material published on it. Those works are protected by copyright laws and treaties around the world. All such rights are reserved.
             </p>
             <p class="footer-text-small">
@@ -500,7 +523,7 @@
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
+            <div>
                 <p class="text-left footer-text-title">4. Reliance on Information Posted</p>
             </div>
             <p class="footer-text-small">
@@ -510,7 +533,7 @@
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
+            <div>
                 <p class="text-left footer-text-title">5. Our Site Changes Regularly</p>
             </div>
             <p class="footer-text-small">
@@ -520,7 +543,7 @@
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
+            <div>
                 <p class="text-left footer-text-title">6. Our Liability</p>
             </div>
             <p class="footer-text-small">
@@ -541,17 +564,17 @@
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
+            <div>
                 <p class="text-left footer-text-title">7. Information About You and Your Visits to Our Site</p>
             </div>
             <p class="footer-text-small">
-                We process information about you in accordance with our privacy policy. By using our site, you consent to such processing and you warrant that all data provided by you is accurate.
+                We process information about you in accordance with our <a class="footer-text-small hyperlink" href="/privacy">privacy policy</a>. By using our site, you consent to such processing and you warrant that all data provided by you is accurate.
             </p>
         </div>
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
+            <div>
                 <p class="text-left footer-text-title">8. Viruses, Hacking and Other Offences</p>
             </div>
             <p class="footer-text-small">
@@ -567,7 +590,7 @@
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
+            <div>
                 <p class="text-left footer-text-title">9. Linking To Our Site</p>
             </div>
             <p class="footer-text-small">
@@ -579,14 +602,14 @@
             <p class="footer-text-small">
                 <strong>9.3</strong> Our site must not be framed on any other site, nor may you create a link to any part of our site other than the home page. We reserve the right to withdraw linking permission without notice. The website from which you are linking must comply in all respects with the standards set out in these terms and conditions.
             </p>
-            <p>
-                <strong>9.4</strong> If you wish to make any use of material on our site other than that set out above, please address your request to <a href="mailto:info@bamboomobile.co.uk">info@bamboomobile.co.uk</a>
+            <p class="footer-text-small">
+                <strong>9.4</strong> If you wish to make any use of material on our site other than that set out above, please address your request to <a class="footer-text-small" href="mailto:info@bamboomobile.co.uk">info@bamboomobile.co.uk</a>
             </p>
         </div>
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
+            <div>
                 <p class="text-left footer-text-title">10. Links from Our Site</p>
             </div>
             <p class="footer-text-small">
@@ -596,7 +619,7 @@
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
+            <div>
                 <p class="text-left footer-text-title">11. Jurisdiction and Applicable Law</p>
             </div>
             <p class="footer-text-small">
@@ -612,7 +635,7 @@
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
+            <div>
                 <p class="text-left footer-text-title">12. Trademarks</p>
             </div>
             <p class="footer-text-small">
@@ -622,7 +645,7 @@
         <br>
 
         <div class="col-md-12">
-            <div class="slavery-title-container-small">
+            <div>
                 <p class="text-left footer-text-title">13. Variations</p>
             </div>
             <p class="footer-text-small">
@@ -632,11 +655,24 @@
         <br>
 
         <div class="col-md-12">
+            <div>
+                <p class="text-left footer-text-title">13. Large print, audio, braille</p>
+            </div>
+            <p class="footer-text-small">
+                All documentation is available in large print, audio or braille.  If you require any of these formats then please contact us on customersupport@bamboomobile.co.uk or call *0345 582 0511.                         
+            </p>
+            <p class="footer-text-small">
+                * Calls may be recorded and/or monitored. Price of call will incur roaming charges if calling from abroad. Check with your operator for details. 
+            </p>
+        </div>
+        <br>
+
+        {{-- <div class="col-md-12">
 
             <p>Paula Hansson</p>
             <p>Company Security</p>
 
-        </div>
+        </div> --}}
 
     </div>
 </div>

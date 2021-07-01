@@ -23,7 +23,7 @@
             
             @if($notification->status === 'info')
                 <img class="notification-green-img mr-4 ml-2" src="{{asset('/customer_page_images/body/green_bell.svg')}}">
-                {!!$notification->content!!}
+                <p class="notification-content @if($notification->status === 'alert') bold @endif">{!!$notification->content!!}</p>
 
             @endif
         </div>

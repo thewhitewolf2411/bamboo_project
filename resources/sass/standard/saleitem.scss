@@ -100,7 +100,12 @@
     flex-direction: column;
     justify-content: center;
     width: 150px;
-    height: 70px;
+    //height: 70px;
+    height: 105px;
+}
+
+.sale-status-col.first{
+    height: 85px;
 }
 
 .sale-status-row{
@@ -109,16 +114,31 @@
 }
 
 .sale-status-text{
-    font-size: 12px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-28) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 20px/28px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
 }
 
 .sale-status-text.bold{
-    font-family: Sharp Sans No1 Bold;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 20px/27px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
 }
 
 .sale-status-img{
     display: block;
-    width: 35px;
+    width: 52px;
+    height: 52px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
@@ -134,7 +154,7 @@
 
 .sale-status-purple-line{
     height: 2px;
-    width: 200px;
+    width: 300px;
     background: #a375bc;
     margin-top: 20px;
     margin-left: -40px;
@@ -143,7 +163,7 @@
 
 .sale-status-grey-line{
     height: 2px;
-    width: 200px;
+    width: 300px;
     background: #cccccc;
     margin-top: 20px;
     margin-left: -40px;
@@ -176,14 +196,14 @@
     margin: 0;
 }
 
-.btn-purple.sale-detail-btn{
+.sale-detail-btn{
     width: 100%;
     max-width: 380px;
-    margin-top: 40px;
+    // margin-top: 40px;
     margin-bottom: 0;
 }
 
-.btn-purple.sale-detail-btn > p {
+.sale-detail-btn > p {
     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 17px/23px Sharp Sans No1 Semibold;
     letter-spacing: var(--unnamed-character-spacing-0);
     color: var(--unnamed-color-ffffff);
@@ -201,9 +221,15 @@
     color: var(--technical-–-violet);
 }
 
-.btn-purple.sale-detail-btn > img {
+.sale-detail-btn:hover > img {
+    filter: contrast(0);
+    transform: scale(1.2);
+}
+
+.sale-detail-btn > img {
     margin-right: 20px;
     margin-left: 20px;
+    transition: all .3s linear;
 }
 
 .sale-detail-btn{
@@ -216,6 +242,10 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     margin-bottom: 5px;
+}
+
+.sale-detail-btn.large{
+    width: 300px;
 }
 
 .sale-detail-btn.auto-width{
@@ -413,21 +443,6 @@
     margin: 0;
 }
 
-.delivery-detail-btn{
-    color: white;
-    padding: 5px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    margin-bottom: 5px;
-}
-
-.delivery-detail-btn > p{
-    padding: 3px;
-    color: white;
-}
 
 
 

@@ -53,13 +53,15 @@
                     If you love Tech and love value, you’ll love collaborating with Bamboo Mobile! Reach out to 
                     our friendly team of mobile phone recycling experts to chat about how we can provide you 
                     with the best value for mobile phones and devices, while helping save the environment at the same time.
+                    <br><br>
+                    For more info please visit <a href="https://bamboodistribution.com">BambooDistribution.com</a>
                 </p>
             </div>
 
             <br><br>
 
             <div class="toggle-about-more" id="buttonAboutToggle" data-toggle="collapse" href="#collapseReadmore" role="button" aria-expanded="false" aria-controls="collapseReadmore">
-                Read more or for more info please visit BambooDistribution.com
+                Read more
             </div>
         </div>
     </div>
@@ -87,13 +89,17 @@
                         the very best value and quality of service end to end, always delivered with care and integrity.
                         <br><br>
                         Bamboo Distribution has been operating for over 10 years by a management team of industry professionals
-                         with over 50 years combined experience in the mobile industry has seen the company become an 
-                         established entity and trusted partner in the marketplace. 
-                        <br><br>
-                        Working with High Street Retailers, Authorised Distributors and Repairers, Insurance Companies, 
-                        Independent Retails and Exporters, Bamboo assist their key partners and add value throughout 
-                        the supply chain, delivering product solutions to individuals and companies.
+                        with over 50 years combined experience in the mobile industry has seen the company become an 
+                        established entity and trusted partner in the marketplace.             
                     </p>
+                    <div class="about-section-row queens mt-5">
+                        <p class="about-bamboo-text-desc mt-2">
+                            Working with High Street Retailers, Authorised Distributors and Repairers, Insurance Companies, 
+                            Independent Retails and Exporters, Bamboo assist their key partners and add value throughout 
+                            the supply chain, delivering product solutions to individuals and companies.
+                        </p>
+                        <img class="queens-award" src="{{asset('/images/queens_gold_logo.png')}}" width="200px" height="225px">
+                    </div>
                 </div>
             </div>
 
@@ -245,7 +251,7 @@
 <script type="application/javascript">
     window.addEventListener('DOMContentLoaded', (event) => {
         $('#collapseReadmore').on('hidden.bs.collapse', function () {
-            $('#buttonAboutToggle').html("Read more or for more info please visit BambooDistribution.com");
+            $('#buttonAboutToggle').html("Read more");
         });
         $('#collapseReadmore').on('shown.bs.collapse', function () {
             $('#buttonAboutToggle').html("Read less");
