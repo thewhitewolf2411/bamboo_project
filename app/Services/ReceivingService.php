@@ -25,6 +25,19 @@ class ReceivingService{
         if($results){  
             $tradein = self::allocateToTray(Tradein::find($request->tradeinid));
             $pdf = self::generateBarcode(Tradein::find($tradein->id));
+
+            $klaviyoEmail = new KlaviyoEmail();
+            if(Tradein::find($request->tradeinid)->hasExpired()){
+                $klaviyoEmail->orderExpired_em10(Tradein::find($request->tradeinid)->customer(), Tradein::find($request->tradeinid));
+            }
+            else{
+                if(Tradein::find($request->tradeinid)->hasExpiredWithSamePrice()){
+                    $klaviyoEmail->orderExpired_em11(Tradein::find($request->tradeinid)->customer(), Tradein::find($request->tradeinid));
+                }
+                else{
+                    $klaviyoEmail->deviceReceived(Tradein::find($request->tradeinid)->customer(), Tradein::find($request->tradeinid));
+                }
+            }
             
             return [$tradein->getTrayName($tradein->id), $pdf];
         }
@@ -185,7 +198,7 @@ class ReceivingService{
                 $tradein->bamboo_price = $newPrice;
             }
             else{
-                $tradein->job_state = '9';
+                $tradein->job_state = '12';
             }
 
             $tradein->save();

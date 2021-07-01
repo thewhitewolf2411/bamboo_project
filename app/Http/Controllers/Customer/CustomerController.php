@@ -729,7 +729,7 @@ class CustomerController extends Controller
                 }
 
                 // set state to test complete
-                $tradein->job_state = '12';
+                $tradein->job_state = '9b';
                 $tradein->save();
 
                 return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
@@ -892,9 +892,19 @@ class CustomerController extends Controller
             foreach($tradeins as $tradein){
                 $user_id = $tradein->user_id;
                 $tradein_id = $tradein->barcode;
-                $tradein->delete();
+                if($tradein->job_state == 4){
+                    $klaviyoEmail = new KlaviyoEmail();
+                    $klaviyoEmail->deviceMissingCancelOrder_offer_em_8($tradein->customer(), $tradein);
+                }
+                else{
+
+                }
+                $tradein->job_state = '4a';
+                $tradein->save();
                  // send notification - order cancelled
                 $notificationService->orderCancelled($tradein_id, $user_id);
+
+
             }
         }
 

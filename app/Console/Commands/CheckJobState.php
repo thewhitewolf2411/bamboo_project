@@ -43,7 +43,7 @@ class CheckJobState extends Command
     {
 
         $triggercustomermailstates = [
-            "2", "4", "6", "7", "8a", "8b", "8c", "8d", "8e", "8f", "9", "9a", "10", "11", "11a", "11b", "11c", "11d", "11e", "11f","11g", "11h",
+            "2", "4", "4b", "6", "7", "8a", "8b", "8c", "8d", "8e", "8f", "9", "9a", "10", "11", "11a", "11b", "11c", "11d", "11e", "11f","11g", "11h",
             "11i", "11j", "12", "13", "14", "15", "15a", "15b", "15c", "15d", "15e", "15f", "15g", "15h", "15i", "15j", "16", "17",
         ];
         $jobstates = JobStateChanged::whereIn('job_state', $triggercustomermailstates)->where('sent', false)->where('updated_at', '<=', \Carbon\Carbon::now()->subHour()->toDateTimeString())->get();
@@ -81,12 +81,13 @@ class CheckJobState extends Command
                     }
                     break;
                 case "4":
-                    $klaviyoemail->missingDevice($emailUser);
-                    $notificationservice->sendMissingDevice($emailTradein);
+                    $tradeins = $jobstate->getTradeinsByBarcode();
+                    $klaviyoemail->deviceMissing_testing_em_5($emailUser, $tradeins[0]);
+                    #$notificationservice->sendMissingDevice($emailTradein);
                     break;
                 case "6":
-                    $klaviyoemail->noImei($emailUser, $emailTradein);
-                    $notificationservice->sendNoIMEI($emailTradein);
+                    $klaviyoemail->noImei_testing_em_3($emailUser, $emailTradein);
+                    //$notificationservice->sendNoIMEI($emailTradein);
                     break;
                 case "7":
                     $klaviyoemail->blacklisted($emailUser, $emailTradein);
@@ -194,6 +195,23 @@ class CheckJobState extends Command
 
             $jobstate->sent = true;
             $jobstate->save();
+        }
+
+
+        $expirycustomerstates = ["4"];
+        $jobstates = JobStateChanged::whereIn('job_state', $expirycustomerstates)->get();
+
+        foreach($jobstates as $jobstate){
+            $emailTradein = $jobstate->getTradein();
+            switch($emailTradein->job_state){
+                case "4":
+                    if(\Carbon\Carbon::parse($emailTradein->updated_at)->diffInDays(\Carbon\Carbon::now()) > 28){
+                        $emailTradein->job_state = '4b';
+                        $emailTradein->save();
+
+                    }
+                break;
+            }
         }
     }
 }

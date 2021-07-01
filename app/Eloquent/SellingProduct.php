@@ -57,4 +57,8 @@ class SellingProduct extends Model
         }
         return asset('/storage/product_images').'/'.$this->product_image;
     }
+
+    public function getExcellentWorkingPrice(){
+        return '£' . ProductInformation::where('product_id', $this->id)->first()->excellent_working;
+    }
 }

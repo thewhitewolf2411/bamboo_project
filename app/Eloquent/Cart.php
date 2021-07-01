@@ -68,4 +68,12 @@ class Cart extends Model
         $user = User::where('id', $id)->first();
         return $user->last_name;
     }
+
+    public function getUser(){
+        return User::find($this->user_id);
+    }
+
+    public function getProduct(){
+        return SellingProduct::find($this->product_id);
+    }
 }
