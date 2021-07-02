@@ -372,7 +372,6 @@ class PaymentsController extends Controller
      */
     public function exportCSV(Request $request){
         if(isset($request->batches)){
-
             // generate payment batch csv file
             $batch_ids = request()->batches;
             $batchService = new PaymentBatchService();

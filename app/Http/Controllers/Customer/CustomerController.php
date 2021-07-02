@@ -718,6 +718,9 @@ class CustomerController extends Controller
     public function acceptFaultyOffer($tradein_id){
         $tradein = Tradein::findOrFail($tradein_id);
 
+        $tradein->order_price = $tradein->bamboo_price;
+        $tradein->customer_grade = 'Faulty';
+
         switch ($tradein->job_state) {
             // no imei
             case '6':
@@ -831,13 +834,16 @@ class CustomerController extends Controller
         $tradein = Tradein::findOrFail($tradein_id);
         $notificationService = new NotificationService();
 
-        $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
-        $notification->resolved = true;
-        $notification->save();
+        //$notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+        //$notification->resolved = true;
+        //$notification->save();
 
         // mark device send to customer
         $tradein->job_state = '19';
         $tradein->save();
+
+        $klaviyoEmail = new KlaviyoEmail();
+        $klaviyoEmail->returnDevice_offer_em_9($tradein->customer(), $tradein);
 
         // send notification - mark for return
         $notificationService->sendMarkedToReturn($tradein->id);

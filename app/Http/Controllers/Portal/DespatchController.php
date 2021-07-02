@@ -8,6 +8,7 @@ use App\Eloquent\Tradein;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\DespatchService;
+use App\Services\KlaviyoEmail;
 use App\Services\NotificationService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -93,6 +94,11 @@ class DespatchController extends Controller
             if($tradeins->count() > 0){
                 $despatchService = new DespatchService();
                 $result = $despatchService->requestDespatch($tradeins);
+
+                foreach($tradeins as $tradein){
+                    $klaviyoEmail = new KlaviyoEmail();
+                    $klaviyoEmail->returnDevice_post_testing_em_3($tradein->customer(), $tradein);
+                }
 
                 $messages = [];
                 if(!empty($result['error'])){

@@ -80,6 +80,9 @@ class PaymentBatchService {
             
                 $tradein = Tradein::find($payment_batch_device->tradein_id);
 
+                $klaviyoEmail = new KlaviyoEmail();
+                $klaviyoEmail->paymentEmail_post_testing_em_6($tradein->customer(), $tradein);
+
                 $additionalCost = AdditionalCosts::where('id','>', 1)->first();
 
                 if($additionalCost){

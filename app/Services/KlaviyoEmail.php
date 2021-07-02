@@ -488,8 +488,88 @@ class KlaviyoEmail{
 
         $this->sendEmail($event);
     }
+
+    //Post Testing EM - 6
+    public function paymentEmail_post_testing_em_6($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Post Testing EM - 6',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$post_testing_em_6_device_1' => $tradein->getCustomerProductName(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+
+    //Offer EM - 9
+    public function returnDevice_offer_em_9($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Offer EM - 9',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$em_9_device_1' => $tradein->getCustomerProductName(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+
+    //Post Testing EM - 3
+    public function returnDevice_post_testing_em_3($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Post Testing EM - 3',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$post_testing_em_9_device_1' => $tradein->getCustomerProductName(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+
     /**
      * No IMEI - Email End
+     */
+
+    /**
+     * PIN Locked - Email Start
+     */
+    //Testing EM - 4
+    public function pinLocked_testing_em_4($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Testing EM - 4',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$testing_em_4_device_1' => $tradein->getCustomerProductName(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+
+    /**
+     * PIN Locked - Email End
      */
 
     /**

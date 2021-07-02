@@ -218,11 +218,14 @@ class Testing{
             }
         }
         else{
-            if($tradein->job_state === "9" || $tradein->job_state === "9a"){
+
+            $tradein->job_state = "10";
+
+            /*if($tradein->job_state === "9" || $tradein->job_state === "9a" || $tradein->job_state === "9b"){
                 $tradein->job_state = "10";
             }else if($tradein->job_state === "14"){
                 $tradein->job_state = "16";
-            }
+            }*/
             switch($bambogradeval){
                 case 5:
                     $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'A')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
