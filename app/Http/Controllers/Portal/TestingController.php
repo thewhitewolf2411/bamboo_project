@@ -74,7 +74,7 @@ class TestingController extends Controller
         if($tradein == null){
             return redirect()->back()->with('error', 'There is no such device');
         }
-        if($tradein->job_state === "9" || $tradein->job_state === "9a" || $tradein->job_state === "13" || $tradein->job_state === "14"){
+        if($tradein->job_state === "9" || $tradein->job_state === "9a" || $tradein->job_state === "9b" || $tradein->job_state === "13" || $tradein->job_state === "14"){
             $user_id = Auth::user()->id;
             $portalUser = PortalUsers::where('user_id', $user_id)->first();
             $product_networks = ProductNetworks::where('product_id', $tradein->product_id)->get()->pluck('network_id');
@@ -427,28 +427,30 @@ class TestingController extends Controller
 
         $sellingProduct = SellingProduct::where('id', $tradein->product_id)->first();
 
-        if($tradein->isInQuarantine() === true){
-            $newBarcode .= "90";
-            $newBarcode .= mt_rand(100000, 999999);
-            $tradein->quarantine_date = \Carbon\Carbon::now();
-        }
-        else{
-            $tradein->job_state = 9;
-            if($sellingProduct->brand_id < 10){
-                $newBarcode .= $tradein->job_state . "0" . $sellingProduct->brand_id;
-                $newBarcode .= mt_rand(10000, 99999);
+        //Generate unique barcode
+        do{
+            if($tradein->isInQuarantine() === true){
+                $newBarcode .= "90";
+                $newBarcode .= mt_rand(100000, 999999);
+                $tradein->quarantine_date = \Carbon\Carbon::now();
             }
             else{
-                $newBarcode .= $tradein->job_state . $sellingProduct->brand_id;
-                $newBarcode .= mt_rand(1000, 9999);
+                $tradein->job_state = 9;
+                if($sellingProduct->brand_id < 10){
+                    $newBarcode .= $tradein->job_state . "0" . $sellingProduct->brand_id;
+                    $newBarcode .= mt_rand(10000, 99999);
+                }
+                else{
+                    $newBarcode .= $tradein->job_state . $sellingProduct->brand_id;
+                    $newBarcode .= mt_rand(1000, 9999);
+                }
+            }
+
+            if($tradein->barcode == $tradein->barcode_original){
+                $tradein->barcode = $newBarcode;
             }
         }
-
-        if($tradein->barcode == $tradein->barcode_original){
-            $tradein->barcode = $newBarcode;
-        }
-        
-        $barcode = DNS1D::getBarcodeHTML($tradein->barcode, 'C128');
+        while(Tradein::where('barcode', $newBarcode)->exists());
 
         $user_id = Auth::user()->id;
         $portalUser = PortalUsers::where('user_id', $user_id)->first();

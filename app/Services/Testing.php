@@ -165,98 +165,101 @@ class Testing{
             $tradein->quarantine_date = \Carbon\Carbon::now();
             switch($bambogradeval){
                 case 5:
-                    $tradein->customer_grade = 'Excellent Working';
+                    //$tradein->customer_grade = 'Excellent Working';
                     $tradein->cosmetic_condition = 'A';
                     break;
                 case 4:
                     if($request->cosmetic_condition === "Grade B+"){
-                        $tradein->customer_grade = 'Good Working';
+                        //$tradein->customer_grade = 'Good Working';
                         $tradein->cosmetic_condition = 'B+';
                     }
                     else{
-                        $tradein->customer_grade = 'Good Working';
+                        //$tradein->customer_grade = 'Good Working';
                         $tradein->cosmetic_condition = 'B';
                     }
                     break;
                 case 3:
-                    $tradein->customer_grade = 'Poor Working';
+                    //$tradein->customer_grade = 'Poor Working';
                     $tradein->cosmetic_condition = 'C';
                     break;
                 case 2:
                     if($request->cosmetic_condition === "WSI"){
-                        $tradein->customer_grade = 'Damaged Working';
+                        //$tradein->customer_grade = 'Damaged Working';
                         $tradein->cosmetic_condition = 'WSI';
                     }
                     else{
-                        $tradein->customer_grade = 'Damaged Working';
+                        //$tradein->customer_grade = 'Damaged Working';
                         $tradein->cosmetic_condition = 'WSD';
                     }
                     break;
                 case 1:
                 case 0:
                     if($request->cosmetic_condition === "WSI"){
-                        $tradein->customer_grade = 'Faulty';
+                        //$tradein->customer_grade = 'Faulty';
                         $tradein->cosmetic_condition = 'WSI';
                     }
                     if($request->cosmetic_condition === "WSD"){
-                        $tradein->customer_grade = 'Faulty';
+                        //$tradein->customer_grade = 'Faulty';
                         $tradein->cosmetic_condition = 'WSD';
                     }
                     if($request->cosmetic_condition === "NWSI"){
-                        $tradein->customer_grade = 'Faulty';
+                        //$tradein->customer_grade = 'Faulty';
                         $tradein->cosmetic_condition = 'NWSI';
                     }
                     if($request->cosmetic_condition === "NWSD"){
-                        $tradein->customer_grade = 'Faulty';
+                        //$tradein->customer_grade = 'Faulty';
                         $tradein->cosmetic_condition = 'NWSD';
                     }
                     if($request->cosmetic_condition === "Catastrophic"){
 
-                        $tradein->customer_grade = 'Faulty';
+                        //$tradein->customer_grade = 'Faulty';
                     }
                     break;
             }
         }
         else{
-            if($tradein->job_state === "9" || $tradein->job_state === "9a"){
+
+            $tradein->job_state = "10";
+
+            /*if($tradein->job_state === "9" || $tradein->job_state === "9a" || $tradein->job_state === "9b"){
                 $tradein->job_state = "10";
             }else if($tradein->job_state === "14"){
                 $tradein->job_state = "16";
-            }
+            }*/
             switch($bambogradeval){
                 case 5:
                     $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'A')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                     #dd($quarantineTrays);
                     $tradein->cosmetic_condition = 'A';
-                    $tradein->customer_grade = 'Excellent Working';
+                    //$tradein->customer_grade = 'Excellent Working';
                     break;
                 case 4:
                     if($request->cosmetic_condition === "Grade B+"){
                         $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'B+')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                         $tradein->cosmetic_condition = 'B+';
-                        $tradein->customer_grade = 'Good Working';
+                        //$tradein->customer_grade = 'Good Working';
                     }
                     else{
                         $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'B')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                         $tradein->cosmetic_condition = 'B';
-                        $tradein->customer_grade = 'Good Working';
+                        //$tradein->customer_grade = 'Good Working';
                     }
                     break;
                 case 3:
                     $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'C')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                     $tradein->cosmetic_condition = 'C';
-                    $tradein->customer_grade = 'Poor Working';
+                    //$tradein->customer_grade = 'Poor Working';
                     break;
                 case 2:
                     if($request->cosmetic_condition === "WSI"){
                         $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSI')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                         $tradein->cosmetic_condition = 'WSI';
-                        $tradein->customer_grade = 'Damaged Working';
+                        //$tradein->customer_grade = 'Damaged Working';
                     }
                     else{
                         $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSD')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                         $tradein->cosmetic_condition = 'WSD';
-                        $tradein->customer_grade = 'Damaged Working';
+                        //$tradein->customer_grade = 'Damaged Working';
                     }
                     break;
                 case 1:
@@ -264,27 +267,27 @@ class Testing{
                     if($request->cosmetic_condition === "WSI"){
                         $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSI')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                         $tradein->cosmetic_condition = 'WSI';
-                        $tradein->customer_grade = 'Faulty';
+                        //$tradein->customer_grade = 'Faulty';
                     }
                     if($request->cosmetic_condition === "WSD"){
                         $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'WSD')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                         $tradein->cosmetic_condition = 'WSD';
-                        $tradein->customer_grade = 'Faulty';
+                        //$tradein->customer_grade = 'Faulty';
                     }
                     if($request->cosmetic_condition === "NWSI"){
                         $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'NWSI')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                         $tradein->cosmetic_condition = 'NWSI';
-                        $tradein->customer_grade = 'Faulty';
+                        //$tradein->customer_grade = 'Faulty';
                     }
                     if($request->cosmetic_condition === "NWSD"){
                         $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'NWSD')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                         $tradein->cosmetic_condition = 'NWSD';
-                        $tradein->customer_grade = 'Faulty';
+                        //$tradein->customer_grade = 'Faulty';
                     }
                     if($request->cosmetic_condition === "Catastrophic"){
                         $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'E')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
                         $tradein->cosmetic_condition = 'CAT';
-                        $tradein->customer_grade = 'Faulty';
+                        //$tradein->customer_grade = 'Faulty';
                     }
                     break;
             }

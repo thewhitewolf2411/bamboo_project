@@ -185,11 +185,19 @@
                                         <p class="mr-0 ml-0">User: {{$tradein->customerName()}}</p><br>
                                     </div>
 
+                                    @if(!$tradein->hasExpired())
                                     <div class="d-flex w-50 border p-3" id="receiving-result-{{$tradein->id}}">
                                     
                                         <p></p>
 
                                     </div>
+                                    @else
+                                    <div class="d-flex w-50 border p-3" id="receiving-result-{{$tradein->id}}-expired">
+                                    
+                                        <p>This order has expired.</p>
+
+                                    </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="w-100 d-flex justify-content-between px-3 my-3">

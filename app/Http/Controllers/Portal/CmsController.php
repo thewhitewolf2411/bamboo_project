@@ -154,7 +154,7 @@ class CmsController extends Controller
             $path1 = $request->file('add_image_1')->storeAs('public/news_images/',$fileNameToStore1);
         }
         else{
-            $fileNameToStore1 = $blog->image_2;
+            $fileNameToStore1 = $blog->image_1;
         }
 
         $cms_parag_2 = null;

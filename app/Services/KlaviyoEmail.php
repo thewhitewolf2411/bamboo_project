@@ -20,11 +20,15 @@ class KlaviyoEmail{
         $this->client = new Klaviyo( $this->klaviyokey, $this->userkey);
     }
 
+    /**
+     * Group OrderTypes - SignUp Email Start
+     */
+
     public function AccountCreated($user){
 
         $event = new KlaviyoEvent(
             array(
-                'event' => 'Registration',
+                'event' => 'Creation of account',
                 'customer_properties' => array(
                     '$email' => $user->email,
                     '$first_name' => $user->first_name,
@@ -40,7 +44,56 @@ class KlaviyoEmail{
 
         $this->sendEmail($event);
     }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $url = '/password/reset/'. $token;
+        $event = new KlaviyoEvent(
+
+            array(
+                'event'=>'Reset Password',
+                'customer_properties'=>array(
+                  '$email'=>$_REQUEST['email'],
+                  '$PasswordResetLink'=>$_SERVER['SERVER_NAME'] . $url,
+                ),
+                'properties'=>array(
+                  'event_id'=>'1234',
+                  'PasswordResetLink'=>$_SERVER['SERVER_NAME'] . $url,
+                ),
+                'time'=>\Carbon\Carbon::now()
+            )
+        );
+
+        $this->sendEmail($event);
+
+    }
+
+    public function sendAbandonedBasketEmail($user, $product){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Abandoned Basket',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$first_name' => $user->first_name,
+                    '$abandoned_card_device_1' => $product->product_name,
+                    '$abandoned_card_device_1_price' => $product->getExcellentWorkingPrice(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+
+    /**
+     * Group OrderTypes - SignUp Email End
+     */
   
+    /*
+    * Print Your Own - Customer Inbound Start Emailing
+    */
     //Offer EM - 1  __One Device__
     public function oneItemSoldPrintOwnLabel($user, $tradein){
 
@@ -250,17 +303,71 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
-    //done
-    public function ItemSoldTradePack($user, Tradein $tradein){
+    /*
+     *   Print Your Own - Customer Inbound End Emailing
+     */
 
+
+    /*
+     *  Customer Converts to Free Trade Pack Start Emailing  
+     */
+    //Offer EM - 4
+    public function tradePackSent($user, $tradeins){
+        if(count($tradeins) === 1){
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Offer EM - 4',
+                    'customer_properties' => array(
+                        '$email' => $user->email,
+                        '$em_4_device_1' => $tradeins[0]->getCustomerProductName(),
+                        '$em_4_tradein_id_1' => $tradeins[0]->barcode_original,
+                        '$em_4_proposed_price_1' => '£' . $tradeins[0]->order_price,
+                    ),
+                    'properties' => array(
+                        'Item sold' => true
+                    )
+                )
+            );
+        }
+        if(count($tradeins) === 2){
+            $event = new KlaviyoEvent(
+                array(
+                    'event' => 'Offer EM - 4',
+                    'customer_properties' => array(
+                        '$email' => $user->email,
+                        '$em_4_device_1' => $tradeins[0]->getCustomerProductName(),
+                        '$em_4_tradein_id_1' => $tradeins[0]->barcode_original,
+                        '$em_4_proposed_price_1' => '£' . $tradeins[0]->order_price,
+                        '$em_4_device_2' => $tradeins[1]->getCustomerProductName(),
+                        '$em_4_tradein_id_2' => $tradeins[1]->barcode_original,
+                        '$em_4_proposed_price_2' => '£' . $tradeins[1]->order_price,
+                    ),
+                    'properties' => array(
+                        'Item sold' => true
+                    )
+                )
+            );
+        }
+
+        $this->sendEmail($event);
+    }
+
+    /*
+    *   Customer Converts to Free Trade Pack End Emailing
+    */
+
+    /* 
+    *   Group Order Types - Print your Own Trade Pack / Free Trade Pack - Device Receipt Email Start
+    */
+    //Offer EM - 7
+    public function deviceReceived($user, $tradein){
         $event = new KlaviyoEvent(
             array(
-                'event' => 'Item Sold to Bamboo (Tradepack)',
+                'event' => 'Offer EM - 7',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName($tradein->product_id),
-                    '$tradein_id' => $tradein->barcode_original,
-                    '$proposed_price' => $tradein->order_price,
+                    '$em_7_device_1' => $tradein->getCustomerProductName(),
+                    '$em_7_proposed_price_1' => '£' . $tradein->order_price,
                 ),
                 'properties' => array(
                     'Item sold' => true
@@ -271,355 +378,42 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
-    //done
-    public function TradePackSent($user, Tradein $tradein){
+    //Offer EM - 10
+    public function orderExpired_em10($user, $tradein){
 
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Trade pack sent',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName($tradein->product_id),
-                    '$tradein_id' => $tradein->barcode_original,
-                    '$proposed_price' => $tradein->order_price,
-                ),
-                'properties' => array(
-                    'Trade pack sent' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    public function offerRemainder($user){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Offer Remainder',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                ),
-                'properties' => array(
-                    'Offer Remainder' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    //Done
-    public function receiptOfDevice($user, Tradein $tradein){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Receipt of device',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName(),
-                ),
-                'properties' => array(
-                    'Receipt of device' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    //done
-    public function noImei($user, Tradein $tradein){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'No IMEI',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName($tradein->product_id),
-                ),
-                'properties' => array(
-                    'No IMEI' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    //Done
-    public function missingDevice($user){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Missing Device',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                ),
-                'properties' => array(
-                    'Missing Device' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    /* Impossible to do atm */
-
-    public function cancellationNoReturn($user){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Cancellation (No device return)',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                ),
-                'properties' => array(
-                    'Cancellation (No device return)' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    /* Impossible to do atm */
-
-    public function cancellationWithReturn($user){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Cancellation (Device return)',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                ),
-                'properties' => array(
-                    'Cancellation (Device return)' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-
-    /* Done */
-    public function pinLocked($user, Tradein $tradein){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Pin Locked',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName(),
-                ),
-                'properties' => array(
-                    'Pin Locked' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    /* Done */
-    public function googleLocked($user, Tradein $tradein){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Google Locked',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName(),
-                ),
-                'properties' => array(
-                    'Google Locked' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    /* Email missing */
-    public function FIMP($user, Tradein $tradein){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'FIMP',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName(),
-                ),
-                'properties' => array(
-                    'FIMP' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    /* Done */
-    public function wrongDevice($user, Tradein $tradein){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Wrong Device',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$deviceWrong' => $tradein->getCustomerProductName(),
-                    '$deviceRight' => $tradein->getProductName(),
-                    '$newPrice' => $tradein->bamboo_price,
-                ),
-                'properties' => array(
-                    'Wrong Device' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    /* Done */
-    public function downgraded($user, Tradein $tradein){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Downgraded',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$customerGrade' => $tradein->customer_grade,
-                    '$bambooGrade' => $tradein->bamboo_grade,
-                    '$newPrice' => $tradein->bamboo_price,
-                ),
-                'properties' => array(
-                    'Downgraded' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    /* Done */
-    public function lockedNetwork($user, Tradein $tradein){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Locked Network',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$originalNetwork' => $tradein->customer_network,
-                    '$bambooNetwork' => $tradein->correct_network,
-                    '$newPrice' => $tradein->bamboo_price,
-                    '$device' => $tradein->getCustomerProductName(),
-                ),
-                'properties' => array(
-                    'Locked Network' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    /* Done */
-    public function devicePassedTest($user, Tradein $tradein){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Passed Test',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName(),
-                    '$price' => $tradein->bamboo_price,
-                ),
-                'properties' => array(
-                    'Passed Test' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    /* Done */
-    public function blacklisted($user, Tradein $tradein){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Blacklisted',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName(),
-                ),
-                'properties' => array(
-                    'Blacklisted' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    /* Done */
-    public function deviceStolen($user, Tradein $tradein){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Device Stolen',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName(),
-                ),
-                'properties' => array(
-                    'Device Stolen' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    /* Done */
-    public function deviceUnderContract($user, Tradein $tradein){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Device Under Contract',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName(),
-                    '$originalNetwork' => $tradein->customer_network,
-                ),
-                'properties' => array(
-                    'Device Under Contract' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    public function deviceReturn($user, Tradein $tradein){
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Device Return',
-                'customer_properties' => array(
-                    '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName(),
-                ),
-                'properties' => array(
-                    'Device Return' => true
-                )
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    public function paymentUnsuccesful($user, Tradein $tradein, $message = null){
-        if($message == null){
-            $message = "we have attempted to transfer payment to you, but it hasn't worked. 
-            Please sign into your account and check your payment details are correct, you'll be able to amend them if not. 
-            Once sorted we should be able to transfer the payment.";
+        $checkPrice = new \App\Services\Testing();
+        switch($tradein->customer_grade){
+            case 'Excellent Working':
+                $bamboogradeval = 5;
+                break;
+            case 'Good Working':
+                $bamboogradeval = 4;
+                break;
+            case 'Poor Working':
+                $bamboogradeval = 3;
+                break;
+            case 'Damaged Working':
+                $bamboogradeval = 2;
+                break;
+            case 'Faulty':
+                $bamboogradeval = 1;
+                break;
+            default:
+            $bamboogradeval = 5;
+                break;
         }
+        $deviceCurrentPrice = $checkPrice->generateDevicePrice($tradein->product_id, $tradein->customer_memory, $tradein->customer_network, $bamboogradeval);
+
         $event = new KlaviyoEvent(
             array(
-                'event' => 'Payment Unsuccessful',
+                'event' => 'Offer EM - 10',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName(),
-                    '$message' => $message
+                    '$em_10_device_1' => $tradein->getCustomerProductName(),
+                    '$em_10_proposed_price_1' => '£' . $deviceCurrentPrice,
                 ),
                 'properties' => array(
-                    'Payment Unsuccessful' => true
+                    'Item sold' => true
                 )
             )
         );
@@ -627,16 +421,67 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
-    public function paymentSuccesful($user, Tradein $tradein){
+    //Offer EM - 11
+    public function orderExpired_em11($user, $tradein){
+
+        $checkPrice = new \App\Services\Testing();
+        switch($tradein->customer_grade){
+            case 'Excellent Working':
+                $bamboogradeval = 5;
+                break;
+            case 'Good Working':
+                $bamboogradeval = 4;
+                break;
+            case 'Poor Working':
+                $bamboogradeval = 3;
+                break;
+            case 'Damaged Working':
+                $bamboogradeval = 2;
+                break;
+            case 'Faulty':
+                $bamboogradeval = 1;
+                break;
+            default:
+            $bamboogradeval = 5;
+                break;
+        }
+
         $event = new KlaviyoEvent(
             array(
-                'event' => 'Payment Successful',
+                'event' => 'Offer EM - 11',
                 'customer_properties' => array(
                     '$email' => $user->email,
-                    '$device' => $tradein->getCustomerProductName(),
+                    '$em_11_device_1' => $tradein->getCustomerProductName(),
                 ),
                 'properties' => array(
-                    'Payment Successful' => true
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+    
+
+    /* 
+    *   Group Order Types - Print your Own Trade Pack / Free Trade Pack - Device Receipt Email End
+    */
+
+    /*
+    *   No IMEI - Email Start
+    */
+
+    //Testing EM - 3
+    public function noImei_testing_em_3($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Testing EM - 3',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$testing_em_3_device_1' => $tradein->getCustomerProductName(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
                 )
             )
         );
@@ -644,16 +489,17 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
-
-    public function subscribeToNewsletter($email){
+    //Post Testing EM - 6
+    public function paymentEmail_post_testing_em_6($user, $tradein){
         $event = new KlaviyoEvent(
             array(
-                'event' => 'Newsletter Subscription',
+                'event' => 'Post Testing EM - 6',
                 'customer_properties' => array(
-                    '$email' => $email,
+                    '$email' => $user->email,
+                    '$post_testing_em_6_device_1' => $tradein->getCustomerProductName(),
                 ),
                 'properties' => array(
-                    'Subscribed' => true
+                    'Item sold' => true
                 )
             )
         );
@@ -661,63 +507,113 @@ class KlaviyoEmail{
         $this->sendEmail($event);
     }
 
-    public function sendAbandonedBasketMail($email){
+    //Offer EM - 9
+    public function returnDevice_offer_em_9($user, $tradein){
         $event = new KlaviyoEvent(
             array(
-                'event' => 'Abandoned Basket Email',
+                'event' => 'Offer EM - 9',
                 'customer_properties' => array(
-                    '$email' => $email
+                    '$email' => $user->email,
+                    '$em_9_device_1' => $tradein->getCustomerProductName(),
                 ),
                 'properties' => array(
-                    'device_image' => 'https://www.pctipsbox.com/wp-content/uploads/2018/12/windows-xp.jpg'
-                ),
-                
-            )
-        );
-
-        $this->sendEmail($event);
-    }
-
-    public function sendPasswordResetNotification($token)
-    {
-        $url = '/password/reset/'. $token;
-        $event = new KlaviyoEvent(
-
-            array(
-                'event'=>'Reset Password',
-                'customer_properties'=>array(
-                  '$email'=>$_REQUEST['email'],
-                  '$PasswordResetLink'=>$_SERVER['SERVER_NAME'] . $url,
-                ),
-                'properties'=>array(
-                  'event_id'=>'1234',
-                  'PasswordResetLink'=>$_SERVER['SERVER_NAME'] . $url,
-                ),
-                'time'=>\Carbon\Carbon::now()
-            )
-        );
-
-        $this->sendEmail($event);
-
-    }
-
-    // send email for shop go live notify list TODO
-    public function shopSignUp($email){
-
-        $event = new KlaviyoEvent(
-            array(
-                'event' => 'Shop Sign Up',
-                'customer_properties' => array(
-                    '$email' => $email,
-                ),
-                'properties' => array(
-                    'User Registered' => true
+                    'Item sold' => true
                 )
             )
         );
 
         $this->sendEmail($event);
     }
+
+    //Post Testing EM - 3
+    public function returnDevice_post_testing_em_3($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Post Testing EM - 3',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$post_testing_em_9_device_1' => $tradein->getCustomerProductName(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+
+    /**
+     * No IMEI - Email End
+     */
+
+    /**
+     * PIN Locked - Email Start
+     */
+    //Testing EM - 4
+    public function pinLocked_testing_em_4($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Testing EM - 4',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$testing_em_4_device_1' => $tradein->getCustomerProductName(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+
+    /**
+     * PIN Locked - Email End
+     */
+
+    /**
+     *  Device Missing - Email Start
+     */
+    //Testing EM - 5
+    public function deviceMissing_testing_em_5($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Testing EM - 5',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$testing_em_5_device_1' => $tradein->getCustomerProductName(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+
+    //Offer EM - 8
+    public function deviceMissingCancelOrder_offer_em_8($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Offer EM - 8',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$em_5_device_1' => $tradein->getCustomerProductName(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+    /**
+     *  Device Missing - Email End
+     */
+
 
     public function sendEmail($event){
         $response =  $this->client->publicAPI->track( $event ); 
@@ -740,7 +636,8 @@ class KlaviyoEmail{
         $orderLog->pushHandler(new StreamHandler(storage_path('logs/klaviyo_logs.log')), Logger::INFO);
         $orderLog->info('KlaviyoLog', $log);
     }
-}
 
+
+}
 
 ?>

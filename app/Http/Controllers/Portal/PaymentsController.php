@@ -237,9 +237,9 @@ class PaymentsController extends Controller
                                 $tradeins->push($tradein);
                             } else {
                                 if(!$tradein->isInQuarantine()){
-                                    array_push($error_msg, 'This device cannot be marked for payment. Reason: Device hasn’t passed testing.');
+                                    array_push($error_msg, 'This device cannot be marked for payment.');
                                 } else {
-                                    array_push($error_msg, 'This device cannot be marked for payment. Reason: Device in Quarantine.');
+                                    array_push($error_msg, 'This device cannot be marked for payment.');
                                 }
                             }
                             
@@ -308,9 +308,11 @@ class PaymentsController extends Controller
                         $tradein->misc_cost = $miscCost->per_job_deduction;
                     }
 
+                    /*
                     $klaviyo = new KlaviyoEmail();
                     $klaviyo->devicePassedTest(User::find($tradein->user_id), $tradein);
-                    
+                    */
+
                     $notificationService = new NotificationService();
                     switch ($tradein->job_state) {
                         // testing complete
@@ -370,7 +372,6 @@ class PaymentsController extends Controller
      */
     public function exportCSV(Request $request){
         if(isset($request->batches)){
-
             // generate payment batch csv file
             $batch_ids = request()->batches;
             $batchService = new PaymentBatchService();
@@ -566,10 +567,11 @@ class PaymentsController extends Controller
 
                         // send payment successful email
                         $klaviyo = new KlaviyoEmail();
-
+                        /*
                         $user = User::find($tradein->user_id);
                         $klaviyo->paymentSuccesful($user, $tradein);
-
+                        */
+                        
                         BatchDeviceEmail::create([
                             'type' => 1,
                             'order' => 1,

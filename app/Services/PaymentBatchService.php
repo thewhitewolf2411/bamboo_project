@@ -66,75 +66,7 @@ class PaymentBatchService {
      */
     public function generateCSV(array $payment_batches_ids){
 
-        #dd($payment_batches_ids);
-        // create csv file
         $batches = collect();
-
-        #$payment_batches_ids = PaymentBatch::find($payment_batches_ids)->pluck('id');
-        #dd($payment_batches);
-
-        /*$payment_batch_devices = PaymentBatchDevice::whereIn('payment_batch_id', $payment_batches_ids)->get();
-        #dd($payment_batch_devices->pluck('tradein_id'));
-
-        $tradeins = Tradein::find($payment_batch_devices->pluck('tradein_id'));
-        #dd($tradeins);
-
-        $payment_rows = array();
-
-        foreach($tradeins as $tradein){
-
-            $user = User::find($tradein->user_id);
-
-            $billing_info = UserBankDetails::where('user_id', $user->id)->first();
-            $account_identifier = null;
-            $account_number = null;
-            $beneficiary_name = null;
-            if(!$billing_info){
-                $account_identifier = "0";
-                $account_number = "0";
-                $beneficiary_name = $user->fullName();
-            } else {
-                try {
-                    $beneficiary_name = Crypt::decrypt($billing_info->account_name);
-                } catch (DecryptException $e) {
-                    $beneficiary_name = $user->fullName();
-                }
-                try {
-                    $account_identifier = Crypt::decrypt($billing_info->sort_code);
-                } catch (DecryptException $e) {
-                    $account_identifier = "000000";
-                }
-                try {
-                    $account_number = Crypt::decrypt($billing_info->card_number);
-                } catch (DecryptException $e) {
-                    $account_number = "00000000";
-                }
-            }
-
-            $payment_row = 
-            ",,,01,,,,,,,,,".
-            env('BAMBOO_ACCOUNT_NUMBER').
-            ",,,,".
-            $tradein->getDevicePrice().
-            ",,".
-            //Carbon::parse($payment_batch->arrive_at)->format('dmY').
-            Carbon::now()->format('dmY') . 
-            ",,,,,,".
-            $account_identifier.
-            ",,,,,,".
-            $account_number.
-            ",,".
-            '"'.$beneficiary_name.'"'. //" ".$user->billing_address.
-            ",,,,".
-            "INVOICE " . $tradein->barcode.
-            ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,";
-
-            array_push($payment_rows, $payment_row);
-
-            $tradein->save();
-        }
-
-        dd($payment_rows);*/
 
         foreach($payment_batches_ids as $id){
             $payment_rows = [];
@@ -147,6 +79,9 @@ class PaymentBatchService {
             foreach($payment_batch_devices as $payment_batch_device){
             
                 $tradein = Tradein::find($payment_batch_device->tradein_id);
+
+                $klaviyoEmail = new KlaviyoEmail();
+                $klaviyoEmail->paymentEmail_post_testing_em_6($tradein->customer(), $tradein);
 
                 $additionalCost = AdditionalCosts::where('id','>', 1)->first();
 
@@ -224,7 +159,7 @@ class PaymentBatchService {
                     ",,,01,,,,,,,,,".
                     env('BAMBOO_ACCOUNT_NUMBER').
                     ",,,,".
-                    $tradein->getDevicePrice().
+                    $tradein->getDeviceCustomerPrice().
                     ",,".
                     //Carbon::parse($payment_batch->arrive_at)->format('dmY').
                     Carbon::now()->format('dmY') . 
@@ -266,7 +201,5 @@ class PaymentBatchService {
         }
 
         return $file_path;
-
     }
-
 }

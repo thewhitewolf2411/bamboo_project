@@ -152,6 +152,7 @@
             <form id="print_trade_pack_form" name="form-print-trade-pack" enctype="multipart/form-data" action="/portal/customer-care/trade-in/printlabel" method="post">
                 @csrf
                 <input type="hidden" id="print_trade_pack_trade_in_id" name="hidden_print_trade_pack_trade_in_id">
+                <input type="hidden" id="print_trade_pack_trade_in_order_management" name="print_trade_pack_trade_in_order_management" value="yes">
                 <input type="submit" id="print_trade_pack_trade_in_trigger" name="print_trade_pack_trade_in" value="Print Trade Pack Trade-In">
             </form>
 

@@ -47,7 +47,7 @@ class GetLabel{
             $sn = $tradein->serial_number;
             $location = $tradein->getTrayName($tradein->id);
             $barcode = DNS1D::getBarcodePNG($tradein->barcode, 'C128');
-            $quarantineReason = $tradein->getBambooStatus();
+            $quarantineReason = $tradein->quarantineReason();
 
             $pdf = PDF::loadView('portal.labels.devicelabels.receivingquarantinelabel', 
             array(
@@ -73,7 +73,7 @@ class GetLabel{
             $sn = $tradein->serial_number;
             $location = $tradein->getTrayName($tradein->id);
             $barcode = DNS1D::getBarcodePNG($tradein->barcode, 'C128');
-            $quarantineReason = $tradein->getBambooStatus();
+            $quarantineReason = $tradein->quarantineReason();
             $bambooGrade = $tradein->getDeviceBambooGrade();
             $network = $tradein->correct_network;
 
@@ -104,7 +104,7 @@ class GetLabel{
             $sn = $tradein->serial_number;
             $location = $tradein->getTrayName($tradein->id);
             $barcode = DNS1D::getBarcodePNG($tradein->barcode, 'C128');
-            $quarantineReason = $tradein->getTestingQuarantineReason();
+            $quarantineReason = $tradein->quarantineReason();
 
             $pdf = PDF::loadView('portal.labels.devicelabels.testingquarantinelabel', 
             array(
@@ -135,7 +135,7 @@ class GetLabel{
             $quarantineReason = $tradein->getBambooStatus();
             $grade = $tradein->cosmetic_condition;
             $network = $tradein->correct_network;
-            $quarantineReason = $tradein->getTestingQuarantineReason();
+            $quarantineReason = $tradein->quarantineReason();
 
             $pdf = PDF::loadView('portal.labels.devicelabels.testingquarantinelabel', 
             array(
@@ -160,7 +160,7 @@ class GetLabel{
         $sn = $tradein->serial_number;
         $location = $tradein->getTrayName($tradein->id);
         $barcode = DNS1D::getBarcodePNG($tradein->barcode, 'C128');
-        $quarantineReason = $tradein->getBambooStatus();
+        $quarantineReason = $tradein->quarantineReason();
         $bambooGrade = $tradein->cosmetic_condition;
         $network = $tradein->correct_network;
 

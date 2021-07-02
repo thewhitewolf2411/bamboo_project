@@ -13,23 +13,23 @@ class NetworksSeeder extends Seeder
     public function run()
     {
         DB::table('networks')->insert([
-            'network_name'=>'o2',
+            'network_name'=>'O2',
             'network_image'=>'/networks/o2.png'
         ]);
         DB::table('networks')->insert([
-            'network_name'=>'ee',
+            'network_name'=>'EE',
             'network_image'=>'/networks/ee.png'
         ]);
         DB::table('networks')->insert([
-            'network_name'=>'vodafone',
+            'network_name'=>'Vodafone',
             'network_image'=>'/networks/vodafone.png'
         ]);
         DB::table('networks')->insert([
-            'network_name'=>'3',
+            'network_name'=>'Three',
             'network_image'=>'/networks/3.png'
         ]);
         DB::table('networks')->insert([
-            'network_name'=>'unlocked',
+            'network_name'=>'Unlocked',
             'network_image'=>'/networks/unlocked.png'
         ]);
     }
