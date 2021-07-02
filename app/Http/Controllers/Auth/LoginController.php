@@ -96,7 +96,8 @@ class LoginController extends Controller
         // User role
 
         $role = Auth::user()->type_of_user; 
-        $redirectUrl = (request()->session()->get('_previous') !== null) ? request()->session()->get('_previous')['url'] : '/';
+        // $redirectUrl = (request()->session()->get('_previous') !== null) ? request()->session()->get('_previous')['url'] : '/';
+        $redirectUrl = '/userprofile';
 
         // Check user role
         switch ($role) {

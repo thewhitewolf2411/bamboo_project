@@ -90,7 +90,7 @@
                                                 </span>
                                             @enderror --}}
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group mb-0">
                                         <input 
                                             id="password" 
                                             type="password" 
@@ -109,6 +109,13 @@
                                     @if(Session::has('error'))
                                         <div class="alert alert-danger" role="alert">
                                             <strong>{{ Session::get('error') }}</strong>
+                                        </div>
+                                    @endif
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            @foreach ($errors->all() as $error)
+                                                {{ $error }}
+                                            @endforeach
                                         </div>
                                     @endif
                                     <div class="form-group mb-0" style="display:flex; flex-direction: row; justify-content:space-between; align-items:center;">

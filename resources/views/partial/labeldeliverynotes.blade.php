@@ -1,6 +1,6 @@
 {{-- onclick="print('{{$tradein->id}}')" --}}
 
-<div class="btn-purple sale-detail-btn large cursor-pointer w-100" data-toggle="modal" data-target="#labelDeliveryModal">
+<div class="btn-purple sale-detail-btn large cursor-pointer" data-toggle="modal" data-target="#labelDeliveryModal">
     <p>{!!$btn_text!!}</p> 
     <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
 </div>

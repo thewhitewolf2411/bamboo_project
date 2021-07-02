@@ -1,16 +1,24 @@
 .sales-item{
     background: white;
     height: 60px;
-    line-height: 3.6;
     padding-left: 20px;
     min-width: 220px;
-    font-family:Sharp Sans No1 Bold;
     margin-bottom: 2px;
     cursor: pointer;
     user-select: none;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-17)/var(--unnamed-line-spacing-23) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 17px/23px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    line-height: 3.5;
 }
 
 .sales-item.link-active{
@@ -35,8 +43,16 @@
     flex-direction: row;
 }
 
-.sale-item-label{
-    font-size: 14px;
+.sale-item-label,
+.delivery-info-dates-label{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-16)/var(--unnamed-line-spacing-21) var(--unnamed-font-family-sharp-sans-no1-book);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 16px/21px Sharp Sans No1 Book;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
     margin: 0;
     margin-bottom: 10px;
 }
@@ -106,6 +122,11 @@
 
 .sale-status-col.first{
     height: 85px;
+    margin-top: 13px;
+}
+
+.sale-status-col.third{
+    margin-top: -13px;
 }
 
 .sale-status-row{
@@ -186,14 +207,26 @@
     width: 190px;
 }
 
-.sale-item-label{
-    font-size: 14px;
+.sale-item-val, 
+.delivery-info-dates-bold{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-20)/var(--unnamed-line-spacing-27) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: left;
+    font: normal normal normal 20px/27px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    margin: 0;
 }
 
-.sale-item-val{
-    font-family: Sharp Sans No1 Bold;
-    font-size: 18px;
-    margin: 0;
+.delivery-details-row{
+    justify-content: space-between;
+}
+
+.delivery-details-col{
+    display: flex;
+    flex-direction: column;
 }
 
 .sale-detail-btn{
@@ -221,6 +254,14 @@
     color: var(--technical-–-violet);
 }
 
+.btn-green.sale-detail-btn:hover > p {
+    color: #A3D147 !important;
+}
+
+.btn-blue.sale-detail-btn:hover > p {
+    color: #23AAF7 !important;
+}
+
 .sale-detail-btn:hover > img {
     filter: contrast(0);
     transform: scale(1.2);
@@ -245,7 +286,8 @@
 }
 
 .sale-detail-btn.large{
-    width: 300px;
+    // width: 300px;
+    width: 320px;
 }
 
 .sale-detail-btn.auto-width{
@@ -277,30 +319,45 @@
 .emoji-col{
     display: flex;
     flex-direction: column;
-    width: 160px;
+    width: 100%;
+    max-width: 268px;
 }
 
 .emoji-img{
     display: block;
     width: 154px;
+    height: 108px;
     margin-left: auto;
     margin-right: auto;
 }
 
 .emoji-text{
-    font-family: Sharp Sans No1 Bold;
-    font-size: 32px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-50)/80px var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 50px/80px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
     text-align: center;
     margin-top: 16px;
 }
 
 .emoji-info-text{
-    font-size: 20px;
-    padding-top: 25px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-30)/var(--unnamed-line-spacing-38) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
     text-align: left;
-    font-family: Sharp Sans No1 Bold;
+    font: normal normal normal 30px/38px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    padding-top: 25px;
     margin: 0;
-    margin-left: 5%;
+    // margin-left: 5%;
+    width: 100%;
+    max-width: 802px;
 }
 
 .process-error-item{
@@ -402,11 +459,16 @@
 
 
 .label-print-type{
-    width: 200px;
+    width: 291px;
     text-align: center;
-    cursor: pointer;
+    // cursor: pointer;
     padding: 10px;
     filter: opacity(0.3);
+}
+
+.label-print-type-column{
+    display: flex;
+    flex-direction: column;
 }
 
 .label-print-type.selected{
@@ -433,16 +495,6 @@
     margin-top: 12px;
 }
 
-.delivery-info-dates-label{
-    font-size: 14px;
-}
-
-.delivery-info-dates-bold{
-    font-family: Sharp Sans No1 Bold;
-    font-size: 18px;
-    margin: 0;
-}
-
 
 
 
@@ -464,10 +516,21 @@
     max-width: 180px;
 }
 
+.payment-details-btn:hover > img {
+    filter: contrast(0);
+    transform: scale(1.2);
+}
+
+.payment-details-btn > img {
+    transition: all .3s linear;
+}
+
 .payment-pen-icon{
     width: 21px;
     height: 20px;
     margin-left: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 

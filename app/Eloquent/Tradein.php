@@ -1340,7 +1340,7 @@ class Tradein extends Model
             return min($prices) + $this->carriage_cost + $this->admin_cost + $this->misc_cost;
         }
 
-        return "Not paid yet.";
+        return 0;
     }
 
 }

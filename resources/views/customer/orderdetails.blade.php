@@ -85,7 +85,7 @@
                                 <div class="section-item-content">
                                     <div class="section-header">
                                         @if(App\Helpers\NotificationHelper::count() !== null) 
-                                            <div class="notifications-count collapse-header">
+                                            <div class="notifications-count positioned collapse-header">
                                                 <img src="{{asset('/images/front-end-icons/notification_count.svg')}}">
                                                 <p>{!!App\Helpers\NotificationHelper::count()!!}</p>
                                             </div>
