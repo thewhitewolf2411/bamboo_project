@@ -1448,4 +1448,12 @@ class Tradein extends Model
         return false;
     }
 
+    public function hasWaterDamage(){
+        if($this->job_state === "15h" || $this->job_state === "11h"){
+            return true;
+        }
+
+        return false;
+    }
+
 }

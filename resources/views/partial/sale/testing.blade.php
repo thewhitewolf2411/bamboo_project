@@ -252,7 +252,58 @@
                         </a>
                     </div>
                 </div>
+            @elseif($tradein->hasWaterDamage())
+            <div class="testing-error-item">
+                <div class="col">
+                    <p class="testing-error-item-label">Issue</p>
+                    <p class="testing-error-item-bold">Water Damage</p>
+                </div>
+                <div class="col">
+                    <p class="testing-error-item-label">Action required</p>
+                    <p class="testing-error-item-bold">Accept faulty offer or request device back</p>
+                </div>
+                <div class="col"></div>
+                <div class="col">
+                    <p class="testing-error-item-label">New Offer</p>
+                    <p class="testing-new-offer-price">£{!!$tradein->bamboo_price!!}</p>
+                </div>
+                <div class="col">
+                    <a href="{{route('acceptFaultyOffer', ['id' => $tradein->id])}}" class="btn btn-orange testing-action-btn">
+                        <p>Accept Offer</p>
+                        <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                    </a>
+                    <a href="{{route('returnDevice', ['id' => $tradein->id])}}" class="btn btn-jade process-action-btn">
+                        <p>Return my Device</p>
+                        <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                    </a>
+                </div>
+            </div>
             @else
+            <div class="testing-error-item">
+                <div class="col">
+                    <p class="testing-error-item-label">Issue</p>
+                    <p class="testing-error-item-bold">Device cosmetic condition downgraded</p>
+                </div>
+                <div class="col">
+                    <p class="testing-error-item-label">Action required</p>
+                    <p class="testing-error-item-bold">Accept faulty offer or request device back</p>
+                </div>
+                <div class="col"></div>
+                <div class="col">
+                    <p class="testing-error-item-label">New Offer</p>
+                    <p class="testing-new-offer-price">£{!!$tradein->bamboo_price!!}</p>
+                </div>
+                <div class="col">
+                    <a href="{{route('acceptFaultyOffer', ['id' => $tradein->id])}}" class="btn btn-orange testing-action-btn">
+                        <p>Accept Offer</p>
+                        <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                    </a>
+                    <a href="{{route('returnDevice', ['id' => $tradein->id])}}" class="btn btn-jade process-action-btn">
+                        <p>Return my Device</p>
+                        <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                    </a>
+                </div>
+            </div>
             @endif
         @endif
 

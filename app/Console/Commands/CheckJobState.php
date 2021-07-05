@@ -83,11 +83,11 @@ class CheckJobState extends Command
                 case "4":
                     $tradeins = $jobstate->getTradeinsByBarcode();
                     $klaviyoemail->deviceMissing_testing_em_5($emailUser, $tradeins[0]);
-                    #$notificationservice->sendMissingDevice($emailTradein);
+                    $notificationservice->sendMissingDevice($emailTradein);
                     break;
                 case "6":
                     $klaviyoemail->noImei_testing_em_3($emailUser, $emailTradein);
-                    //$notificationservice->sendNoIMEI($emailTradein);
+                    $notificationservice->sendNoIMEI($emailTradein);
                     break;
                 case "7":
                     //$klaviyoemail->blacklisted($emailUser, $emailTradein);
@@ -112,15 +112,15 @@ class CheckJobState extends Command
                     break;
                 case "11a":
                 case "15a":
-                    //$klaviyoemail->FIMP($emailUser, $emailTradein);
-                    //$notificationservice->sendTestingFailed(
-                    //    $emailTradein,
-                    //    'Find My iPhone still active.'
-                    //);
+                    $klaviyoemail->FMIP_testing_em_4($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Find My iPhone still active.'
+                    );
                     break;
                 case "11b":
                 case "15b":
-                    //$klaviyoemail->googleLocked($emailUser, $emailTradein);
+                    $klaviyoemail->Google_testing_em_4($emailUser, $emailTradein);
                     $notificationservice->sendTestingFailed(
                         $emailTradein,
                         'Google Activation Lock still active.'
@@ -130,63 +130,67 @@ class CheckJobState extends Command
                 case "11c":
                 case "15c":
                     $klaviyoemail->pinLocked_testing_em_4($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Pin Lock still active.'
+                    );
                     break;
                 case "11d":
                 case "15d":
-                    //$klaviyoemail->wrongDevice($emailUser, $emailTradein);
-                    //$notificationservice->sendTestingFailed(
-                    //    $emailTradein,
-                    //    'Device model incorrect.'
-                    //);
+                    $klaviyoemail->noImei_testing_em_3($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Device model incorrect.'
+                    );
                     break;
                 case "11e":
                 case "15e":
-                    //$klaviyoemail->downgraded($emailUser, $emailTradein);
-                    //$notificationservice->sendTestingFailed(
-                    //    $emailTradein,
-                    //    'Device does not meet the following requirements. Reason: Downgrade.'
-                    //);
+                    $klaviyoemail->noImei_testing_em_3($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Device does not meet the following requirements. Reason: Downgrade.'
+                    );
                     break;
                 case "11f":
                 case "15f":
-                    //$klaviyoemail->downgraded($emailUser, $emailTradein);
-                    //$notificationservice->sendTestingFailed(
-                    //    $emailTradein,
-                    //    'Device memory incorrect.'
-                    //);
+                    $klaviyoemail->noImei_testing_em_3($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Device memory incorrect.'
+                    );
                     break;
                 case "11g":
                 case "15g":
-                    //$klaviyoemail->downgraded($emailUser, $emailTradein);
-                    //$notificationservice->sendTestingFailed(
-                    //    $emailTradein,
-                    //    'Device network is incorrect.'
-                    //);
+                    $klaviyoemail->noImei_testing_em_3($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Device network is incorrect.'
+                    );
                     break;
                 case "11h":
                 case "15h":
-                    //$klaviyoemail->downgraded($emailUser, $emailTradein);
-                    //$notificationservice->sendTestingFailed(
-                    //    $emailTradein,
-                    //    'Device does not meet the following requirements. Reason: Downgrade.'
-                    //);
+                    $klaviyoemail->noImei_testing_em_3($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Device does not meet the following requirements. Reason: Device has water damage.'
+                    );
                     break;
                 case "11i":
                 case "15i":
-                    //$klaviyoemail->downgraded($emailUser, $emailTradein);
-                    //$notificationservice->sendTestingFailed(
-                    //    $emailTradein,
-                    //    'Device does not meet the following requirements. Reason: Downgrade.'
-                    //);
+                    $klaviyoemail->noImei_testing_em_3($emailUser, $emailTradein);
+                    $notificationservice->sendTestingFailed(
+                        $emailTradein,
+                        'Device does not meet the following requirements. Reason: Downgrade.'
+                    );
                     break;
                 case "11j":
-                case "15j":
-                    //$klaviyoemail->downgraded($emailUser, $emailTradein);
-                    //$notificationservice->sendTestingFailed(
-                    //    $emailTradein,
-                    //    'Device does not meet the following requirements. Reason: Downgrade.'
-                    //);
-                    break;
+               // case "15j":
+                //    $klaviyoemail->downgraded($emailUser, $emailTradein);
+                //    $notificationservice->sendTestingFailed(
+                //        $emailTradein,
+                //        'Device does not meet the following requirements. Reason: Downgrade.'
+                //    );
+                //    break;
             }
 
             $jobstate->sent = true;
