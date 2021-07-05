@@ -196,10 +196,8 @@
                     @endif
                 </div>
             </div>
-        @endif
-
         {{-- todo these pls --}}
-        @if($tradein->wrongDevice() || $tradein->wrongMemory() || $tradein->wrongNetwork())
+        @elseif($tradein->wrongDevice() || $tradein->wrongMemory() || $tradein->wrongNetwork())
             @if($tradein->getTestingFaults() === null)
                 <div class="testing-error-item">
                     <div class="col">

@@ -741,9 +741,9 @@ class CustomerController extends Controller
             // incorrect network
             case '15g':
                 // set notification as resolved
-                //$notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
-                //$notification->resolved = true;
-                //$notification->save();
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
 
                 // set state to test complete
                 $tradein->job_state = '12';
@@ -754,9 +754,9 @@ class CustomerController extends Controller
 
             // fmip
             case '15a':
-                //$notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
-                //$notification->resolved = true;
-                //$notification->save();
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
 
                 // set state to test complete
                 $tradein->job_state = '12';
@@ -767,9 +767,9 @@ class CustomerController extends Controller
 
             // glock
             case '15b':
-                //$notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
-                //$notification->resolved = true;
-                //$notification->save();
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
 
                 // set state to test complete
                 $tradein->job_state = '12';
@@ -780,8 +780,8 @@ class CustomerController extends Controller
             // PIN Lock
             case '15c':
                 $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
-                //$notification->resolved = true;
-                //$notification->save();
+                $notification->resolved = true;
+                $notification->save();
 
                 // set state to test complete
                 $tradein->job_state = '12';
@@ -792,8 +792,8 @@ class CustomerController extends Controller
 
             case '15d':
                 $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
-                //$notification->resolved = true;
-                //$notification->save();
+                $notification->resolved = true;
+                $notification->save();
 
                 // set state to test complete
                 $tradein->job_state = '12';
@@ -804,9 +804,9 @@ class CustomerController extends Controller
             // downgrade after testing faults
             case '15e':
                 // set notification as resolved
-                //$notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
-                //$notification->resolved = true;
-                //$notification->save();
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
 
                 // set state to test complete
                 $tradein->job_state = '12';
@@ -817,9 +817,9 @@ class CustomerController extends Controller
             // incorrect memory
             case '15f':
                 // set notification as resolved
-                //$notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
-                //$notification->resolved = true;
-                //$notification->save();
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
 
                 // set state to test complete
                 $tradein->job_state = '12';
@@ -831,9 +831,9 @@ class CustomerController extends Controller
             //Testing faults
             case '15i':
                 // set notification as resolved
-                //$notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
-                //$notification->resolved = true;
-                //$notification->save();
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
 
                 // set state to test complete
                 $tradein->job_state = '12';
@@ -844,9 +844,9 @@ class CustomerController extends Controller
             //Water Damage
             case '15h':
                 // set notification as resolved
-                //$notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
-                //$notification->resolved = true;
-                //$notification->save();
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
 
                 // set state to test complete
                 $tradein->job_state = '12';
@@ -868,15 +868,15 @@ class CustomerController extends Controller
         switch ($tradein->job_state) {
             // fmip
             case '15a':
-                //$notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
-                //$notification->resolved = true;
-                //$notification->save();
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
                 break;
             // glock
             case '15b':
-                //$notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
-                //$notification->resolved = true;
-                //$notification->save();
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
                 break;
             default:
                 # code...
