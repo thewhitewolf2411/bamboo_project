@@ -67,7 +67,7 @@
                         <p class="testing-error-item-bold">Remove Google Activation Lock function, accept faulty offer or request your device back.</p>
                     </div>
                 @endif
-                <div class="col"></div>
+                {{-- <div class="col"></div> --}}
                 <div class="col">
                     <p class="testing-error-item-label">New Offer</p>
                     <p class="testing-new-offer-price">£{!!$tradein->bamboo_price!!}</p>
@@ -76,7 +76,7 @@
 
 
                     @if($tradein->isPinLocked())
-                        <div class="btn btn-green testing-action-btn m-auto" data-toggle="modal" data-target="#pinModal">
+                        <div class="btn btn-green testing-action-btn" data-toggle="modal" data-target="#pinModal">
                             <p>Enter Pattern/PIN</p>
                             <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
                         </div>

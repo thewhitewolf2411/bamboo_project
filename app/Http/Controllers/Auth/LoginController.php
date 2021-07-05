@@ -103,6 +103,7 @@ class LoginController extends Controller
         switch ($role) {
             case 0:
                 // return '/userprofile';
+                request()->session()->flash('success_login', true);
                 return $redirectUrl;
                 break;
             case 1:

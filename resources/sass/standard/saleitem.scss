@@ -63,6 +63,13 @@
     margin: 0;
 }
 
+.alert-sale-item-status{
+    display: block;
+    width: 31px;
+    height: 31px;
+    margin-right: 10px;
+}
+
 .sale-item-link-img{
     display: block;
     width: 25px;
@@ -117,17 +124,17 @@
     justify-content: center;
     width: 150px;
     //height: 70px;
-    height: 105px;
+    height: 130px;
 }
 
-.sale-status-col.first{
-    height: 85px;
-    margin-top: 13px;
-}
+// .sale-status-col.first{
+//     height: 85px;
+//     margin-top: 13px;
+// }
 
-.sale-status-col.third{
-    margin-top: -13px;
-}
+// .sale-status-col.third{
+//     margin-top: -13px;
+// }
 
 .sale-status-row{
     display: flex;
@@ -143,6 +150,8 @@
     letter-spacing: 0px;
     color: #000000;
     opacity: 1;
+
+    height: 60px;
 }
 
 .sale-status-text.bold{
@@ -177,7 +186,7 @@
     height: 2px;
     width: 300px;
     background: #a375bc;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-left: -40px;
     margin-right: -40px;
 }
@@ -186,7 +195,7 @@
     height: 2px;
     width: 300px;
     background: #cccccc;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-left: -40px;
     margin-right: -40px;
 }
@@ -250,8 +259,32 @@
     margin-left: 20px;
 }
 
+.sale-detail-btn > img {
+    display: block;
+    width: 23px;
+    height: 23px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.sale-detail-btn.cancelsale{
+    transition: all .3s linear;
+    background: #FCC44C;
+    cursor: pointer;
+}
+.sale-detail-btn.cancelsale > p {
+    color: black;
+}
+.sale-detail-btn.cancelsale:hover {
+    background: white;
+    border-color: #FCC44C;
+}
+.sale-detail-btn.cancelsale:hover > p {
+    color: black;
+}
+
 .btn-purple.sale-detail-btn:hover > p {
-    color: var(--technical-–-violet);
+    color: var(--technical-–-violet) 0% 0% no-repeat padding-box;;
 }
 
 .btn-green.sale-detail-btn:hover > p {
@@ -353,11 +386,13 @@
     letter-spacing: 0px;
     color: #000000;
     opacity: 1;
-    padding-top: 25px;
+    // padding-top: 25px;
     margin: 0;
     // margin-left: 5%;
     width: 100%;
     max-width: 802px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .process-error-item{
@@ -394,7 +429,7 @@
 }
 
 .process-action-btn{
-    width: 160px;
+    width: 237px;
     color: white;
     padding: 5px;
     border-radius: 5px;
@@ -402,12 +437,33 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    margin-bottom: 5px;
+    margin-bottom: 7px;
 }
 
 .process-action-btn > p{
     padding: 3px;
-    color: white;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-17)/var(--unnamed-line-spacing-23) Sharp Sans No1 Semibold;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: left;
+    font: normal normal normal 17px/23px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.process-action-btn > img {
+    transition: all 0.3s linear;
+    margin-right: 15px;
+}
+
+.process-action-btn:hover > p {
+    color: black;
+}
+
+.process-action-btn:hover > img {
+    filter: contrast(0);
+    transform: scale(1.2);
 }
 
 
@@ -441,7 +497,7 @@
 }
 
 .testing-action-btn{
-    width: 160px;
+    width: 237px;
     color: white;
     padding: 5px;
     border-radius: 5px;
@@ -449,12 +505,33 @@
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
-    margin-bottom: 5px;
+    margin-bottom: 7px;
 }
 
 .testing-action-btn > p{
     padding: 3px;
-    color: white;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-17)/var(--unnamed-line-spacing-23) Sharp Sans No1 Semibold;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: left;
+    font: normal normal normal 17px/23px Sharp Sans No1 Semibold;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.testing-action-btn.btn-green:hover > p{
+    color: black;
+}
+
+.testing-action-btn > img {
+    transition: all .3s linear;
+    margin-right: 15px;
+}
+
+.testing-action-btn:hover > img {
+    filter: contrast(0);
+    transform: scale(1.2);
 }
 
 
