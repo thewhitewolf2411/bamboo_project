@@ -21,7 +21,7 @@ class JobStateChanged extends Model
      * @var array
      */
     protected $fillable = [
-        'tradein_id','job_state','sent','created_at'
+        'tradein_id','job_state', 'previous_job_state','sent','created_at'
     ];
 
     public function getTradein(){

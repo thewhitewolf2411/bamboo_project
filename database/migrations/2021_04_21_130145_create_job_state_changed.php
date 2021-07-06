@@ -17,6 +17,7 @@ class CreateJobStateChanged extends Migration
             $table->id();
             $table->integer('tradein_id');
             $table->string('job_state');
+            $table->string('previous_job_state')->nullable();
             $table->boolean('sent')->default(false);
             $table->timestamps();
         });
