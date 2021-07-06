@@ -689,6 +689,13 @@ class ProfileService{
                 'description'   => self::$tvm8
             ];
         }
+        if($tradein->job_state === "15e" || $tradein->job_state === "15i"){
+            return [
+                'emoji'         => asset(self::$t2['emoji']),
+                'emoji_text'    => self::$t2['text'],
+                'description'   => self::$tvm8
+            ];
+        }
     }
 
 
@@ -703,7 +710,6 @@ class ProfileService{
         // google lock                      -> PEM10
         // testing faults/gb size/condition -> PEM11
         // cosmetic condition (catastrophic)-> PEM12 ??
-        dd($tradein->isPinLocked());
         if($tradein->isPinLocked()){
             return "PEM8";
         }

@@ -9,7 +9,6 @@
         {!!App\Services\ProfileService::getTestingStatus($tradein)['description']!!}
     </p>
 </div>
-{{dd(App\Services\ProfileService::getTestingError($tradein))}}
 
 {{-- testing section error statuses --}}
 @if(App\Services\ProfileService::getTestingError($tradein))
