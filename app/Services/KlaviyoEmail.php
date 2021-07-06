@@ -742,9 +742,9 @@ class KlaviyoEmail{
         // classmethods -> jsonSerialize, toArray
 
         // logging channel name
-        $orderLog = new Logger('klaviyo_logs');
-        $orderLog->pushHandler(new StreamHandler(storage_path('logs/klaviyo_logs.log')), Logger::INFO);
-        $orderLog->info('KlaviyoLog', $log);
+        // $orderLog = new Logger('klaviyo_logs');
+        // $orderLog->pushHandler(new StreamHandler(storage_path('logs/klaviyo_logs.log')), Logger::INFO);
+        // $orderLog->info('KlaviyoLog', $log);
     }
 
 
