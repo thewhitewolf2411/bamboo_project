@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\CheckJobState::class,
     ];
 
     /**
@@ -57,6 +57,8 @@ class Kernel extends ConsoleKernel
             }
 
         })->everyMinute();
+
+        $schedule->command('CheckJobState')->hourly();
     }
 
     /**

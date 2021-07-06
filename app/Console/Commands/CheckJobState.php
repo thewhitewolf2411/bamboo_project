@@ -62,21 +62,25 @@ class CheckJobState extends Command
                     if(\Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) > 7 && \Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) < 10){
                         $tradeins = $jobstate->getTradeinsByBarcode();
                         $klaviyoemail->orderExpiresInSevenDays($emailUser, $tradeins);
+                        //$jobstate->sent = true;
                         break;
                     }
                     if(\Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) > 10 && \Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) < 14){
                         $tradeins = $jobstate->getTradeinsByBarcode();
                         $klaviyoemail->orderExpiresInFourDays($emailUser, $tradeins);
+                        //$jobstate->sent = true;
                         break;
                     }
                     if(\Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) > 14 && \Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) < 21){
                         $tradeins = $jobstate->getTradeinsByBarcode();
                         $klaviyoemail->orderExpired($emailUser, $tradeins);
+                        //$jobstate->sent = true;
                         break;
                     }
                     if(\Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) > 21){
                         $tradeins = $jobstate->getTradeinsByBarcode();
                         $klaviyoemail->orderNeverReceived($emailUser, $tradeins);
+                        //$jobstate->sent = true;
                         break;
                     }
                     break;
@@ -84,31 +88,38 @@ class CheckJobState extends Command
                     $tradeins = $jobstate->getTradeinsByBarcode();
                     $klaviyoemail->deviceMissing_testing_em_5($emailUser, $tradeins[0]);
                     $notificationservice->sendMissingDevice($emailTradein);
+                    $jobstate->sent = true;
                     break;
                 case "6":
                     $klaviyoemail->noImei_testing_em_3($emailUser, $emailTradein);
                     $notificationservice->sendNoIMEI($emailTradein);
-                    break;
-                case "7":
-                    //$klaviyoemail->blacklisted($emailUser, $emailTradein);
-                    //$notificationservice->sendBlacklisted($emailTradein);
+                    $jobstate->sent = true;
                     break;
                 case "8a":
-                    //$klaviyoemail->cancellationNoReturn($emailUser);
-                    //$notificationservice->sendBlacklisted($emailTradein);
+                    $klaviyoemail->device_lost_post_testing_em_4($emailUser, $emailTradein);
+                    $notificationservice->sendBlacklisted($emailTradein);
+                    $jobstate->sent = true;
                     break;
                 case "8b":
-                    //$klaviyoemail->deviceUnderContract($emailUser, $emailTradein);
-                    //$notificationservice->sendBlacklisted($emailTradein);
+                    $klaviyoemail->device_lost_post_testing_em_4($emailUser, $emailTradein);
+                    $notificationservice->sendBlacklisted($emailTradein);
+                    $jobstate->sent = true;
                     break;
                 case "8d":
-                    //$klaviyoemail->deviceStolen($emailUser, $emailTradein);
-                    //$notificationservice->sendBlacklisted($emailTradein);
+                    $klaviyoemail->device_lost_post_testing_em_4($emailUser, $emailTradein);
+                    $notificationservice->sendBlacklisted($emailTradein);
+                    $jobstate->sent = true;
                     break;
                 case "8c":
                 case "8e":
-                    //$klaviyoemail->cancellationNoReturn($emailUser);
-                    //$notificationservice->sendBlacklisted($emailTradein);
+                    $klaviyoemail->device_lost_post_testing_em_4($emailUser, $emailTradein);
+                    $notificationservice->sendBlacklisted($emailTradein);
+                    $jobstate->sent = true;
+                    break;
+                case "8f":
+                    $klaviyoemail->asset_watch_post_testing_em_5($emailUser, $emailTradein);
+                    $notificationservice->sendBlacklisted($emailTradein);
+                    $jobstate->sent = true;
                     break;
                 case "11a":
                 case "15a":
@@ -117,6 +128,7 @@ class CheckJobState extends Command
                         $emailTradein,
                         'Find My iPhone still active.'
                     );
+                    $jobstate->sent = true;
                     break;
                 case "11b":
                 case "15b":
@@ -125,7 +137,7 @@ class CheckJobState extends Command
                         $emailTradein,
                         'Google Activation Lock still active.'
                     );
-                    break;
+                    $jobstate->sent = true;
                     break;
                 case "11c":
                 case "15c":
@@ -134,6 +146,7 @@ class CheckJobState extends Command
                         $emailTradein,
                         'Pin Lock still active.'
                     );
+                    $jobstate->sent = true;
                     break;
                 case "11d":
                 case "15d":
@@ -142,6 +155,7 @@ class CheckJobState extends Command
                         $emailTradein,
                         'Device model incorrect.'
                     );
+                    $jobstate->sent = true;
                     break;
                 case "11e":
                 case "15e":
@@ -150,6 +164,7 @@ class CheckJobState extends Command
                         $emailTradein,
                         'Device does not meet the following requirements. Reason: Downgrade.'
                     );
+                    $jobstate->sent = true;
                     break;
                 case "11f":
                 case "15f":
@@ -158,6 +173,7 @@ class CheckJobState extends Command
                         $emailTradein,
                         'Device memory incorrect.'
                     );
+                    $jobstate->sent = true;
                     break;
                 case "11g":
                 case "15g":
@@ -166,6 +182,7 @@ class CheckJobState extends Command
                         $emailTradein,
                         'Device network is incorrect.'
                     );
+                    $jobstate->sent = true;
                     break;
                 case "11h":
                 case "15h":
@@ -174,6 +191,7 @@ class CheckJobState extends Command
                         $emailTradein,
                         'Device does not meet the following requirements. Reason: Device has water damage.'
                     );
+                    $jobstate->sent = true;
                     break;
                 case "11i":
                 case "15i":
@@ -182,9 +200,10 @@ class CheckJobState extends Command
                         $emailTradein,
                         'Device does not meet the following requirements. Reason: Downgrade.'
                     );
+                    $jobstate->sent = true;
                     break;
-                case "11j":
-               // case "15j":
+                //case "11j":
+                //case "15j":
                 //    $klaviyoemail->downgraded($emailUser, $emailTradein);
                 //    $notificationservice->sendTestingFailed(
                 //        $emailTradein,
@@ -193,7 +212,6 @@ class CheckJobState extends Command
                 //    break;
             }
 
-            $jobstate->sent = true;
             $jobstate->save();
         }
 

@@ -682,6 +682,49 @@ class KlaviyoEmail{
      *  Device Missing - Email End
      */
 
+    /**
+     *  Blacklisted - Email Start
+     */
+    //Post Testing EM - 4
+    public function device_lost_post_testing_em_4($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Post Testing EM - 4',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$post_testing_em_4_device_1' => $tradein->getCustomerProductName(),
+                    '$post_testing_em_4_quarantine' => $tradein->quarantineReason(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+    //Post Testing EM - 5
+    public function asset_watch_post_testing_em_5($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Post Testing EM - 5',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$post_testing_em_5_device_1' => $tradein->getCustomerProductName(),
+                    '$post_testing_em_5_quarantine' => $tradein->quarantineReason(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+    /**
+     *  Blacklisted - Email Start
+     */
+
     public function sendEmail($event){
         $response =  $this->client->publicAPI->track( $event ); 
 
