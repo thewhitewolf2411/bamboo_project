@@ -11804,6 +11804,7 @@ main p, a, span {
 .btn-orange.logout {
   background: var(--celebrate-–-mustard) 0% 0% no-repeat padding-box !important;
   background: #FCC44C 0% 0% no-repeat padding-box !important;
+  border-color: #FCC44C !important;
 }
 
 .btn-orange.logout:hover {
@@ -12914,7 +12915,7 @@ main p, a, span {
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 268px;
+  max-width: 270px;
 }
 
 .emoji-img {

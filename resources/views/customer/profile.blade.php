@@ -44,7 +44,7 @@
 
                         <div class="sections-menu">
                             <div class="change-page menu-item link-active" id="menu-overview">Account overview</div>
-                            <div class="change-page menu-item" id="menu-notifications">
+                            {{-- <div class="change-page menu-item" id="menu-notifications">
                                 Notifications
                                 @if(App\Helpers\NotificationHelper::count() !== null) 
                                     <div class="notifications-count menu">
@@ -52,7 +52,7 @@
                                         <p>{!!App\Helpers\NotificationHelper::count()!!}</p>
                                     </div>
                                 @endif
-                            </div>
+                            </div> --}}
                             <div class="change-page menu-item" id="menu-personal">Personal Information</div>
                             <div class="change-page menu-item" id="menu-account">Account Information</div>
                             <div class="change-page menu-item" id="menu-sales">My Sales</div>
@@ -63,7 +63,7 @@
                         </div>
 
                         <div class="sections-menu-mobile">
-                            <div class="change-page-mobile mobile-menu-item" id="mobile-menu-notifications">
+                            {{-- <div class="change-page-mobile mobile-menu-item" id="mobile-menu-notifications">
                                 <img class="mobile-img-arrow-back hidden" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
                                 <p class="left  @if(App\Helpers\NotificationHelper::count() !== null) norightmargin @endif">Notifications</p>
                                 @if(App\Helpers\NotificationHelper::count() !== null) 
@@ -73,7 +73,7 @@
                                     </div>
                                 @endif
                                 <img class="mobile-img-arrow-next" src="{{asset('/images/front-end-icons/black_arrow_next.svg')}}">
-                            </div>
+                            </div> --}}
                             <div class="change-page-mobile mobile-menu-item" id="mobile-menu-personal">
                                 <img class="mobile-img-arrow-back hidden" src="{{asset('/images/front-end-icons/black_arrow_left.svg')}}">
                                 <p class="left">Personal Information</p>
@@ -103,7 +103,7 @@
 
                         <div class="section-items">
                             <div id="section-overview" class="page-sections">
-                                <div class="section-item-preview">
+                                {{-- <div class="section-item-preview">
                                     <p class="section-item-title">Notifications</p>
                                     <div class="change-page right-link-box" id="box-notifications">
                                         <p class="right-link-text">See all Notifications</p>
@@ -111,7 +111,7 @@
                                             <img class="right-link-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="section-item-preview">
                                     <p class="section-item-title">Personal Information</p>
                                     <div class="change-page action-button-right purple" id="right-personal">
@@ -149,7 +149,7 @@
                                 </div>
                             </div>
 
-                            <div id="section-notifications" class="page-sections hidden">
+                            {{-- <div id="section-notifications" class="page-sections hidden">
                                 <div class="section-item-content">
                                     <div class="section-header">
                                         <p class="section-item-title">Notifications</p>
@@ -158,7 +158,7 @@
 
                                     @include('partial.customer.notifications', ['notifications' => $notifications])
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div id="section-personal" class="page-sections hidden">
 

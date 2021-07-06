@@ -40,12 +40,12 @@
                 <p class="m-0">Sort Code</p>
                 <p style="font-size: 20px;">{!!Auth::user()->sortCode()!!}</p>
             </div>
-
-            <div class="col-2">
-                <p class="payment-price-label">Agreed Price</p>
-                <p class="payment-agreed-price">£{!!$tradein->bamboo_price!!}</p>
-            </div>
-
+            @if($tradein->bamboo_price !== null)
+                <div class="col-2">
+                    <p class="payment-price-label">Agreed Price</p>
+                    <p class="payment-agreed-price">£{!!$tradein->bamboo_price!!}</p>
+                </div>
+            @endif
             <button type="button" class="btn btn-purple payment-details-btn mt-auto mb-auto " style="color: white;" data-toggle="modal" data-target="#accountDetils">
                 Re-enter details <img class="payment-pen-icon" src="{{asset('/images/pen.png')}}">
             </button>

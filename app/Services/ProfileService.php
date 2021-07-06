@@ -199,4 +199,562 @@ class ProfileService{
         return false;
     }
 
+
+
+
+
+
+    /**
+     * Processing section statuses variables (images/texts).
+     */
+    public static $p1 = [
+        'emoji' => '/customer_page_images/body/emoji_emotionless.svg',
+        'text'  =>  "We're on it..."
+    ];
+
+    public static $p2 = [
+        'emoji' => '/customer_page_images/body/emoji_sad.svg',
+        'text'  => "Sooo sorry, but...."
+    ];
+
+    public static $p3 = [
+        'emoji' => '/customer_page_images/body/emoji_winking.svg',
+        'text' => "Almost there..."
+    ];
+
+    public static $pvm1     = "As soon as we receive your device, it will be processed with Boo & the Team. Keep an eye out below for updates.";
+    public static $p1vm2    = "We have received your device and it is currently being booked in with Boo and the team";
+    public static $pvm3     = "Processing is complete., check back for updates below";
+    public static $pvm4     = "Processing Complete! We’re working on your return request";
+    public static $pvm5     = "We’ve ran into an issue when processing your order, please see below for details";
+
+    
+
+
+    /**
+     * Get processing section status.
+     * @param Tradein $tradein
+     * @return array
+     */
+    public static function getProcessingStatus(Tradein $tradein): array
+    {
+        // pending device receiving
+        if($tradein->job_state === "1"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm1
+            ];
+        }
+        // print your own - customer inbound
+        if($tradein->job_state === "2"){
+            if($tradein->notReceivedYet()){
+                if($tradein->notReceivedAfterSevenDays()){
+                    return [
+                        'emoji'         => asset(self::$p3['emoji']),
+                        'emoji_text'    => self::$p3['text'],
+                        'description'   => self::$pvm1
+                    ];
+                }
+                if($tradein->notReceivedAfterTenDays()){
+                    return [
+                        'emoji'         => asset(self::$p3['emoji']),
+                        'emoji_text'    => self::$p3['text'],
+                        'description'   => self::$pvm1
+                    ];
+                }
+                if($tradein->notReceivedAfterFourteenDays()){
+                    return [
+                        'emoji'         => asset(self::$p2['emoji']),
+                        'emoji_text'    => self::$p2['text'],
+                        'description'   => self::$pvm5
+                    ];
+                }
+            } else {
+                return [
+                    'emoji'         => asset(self::$p1['emoji']),
+                    'emoji_text'    => self::$p1['text'],
+                    'description'   => self::$pvm1
+                ];
+            }
+        }
+
+        // customer converts to free trade pack ??? TODO
+        if($tradein->job_state === "3"){
+            if($tradein->notReceivedYet()){
+                if($tradein->notReceivedAfterSevenDays()){
+                    return [
+                        'emoji'         => asset(self::$p3['emoji']),
+                        'emoji_text'    => self::$p3['text'],
+                        'description'   => self::$pvm1
+                    ];
+                }
+                if($tradein->notReceivedAfterTenDays()){
+                    return [
+                        'emoji'         => asset(self::$p3['emoji']),
+                        'emoji_text'    => self::$p3['text'],
+                        'description'   => self::$pvm1
+                    ];
+                }
+                if($tradein->notReceivedAfterFourteenDays()){
+                    return [
+                        'emoji'         => asset(self::$p2['emoji']),
+                        'emoji_text'    => self::$p2['text'],
+                        'description'   => self::$pvm5
+                    ];
+                }
+            } else {
+                return [
+                    'emoji'         => asset(self::$p1['emoji']),
+                    'emoji_text'    => self::$p1['text'],
+                    'description'   => self::$pvm1
+                ];
+            }
+        }
+
+        // lost in transit
+        if($tradein->job_state === "4"){
+            return [
+                'emoji'         => asset(self::$p2['emoji']),
+                'emoji_text'    => self::$p2['text'],
+                'description'   => self::$pvm5
+            ];
+        }
+
+        // no imei
+        if($tradein->job_state === "6"){
+            return [
+                'emoji'         => asset(self::$p2['emoji']),
+                'emoji_text'    => self::$p2['text'],
+                'description'   => self::$pvm5
+            ];
+        }
+
+        // blacklisted - awaiting response
+        if($tradein->job_state === "7"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // blacklisted
+        if($tradein->job_state === "8a"){
+            return [
+                'emoji'         => asset(self::$p2['emoji']),
+                'emoji_text'    => self::$p2['text'],
+                'description'   => self::$pvm5
+            ];
+        }
+
+        // blacklisted
+        if($tradein->job_state === "8b"){
+            return [
+                'emoji'         => asset(self::$p2['emoji']),
+                'emoji_text'    => self::$p2['text'],
+                'description'   => self::$pvm5
+            ];
+        }
+
+        // blacklisted
+        if($tradein->job_state === "8c"){
+            return [
+                'emoji'         => asset(self::$p2['emoji']),
+                'emoji_text'    => self::$p2['text'],
+                'description'   => self::$pvm5
+            ];
+        }
+
+        // blacklisted
+        if($tradein->job_state === "8d"){
+            return [
+                'emoji'         => asset(self::$p2['emoji']),
+                'emoji_text'    => self::$p2['text'],
+                'description'   => self::$pvm5
+            ];
+        }
+
+        // blacklisted - sent for destruction
+        if($tradein->job_state === "8f"){
+            return [
+                'emoji'         => asset(self::$p2['emoji']),
+                'emoji_text'    => self::$p2['text'],
+                'description'   => self::$pvm5
+            ];
+        }
+
+        // trade pack received - awaiting testing
+        if($tradein->job_state === "9"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$p1vm2
+            ];
+        }
+
+        // first test
+        if($tradein->job_state === "10"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // FMIP
+        if($tradein->job_state === "11a" || $tradein->job_state === "15a"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // Google lock
+        if($tradein->job_state === "11b" || $tradein->job_state === "15b"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // pin lock
+        if($tradein->job_state === "11c" || $tradein->job_state === "15c"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // incorrect model size
+        if($tradein->job_state === "11d" || $tradein->job_state === "15d"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // downgrade
+        if($tradein->job_state === "11e" || $tradein->job_state === "15e"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // incorrect gb size
+        if($tradein->job_state === "11f" || $tradein->job_state === "15f"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // incorrect network
+        if($tradein->job_state === "11g" || $tradein->job_state === "15g"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // downgrade
+        if($tradein->job_state === "11h" || $tradein->job_state === "15h"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // downgrade
+        if($tradein->job_state === "11i" || $tradein->job_state === "15i"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // order not valid
+        if($tradein->job_state === "11j"){
+            return [
+                'emoji'         => asset(self::$p2['emoji']),
+                'emoji_text'    => self::$p2['text'],
+                'description'   => self::$pvm5
+            ];
+        }
+
+        // test complete
+        if($tradein->job_state === "12"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // awaiting retesting
+        if($tradein->job_state === "13"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // 2nd test
+        if($tradein->job_state === "14"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+        
+        // 2nd testing complete
+        if($tradein->job_state === "16"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // 17 - blacklisted - N/A
+
+        // return to customer
+        if($tradein->job_state === "19"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm4
+            ];
+        }
+
+        // return to customer
+        if($tradein->job_state === "20"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm4
+            ];
+        }
+
+        // despatched to customer
+        if($tradein->job_state === "21"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm4
+            ];
+        }
+
+        // awaiting box build / awaiting payment
+        if($tradein->job_state === "22"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // awaiting box build / submitted for payment
+        if($tradein->job_state === "23"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // awaiting box build / failed payment
+        if($tradein->job_state === "24"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+        // awaiting box build / paid
+        if($tradein->job_state === "25"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
+    }
+
+
+    /**
+     * Return processing error codename.
+     * @param Tradein $tradein
+     */
+    public static function getProcessingError(Tradein $tradein)
+    {
+        // if not received after 7 days     -> PEM1
+        // if not received after 10 days    -> PEM2
+        // if not received after 14 days    -> PEM3
+        // if received after 14 days        -> PEM4
+        // no imei                          -> PEM5
+        // reported as stolen               -> PEM6
+        // no device                        -> PEM7
+        // blacklisted - with reason        -> PEM-B
+        
+        if($tradein->notReceivedAfterSevenDays()){
+            return "PEM1";
+        }
+        if($tradein->notReceivedAfterTenDays()){
+            return "PEM2";
+        }
+        if($tradein->notReceivedAfterFourteenDays()){
+            return "PEM3";
+        }
+        if($tradein->job_state === "11j"){
+            return "PEM4";
+        }
+        if($tradein->job_state === "6"){
+            return "PEM5";
+        }
+        if($tradein->job_state === "8d"){
+            return "PEM6";
+        }
+        if($tradein->job_state === "4"){
+            return "PEM7";
+        }
+
+        if(in_array($tradein->job_state, ['7', '8a', '8b', '8c', '8e', '8f'])){
+            return "PEM-B";
+        }
+
+        return null;
+    }
+
+
+
+
+
+
+
+
+
+    /**
+     * Testing section statuses variables (images/texts).
+     */
+    public static $t1 = [
+        'emoji' => '/customer_page_images/body/emoji_winking.svg',
+        'text' => "Almost there..."
+    ];
+
+    public static $t2 = [
+        'emoji' => '/customer_page_images/body/emoji_sad.svg',
+        'text' => "Sooo sorry, but...."
+    ];
+
+    public static $t3 = [
+        'emoji' => '/customer_page_images/body/emoji_emotionless.svg',
+        'text' => "We're on it..."
+    ];
+
+    public static $tvm1 = "We’re working on your order.";
+    public static $tvm3 = "Your device is in testing! We’ll let you know your test results as soon as we do. Check back for updates";
+    public static $tmv4 = "Your device passed our checks! Your payment request has been submitted, check below for payment advise and get “pay day” planning!";
+    public static $tvm5 = "Testing Complete! We’re working on your return request";
+    public static $tvm8 = "We have encountered an issue whilst trying to test your device, please check below to see your resolution options";
+
+
+
+    /**
+     * Get testing section status.
+     * @param Tradein $tradein
+     * @return array
+     */
+    public static function getTestingStatus(Tradein $tradein): array {
+        
+        // downgrade
+        if($tradein->job_state === "11i" || $tradein->job_state === "15i"){
+            return [
+                'emoji'         => asset(self::$t2['emoji']),
+                'emoji_text'    => self::$t2['text'],
+                'description'   => self::$tvm8
+            ];
+        }
+    }
+
+
+    /**
+     * Get testing error codename.
+     * @param Tradein $tradein
+     */
+    public static function getTestingError(Tradein $tradein)
+    {
+        // pattern/pin lock                 -> PEM8
+        // FMIP lock                        -> PEM9
+        // google lock                      -> PEM10
+        // testing faults/gb size/condition -> PEM11
+        // cosmetic condition (catastrophic)-> PEM12 ??
+        dd($tradein->isPinLocked());
+        if($tradein->isPinLocked()){
+            return "PEM8";
+        }
+        if($tradein->isFimpLocked()){
+            return "PEM9";
+        }
+        if($tradein->isGoogleLocked()){
+            return "PEM10";
+        }
+        if($tradein->getTestingFaults() !== null){
+            return "PEM11";
+        }
+
+    }
+
+
+
+
+
+
+
+
+    /**
+     * Payment section variables (images/texts).
+     */
+    public static $payment_emoji_py1     = '/customer_page_images/body/emoji_winking.svg'; 
+    public static $payment_emoji_py2     = '/customer_page_images/body/emoji_laughing.svg';
+    public static $payment_emoji_py3     = '/customer_page_images/body/emoji_sad.svg';
+
+    public static $payment_emoji_py1_text = "Almost there...";
+    public static $payment_emoji_py2_text = "Success!";
+    public static $payment_emoji_py3_text = "Sooo sorry, but....";
+
+    public static $pyvm1 = "We’ll let you know the status of your payment once your device has completed our checks.";
+    public static $pyvm2 = "We are processing your payment…";
+    public static $pyvm3 = "Woohoo! It’s pay day! You should have received payment for your product_name";
+    public static $pyvm4 = "Sadly we won’t be making payment to you on this occasion, your device is getting ready to come home…";
+    public static $pyvm5 = "Your device has been returned; no payment required";
+    public static $pyvm6 = "We have encountered an issue whilst trying to submit your payment. Please ensure your payment details are correct";
+    public static $pyvm8 = "Woohoo! It’s pay day! Your payment for your product_name is on its way to you, keep an eye on the post!";
+
+
+
+    /**
+     * Get payment section status.
+     * @param Tradein $tradein
+     * @return array
+     */
+    public static function getPaymentSectionStatus(Tradein $tradein): array
+    {
+        return [];
+    }
+
 }
