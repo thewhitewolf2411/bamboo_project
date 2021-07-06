@@ -157,6 +157,7 @@ class TradeInObserver
 
         $last_job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
         if($last_job_state->job_state !== $tradein->job_state){
+            $last_job_state->previous_job_state = $last_job_state->job_state;
             $last_job_state->job_state = $tradein->job_state;
             $last_job_state->save();
         }
