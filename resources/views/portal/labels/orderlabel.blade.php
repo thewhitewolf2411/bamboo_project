@@ -28,7 +28,7 @@
         span, p{
             margin: 0;
             font-family: "Sharp Sans No1 Medium";
-            line-height: 10px !important;
+            line-height: 9px !important;
         }
 
         .bold{
@@ -104,13 +104,19 @@
             left: 67px;
         }
 
-        #vertical-barcode{
-            position: absolute;
+        #vertical-barcode-text{
             transform: rotate(90deg);
-            left: 130px;
-            bottom: 150px;
-            width: 60px;
-            height: 146px;
+            font-size: 7px;
+            position: fixed;
+            left: -200px;
+            bottom: 0;
+        }
+
+        #vertical-barcode-image{
+            transform: rotate(90deg);
+            position: fixed;
+            left: -200px;
+            bottom: -60px;
         }
 
         #delivery-note-image{
@@ -123,7 +129,7 @@
 
         #delivery-note-text{
             position: absolute;
-            top: 68px;
+            top: 70px;
             left: 66px;
             font-size: 18px;
         }
@@ -203,7 +209,7 @@
 
     </div>
 
-    <div id="pre-date-data" class="bold">
+    <div id="pre-date-data">
 
         <p>Order Date:<br>Trade-in ID:<br>Order Expiry date:</p>
 
@@ -225,7 +231,13 @@
 
     <div id="hi-name">
         <p>Hi {{$tradeins[0]->customerFirstName()}}</p><br>
-        <p>Thank you for choosing Bamboo Mobile to SELL your device! Don’t delay in sending <br> your device(s). It must reach us by {{\Carbon\Carbon::parse($tradeins[0]->expiry_date)->format('d/m/y')}}  or the price offered to you could change.</p>
+        <span>
+            Thank you for choosing Bamboo Mobile to SELL your device! Don’t delay in sending <br> your device(s). It must reach us by 
+        </span>
+            <span class="bold">{{\Carbon\Carbon::parse($tradeins[0]->expiry_date)->format('d/m/y')}}</span>
+        <span>
+            or the price offered to you could change.
+        </span>
     </div>
 
     <div id="black-line-1" class="black-line"></div>
@@ -247,17 +259,17 @@
             <p>Total Price</p>
         </div>
 
-        <p id="product-data-p" class="product-data-class">
+        <span id="product-data-p" class="product-data-class">
         @foreach($tradeins as $tradein)
 
            
-                {{$tradein->getProductName()}}<br>
+                <p class="bold">{{$tradein->getProductName()}}</p>
                 Network:{{$tradein->getDeviceNetwork()}}<br>
                 Memory:{{$tradein->getDeviceMemory()}}<br>
                 Grade:{{$tradein->customer_grade}}<br><br>
 
         @endforeach
-        </p>
+        </span>
 
         <p id="product-price-p" class="product-data-class">
         @foreach($tradeins as $tradein)
@@ -275,7 +287,7 @@
         </p>
         
 
-        <p id="total-price-p" class="product-data-class">
+        <p id="total-price-p" class="product-data-class bold">
             @foreach($tradeins as $tradein)
                 <br><br>
                 £{{$tradein->order_price}}<br><br><br><br>
@@ -290,15 +302,20 @@
             <span>SELL VALUE</span>
         </p>
 
-        <p id="total-order-price">
+        <p id="total-order-price" class="bold">
             £{{$price}}
         </p>
 
         <div id="vertical-barcode">
-            <p>Trade in-ID:
-                {{$tradeins[0]->barcode_original}}
-            </p>
-            <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($tradeins[0]->barcode_original,'C128') }}" height="15" width="150" style="margin: 0" />
+            <div id="vertical-barcode-text">
+                <p>Trade in-ID:<br>
+                    {{$tradeins[0]->barcode_original}}
+                </p>
+            </div>
+    
+            <div id="vertical-barcode-image">
+                <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($tradeins[0]->barcode_original,'C128') }}" height="15" width="80" style="margin: 0" />
+            </div>
         </div>
 
         <div id="thank-you-note">

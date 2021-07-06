@@ -550,6 +550,7 @@ class KlaviyoEmail{
     /**
      * PIN Locked - Email Start
      */
+
     //Testing EM - 4
     public function pinLocked_testing_em_4($user, $tradein){
         $event = new KlaviyoEvent(
@@ -571,6 +572,73 @@ class KlaviyoEmail{
     /**
      * PIN Locked - Email End
      */
+
+    /**
+     * FMIP Journey - Email Start
+     */
+    //Testing EM - 4.1
+    public function FMIP_testing_em_4($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Testing EM - 4.1',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$testing_em_4.1_device_1' => $tradein->getCustomerProductName(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+
+    //Testing EM - 4.2
+    public function Google_testing_em_4($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Testing EM - 4.2',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$testing_em_4.2_device_1' => $tradein->getCustomerProductName(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+    
+
+    /**
+     * FMIP Journey - Email End
+     */
+
+    /**
+    * Incorrect GB Journey  - Email Start
+    *
+    *public function incorrect_GB_testing_em_3($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Testing EM - 3',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$testing_em_3_device_1' => $tradein->getCustomerProductName(),
+                    '$testing_em_3_new_price' => '£' . $tradein->bamboo_price,
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    *}
+    * Incorrect GB Journey  - Email Start
+    */
 
     /**
      *  Device Missing - Email Start
@@ -614,6 +682,48 @@ class KlaviyoEmail{
      *  Device Missing - Email End
      */
 
+    /**
+     *  Blacklisted - Email Start
+     */
+    //Post Testing EM - 4
+    public function device_lost_post_testing_em_4($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Post Testing EM - 4',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$post_testing_em_4_device_1' => $tradein->getCustomerProductName(),
+                    '$post_testing_em_4_quarantine' => $tradein->quarantineReason(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+    //Post Testing EM - 5
+    public function asset_watch_post_testing_em_5($user, $tradein){
+        $event = new KlaviyoEvent(
+            array(
+                'event' => 'Post Testing EM - 5',
+                'customer_properties' => array(
+                    '$email' => $user->email,
+                    '$post_testing_em_5_device_1' => $tradein->getCustomerProductName(),
+                    '$post_testing_em_5_quarantine' => $tradein->quarantineReason(),
+                ),
+                'properties' => array(
+                    'Item sold' => true
+                )
+            )
+        );
+
+        $this->sendEmail($event);
+    }
+    /**
+     *  Blacklisted - Email Start
+     */
 
     public function sendEmail($event){
         $response =  $this->client->publicAPI->track( $event ); 

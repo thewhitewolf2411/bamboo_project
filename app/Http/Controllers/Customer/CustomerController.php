@@ -737,7 +737,7 @@ class CustomerController extends Controller
 
                 return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
                 break;
-            
+
             // incorrect network
             case '15g':
                 // set notification as resolved
@@ -777,9 +777,72 @@ class CustomerController extends Controller
 
                 return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
                 break;
+            // PIN Lock
+            case '15c':
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
 
+                // set state to test complete
+                $tradein->job_state = '12';
+                $tradein->save();
+
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                break;
+
+            case '15d':
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+
+                // set state to test complete
+                $tradein->job_state = '12';
+                $tradein->save();
+
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                break;
             // downgrade after testing faults
             case '15e':
+                // set notification as resolved
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+
+                // set state to test complete
+                $tradein->job_state = '12';
+                $tradein->save();
+
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                break;
+            // incorrect memory
+            case '15f':
+                // set notification as resolved
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+
+                // set state to test complete
+                $tradein->job_state = '12';
+                $tradein->save();
+
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                break;
+            
+            //Testing faults
+            case '15i':
+                // set notification as resolved
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+                $notification->resolved = true;
+                $notification->save();
+
+                // set state to test complete
+                $tradein->job_state = '12';
+                $tradein->save();
+
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                break;
+            //Water Damage
+            case '15h':
                 // set notification as resolved
                 $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
                 $notification->resolved = true;
@@ -1104,7 +1167,7 @@ class CustomerController extends Controller
         if(isset($request->pattern) && isset($request->tradein)){
             $tradein = Tradein::find($request->tradein);
             $tradein->pin_pattern_number = $request->pattern;
-            $tradein->job_state = '9';
+            $tradein->job_state = '13';
             $tradein->save();
             return redirect()->back()->with('success', 'Device Pattern added successfuly. Device sent to testing.');
         }

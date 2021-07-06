@@ -150,7 +150,16 @@ class Testing{
                     }
                 }
                 else{
-                    $tradein->job_state = "11i";
+                    if($request->water_damage === 'true' && $tradein->customer_grade !== 'Faulty'){
+                        $tradein->cosmetic_condition = $request->cosmetic_condition;
+                        $tradein->job_state = '15h';
+                    }
+                    else if($request->device_fully_functional !== 'true' && $tradein->customer_grade !== 'Faulty'){
+                        $tradein->job_state = '15e';
+                    }
+                    else{
+                        $tradein->job_state = "15i";
+                    }
                 }
             }
         }
@@ -219,13 +228,13 @@ class Testing{
         }
         else{
 
-            $tradein->job_state = "10";
+            //$tradein->job_state = "10";
 
-            /*if($tradein->job_state === "9" || $tradein->job_state === "9a" || $tradein->job_state === "9b"){
+            if($tradein->job_state === "9" || $tradein->job_state === "9a" || $tradein->job_state === "9b"){
                 $tradein->job_state = "10";
-            }else if($tradein->job_state === "14"){
+            }else if($tradein->job_state === "14" || $tradein->job_state === "13"){
                 $tradein->job_state = "16";
-            }*/
+            }
             switch($bambogradeval){
                 case 5:
                     $quarantineTrays = Tray::where('tray_type', 'T')->where('tray_grade', 'A')->where('tray_brand',$tradein->getBrandLetter($tradein->correct_product_id))->where('number_of_devices', "<" ,100)->first();
