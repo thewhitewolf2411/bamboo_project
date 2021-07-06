@@ -881,38 +881,24 @@ class Tradein extends Model
     }
 
     public function notReceivedAfterSevenDays(){
-        $now = Carbon::now();
-        $expires = Carbon::parse($this->expiry_date);
-        $diff = $expires->diffInDays($now);
-        //dd($diff, $diff >= 7 && $diff < 10, $now->format('d.m.Y'), $expires->format('d.m.Y'));
-        if($diff <= 7 && $diff > 3){
-            $notificationService = new NotificationService();
-            $notificationService->sendNotReceivedYet($this);
+        $emailTradein = JobStateChanged::where('tradein_id', $this->id)->first();
+        if(\Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) > 7 && \Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) < 10){
             return true;
         }
         return false;
     }
 
     public function notReceivedAfterTenDays(){
-        $now = Carbon::now();
-        $expires = Carbon::parse($this->expiry_date);
-        $diff = $expires->diffInDays($now);
-
-        if($diff <= 3 && $diff > 0){
-            $notificationService = new NotificationService();
-            $notificationService->sendNotReceivedYet($this);
+        $emailTradein = JobStateChanged::where('tradein_id', $this->id)->first();
+        if(\Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) > 10 && \Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) < 14){
             return true;
         }
         return false;
     }
 
     public function notReceivedAfterFourteenDays(){
-        $now = Carbon::now();
-        $expires = Carbon::parse($this->expiry_date);
-        $diff = $expires->diffInDays($now);
-        if($now >= $expires){
-            $notificationService = new NotificationService();
-            $notificationService->sendNotReceivedYet($this);
+        $emailTradein = JobStateChanged::where('tradein_id', $this->id)->first();
+        if(\Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) > 14 && \Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) < 21){
             return true;
         }
         return false;

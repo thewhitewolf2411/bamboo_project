@@ -531,7 +531,7 @@
 
                                                     <div class="col">
                                                         <p class="sale-item-label">Status</p>
-                                                        @if(App\Services\ProfileService::isAlertableStatus($tradein->job_state))
+                                                        @if(App\Services\ProfileService::isAlertableStatus($tradein))
                                                             <div class="d-flex flex-row">
                                                                 <img class="alert-sale-item-status" src="{{asset('/customer_page_images/body/error_alert.svg')}}">    
                                                                 <p class="sale-item-bold">{{$tradein->getCustomerStatus()}}</p>

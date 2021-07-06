@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Eloquent\JobStateChanged;
 use App\Eloquent\Tradein;
 
 class ProfileService{
@@ -18,8 +19,16 @@ class ProfileService{
      */
     public static function getSaleStatus(Tradein $tradein):array
     {
+        $job_state = JobStateChanged::where('tradein_id', $tradein->id)->get()->last();
+        $actual_job_state = null;
+        if($job_state->previous_job_state === null){
+            $actual_job_state = $job_state->job_state;
+        } else {
+            $actual_job_state = $job_state->previous_job_state;
+        }
+
         // in receiving process
-        if(in_array($tradein->job_state, ['1', '2', '3'])){
+        if(in_array($actual_job_state, ['1', '2', '3'])){
             if($tradein->notReceivedYet()){
                 return [
                     'first_roundel'         => asset(self::$success_icon),
@@ -32,7 +41,7 @@ class ProfileService{
                     Please check processing section to help us resolve the issue and speed up your sale.',
                 ];
             } else {
-                if($tradein->job_state === "3"){
+                if($actual_job_state === "3"){
                     return [
                         'first_roundel'         => asset(self::$success_icon),
                         'first_roundel_text'    => 'Order placed',
@@ -58,7 +67,7 @@ class ProfileService{
         }
 
         // awaiting testing
-        if($tradein->job_state === '9'){
+        if($actual_job_state === '9'){
             return [
                 'first_roundel'         => asset(self::$success_icon),
                 'first_roundel_text'    => 'Trade Pack Received',
@@ -71,7 +80,7 @@ class ProfileService{
         }
 
         // test complete
-        if($tradein->job_state === '10' || $tradein->job_state === '12'){
+        if($actual_job_state === '10' || $actual_job_state === '12'){
             return [
                 'first_roundel'         => asset(self::$success_icon),
                 'first_roundel_text'    => 'Testing',
@@ -85,7 +94,7 @@ class ProfileService{
 
         // payment statuses
         if($tradein->deviceInPaymentProcess()){
-            if($tradein->job_state === '25'){
+            if($actual_job_state === '25'){
                 return [
                     'first_roundel'         => asset(self::$success_icon),
                     'first_roundel_text'    => 'Trade Pack received',
@@ -152,7 +161,7 @@ class ProfileService{
         }
 
         // awaiting retesting
-        if($tradein->job_state === '14'){
+        if($actual_job_state === '14'){
             return [
                 'first_roundel'         => asset(self::$success_icon),
                 'first_roundel_text'    => 'Trade pack recieved',
@@ -184,8 +193,16 @@ class ProfileService{
      * Check if tradein status is alertabled (userprofile/my sales tab)
      * @param string $job_state
      */
-    public static function isAlertableStatus(string $job_state):bool
+    public static function isAlertableStatus(Tradein $tradein):bool
     {
+        $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
+        $actual_job_state = null;
+        if($job_state->previous_job_state === null){
+            $actual_job_state = $job_state->job_state;
+        } else {
+            $actual_job_state = $job_state->previous_job_state;
+        }
+
         $alertable_statuses = [
             "4", "4b", "5", "6", "7", 
             "8a", "8b", "8c", "8d", "8e", "8f", 
@@ -193,7 +210,7 @@ class ProfileService{
             "15", "15a", "15b", "15c", "15e", "15f", "15g", "15h", "15i", "15j",
             "17", "18"
         ];
-        if(in_array($job_state, $alertable_statuses)){
+        if(in_array($actual_job_state, $alertable_statuses)){
             return true;
         }
         return false;
@@ -238,8 +255,16 @@ class ProfileService{
      */
     public static function getProcessingStatus(Tradein $tradein): array
     {
+        $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
+        $actual_job_state = null;
+        if($job_state->previous_job_state === null){
+            $actual_job_state = $job_state->job_state;
+        } else {
+            $actual_job_state = $job_state->previous_job_state;
+        }
+
         // pending device receiving
-        if($tradein->job_state === "1"){
+        if($actual_job_state === "1"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -247,7 +272,7 @@ class ProfileService{
             ];
         }
         // print your own - customer inbound
-        if($tradein->job_state === "2"){
+        if($actual_job_state === "2"){
             if($tradein->notReceivedYet()){
                 if($tradein->notReceivedAfterSevenDays()){
                     return [
@@ -280,7 +305,7 @@ class ProfileService{
         }
 
         // customer converts to free trade pack ??? TODO
-        if($tradein->job_state === "3"){
+        if($actual_job_state === "3"){
             if($tradein->notReceivedYet()){
                 if($tradein->notReceivedAfterSevenDays()){
                     return [
@@ -313,7 +338,7 @@ class ProfileService{
         }
 
         // lost in transit
-        if($tradein->job_state === "4"){
+        if($actual_job_state === "4"){
             return [
                 'emoji'         => asset(self::$p2['emoji']),
                 'emoji_text'    => self::$p2['text'],
@@ -322,7 +347,7 @@ class ProfileService{
         }
 
         // no imei
-        if($tradein->job_state === "6"){
+        if($actual_job_state === "6"){
             return [
                 'emoji'         => asset(self::$p2['emoji']),
                 'emoji_text'    => self::$p2['text'],
@@ -331,7 +356,7 @@ class ProfileService{
         }
 
         // blacklisted - awaiting response
-        if($tradein->job_state === "7"){
+        if($actual_job_state === "7"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -340,7 +365,7 @@ class ProfileService{
         }
 
         // blacklisted
-        if($tradein->job_state === "8a"){
+        if($actual_job_state === "8a"){
             return [
                 'emoji'         => asset(self::$p2['emoji']),
                 'emoji_text'    => self::$p2['text'],
@@ -349,7 +374,7 @@ class ProfileService{
         }
 
         // blacklisted
-        if($tradein->job_state === "8b"){
+        if($actual_job_state === "8b"){
             return [
                 'emoji'         => asset(self::$p2['emoji']),
                 'emoji_text'    => self::$p2['text'],
@@ -358,7 +383,7 @@ class ProfileService{
         }
 
         // blacklisted
-        if($tradein->job_state === "8c"){
+        if($actual_job_state === "8c"){
             return [
                 'emoji'         => asset(self::$p2['emoji']),
                 'emoji_text'    => self::$p2['text'],
@@ -367,7 +392,7 @@ class ProfileService{
         }
 
         // blacklisted
-        if($tradein->job_state === "8d"){
+        if($actual_job_state === "8d"){
             return [
                 'emoji'         => asset(self::$p2['emoji']),
                 'emoji_text'    => self::$p2['text'],
@@ -376,7 +401,7 @@ class ProfileService{
         }
 
         // blacklisted - sent for destruction
-        if($tradein->job_state === "8f"){
+        if($actual_job_state === "8f"){
             return [
                 'emoji'         => asset(self::$p2['emoji']),
                 'emoji_text'    => self::$p2['text'],
@@ -385,7 +410,7 @@ class ProfileService{
         }
 
         // trade pack received - awaiting testing
-        if($tradein->job_state === "9"){
+        if($actual_job_state === "9"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -394,7 +419,7 @@ class ProfileService{
         }
 
         // first test
-        if($tradein->job_state === "10"){
+        if($actual_job_state === "10"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -403,7 +428,7 @@ class ProfileService{
         }
 
         // FMIP
-        if($tradein->job_state === "11a" || $tradein->job_state === "15a"){
+        if($actual_job_state === "11a" || $actual_job_state === "15a"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -412,7 +437,7 @@ class ProfileService{
         }
 
         // Google lock
-        if($tradein->job_state === "11b" || $tradein->job_state === "15b"){
+        if($actual_job_state === "11b" || $actual_job_state === "15b"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -421,7 +446,7 @@ class ProfileService{
         }
 
         // pin lock
-        if($tradein->job_state === "11c" || $tradein->job_state === "15c"){
+        if($actual_job_state === "11c" || $actual_job_state === "15c"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -430,7 +455,7 @@ class ProfileService{
         }
 
         // incorrect model size
-        if($tradein->job_state === "11d" || $tradein->job_state === "15d"){
+        if($actual_job_state === "11d" || $actual_job_state === "15d"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -439,7 +464,7 @@ class ProfileService{
         }
 
         // downgrade
-        if($tradein->job_state === "11e" || $tradein->job_state === "15e"){
+        if($actual_job_state === "11e" || $actual_job_state === "15e"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -448,7 +473,7 @@ class ProfileService{
         }
 
         // incorrect gb size
-        if($tradein->job_state === "11f" || $tradein->job_state === "15f"){
+        if($actual_job_state === "11f" || $actual_job_state === "15f"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -457,7 +482,7 @@ class ProfileService{
         }
 
         // incorrect network
-        if($tradein->job_state === "11g" || $tradein->job_state === "15g"){
+        if($actual_job_state === "11g" || $actual_job_state === "15g"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -466,7 +491,7 @@ class ProfileService{
         }
 
         // downgrade
-        if($tradein->job_state === "11h" || $tradein->job_state === "15h"){
+        if($actual_job_state === "11h" || $actual_job_state === "15h"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -475,7 +500,7 @@ class ProfileService{
         }
 
         // downgrade
-        if($tradein->job_state === "11i" || $tradein->job_state === "15i"){
+        if($actual_job_state === "11i" || $actual_job_state === "15i"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -484,7 +509,7 @@ class ProfileService{
         }
 
         // order not valid
-        if($tradein->job_state === "11j"){
+        if($actual_job_state === "11j"){
             return [
                 'emoji'         => asset(self::$p2['emoji']),
                 'emoji_text'    => self::$p2['text'],
@@ -493,7 +518,7 @@ class ProfileService{
         }
 
         // test complete
-        if($tradein->job_state === "12"){
+        if($actual_job_state === "12"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -502,7 +527,7 @@ class ProfileService{
         }
 
         // awaiting retesting
-        if($tradein->job_state === "13"){
+        if($actual_job_state === "13"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -511,7 +536,7 @@ class ProfileService{
         }
 
         // 2nd test
-        if($tradein->job_state === "14"){
+        if($actual_job_state === "14"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -520,7 +545,7 @@ class ProfileService{
         }
         
         // 2nd testing complete
-        if($tradein->job_state === "16"){
+        if($actual_job_state === "16"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -531,7 +556,7 @@ class ProfileService{
         // 17 - blacklisted - N/A
 
         // return to customer
-        if($tradein->job_state === "19"){
+        if($actual_job_state === "19"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -540,7 +565,7 @@ class ProfileService{
         }
 
         // return to customer
-        if($tradein->job_state === "20"){
+        if($actual_job_state === "20"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -549,7 +574,7 @@ class ProfileService{
         }
 
         // despatched to customer
-        if($tradein->job_state === "21"){
+        if($actual_job_state === "21"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -558,7 +583,7 @@ class ProfileService{
         }
 
         // awaiting box build / awaiting payment
-        if($tradein->job_state === "22"){
+        if($actual_job_state === "22"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -567,7 +592,7 @@ class ProfileService{
         }
 
         // awaiting box build / submitted for payment
-        if($tradein->job_state === "23"){
+        if($actual_job_state === "23"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -576,7 +601,7 @@ class ProfileService{
         }
 
         // awaiting box build / failed payment
-        if($tradein->job_state === "24"){
+        if($actual_job_state === "24"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -585,7 +610,7 @@ class ProfileService{
         }
 
         // awaiting box build / paid
-        if($tradein->job_state === "25"){
+        if($actual_job_state === "25"){
             return [
                 'emoji'         => asset(self::$p1['emoji']),
                 'emoji_text'    => self::$p1['text'],
@@ -610,6 +635,14 @@ class ProfileService{
         // reported as stolen               -> PEM6
         // no device                        -> PEM7
         // blacklisted - with reason        -> PEM-B
+
+        $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
+        $actual_job_state = null;
+        if($job_state->previous_job_state === null){
+            $actual_job_state = $job_state->job_state;
+        } else {
+            $actual_job_state = $job_state->previous_job_state;
+        }
         
         if($tradein->notReceivedAfterSevenDays()){
             return "PEM1";
@@ -620,20 +653,20 @@ class ProfileService{
         if($tradein->notReceivedAfterFourteenDays()){
             return "PEM3";
         }
-        if($tradein->job_state === "11j"){
+        if($actual_job_state === "11j"){
             return "PEM4";
         }
-        if($tradein->job_state === "6"){
+        if($actual_job_state === "6"){
             return "PEM5";
         }
-        if($tradein->job_state === "8d"){
+        if($actual_job_state === "8d"){
             return "PEM6";
         }
-        if($tradein->job_state === "4"){
+        if($actual_job_state === "4"){
             return "PEM7";
         }
 
-        if(in_array($tradein->job_state, ['7', '8a', '8b', '8c', '8e', '8f'])){
+        if(in_array($actual_job_state, ['7', '8a', '8b', '8c', '8e', '8f'])){
             return "PEM-B";
         }
 
@@ -679,23 +712,49 @@ class ProfileService{
      * @param Tradein $tradein
      * @return array
      */
-    public static function getTestingStatus(Tradein $tradein): array {
-        
+    public static function getTestingStatus(Tradein $tradein): array 
+    {
+        $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
+        $actual_job_state = null;
+        if($job_state->previous_job_state === null){
+            $actual_job_state = $job_state->job_state;
+        } else {
+            $actual_job_state = $job_state->previous_job_state;
+        }
+
+        // order placed
+        if($actual_job_state === "1"){
+            return [];
+        }
+
+        // awaiting testing
+        if($actual_job_state === "9"){
+            return [
+                'emoji'         => asset(self::$t1['emoji']),
+                'emoji_text'    => self::$t1['text'],
+                'description'   => self::$tvm1
+            ];
+        }
+
         // downgrade
-        if($tradein->job_state === "11i" || $tradein->job_state === "15i"){
+        if($actual_job_state === "11i" || $actual_job_state === "15i"){
             return [
                 'emoji'         => asset(self::$t2['emoji']),
                 'emoji_text'    => self::$t2['text'],
                 'description'   => self::$tvm8
             ];
         }
-        if($tradein->job_state === "15e" || $tradein->job_state === "15i"){
+
+        // testing faults
+        if($actual_job_state === "15e" || $actual_job_state === "15i"){
             return [
                 'emoji'         => asset(self::$t2['emoji']),
                 'emoji_text'    => self::$t2['text'],
                 'description'   => self::$tvm8
             ];
         }
+
+
     }
 
 
@@ -710,10 +769,18 @@ class ProfileService{
         // google lock                      -> PEM10
         // testing faults/gb size/condition -> PEM11
         // cosmetic condition (catastrophic)-> PEM12 ??
+        $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
+        $actual_job_state = null;
+        if($job_state->previous_job_state === null){
+            $actual_job_state = $job_state->job_state;
+        } else {
+            $actual_job_state = $job_state->previous_job_state;
+        }
+
         if($tradein->isPinLocked()){
             return "PEM8";
         }
-        if($tradein->isFimpLocked()){
+        if($actual_job_state === "11a" || $actual_job_state === "15a"){
             return "PEM9";
         }
         if($tradein->isGoogleLocked()){

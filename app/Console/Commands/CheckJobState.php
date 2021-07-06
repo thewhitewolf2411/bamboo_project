@@ -62,18 +62,30 @@ class CheckJobState extends Command
                     if(\Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) > 7 && \Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) < 10){
                         $tradeins = $jobstate->getTradeinsByBarcode();
                         $klaviyoemail->orderExpiresInSevenDays($emailUser, $tradeins);
+                        foreach($tradeins as $tradein){
+                            $notificationService = new NotificationService();
+                            $notificationService->sendNotReceivedYet($tradein);
+                        }
                         //$jobstate->sent = true;
                         break;
                     }
                     if(\Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) > 10 && \Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) < 14){
                         $tradeins = $jobstate->getTradeinsByBarcode();
                         $klaviyoemail->orderExpiresInFourDays($emailUser, $tradeins);
+                        foreach($tradeins as $tradein){
+                            $notificationService = new NotificationService();
+                            $notificationService->sendNotReceivedYet($tradein);
+                        }
                         //$jobstate->sent = true;
                         break;
                     }
                     if(\Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) > 14 && \Carbon\Carbon::parse($emailTradein->created_at)->diffInDays(\Carbon\Carbon::now()) < 21){
                         $tradeins = $jobstate->getTradeinsByBarcode();
                         $klaviyoemail->orderExpired($emailUser, $tradeins);
+                        foreach($tradeins as $tradein){
+                            $notificationService = new NotificationService();
+                            $notificationService->sendNotReceivedYet($tradein);
+                        }
                         //$jobstate->sent = true;
                         break;
                     }
