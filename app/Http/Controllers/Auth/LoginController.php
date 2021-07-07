@@ -74,6 +74,8 @@ class LoginController extends Controller
                     $request->session()->forget('user_selection');
 
                     $request->session()->flash('productaddedtocart', true);
+
+                    return redirect('/cart');
                 }
 
                 //return $this->sendLoginResponse($request);
