@@ -12937,6 +12937,7 @@ main p, a, span {
   opacity: 1;
   text-align: center;
   margin-top: 16px;
+  line-height: 1.2;
 }
 
 .emoji-info-text {

@@ -24,7 +24,11 @@ class ProfileService{
         if($job_state->previous_job_state === null){
             $actual_job_state = $job_state->job_state;
         } else {
-            $actual_job_state = $job_state->previous_job_state;
+            if($job_state->sent){
+                $actual_job_state = $job_state->job_state;
+            } else {
+                $actual_job_state = $job_state->previous_job_state;
+            }
         }
 
         // in receiving process
@@ -200,7 +204,11 @@ class ProfileService{
         if($job_state->previous_job_state === null){
             $actual_job_state = $job_state->job_state;
         } else {
-            $actual_job_state = $job_state->previous_job_state;
+            if($job_state->sent){
+                $actual_job_state = $job_state->job_state;
+            } else {
+                $actual_job_state = $job_state->previous_job_state;
+            }
         }
 
         $alertable_statuses = [
@@ -260,7 +268,11 @@ class ProfileService{
         if($job_state->previous_job_state === null){
             $actual_job_state = $job_state->job_state;
         } else {
-            $actual_job_state = $job_state->previous_job_state;
+            if($job_state->sent){
+                $actual_job_state = $job_state->job_state;
+            } else {
+                $actual_job_state = $job_state->previous_job_state;
+            }
         }
 
         // pending device receiving
@@ -641,7 +653,11 @@ class ProfileService{
         if($job_state->previous_job_state === null){
             $actual_job_state = $job_state->job_state;
         } else {
-            $actual_job_state = $job_state->previous_job_state;
+            if($job_state->sent){
+                $actual_job_state = $job_state->job_state;
+            } else {
+                $actual_job_state = $job_state->previous_job_state;
+            }
         }
         
         if($tradein->notReceivedAfterSevenDays()){
@@ -719,12 +735,120 @@ class ProfileService{
         if($job_state->previous_job_state === null){
             $actual_job_state = $job_state->job_state;
         } else {
-            $actual_job_state = $job_state->previous_job_state;
+            if($job_state->sent){
+                $actual_job_state = $job_state->job_state;
+            } else {
+                $actual_job_state = $job_state->previous_job_state;
+            }
         }
 
         // order placed
         if($actual_job_state === "1"){
             return [];
+        }
+
+        // awaiting receipt / trade pack despatched
+        if($actual_job_state === "2"){
+            return [
+                'emoji'         => asset(self::$t1['emoji']),
+                'emoji_text'    => self::$t1['text'],
+                'description'   => self::$tvm1
+            ];
+        }
+
+        // awaiting receipt / trade pack despatched
+        if($actual_job_state === "3"){
+            return [
+                'emoji'         => asset(self::$t1['emoji']),
+                'emoji_text'    => self::$t1['text'],
+                'description'   => self::$tvm1
+            ];
+        }
+
+        // lost in transit
+        if($actual_job_state === "4"){
+            return [
+                'emoji'         => asset(self::$t1['emoji']),
+                'emoji_text'    => self::$t1['text'],
+                'description'   => self::$tvm1
+            ];
+        }
+
+        // order cancelled
+        if($actual_job_state === "4a"){
+            return [];
+        }
+
+        // lost in transit / expired
+        if($actual_job_state === "4b"){
+            return [];
+        }
+
+        if($actual_job_state === "5"){
+            return [];
+        }
+
+        // no imei
+        if($actual_job_state === "6"){
+            return [
+                'emoji'         => asset(self::$t1['emoji']),
+                'emoji_text'    => self::$t1['text'],
+                'description'   => self::$tvm1
+            ];
+        }
+
+        // blacklisted
+        if($actual_job_state === "8a"){
+            return [
+                'emoji'         => asset(self::$t1['emoji']),
+                'emoji_text'    => self::$t1['text'],
+                'description'   => self::$tvm1
+            ];
+        }
+
+        // blacklisted
+        if($actual_job_state === "8b"){
+            return [
+                'emoji'         => asset(self::$t1['emoji']),
+                'emoji_text'    => self::$t1['text'],
+                'description'   => self::$tvm1
+            ];
+        }
+
+        // blacklisted
+        if($actual_job_state === "8c"){
+            return [
+                'emoji'         => asset(self::$t1['emoji']),
+                'emoji_text'    => self::$t1['text'],
+                'description'   => self::$tvm1
+            ];
+        }
+
+        // blacklisted
+        if($actual_job_state === "8d"){
+            return [
+                'emoji'         => asset(self::$t1['emoji']),
+                'emoji_text'    => self::$t1['text'],
+                'description'   => self::$tvm1
+            ];
+        }
+
+        // blacklisted
+        if($actual_job_state === "8f"){
+            return [
+                'emoji'         => asset(self::$t1['emoji']),
+                'emoji_text'    => self::$t1['text'],
+                'description'   => self::$tvm1
+            ];
+        }
+
+        // awaiting testing / test complete
+        if($actual_job_state === "9b"){
+            return [
+                'emoji'         => asset(self::$t3['emoji']),
+                'emoji_text'    => self::$t3['text'],
+                'description'   => self::$tmv4
+            ];
         }
 
         // awaiting testing
@@ -733,6 +857,87 @@ class ProfileService{
                 'emoji'         => asset(self::$t1['emoji']),
                 'emoji_text'    => self::$t1['text'],
                 'description'   => self::$tvm1
+            ];
+        }
+
+        // first test
+        if($actual_job_state === "10"){
+            return [
+                'emoji'         => asset(self::$t3['emoji']),
+                'emoji_text'    => self::$t3['text'],
+                'description'   => self::$tvm3
+            ];
+        }
+
+        // FMIP
+        if($actual_job_state === "11a" || $actual_job_state === "15a"){
+            return [
+                'emoji'         => asset(self::$t2['emoji']),
+                'emoji_text'    => self::$t2['text'],
+                'description'   => self::$tvm8
+            ];
+        }
+
+        // google lock
+        if($actual_job_state === "11b" || $actual_job_state === "15b"){
+            return [
+                'emoji'         => asset(self::$t2['emoji']),
+                'emoji_text'    => self::$t2['text'],
+                'description'   => self::$tvm8
+            ];
+        }
+
+        // pin lock
+        if($actual_job_state === "11c" || $actual_job_state === "15c"){
+            return [
+                'emoji'         => asset(self::$t2['emoji']),
+                'emoji_text'    => self::$t2['text'],
+                'description'   => self::$tvm8
+            ];
+        }
+
+        // incorrect model size
+        if($actual_job_state === "11d" || $actual_job_state === "15d"){
+            return [
+                'emoji'         => asset(self::$t2['emoji']),
+                'emoji_text'    => self::$t2['text'],
+                'description'   => self::$tvm8
+            ];
+        }
+
+        // downgrade
+        if($actual_job_state === "11e" || $actual_job_state === "15e"){
+            return [
+                'emoji'         => asset(self::$t2['emoji']),
+                'emoji_text'    => self::$t2['text'],
+                'description'   => self::$tvm8
+            ];
+        }
+
+        // incorrect gb size
+        if($actual_job_state === "11f" || $actual_job_state === "15f"){
+            return [
+                'emoji'         => asset(self::$t2['emoji']),
+                'emoji_text'    => self::$t2['text'],
+                'description'   => self::$tvm8
+            ];
+        }
+
+        // incorrect network
+        if($actual_job_state === "11g" || $actual_job_state === "15g"){
+            return [
+                'emoji'         => asset(self::$t2['emoji']),
+                'emoji_text'    => self::$t2['text'],
+                'description'   => self::$tvm8
+            ];
+        }
+
+        // downgrade - awaiting response
+        if($actual_job_state === "11h" || $actual_job_state === "15h"){
+            return [
+                'emoji'         => asset(self::$t2['emoji']),
+                'emoji_text'    => self::$t2['text'],
+                'description'   => self::$tvm8
             ];
         }
 
@@ -745,12 +950,116 @@ class ProfileService{
             ];
         }
 
+        // order not valid
+        if($actual_job_state === "11j"){
+            return [
+                'emoji'         => asset(self::$t1['emoji']),
+                'emoji_text'    => self::$t1['text'],
+                'description'   => self::$tvm1
+            ];
+        }
+
+        // test complete
+        if($actual_job_state === "12"){
+            return [
+                'emoji'         => asset(self::$t3['emoji']),
+                'emoji_text'    => self::$t3['text'],
+                'description'   => self::$tvm3
+            ];
+        }
+
+        // awaiting retesting
+        if($actual_job_state === "13"){
+            return [
+                'emoji'         => asset(self::$t3['emoji']),
+                'emoji_text'    => self::$t3['text'],
+                'description'   => self::$tvm3
+            ];
+        }
+
+        // 2nd test
+        if($actual_job_state === "14"){
+            return [
+                'emoji'         => asset(self::$t3['emoji']),
+                'emoji_text'    => self::$t3['text'],
+                'description'   => self::$tvm3
+            ];
+        }
+
         // testing faults
         if($actual_job_state === "15e" || $actual_job_state === "15i"){
             return [
                 'emoji'         => asset(self::$t2['emoji']),
                 'emoji_text'    => self::$t2['text'],
                 'description'   => self::$tvm8
+            ];
+        }
+
+        // 2nd test complete /
+        if($actual_job_state === "16"){
+            return [
+                'emoji'         => asset(self::$t3['emoji']),
+                'emoji_text'    => self::$t3['text'],
+                'description'   => self::$tvm3
+            ];
+        }
+
+        // blacklisted - sent for destruction
+        if($actual_job_state === "17"){
+            return [];
+        }
+
+        // return to customer
+        if($actual_job_state === "19"){
+            return [
+                'emoji'         => asset(self::$t3['emoji']),
+                'emoji_text'    => self::$t3['text'],
+                'description'   => self::$tvm5
+            ];
+        }
+
+        // return to customer - returning device
+        if($actual_job_state === "20"){
+            return [
+                'emoji'         => asset(self::$t3['emoji']),
+                'emoji_text'    => self::$t3['text'],
+                'description'   => self::$tvm5
+            ];
+        }
+
+        // despatched to customer
+        if($actual_job_state === "21"){
+            return [
+                'emoji'         => asset(self::$t3['emoji']),
+                'emoji_text'    => self::$t3['text'],
+                'description'   => self::$tvm5
+            ];
+        }
+
+        // awaiting box build / submitted for payment
+        if($actual_job_state === "23"){
+            return [
+                'emoji'         => asset(self::$t3['emoji']),
+                'emoji_text'    => self::$t3['text'],
+                'description'   => self::$tmv4
+            ];
+        }
+
+        // awaiting box build - failed payment
+        if($actual_job_state === "24"){
+            return [
+                'emoji'         => asset(self::$t3['emoji']),
+                'emoji_text'    => self::$t3['text'],
+                'description'   => self::$tmv4
+            ];
+        }
+
+        // awaiting box build / paid
+        if($actual_job_state === "25"){
+            return [
+                'emoji'         => asset(self::$t3['emoji']),
+                'emoji_text'    => self::$t3['text'],
+                'description'   => self::$tmv4
             ];
         }
 
@@ -774,19 +1083,25 @@ class ProfileService{
         if($job_state->previous_job_state === null){
             $actual_job_state = $job_state->job_state;
         } else {
-            $actual_job_state = $job_state->previous_job_state;
+            if($job_state->sent){
+                $actual_job_state = $job_state->job_state;
+            } else {
+                $actual_job_state = $job_state->previous_job_state;
+            }
         }
 
-        if($tradein->isPinLocked()){
+        if($actual_job_state === "11c" || $actual_job_state === "15c"){
             return "PEM8";
         }
         if($actual_job_state === "11a" || $actual_job_state === "15a"){
             return "PEM9";
         }
-        if($tradein->isGoogleLocked()){
+        if($actual_job_state === "11b" || $actual_job_state === "15b"){
             return "PEM10";
         }
-        if($tradein->getTestingFaults() !== null){
+
+        $testing_faults = ["11d", "11e", "11f", "11g", "15d", "15e", "15f", "15g"];
+        if(in_array($actual_job_state, $testing_faults)){
             return "PEM11";
         }
 
@@ -802,13 +1117,20 @@ class ProfileService{
     /**
      * Payment section variables (images/texts).
      */
-    public static $payment_emoji_py1     = '/customer_page_images/body/emoji_winking.svg'; 
-    public static $payment_emoji_py2     = '/customer_page_images/body/emoji_laughing.svg';
-    public static $payment_emoji_py3     = '/customer_page_images/body/emoji_sad.svg';
+    public static $py1 = [
+        'emoji' => '/customer_page_images/body/emoji_winking.svg',
+        'text'  => "Almost there..."
+    ];
 
-    public static $payment_emoji_py1_text = "Almost there...";
-    public static $payment_emoji_py2_text = "Success!";
-    public static $payment_emoji_py3_text = "Sooo sorry, but....";
+    public static $py2 = [
+        'emoji' => '/customer_page_images/body/emoji_laughing.svg',
+        'text'  => "Success!"
+    ];
+
+    public static $py3 = [
+        'emoji' => '/customer_page_images/body/emoji_sad.svg',
+        'text'  => "Sooo sorry, but...."
+    ];
 
     public static $pyvm1 = "We’ll let you know the status of your payment once your device has completed our checks.";
     public static $pyvm2 = "We are processing your payment…";
@@ -827,7 +1149,116 @@ class ProfileService{
      */
     public static function getPaymentSectionStatus(Tradein $tradein): array
     {
-        return [];
+        $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
+        $actual_job_state = null;
+        if($job_state->previous_job_state === null){
+            $actual_job_state = $job_state->job_state;
+        } else {
+            if($job_state->sent){
+                $actual_job_state = $job_state->job_state;
+            } else {
+                $actual_job_state = $job_state->previous_job_state;
+            }
+        }
+
+        // awaiting testing - trade pack received
+        if($actual_job_state === "9"){
+            return [
+                'emoji'         => asset(self::$py1['emoji']),
+                'emoji_text'    => self::$py1['text'],
+                'description'   => self::$pyvm1
+            ];
+        }
+
+        if($actual_job_state === '12'){
+            return [
+                'emoji'         => asset(self::$py1['emoji']),
+                'emoji_text'    => self::$py1['text'],
+                'description'   => self::$pyvm1
+            ];
+        }
+
+        if($actual_job_state === "15c"){
+            return [
+                'emoji'         => asset(self::$py1['emoji']),
+                'emoji_text'    => self::$py1['text'],
+                'description'   => self::$pyvm1
+            ];
+        }
+        
+        if($actual_job_state === "19"){
+            return [
+                'emoji'         => asset(self::$py3['emoji']),
+                'emoji_text'    => self::$py3['text'],
+                'description'   => self::$pyvm4
+            ];
+        }
+
+        if($actual_job_state === "25"){
+            return [
+                'emoji'         => asset(self::$py2['emoji']),
+                'emoji_text'    => self::$py2['text'],
+                'description'   => self::$pyvm3
+            ];
+        }
+
+        if($actual_job_state === "5"){
+            return [];
+        }
+        //return [];
+    }
+
+
+    /**
+     * Check if there is payment issues.
+     * @param Tradein $tradein
+     * @return bool
+     */
+    public static function hasPaymentIssues(Tradein $tradein): bool
+    {
+        $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
+        $actual_job_state = null;
+        if($job_state->previous_job_state === null){
+            $actual_job_state = $job_state->job_state;
+        } else {
+            if($job_state->sent){
+                $actual_job_state = $job_state->job_state;
+            } else {
+                $actual_job_state = $job_state->previous_job_state;
+            }
+        }
+
+        if($actual_job_state === "24"){
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Check if tradein has agreed payment price.
+     * @param Tradein $tradein
+     * @return bool
+     */
+    public static function hasAgreedPrice(Tradein $tradein): bool
+    {
+        $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
+        $actual_job_state = null;
+        if($job_state->previous_job_state === null){
+            $actual_job_state = $job_state->job_state;
+        } else {
+            if($job_state->sent){
+                $actual_job_state = $job_state->job_state;
+            } else {
+                $actual_job_state = $job_state->previous_job_state;
+            }
+        }
+
+        if($tradein->bamboo_price === $tradein->order_price){
+            return true;
+        }
+
+        return false;
     }
 
 }
