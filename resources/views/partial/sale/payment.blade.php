@@ -1,14 +1,16 @@
 <div class="customer-orders customer-buying py-3">
 
-    <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
-        <div class="emoji-col">
-            <img class="emoji-img" src="{{asset(App\Services\ProfileService::getPaymentSectionStatus($tradein)['emoji'])}}">
-            <p class="emoji-text">{!!App\Services\ProfileService::getPaymentSectionStatus($tradein)['emoji_text']!!}</p>
+    @if(!empty(App\Services\ProfileService::getPaymentSectionStatus($tradein)))
+        <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
+            <div class="emoji-col">
+                <img class="emoji-img" src="{{asset(App\Services\ProfileService::getPaymentSectionStatus($tradein)['emoji'])}}">
+                <p class="emoji-text">{!!App\Services\ProfileService::getPaymentSectionStatus($tradein)['emoji_text']!!}</p>
+            </div>
+            <p class="emoji-info-text">
+                {!!App\Services\ProfileService::getPaymentSectionStatus($tradein)['description']!!}
+            </p>
         </div>
-        <p class="emoji-info-text">
-            {!!App\Services\ProfileService::getPaymentSectionStatus($tradein)['description']!!}
-        </p>
-    </div>
+    @endif
     
     {{-- processing section status --}}
 
