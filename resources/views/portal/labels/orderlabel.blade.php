@@ -5,8 +5,8 @@
     <style type="text/css">
 
         @page{
-            margin: 10mm;
-            font-size: 10px;
+            margin: 0;
+            font-size: 10pt;
             width: 100%;
             text-align: left;
         }
@@ -28,7 +28,8 @@
         span, p{
             margin: 0;
             font-family: "Sharp Sans No1 Medium";
-            line-height: 9px !important;
+            line-height: 12px !important;
+            font-size: 10pt;
         }
 
         .bold{
@@ -36,151 +37,207 @@
         }
 
         body{
-            width: 541px;
-            height: 727px;
             font-family: "Sharp Sans No1 Medium" ;
         }
 
-        #user-data{
-            position: absolute;
-            top: 140px;
-            left: 67px;
+        #user-data-1{
+            position: fixed;
+            top: 140pt;
+            left: 67pt;
         }
 
-        #date-data{
-            position: absolute;
-            top: 91px;
-            left: 483px;
+        #user-data-2{
+            position: fixed;
+            top: 152pt;
+            left: 67pt;
+        }
+
+        #user-data-3{
+            position: fixed;
+            top: 164pt;
+            left: 67pt;
+        }
+
+        #date-data-1{
+            position: fixed;
+            top: 91pt;
+            left: 483pt;
             text-align: right;
+            width: 50pt;
+            max-width: 50pt;
         }
 
-        #barcode-data{
-            position: absolute;
-            top: 148px;
-            left: 484px;
-            widows: 87px;
-            height: 62px;
+        #date-data-2{
+            position: fixed;
+            top: 103pt;
+            left: 483pt;
+            text-align: right;
+            width: 50pt;
+            max-width: 50pt;
+        }
+
+        #date-data-3{
+            position: fixed;
+            top: 115pt;
+            left: 483pt;
+            text-align: right;
+            width: 50pt;
+            max-width: 50pt;
+        }
+
+        #barcode-data-image{
+            position: fixed;
+            top: 148pt;
+            left: 484pt;
+            width: 87pt;
+            height: 62pt;
+        }
+
+        #barcode-data-text{
+            position: fixed;
+            text-align: center;
+            top: 195pt;
+            left: 470pt;
+            width: 87pt;
+            height: 62pt;
         }
 
         #hi-name{
-            position: absolute;
-            top: 206px;
-            left: 66px;
+            position: fixed;
+            top: 206pt;
+            left: 66pt;
         }
 
         #expiry-date{
-            position: absolute;
-            top: 242px;
-            left: 232px;
+            position: fixed;
+            top: 242pt;
+            left: 232pt;
         }
 
         .product-data-class{
-            position: absolute;
-            top: 276px;
-            left: 67px;
+            position: fixed;
+            top: 276pt;
+            left: 67pt;
         }
 
         #product-price-p{
-            left: 237px;
+            left: 237pt;
         }
 
         #product-quantity-p{
-            left: 329px;
+            left: 329pt;
         }
 
         #total-price-p{
-            left: 424px;
+            left: 424pt;
         }
 
         #total-order-price{
-            position: absolute;
-            top: 414px;
-            left: 424px;
+            position: fixed;
+            top: 414pt;
+            left: 424pt;
         }
 
         #total-order-data{
-            position: absolute;
-            top: 414px;
-            left: 67px;
+            position: fixed;
+            top: 414pt;
+            left: 67pt;
         }
 
         #vertical-barcode-text{
-            transform: rotate(90deg);
-            font-size: 7px;
+            font-size: 7pt !important;
             position: fixed;
-            left: -200px;
-            bottom: 0;
+            transform: rotate(90deg);
+            width: 80pt;
+            height: 15pt;
+            left: 130pt;
+            top: 595pt;
         }
 
         #vertical-barcode-image{
-            transform: rotate(90deg);
             position: fixed;
-            left: -200px;
-            bottom: -60px;
+            transform: rotate(90deg);
+            width: 80pt;
+            height: 15pt;
+            left: 122pt;
+            top: 645pt;
         }
 
         #delivery-note-image{
-            position: absolute;
-            top: 68px;
-            left: 30px;
-            width: 27px;
-            height: 21px;
+            position: fixed;
+            top: 68pt;
+            left: 30pt;
+            width: 27pt;
+            height: 21pt;
         }
 
         #delivery-note-text{
-            position: absolute;
-            top: 70px;
-            left: 66px;
-            font-size: 18px;
+            position: fixed;
+            top: 70pt;
+            left: 66pt;
+            font-size: 18px !important;
+            line-height: 21.6px !important;
         }
 
-        #pre-date-data{
-            position: absolute;
-            top: 91px;
-            left: 349px;
+        #pre-date-data-1{
+            position: fixed;
+            top: 91pt;
+            left: 349pt;
+        }
+
+        #pre-date-data-2{
+            position: fixed;
+            top: 103pt;
+            left: 349pt;
+        }
+
+        #pre-date-data-3{
+            position: fixed;
+            top: 115pt;
+            left: 349pt;
         }
 
         .black-line{
             border-bottom: 1px solid #000;
-            position: absolute;
-            width: 408px;
-            left: 67px;
+            position: fixed;
+            width: 408pt;
+            left: 67pt;
         }
 
         #black-line-1{
-            top: 262px;
+            top: 262pt;
         }
 
         #black-line-2{
-            top: 414px;
+            top: 414pt;
         }
 
         #black-line-3{
-            top: 428px;
+            top: 428pt;
         }
 
         #product-data-price-template{
-            position: absolute;
-            left: 237px;
-            top: 264px;
+            position: fixed;
+            left: 237pt;
+            top: 264pt;
         }
 
         #product-data-quantity-template{
-            position: absolute;
-            left: 329px;
-            top: 264px;
+            position: fixed;
+            left: 329pt;
+            top: 264pt;
         }
 
         #product-data-total-price-template{
-            position: absolute;
-            left: 424px;
-            top: 264px;
+            position: fixed;
+            left: 424pt;
+            top: 264pt;
         }
 
         #thank-you-note{
-            position: absolute;
-            top: 430px;
-            left: 67px;
+            position: fixed;
+            top: 430pt;
+            left: 67pt;
         }
 
     </style>
@@ -203,30 +260,67 @@
         @endforeach
     </p>
    
-    <div id="user-data">
+    <div id="user-data-1">
 
-        <p>{{$tradeins[0]->customerName()}}<br>{{$tradeins[0]->addressLine()}}<br>{{$tradeins[0]->addressLastLine()}}</p>
-
-    </div>
-
-    <div id="pre-date-data">
-
-        <p>Order Date:<br>Trade-in ID:<br>Order Expiry date:</p>
+        <p>{{$tradeins[0]->customerName()}}</p>
 
     </div>
 
+    <div id="user-data-2">
 
-    <div id="date-data">
-
-        <p>{{\Carbon\Carbon::parse($tradeins[0]->created_at)->format('d/m/y')}}<br>{{$tradeins[0]->barcode}}<br>{{\Carbon\Carbon::parse($tradeins[0]->expiry_date)->format('d/m/y')}}</p>
+        <p>{{$tradeins[0]->addressLine()}}</p>
 
     </div>
 
-    <div id="barcode-data">
+    <div id="user-data-3">
 
+        <p>{{$tradeins[0]->addressLastLine()}}</p>
+
+    </div>
+
+    <div id="pre-date-data-1">
+
+        <p>Order Date:</p>
+
+    </div>
+
+    <div id="pre-date-data-2">
+
+        <p>Trade-in ID:</p>
+
+    </div>
+
+    <div id="pre-date-data-3">
+
+        <p>Order Expiry date:</p>
+
+    </div>
+
+
+    <div id="date-data-1">
+
+        <p>{{\Carbon\Carbon::parse($tradeins[0]->created_at)->format('d/m/y')}}</p>
+
+    </div>
+
+    <div id="date-data-2">
+
+        <p>{{$tradeins[0]->barcode}}</p>
+
+    </div>
+
+    <div id="date-data-3">
+
+        <p>{{\Carbon\Carbon::parse($tradeins[0]->expiry_date)->format('d/m/y')}}</p>
+
+    </div>
+
+    <div id="barcode-data-image">
         <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($tradeins[0]->barcode_original,'C128') }}" height="62" width="88" style="margin: 0" />
-        <p style="width:88px; text-align: center; margin:0 auto;">{{$tradeins[0]->barcode_original}}</p>
+    </div>
 
+    <div id="barcode-data-text">
+        <p style="width:88pt; text-align: center; margin:0 auto;">{{$tradeins[0]->barcode_original}}</p>
     </div>
 
     <div id="hi-name">
@@ -306,17 +400,13 @@
             £{{$price}}
         </p>
 
-        <div id="vertical-barcode">
-            <div id="vertical-barcode-text">
-                <p>Trade in-ID:<br>
-                    {{$tradeins[0]->barcode_original}}
-                </p>
-            </div>
-    
-            <div id="vertical-barcode-image">
-                <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($tradeins[0]->barcode_original,'C128') }}" height="15" width="80" style="margin: 0" />
-            </div>
-        </div>
+        <p id="vertical-barcode-text">Trade in-ID:<br>
+            {{$tradeins[0]->barcode_original}}
+        </p>
+
+        <img id="vertical-barcode-image" src="data:image/png;base64,{{ DNS1D::getBarcodePNG($tradeins[0]->barcode_original,'C128') }}" height="15" width="80" style="margin: 0" />
+
+
 
         <div id="thank-you-note">
             <span>
