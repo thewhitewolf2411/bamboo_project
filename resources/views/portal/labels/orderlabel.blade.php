@@ -42,19 +42,19 @@
 
         #user-data-1{
             position: fixed;
-            top: 152pt;
+            top: 140pt;
             left: 67pt;
         }
 
         #user-data-2{
             position: fixed;
-            top: 164pt;
+            top: 152pt;
             left: 67pt;
         }
 
         #user-data-3{
             position: fixed;
-            top: 140pt;
+            top: 164pt;
             left: 67pt;
         }
 
