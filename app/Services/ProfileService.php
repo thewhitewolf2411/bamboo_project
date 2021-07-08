@@ -1544,6 +1544,7 @@ class ProfileService{
             ];
         }
 
+        // awaiting testing - test complete
         if($actual_job_state === "9b"){
             return [
                 'emoji'         => asset(self::$t1['emoji']),
@@ -1552,6 +1553,7 @@ class ProfileService{
             ];
         }
 
+        // test complete - testing
         if($actual_job_state === '12'){
             return [
                 'emoji'         => asset(self::$py1['emoji']),
@@ -1560,6 +1562,7 @@ class ProfileService{
             ];
         }
 
+        // pin lock - awaiting response
         if($actual_job_state === "15c"){
             return [
                 'emoji'         => asset(self::$py1['emoji']),
@@ -1568,6 +1571,7 @@ class ProfileService{
             ];
         }
         
+        // return to customer - returning device
         if($actual_job_state === "19"){
             return [
                 'emoji'         => asset(self::$py3['emoji']),
@@ -1576,6 +1580,7 @@ class ProfileService{
             ];
         }
 
+        // awaiting box build - paid
         if($actual_job_state === "25"){
             return [
                 'emoji'         => asset(self::$py2['emoji']),
@@ -1584,11 +1589,12 @@ class ProfileService{
             ];
         }
 
+        // never received - expired
         if($actual_job_state === "5"){
             return [];
         }
 
-        // PROD ONLY
+        // return empty array - no messages for non-defined scenarios
         return [];
     }
 
@@ -1696,10 +1702,12 @@ class ProfileService{
             }
         }
 
+        // google lock
         if($actual_job_state === '11b' || $actual_job_state === '15b'){
             return 'googleInstructions';
         }
 
+        // FMIP lock
         if($actual_job_state === "11a" || $actual_job_state === '15a'){
             return 'appleInstructions';
         }
