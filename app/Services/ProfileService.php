@@ -31,166 +31,522 @@ class ProfileService{
             }
         }
 
-        // in receiving process
-        if(in_array($actual_job_state, ['1', '2', '3'])){
+        // order placed
+        if($actual_job_state === "1"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => null,
+                'second_roundel_text'   => '',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // awaiting receipt - trade pack despatched
+        if($actual_job_state === "2" || $actual_job_state === "3"){
             if($tradein->notReceivedYet()){
+                if($tradein->notReceivedAfterSevenDays()){
+                    return [
+                        'first_roundel'         => asset(self::$success_icon),
+                        'first_roundel_text'    => 'Order placed',
+                        'second_roundel'        => asset(self::$failed_icon),
+                        'second_roundel_text'   => 'Awaiting Response',
+                        'third_roundel'         => null,
+                        'third_roundel_text'    => '',
+                        'sale_status'           => '',
+                    ];
+                }
+                if($tradein->notReceivedAfterTenDays()){
+                    return [
+                        'first_roundel'         => asset(self::$success_icon),
+                        'first_roundel_text'    => 'Order placed',
+                        'second_roundel'        => asset(self::$failed_icon),
+                        'second_roundel_text'   => 'Awaiting Response',
+                        'third_roundel'         => null,
+                        'third_roundel_text'    => '',
+                        'sale_status'           => '',
+                    ];
+                }
+                if($tradein->notReceivedAfterFourteenDays()){
+                    return [
+                        'first_roundel'         => asset(self::$success_icon),
+                        'first_roundel_text'    => 'Order placed',
+                        'second_roundel'        => asset(self::$failed_icon),
+                        'second_roundel_text'   => 'Awaiting Response',
+                        'third_roundel'         => asset(self::$on_hold_icon),
+                        'third_roundel_text'    => 'Order Expired',
+                        'sale_status'           => '',
+                    ];
+                }
+            } else {
                 return [
                     'first_roundel'         => asset(self::$success_icon),
                     'first_roundel_text'    => 'Order placed',
                     'second_roundel'        => asset(self::$on_hold_icon),
-                    'second_roundel_text'   => 'Trade Pack Despatched',
-                    'third_roundel'         => asset(self::$on_hold_icon),
-                    'third_roundel_text'    => 'Receiving',
-                    'sale_status'           => 'Oh no! It looks like there is something holding up your sale.<br>
-                    Please check processing section to help us resolve the issue and speed up your sale.',
+                    'second_roundel_text'   => 'In progress',
+                    'third_roundel'         => null,
+                    'third_roundel_text'    => '',
+                    'sale_status'           => '',
                 ];
-            } else {
-                if($actual_job_state === "3"){
-                    return [
-                        'first_roundel'         => asset(self::$success_icon),
-                        'first_roundel_text'    => 'Order placed',
-                        'second_roundel'        => asset(self::$on_hold_icon),
-                        'second_roundel_text'   => 'Trade Pack Despatched',
-                        'third_roundel'         => asset(self::$on_hold_icon),
-                        'third_roundel_text'    => 'Receiving',
-                        'sale_status'           => 'Your order is being recieved.',
-                    ];
-                } else {
-                    return [
-                        'first_roundel'         => asset(self::$success_icon),
-                        'first_roundel_text'    => 'Order placed',
-                        'second_roundel'        => asset(self::$on_hold_icon),
-                        'second_roundel_text'   => 'Trade Pack Despatched',
-                        'third_roundel'         => asset(self::$on_hold_icon),
-                        'third_roundel_text'    => 'Receiving',
-                        'sale_status'           => 'Your order is waiting for despatch.',
-                    ];
-                }
-               
             }
         }
 
-        // awaiting testing
+        // lost in transit - lost in transit
+        if($actual_job_state === "4"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // order cancelled - order cancelled
+        if($actual_job_state === "4a"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => null,
+                'second_roundel_text'   => "",
+                'third_roundel'         => asset(self::$success_icon),
+                'third_roundel_text'    => 'Sale canceled',
+                'sale_status'           => '',
+            ];
+        }
+
+        // lost in transit- expired
+        if($actual_job_state === "4b"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => null,
+                'second_roundel_text'   => "",
+                'third_roundel'         => asset(self::$failed_icon),
+                'third_roundel_text'    => 'Order expired',
+                'sale_status'           => '',
+            ];
+        }
+
+        // never received - expired
+        if($actual_job_state === '5'){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => asset(self::$on_hold_icon),
+                'third_roundel_text'    => 'Order Expired',
+                'sale_status'           => '',
+            ];
+        }
+
+        // noe IMEI - awaiting response
+        if($actual_job_state === "6"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // BLACKLISTED - awaiting response
+        if($actual_job_state === "8a"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // BLACKLISTED - awaiting response
+        if($actual_job_state === "8b"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // BLACKLISTED - awaiting response
+        if($actual_job_state === "8c"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // BLACKLISTED - awaiting response
+        if($actual_job_state === "8d"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // BLACKLISTED - awaiting response
+        if($actual_job_state === "8f"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // awaiting testing - trade pack received
         if($actual_job_state === '9'){
             return [
                 'first_roundel'         => asset(self::$success_icon),
-                'first_roundel_text'    => 'Trade Pack Received',
+                'first_roundel_text'    => 'Order placed',
                 'second_roundel'        => asset(self::$on_hold_icon),
-                'second_roundel_text'   => 'Testing',
-                'third_roundel'         => asset(self::$on_hold_icon),
-                'third_roundel_text'    => 'Submitted for payment',
-                'sale_status'           => 'Your order is awaiting testing.',
+                'second_roundel_text'   => 'In progress',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
             ];
         }
 
-        // test complete
-        if($actual_job_state === '10' || $actual_job_state === '12'){
+        // awaiting testing - test complete
+        if($actual_job_state === "9b"){
             return [
                 'first_roundel'         => asset(self::$success_icon),
-                'first_roundel_text'    => 'Testing',
+                'first_roundel_text'    => 'Order placed',
                 'second_roundel'        => asset(self::$on_hold_icon),
-                'second_roundel_text'   => 'Submitted for payment',
-                'third_roundel'         => asset(self::$on_hold_icon),
-                'third_roundel_text'    => 'Payment confirmed',
-                'sale_status'           => 'Your order is awaiting for payment.',
+                'second_roundel_text'   => 'In progress',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
             ];
         }
 
-        // payment statuses
-        if($tradein->deviceInPaymentProcess()){
-            if($actual_job_state === '25'){
-                return [
-                    'first_roundel'         => asset(self::$success_icon),
-                    'first_roundel_text'    => 'Trade Pack received',
-                    'second_roundel'        => asset(self::$success_icon),
-                    'second_roundel_text'   => 'Submitted for payment',
-                    'third_roundel'         => asset(self::$on_hold_icon),
-                    'third_roundel_text'    => 'Sale complete',
-                    'sale_status'           => 'Your order is being submitted for payment.',
-                ];
-            } else {
-                if($tradein->paymentFailed()){
-                    return [
-                        'first_roundel'         => asset(self::$success_icon),
-                        'first_roundel_text'    => 'Testing',
-                        'second_roundel'        => asset(self::$failed_icon),
-                        'second_roundel_text'   => 'Awaiting response',
-                        'third_roundel'         => asset(self::$on_hold_icon),
-                        'third_roundel_text'    => 'Submitted for payment',
-                        'sale_status'           => 'Oh no! It looks like there is something holding up your sale.<br>
-                        Please check payment section to help us resolve the issue and speed up your sale.',
-                    ];
-                } else {
-                    return [
-                        'first_roundel'         => asset(self::$success_icon),
-                        'first_roundel_text'    => 'Submitted for payment',
-                        'second_roundel'        => asset(self::$on_hold_icon),
-                        'second_roundel_text'   => 'Payment confirmed',
-                        'third_roundel'         => asset(self::$on_hold_icon),
-                        'third_roundel_text'    => 'Sale complete',
-                        'sale_status'           => 'Your order is being submitted for payment.',
-                    ];
-                }
-            }
-            
-        }
-
-        // processing fails
-        if($tradein->stuckAtProcessing()){
+        // 1st test - testing
+        if($actual_job_state === "10"){
             return [
                 'first_roundel'         => asset(self::$success_icon),
-                'first_roundel_text'    => 'Trade pack recieved',
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$on_hold_icon),
+                'second_roundel_text'   => 'In progress',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // FMIP - awaiting response
+        if($actual_job_state === "11a" || $actual_job_state === "15a"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
                 'second_roundel'        => asset(self::$failed_icon),
-                'second_roundel_text'   => 'Awaiting response',
-                'third_roundel'         => asset(self::$on_hold_icon),
-                'third_roundel_text'    => 'Testing',
-                'sale_status'           => 'Oh no! It looks like there is something holding up your sale.
-                Please check processing section to help us resolve the issue and speed up your sale.',
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
             ];
-
         }
 
-        // testing fails
-        if($tradein->hasFailedTesting()){
+        // Google lock - awaiting response
+        if($actual_job_state === "11b" || $actual_job_state === "15b"){
             return [
                 'first_roundel'         => asset(self::$success_icon),
-                'first_roundel_text'    => 'Trade pack recieved',
+                'first_roundel_text'    => 'Order placed',
                 'second_roundel'        => asset(self::$failed_icon),
-                'second_roundel_text'   => 'Awaiting response',
-                'third_roundel'         => asset(self::$on_hold_icon),
-                'third_roundel_text'    => 'Submitted for payment',
-                'sale_status'           => 'Oh no! It looks like there is something holding up your sale.<br>
-                Please check testing section to help us resolve the issue and speed up your sale.',
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
             ];
         }
 
-        // awaiting retesting
-        if($actual_job_state === '14'){
+        // PIN Lock - awaiting response
+        if($actual_job_state === "11c" || $actual_job_state === "15c"){
             return [
                 'first_roundel'         => asset(self::$success_icon),
-                'first_roundel_text'    => 'Trade pack recieved',
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // incorrect model size - awaiting response
+        if($actual_job_state === "11d" || $actual_job_state === "15d"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // downgrade - awaiting response
+        if($actual_job_state === "11e" || $actual_job_state === "15e"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+         // incorrect GB size - awaiting response
+         if($actual_job_state === "11f" || $actual_job_state === "15f"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // incorrect network - awaiting response
+        if($actual_job_state === "11g" || $actual_job_state === "15g"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // downgrade - awaiting response
+        if($actual_job_state === "11h" || $actual_job_state === "15h"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // downgrade - awaiting response
+        if($actual_job_state === "11i" || $actual_job_state === "15i"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // order not valid - awaiting response (received after 14 days)
+        if($actual_job_state === "11j"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // test complete - testing
+        if($actual_job_state === "12"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
                 'second_roundel'        => asset(self::$on_hold_icon),
-                'second_roundel_text'   => 'Testing',
-                'third_roundel'         => asset(self::$on_hold_icon),
-                'third_roundel_text'    => 'Submitted for payment',
-                'sale_status'           => 'Your order is awaiting second testing.',
+                'second_roundel_text'   => 'In progress',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
             ];
         }
 
-        // device in return process
-        if($tradein->deviceInReturnProcess()){
+        // awaiting retesting - device marked for retest
+        if($actual_job_state === "13"){
             return [
                 'first_roundel'         => asset(self::$success_icon),
-                'first_roundel_text'    => 'Trade pack recieved',
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$on_hold_icon),
+                'second_roundel_text'   => 'In progress',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // 2nd test - testing 
+        if($actual_job_state === "14"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$on_hold_icon),
+                'second_roundel_text'   => 'In progress',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // 2nd test complete - testing 
+        if($actual_job_state === "16"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$on_hold_icon),
+                'second_roundel_text'   => 'In progress',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // BLACKLISTED - device sent for destruction
+        if($actual_job_state === "17"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => null,
+                'second_roundel_text'   => '',
+                'third_roundel'         => asset(self::$success_icon),
+                'third_roundel_text'    => 'Device Destroyed',
+                'sale_status'           => '',
+            ];
+        }
+
+        // return to customer - returning device
+        if($actual_job_state === "19"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => null,
+                'second_roundel_text'   => '',
+                'third_roundel'         => asset(self::$success_icon),
+                'third_roundel_text'    => 'Sale Cancelled',
+                'sale_status'           => '',
+            ];
+        }
+
+        // return to customer - returning device
+        if($actual_job_state === "20"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => null,
+                'second_roundel_text'   => '',
+                'third_roundel'         => asset(self::$success_icon),
+                'third_roundel_text'    => 'Sale Cancelled',
+                'sale_status'           => '',
+            ];
+        }
+
+        // despatched to customer - returning device
+        if($actual_job_state === "21"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => null,
+                'second_roundel_text'   => '',
+                'third_roundel'         => asset(self::$success_icon),
+                'third_roundel_text'    => 'Sale Cancelled',
+                'sale_status'           => '',
+            ];
+        }
+
+        // awaiting box build - awaiting payment
+        if($actual_job_state === "22"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
                 'second_roundel'        => asset(self::$success_icon),
-                'second_roundel_text'   => 'Sent to despatch',
-                'third_roundel'         => asset(self::$on_hold_icon),
-                'third_roundel_text'    => 'Returned to customer',
-                'sale_status'           => 'Your device is in return process.',
+                'second_roundel_text'   => 'In progress',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
             ];
         }
 
+        // awaiting box build - submitted for payment
+        if($actual_job_state === "23"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$on_hold_icon),
+                'second_roundel_text'   => 'Testing Complete',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
 
+        // awaiting box build - failed payment
+        if($actual_job_state === "24"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$failed_icon),
+                'second_roundel_text'   => 'Awaiting Response',
+                'third_roundel'         => null,
+                'third_roundel_text'    => '',
+                'sale_status'           => '',
+            ];
+        }
+
+        // awaiting box build - paid
+        if($actual_job_state === "25"){
+            return [
+                'first_roundel'         => asset(self::$success_icon),
+                'first_roundel_text'    => 'Order placed',
+                'second_roundel'        => asset(self::$success_icon),
+                'second_roundel_text'   => 'Testing Complete',
+                'third_roundel'         => asset(self::$success_icon),
+                'third_roundel_text'    => 'Sale Complete',
+                'sale_status'           => '',
+            ];
+        }
     }
 
     /**
@@ -430,6 +786,15 @@ class ProfileService{
             ];
         }
 
+        // awaiting testing - test complete
+        if($actual_job_state === "9b"){
+            return [
+                'emoji'         => asset(self::$p1['emoji']),
+                'emoji_text'    => self::$p1['text'],
+                'description'   => self::$pvm3
+            ];
+        }
+
         // first test
         if($actual_job_state === "10"){
             return [
@@ -565,7 +930,7 @@ class ProfileService{
             ];
         }
 
-        // 17 - blacklisted - N/A
+        // 17 - blacklisted - N/A ??
 
         // return to customer
         if($actual_job_state === "19"){
@@ -1036,6 +1401,15 @@ class ProfileService{
             ];
         }
 
+        // awaiting box build - awaiting payment
+        if($actual_job_state === "22"){
+            return [
+                'emoji'         => asset(self::$t3['emoji']),
+                'emoji_text'    => self::$t3['text'],
+                'description'   => self::$tmv4
+            ];
+        }
+
         // awaiting box build / submitted for payment
         if($actual_job_state === "23"){
             return [
@@ -1170,11 +1544,19 @@ class ProfileService{
             ];
         }
 
+        if($actual_job_state === "9b"){
+            return [
+                'emoji'         => asset(self::$t1['emoji']),
+                'emoji_text'    => self::$t1['text'],
+                'description'   => self::$tvm1
+            ];
+        }
+
         if($actual_job_state === '12'){
             return [
                 'emoji'         => asset(self::$py1['emoji']),
                 'emoji_text'    => self::$py1['text'],
-                'description'   => self::$pyvm1
+                'description'   => self::$pyvm2
             ];
         }
 
@@ -1244,6 +1626,37 @@ class ProfileService{
      */
     public static function hasAgreedPrice(Tradein $tradein): bool
     {
+        // if($tradein->bamboo_price === $tradein->order_price){
+        //     return true;
+        // }
+        $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
+        $actual_job_state = null;
+        if($job_state->previous_job_state === null){
+            $actual_job_state = $job_state->job_state;
+        } else {
+            if($job_state->sent){
+                $actual_job_state = $job_state->job_state;
+            } else {
+                $actual_job_state = $job_state->previous_job_state;
+            }
+        }
+        
+        // awaiting box build - awaiting payment
+        if($actual_job_state === "22"){
+            return true;
+        }
+        return false;
+    }
+
+
+
+    /**
+     * Check if device has been received in the system.
+     * @param Tradein $tradein
+     * @return bool
+     */
+    public static function deviceReceived(Tradein $tradein): bool
+    {
         $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
         $actual_job_state = null;
         if($job_state->previous_job_state === null){
@@ -1256,11 +1669,40 @@ class ProfileService{
             }
         }
 
-        if($tradein->bamboo_price === $tradein->order_price){
-            return true;
+        $matches = ["1","2","3","4","5", "9a"];
+        if(in_array($actual_job_state, $matches)){
+            return false;
         }
-
-        return false;
+        return true;
     }
 
+
+    /**
+     * Get device type (google/apple).
+     * @param Tradein $tradein
+     * @return string
+     */
+    public static function getDeviceType(Tradein $tradein): string
+    {
+        $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
+        $actual_job_state = null;
+        if($job_state->previous_job_state === null){
+            $actual_job_state = $job_state->job_state;
+        } else {
+            if($job_state->sent){
+                $actual_job_state = $job_state->job_state;
+            } else {
+                $actual_job_state = $job_state->previous_job_state;
+            }
+        }
+
+        if($actual_job_state === '11b' || $actual_job_state === '15b'){
+            return 'googleInstructions';
+        }
+
+        if($actual_job_state === "11a" || $actual_job_state === '15a'){
+            return 'appleInstructions';
+        }
+        
+    }
 }

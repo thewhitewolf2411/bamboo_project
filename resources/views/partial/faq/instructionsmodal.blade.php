@@ -1,9 +1,17 @@
 @if($type === 'googleInstructions')
     @if(isset($page))
-        <a role="button" class="remove-lock-button" data-toggle="modal" data-target="#{{$type}}Modal">
-            <p>Remember to remove Google Lock</p>
-            <img src="{{asset("/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg")}}">
-        </a>
+        @if($page === 'sellitem')
+            <a role="button" class="remove-lock-button" data-toggle="modal" data-target="#{{$type}}Modal">
+                <p>Remember to remove Google Lock</p>
+                <img src="{{asset("/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg")}}">
+            </a>
+        @endif
+        @if($page === 'testing')
+            <a role="button" class="btn btn-purple testing-action-btn" data-toggle="modal" data-target="#{{$type}}Modal">
+                <p>How do I remove?</p>
+                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+            </a>
+        @endif
     @else
         <p class="answer-text">It would be best if you can remove your device from your Google account before sending the device to us. 
             This is really quick and easy to do, please 
@@ -97,10 +105,18 @@
 
 @if($type === 'appleInstructions')
     @if(isset($page))
+        @if($page === 'sellitem')
         <a role="button" class="remove-lock-button" data-toggle="modal" data-target="#{{$type}}Modal">
             <p>Remember to remove Find My iPhone</p>
             <img src="{{asset("/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg")}}">
         </a>
+        @endif
+        @if($page === 'testing')
+            <a role="button" class="btn btn-purple testing-action-btn" data-toggle="modal" data-target="#{{$type}}Modal">
+                <p>How do I remove?</p>
+                <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+            </a>
+        @endif
     @else
         <p class="answer-text">
             {{-- Remove your device from your iCloud account before sending the device to us. 

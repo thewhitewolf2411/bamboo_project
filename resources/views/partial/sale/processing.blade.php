@@ -93,7 +93,7 @@
                 </p>
             </div>
             <div class="col">
-                <a href="#" class="btn btn-orange process-action-btn">
+                <a href="/sell" class="btn btn-orange process-action-btn">
                     <p>Submit new SELL order</p>
                     <img class="process-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
                 </a>

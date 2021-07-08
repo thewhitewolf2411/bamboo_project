@@ -53,7 +53,7 @@
         {{-- <p class="delivery-info-dates-label">Enter Tracking Number</p> --}}
         <p class="delivery-info-dates-bold"></p>
         <a class="btn-purple sale-detail-btn large mt-4" id="call-print-own" href="#"><p>Edit Tracking Number</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
-        <a class="btn-green sale-detail-btn large mt-1" id="call-print-own" href="#"><p>Track Parcel</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+        <a class="btn-green sale-detail-btn large mt-1" id="call-print-own" href="https://www.royalmail.com/track-your-item#/" target="_blank"><p>Track Parcel</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
     </div>
 </div>
 

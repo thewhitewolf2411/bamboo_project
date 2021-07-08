@@ -867,14 +867,14 @@ class CustomerController extends Controller
         $tradein = Tradein::findOrFail($tradein_id);
         switch ($tradein->job_state) {
             // fmip
-            case '15a':
-                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+            case "15a":
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->where('resolved', false)->first();
                 $notification->resolved = true;
                 $notification->save();
                 break;
             // glock
-            case '15b':
-                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+            case "15b":
+                $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->where('resolved', false)->first();
                 $notification->resolved = true;
                 $notification->save();
                 break;
@@ -1156,19 +1156,34 @@ class CustomerController extends Controller
     public function addDevicePIN(Request $request){
         if(isset($request->pin) && isset($request->tradein)){
             $tradein = Tradein::find($request->tradein);
+            $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+
             $tradein->pin_pattern_number = $request->pin;
             $tradein->job_state = '13';
             $tradein->save();
+
+            // resolve notification
+            $notification->resolved = true;
+            $notification->save();
             return redirect()->back()->with('success', 'Device PIN added successfuly. Device sent to testing.');
         }
     }
 
+    /**
+     * Add device unlock pattern.
+     */
     public function addDevicePattern(Request $request){
         if(isset($request->pattern) && isset($request->tradein)){
             $tradein = Tradein::find($request->tradein);
+            $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+
             $tradein->pin_pattern_number = $request->pattern;
             $tradein->job_state = '13';
             $tradein->save();
+            
+            // resolve notification
+            $notification->resolved = true;
+            $notification->save();
             return redirect()->back()->with('success', 'Device Pattern added successfuly. Device sent to testing.');
         }
     }

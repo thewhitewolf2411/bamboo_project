@@ -7,10 +7,14 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationHelper {
 
-    public static function count(){
+    public static function count($tradein_id = null){
         if(Auth::user()){
             // $notifications = Notification::where('user_id', Auth::user()->id)->where('status', 'alert')->where('resolved', false)->get();
-            $notifications = Notification::where('user_id', Auth::user()->id)->get();            
+            if($tradein_id){
+                $notifications = Notification::where('user_id', Auth::user()->id)->where('tradein_id', $tradein_id)->get();            
+            } else {
+                $notifications = Notification::where('user_id', Auth::user()->id)->get();            
+            }
             $total = $notifications->count();
             if($total > 0){
                 return $total;
