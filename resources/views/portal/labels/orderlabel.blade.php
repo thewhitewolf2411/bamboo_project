@@ -42,45 +42,45 @@
 
         #user-data-1{
             position: fixed;
-            top: 140pt;
-            left: 67pt;
+            top: 135.05pt;
+            left: 67.07pt;
         }
 
         #user-data-2{
             position: fixed;
-            top: 152pt;
-            left: 67pt;
+            top: 147.05pt;
+            left: 67.07pt;
         }
 
         #user-data-3{
             position: fixed;
-            top: 164pt;
-            left: 67pt;
+            top: 159.05pt;
+            left: 67.07pt;
         }
 
         #date-data-1{
             position: fixed;
-            top: 91pt;
-            left: 483pt;
-            text-align: right;
+            top: 87.46pt;
+            left: 483.53pt;
+            text-align: left;
             width: 50pt;
             max-width: 50pt;
         }
 
         #date-data-2{
             position: fixed;
-            top: 103pt;
-            left: 483pt;
-            text-align: right;
+            top: 99.46pt;
+            left: 487.26pt;
+            text-align: left;
             width: 50pt;
             max-width: 50pt;
         }
 
         #date-data-3{
             position: fixed;
-            top: 115pt;
-            left: 483pt;
-            text-align: right;
+            top: 111.46pt;
+            left: 483.53pt;
+            text-align: left;
             width: 50pt;
             max-width: 50pt;
         }
@@ -88,7 +88,7 @@
         #barcode-data-image{
             position: fixed;
             top: 148pt;
-            left: 484pt;
+            left: 491.23pt;
             width: 87pt;
             height: 62pt;
         }
@@ -104,31 +104,31 @@
 
         #hi-name{
             position: fixed;
-            top: 206pt;
+            top: 202pt;
             left: 66pt;
         }
 
         #thank-you{
             position: fixed;
             left: 66pt;
-            top:230.58pt;
+            top:226.58pt;
         }
 
         #expiry-date{
             position: fixed;
-            top: 242.58pt;
+            top: 238.58pt;
             left: 232pt;
         }
 
         #reach-us{
             position: fixed;
-            top: 242.58pt;
+            top: 238.58pt;
             left: 66pt;
         }
 
         #price-change{
             position: fixed;
-            top: 242.58pt;
+            top: 238.58pt;
             left: 277pt;
         }
 
@@ -152,13 +152,13 @@
 
         #total-order-price{
             position: fixed;
-            top: 391.48pt;
+            top: 387.48pt;
             left: 424.12pt;
         }
 
         #total-order-data{
             position: fixed;
-            top: 391.48pt;
+            top: 387.48pt;
             left: 67.12pt;
         }
 
@@ -168,8 +168,8 @@
             position: fixed;
             height: 14pt;
             width: 40pt;
-            left: 116.501pt;
-            top: 615.537pt;
+            left: 114.148pt;
+            top: 642.066pt;
 
             transform: rotate(90deg);
             transform-origin: center;
@@ -179,8 +179,8 @@
             position: fixed;
             height: 14pt;
             width: 60pt;
-            left: 92.501pt;
-            top: 680.89pt;
+            left: 90.148pt;
+            top: 707.419pt;
 
             transform: rotate(90deg);
             transform-origin: center;
@@ -190,33 +190,38 @@
             position: fixed;
             top: 68pt;
             left: 30pt;
-            width: 27pt;
-            height: 21pt;
+            width: 26.6pt;
+            height: 20.52pt;
+        }
+
+        #delivery-note-image img{
+            width: 26.6pt;
+            height: 20.52pt;
         }
 
         #delivery-note-text{
             position: fixed;
-            top: 70pt;
-            left: 66pt;
+            top: 73.28pt;
+            left: 66.04pt;
             font-size: 18pt !important;
             line-height: 21.6pt !important;
         }
 
         #pre-date-data-1{
             position: fixed;
-            top: 91pt;
+            top: 89pt;
             left: 349pt;
         }
 
         #pre-date-data-2{
             position: fixed;
-            top: 103pt;
+            top: 100pt;
             left: 349pt;
         }
 
         #pre-date-data-3{
             position: fixed;
-            top: 115pt;
+            top: 112pt;
             left: 349pt;
         }
 
@@ -228,122 +233,122 @@
         }
 
         #black-line-1{
-            top: 262pt;
+            top: 261pt;
         }
 
         #black-line-2{
-            top: 390.72pt;
+            top: 389.72pt;
         }
 
         #black-line-3{
-            top: 407.62pt;
+            top: 406.62pt;
         }
 
         #product-data-price-template{
             position: fixed;
             left: 237.2pt;
-            top: 264.48pt;
+            top: 261.48pt;
         }
 
         #product-data-quantity-template{
             position: fixed;
             left: 329.12pt;
-            top: 264.48pt;
+            top: 261.48pt;
         }
 
         #product-data-total-price-template{
             position: fixed;
             left: 424.12pt;
-            top: 264.48pt;
+            top: 261.48pt;
         }
 
         #thank-you-note{
             position: fixed;
-            top: 411.89pt;
+            top: 407.89pt;
             left: 67pt;
         }
 
         #product-1-name{
             position: fixed;
-            top: 276.48pt;
+            top: 272.48pt;
             left: 67.12pt;
         }
 
         #product-1-network{
             position: fixed;
-            top: 288.48pt;
+            top: 284.48pt;
             left: 67.12pt;
         }
 
         #product-1-memory{
             position: fixed;
-            top: 300.48pt;
+            top: 296.48pt;
             left: 67.12pt;
         }
 
         #product-1-grade{
             position: fixed;
-            top: 312.48pt;
+            top: 308.48pt;
             left: 67.12pt;
         }
 
         #product-1-price{
             position: fixed;
-            top: 300.48pt;
+            top: 296.48pt;
             left: 237.2pt;
         }
 
         #product-1-quantity{
             position: fixed;
-            top: 300.48pt;
+            top: 296.48pt;
             left: 329.12pt;
         }
 
         #product-1-total-price{
             position: fixed;
-            top: 300.48pt;
+            top: 296.48pt;
             left: 424.12pt;
         }
 
         #product-2-name{
             position: fixed;
-            top: 331.48pt;
+            top: 327.48pt;
             left: 67.12pt;
         }
 
         #product-2-network{
             position: fixed;
-            top: 346.48pt;
+            top: 342.48pt;
             left: 67.12pt;
         }
 
         #product-2-memory{
             position: fixed;
-            top: 358.48pt;
+            top: 354.48pt;
             left: 67.12pt;
         }
 
         #product-2-grade{
             position: fixed;
-            top: 370.48pt;
+            top: 366.48pt;
             left: 67.12pt;
         }
 
         #product-2-price{
             position: fixed;
-            top: 358.48pt;
+            top: 354.48pt;
             left: 237.2pt;
         }
 
         #product-2-quantity{
             position: fixed;
-            top: 358.48pt;
+            top: 354.48pt;
             left: 329.12pt;
         }
 
         #product-2-total-price{
             position: fixed;
-            top: 358.48pt;
+            top: 354.48pt;
             left: 424.12pt;
         }
 
@@ -353,7 +358,7 @@
 <body>
 
     <div id="delivery-note-image">
-        <img src="{{public_path() . '/images/Group5.png'}}" width="27" height="21">
+        <img src="{{public_path() . '/images/Group5.png'}}" width="26.6pt" height="20.52pt">
     </div>
     <div id="delivery-note-text">
         <p class="bold">Delivery Note</p>
@@ -423,7 +428,7 @@
     </div>
 
     <div id="barcode-data-image">
-        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($tradeins[0]->barcode_original,'C128') }}" height="62" width="88" style="margin: 0" />
+        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($tradeins[0]->barcode_original,'C128') }}" height="64.471pt" width="90.588pt" style="margin: 0" />
     </div>
 
     <div id="barcode-data-text">
