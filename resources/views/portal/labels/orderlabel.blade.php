@@ -28,7 +28,7 @@
         span, p{
             margin: 0;
             font-family: "Sharp Sans No1 Medium";
-            line-height: 12px !important;
+            line-height: 12pt !important;
             font-size: 10pt;
         }
 
@@ -108,10 +108,28 @@
             left: 66pt;
         }
 
+        #thank-you{
+            position: fixed;
+            left: 66pt;
+            top:230.58pt;
+        }
+
         #expiry-date{
             position: fixed;
-            top: 242pt;
+            top: 242.58pt;
             left: 232pt;
+        }
+
+        #reach-us{
+            position: fixed;
+            top: 242.58pt;
+            left: 66pt;
+        }
+
+        #price-change{
+            position: fixed;
+            top: 242.58pt;
+            left: 277pt;
         }
 
         .product-data-class{
@@ -134,33 +152,38 @@
 
         #total-order-price{
             position: fixed;
-            top: 414pt;
-            left: 424pt;
+            top: 391.48pt;
+            left: 424.12pt;
         }
 
         #total-order-data{
             position: fixed;
-            top: 414pt;
-            left: 67pt;
+            top: 391.48pt;
+            left: 67.12pt;
         }
 
         #vertical-barcode-text{
             font-size: 7pt !important;
+            line-height: 7pt !important;
             position: fixed;
+            height: 14pt;
+            width: 40pt;
+            left: 116.501pt;
+            top: 615.537pt;
+
             transform: rotate(90deg);
-            width: 80pt;
-            height: 15pt;
-            left: 130pt;
-            top: 595pt;
+            transform-origin: center;
         }
 
         #vertical-barcode-image{
             position: fixed;
+            height: 14pt;
+            width: 60pt;
+            left: 92.501pt;
+            top: 680.89pt;
+
             transform: rotate(90deg);
-            width: 80pt;
-            height: 15pt;
-            left: 122pt;
-            top: 645pt;
+            transform-origin: center;
         }
 
         #delivery-note-image{
@@ -175,8 +198,8 @@
             position: fixed;
             top: 70pt;
             left: 66pt;
-            font-size: 18px !important;
-            line-height: 21.6px !important;
+            font-size: 18pt !important;
+            line-height: 21.6pt !important;
         }
 
         #pre-date-data-1{
@@ -198,9 +221,9 @@
         }
 
         .black-line{
-            border-bottom: 1px solid #000;
+            border-bottom: 1pt solid #000;
             position: fixed;
-            width: 408pt;
+            width: 407pt;
             left: 67pt;
         }
 
@@ -209,35 +232,119 @@
         }
 
         #black-line-2{
-            top: 414pt;
+            top: 390.72pt;
         }
 
         #black-line-3{
-            top: 428pt;
+            top: 407.62pt;
         }
 
         #product-data-price-template{
             position: fixed;
-            left: 237pt;
-            top: 264pt;
+            left: 237.2pt;
+            top: 264.48pt;
         }
 
         #product-data-quantity-template{
             position: fixed;
-            left: 329pt;
-            top: 264pt;
+            left: 329.12pt;
+            top: 264.48pt;
         }
 
         #product-data-total-price-template{
             position: fixed;
-            left: 424pt;
-            top: 264pt;
+            left: 424.12pt;
+            top: 264.48pt;
         }
 
         #thank-you-note{
             position: fixed;
-            top: 430pt;
+            top: 411.89pt;
             left: 67pt;
+        }
+
+        #product-1-name{
+            position: fixed;
+            top: 276.48pt;
+            left: 67.12pt;
+        }
+
+        #product-1-network{
+            position: fixed;
+            top: 288.48pt;
+            left: 67.12pt;
+        }
+
+        #product-1-memory{
+            position: fixed;
+            top: 300.48pt;
+            left: 67.12pt;
+        }
+
+        #product-1-grade{
+            position: fixed;
+            top: 312.48pt;
+            left: 67.12pt;
+        }
+
+        #product-1-price{
+            position: fixed;
+            top: 300.48pt;
+            left: 237.2pt;
+        }
+
+        #product-1-quantity{
+            position: fixed;
+            top: 300.48pt;
+            left: 329.12pt;
+        }
+
+        #product-1-total-price{
+            position: fixed;
+            top: 300.48pt;
+            left: 424.12pt;
+        }
+
+        #product-2-name{
+            position: fixed;
+            top: 331.48pt;
+            left: 67.12pt;
+        }
+
+        #product-2-network{
+            position: fixed;
+            top: 346.48pt;
+            left: 67.12pt;
+        }
+
+        #product-2-memory{
+            position: fixed;
+            top: 358.48pt;
+            left: 67.12pt;
+        }
+
+        #product-2-grade{
+            position: fixed;
+            top: 370.48pt;
+            left: 67.12pt;
+        }
+
+        #product-2-price{
+            position: fixed;
+            top: 358.48pt;
+            left: 237.2pt;
+        }
+
+        #product-2-quantity{
+            position: fixed;
+            top: 358.48pt;
+            left: 329.12pt;
+        }
+
+        #product-2-total-price{
+            position: fixed;
+            top: 358.48pt;
+            left: 424.12pt;
         }
 
     </style>
@@ -323,15 +430,14 @@
         <p style="width:88pt; text-align: center; margin:0 auto;">{{$tradeins[0]->barcode_original}}</p>
     </div>
 
-    <div id="hi-name">
-        <p>Hi {{$tradeins[0]->customerFirstName()}}</p><br>
-        <span>
-            Thank you for choosing Bamboo Mobile to SELL your device! Don’t delay in sending <br> your device(s). It must reach us by 
-        </span>
-            <span class="bold">{{\Carbon\Carbon::parse($tradeins[0]->expiry_date)->format('d/m/y')}}</span>
-        <span>
-            or the price offered to you could change.
-        </span>
+    <div id="hi-name-container">
+        <p id="hi-name">Hi {{$tradeins[0]->customerFirstName()}}</p>
+
+        <p id="thank-you">Thank you for choosing Bamboo Mobile to SELL your device! Don’t delay in sending</p>
+        <p id="reach-us">your device(s). It must reach us by </p>
+        <p id="expiry-date" class="bold">{{\Carbon\Carbon::parse($tradeins[0]->expiry_date)->format('d/m/y')}}</p>
+        <p id="price-change">or the price offered to you could change.</p>
+
     </div>
 
     <div id="black-line-1" class="black-line"></div>
@@ -353,41 +459,36 @@
             <p>Total Price</p>
         </div>
 
-        <span id="product-data-p" class="product-data-class">
-        @foreach($tradeins as $tradein)
 
-           
-                <p class="bold">{{$tradein->getProductName()}}</p>
-                Network:{{$tradein->getDeviceNetwork()}}<br>
-                Memory:{{$tradein->getDeviceMemory()}}<br>
-                Grade:{{$tradein->customer_grade}}<br><br>
+        @if(isset($tradeins[0]))
 
-        @endforeach
-        </span>
+            <p id="product-1-name" class="bold">{{$tradeins[0]->getProductName()}}</p>
+            <p id="product-1-network">Network:{{$tradeins[0]->getDeviceNetwork()}}</p>
+            <p id="product-1-memory">Memory:{{$tradeins[0]->getDeviceMemory()}}</p>
+            <p id="product-1-grade">Grade:{{$tradeins[0]->customer_grade}}</p>
 
-        <p id="product-price-p" class="product-data-class">
-        @foreach($tradeins as $tradein)
-            <br><br>
-            £{{$tradein->order_price}}<br><br><br><br>
+            <p id="product-1-price">£{{$tradeins[0]->order_price}}</p>
 
-        @endforeach
-        </p>
+            <p id="product-1-quantity">1</p>
 
-        <p id="product-quantity-p" class="product-data-class">
-            @foreach($tradeins as $tradein)
-            <br><br>
-            1<br><br><br><br>
-            @endforeach
-        </p>
-        
+            <p id="product-1-total-price" class="bold">£{{$tradeins[0]->order_price}}</p>
 
-        <p id="total-price-p" class="product-data-class bold">
-            @foreach($tradeins as $tradein)
-                <br><br>
-                £{{$tradein->order_price}}<br><br><br><br>
-    
-            @endforeach
-        </p>
+        @endif
+
+        @if(isset($tradeins[1]))
+
+            <p id="product-2-name" class="bold">{{$tradeins[1]->getProductName()}}</p>
+            <p id="product-2-network">Network:{{$tradeins[1]->getDeviceNetwork()}}</p>
+            <p id="product-2-memory">Memory:{{$tradeins[1]->getDeviceMemory()}}</p>
+            <p id="product-2-grade">Grade:{{$tradeins[1]->customer_grade}}</p>
+
+            <p id="product-2-price">£{{$tradeins[1]->order_price}}</p>
+
+            <p id="product-2-quantity">1</p>
+
+            <p id="product-2-total-price" class="bold">£{{$tradeins[1]->order_price}}</p>
+
+        @endif
 
         <p id="total-order-data">
             <span class="bold">
