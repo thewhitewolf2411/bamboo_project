@@ -381,8 +381,8 @@ class DespatchService {
         $response = json_decode($result,true);
         if(isset($response[0])){
             $info = $response[0];
-            if(isset($info['trackingNumber']) && $info['trackingNumber'] !== ''){
-                return $info['trackingNumber'];
+            if(isset($info['manifestedOn']) && $info['manifestedOn'] !== ''){
+                return true;
             }
             return false;
         }

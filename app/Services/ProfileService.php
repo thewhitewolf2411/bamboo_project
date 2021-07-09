@@ -34,10 +34,10 @@ class ProfileService{
         // order placed
         if($actual_job_state === "1"){
             return [
-                'first_roundel'         => asset(self::$success_icon),
-                'first_roundel_text'    => 'Order placed',
-                'second_roundel'        => null,
-                'second_roundel_text'   => '',
+                'first_roundel'         => null,
+                'first_roundel_text'    => '',
+                'second_roundel'        => asset(self::$success_icon),
+                'second_roundel_text'   => 'Order placed',
                 'third_roundel'         => null,
                 'third_roundel_text'    => '',
                 'sale_status'           => '',
@@ -714,6 +714,11 @@ class ProfileService{
             ];
         }
 
+        // order cancelled
+        if($actual_job_state === "4a"){
+            return [];
+        }
+
         // no imei
         if($actual_job_state === "6"){
             return [
@@ -1109,7 +1114,11 @@ class ProfileService{
 
         // order placed
         if($actual_job_state === "1"){
-            return [];
+            return [
+                'emoji'         => asset(self::$t1['emoji']),
+                'emoji_text'    => self::$t1['text'],
+                'description'   => self::$tvm1
+            ];
         }
 
         // awaiting receipt / trade pack despatched

@@ -11832,10 +11832,12 @@ main p, a, span {
 .sections-row {
   display: flex;
   flex-direction: row;
-  width: 80%;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding-top: 3%;
+  padding-left: 140px;
+  padding-right: 140px;
 }
 
 .menu-item {
@@ -11912,10 +11914,15 @@ main p, a, span {
 }
 
 .section-item-title-regular {
-  font-size: 24px;
-  font-family: Sharp Sans No1 Bold;
-  margin: 0;
+  font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-30)/var(--unnamed-line-spacing-38) var(--unnamed-font-family-sharp-sans-no1-bold);
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--black);
   text-align: center;
+  font: normal normal normal 30px/38px Sharp Sans No1 Bold;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  margin: 0;
   padding: 30px;
 }
 
@@ -12454,6 +12461,20 @@ main p, a, span {
   margin-right: 45px;
 }
 
+.toggle-tracking-number {
+  height: 115px;
+  transition: all 0.3s linear;
+  overflow-y: hidden;
+}
+
+.toggle-tracking-number.collapsed {
+  height: 0;
+}
+
+.btn-purple.sale-detail-btn.disabled-btn {
+  opacity: 0.5 !important;
+}
+
 .sections-menu-mobile {
   display: none;
   flex-direction: column;
@@ -12574,6 +12595,17 @@ main p, a, span {
 
   .section-header {
     flex-wrap: wrap;
+  }
+
+  .section-item-title-regular {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-30)/var(--unnamed-line-spacing-38) var(--unnamed-font-family-sharp-sans-no1-bold);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--black);
+    text-align: center;
+    font: normal normal normal 30px/38px Sharp Sans No1 Bold;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
   }
 }
 .sales-item {
@@ -13292,7 +13324,7 @@ main p, a, span {
     top: 40px !important;
   }
 }
-@media only screen and (max-width: 740px) {
+@media (max-width: 768px) {
   .back-to-sales-mobile {
     display: block;
   }
@@ -13346,6 +13378,7 @@ main p, a, span {
 
   .emoji-info-text {
     text-align: center;
+    margin-top: 40px;
   }
 
   .sale-status-col.first, .sale-status-col.third {
@@ -16833,6 +16866,10 @@ h3, h4, h5 {
   transform: scale(1.1);
 }
 
+.product:hover > .product-data-container > h5 {
+  color: var(--sell-–-orange);
+}
+
 .selling-product-image-container {
   width: 100%;
   max-width: 300px;
@@ -16986,13 +17023,28 @@ h3, h4, h5 {
   flex-direction: row;
 }
 
-.product-price-container > div.tutorials {
+.sell-tutorial-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.tutorials {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 40px;
 }
 
+.tutorials.abandoned {
+  max-width: 370px;
+}
+
+@media (max-width: 1860px) {
+  .tutorials {
+    margin-left: 0 !important;
+    margin-top: 0.5rem;
+  }
+}
 .single-product-container {
   display: flex;
   flex-direction: row;
@@ -17045,6 +17097,10 @@ h3, h4, h5 {
 .modal-header.grades {
   position: relative;
   background: white !important;
+}
+
+.modal-header.grades > p {
+  color: black;
 }
 
 .grades-info-header-text {
@@ -17143,7 +17199,7 @@ h3, h4, h5 {
   text-align: left;
   font: normal normal normal 20px/27px Sharp Sans No1 Bold;
   letter-spacing: 0px;
-  color: #000000;
+  color: #000000 !important;
   opacity: 1;
   margin-bottom: 30px;
 }
@@ -18653,7 +18709,7 @@ input.lookup-delivery-basket::placeholder {
 }
 
 .confirmation-info-text-bold-smaller.fixed-height.centered-vertically {
-  text-align: left;
+  text-align: center;
 }
 
 .confirmation-info-text-smaller {
@@ -20287,7 +20343,7 @@ input[type=number] {
   font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-40)/var(--unnamed-line-spacing-48) var(--unnamed-font-family-sharp-sans-no1-bold);
   letter-spacing: var(--unnamed-character-spacing-0);
   color: var(--black);
-  text-align: left;
+  text-align: center;
   font: normal normal normal 40px/48px Sharp Sans No1 Bold;
   letter-spacing: 0px;
   color: #000000;

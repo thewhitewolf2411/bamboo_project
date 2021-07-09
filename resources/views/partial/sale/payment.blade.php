@@ -4,10 +4,16 @@
         <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
             <div class="emoji-col">
                 <img class="emoji-img" src="{{asset(App\Services\ProfileService::getPaymentSectionStatus($tradein)['emoji'])}}">
-                <p class="emoji-text">{!!App\Services\ProfileService::getPaymentSectionStatus($tradein)['emoji_text']!!}</p>
+                <p class="emoji-text">
+                    {!!App\Services\ProfileService::getPaymentSectionStatus($tradein)['emoji_text']!!}
+                </p>
             </div>
             <p class="emoji-info-text">
-                {!!App\Services\ProfileService::getPaymentSectionStatus($tradein)['description']!!}
+                @if(strpos(App\Services\ProfileService::getPaymentSectionStatus($tradein)['description'], 'product_name') !== false)
+                    {{str_replace('product_name', $tradein->getProductName(), App\Services\ProfileService::getPaymentSectionStatus($tradein)['description'])}}
+                @else
+                    {!!App\Services\ProfileService::getPaymentSectionStatus($tradein)['description']!!}
+                @endif
             </p>
         </div>
     @endif

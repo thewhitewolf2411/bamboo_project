@@ -1054,10 +1054,9 @@ class Tradein extends Model
         $despatched = DespatchedDevice::where('tradein_id', $this->id)->first();
         if($despatched){
             $despatchService = new DespatchService();
-            $tracking_number = $despatchService->checkIfManifested($despatched->order_identifier);
-            if($tracking_number !== null && $tracking_number !== false){
-                $this->tracking_reference = $tracking_number;
-                $this->save();
+            $is_manifested = $despatchService->checkIfManifested($despatched->order_identifier);
+            if($is_manifested){
+                return true;
             }
         }
         return false;

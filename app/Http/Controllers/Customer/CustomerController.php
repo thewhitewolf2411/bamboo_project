@@ -1190,6 +1190,21 @@ class CustomerController extends Controller
 
 
     /**
+     * Save customer tracking number.
+     * @param string $id - tradein id
+     */
+    public function saveTrackingNumber(Request $request, $id)
+    {
+        if(isset($request->tracking_number)){
+            $tradein = Tradein::findOrFail($id);
+            $tradein->tracking_reference = $request->tracking_number;
+            $tradein->save();
+            return redirect()->back()->with('success', 'Tracking number added successfuly');
+        }
+    }
+
+
+    /**
      * Print label from userprofile delivery details.
      */
     public function printTradeinLabel($tradein){

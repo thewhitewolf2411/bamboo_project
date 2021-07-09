@@ -160,13 +160,6 @@
                     <p id="product-price">
 
                     </p>
-                    <div class="tutorials">
-                        @if($product->brand_id === 1)
-                            @include('partial.faq.instructionsmodal', ['type' => 'appleInstructions', 'page' => 'sellitem'])
-                        @else
-                            @include('partial.faq.instructionsmodal', ['type' => 'googleInstructions', 'page' => 'sellitem'])
-                        @endif
-                    </div>
                 </div>
 
 
@@ -181,7 +174,16 @@
                                 <input type="hidden" name="memory" id="memory">
                                 <input type="hidden" name="price" id="price">
                                 <input type="hidden" name="type" value="tradein">
-                                <button id="addToCart" type="submit" class="btn start-selling sellitem fullwidth"><p>Sell my device</p></button>
+                                <div class="sell-tutorial-wrapper">
+                                    <button id="addToCart" type="submit" class="btn start-selling sellitem fullwidth"><p>Sell my device</p></button>
+                                    <div class="tutorials ml-3">
+                                        @if($product->brand_id === 1)
+                                            @include('partial.faq.instructionsmodal', ['type' => 'appleInstructions', 'page' => 'sellitem'])
+                                        @else
+                                            @include('partial.faq.instructionsmodal', ['type' => 'googleInstructions', 'page' => 'sellitem'])
+                                        @endif
+                                    </div>
+                                </div>
                             </div>
                         </form>
 
@@ -210,6 +212,13 @@
                                         @endif
                                     </div>
                                     <button id="addToCart" type="submit" class="btn start-selling sellitem-small mt-auto ml-2"><p>Sell my device</p></button>
+                                </div>
+                                <div class="tutorials abandoned ml-0 mt-3">
+                                    @if($product->brand_id === 1)
+                                        @include('partial.faq.instructionsmodal', ['type' => 'appleInstructions', 'page' => 'sellitem'])
+                                    @else
+                                        @include('partial.faq.instructionsmodal', ['type' => 'googleInstructions', 'page' => 'sellitem'])
+                                    @endif
                                 </div>
                                 <div id="please-enter-email" class="alert alert-danger pleaseSelect invisible mt-2"><p>Please complete email field to proceed.</p></div>
                                 
