@@ -731,11 +731,11 @@ class CustomerController extends Controller
                     $notification->save();
                 }
 
-                // set state to test complete
-                $tradein->job_state = '9b';
+                // set state to awaiting testing
+                $tradein->job_state = '9';
                 $tradein->save();
 
-                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
+                return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting testing.');
                 break;
 
             // incorrect network
@@ -977,7 +977,7 @@ class CustomerController extends Controller
             }
         }
 
-        return redirect('/userprofile');
+        return redirect('/userprofile')->with('success_info', 'Order cancelled.');
     }
 
     public function changeName(Request $request){

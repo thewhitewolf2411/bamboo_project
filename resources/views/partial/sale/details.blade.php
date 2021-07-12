@@ -27,6 +27,10 @@
                 <p class="sale-item-label">Colour</p>
                 <p class="sale-item-val">{!!$tradein->getDeviceColour()!!}</p>
             </div>
+            <div class="col sale-detail-infofix m-0">
+                <p class="sale-item-label">Customer Grade:</p>
+                <p class="sale-item-val">{!!$tradein->customer_grade!!}</p>
+            </div>
         </div>
     </div>
     <div class="sale-detail-col">

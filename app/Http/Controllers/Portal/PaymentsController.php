@@ -628,7 +628,8 @@ class PaymentsController extends Controller
                         $klaviyo = new KlaviyoEmail();
 
                         $user = User::find($tradein->user_id);
-                        $klaviyo->paymentUnsuccesful($user, $tradein);
+                        // $klaviyo->($user, $tradein);
+                        // PAYMENT TODO
 
                         // send notification - unsuccessful payment
                         $notificationService->paymentUnsuccessful($tradein);

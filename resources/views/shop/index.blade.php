@@ -41,10 +41,9 @@
                 <input type="checkbox" id="shop_notify_terms" name="shop_notify_terms">
                 <img id="shop-notify-terms-toggle" src="{{asset('/images/front-end-icons/black_circle.svg')}}">
                 <p class="shop-notify-terms-text text-left">
-                    In addition to receiving an instant email when you open your account with Bamboo, 
-                    I agree to Bamboo sending me a regular newsletter, carrying out market research, 
-                    keeping me informed with personalised news, offers, products and promotions it 
-                    believes would be of interest to me through my preferred channel.
+                    Yes, I would also like to sign up for a regular email newsletter, with offers products and promotions" then on a line underneath this, 
+                    please place the wording “You can unsubscribe from receiving this newsletter at anytime by sending an email to info@bamboomobile.co.uk 
+                    with “STOP” in the heading.
                 </p>
             </div>
 
@@ -119,9 +118,10 @@
     function check(){
         let email = document.getElementById('notify_email');
         let age_range = document.getElementById('notify_age');
-        let terms = document.getElementById('shop_notify_terms');
+        //let terms = document.getElementById('shop_notify_terms');
 
-        if(email.value && age_range.value && terms.checked){
+        //if(email.value && age_range.value && terms.checked){
+        if(email.value && age_range.value){
             if(validateEmail(email.value)){
                 document.getElementById('submitnotify').classList.remove('disabled');
                 return true;

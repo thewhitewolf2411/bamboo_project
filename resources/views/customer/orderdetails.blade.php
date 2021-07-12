@@ -61,13 +61,18 @@
                                 <div class="section-item-content">
                                     <div class="section-header">
                                         <p class="section-item-title">Sale Status</p>
-                                        <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseSaleStatus" aria-expanded="false" aria-controls="collapseSaleStatus">
+                                        {{-- <button class="notbtn" 
+                                            data-toggle="collapse" 
+                                            data-target="#collapseSaleStatus" 
+                                            aria-expanded="false" 
+                                            aria-controls="collapseSaleStatus"
+                                        >
                                             <p id="sale-status-collapse-text" class="collapse-title">Expand</p>
                                             <img id="sale-status-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
-                                        </button>
+                                        </button> --}}
                                     </div>
                                     <div class="line-bottom"></div>
-                                    <div class="collapse" id="collapseSaleStatus">
+                                    <div class="collapse show" id="collapseSaleStatus">
 
                                         @include('partial.sale.status', ['tradein' => $tradein])
 
@@ -107,13 +112,19 @@
                                 <div class="section-item-content">
                                     <div class="section-header">
                                         <p class="section-item-title">Sale details</p>
-                                        <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseSaleDetails" aria-expanded="false" aria-controls="collapseSaleDetails">
+                                        {{-- <button 
+                                            class="notbtn" 
+                                            data-toggle="collapse" 
+                                            data-toggle="collapse" 
+                                            data-target="#collapseSaleDetails" 
+                                            aria-expanded="false" 
+                                            aria-controls="collapseSaleDetails">
                                             <p id="sale-detail-text" class="collapse-title">Expand</p>
                                             <img id="sale-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
-                                        </button>
+                                        </button> --}}
                                     </div>
                                     <div class="line-bottom"></div>
-                                    <div class="collapse" id="collapseSaleDetails">
+                                    <div class="collapse show" id="collapseSaleDetails">
                                         @include('partial.sale.details', ['tradein' => $tradein])
                                     </div>
                                 </div>
@@ -123,13 +134,19 @@
                                 <div class="section-item-content">
                                     <div class="section-header">
                                         <p class="section-item-title">Delivery details</p>
-                                        <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseDeliveryDetails" aria-expanded="false" aria-controls="collapseDeliveryDetails">
+                                        {{-- <button 
+                                            class="notbtn" 
+                                            data-toggle="collapse" 
+                                            data-toggle="collapse" 
+                                            data-target="#collapseDeliveryDetails" 
+                                            aria-expanded="false" 
+                                            aria-controls="collapseDeliveryDetails">
                                             <p id="delivery-detail-text" class="collapse-title">Expand</p>
                                             <img id="delivery-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
-                                        </button>
+                                        </button> --}}
                                     </div>
                                     <div class="line-bottom"></div>
-                                    <div class="collapse" id="collapseDeliveryDetails">
+                                    <div class="collapse show" id="collapseDeliveryDetails">
                                         @include('partial.sale.delivery', ['tradein' => $tradein])
                                     </div>
                                 </div>
@@ -138,17 +155,25 @@
                             <div id="section-processing" class="sale-item-sections mb-2">
                                 <div class="section-item-content">
                                     <div class="section-header">
-                                        @if(App\Helpers\NotificationHelper::hasProcessingAlerts())
+                                        @if(App\Services\ProfileService::hasProcessingAlerts($tradein))
                                             <img class="sale-details-alert" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
                                         @endif
                                         <p class="section-item-title @if(App\Helpers\NotificationHelper::hasProcessingAlerts()) mr-auto @endif">Processing</p>
-                                        <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseProcessingDetails" aria-expanded="false" aria-controls="collapseProcessingDetails">
-                                            <p id="processing-detail-text" class="collapse-title">Expand</p>
-                                            <img id="processing-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
-                                        </button>
+                                        @if(!App\Services\ProfileService::hasProcessingAlerts($tradein))
+                                            <button 
+                                                class="notbtn" 
+                                                data-toggle="collapse" 
+                                                data-toggle="collapse" 
+                                                data-target="#collapseProcessingDetails" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseProcessingDetails">
+                                                <p id="processing-detail-text" class="collapse-title">Expand</p>
+                                                <img id="processing-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
+                                            </button>
+                                        @endif
                                     </div>
                                     <div class="line-bottom"></div>
-                                    <div class="collapse" id="collapseProcessingDetails">
+                                    <div class="collapse @if(App\Services\ProfileService::hasProcessingAlerts($tradein)) show @endif" id="collapseProcessingDetails">
 
                                         @include('partial.sale.processing', ['tradein' => $tradein])
 
@@ -159,17 +184,25 @@
                             <div id="section-testing" class="sale-item-sections mb-2">
                                 <div class="section-item-content">
                                     <div class="section-header">
-                                        @if(App\Helpers\NotificationHelper::hasTestingAlerts())
+                                        @if(App\Services\ProfileService::hasTestingAlerts($tradein))
                                             <img class="sale-details-alert" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
                                         @endif
-                                        <p class="section-item-title @if(App\Helpers\NotificationHelper::hasTestingAlerts()) mr-auto @endif">Testing</p>
-                                        <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseTesting" aria-expanded="false" aria-controls="collapseTesting">
-                                            <p id="testing-detail-text" class="collapse-title">Expand</p>
-                                            <img id="testing-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
-                                        </button>
+                                        <p class="section-item-title @if(App\Services\ProfileService::hasTestingAlerts($tradein)) mr-auto @endif">Testing</p>
+                                        @if(!App\Services\ProfileService::hasTestingAlerts($tradein))
+                                            <button 
+                                                class="notbtn" 
+                                                data-toggle="collapse" 
+                                                data-toggle="collapse" 
+                                                data-target="#collapseTesting" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapseTesting">
+                                                <p id="testing-detail-text" class="collapse-title">Expand</p>
+                                                <img id="testing-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
+                                            </button>
+                                        @endif
                                     </div>
                                     <div class="line-bottom"></div>
-                                    <div class="collapse" id="collapseTesting">
+                                    <div class="collapse @if(App\Services\ProfileService::hasTestingAlerts($tradein)) show @endif" id="collapseTesting">
 
                                         @include('partial.sale.testing', ['tradein' => $tradein])
 
@@ -180,17 +213,25 @@
                             <div id="section-payment" class="sale-item-sections mb-xl-5">
                                 <div class="section-item-content">
                                     <div class="section-header">
-                                        @if(App\Helpers\NotificationHelper::hasPaymentAlerts())
+                                        @if(App\Services\ProfileService::hasPaymentAlerts($tradein))
                                             <img class="sale-details-alert" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
                                         @endif
-                                        <p class="section-item-title @if(App\Helpers\NotificationHelper::hasPaymentAlerts()) mr-auto @endif">Payment</p>
-                                        <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapsePayment" aria-expanded="false" aria-controls="collapsePayment">
-                                            <p id="payment-detail-text" class="collapse-title">Expand</p>
-                                            <img id="payment-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
-                                        </button>
+                                        <p class="section-item-title @if(App\Services\ProfileService::hasPaymentAlerts($tradein)) mr-auto @endif">Payment</p>
+                                        @if(!App\Services\ProfileService::hasPaymentAlerts($tradein))
+                                            <button 
+                                                class="notbtn" 
+                                                data-toggle="collapse" 
+                                                data-toggle="collapse" 
+                                                data-target="#collapsePayment" 
+                                                aria-expanded="false" 
+                                                aria-controls="collapsePayment">
+                                                <p id="payment-detail-text" class="collapse-title">Expand</p>
+                                                <img id="payment-details-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">
+                                            </button>
+                                        @endif
                                     </div>
                                     <div class="line-bottom"></div>
-                                    <div class="collapse" id="collapsePayment">
+                                    <div class="collapse @if(App\Services\ProfileService::hasPaymentAlerts($tradein)) show @endif" id="collapsePayment">
                                         @include('partial.sale.payment', ['tradein' => $tradein])
                                     </div>
                                 </div>
@@ -206,16 +247,18 @@
                         <div class="modal-content padded">
                             <div class="validation-modal-header">
                                 <img class="close-modal-img ml-auto" src="{{asset('/customer_page_images/body/modal-close.svg')}}" data-dismiss="modal" aria-label="Close">
-                                <h5 class="validationModal-title" id="cancelSaleModalLabel">Are you sure?</h5>
+                                <h5 class="validationModal-title" id="cancelSaleModalLabel">Are you sure you wish to cancel your order?</h5>
                             </div>
                             <div class="line-bottom"></div>
-                            <div class="pt-4 pb-2 text-center info-item-val">
-                                This will cancel your order!
+                            <div class="pt-4 pb-2 text-left">
+                                Clicking 'Yes, cancel my order' will notify our Customer Care team of your desire to cancel your order, 
+                                we will then get in touch via email to confirm this action.
                             </div>
                             <div class="modal-footer border-0 p-0 padded mt-4">
-                                <a class="btn btn-danger w-25 m-auto" href="/userprofile/deleteorder/{{$tradein->barcode}}">Yes</a>
-                                <button type="button" class="btn btn-light w-25 m-auto" data-dismiss="modal" aria-label="Close">No</button>
+                                <a class="btn btn-orange logout ml-auto mr-2" href="/userprofile/deleteorder/{{$tradein->barcode}}"><strong class="bold">Yes</strong>, cancel my order*</a>
+                                <button type="button" class="btn btn-jade mr-auto ml-2" data-dismiss="modal" aria-label="Close">No, keep my order open</button>
                             </div>
+                            <p class="cancel-order-desc">*This action cannot be undone.</p>
                         </div>
                     </div>
                 </div>

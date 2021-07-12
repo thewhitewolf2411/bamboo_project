@@ -40,7 +40,15 @@
                         </div>
                     @endif
 
-                    <div class="sections-row @if(Session::has('success_login'))pt-2 @endif">
+                    @if(Session::has('success_info'))
+                        <div class="row pt-4">
+                            <div class="alert alert-success w-25 ml-auto mr-auto text-center">
+                                {{Session::get('success_info')}}
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="sections-row @if(Session::has('success_login') || Session::has('success_info'))pt-2 @endif">
 
                         <div class="sections-menu">
                             <div class="change-page menu-item link-active" id="menu-overview">Account overview</div>

@@ -85,7 +85,7 @@
 
     <div class="newsletter-subscription">
         <label class="news-label">
-            <input id="radio-checked-yes" type="radio" name="sub" value="true" required>
+            <input id="radio-checked-yes" type="radio" name="sub" value="true">
 
             <div class="news-label-content">
                 <p><b>Yes,</b> I would love to hear about the latest amazing offers, hints & tips</p>
@@ -98,7 +98,7 @@
         </label>
 
           <label class="news-label">
-            <input id="radio-checked-no" type="radio" name="sub" value="false" required>
+            <input id="radio-checked-no" type="radio" name="sub" value="false">
 
             <div class="news-label-content">
                 <p><b>No,</b>  I do not want to hear about the latest amazing offers, hints & tips</p>
@@ -112,7 +112,8 @@
 
     <div class="form-group mb-0 d-flex justify-content-between" style="padding: 25px 0 25px 0;">
         <div class="terms-container">
-            <input type="checkbox" class="mx-3" id="terms" name="terms" required>
+            <input type="checkbox" class="mx-3 terms_checkbox" id="terms" name="terms" required>
+            {{-- <img id="register-terms-toggle" src="{{asset('/images/front-end-icons/black_circle.svg')}}"> --}}
             <label for="terms" class="terms-label">I agree to Bamboo Mobile <a onclick="showTerms()">Terms and Conditions</a></label>
         </div>
 
@@ -327,7 +328,7 @@
             <p class="text-left footer-text-title">Lost or Stolen Mobile Phones and Devices</p>
             <br>
             <p class="footer-text-small">
-                Selling a mobile phone or device which you do not own may amount to a criminal offence. We will check the IMEI/Serial number of all mobile phones and devices received on CheckMEND (www.checkmend.com/uk) to ensure no lost or stolen items are purchased.<br><br>
+                Selling a mobile phone or device which you do not own may amount to a criminal offence. We will check the IMEI/Serial number of all mobile phones and devices received on <a class="footer-text-small hyperlink" href="https://www.checkmend.com/uk" target="_blank">CheckMEND</a> to ensure no lost or stolen items are purchased.<br><br>
                 If a mobile phone or device is found to have a record that indicates it has been lost or stolen or we become aware of any other issue relating to its ownership, we will notify the seller by email and quarantine the mobile phone or device for an initial period of 28 days ("the Quarantine Period"). Payment for the mobile phone or device will be withheld by us until the Checkmend does not show the mobile phone as stolen or lost.<br><br>
                 In such circumstances you will be required to prove that you are the rightful owner of the mobile phone or device and have the lost or stolen records associated with it cleared within the Quarantine Period and/or resolve any other issue relating to its ownership.<br><br>
                 If during the Quarantine Period the mobile phone or device is cleared on the Checkmend database and any other issue relating to ownership of the same is resolved, your sale will be processed and paid for as normal.<br><br>

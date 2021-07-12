@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Eloquent\JobStateChanged;
+use App\Eloquent\Notification;
 use App\Eloquent\Tradein;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileService{
 
@@ -1603,6 +1605,15 @@ class ProfileService{
             return [];
         }
 
+        // payment failed
+        if($actual_job_state === "24"){
+            return [
+                'emoji'         => asset(self::$py3['emoji']),
+                'emoji_text'    => self::$py3['text'],
+                'description'   => self::$pyvm6
+            ];
+        }
+
         // return empty array - no messages for non-defined scenarios
         return [];
     }
@@ -1721,5 +1732,89 @@ class ProfileService{
             return 'appleInstructions';
         }
         
+    }
+
+
+    /**
+     * Check if sale is complete.
+     * @param Tradein $tradein
+     * @return bool
+     */
+    public static function saleComplete(Tradein $tradein): bool
+    {
+        $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
+        $actual_job_state = null;
+        if($job_state->previous_job_state === null){
+            $actual_job_state = $job_state->job_state;
+        } else {
+            if($job_state->sent){
+                $actual_job_state = $job_state->job_state;
+            } else {
+                $actual_job_state = $job_state->previous_job_state;
+            }
+        }
+
+        // awaiting box build - paid
+        if($actual_job_state === '25'){
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Check if tradein has processing alerts.
+     * @param Tradein $tradein
+     * @return bool
+     */
+    public static function hasProcessingAlerts(Tradein $tradein): bool
+    {
+        $notifications = Notification::where('user_id', Auth::user()->id)
+            ->where('status', 'alert')
+            ->whereIn('type', [6,7,8,9,14])
+            ->where('tradein_id', $tradein->id)
+            ->where('resolved', false)->get();
+        if($notifications->count() > 0){
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Check if tradein has testing alerts.
+     * @param Tradein $tradein
+     * @return bool
+     */
+    public static function hasTestingAlerts(Tradein $tradein): bool 
+    {
+        $notifications = Notification::where('user_id', Auth::user()->id)
+            ->where('status', 'alert')
+            ->where('type', 12)
+            ->where('tradein_id', $tradein->id)
+            ->where('resolved', false)->get();
+        if($notifications->count() > 0){
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Check if tradein has payment alerts.
+     * @param Tradein $tradein
+     * @return bool
+     */
+    public static function hasPaymentAlerts(Tradein $tradein): bool
+    {
+        $notifications = Notification::where('user_id', Auth::user()->id)
+            ->where('status', 'alert')
+            ->where('type', 13)
+            ->where('tradein_id', $tradein->id)
+            ->where('resolved', false)->get();
+        if($notifications->count() > 0){
+            return true;
+        }
+        return false;
     }
 }

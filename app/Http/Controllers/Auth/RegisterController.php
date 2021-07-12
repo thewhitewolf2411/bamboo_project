@@ -60,6 +60,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'first-name' => ['required', 'string', 'min:2'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         ]);
 
@@ -90,6 +91,11 @@ class RegisterController extends Controller
         }
         $validator = $this->validator($request->all());
         if ($validator->fails()) {
+            // dd($validator);
+            $fails = $validator->errors()->keys();
+            if(in_array("first-name", $fails)){
+                return redirect('/')->with('regerror','First name needs to be at least 2 characters.');
+            }
             return redirect('/')->with('regerror','This email is already registered');
         }
 
