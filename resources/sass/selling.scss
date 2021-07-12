@@ -218,6 +218,10 @@
     transform: scale(1.1);
 }
 
+.product:hover  > .product-data-container > h5 {
+    color: var(--sell-–-orange);
+}
+
 .selling-product-image-container{
     width: 100%;
     max-width: 300px;
@@ -385,11 +389,28 @@
     flex-direction: row;
 }
 
-.product-price-container > div.tutorials{
+.sell-tutorial-wrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.tutorials{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-left: 40px;
+}
+
+.tutorials.abandoned{
+    max-width: 370px;
+}
+
+// tutorials breakpoint
+@media (max-width: 1860px){
+    .tutorials{
+        margin-left: 0 !important;
+        margin-top: 0.5rem;
+    }
 }
 
 .single-product-container{
@@ -457,6 +478,10 @@
 .modal-header.grades{
     position: relative;
     background: white !important;
+}
+
+.modal-header.grades > p {
+    color: black;
 }
 
 .grades-info-header-text{
@@ -556,7 +581,7 @@
     text-align: left;
     font: normal normal normal 20px/27px Sharp Sans No1 Bold;
     letter-spacing: 0px;
-    color: #000000;
+    color: #000000 !important;
     opacity: 1;
     margin-bottom: 30px;
 }
@@ -2222,8 +2247,7 @@ input.lookup-delivery-basket::placeholder{
 // }
 
 .confirmation-info-text-bold-smaller.fixed-height.centered-vertically{
-    // text-align: center;
-    text-align: left;
+    text-align: center;
 }
 
 .confirmation-info-text-smaller{

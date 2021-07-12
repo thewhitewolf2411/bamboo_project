@@ -35,10 +35,10 @@
                             <div class="change-sales-page sales-item" id="sales-status">Sale status</div>
                             <div class="change-sales-page sales-item" id="sales-notifications">
                                 Notifications
-                                @if(App\Helpers\NotificationHelper::count() !== null) 
+                                @if(App\Helpers\NotificationHelper::count($tradein->id) !== null) 
                                     <div class="notifications-count menu">
                                         <img src="{{asset('/images/front-end-icons/notification_count.svg')}}">
-                                        <p>{!!App\Helpers\NotificationHelper::count()!!}</p>
+                                        <p>{!!App\Helpers\NotificationHelper::count($tradein->id)!!}</p>
                                     </div>
                                 @endif
                             </div>
@@ -84,13 +84,13 @@
                             <div id="section-sale-notifications" class="sale-item-sections mb-2">
                                 <div class="section-item-content">
                                     <div class="section-header">
-                                        @if(App\Helpers\NotificationHelper::count() !== null) 
+                                        @if(App\Helpers\NotificationHelper::count($tradein->id) !== null) 
                                             <div class="notifications-count positioned collapse-header">
                                                 <img src="{{asset('/images/front-end-icons/notification_count.svg')}}">
-                                                <p>{!!App\Helpers\NotificationHelper::count()!!}</p>
+                                                <p>{!!App\Helpers\NotificationHelper::count($tradein->id)!!}</p>
                                             </div>
                                         @endif
-                                        <p class="section-item-title @if(App\Helpers\NotificationHelper::count() !== null)mr-auto @endif">Notifications</p>
+                                        <p class="section-item-title @if(App\Helpers\NotificationHelper::count($tradein->id) !== null)mr-auto @endif">Notifications</p>
                                         <button class="notbtn" data-toggle="collapse" data-toggle="collapse" data-target="#collapseNotifications" aria-expanded="false" aria-controls="collapseNotifications">
                                             <p id="notifications-collapse-text" class="collapse-title">Expand</p>
                                             <img id="notifications-collapse" class="collapse-up-img" src="{{asset('/customer_page_images/body/collapse-down.svg')}}">

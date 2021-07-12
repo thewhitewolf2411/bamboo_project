@@ -102,7 +102,7 @@
 
         <div class="mobile-phones-submenu-column">
             <a class="mobile-phone-submenu-title" href="/sell/devices/mobile/1">
-                <p>Apple iPhone</p> 
+                <p>Apple Mobile Phones</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </a>
 
@@ -113,12 +113,13 @@
                     <span class="tooltiptext"><p>{{$apple_phone->product_name}}</p></span>
                 </a>
             @endforeach
+            <a class="mobile-phone-submenu-item" href="/sell/devices/mobile/1"><p>See more</p></a>
 
         </div>
 
         <div class="mobile-phones-submenu-column">
             <a class="mobile-phone-submenu-title" href="/sell/devices/mobile/2">
-                <p>Samsung Galaxy</p> 
+                <p>Samsung Mobile Phones</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </a>
 
@@ -129,7 +130,8 @@
                     <span class="tooltiptext"><p>{{$samsung_phone->product_name}}</p></span>
                 </a>
             @endforeach
-            
+            <a class="mobile-phone-submenu-item" href="/sell/devices/mobile/2"><p>See more</p></a>
+
         </div>
 
         <div class="mobile-phones-submenu-column">
@@ -166,7 +168,7 @@
 
         <div class="mobile-phones-submenu-column">
             <a class="mobile-phone-submenu-title" href="/sell/devices/tablets/1">
-                <p>Apple IPad</p> 
+                <p>Apple Tablets</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </a>
 
@@ -177,11 +179,14 @@
                     <span class="tooltiptext"><p>{{$apple_tablet->product_name}}</p></span>
                 </a>
             @endforeach
+
+            <a class="mobile-phone-submenu-item" href="/sell/devices/tablets/1"><p>See more</p></a>
+
         </div>
 
         <div class="mobile-phones-submenu-column">
             <a class="mobile-phone-submenu-title" href="/sell/devices/tablets/2">
-                <p>Samsung Galaxy Tab</p> 
+                <p>Samsung Tablets</p> 
                 <img class="mobile-submenu-icon" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </a>
 
@@ -192,6 +197,8 @@
                     <span class="tooltiptext"><p>{{$samsung_tablet->product_name}}</p></span>
                 </a>
             @endforeach
+
+            <a class="mobile-phone-submenu-item" href="/sell/devices/tablets/2"><p>See more</p></a>
 
         </div>
 
@@ -240,6 +247,9 @@
                     <span class="tooltiptext"><p>{{$apple_watch->product_name}}</p></span>
                 </a>
             @endforeach
+
+            <a class="mobile-phone-submenu-item" href="/sell/devices/watches/1"><p>See more</p></a>
+
         </div>
 
         <div class="mobile-phones-submenu-column">
@@ -255,6 +265,9 @@
                     <span class="tooltiptext"><p>{{$samsung_watch->product_name}}</p></span>
                 </a>
             @endforeach
+
+            <a class="mobile-phone-submenu-item" href="/sell/devices/watches/2"><p>See more</p></a>
+
         </div>
 
         <div class="mobile-phones-submenu-column">
@@ -322,7 +335,7 @@
         <div class="dropdown-column">
 
             <div class="mobile-dropdown-toggle" id="toggleApplePhones" data-toggle="collapse" href="#collapseAppleMobilePhones" role="button" aria-expanded="false" aria-controls="collapseMobilePhones">
-                <p>Apple iPhone</p> 
+                <p>Apple Phones</p> 
                 <img class="mobile-menu-image" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </div>
             <div class="dropdown-phones-list collapse" id="collapseAppleMobilePhones">
@@ -334,7 +347,7 @@
                     <div class="hr-dropdown"></div>
                 @endforeach
                 <a href="/sell/devices/mobile/1">
-                    <p>Show all iPhones</p>
+                    <p>Show all Apple Mobile Phones</p>
                     <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                 </a>
             </div>
@@ -342,7 +355,7 @@
             <div class="hr-dropdown"></div>
 
             <div class="mobile-dropdown-toggle" id="toggleSamsungPhones" data-toggle="collapse" href="#collapseSamsungMobilePhones" role="button" aria-expanded="false" aria-controls="collapseSamsungMobilePhones">
-                <p>Samsung Galaxy</p> 
+                <p>Samsung Phones</p> 
                 <img class="mobile-menu-image" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </div>
             <div class="dropdown-phones-list collapse" id="collapseSamsungMobilePhones">
@@ -354,7 +367,7 @@
                     <div class="hr-dropdown"></div>
                 @endforeach
                 <a href="/sell/devices/mobile/2">
-                    <p>Show all Samsung Galaxy phones</p>
+                    <p>Show all Samsung Mobile phones</p>
                     <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                 </a>
             </div>
@@ -389,7 +402,7 @@
         <div class="dropdown-column">
 
             <div class="mobile-dropdown-toggle" id="toggleAppleTablets" data-toggle="collapse" href="#collapseAppleTablets" role="button" aria-expanded="false" aria-controls="collapseAppleTablets">
-                <p>Apple iPad</p> 
+                <p>Apple Tablets</p> 
                 <img class="mobile-menu-image" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </div>
             <div class="dropdown-phones-list collapse" id="collapseAppleTablets">
@@ -409,7 +422,7 @@
             <div class="hr-dropdown"></div>
 
             <div class="mobile-dropdown-toggle" id="toggleSamsungTablets" data-toggle="collapse" href="#collapseSamsungTablets" role="button" aria-expanded="false" aria-controls="collapseSamsungTablets">
-                <p>Samsung Galaxy Tab</p> 
+                <p>Samsung Tablets</p> 
                 <img class="mobile-menu-image" src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
             </div>
             <div class="dropdown-phones-list collapse" id="collapseSamsungTablets">
@@ -421,7 +434,7 @@
                     <div class="hr-dropdown"></div>
                 @endforeach
                 <a href="/sell/devices/tablets/2">
-                    <p>Show all Samsung Galaxy Tablets</p>
+                    <p>Show all Samsung Tablets</p>
                     <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                 </a>
             </div>
@@ -487,7 +500,7 @@
                     <div class="hr-dropdown"></div>
                 @endforeach
                 <a href="/sell/devices/watches/2">
-                    <p>Show all Samsung Galaxy Watches</p>
+                    <p>Show all Samsung Watches</p>
                     <img src="{{asset('customer_page_images/body/Icon-Arrow-Next-Black.svg')}}">
                 </a>
             </div>

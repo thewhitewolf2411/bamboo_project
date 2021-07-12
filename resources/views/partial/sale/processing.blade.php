@@ -1,14 +1,16 @@
 
 {{-- processing section status --}}
-<div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
-    <div class="emoji-col">
-        <img class="emoji-img" src="{{asset(App\Services\ProfileService::getProcessingStatus($tradein)['emoji'])}}">
-        <p class="emoji-text">{!!App\Services\ProfileService::getProcessingStatus($tradein)['emoji_text']!!}</p>
+@if(!empty(App\Services\ProfileService::getProcessingStatus($tradein)))
+    <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
+        <div class="emoji-col">
+            <img class="emoji-img" src="{{asset(App\Services\ProfileService::getProcessingStatus($tradein)['emoji'])}}">
+            <p class="emoji-text">{!!App\Services\ProfileService::getProcessingStatus($tradein)['emoji_text']!!}</p>
+        </div>
+        <p class="emoji-info-text">
+            {!!App\Services\ProfileService::getProcessingStatus($tradein)['description']!!}
+        </p>
     </div>
-    <p class="emoji-info-text">
-        {!!App\Services\ProfileService::getProcessingStatus($tradein)['description']!!}
-    </p>
-</div>
+@endif
 
 {{-- processing section error statuses --}}
 @if(App\Services\ProfileService::getProcessingError($tradein))
@@ -93,7 +95,7 @@
                 </p>
             </div>
             <div class="col">
-                <a href="#" class="btn btn-orange process-action-btn">
+                <a href="/sell" class="btn btn-orange process-action-btn">
                     <p>Submit new SELL order</p>
                     <img class="process-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
                 </a>

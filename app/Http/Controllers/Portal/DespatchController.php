@@ -128,7 +128,7 @@ class DespatchController extends Controller
                 foreach($tradeins as $tradein){
                     $despatchDevice = DespatchedDevice::where('tradein_id', $tradein->id)->first();
                     if($tradein->job_state === '20' && $despatchDevice !== null){
-                        if($tradein->tracking_reference !== null){
+                        if($tradein->isManifested()){
                             $despatchDevice->despatched_at = Carbon::now();
                             $despatchDevice->save();
                             $tradein->job_state = '21';

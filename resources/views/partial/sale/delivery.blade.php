@@ -51,9 +51,30 @@
     </div>
     <div class="delivery-details-col">
         {{-- <p class="delivery-info-dates-label">Enter Tracking Number</p> --}}
-        <p class="delivery-info-dates-bold"></p>
-        <a class="btn-purple sale-detail-btn large mt-4" id="call-print-own" href="#"><p>Edit Tracking Number</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
-        <a class="btn-green sale-detail-btn large mt-1" id="call-print-own" href="#"><p>Track Parcel</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+        
+        @if($tradein->tracking_reference === null)
+            <a class="btn-purple sale-detail-btn large mt-4" id="toggle-tracking-number" role="button">
+                <p>Edit Tracking Number</p> 
+                <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+            </a>
+            <div class="toggle-tracking-number collapsed" id="trackingNumberCollapse">
+                <form method="POST" action="{{route('storeTrackingNumber', ['id' => $tradein->id])}}">
+                    @csrf
+                    <input type="text" name="tracking_number" required>
+                    <button class="btn process-action-btn btn-orange ml-auto mr-auto" type="submit"><p>Save</p></button>
+                </form>
+            </div>
+            <br>
+        @else
+            <p class="delivery-info-dates-label">Tracking number</p>
+            <p class="delivery-info-dates-bold">{!!$tradein->tracking_reference!!}</p>
+            <a class="btn-purple sale-detail-btn large mt-4 disabled-btn">
+                <p>Edit Tracking Number</p> 
+                <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+            </a>
+        @endif
+
+        <a class="btn-green sale-detail-btn large mt-1" href="https://www.royalmail.com/track-your-item#/" target="_blank"><p>Track Parcel</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
     </div>
 </div>
 
@@ -78,6 +99,18 @@
             //     alert(response.responseText);
             // }
         });
+    }
+
+    let tracking_ref_toggle = document.getElementById('toggle-tracking-number');
+    if(tracking_ref_toggle){
+        tracking_ref_toggle.addEventListener('click', function(){
+            let dropdown = document.getElementById("trackingNumberCollapse");
+            if(dropdown.classList.contains('collapsed')){
+                dropdown.classList.remove('collapsed');
+            } else {
+                dropdown.classList.add('collapsed');
+            }
+        })
     }
 
 </script>

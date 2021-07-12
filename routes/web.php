@@ -78,6 +78,7 @@ Route::post('/userprofile/printlabel', 'Customer\CustomerController@printLabel')
 Route::get('/userprofile/acceptoffer/{id}', 'Customer\CustomerController@acceptFaultyOffer')->middleware('auth')->name('acceptFaultyOffer');
 Route::get('/userprofile/sendtoretest/{id}', 'Customer\CustomerController@sendToRetesting')->middleware('auth')->name('retestDevice');
 Route::get('/userprofile/returndevice/{id}', 'Customer\CustomerController@returnDevice')->middleware('auth')->name('returnDevice');
+Route::post('/userprofile/storetrackingnumber/{id}', 'Customer\CustomerController@saveTrackingNumber')->middleware('auth')->name('storeTrackingNumber');
 
 Route::get('/products/{category}', 'Customer\CustomerController@customerCategoryView')->name('customerproducts');
 Route::get('/product/{product}', 'Customer\CustomerController@showProduct')->name('showproduct');

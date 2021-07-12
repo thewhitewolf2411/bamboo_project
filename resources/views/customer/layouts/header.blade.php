@@ -91,21 +91,20 @@
         {{-- <img id="start-selling-button-img-down" class="invisible" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White.svg')}}"> --}}
     </a>
     {{-- </div> --}}
-    <div class="url-header-container how" @if(request()->path() === 'how') style="border-bottom: 4px solid #A3D147;" @endif>
-        <a href="/how" class="header-url-link" @if(request()->path() === 'how') style="font-family: Sharp Sans No1 Bold; margin-bottom: 8px;" @endif>How it Works</a>
+    <div class="url-header-container how @if(request()->path() === 'how') onpage @endif">
+        <a href="/how" class="header-url-link @if(request()->path() === 'how') bolded @endif">How it Works</a>
     </div>
-    <div class="url-header-container" @if(request()->path() === 'about') style="border-bottom: 4px solid #A3D147;" @endif>
-        <a href="/about" class="header-url-link" @if(request()->path() === 'about') style="font-family: Sharp Sans No1 Bold; margin-bottom: 8px;" @endif>About</a>
+    <div class="url-header-container about @if(request()->path() === 'about') onpage @endif">
+        <a href="/about" class="header-url-link @if(request()->path() === 'about') bolded @endif">About</a>
     </div>
-    <div class="url-header-container" @if(str_contains(request()->path(), 'news')) style="border-bottom: 4px solid #A3D147;" @endif>
-        <a href="/news" class="header-url-link" @if(str_contains(request()->path(), 'news')) style="font-family: Sharp Sans No1 Bold; margin-bottom: 8px;" @endif>News & Blog</a>
+    <div class="url-header-container news @if(str_contains(request()->path(), 'news')) onpage @endif">
+        <a href="/news" class="header-url-link  @if(str_contains(request()->path(), 'news')) bolded @endif">News & Blog</a>
     </div>
-    <div class="url-header-container" @if(request()->path() === 'support/selling') style="border-bottom: 4px solid #A3D147;" @endif>
-        {{-- <a href="/support" class="header-url-link" @if(request()->path() === 'support') style="font-family: Sharp Sans No1 Bold;" @endif>Service & Support</a> --}}
-        <a href="/support" class="header-url-link" @if(request()->path() === 'support/selling') style="font-family: Sharp Sans No1 Bold; margin-bottom: 8px;" @endif>FAQ’s</a>
+    <div class="url-header-container faq @if(request()->path() === 'support/selling') onpage @endif">
+        <a href="/support" class="header-url-link @if(request()->path() === 'support/selling') bolded @endif">FAQ’s</a>
     </div>
-    <div class="url-header-container mr-0" @if(request()->path() === 'contact') style="border-bottom: 4px solid #A3D147;" @endif>
-        <a href="/contact" class="header-url-link" @if(request()->path() === 'contact') style="font-family: Sharp Sans No1 Bold; margin-bottom: 8px;" @endif>Contact Us</a>
+    <div class="url-header-container contact mr-0 @if(request()->path() === 'contact') onpage @endif">
+        <a href="/contact" class="header-url-link @if(request()->path() === 'contact') bolded @endif">Contact Us</a>
     </div>
 
 </div>

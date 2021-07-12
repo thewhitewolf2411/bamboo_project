@@ -79,7 +79,7 @@
                                                     </div>
                                                     <div class="col mt-auto mb-auto">
                                                         <p>Pattern Sequence:</p>
-                                                        <input type="text" class="form-group" name="pattern">
+                                                        <input type="text" class="form-group" name="pattern" required>
                                                         <div class="row">
                                                             <button type="submit" class="btn btn-primary ml-auto mr-auto">Save changes</button>
                                                         </div>
@@ -94,7 +94,7 @@
                                                 <div class="col">
                                                     <div class="row mx-3 mt-2 w-25 ml-auto mr-auto">
                                                         <p>PIN Code:</p>
-                                                        <input type="number" class="form-group" placeholder="0000" name="pin">
+                                                        <input type="number" class="form-group" placeholder="0000" name="pin" required>
                                                     </div>
                                                     <div class="row">
                                                         <button type="submit" class="btn btn-primary ml-auto mr-auto">Save changes</button>
@@ -141,10 +141,7 @@
                         <p>I have removed</p>
                         <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
                     </a>
-                    <a href="#" class="btn btn-purple testing-action-btn">
-                        <p>How do I remove?</p>
-                        <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
-                    </a>
+                    @include('partial.faq.instructionsmodal', ['type' => App\Services\ProfileService::getDeviceType($tradein) , 'page' => 'testing'])
                     <a href="{{route('acceptFaultyOffer', ['id' => $tradein->id])}}" class="btn btn-orange testing-action-btn">
                         <p>Accept Faulty Offer</p>
                         <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
