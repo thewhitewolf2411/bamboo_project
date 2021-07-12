@@ -136,7 +136,7 @@ class LabelService{
             mkdir(public_path() . '/storage/pdf', 0777, true);
         }
 
-        PDF::loadView('portal.labels.orderlabel', ['tradeins'=>$tradeins])->setPaper('a4', 'portrait')->setWarnings(false)->save('./storage/pdf/' . $filename);
+        PDF::loadView('portal.labels.orderlabel', ['tradeins'=>$tradeins, 'printyourown'=>$data['printyourown']])->setPaper('a4', 'portrait')->setWarnings(false)->save('./storage/pdf/' . $filename);
 
         return response()->json(
             [

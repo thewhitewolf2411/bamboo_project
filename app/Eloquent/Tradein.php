@@ -309,7 +309,7 @@ class Tradein extends Model
     }
 
     public function isSIMLocked(){
-        if($this->correct_network === "unlocked" || $this->correct_network === null){
+        if($this->correct_network === "Unlocked" || $this->correct_network === null){
             return false;
         }
 
@@ -345,6 +345,14 @@ class Tradein extends Model
                 return $this->getBlacklistedIssue();
             }
 
+            if($this->isMissing()){
+                return "Lost in Transit";
+            }
+
+            if(!$this->hasImei()){
+                return "No IMEI";
+            }
+
             if($this->hasExpired()){
                 return "Order Expired";
             }
@@ -359,6 +367,20 @@ class Tradein extends Model
         }
 
         return "Downgraded";
+    }
+
+    public function isMissing(){
+        if($this->job_state == 4){
+            return true;
+        }
+        return false;
+    }
+
+    public function hasImei(){
+        if($this->imei_number === null){
+            return false;
+        }
+        return true;
     }
 
     public function getTestingQuarantineReason(){
@@ -1349,7 +1371,7 @@ class Tradein extends Model
     
             $prices = [$orderPrice, $bambooPrice];
     
-            return min($prices);
+            return min($prices) + $this->carriage_cost + $this->admin_cost + $this->misc_cost;
         }
 
         return 0;

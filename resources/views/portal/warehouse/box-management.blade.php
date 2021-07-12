@@ -139,8 +139,8 @@
                         </div>
 
                         <div class="d-flex flex-column ml-3">
-                            <p style="color: red"><b>Boxed device: {{$box->number_of_devices}} / {{$box->max_number_of_devices}}</b></p>
-                            <p style="color: red"><b>Devices left to scan: {{$box->max_number_of_devices - $box->number_of_devices}}</b></p>
+                            <p style="color: red"><b>Boxed device: {{$box->getNumberOfDevices()}} / {{$box->max_number_of_devices}}</b></p>
+                            <p style="color: red"><b>Devices left to scan: {{$box->max_number_of_devices - $box->getNumberOfDevices()}}</b></p>
                         </div>
 
                         @endif
@@ -265,7 +265,7 @@
                                                 @if($test->trolley_id !== null)
                                                 <a href="/portal/warehouse-management/bay-overview/bay/?bay_id_scan={{$test->getTrolleyName($test->trolley_id)}}" target="_blank">Box in a bay. </a>
                                                 @else
-                                                <a href="" >Box part of sales lot </a>
+                                                <a href="/portal/warehouse-management/box-management/{{$test->id}}" >Unsuspend box </a>
                                                 @endif
                                             @endif
                                         </div></td>

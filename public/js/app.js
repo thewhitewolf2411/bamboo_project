@@ -56425,6 +56425,8 @@ __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 
 __webpack_require__(/*! ./DataTableSum */ "./resources/js/DataTableSum.js");
 
+__webpack_require__(/*! ./scripts/scanner/scannerdetection */ "./resources/js/scripts/scanner/scannerdetection.js");
+
 __webpack_require__(/*! ./scripts/quarantinemanagement */ "./resources/js/scripts/quarantinemanagement.js");
 
 __webpack_require__(/*! ./scripts/bayoverview */ "./resources/js/scripts/bayoverview.js");
@@ -57967,6 +57969,25 @@ $('.baydelete').on('click', function () {
     });
   }
 });
+$('#inputboxid').scannerDetection({
+  //https://github.com/kabachello/jQuery-Scanner-Detection
+  timeBeforeScanTest: 200,
+  // wait for the next character for upto 200ms
+  avgTimeByChar: 40,
+  // it's not a barcode if a character takes longer than 100ms
+  preventDefault: true,
+  endChar: [13],
+  onComplete: function onComplete(barcode, qty) {//validScan = true;
+    //$('#search_id').val (barcode);
+  },
+  // main callback function	,
+  onError: function onError(string, qty) {
+    $('#inputboxid').val(string);
+    $('#checkboxsubmit').click(); // console.log(string);
+    // console.log(qty);
+    //$('#userInput').val ($('#userInput').val()  + string);
+  }
+});
 $('#checkboxsubmit').on('click', function () {
   var bayname = $('#bayid').val();
   var boxname = $('#inputboxid').val();
@@ -58515,12 +58536,13 @@ $(document).ready(function () {
   });
 });
 
-if (document.getElementById("cancel-box")) {
+if (document.getElementById("cancel-box") || document.getElementById('reference')) {
   $('select').on('change', function () {
     if ($('#manifacturer').val() != '' && $('#reference').val() != '') {
       var manufacturer = $('#manifacturer').val();
       var reference = $('#reference').val();
       var network = $('#network').val();
+      console.log("here");
       $.ajax({
         url: "/portal/warehouse-management/getboxnumber",
         type: "POST",
@@ -59547,6 +59569,168 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./resources/js/scripts/scanner/scannerdetection.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/scripts/scanner/scannerdetection.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/*
+ * jQuery Scanner Detection
+ *
+ * Copyright (c) 2013 Julien Maurel
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/mit-license.php
+ *
+ * Project home:
+ * https://github.com/julien-maurel/jQuery-Scanner-Detection
+ *
+ * Version: 1.1.2
+ *
+ */
+(function ($) {
+  $.fn.scannerDetection = function (options) {
+    // If string given, call onComplete callback
+    if (typeof options === "string") {
+      this.each(function () {
+        this.scannerDetectionTest(options);
+      });
+      return this;
+    }
+
+    var defaults = {
+      onComplete: false,
+      // Callback after detection of a successfull scanning (scanned string in parameter)
+      onError: false,
+      // Callback after detection of a unsuccessfull scanning (scanned string in parameter)
+      onReceive: false,
+      // Callback after receive a char (scanned char in parameter)
+      timeBeforeScanTest: 100,
+      // Wait duration (ms) after keypress event to check if scanning is finished
+      avgTimeByChar: 30,
+      // Average time (ms) between 2 chars. Used to do difference between keyboard typing and scanning
+      minLength: 6,
+      // Minimum length for a scanning
+      endChar: [9, 13],
+      // Chars to remove and means end of scanning
+      stopPropagation: false,
+      // Stop immediate propagation on keypress event
+      preventDefault: false // Prevent default action on keypress event
+
+    };
+
+    if (typeof options === "function") {
+      options = {
+        onComplete: options
+      };
+    }
+
+    if (_typeof(options) !== "object") {
+      options = $.extend({}, defaults);
+    } else {
+      options = $.extend({}, defaults, options);
+    }
+
+    this.each(function () {
+      var self = this,
+          $self = $(self),
+          firstCharTime = 0,
+          lastCharTime = 0,
+          stringWriting = '',
+          callIsScanner = false,
+          testTimer = false;
+
+      var initScannerDetection = function initScannerDetection() {
+        firstCharTime = 0;
+        stringWriting = '';
+      };
+
+      self.scannerDetectionTest = function (s) {
+        // If string is given, test it
+        if (s) {
+          firstCharTime = lastCharTime = 0;
+          stringWriting = s;
+        } // If all condition are good (length, time...), call the callback and re-initialize the plugin for next scanning
+        // Else, just re-initialize
+
+
+        if (stringWriting.length >= options.minLength && lastCharTime - firstCharTime < stringWriting.length * options.avgTimeByChar) {
+          if (options.onComplete) options.onComplete.call(self, stringWriting);
+          $self.trigger('scannerDetectionComplete', {
+            string: stringWriting
+          });
+          initScannerDetection();
+          return true;
+        } else {
+          if (options.onError) options.onError.call(self, stringWriting);
+          $self.trigger('scannerDetectionError', {
+            string: stringWriting
+          });
+          initScannerDetection();
+          return false;
+        }
+      }; // remove deprecated unbind/bind          
+      // $self.data('scannerDetection',{options:options}).unbind('.scannerDetection').bind('keydown.scannerDetection',function(e){
+
+
+      $self.data('scannerDetection', {
+        options: options
+      }).off('.scannerDetection').on('keydown.scannerDetection', function (e) {
+        // Add event on keydown because keypress is not triggered for non character keys (tab, up, down...)
+        // So need that to check endChar (that is often tab or enter) and call keypress if necessary
+        if (firstCharTime && options.endChar.indexOf(e.which) !== -1) {
+          // Clone event, set type and trigger it
+          var e2 = jQuery.Event('keypress', e);
+          e2.type = 'keypress.scannerDetection';
+          $self.triggerHandler(e2); // Cancel default
+
+          e.preventDefault();
+          e.stopImmediatePropagation();
+        } // }).bind('keypress.scannerDetection',function(e){
+
+      }).on('keypress.scannerDetection', function (e) {
+        if (options.stopPropagation) e.stopImmediatePropagation();
+        if (options.preventDefault) e.preventDefault();
+
+        if (firstCharTime && options.endChar.indexOf(e.which) !== -1) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          callIsScanner = true;
+        } else {
+          stringWriting += String.fromCharCode(e.which);
+          callIsScanner = false;
+        }
+
+        if (!firstCharTime) {
+          firstCharTime = e.timeStamp;
+        }
+
+        lastCharTime = e.timeStamp;
+        if (testTimer) clearTimeout(testTimer);
+
+        if (callIsScanner) {
+          self.scannerDetectionTest();
+          testTimer = false;
+        } else {
+          testTimer = setTimeout(self.scannerDetectionTest, options.timeBeforeScanTest);
+        }
+
+        if (options.onReceive) options.onReceive.call(self, e);
+        $self.trigger('scannerDetectionReceive', {
+          evt: e
+        });
+      });
+    });
+    return this;
+  };
+})(jQuery);
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -59565,8 +59749,8 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
