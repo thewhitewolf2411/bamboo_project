@@ -192,7 +192,7 @@
 
                                     </div>
                                     @else
-                                    <div class="d-flex w-50 border p-3" id="receiving-result-{{$tradein->id}}-expired">
+                                    <div class="d-flex w-50 border p-3" id="receiving-result-{{$tradein->id}}">
                                     
                                         <p>This order has expired.</p>
 
@@ -204,7 +204,8 @@
                                 <button type="button" onclick="changeQuestion(undefined, 4, {{$tradein->id}})" class="btn btn-primary">Back</button>
                                 <div class="w-50 d-flex justify-content-between">
                                     <button type="submit" data-id="{{$tradein->id}}" onclick="javascript: form.action='/portal/testing/receive/toquarantineblacklisted'" class="send-to-quarantine btn btn-primary">Send to quarantine</button>
-                                    <button type="submit" class="send-to-testing btn btn-primary" onclick="javascript: form.action='/portal/testing/receive/receivingresults'" style="margin-left:auto; margin-right:0;">Send to testing</button>
+                                    @if($tradein->hasExpired())<button type="submit" data-id="{{$tradein->id}}" onclick="javascript: form.action='/portal/testing/receive/toquarantineblacklisted'" class="btn btn-primary">Send to quarantine</button>@endif
+                                    @if(!$tradein->hasExpired())<button type="submit" class="send-to-testing btn btn-primary" onclick="javascript: form.action='/portal/testing/receive/receivingresults'" style="margin-left:auto; margin-right:0;">Send to testing</button>@endif
                                 </div>
                                 
                             </div>

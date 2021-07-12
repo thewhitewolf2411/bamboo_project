@@ -34,7 +34,7 @@
 </style>
 
 <div style="margin: 0 auto">
-    <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($barcode,'C128') }}" height="25" width="180" />
+    <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($barcodenumber,'C128') }}" height="25" width="180" />
     <table>
         <tr>
             <td><p>{{$models}}</p></td>

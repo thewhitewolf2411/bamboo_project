@@ -107,7 +107,7 @@
 
                                 <div class="row w-100">
                                     <div class="col-md-9 d-flex align-items-center">
-                                    <p>{{$tradein->quarantine_reason}}</p>
+                                    <p>{{$tradein->quarantineReason()}}</p>
                                     </div>
                                     <div class="col-md-3">
                                         <a onclick="removeQuarantineReason({{$tradein->id}})" class="btn btn-green" title="Remove quarantine reason">x</a>
@@ -115,7 +115,7 @@
                                 </div>
                                 
                             @else
-                                {{$tradein->getTestingQuarantineReason()}}
+                                {{$tradein->quarantineReason()}}
                             @endif
                         </div></td>
                         <td><div class="table-element">{{$tradein->getTrayName($tradein->id)}}</div></td>

@@ -44,7 +44,7 @@ class PaymentBatchDevice extends Model
     }
 
     public function price(){
-        return Tradein::find($this->tradein_id)->getDevicePrice();
+        return Tradein::find($this->tradein_id)->getDeviceCustomerPrice();
     }
 
     public function batchReference(){

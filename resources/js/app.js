@@ -12,6 +12,7 @@ require('easy-autocomplete');
 require('jquery');
 require('./DataTableSum');
 
+require('./scripts/scanner/scannerdetection');
 require('./scripts/quarantinemanagement');
 require('./scripts/bayoverview');
 require('./scripts/PrintTradeIn');

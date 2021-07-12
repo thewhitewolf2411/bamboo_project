@@ -110,6 +110,7 @@
             method:"GET",
                 data:{
                     tradein: id,
+                    printyourown:true
                 },
             success:function(response){
                 $('#special-label-loader').addClass('hidden');

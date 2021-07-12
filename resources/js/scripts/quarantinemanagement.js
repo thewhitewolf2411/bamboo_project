@@ -401,13 +401,15 @@ $(document).ready(function(){
 
 });
 
-if(document.getElementById("cancel-box")){
+if(document.getElementById("cancel-box") || document.getElementById('reference')){
     $('select').on('change', function(){
         if($('#manifacturer').val() != '' && $('#reference').val() != ''){
             var manufacturer = $('#manifacturer').val();
             var reference = $('#reference').val();
             var network = $('#network').val();
     
+            console.log("here");
+
             $.ajax({
                 url: "/portal/warehouse-management/getboxnumber",
                 type:"POST",

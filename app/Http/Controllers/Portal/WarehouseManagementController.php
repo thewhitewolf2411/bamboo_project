@@ -609,7 +609,7 @@ class WarehouseManagementController extends Controller
 
     public function checkAllocateBox(Request $request){
 
-        $box = Tray::where('tray_name', $request->boxname)->first();
+        $box = Tray::find($request->boxname);
         $bay = Trolley::where('trolley_name', $request->bayname)->first();
 
         if($box === null){

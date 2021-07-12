@@ -22,6 +22,31 @@ $('.baydelete').on('click', function(){
 
 });
 
+$('#inputboxid').scannerDetection({
+	   
+    //https://github.com/kabachello/jQuery-Scanner-Detection
+    
+    timeBeforeScanTest: 200, // wait for the next character for upto 200ms
+    avgTimeByChar: 40, // it's not a barcode if a character takes longer than 100ms
+    preventDefault: true,
+
+    endChar: [13],
+    onComplete: function(barcode, qty){
+        //validScan = true;
+        //$('#search_id').val (barcode);
+    }, // main callback function	,
+    onError: function(string, qty) {
+        $('#inputboxid').val (string);
+        $('#checkboxsubmit').click();
+        // console.log(string);
+        // console.log(qty);
+        //$('#userInput').val ($('#userInput').val()  + string);
+    }
+         
+         
+});
+
+
 $('#checkboxsubmit').on('click', function(){
 
     var bayname = $('#bayid').val();

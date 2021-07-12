@@ -284,7 +284,7 @@ class GetLabel{
         $pdf = PDF::loadView('portal.labels.boxlabel', 
         array(
             'barcode'=>$box->tray_name,
-            'barcodenumber'=>$box->tray_name,
+            'barcodenumber'=>"00000000" . $box->id,
             'models'=>$box->getTrayDevices() . " devices",
             ))
         ->setPaper($this->customPaper, 'landscape')
