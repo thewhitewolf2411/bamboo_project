@@ -37,6 +37,26 @@
 
         </main>
 
+        @if(Session::has('success_logout'))
+              <div class="modal fade" id="logoutInfoModal" tabindex="-1" role="dialog" aria-labelledby="logoutInfoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content padded">
+                            <div class="validation-modal-header">
+                                <img class="close-modal-img ml-auto" src="{{asset('/customer_page_images/body/modal-close.svg')}}" data-dismiss="modal" aria-label="Close">
+                            </div>
+                            <div class="modal-body text-center">
+                                <p class="infotext-sell-item text-center">We’ve signed you out of your account.</p>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+              <script>
+                  window.addEventListener("DOMContentLoaded", function(){
+                    $('#logoutInfoModal').modal('show')
+                  });
+              </script>
+        @endif
+
         <div class="modal fade noscrolly" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

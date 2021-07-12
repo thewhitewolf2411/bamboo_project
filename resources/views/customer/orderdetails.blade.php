@@ -209,7 +209,7 @@
                                 <h5 class="validationModal-title" id="cancelSaleModalLabel">Are you sure?</h5>
                             </div>
                             <div class="line-bottom"></div>
-                            <div class="pt-4 pb-2 text-center">
+                            <div class="pt-4 pb-2 text-center info-item-val">
                                 This will cancel your order!
                             </div>
                             <div class="modal-footer border-0 p-0 padded mt-4">

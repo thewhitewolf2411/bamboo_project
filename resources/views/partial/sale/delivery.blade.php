@@ -47,7 +47,7 @@
         <p class="delivery-info-dates-bold">{!!$tradein->created_at->format('d M, Y')!!}</p>
         <br>
         <p class="delivery-info-dates-label">Date Received</p>
-        <p class="delivery-info-dates-bold">{!!$tradein->getReceivedDate()!!}</p>
+        <p class="delivery-info-dates-bold">{{$tradein->getReceivedDate()}}</p>
     </div>
     <div class="delivery-details-col">
         {{-- <p class="delivery-info-dates-label">Enter Tracking Number</p> --}}

@@ -1,30 +1,18 @@
 <div class="customer-orders customer-buying py-3">
 
-    @if($tradein->paymentFailed())
+    @if(!empty(App\Services\ProfileService::getPaymentSectionStatus($tradein)))
         <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
             <div class="emoji-col">
-                <img class="emoji-img" src="{{asset('/customer_page_images/body/emoji_confused.svg')}}">
-                <p class="emoji-text">Uh-oh!</p>
+                <img class="emoji-img" src="{{asset(App\Services\ProfileService::getPaymentSectionStatus($tradein)['emoji'])}}">
+                <p class="emoji-text">{!!App\Services\ProfileService::getPaymentSectionStatus($tradein)['emoji_text']!!}</p>
             </div>
             <p class="emoji-info-text">
-                We have encountered an issue whilst trying to submit your
-                payment. Please ensure your payment details are correct.
+                {!!App\Services\ProfileService::getPaymentSectionStatus($tradein)['description']!!}
             </p>
         </div>
     @endif
-
-    @if($tradein->job_state === '25')
-        <div class="emoji-info-row pt-5 pb-4 pl-4 pt-4">
-            <div class="emoji-col">
-                <img class="emoji-img" src="{{asset('/customer_page_images/body/emoji_winking.svg')}}">
-                <p class="emoji-text">Woohoo!</p>
-            </div>
-            <p class="emoji-info-text">
-                Your device passed our checks with flying colours.
-                Your payment will now be submitted.
-            </p>
-        </div>
-    @endif
+    
+    {{-- processing section status --}}
 
     @if(Auth::user()->hasPaymentDetails())
         <div class="payment-item-info">
@@ -40,12 +28,12 @@
                 <p class="m-0">Sort Code</p>
                 <p style="font-size: 20px;">{!!Auth::user()->sortCode()!!}</p>
             </div>
-
-            <div class="col-2">
-                <p class="payment-price-label">Agreed Price</p>
-                <p class="payment-agreed-price">£{!!$tradein->bamboo_price!!}</p>
-            </div>
-
+            @if(App\Services\ProfileService::hasAgreedPrice($tradein))
+                <div class="col-2">
+                    <p class="payment-price-label">Agreed Price</p>
+                    <p class="payment-agreed-price">£{!!$tradein->bamboo_price!!}</p>
+                </div>
+            @endif
             <button type="button" class="btn btn-purple payment-details-btn mt-auto mb-auto " style="color: white;" data-toggle="modal" data-target="#accountDetils">
                 Re-enter details <img class="payment-pen-icon" src="{{asset('/images/pen.png')}}">
             </button>
@@ -80,7 +68,8 @@
 
 </div>
 
-<!-- Modal -->
+
+{{-- Modal --}}
 <div class="modal fade" id="accountDetils" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered " role="document">
         <div class="modal-content">

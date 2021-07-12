@@ -36,7 +36,7 @@
         <a class="btn-purple sale-detail-btn large" href="#"><p>Email me a copy</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
         <a class="btn-blue sale-detail-btn large" href="/contact" target="_blank"><p>Get in touch</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
         @if(!$tradein->hasDeviceBeenReceived())
-            <a class="btn-primary sale-detail-btn large" href="/userprofile/deleteorder/{{$tradein->barcode}}"><p>Cancel Sale</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}"></a>
+            <div class="btn-primary sale-detail-btn large cancelsale" data-toggle="modal" data-target="#cancelSaleModal"><p>Cancel Sale</p> <img class="sale-detail-btn-img" src="{{asset('/customer_page_images/body/Icon-Arrow-Next-Black.svg')}}"></div>
         @endif
     </div>
 </div>
