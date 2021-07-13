@@ -34,6 +34,7 @@ require('./scripts/Costs');
 require('./scripts/FeedsScript');
 require('./scripts/CustomerCare');
 require('./scripts/Receiving');
+require('./scripts/InputTrackingNumber');
 
 //Sales Lot
 require('./scripts/saleslot/BuildingSalesLot');

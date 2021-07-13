@@ -56467,7 +56467,9 @@ __webpack_require__(/*! ./scripts/FeedsScript */ "./resources/js/scripts/FeedsSc
 
 __webpack_require__(/*! ./scripts/CustomerCare */ "./resources/js/scripts/CustomerCare.js");
 
-__webpack_require__(/*! ./scripts/Receiving */ "./resources/js/scripts/Receiving.js"); //Sales Lot
+__webpack_require__(/*! ./scripts/Receiving */ "./resources/js/scripts/Receiving.js");
+
+__webpack_require__(/*! ./scripts/InputTrackingNumber */ "./resources/js/scripts/InputTrackingNumber.js"); //Sales Lot
 
 
 __webpack_require__(/*! ./scripts/saleslot/BuildingSalesLot */ "./resources/js/scripts/saleslot/BuildingSalesLot.js");
@@ -57046,6 +57048,54 @@ $('.feed-container').on('click', function () {
 });
 $('#view-feeds-log').on('hide.bs.modal', function () {
   $('#feed-logs-table tbody').empty();
+});
+
+/***/ }),
+
+/***/ "./resources/js/scripts/InputTrackingNumber.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/scripts/InputTrackingNumber.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  $('.input_tracking').each(function () {
+    $(this).hide();
+  });
+});
+$('.input_tracking_button').on('click', function () {
+  var tradeinid = $(this).data('id');
+  $('.input_tracking').each(function () {
+    $(this).hide();
+
+    if ($(this).data('id') === tradeinid) {
+      $(this).show();
+    }
+  });
+  $(this).hide();
+});
+$('.input_tracking_button_submit').on('click', function () {
+  var c = confirm('Are you sure you want to change tracking reference of this tradein?');
+
+  if (c) {
+    var tradeinid = $(this).data('id');
+    var input_tracking = $('#input_tracking_' + tradeinid).val();
+    $.ajax({
+      url: "/portal/customer-care/order-management-input-tracking",
+      type: "POST",
+      data: {
+        input_tracking: input_tracking,
+        tradeinid: tradeinid
+      },
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success: function success(response) {
+        location.reload();
+      }
+    });
+  }
 });
 
 /***/ }),
@@ -59262,9 +59312,14 @@ $('.salelotlist_picking').on('click', function () {
 $('#starttopicklot').on('click', function () {
   var status = $('.salelotlist_picking_active').data('status');
   var id = $('.salelotlist_picking_active').prop('id');
+  var picked = $('.salelotlist_picking_active').data('picked');
 
   if (status === 2 || status === 4 || status === 6) {
-    window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');
+    if (picked === 1) {
+      alert("This was picked.");
+    } else {
+      window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');
+    }
   } else {
     alert("This lot cannot be picked.");
   }
@@ -59749,8 +59804,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\zulfo\Desktop\xampp\htdocs\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\haris.muslic\Desktop\bamboo_project\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

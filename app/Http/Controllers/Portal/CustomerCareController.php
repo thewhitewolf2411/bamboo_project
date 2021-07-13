@@ -564,6 +564,21 @@ class CustomerCareController extends Controller
         return view('portal.customer-care.order-management')->with('portalUser', $portalUser)->with('tradeins', $tradeins)->with('title', 'Order Management')->with('search', $request->search);
     }
 
+    public function inputTrackingNumber(Request $request){
+        #dd($request->all());
+
+        $tradein = Tradein::find($request->tradeinid);
+
+        $tradeins = Tradein::where('barcode_original', $tradein->barcode_original)->get();
+
+        foreach($tradeins as $t){
+            $t->tracking_reference = $request->input_tracking;
+            $t->save();
+        }
+
+        return response('', 200);
+    }
+
     public function showMessagesPage(){
         $messages = Message::all();
         $user_id = Auth::user()->id;

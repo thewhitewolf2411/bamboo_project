@@ -292,11 +292,14 @@ class WarehouseManagementController extends Controller
             $oldTray = Tray::where('id', $bC->tray_id)->first();//->orWhere('id', $bC->pseudo_tray_id)->first();
             #dd($oldTray);
             //if($oldTray->tray_id !== $oldTray->pseudo_tray_id){
-            $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+            if($oldTray){
+                $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+                $oldTray->save();
+            }
+
             $tray->number_of_devices = $tray->number_of_devices + 1;
             //}
-            $oldTray->save();
-
+            
             $bC->tray_id = $request->boxid;
             $bC->save();
         }
@@ -610,11 +613,16 @@ class WarehouseManagementController extends Controller
     public function checkAllocateBox(Request $request){
 
         $box = Tray::find($request->boxname);
-        $bay = Trolley::where('trolley_name', $request->bayname)->first();
+        
 
         if($box === null){
-            return response('There is no box with this id.', 404);
+            $box = Tray::where('tray_name', $request->boxname)->first();
+            if($box === null){
+                return response('There is no box with this id.', 404);
+            }
         }
+
+        $bay = Trolley::where('trolley_name', $request->bayname)->first();
 
         if($box->tray_type !== 'Bo'){
             return response('This is a tray, and cannot be added.', 404);

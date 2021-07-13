@@ -59,7 +59,7 @@
                     </tfoot>
                     <tbody>
                         @foreach ($salesLots as $salesLot)
-                        <tr class="salelotlist_picking" id="{{$salesLot->id}}" data-status="{{$salesLot->sales_lot_status}}">
+                        <tr class="salelotlist_picking" id="{{$salesLot->id}}" data-status="{{$salesLot->sales_lot_status}}" data-picked="{{$salesLot->isFullyPicked()}}">
                             <td><div class="table-element">{{$salesLot->id}}</div></td>
                             <td><div class="table-element">{{$salesLot->created_at}}</div></td>
                             <td><div class="table-element">{{$salesLot->getCustomerName()}}</div></td>

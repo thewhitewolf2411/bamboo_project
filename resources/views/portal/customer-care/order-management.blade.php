@@ -41,6 +41,7 @@
                         <td><div class="table-element">Location</div></td>
                         <td><div class="table-element">Customer status</div></td>
                         <td><div class="table-element text-center">View detail</div></td>
+                        <td><div class="table-element text-center">Input Tracking</div></td>
                         <td><div class="table-element text-center">Reprint</div></td>
                         <td><div class="table-element text-center">Revert to Receiving</div></td>
                         <td><div class="table-element text-center">Revert to Testing</div></td>
@@ -60,6 +61,7 @@
                         <td><div class="table-element">Location</div></td>
                         <td><div class="table-element">Customer status</div></td>
                         <td><div class="table-element text-center">View detail</div></td>
+                        <td><div class="table-element text-center">Input Tracking</div></td>
                         <td><div class="table-element text-center">Reprint</div></td>
                         <td><div class="table-element text-center">Revert to Receiving</div></td>
                         <td><div class="table-element text-center">Revert to Testing</div></td>
@@ -85,6 +87,18 @@
                                 </a>
                                 </div>
                             </td>
+                            @if($order[0]->tracking_reference === null)
+                            <td><div class="table-element text-center">
+                                <button class="btn btn-primary btn-blue input_tracking_button" data-id="{{$order[0]->id}}">Input tracking</button>
+                                <div class="input_tracking" data-id="{{$order[0]->id}}">
+                                    <input type="text" class="form-control" name="" id="input_tracking_{{$order[0]->id}}" data-id="{{$order[0]->id}}">
+                                    <button class="btn btn-primary btn-blue input_tracking_button_submit" data-id="{{$order[0]->id}}">Submit</button>
+                                </div>
+                            
+                            </div></td>
+                            @else
+                            <td><div class="table-element text-center">{{$order[0]->tracking_reference}}</div></td>
+                            @endif
                             <td>
                                 <div class="table-element">
                                     @if(!$tradein->hasDeviceBeenReceived())
@@ -110,7 +124,6 @@
                                 @endif
                             </td>
                                 
-                            
                             <td class="text-center 3 p-0">
                                 @if($tradein->hasBeenTested())
                                 <a title="Return device to testing" onclick="return confirm('Are you sure you want to send device to testing?')" href="/totesting/{{$tradein->id}}">
@@ -138,8 +151,6 @@
                     @endforeach
                 </tbody>
 
-
-
             </table>
 
             <div class="py-4 d-flex align-items-center">
@@ -147,7 +158,6 @@
                 <p>Number of tradeins: {{count($tradeins)}}</p>
 
             </div>
-
 
             <form id="print_trade_pack_form" name="form-print-trade-pack" enctype="multipart/form-data" action="/portal/customer-care/trade-in/printlabel" method="post">
                 @csrf
@@ -167,8 +177,6 @@
                 <input type="hidden" id="set_trade_in_as_sent" name="set_trade_in_as_sent">
                 <input type="submit" id="set_trade_in_as_sent_trigger" name="set_trade_in_as_sent_trigger" value="Set trade-in label as sent Trade-In">
             </form>
-
-            
 
         </div>
     </div>

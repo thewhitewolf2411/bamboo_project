@@ -242,8 +242,16 @@ $('#starttopicklot').on('click', function(){
     var status = $('.salelotlist_picking_active').data('status');
     var id = $('.salelotlist_picking_active').prop('id');
 
+    var picked = $('.salelotlist_picking_active').data('picked');
+
     if(status === 2 || status === 4 || status === 6){
-        window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');
+        if(picked === 1){
+            alert("This was picked.");
+        }
+        else{
+            window.open('/portal/warehouse-management/picking-despatch/pick-lot/' + id, '_self');
+        }
+        
     }
     else{
         alert("This lot cannot be picked.");

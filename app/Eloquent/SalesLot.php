@@ -81,6 +81,9 @@ class SalesLot extends Model
             case 3:
                 return "Sales lot Picked";
             case 4:
+                if($this->isFullyPicked()){
+                    return "Sales Lot Picked";
+                }
                 return "Sales Lot Sold - Payment Received";
             case 5:
                 return "Sales Lot Despatched";
@@ -92,6 +95,16 @@ class SalesLot extends Model
 
     public function getCustomerName(){
         return Clients::where('id', $this->sold_to)->first()->account_name;
+    }
+
+    public function isFullyPicked(){
+        $fullContentNumber = SalesLotContent::where('sales_lot_id', $this->id)->get();
+        $pickedContentNumber = SalesLotContent::where('sales_lot_id', $this->id)->where('picked', true)->get();
+
+        if(count($fullContentNumber) === count($pickedContentNumber)){
+            return true;
+        }
+        return false;
     }
     
 }

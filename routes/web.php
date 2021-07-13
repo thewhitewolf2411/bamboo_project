@@ -178,6 +178,7 @@ Route::get('/portal/customer-care/seller/delete/{id}', 'Portal\CustomerCareContr
 Route::get('/portal/customer-care/createorder', 'Portal\CustomerCareController@createOrder');
 Route::get('/portal/customer-care/trade-pack/markforreprint/{id}', 'Portal\CustomerCareController@markForReprint');
 Route::get('/portal/customer-care/order-managment/{search?}', 'Portal\CustomerCareController@showOrderManagment');
+Route::post('portal/customer-care/order-management-input-tracking', 'Portal\CustomerCareController@inputTrackingNumber');
 Route::get('/portal/customer-care/messages', 'Portal\CustomerCareController@showMessagesPage');
 Route::get('/portal/customer-care/seemessage', 'Portal\CustomerCareController@showMessageContent');
 Route::post('/portal/customer-care/printdevicelabel', 'Portal\CustomerCareController@printDeviceLabel');
