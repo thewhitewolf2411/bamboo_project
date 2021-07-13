@@ -1217,7 +1217,7 @@ class Tradein extends Model
     }
 
     public function getTimePassed(){
-        $tradeinauditTested = TradeinAudit::where('tradein_id', $this->id)->where('bamboo_status', 'Test Complete')->first();
+        $tradeinauditTested = TradeinAudit::where('tradein_id', $this->id)->where('bamboo_status', 'Test Complete')->order_by('created_at', 'desc')->first();
 
         $timePassed = \Carbon\Carbon::now()->diffInSeconds(\Carbon\Carbon::parse($tradeinauditTested->created_at));
 

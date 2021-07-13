@@ -292,11 +292,14 @@ class WarehouseManagementController extends Controller
             $oldTray = Tray::where('id', $bC->tray_id)->first();//->orWhere('id', $bC->pseudo_tray_id)->first();
             #dd($oldTray);
             //if($oldTray->tray_id !== $oldTray->pseudo_tray_id){
-            $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+            if($oldTray){
+                $oldTray->number_of_devices = $oldTray->number_of_devices - 1;
+                $oldTray->save();
+            }
+
             $tray->number_of_devices = $tray->number_of_devices + 1;
             //}
-            $oldTray->save();
-
+            
             $bC->tray_id = $request->boxid;
             $bC->save();
         }
