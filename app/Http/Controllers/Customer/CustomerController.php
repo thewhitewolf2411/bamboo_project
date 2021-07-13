@@ -827,7 +827,7 @@ class CustomerController extends Controller
 
                 return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
                 break;
-            
+                
             //Testing faults
             case '15i':
                 // set notification as resolved
@@ -841,6 +841,7 @@ class CustomerController extends Controller
 
                 return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
                 break;
+
             //Water Damage
             case '15h':
                 // set notification as resolved
@@ -855,6 +856,7 @@ class CustomerController extends Controller
                 return redirect()->back()->with('success', 'Faulty offer accepted. Device sent to awaiting payment.');
                 break;
             default:
+                
                 # code...
                 break;
         }
@@ -897,9 +899,9 @@ class CustomerController extends Controller
         $tradein = Tradein::findOrFail($tradein_id);
         $notificationService = new NotificationService();
 
-        //$notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
-        //$notification->resolved = true;
-        //$notification->save();
+        $notification = Notification::where('tradein_id', $tradein->id)->where('type', 12)->first();
+        $notification->resolved = true;
+        $notification->save();
 
         // mark device send to customer
         $tradein->job_state = '19';

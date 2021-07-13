@@ -9,7 +9,7 @@
                     <img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
                 @endif
 
-                <p class="notification-content">{!!$notification->content!!}</p>
+                <p class="notification-content bold">{!!$notification->content!!}</p>
 
                 @if(Route::getCurrentRoute()->uri() === 'userprofile')
                     @if($notification->resolved) @else

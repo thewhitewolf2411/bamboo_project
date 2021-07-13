@@ -218,6 +218,34 @@
             </div>
         @endif
 
+        {{-- downgrade --}}
+        @if(App\Services\ProfileService::getTestingError($tradein) === "PEM12")
+            <div class="testing-error-item">
+                <div class="col">
+                    <p class="testing-error-item-label">Issue</p>
+                    <p class="testing-error-item-bold">Device does not meet the following requirements: </p>
+                </div>
+                <div class="col">
+                    <p class="testing-error-item-label">Faults</p>
+                    <p class="testing-error-item-bold">{!!App\Services\ProfileService::getTestingFaults($tradein)!!}</p>
+                </div>
+                <div class="col">
+                    <p class="testing-error-item-label">New Offer</p>
+                    <p class="testing-new-offer-price">£{!!$tradein->bamboo_price!!}</p>
+                </div>
+                <div class="col">
+                    <a href="{{route('acceptFaultyOffer', ['id' => $tradein->id])}}" class="btn btn-orange process-action-btn">
+                        <p>Accept Offer</p>
+                        <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                    </a>
+                    <a href="{{route('returnDevice', ['id' => $tradein->id])}}" class="btn btn-jade process-action-btn">
+                        <p>Return my Device</p>
+                        <img class="testing-action-img" src="{{asset('customer_page_images/body/Icon-Arrow-Next-White-Rotated.svg')}}">
+                    </a>
+                </div>
+            </div>
+        @endif
+
     @endif
 
 @endif

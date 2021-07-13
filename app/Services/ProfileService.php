@@ -573,8 +573,8 @@ class ProfileService{
         $alertable_statuses = [
             "4", "4b", "5", "6", "7", 
             "8a", "8b", "8c", "8d", "8e", "8f", 
-            "11", "11a", "11b", "11c", "11e", "11f", "11g", "11h", "11i", "11j",
-            "15", "15a", "15b", "15c", "15e", "15f", "15g", "15h", "15i", "15j",
+            "11", "11a", "11b", "11c", "11d", "11e", "11f", "11g", "11h", "11i", "11j",
+            "15", "15a", "15b", "15c", "15d", "15e", "15f", "15g", "15h", "15i", "15j",
             "17", "18"
         ];
         if(in_array($actual_job_state, $alertable_statuses)){
@@ -1463,7 +1463,7 @@ class ProfileService{
         // FMIP lock                        -> PEM9
         // google lock                      -> PEM10
         // testing faults/gb size/condition -> PEM11
-        // cosmetic condition (catastrophic)-> PEM12 ??
+        // downgrade                        -> PEM12
         $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
         $actual_job_state = null;
         if($job_state->previous_job_state === null){
@@ -1489,6 +1489,10 @@ class ProfileService{
         $testing_faults = ["11d", "11e", "11f", "11g", "15d", "15e", "15f", "15g"];
         if(in_array($actual_job_state, $testing_faults)){
             return "PEM11";
+        }
+
+        if($actual_job_state === "11i" || $actual_job_state === "15i" || $actual_job_state === "11h" || $actual_job_state === "15h"){
+            return "PEM12";
         }
 
     }
@@ -2068,23 +2072,36 @@ class ProfileService{
             "knox_removed"=>"Knox Removed"
         ];
 
+        // Incorrect GB size
+        if($actual_job_state === "15f" || $actual_job_state === "11f"){
+            array_push($faults, "Incorrect GB Size - [".$tradein->correct_memory ."]");
+        }
+        // incorrect network
+        if($actual_job_state === "15g" || $actual_job_state === "11f"){
+            array_push($faults, "Incorrect Network - [" . $tradein->correct_network ."]");
+        }
+        // incorrect model
+        if($actual_job_state === "15d" || $actual_job_state === "11d"){
+            array_push($faults, "Incorrect Model - [". $tradein->getProductName() ."]");
+        }
+
+        // downgrade
+        if($actual_job_state === "11i" || $actual_job_state === "15i" || $actual_job_state === "11h" || $actual_job_state === "15h"){
+            array_push($faults, "Device does not meet expected requirements. Device grade is: ". $tradein->bamboo_grade);
+        }
+
         if($testing_faults){
             foreach($available_faults as $fault => $text){
                 if($testing_faults[$fault] !== null){
                     array_push($faults, $text);
                 }
             }
-        } else {
-            // Incorrect GB size
-            if($actual_job_state === '15f'){
-                return "Incorrect GB size.";
-            }
         }
 
-        
         if(count($faults) > 0){
-            return implode(', ', $faults);
+            return implode('<br>', $faults);
         }
+
         return null;
     }
 }
