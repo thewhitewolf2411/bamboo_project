@@ -1001,6 +1001,7 @@ class Tradein extends Model
                 }
             }
         }
+
         
         if(count($faults) > 0){
             return implode(', ', $faults);

@@ -199,7 +199,7 @@
                 </div>
                 <div class="col">
                     <p class="testing-error-item-label">Faults</p>
-                    <p class="testing-error-item-bold">{!!$tradein->getTestingFaults()!!}</p>
+                    <p class="testing-error-item-bold">{!!App\Services\ProfileService::getTestingFaults($tradein)!!}</p>
                 </div>
                 <div class="col">
                     <p class="testing-error-item-label">New Offer</p>

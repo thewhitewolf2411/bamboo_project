@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Eloquent\JobStateChanged;
 use App\Eloquent\Notification;
+use App\Eloquent\TestingFaults;
 use App\Eloquent\Tradein;
 use Illuminate\Support\Facades\Auth;
 
@@ -1816,5 +1817,274 @@ class ProfileService{
             return true;
         }
         return false;
+    }
+
+
+
+    /**
+     * Get actual customer status.
+     * @param Tradein $tradein
+     * @return string
+     */
+    public static function getCustomerStatus(Tradein $tradein): string 
+    {
+        $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
+        $actual_job_state = null;
+        if($job_state->previous_job_state === null){
+            $actual_job_state = $job_state->job_state;
+        } else {
+            if($job_state->sent){
+                $actual_job_state = $job_state->job_state;
+            } else {
+                $actual_job_state = $job_state->previous_job_state;
+            }
+        }
+
+        // array[0] - bamboo status
+        // array[1] - customer status
+        // left - database flags
+        $states = [
+            /*0*/   [],
+            /*1*/   ['Awaiting trade pack','Order Placed'],     // old - ['Order Request received','Order Placed']
+            /*2*/   ['Awaiting Receipt','Trade Pack Despatched'],
+            /*3*/   ['Awaiting Receipt','Trade Pack Despatched'],
+            /*4*/   ['Lost in transit','Lost in transit'],
+            /*4a*/  ['Order Cancelled','Order Cancelled'],
+            /*4b*/  ['Lost in transit','Expired'],
+            /*5*/   ['Never Received','Expired'],
+            /*6*/   ['No IMEI','Awaiting Response'],
+            /*7*/   ['Blacklisted','Awaiting Response'],
+            /*8a*/  ['Lost','Awaiting Response'],
+            /*8b*/  ['Insurance Claim','Awaiting Response'],
+            /*8c*/  ['Blocked/FRP','Awaiting Response'],
+            /*8d*/  ['Stolen','Awaiting Response'],
+            /*8e*/  ['Knox','Awaiting Response'],
+            /*8f*/  ['Assetwatch','Awaiting Response'],
+            /*9*/   ['Awaiting Testing','Trade Pack Received'],    // old - ['Awaiting Testing','Awaiting Testing']
+            /*9a*/  ['Awaiting Testing','Trade Pack Received'], 
+            /*9b*/  ['Awaiting Testing','Test Complete'], 
+            /*10*/  ['Test Complete','Testing'],
+            /* First Test results */
+            /*11*/  ['Quarantine','Awaiting Response'],
+            /*11a*/  ['FMIP','Awaiting Response'],
+            /*11b*/  ['Google Lock','Awaiting Response'],
+            /*11c*/  ['PIN Lock','Awaiting Response'],
+            /*11d*/  ['Incorrect Model','Awaiting Response'],
+            /*11e*/  ['Device isn\'t fully functional','Awaiting Response'],
+            /*11f*/  ['Incorrect GB size','Awaiting Response'],
+            /*11g*/  ['Incorrect Network','Awaiting Response'],
+            /*11h*/  ['Downgrade','Awaiting Response'],
+            /*11i*/  ['Downgrade','Awaiting Response'],
+            /*11j*/  ['Order not valid ','Awaiting Response'],
+            /*12*/  ['Test complete','Testing'],
+            /*13*/  ['Awaiting retesting','Device marked for retest'],
+            /*14*/  ['Awaiting retesting','Device marked for retest'],
+            /* Second Test results */
+            /*15*/  ['2nd Test Quarantine','Awaiting Response'],
+            /*15a*/  ['FMIP','Awaiting Response'],
+            /*15b*/  ['Google Lock','Awaiting Response'],
+            /*15c*/  ['PIN Lock','Awaiting Response'],
+            /*15d*/  ['Incorrect Model','Awaiting Response'],
+            /*15e*/  ['Downgrade','Awaiting Response'],
+            /*15f*/  ['Incorrect GB size','Awaiting Response'],
+            /*15g*/  ['Incorrect Network','Awaiting Response'],
+            /*15h*/  ['Downgrade','Awaiting Response'],
+            /*15i*/  ['Downgrade','Awaiting Response'],
+            /*15j*/  ['Order not valid','Awaiting Response'],
+            /*16*/  ['2nd test complete','Testing'],
+            /*17*/  ['Blacklisted','Order expired'],
+            /*18*/  ['Device destroyed','Order expired'],
+            /*19*/  ['Return to customer','Returning Device'],
+            /*20*/  ['Return to customer','Returning Device'],
+            /*21*/  ['Despatched','Returning Device'],
+            /*22*/  ['Awaiting Box build','Awaiting payment'],
+            /*23*/  ['Awaiting Box build','Submitted for payment'],
+            /*24*/  ['Awaiting Box build','Payment Failed'],
+            /*25*/  ['Awaiting Box build','Paid'],
+            /*26*/  ['Ready For Sale','Paid'],
+            /*27*/  ['Closed','Paid'],
+            /*28*/  ['Part of sales lot', 'Paid'],
+            /*29*/  ['Picked for sales lot', 'Paid'],
+        ];
+
+        switch($actual_job_state){
+            case "1":
+                return $states[1][1];
+            case "2":
+                return $states[2][1];
+            case "3":
+                return $states[3][1];
+            case "4":
+                return $states[4][1];
+            case "4a":
+                return $states[5][1];
+            case "4b":
+                return $states[6][1];
+            case "5":
+                return $states[7][1];
+            case "6":
+                return $states[8][1];
+            case "7":
+                return $states[9][1];
+            case "8a":
+                return $states[10][1];
+            case "8b":
+                return $states[11][1];
+            case "8c":
+                return $states[12][1];
+            case "8d":
+                return $states[13][1];
+            case "8e":
+                return $states[14][1];
+            case "8f":
+                return $states[15][1];
+            case "9":
+                return $states[16][1];
+            case "9a":
+                return $states[17][1];
+            case "9b":
+                return $states[18][1];
+            case "10":
+                return $states[19][1];
+            case "11":
+                return $states[20][1];
+            case "11a":
+                return $states[21][1];
+            case "11b":
+                return $states[22][1];
+            case "11c":
+                return $states[23][1];
+            case "11d":
+                return $states[24][1];
+            case "11e":
+                return $states[25][1];
+            case "11f":
+                return $states[26][1];
+            case "11g":
+                return $states[27][1];
+            case "11h":
+                return $states[28][1];
+            case "11i":
+                return $states[29][1];
+            case "11j":
+                return $states[30][1];
+            case "12":
+                return $states[31][1];
+            case "13":
+                return $states[32][1];
+            case "14":
+                return $states[33][1];
+            case "15":
+                return $states[34][1];
+            case "15a":
+                return $states[35][1];
+            case "15b":
+                return $states[36][1];
+            case "15c":
+                return $states[37][1];
+            case "15d":
+                return $states[38][1];
+            case "15e":
+                return $states[39][1];
+            case "15f":
+                return $states[40][1];
+            case "15g":
+                return $states[41][1];
+            case "15h":
+                return $states[42][1];
+            case "15i":
+                return $states[43][1];
+            case "15j":
+                return $states[44][1];
+            case "16":
+                return $states[45][1];
+            case "17":
+                return $states[46][1];
+            case "18":
+                return $states[47][1];
+            case "19":
+                return $states[48][1];
+            case "20":
+                return $states[49][1];
+            case "21":
+                return $states[50][1];
+            case "22":
+                return $states[51][1];
+            case "23":
+                return $states[52][1];
+            case "24":
+                return $states[53][1];
+            case "25":
+                return $states[54][1];
+            case "26":
+                return $states[55][1];
+            case "27":
+                return $states[56][1];
+            case "28":
+                return $states[57][1];
+            case "29":
+                return $states[58][1];
+        }
+    }
+
+
+
+    /**
+     * Get testing faults.
+     * @param Tradein $tradein
+     */
+    public static function getTestingFaults(Tradein $tradein)
+    {
+        $job_state = JobStateChanged::where('tradein_id', $tradein->id)->first();
+        $actual_job_state = null;
+        if($job_state->previous_job_state === null){
+            $actual_job_state = $job_state->job_state;
+        } else {
+            if($job_state->sent){
+                $actual_job_state = $job_state->job_state;
+            } else {
+                $actual_job_state = $job_state->previous_job_state;
+            }
+        }
+
+        $testing_faults = TestingFaults::where('tradein_id', $tradein->id)->first();
+        $faults = [];
+        $available_faults = [
+            "audio_test" => "Audio Test",
+            "front_microphone" => "Front Microphone",
+            "headset_test" => "Headset Test",
+            "loud_speaker_test" => "Loud Speaker Test",
+            "microphone_playback_test" => "Microphone Playback Test",
+            "buttons_test" => "Buttons Test",
+            "sensor_test" => "Sensor Test",
+            "camera_test" => "Camera Test",
+            "glass_condition" => "Glass Condition",
+            "vibration" => "Vibration",
+            "original_colour" => "Original Colour",
+            "battery_health" => "Battery Health",
+            "nfc" => "NFC",
+            "no_power" => "No Power",
+            "fake_missing_parts" => "Fake Missing Parts",
+            "knox_removed"=>"Knox Removed"
+        ];
+
+        if($testing_faults){
+            foreach($available_faults as $fault => $text){
+                if($testing_faults[$fault] !== null){
+                    array_push($faults, $text);
+                }
+            }
+        } else {
+            // Incorrect GB size
+            if($actual_job_state === '15f'){
+                return "Incorrect GB size.";
+            }
+        }
+
+        
+        if(count($faults) > 0){
+            return implode(', ', $faults);
+        }
+        return null;
     }
 }
