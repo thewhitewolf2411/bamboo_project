@@ -9,7 +9,7 @@
                     <img class="notification-error-img mr-4 ml-2" src="{{asset('/customer_page_images/body/error_alert.svg')}}">
                 @endif
 
-                <p class="notification-content bold">{!!$notification->content!!}</p>
+                <p class="notification-content @if(!$notification->resolved)bold @endif">{!!$notification->content!!}</p>
 
                 @if(Route::getCurrentRoute()->uri() === 'userprofile')
                     @if($notification->resolved) @else
@@ -23,7 +23,7 @@
             
             @if($notification->status === 'info')
                 <img class="notification-green-img mr-4 ml-2" src="{{asset('/customer_page_images/body/green_bell.svg')}}">
-                <p class="notification-content @if($notification->status === 'alert') bold @endif">{!!$notification->content!!}</p>
+                <p class="notification-content @if($notification->status === 'alert' && !$notification->resolved) bold @endif">{!!$notification->content!!}</p>
 
             @endif
         </div>
