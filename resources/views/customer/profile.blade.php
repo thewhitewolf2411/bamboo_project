@@ -545,7 +545,7 @@
                                                                 <p class="sale-item-bold">{{$tradein->getCustomerStatus()}}</p>
                                                             </div>
                                                         @else
-                                                            <p class="sale-item-bold">{{$tradein->getCustomerStatus()}}</p>                                                      
+                                                            <p class="sale-item-bold">{{App\Services\ProfileService::getCustomerStatus($tradein)}}</p>                                                      
                                                         @endif
                                                     </div>
                                                 </div>

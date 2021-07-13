@@ -33,12 +33,12 @@
         <form action="/cart/sell" method="POST">
             @csrf
 
-            <div class="d-flex p-5 ml-5 cartdetails-container">
+            <div class="d-flex cartdetails-container">
 
                 <div class="d-flex flex-column cartdetails-type">
                     <p class="welcome-basket-details">Your details</p>
 
-                    <div class="welcome-user-container w-75 mb-4">
+                    <div class="welcome-user-container mb-4">
                         <p class="welcome-bold">Woohoo! You're all signed in</p>
                         <div class="cartdetails-user-info-row">
                             <img class="welcome-img" src="{{asset('/customer_page_images/body/emoji_laughing.svg')}}">
@@ -46,7 +46,38 @@
                         </div>
                     </div>
 
-                    <div class="trade-pack-type w-75 cartdetails-type-subcontainer">
+                    <div class="cartdetails-summary-mobile">
+                        <p class="order-summary-bold w-100">Sell Order Summary</p>
+
+                        @if($hasTradeOut)
+                            <p style="display: flex; align-items: center;">Price to pay: £{{$fullprice}}</p>
+                        @endif
+                        
+                        @if($hasTradeIn)
+                            @foreach($cart as $cart_item)
+                                <div class="summary-cart-order-info">
+                                    <p class="summary-cart-device">{{$cart_item->getProductName($cart_item->id)}}</p>
+                                    <p class="summary-cart-order-details">Network: {{$cart_item->network}}</p>
+                                    <p class="summary-cart-order-details">Memory: {{$cart_item->memory}}</p>
+                                    <p class="summary-cart-order-details">Grade: {{$cart_item->grade}}</p>
+                                </div>
+                            @endforeach
+                            <div class="summary-cart">
+                                <p class="summary-cart-details-text">Subtotal</p>
+                                <p class="summary-cart-details-text">£{{$sellPrice}}</p>
+                            </div>
+                            <div class="summary-cart promotional invisible" id="promotional-info">
+                                <p class="summary-cart-details-text m-0" id="promo-info">Promotional code</p>
+                                <p class="summary-cart-text-bold" id="promo-percentage"></p>
+                            </div>
+                            <div class="summary-cart">
+                                <p class="summary-cart-text-bold-total">TOTAL</p>
+                                <p class="summary-cart-text-bold-total" id="total-sell-price">£{{$sellPrice}}</p>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="trade-pack-type cartdetails-type-subcontainer">
                         <div class="col m-0 p-4">
                             <p class="title-trade-pack-type-large">How would you like to send your device?</p>
                             <p class="title-trade-pack-type">Please select how you would like to send your device(s) to us</p>
@@ -104,7 +135,7 @@
                     </div>
 
                     @if(!Auth::user()->hasPaymentDetails())
-                        <div class="bank-account-details w-75 mb-4 mt-4">
+                        <div class="bank-account-details mb-4 mt-4">
                             <p class="bank-details-large">Bank account details</p>
                             <p class="bank-details-small mt-2">Please provide banking details for payment transfer</p>
 
@@ -155,15 +186,23 @@
 
                 </div>
 
-                <div class="d-flex flex-column w-25 pb-3 ml-2 cartdetails-summary">
+                <div class="d-flex flex-column pb-3 cartdetails-summary">
                     <div class="order-summary-cart flex-column">
-                        <p class="order-summary-bold w-100">Order Summary</p>
+                        <p class="order-summary-bold w-100">Sell Order Summary</p>
 
                         @if($hasTradeOut)
                         <p style="display: flex; align-items: center;">Price to pay: £{{$fullprice}}</p>
                         @endif
                         
                         @if($hasTradeIn)
+                            @foreach($cart as $cart_item)
+                                <div class="summary-cart-order-info">
+                                    <p class="summary-cart-device">{{$cart_item->getProductName($cart_item->id)}}</p>
+                                    <p class="summary-cart-order-details">Network: {{$cart_item->network}}</p>
+                                    <p class="summary-cart-order-details">Memory: {{$cart_item->memory}}</p>
+                                    <p class="summary-cart-order-details">Grade: {{$cart_item->grade}}</p>
+                                </div>
+                            @endforeach
                             <div class="summary-cart">
                                 <p class="summary-cart-details-text">Subtotal</p>
                                 <p class="summary-cart-details-text">£{{$sellPrice}}</p>
@@ -181,34 +220,37 @@
                                 <option value="2">Print and send trade label yourself</option>
                             </select> --}}
 
-                            <div class="selling-disclaimer-cart-mobile">
-                                <p class="newsletter-small-sell">
-                                    I agree to Bamboo sending me a regular newsletter, carrying out market research, keeping 
-                                    me informed with personalised news, offers, products and promotions it believes would be 
-                                    of interest to me through my preferred channel. 
-                                </p>
-                                <div class="disclaimer-checkboxes-row">
-                                    <div class="disclaimer-input">
-                                        <label for="email_newsletter">Email</label>
-                                        <input type="checkbox" class="checkbox-input" name="email_newsletter">
-                                    </div>
-                                    <div class="disclaimer-input">
-                                        <label for="sms_newsletter">SMS / Text Message</label>
-                                        <input type="checkbox" class="checkbox-input" name="sms_newsletter">
-                                    </div>
-                                    <div class="disclaimer-input">
-                                        <label for="telephone_newsletter">Telephone</label>
-                                        <input type="checkbox" class="checkbox-input" name="telephone_newsletter">
-                                    </div>
-                                    <div class="disclaimer-input">
-                                        <label for="post_newsletter">Post</label>
-                                        <input type="checkbox" class="checkbox-input" name="post_newsletter">
-                                    </div>
-                                </div>
-                            </div>
+                            
                         @endif   
                     </div>
 
+                    @if($hasTradeIn)
+                        <div class="selling-disclaimer-cart-mobile">
+                            <p class="newsletter-small-sell">
+                                I agree to Bamboo sending me a regular newsletter, carrying out market research, keeping 
+                                me informed with personalised news, offers, products and promotions it believes would be 
+                                of interest to me through my preferred channel. 
+                            </p>
+                            <div class="disclaimer-checkboxes-row">
+                                <div class="disclaimer-input">
+                                    <label for="email_newsletter">Email</label>
+                                    <input type="checkbox" class="checkbox-input" name="email_newsletter">
+                                </div>
+                                <div class="disclaimer-input">
+                                    <label for="sms_newsletter">SMS / Text Message</label>
+                                    <input type="checkbox" class="checkbox-input" name="sms_newsletter">
+                                </div>
+                                <div class="disclaimer-input">
+                                    <label for="telephone_newsletter">Telephone</label>
+                                    <input type="checkbox" class="checkbox-input" name="telephone_newsletter">
+                                </div>
+                                <div class="disclaimer-input">
+                                    <label for="post_newsletter">Post</label>
+                                    <input type="checkbox" class="checkbox-input" name="post_newsletter">
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
 
                     @if($hasTradeIn)
@@ -362,6 +404,14 @@
                     @endif
                     
                     @if($hasTradeIn)
+                        @foreach($cart as $cart_item)
+                            <div class="summary-cart-order-info">
+                                <p class="summary-cart-device">{{$cart_item->getProductName($cart_item->id)}}</p>
+                                <p class="summary-cart-order-details">Network: {{$cart_item->network}}</p>
+                                <p class="summary-cart-order-details">Memory: {{$cart_item->memory}}</p>
+                                <p class="summary-cart-order-details">Grade: {{$cart_item->grade}}</p>
+                            </div>
+                        @endforeach 
                         <div class="summary-cart">
                             <p class="summary-cart-text-total">Subtotal</p>
                             <p class="summary-cart-text-total">£{{$sellPrice}}</p>
