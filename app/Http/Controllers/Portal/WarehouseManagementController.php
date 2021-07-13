@@ -610,11 +610,16 @@ class WarehouseManagementController extends Controller
     public function checkAllocateBox(Request $request){
 
         $box = Tray::find($request->boxname);
-        $bay = Trolley::where('trolley_name', $request->bayname)->first();
+        
 
         if($box === null){
-            return response('There is no box with this id.', 404);
+            $box = Tray::where('tray_name', $request->boxname)->first();
+            if($box === null){
+                return response('There is no box with this id.', 404);
+            }
         }
+
+        $bay = Trolley::where('trolley_name', $request->bayname)->first();
 
         if($box->tray_type !== 'Bo'){
             return response('This is a tray, and cannot be added.', 404);

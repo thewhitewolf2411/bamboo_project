@@ -98,7 +98,7 @@ class TradeInObserver
             'pin_pattern_number' => $tradein->pin_pattern_number
         ]);
 
-        $can_store_audit = false;
+        $can_store_audit = true;
         if($last_audit){
             if($last_audit->tradein_barcode !== $audit->tradein_barcode){
                 $can_store_audit = true;
