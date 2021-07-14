@@ -793,16 +793,17 @@ class PaymentsController extends Controller
                 if($tradein->job_state !== '24'){
                     return redirect()->back()->with('fail', 'Tradein not in failed payments module.');
                 }
+                $batch_device = PaymentBatchDevice::where('tradein_id', $tradein->id)->first();
 
                 // send emails if they are not sent
                 // if second not send, send it
-                $second_email = BatchDeviceEmail::where('type', 2)->where('order', 2)->where('batch_device_id', $tradein->id)->first();
+                $second_email = BatchDeviceEmail::where('type', 2)->where('order', 2)->where('batch_device_id', $batch_device->id)->first();
                 if(!$second_email){
                     // send second failed payment mail
                     BatchDeviceEmail::create([
                         'type' => 2,
                         'order' => 2,
-                        'batch_device_id' => $tradein->id
+                        'batch_device_id' => $batch_device->id
                     ]);
                     $logfile = fopen("fpcronlog.txt", "a");
                     fwrite($logfile, "Sent second failed payment mail for tradein barcode: " . $tradein->barcode . " \n");
@@ -813,12 +814,12 @@ class PaymentsController extends Controller
                 }
                 
                 // check for third email (send it if not sent)
-                $third_email = BatchDeviceEmail::where('type', 2)->where('order', 3)->where('batch_device_id', $tradein->id)->first();
+                $third_email = BatchDeviceEmail::where('type', 2)->where('order', 3)->where('batch_device_id', $batch_device->id)->first();
                 if(!$third_email){
                     BatchDeviceEmail::create([
                         'type' => 2,
                         'order' => 3,
-                        'batch_device_id' => $tradein->id
+                        'batch_device_id' => $batch_device->id
                     ]);
                     $logfile = fopen("fpcronlog.txt", "a");
                     fwrite($logfile, "Sent third failed payment mail for tradein barcode: " . $tradein->barcode . " \n");
