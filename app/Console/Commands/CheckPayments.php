@@ -62,7 +62,7 @@ class CheckPayments extends Command
                         $message = "we have attempted to transfer payment to you on " . $created_at->format('d.m.Y') .", 
                         but it hasn't worked. Not to worry, you simply sign into your account and
                         check your payment details are correct, you'll be able to amend them if not.";
-                        $klaviyo->paymentUnsuccesful($user, $tradein, $message);
+                        //$klaviyo->paymentUnsuccesful($user, $tradein, $message);
 
                         BatchDeviceEmail::create([
                             'type' => 2,
@@ -86,7 +86,7 @@ class CheckPayments extends Command
                         $message = "we have tried to contact you on 2 occasions without any response and
                         therefore unable to pay you by bank transfer. To ensure we pay you we will raise a cheque
                         for £" . $tradein->bamboo_price . " and it will be posted to the registered address on your account'";
-                        $klaviyo->paymentUnsuccesful($user, $tradein, $message);
+                        //$klaviyo->paymentUnsuccesful($user, $tradein, $message);
 
                         BatchDeviceEmail::create([
                             'type' => 2,

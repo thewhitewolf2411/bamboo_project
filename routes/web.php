@@ -286,6 +286,9 @@ Route::group(['prefix' => 'portal/payments'], function () {
     Route::get('/failed', 'Portal\PaymentsController@showFailedPayments');
     Route::post('/failed/createbatch', 'Portal\PaymentsController@createFailedBatch');
 
+    // TODO disable for GO LIVE
+    Route::get('/setforfc', 'Portal\PaymentsController@showSetForFC');
+    Route::post('/setforfc/apply', 'Portal\PaymentsController@applySetFC');
 });
 
 Route::post('/portal/testing/receive/checkdevicestatus', 'Portal\TestingController@checkDeviceStatus');

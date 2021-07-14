@@ -766,4 +766,71 @@ class PaymentsController extends Controller
         
         }
     }
+
+
+
+
+
+    // dev testing routes - to be disabled for go live
+    public function showSetForFC()
+    {
+        return view('portal.payments.setfc');
+    }
+
+
+    /**
+     * Send 3 failed payment emails and make device available for FC batch.
+     */
+    public function applySetFC(Request $request)
+    {
+        if(isset($request->tradein)){
+            $tradein = Tradein::where('barcode', $request->tradein)->first();
+            if($tradein){
+
+                $messages = [];
+
+                // check if tradein is in failed payments
+                if($tradein->job_state !== '24'){
+                    return redirect()->back()->with('fail', 'Tradein not in failed payments module.');
+                }
+
+                // send emails if they are not sent
+                // if second not send, send it
+                $second_email = BatchDeviceEmail::where('type', 2)->where('order', 2)->where('batch_device_id', $tradein->id)->first();
+                if(!$second_email){
+                    // send second failed payment mail
+                    BatchDeviceEmail::create([
+                        'type' => 2,
+                        'order' => 2,
+                        'batch_device_id' => $tradein->id
+                    ]);
+                    $logfile = fopen("fpcronlog.txt", "a");
+                    fwrite($logfile, "Sent second failed payment mail for tradein barcode: " . $tradein->barcode . " \n");
+                    fclose($logfile);
+                    array_push($messages, 'Send second payment failed email.');
+                } else {
+                    array_push($messages, 'Second email already sent.');
+                }
+                
+                // check for third email (send it if not sent)
+                $third_email = BatchDeviceEmail::where('type', 2)->where('order', 3)->where('batch_device_id', $tradein->id)->first();
+                if(!$third_email){
+                    BatchDeviceEmail::create([
+                        'type' => 2,
+                        'order' => 3,
+                        'batch_device_id' => $tradein->id
+                    ]);
+                    $logfile = fopen("fpcronlog.txt", "a");
+                    fwrite($logfile, "Sent third failed payment mail for tradein barcode: " . $tradein->barcode . " \n");
+                    fclose($logfile);
+                    array_push($messages, 'Send third payment failed email.');
+                } else {
+                    array_push($messages, 'Third email already sent.');
+                }
+                
+                return redirect()->back()->with('fail', implode("<br>", $messages));
+            }   
+            return redirect()->back()->with('fail', 'Tradein not found.');
+        }
+    }
 }
